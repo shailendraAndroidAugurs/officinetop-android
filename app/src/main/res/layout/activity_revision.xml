@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".misc_activities.RevisionActivity">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/revision_service_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginLeft="@dimen/_16sdp"-->
+<!--        android:layout_marginRight="@dimen/_16sdp"-->
+<!--        android:padding="@dimen/_10sdp"-->
+<!--        android:background="@drawable/rounded_white_background"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray_dark"-->
+<!--            android:text="@string/vehicle_precheck_revision"-->
+<!--            style="@style/TextViewHeading"-->
+<!--            android:padding="0dp"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:text="@string/revision_detail"-->
+<!--            style="@style/TextViewHeading"-->
+<!--            android:paddingLeft="0dp"-->
+<!--            />-->
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/TextViewHeading"-->
+<!--                android:paddingLeft="0dp"-->
+<!--                android:paddingRight="0dp"-->
+<!--                android:text="@string/dummy_prepend_euro_symbol_with_da"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:text="@string/choose_workshop"-->
+<!--                style="@style/RoundButton"-->
+<!--                android:textSize="@dimen/_12sdp"-->
+<!--                android:layout_margin="0dp"-->
+<!--                android:paddingLeft="@dimen/_20sdp"-->
+<!--                android:paddingRight="@dimen/_20sdp"-->
+<!--                />-->
+
+
+<!--        </FrameLayout>-->
+
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

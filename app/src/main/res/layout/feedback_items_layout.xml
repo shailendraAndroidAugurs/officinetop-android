@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="listItemViewModel"
+            type="com.officinetop.officine.data.Models.FeedbacksList"/>
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_margin="@dimen/_5sdp"
+        android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion) }">
+
+        <ImageView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:src="@drawable/no_image_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            app:imageResource="@{listItemViewModel.images!=null ? listItemViewModel.images.get(0).imageUrl: @string/url_not_found}"
+            android:id="@+id/fedback_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fedback_given_by"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:text="@{listItemViewModel.fName}"
+            app:layout_constraintStart_toEndOf="@+id/fedback_image"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fedback_l_name"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:text="@{listItemViewModel.lName}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fedback_given_by"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"/>
+
+
+
+        <RatingBar
+            style="@style/RatingBarSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:rating="@{listItemViewModel.avgRatings!=null? listItemViewModel.avgRatings : Integer.toString(0)}"
+            android:id="@+id/user_rating"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_given_by"
+            app:layout_constraintStart_toEndOf="@+id/fedback_image"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fedback_comment"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:text="@{listItemViewModel.comments}"
+            app:layout_constraintStart_toEndOf="@+id/fedback_image"
+            android:layout_margin="@dimen/_10sdp"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@+id/user_rating"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

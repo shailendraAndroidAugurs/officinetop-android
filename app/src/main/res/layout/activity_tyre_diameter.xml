@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".tyre.TyreListActivity">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/gray_dark"
+        style="@style/TextViewHeading"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/_15sdp"
+        android:text="@string/sample_title"
+        android:id="@+id/title_tyre"
+        android:layout_marginBottom="@dimen/_10sdp" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <include android:layout_height="@dimen/tyre_measurement_list_height"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        layout="@layout/layout_recycler_view"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        android:background="@color/white"
+        android:layout_height="0dp">
+
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/RoundButton"
+          android:id="@+id/customize_measure_btn"
+          android:text="@string/customize_measures"
+          />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/gray_dark"
+            style="@style/TextViewSubHeadingBlack"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/diameter_msg"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+
+
+    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

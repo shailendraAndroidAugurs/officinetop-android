@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <TextView
+        android:id="@+id/tv_Sort_ClearSection"
+        style="@style/TextViewSubHeadingBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/clear_selection"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_other_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/TextViewSubHeadingBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="@string/price" />
+
+        <RadioGroup
+            android:id="@+id/radio_grp_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:divider="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp">
+
+            <RadioButton
+                android:id="@+id/rb_price_low"
+                style="@style/TextViewSubHeadingBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:checked="true"
+                android:text="@string/low_to_high" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@color/gray" />
+
+
+            <RadioButton
+                android:id="@+id/rb_price_high"
+                style="@style/TextViewSubHeadingBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:text="@string/high_to_low" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/sort_distance_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/TextViewSubHeadingBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/distance" />
+
+
+            <RadioGroup
+                android:id="@+id/radio_grp_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:divider="@color/colorPrimary"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
+
+                <RadioButton
+                    android:id="@+id/rb_distance_low"
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:checked="true"
+                    android:text="@string/low_to_high" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray" />
+
+
+                <RadioButton
+                    android:id="@+id/rb_distance_high"
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    android:text="@string/high_to_low" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_for"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/TextViewSubHeadingBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="@string/Alphabetical" />
+
+        <RadioGroup
+            android:id="@+id/radio_grp_Alphabetical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:divider="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp">
+
+            <RadioButton
+                android:id="@+id/rb_Alphabetical_Ascending"
+                style="@style/TextViewSubHeadingBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:checked="true"
+                android:text="@string/Ascending" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@color/gray" />
+
+
+            <RadioButton
+                android:id="@+id/rb_Alphabetical_Descending"
+                style="@style/TextViewSubHeadingBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:text="@string/Descending" />
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+</LinearLayout>

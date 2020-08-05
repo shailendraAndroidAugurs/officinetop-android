@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/include_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/search_view_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/category_margin"
+        android:background="@color/gray_light">
+
+        <EditText
+        android:layout_width="0dp"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/rounded_white_background"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:id="@+id/search_product"
+        android:hint="@string/SearchProducts"
+        android:focusable="false"
+        android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_background"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/search_field_edit"
+            android:hint="@string/SearchProducts"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_height="match_parent"
+            style="@style/TextViewWhite"
+            android:textColor="@color/gray_dark"
+            android:text="@string/Search"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/category_list_width"
+            android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingBottom="@dimen/category_margin"
+        android:clipToPadding="false"/>
+        </RelativeLayout>
+
+    <ExpandableListView
+        android:id="@+id/sub_category_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:divider="@color/gray_transparent"
+        android:dividerHeight="1dp"
+        android:paddingEnd="@dimen/category_margin"
+        android:paddingBottom="@dimen/category_margin"
+        android:clipToPadding="false"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

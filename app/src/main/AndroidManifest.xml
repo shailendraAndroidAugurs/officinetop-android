@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.officinetop.officine">
+
+    <application
+        android:name=".OfficineApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
+
+        <activity android:name=".Online_Payment.OnlinePaymentScreen" />
+        <activity android:name=".feedback.Support_FAQ_Activity" />
+        <activity android:name=".invite_frnds.HowItWorksActivity" />
+        <activity android:name=".invite_frnds.InviteFriendsActivity" />
+        <activity android:name=".News.WebViewLoad" />
+        <activity android:name=".misc_activities.PartList_Replacement" />
+        <activity
+            android:name=".userprofile.SyncMyContact"
+            android:screenOrientation="portrait" />
+        <activity android:name=".WishList.WishListActivity" />
+        <activity
+            android:name=".userprofile.ProfileSetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Orders.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cart.CartDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feedback.Support_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feedback.ComplaintTypeFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feedback.Genrated_UserTicket"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".push_notification.NotificationList"
+            android:parentActivityName=".HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Orders.Order_Tracking"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Orders.Order_List"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".userprofile.Contactlist_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".userprofile.Addresslist_Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".feedback.FeedbackDetailActivity" />
+        <activity android:name=".car_parts.RimActicvity" />
+        <activity
+            android:name=".userprofile.Edit_Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Online_Payment.OnlinePayment"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MOT.MotDetailActivity" />
+        <activity
+            android:name=".MOT.MotListActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".feedback.FeedbackAddActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".feedback.FeedbackListActivity" />
+        <activity android:name=".quotes.QuotesActivity" />
+        <activity
+            android:name=".sos.SOSActivity"
+            android:label="@string/title_activity_sos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".misc_activities.MaintenanceActivity"
+            android:screenOrientation="portrait" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".misc_activities.RevisionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tyre.TyreDiameterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tyre.TyreSellerDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tyre.TyreCustomizationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tyre.TyreListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.TyreDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".workshop.ServiceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".workshop.WorkshopDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".workshop.WorkshopBookingDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.ProductListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.ProductDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WorkshopListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.PartsCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.PartCategories"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".car_parts.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".misc_activities.LocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="kotlin.example.com"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".authentication.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".authentication.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".virtual_garage.MyVehicleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".virtual_garage.AddVehicleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <!--
+<activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        -->
+        <activity
+            android:name=".authentication.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity
+            android:name=".authentication.linkedin.LinkedInWebView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".workshop.CarServiceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".workshop.MapFilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".coupons.CouponsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW " />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity> <!-- Connection callback service -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+        <!--
+ <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationName"
+            tools:replace="android:value"
+            android:value="@string/app_name" />
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_stat_app_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@mipmap/ic_stat_app_icon" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource" />
+        </provider>
+
+        <service
+            android:name="com.novoda.merlin.MerlinService"
+            android:exported="false" />
+        <service
+            android:name=".push_notification.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.Lo" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+</manifest>

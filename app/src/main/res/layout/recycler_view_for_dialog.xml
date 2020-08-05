@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/header"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/title"
+                android:textColor="@color/white"
+                style="@style/TextViewHeading"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_delete"
+                android:layout_gravity="end|center"
+                android:id="@+id/imageCross"
+                android:paddingEnd="@dimen/_10sdp"/>
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:id="@+id/ll_Note_ApplyCoupon"
+            android:layout_below="@+id/header"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:textColor="@color/green"
+                android:text="@string/Note"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_weight=".4"
+                android:background="?android:windowBackground"
+                android:layout_height="match_parent">
+
+            </TextView>
+            <TextView
+
+android:textSize="@dimen/_10sdp"
+                android:text="@string/Apply_Coupon_Note"
+                android:layout_width="0dp"
+                android:layout_weight="1.6"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:background="?android:windowBackground"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/dialog_recycler_view"
+            android:layout_below="@+id/ll_Note_ApplyCoupon"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_above="@+id/ll_coupons"
+            android:background="?android:windowBackground">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ll_coupons">
+        <Button
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_white"
+            android:id="@+id/apply_coupons"
+            android:textColor="@color/white"
+            android:text="@string/Add_parts"/>
+        <Button
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RoundButton"
+            android:id="@+id/cancel_coupons"
+            android:text="@string/apply"/>
+    </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

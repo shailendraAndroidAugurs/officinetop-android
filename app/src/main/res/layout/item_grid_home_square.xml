@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:gravity="center"
+    android:padding="0dp"
+    android:layout_margin="5dp"
+    android:background="?selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+   <LinearLayout
+       android:id="@+id/best_selling_container"
+       android:layout_width="wrap_content"
+       android:orientation="vertical"
+       android:background="@color/white"
+       android:layout_height="wrap_content">
+
+       <ImageView
+        android:layout_width="@dimen/image_best_selling"
+        android:layout_height="@dimen/image_best_selling"
+        android:src="@drawable/no_image_placeholder"
+        android:layout_margin="10dp"
+        android:id="@+id/item_icon"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"
+        />
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:background="@color/colorAccent">
+
+           <TextView
+               android:id="@+id/item_name"
+               style="@style/TextViewSubHeadingWhite"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:ellipsize="end"
+               android:gravity="center"
+               android:maxLines="2"
+               android:paddingLeft="10dp"
+               android:paddingTop="5dp"
+               android:paddingRight="10dp"
+               android:paddingBottom="5dp"
+               android:textColor="@color/white"
+               android:textSize="@dimen/_8sdp" />
+
+       <TextView
+           style="@style/TextViewWhite.VerySmall"
+           android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:textColor="@color/black"
+        android:id="@+id/item_sub_titleGrid"
+        android:singleLine="true"
+           android:textSize="@dimen/_8sdp"
+        android:ellipsize="end"
+        />
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+</LinearLayout>

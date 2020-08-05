@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_white">
+
+        <TextView
+            android:id="@+id/workshop_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:padding="5sp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="@{data.WorkshopName}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/address1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="start"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="@{data.address1}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/workshop_name"
+            app:setVisibility="@{data.address1!=null}" />
+
+        <TextView
+            android:id="@+id/address2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="start"
+            android:maxLines="2"
+            android:text="@{data.address2}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address1"
+            app:setVisibility="@{data.address1!=null}" />
+
+
+        <TextView
+            android:id="@+id/address3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="@{data.address3}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="@{data.address3==null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/mobile_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address2" />
+
+
+        <TextView
+            android:id="@+id/mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+            android:drawablePadding="@dimen/_5sdp"
+
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="@{data.mobileNumber.toString()}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/address3"
+            app:setVisibility="@{data.mobileNumber.toString()!=null}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--   <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:background="@drawable/rounded_white"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:id="@+id/workshop_name"
+               android:visibility="visible"
+               android:textColor="@color/white"
+               android:textSize="@dimen/_14sdp"
+               android:padding="5sp"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:text="@{data.WorkshopName}"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+           </TextView>
+           <TextView
+               android:id="@+id/address1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:gravity="start"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:text="@{data.address1}"
+               android:textColor="@color/white"
+               android:textSize="@dimen/_14sdp"
+
+               app:layout_constraintStart_toStartOf="parent"
+               app:setVisibility="@{data.address1!=null}" />
+
+           <TextView
+               android:id="@+id/address2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/_5sdp"
+               android:text="@{data.address2}"
+               android:textColor="@color/white"
+               android:textSize="@dimen/_14sdp"
+               app:layout_constraintStart_toEndOf="@+id/address1"
+               app:setVisibility="@{data.address2!=null}"
+               tools:ignore="MissingConstraints" />
+
+           <TextView
+               android:id="@+id/address3"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@{data.address3}"
+               android:textColor="@color/white"
+               android:textSize="@dimen/_12sdp"
+               android:visibility="@{data.address3==null ? View.GONE : View.VISIBLE}"
+               app:layout_constraintBottom_toTopOf="@+id/mobile_number"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/address2" />
+
+
+           <TextView
+               android:id="@+id/mobile_number"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+
+               android:gravity="start"
+
+               android:textColor="@color/white"
+               android:textSize="@dimen/_12sdp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/address3"
+               />
+
+           <TextView
+               android:id="@+id/view"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:background="@color/white"
+               android:drawablePadding="@dimen/_5sdp"
+               android:gravity="end"
+               android:paddingLeft="@dimen/_3sdp"
+               android:paddingRight="@dimen/_3sdp"
+               android:text="@string/service_list"
+               android:textColor="@color/black"
+               android:textSize="@dimen/_10sdp"
+               android:visibility="invisible"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
+
+
+       </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.officinetop.officine.data.Models.AllWrackerWorkshops" />
+
+    </data>
+
+
+</layout>

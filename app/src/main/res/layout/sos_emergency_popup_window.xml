@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+    <data>
+        <variable
+            name="wrackerServices"
+            type="com.officinetop.officine.data.Models.WrackerServices" />
+    </data>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_background_round_white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_background_round_white"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Emergency_Service_Details"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textStyle="bold"
+            style="@style/TextViewHeading"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_margin="@dimen/_2sdp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:text="@string/Total_time_Arrives"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{wrackerServices.totalTimeArrives}"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:id="@+id/total_time_arrives"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_margin="@dimen/_2sdp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:text="@string/Hourly_Cost"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{wrackerServices.hourlyCost}"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:id="@+id/hourly_cost"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_margin="@dimen/_2sdp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:text="@string/Cost_KM"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{wrackerServices.costPerKm}"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:id="@+id/cost_per_km"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_margin="@dimen/_2sdp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:text="@string/call_cost"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{wrackerServices.callCost}"
+                style="@style/TextViewNormal"
+                android:textColor="@color/black"
+                android:id="@+id/call_cost"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/gray"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textStyle="bold"
+            android:id="@+id/cancel_emergency"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/color1"
+            android:textAllCaps="false"
+            android:onClick="@{()-> wrackerServices.sosActivityListener.onClickEvent(false)}"
+            android:background="@android:color/transparent"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:id="@+id/submit_emergency"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color1"
+            android:onClick="@{()-> wrackerServices.sosActivityListener.onClickEvent(true)}"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
+
+</layout>

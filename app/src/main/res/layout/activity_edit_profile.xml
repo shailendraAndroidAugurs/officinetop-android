@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".userprofile.Edit_Profile">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/include_toolbar" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--
+                        <TextView
+                            android:id="@+id/textview_changepic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_dark"
+                            android:gravity="center|bottom"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_2sdp"
+                            android:text="@string/update_pic"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            tools:ignore="MissingConstraints"
+                            tools:layout_editor_absoluteX="125dp"
+                            tools:layout_editor_absoluteY="182dp" />-->
+
+            <ImageView
+                android:id="@+id/profile_imagefull"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:letterSpacing="0.2"
+                android:id="@+id/textview_changepic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:background="@color/green_dark"
+                android:gravity="end"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:text="@string/update_pic"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+
+        </RelativeLayout>
+
+
+        <!--<de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/userprofile"
+            app:civ_border_width="2dp"
+            android:transitionName="profile"
+            android:layout_marginTop="10dp"
+            app:civ_border_color="#FF000000"/>-->
+
+        <!-- <TextView
+             android:gravity="center"
+             android:id="@+id/textview_changepic"
+             android:layout_marginTop="@dimen/_5sdp"
+             android:paddingLeft="@dimen/_5sdp"
+             android:paddingRight="@dimen/_5sdp"
+             android:paddingTop="@dimen/_2sdp"
+             android:paddingBottom="@dimen/_2sdp"
+             android:background="@color/green_dark"
+             android:textSize="@dimen/_12sdp"
+             android:textColor="@color/white"
+             android:text="@string/update_pic"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingRight="@dimen/_30sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_gray_empty"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:id="@+id/EditText_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_telephone_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rectangle_gray_empty"
+            android:orientation="vertical">
+
+
+            <TextView
+
+                android:id="@+id/EditText_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_emailicon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_updateprofile"
+            style="@style/RoundButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/shape_button_rounded_orange"
+            android:text="@string/update_profile" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

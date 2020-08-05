@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="listItemViewModel"
+            type="com.officinetop.officine.data.Models.AllCoupons" />
+    </data>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="165dp"
+    android:background="@color/white"
+    android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v, listItemViewModel.adapterPostion)}"
+    android:layout_margin="@dimen/_5sdp">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        >
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_type"
+            android:text="@string/cutting_brakes"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modification"
+            android:padding="6dp"
+            android:id="@+id/item_text"
+            android:layout_alignParentRight="true"/>
+
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/item_image"
+            android:layout_below="@+id/item_type"
+            android:src="@drawable/banner"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{listItemViewModel.couponTitle}"
+            android:maxLines="2"
+            style="@style/TextViewWhite"
+            android:textColor="@color/black"
+            android:id="@+id/item_info"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/item_image"
+            android:layout_below="@+id/item_type"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextViewNormal"
+            android:maxLines="2"
+            android:text="@{String.format(@string/prepend_euro_symbol_string, listItemViewModel.amount)}"
+            android:layout_toRightOf="@+id/item_image"
+            android:layout_below="@+id/item_info"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rectangle_gray"
+            android:layout_below="@+id/item_info"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            >
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/spinner_item_quantity"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/colorAccent"/>
+
+</RelativeLayout>
+
+
+
+</layout>

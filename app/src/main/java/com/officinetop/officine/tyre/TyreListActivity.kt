@@ -1,0 +1,1147 @@
+package com.officinetop.officine.tyre
+
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.os.Bundle
+import android.os.Handler
+import android.util.Log
+import android.view.*
+import android.widget.CheckBox
+import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.jaygoo.widget.OnRangeChangedListener
+import com.jaygoo.widget.RangeSeekBar
+import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.R
+import com.officinetop.officine.adapter.PaginationListener
+import com.officinetop.officine.adapter.RecyclerViewAdapter
+import com.officinetop.officine.car_parts.TyreDetailActivity
+import com.officinetop.officine.data.*
+import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.*
+import kotlinx.android.synthetic.main.activity_tyre_list.*
+import kotlinx.android.synthetic.main.dialog_sorting.*
+import kotlinx.android.synthetic.main.dialog_tyre_filter.*
+import kotlinx.android.synthetic.main.dialog_tyre_filter_category.*
+import kotlinx.android.synthetic.main.dialog_tyre_filter_subcategory.*
+import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.item_checkbox.view.*
+import kotlinx.android.synthetic.main.item_tyre.view.*
+import kotlinx.android.synthetic.main.layout_recycler_view.*
+import okhttp3.ResponseBody
+import org.jetbrains.anko.intentFor
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.math.ceil
+
+import kotlin.math.floor
+
+class TyreListActivity : BaseActivity() {
+
+    lateinit var filterDialog: Dialog
+    lateinit var sortDialog: Dialog
+    var tempPriceFinal: Float = -1f
+    var tempPriceInitial: Float = 0f
+    var priceRangeInitial: Float = 0f
+    var priceRangeFinal: Float = -1f
+    val filterBrandList: MutableList<String> = ArrayList()
+    val filterTyreSeasonList: MutableList<Models.TypeSpecification> = ArrayList()
+    val filterTyreSpeedIndexList: MutableList<Models.TypeSpecification> = ArrayList()
+    private var searchString: String = ""
+    private var priceSortLevel: Int = 0
+    private var priceRange: String = ""
+    private var recyclerViewAdapter: RecyclerViewAdapter? = null
+    private val PAGE_START = 0
+    private var current_page = PAGE_START
+    private var isLastPage = false
+    private var totalPage = 500
+    private var isLoading = false
+    private var maxPrice: Float = 1f
+    private var minPrice: Float = 0f
+    private var isRunFlat: Boolean = false
+    private var isReinforced: Boolean = false
+    private var isFavouriteChecked = false
+    private var isOfferChecked = false
+    lateinit var tyreDetail: Models.TyreDetail
+    lateinit var tyreDetailFilter: Models.TyreDetail
+    lateinit var textView_Brand_name: TextView
+    lateinit var textView_Rating_name: TextView
+    lateinit var textView_season_name: TextView
+    lateinit var textView_Speed_Index_name: TextView
+    lateinit var isSwitch_OfferCoupon: Switch
+    lateinit var isSwitch_OnlyFav: Switch
+    lateinit var isSwitch_Reinforced: Switch
+    lateinit var isSwitch_RunFlat: Switch
+    lateinit var priceRangeSeekerBar: RangeSeekBar
+    var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    var tyre_type: JSONArray = JSONArray()
+    var speed_index: JSONArray = JSONArray()
+    lateinit var brandList: ArrayList<Models.brand>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_tyre_list)
+        setSupportActionBar(toolbar)
+        toolbar_title.text = getString(R.string.tyres)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        recycler_view.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
+
+        recyclerViewAdapter = RecyclerViewAdapter(this@TyreListActivity, ArrayList())
+        recycler_view.adapter = recyclerViewAdapter
+
+        recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+
+            override fun loadMoreItems() {
+                isLoading = true
+                current_page += 10
+                loadTyreData()
+            }
+
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
+
+        try {
+            tyreDetail = getTyreDetail()!!
+            tyreDetailFilter = getTyreDetail()!!
+            tyreDetail?.let {
+                title_tyre.text = resources.getString(R.string.select_measurements) + "\n" +
+                        (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " + it.speedIndex
+
+                /*       "${it.vehicleTypeName} ${resources.getString(R.string.with_diameter)} ${it.diameter} , ${resources.getString(R.string.width)}: ${it.width}" +
+                       ",${resources.getString(R.string.aspect_ratio)}: ${it.aspectRatio}"
+
+n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
+
+
+*/
+///*, Speed Index : ${it.speedIndex}*/
+                searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
+
+
+                progress_bar.visibility = View.VISIBLE
+
+                loadTyreData()
+
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        val body = response.body()?.string()
+                        if (response.isSuccessful) {
+                            if (isStatusCodeValid(body)) {
+                                try {
+
+
+                                    val jsonObject = JSONObject(body)
+                                    val data = jsonObject.getJSONObject("data") as JSONObject
+                                    speed_index = data.getJSONArray("speed_index") as JSONArray
+                                    tyre_type = data.getJSONArray("season_tyre_type") as JSONArray
+
+                                    var PriceObject = data.getJSONObject("price")
+
+                                    filterTyreSeasonList.clear()
+                                    filterTyreSpeedIndexList.clear()
+                                    for (tyreType in 0 until tyre_type.length()) {
+                                        val tyreTypeObject: JSONObject = tyre_type.get(tyreType) as JSONObject
+                                        filterTyreSeasonList.add(Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
+                                    }
+
+                                    for (speedIndex in 0 until speed_index.length()) {
+                                        val speedIndexObject: JSONObject = speed_index.get(speedIndex) as JSONObject
+                                        filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("name"), speedIndexObject.optString("id")))
+                                    }
+
+                                } catch (e: Exception) {
+                                    e.message
+                                    e.printStackTrace()
+                                }
+
+
+                            }
+                        }
+
+
+                    }
+                })
+
+        edit_tyre.setOnClickListener {
+            finish()
+            startActivityForResult(intentFor<TyreDiameterActivity>(), 100)
+        }
+
+        filter_btn.setOnClickListener {
+            createFilterDialog()
+            filterDialog.show()
+        }
+
+        sort_btn.setOnClickListener {
+            sortDialog.show()
+
+        }
+
+        // createFilterDialog()
+        createSortDialog()
+        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
+        drawableRight?.setBounds(100, 100, 100, 100)
+        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || priceRangeFinal.toInt() - priceRangeInitial.toInt() != 1000) {
+
+            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun loadTyreData() {
+
+        /*  tyreDetail?.let {
+              title_tyre.text = resources.getString(R.string.select_measurements) + "\n" +
+                      (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " + it.speedIndex
+
+              Log.d("speedIndexvalue", it.speedIndex)
+          }*/
+
+
+        try {
+            RetrofitClient.client.tyreList(
+                    tyreDetail.vehicleType,
+                    searchString,
+                    tyreDetail.brands,
+                    tyreDetail.filter_SeasonTypeId,
+                    tyreDetail.filter_SpeedIndexId,
+                    current_page.toString(),
+                    if (tyreDetail.onlyFav) "1" else "0",
+                    if (tyreDetail.offerOrCoupon) "1" else "0",
+                    if (tyreDetail.reinforced) "1" else "0",
+                    if (tyreDetail.runFlat) "1" else "0",
+                    priceSortLevel.toString(),
+                    tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/tyreDetail.Rating,
+                    "2", getUserId()
+            )
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progress_bar.visibility = View.GONE
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            progress_bar.visibility = View.GONE
+                            recycler_view.visibility = View.VISIBLE
+
+                            val body = response.body()?.string()
+                            if (isStatusCodeValid(body)) {
+                                val dataSet = getDataSetArrayFromResponse(body)
+                                progress_bar.visibility = View.GONE
+                                if (!dataSet.isEmpty())
+                                    setView(jsonArray = dataSet)
+                                else {
+                                    Toast.makeText(applicationContext, getString(R.string.NoItemFound), Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                try {
+                                    isLastPage = true
+                                    recyclerViewAdapter?.removeLoading()
+                                    val jsonObject = JSONObject(body)
+                                    progress_bar.visibility = View.GONE
+                                    Toast.makeText(applicationContext, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+
+                    })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+    }
+
+    private fun createFilterDialog() {
+        tyreDetail = getTyreDetail()!!
+        filterDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+        with(filterDialog) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout./*dialog_tyre_filter*/dialog_tyre_filter_category)
+            initDialogCategory(filterDialog)
+            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+            val drawableLeft = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.ic_sort_black_24dp)
+            val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
+            drawableRight?.setBounds(100, 100, 100, 100)
+            textView_Brand_name = tv_Brand_name
+            textView_Rating_name = tv_Rating_name
+            textView_season_name = tv_season_name
+            textView_Speed_Index_name = tv_Speed_Index_name
+            priceRangeSeekerBar = RS_dialog_price_range
+            isSwitch_OfferCoupon = switch_OfferCoupon
+            isSwitch_OnlyFav = switch_OnlyFav
+            isSwitch_Reinforced = switch_Reinforced
+            isSwitch_RunFlat = switch_RunFlat
+
+
+
+
+
+            try {
+                priceRangeSeekerBar.setRange(minPrice, maxPrice)
+                Log.d("tyre_list", "try filter minPrice" + minPrice)
+                Log.d("tyre_list", "try filter maxPrice" + maxPrice)
+                if (!tyreDetail.priceRange.isNullOrBlank()) {
+                    var minPrice1 = tyreDetail.priceRange.split(",")[0].toFloat()
+                    var maxPrice1 = tyreDetail.priceRange.split(",")[1].toFloat()
+
+                    if (minPrice >= minPrice1) {
+                        minPrice1 = minPrice
+                    }
+                    Log.d("tyre_list", "minPrice1 if " + minPrice1)
+                    Log.d("tyre_list", "maxPrice1 if " + maxPrice1)
+                    priceRangeSeekerBar.setValue(minPrice1, maxPrice1)
+                    tv_price_start_range.text = getString(R.string.prepend_euro_symbol_string, minPrice1.toString())
+                    tv_price_end_range.text = getString(R.string.prepend_euro_symbol_string, maxPrice1.toString())
+                    /*  priceRangeInitial = minPrice1
+                      priceRangeFinal = maxPrice1*/
+
+                } else {
+                    priceRangeSeekerBar.setValue(minPrice, maxPrice)
+                    tv_price_start_range.text = getString(R.string.prepend_euro_symbol_string, minPrice.toString())
+                    tv_price_end_range.text = getString(R.string.prepend_euro_symbol_string, maxPrice.toString())
+                    /* priceRangeInitial = minPrice
+                     priceRangeFinal = maxPrice*/
+                }
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+
+
+                priceRangeSeekerBar.setOnRangeChangedListener(object : OnRangeChangedListener {
+                    override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
+                    override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
+
+                        if (rightValue.toString().contains(".0")) {
+                            tempPriceInitial = floor(leftValue)
+                            tempPriceFinal = ceil(rightValue)
+                        } else {
+                            tempPriceInitial = /*floor*/(leftValue).toDouble().roundTo2Places().toFloat()
+                            tempPriceFinal = /*ceil*/(rightValue).toDouble().roundTo2Places().toFloat()
+                        }
+
+
+
+                        priceRangeInitial = tempPriceInitial
+                        priceRangeFinal = tempPriceFinal
+                        tv_price_start_range.text = getString(R.string.prepend_euro_symbol_string, tempPriceInitial.toString())
+                        tv_price_end_range.text = getString(R.string.prepend_euro_symbol_string, tempPriceFinal.toString())
+
+                        if (priceRangeInitial.equals(minPrice) && priceRangeFinal.equals(maxPrice)) {
+                            priceRange = ""
+
+
+                        } else {
+                            priceRange = priceRangeInitial.toString() + "," + priceRangeFinal.toString()
+
+                        }
+
+
+                    }
+
+                    override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
+                })
+
+
+                if (isRunFlat || tyreDetail.runFlat) {
+                    switch_RunFlat.isChecked = true
+                }
+                if (isReinforced || tyreDetail.reinforced) {
+                    switch_Reinforced.isChecked = true
+                }
+
+                if (isOfferChecked || tyreDetail.offerOrCoupon) {
+                    switch_OfferCoupon.isChecked = true
+                }
+
+                if (isFavouriteChecked || tyreDetail.onlyFav) {
+                    switch_OnlyFav.isChecked = true
+                }
+
+                tv_Brand_name.setText(tyreDetail.brands)
+                tv_Rating_name.setText(if (tyreDetail.Rating.equals("0")) "" else tyreDetail.Rating)
+                if (!tyreDetail.seasonType.isNullOrBlank()) {
+                    tv_season_name.setText(tyreDetail.seasonType)
+                } else {
+                    tv_season_name.setText(tyreDetail.seasonTypeName)
+
+                }
+
+                Log.d("seasonType", tyreDetail.seasonType)
+                tv_Speed_Index_name.setText(tyreDetail.speedIndex)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            toolbar.setOnMenuItemClickListener {
+
+                FinalFilter(false)
+                dismiss()
+                return@setOnMenuItemClickListener true
+            }
+            toolbar.setNavigationOnClickListener {
+                setTyreDetail(tyreDetailFilter)
+                dismiss()
+            }
+            if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || priceRangeFinal.toInt() - priceRangeInitial.toInt() != 1000) {
+
+                this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+            }
+
+            toolbar.inflateMenu(R.menu.menu_single_item)
+            toolbar_title.text = getText(R.string.filter)
+
+            clearselection.setOnClickListener {
+                try {
+                   // priceRangeSeekerBar.setRange(minPrice, maxPrice)
+                   priceRangeSeekerBar.setValue(minPrice, maxPrice)
+                    Log.d("tyre_list","clearselection"+minPrice)
+                    Log.d("tyre_list","clearselection"+maxPrice)
+                    //priceRangeSeekerBar.setValue(0f, dialog_price_range.maxProgress)
+                    this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+
+
+                    /*       dialog_rating_five.isChecked = false
+                           //reset rating filter
+                           dialog_rating_four.isChecked = false
+                           dialog_rating_three.isChecked = false
+                           dialog_rating_two.isChecked = false
+                           dialog_rating_one.isChecked = false
+
+                           //reset other categories
+                           dialog_favourite_check_box.isChecked = false
+                           dialog_offers_check_box.isChecked = false*/
+
+
+                    filterBrandList.clear()
+                    filterTyreSeasonList.clear()
+                    filterTyreSpeedIndexList.clear()
+                    /*   filterBrandList.clear()
+                       filterTyreAspectRatioList.clear()
+                       filterTyreDiameterList.clear()
+                       filterTyreSeasonList.clear()
+                       filterTyreTypeList.clear()
+                       filterTyreSpeedIndexList.clear()
+                       filterTyreWidthList.clear()
+                       brandFilterAdapter?.notifyDataSetChanged()
+                       tyreSeasonFilterAdapter?.notifyDataSetChanged()
+                       tyreSpeedIndexFilterAdapter?.notifyDataSetChanged()*/
+
+                    tv_Brand_name.setText("")
+                    tv_Rating_name.setText("")
+                    tv_season_name.setText("")
+                    tv_Speed_Index_name.setText("")
+                    tyreDetail.brands = ""
+                    tyreDetail.Rating = ""
+
+                    tyreDetail.seasonType = ""
+
+                    tyreDetail.filter_SpeedIndexId = ""
+                    tyreDetail.filter_SeasonTypeId = ""
+                    tyreDetail.speedIndex = ""
+                    isRunFlat = false
+                    tyreDetail.runFlat = false
+                    isReinforced = false
+                    tyreDetail.reinforced = false
+                    isOfferChecked = false
+                    tyreDetail.offerOrCoupon = false
+                    isFavouriteChecked = false
+                    tyreDetail.onlyFav = false
+                    tyreDetail.priceRange = ""
+                    tyreDetail.seasonTypeName = ""
+                    switch_RunFlat.isChecked = false
+                    switch_Reinforced.isChecked = false
+                    switch_OfferCoupon.isChecked = false
+                    switch_OnlyFav.isChecked = false
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+
+            create()
+
+        }
+
+
+    }
+
+    private fun setCheckedListener(layout: View, checkbox: CheckBox, onCheckedChanged: ((isChecked: Boolean) -> Unit)? = null) {
+        layout.setOnClickListener {
+            checkbox.isChecked = !checkbox.isChecked; //onCheckedChanged?.invoke(checkbox.isChecked)
+        }
+        checkbox.setOnCheckedChangeListener { _, isChecked -> onCheckedChanged?.invoke(isChecked) }
+    }
+
+
+    private fun createSortDialog() {
+        sortDialog = Dialog(this@TyreListActivity, R.style.DialogSlideAnimStyle)
+
+        with(sortDialog) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_sorting)
+            window?.setGravity(Gravity.TOP)
+            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+            toolbar.setNavigationOnClickListener { dismiss() }
+            toolbar_title.text = resources.getString(R.string.sort)
+            toolbar.inflateMenu(R.menu.menu_single_item)
+            if (!tyreDetail.priceLevel.isNullOrBlank()) if (tyreDetail.priceLevel.equals("0")) radio_grp_price.check(R.id.rb_price_low) else radio_grp_price.check(R.id.rb_price_high) else radio_grp_price.check(R.id.rb_price_low)
+            if (!tyreDetail.AlphabeticalOrder.isNullOrBlank()) if (tyreDetail.AlphabeticalOrder.equals("0")) radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Ascending) else radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Descending) else radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Ascending)
+
+            tv_Sort_ClearSection.setOnClickListener {
+                /*   tyreDetail.priceLevel = "0"
+                   tyreDetail.AlphabeticOrder = "0"*/
+                radio_grp_price.check(R.id.rb_price_low);
+                radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Ascending);
+
+            }
+
+            toolbar.setOnMenuItemClickListener {
+
+
+                val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
+                val radio_grp_Alphabetical = radio_grp_Alphabetical.indexOfChild(radio_grp_Alphabetical.findViewById(radio_grp_Alphabetical.checkedRadioButtonId))
+                tyreDetail.priceLevel = priceIndex.toString()
+                tyreDetail.AlphabeticalOrder = radio_grp_Alphabetical.toString()
+                FinalFilter(true)
+                dismiss()
+                return@setOnMenuItemClickListener true
+            }
+            create()
+
+        }
+    }
+
+
+    private fun loadSortedProducts() {
+
+        progress_bar.visibility = View.VISIBLE
+
+        priceSortLevel = tyreDetail.priceLevel.toInt()
+        tyreDetail.priceRange = priceRange
+        setTyreDetail(tyreDetail)
+        tyreDetailFilter = getTyreDetail()!!
+        current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
+        recyclerViewAdapter!!.clear()
+        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
+        drawableRight?.setBounds(100, 100, 100, 100)
+        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || !priceRange.isNullOrBlank()) {
+
+            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+        }
+        loadTyreData()
+
+    }
+
+    private fun initDialogCategory(dialog: Dialog) {
+
+
+        dialog.ll_item_brand.setOnClickListener {
+
+            var brandsDialog = CreateSubDialog(getString(R.string.brand))
+            brandsDialog.progressbar.visibility = View.VISIBLE
+            hideKeyboard()
+            RetrofitClient.client.getProductBrandList("2").onCall { _, response ->
+
+                response?.body()?.string()?.let {
+
+                    if (isStatusCodeValid(it)) {
+                        val dataSet = getDataSetArrayFromResponse(it)
+                        val gson = GsonBuilder().create()
+
+                        brandList = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+                        setBrandAdapter(brandList, brandsDialog.rv_subcategory)
+                        brandsDialog.progressbar.visibility = View.GONE
+
+                    }
+
+
+                }
+
+            }
+
+
+
+
+            brandsDialog.create()
+            brandsDialog.show()
+        }
+        dialog.ll_item_Rating.setOnClickListener {
+            var ratingDialog = Dialog(this@TyreListActivity, R.style.DialogSlideAnimStyle)
+            with(ratingDialog) {
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                setContentView(R.layout.dialog_rating_tyrefilter)
+                window?.setGravity(Gravity.TOP)
+                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+
+
+                var filterTyreRatingList: MutableList<String> = ArrayList()
+
+                if (!tyreDetail.Rating.isNullOrBlank()) {
+                    textView_Rating_name.setText(if (tyreDetail.Rating.equals("0")) "" else tyreDetail.Rating)
+                    var arrayList = tyreDetail.Rating.split(",")
+                    for (n in 0 until arrayList.size) {
+                        filterTyreRatingList.add(arrayList[n])
+
+                        when (arrayList[n]) {
+
+                            "5" -> dialog_rating_five.isChecked = true
+                            "4" -> dialog_rating_four.isChecked = true
+                            "3" -> dialog_rating_three.isChecked = true
+                            "2" -> dialog_rating_two.isChecked = true
+                            "1" -> dialog_rating_one.isChecked = true
+                        }
+                    }
+
+                }
+
+
+                toolbar.setNavigationOnClickListener {
+                    setRatingToTyreDetail(filterTyreRatingList)
+                    dismiss()
+                }
+                toolbar.setOnMenuItemClickListener {
+
+                    setRatingToTyreDetail(filterTyreRatingList)
+                    FinalFilter(false)
+                    dismiss()
+                    return@setOnMenuItemClickListener true
+                }
+                toolbar_title.text = getString(R.string.rating)
+                toolbar.inflateMenu(R.menu.menu_single_item)
+
+                dialog_rating_five.setOnCheckedChangeListener { compoundButton, b ->
+                    setRatingtoFilterList(b, filterTyreRatingList, "5")
+
+
+                }
+                dialog_rating_four.setOnCheckedChangeListener { compoundButton, b ->
+                    setRatingtoFilterList(b, filterTyreRatingList, "4")
+
+
+                }
+                dialog_rating_three.setOnCheckedChangeListener { compoundButton, b ->
+                    setRatingtoFilterList(b, filterTyreRatingList, "3")
+
+
+                }
+                dialog_rating_two.setOnCheckedChangeListener { compoundButton, b ->
+                    setRatingtoFilterList(b, filterTyreRatingList, "2")
+
+                }
+                dialog_rating_one.setOnCheckedChangeListener { compoundButton, b ->
+                    setRatingtoFilterList(b, filterTyreRatingList, "1")
+
+
+                }
+
+            }
+            ratingDialog.create()
+            ratingDialog.show()
+
+        }
+        dialog.ll_item_Season.setOnClickListener {
+            var SeasonDialog = CreateSubDialog(getString(R.string.season))
+
+            var tyreSeasonFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+
+
+            tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, tyre_type, R.layout.item_checkbox) { itemView, _, jsonObject ->
+                val tyreSeasonName = jsonObject.optString("name")
+                val tyreSeasonCode = jsonObject.optString("id")
+
+                itemView.item_checkbox_text.text = tyreSeasonName?.toUpperCase()
+                if (tyreDetail.seasonType != null) {
+                    var seasonType = tyreDetail.filter_SeasonTypeId.split(",")
+                    var seasonTypename = tyreDetail.seasonType.split(",")
+                    itemView.item_checkbox.isChecked = seasonType.contains(tyreSeasonCode) || seasonTypename.contains(tyreSeasonName)
+
+                } else itemView.item_checkbox.isChecked = false
+
+
+                setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
+
+                }
+
+                itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
+
+                    if (isChecked) {
+                        if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode)))
+                            filterTyreSeasonList.add(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+                    } else filterTyreSeasonList.remove(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+
+                    Log.d("ProductOrWorkshopList", "createFilterDialog: Tyre Season = $filterTyreSeasonList")
+
+                }
+
+                if (itemView.item_checkbox.isChecked) {
+                    if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))) {
+                        filterTyreSeasonList.add(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+                    }
+                } else filterTyreSeasonList.remove(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+
+
+            }
+            SeasonDialog.create()
+            SeasonDialog.show()
+        }
+
+
+        dialog.ll_item_Speed_index.setOnClickListener {
+            var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+
+            var SpeedIndexDialog = CreateSubDialog(getString(R.string.speed_index))
+
+
+            tyreSpeedIndexFilterAdapter = SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_index, R.layout.item_checkbox) { itemView, position, jsonObject ->
+                val tyreSpeedIndexName = jsonObject.optString("name")
+                val tyreSpeedIndexCode = jsonObject.optString("id")
+                itemView.item_checkbox_text.text = tyreSpeedIndexName
+                if (tyreDetail.speedIndex != null) {
+                    var brandArray = tyreDetail.speedIndex.split(",")
+                    itemView.item_checkbox.isChecked = brandArray.contains(tyreSpeedIndexName)
+
+                } else itemView.item_checkbox.isChecked = false
+
+                setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
+
+                }
+                itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
+
+                    if (isChecked) {
+                        if (!filterTyreSpeedIndexList.contains(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode)))
+                            filterTyreSpeedIndexList.add(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode))
+                    } else filterTyreSpeedIndexList.remove(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode))
+                    Log.d("ProductOrWorkshopList", "createFilterDialog: Speed Index = $filterTyreSpeedIndexList")
+                }
+                if (itemView.item_checkbox.isChecked) {
+                    if (!filterTyreSpeedIndexList.contains(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode))) {
+                        filterTyreSpeedIndexList.add(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode))
+                    }
+                } else filterTyreSpeedIndexList.remove(Models.TypeSpecification(tyreSpeedIndexName, tyreSpeedIndexCode))
+            }
+
+
+            SpeedIndexDialog.create()
+            SpeedIndexDialog.show()
+        }
+
+    }
+
+
+    private fun CreateSubDialog(toolbarTitle: String): Dialog {
+        var brandsDialog = Dialog(this@TyreListActivity, R.style.DialogSlideAnimStyle)
+        with(brandsDialog) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_tyre_filter_subcategory)
+            window?.setGravity(Gravity.TOP)
+            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+            toolbar_title.text = toolbarTitle
+            toolbar.inflateMenu(R.menu.menu_single_item)
+
+            if (toolbarTitle.equals(context.getString(R.string.brand))) {
+                search_view.visibility = View.VISIBLE
+
+            } else {
+                search_view.visibility = View.GONE
+            }
+            toolbar.setNavigationOnClickListener {
+                SetDataToTyreList(toolbarTitle)
+                brandsDialog.dismiss()
+
+            }
+
+            search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextChange(newText: String): Boolean {
+
+                    if (!newText.isNullOrBlank()) {
+
+                        var newText1 = newText.toLowerCase();
+
+                        var brandList1: ArrayList<Models.brand> = ArrayList<Models.brand>();
+                        for (brand in brandList) {
+                            var text = brand.brandName?.toLowerCase();
+                            if (text?.contains(newText1)!!) {
+                                brandList1.add(brand);
+                            }
+                        }
+                        setBrandAdapter(brandList1, brandsDialog.rv_subcategory)
+                    } else {
+                        setBrandAdapter(brandList, brandsDialog.rv_subcategory)
+                    }
+
+
+                    return true
+                }
+
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // task HERE
+                    return false
+                }
+
+            })
+
+
+
+            toolbar.setOnMenuItemClickListener {
+
+                SetDataToTyreList(toolbarTitle)
+                FinalFilter(false)
+                dismiss()
+
+
+                return@setOnMenuItemClickListener true
+            }
+
+        }
+        return brandsDialog
+    }
+
+    private fun SetDataToTyreList(toolbarTitle: String) {
+        if (toolbarTitle.equals(getString(R.string.brand))) {
+            setBrandToTyreList()
+        } else if (toolbarTitle.equals(getString(R.string.season))) {
+            setSeasonTypeToTyreList()
+
+        } else if (toolbarTitle.equals(getString(R.string.speed_index))) {
+            setSpeedIndexToTyreList()
+        }
+    }
+
+    private fun setSpeedIndexToTyreList() {
+        var speedIndexName = ""
+        val tyreSpeedIndex: MutableList<String> = ArrayList()
+        val tyreSpeedIndexId: MutableList<String> = ArrayList()
+        for (i in 0 until filterTyreSpeedIndexList.size) {
+            val item = filterTyreSpeedIndexList.get(i)
+            tyreSpeedIndex.add(item.name)
+            tyreSpeedIndexId.add((item.code))
+        }
+        Log.d("speedIndexvalue", filterTyreSpeedIndexList.size.toString())
+        if (tyreSpeedIndex.size > 0) {
+            speedIndexName = tyreSpeedIndex.joinToString(",")
+            tyreDetail.speedIndex = speedIndexName
+            tyreDetail.filter_SpeedIndexId = tyreSpeedIndexId.joinToString(",")
+            textView_Speed_Index_name.setText(speedIndexName)
+        } else {
+            textView_Speed_Index_name.setText("")
+            tyreDetail.speedIndex = ""
+            tyreDetail.filter_SpeedIndexId = ""
+        }
+    }
+
+    private fun setSeasonTypeToTyreList() {
+        var seasonType = ""
+        val tyreSeason: MutableList<String> = ArrayList()
+
+        val tyreSeasonTypeId: MutableList<String> = ArrayList()
+        for (i in 0 until filterTyreSeasonList.size) {
+            val item = filterTyreSeasonList.get(i)
+            tyreSeason.add(item.name)
+            tyreSeasonTypeId.add(item.code)
+        }
+        if (tyreSeason.size > 0) {
+            seasonType = tyreSeason.joinToString(",")
+            tyreDetail.seasonType = seasonType
+            tyreDetail.filter_SeasonTypeId = tyreSeasonTypeId.joinToString(",")
+
+            textView_season_name.setText(seasonType)
+        } else {
+            textView_season_name.setText("")
+            tyreDetail.seasonType = ""
+            tyreDetail.seasonTypeName = ""
+            tyreDetail.filter_SeasonTypeId = ""
+        }
+
+    }
+
+    private fun setBrandToTyreList() {
+        var brands = ""
+        val brands1: MutableList<String> = ArrayList()
+        for (i in 0 until filterBrandList.size) {
+            val item = filterBrandList.get(i)
+            brands1.add(item)
+        }
+        if (brands1.size > 0) {
+            brands = brands1.joinToString(",")
+            tyreDetail.brands = brands
+            textView_Brand_name.setText(brands)
+        } else {
+            textView_Brand_name.setText("")
+            tyreDetail.brands = ""
+        }
+
+    }
+
+    private fun setRatingtoFilterList(checked: Boolean, filterTyreRatingList: MutableList<String>, ratingStar: String) {
+        if (checked) {
+            filterTyreRatingList.add(ratingStar)
+        } else {
+            filterTyreRatingList.remove(ratingStar)
+        }
+    }
+
+    private fun setRatingToTyreDetail(filterTyreRatingList: MutableList<String>) {
+        var ratingString = ""
+        for (n in 0 until filterTyreRatingList.size) {
+            if (n == filterTyreRatingList.size - 1) {
+                ratingString = ratingString + filterTyreRatingList[n]
+            } else {
+                ratingString = ratingString + filterTyreRatingList[n] + ","
+            }
+
+        }
+
+
+        tyreDetail.Rating = ratingString
+
+        textView_Rating_name.setText(if (tyreDetail.Rating.equals("0")) "" else tyreDetail.Rating)
+    }
+
+    private fun FinalFilter(isSort: Boolean) {
+        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
+        drawableRight?.setBounds(100, 100, 100, 100)
+        if (!isSort) {
+            tyreDetail.onlyFav = isSwitch_OnlyFav.isChecked
+            tyreDetail.offerOrCoupon = isSwitch_OfferCoupon.isChecked
+            tyreDetail.runFlat = isSwitch_RunFlat.isChecked
+            tyreDetail.reinforced = isSwitch_Reinforced.isChecked
+
+        }
+
+        try {
+            filterDialog.dismiss()
+            loadSortedProducts()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setView(jsonArray: JSONArray) {
+
+        try {
+
+            Handler().postDelayed(Runnable {
+                kotlin.run {
+                    val tyreListItems: MutableList<Models.TyreDetailItem> = ArrayList()
+                    for (i in 0 until jsonArray.length()) {
+
+                        val tyreObject = jsonArray.get(i) as JSONObject
+                        val tyreDetailItem = Gson().fromJson<Models.TyreDetailItem>(tyreObject.toString(), Models.TyreDetailItem::class.java)
+                        minPrice = if (!tyreDetailItem.min_price.isNullOrBlank()) tyreDetailItem.min_price.toFloat() else 0f
+                        maxPrice = if (!tyreDetailItem.max_price.isNullOrBlank()) tyreDetailItem.max_price.toFloat() else 1f
+
+                        tyreListItems.add(tyreDetailItem)
+                    }
+                    if (minPrice == maxPrice) {
+                        minPrice = 0f
+                    }
+                    Log.d("tyre_List", "maxPrices" + maxPrice)
+                    Log.d("tyre_List", "minPrices" + minPrice)
+                    if (current_page != PAGE_START) recyclerViewAdapter?.removeLoading()
+                    recyclerViewAdapter?.addItems(tyreListItems)
+
+                    //check if last page or not
+                    if (current_page < totalPage) {
+                        recyclerViewAdapter?.addLoading()
+                    } else {
+                        isLastPage = true
+                        recyclerViewAdapter?.removeLoading()
+                    }
+                    //if (tyreListItems.size<10) recyclerViewAdapter?.removeLoading()
+                    isLoading = false
+
+                }
+            }, 250)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setAdapter(jsonArray: JSONArray) {
+
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val title = view.item_title
+            val distance = view.item_sub_title
+            val icon = view.item_image
+            val price = view.item_price
+            val rating = view.item_rating
+            val ratingCount = view.item_rating_count
+            val tireCellContainer = view.tire_cell
+            val tyreImage = view.item_image
+            val matchCode = view.item_sub_title
+            val ourDescription = view.item_description
+            val tyreSeasonIcon = view.tyre_season_icon
+            val tyreFuelValue = view.tyre_fuel_value
+            val tyreWetGripValue = view.tyre_wet_grip_value
+            val tyreDbValue = view.tyre_db_value
+        }
+
+        recycler_view.adapter = object : RecyclerView.Adapter<ViewHolder>() {
+            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
+                return ViewHolder(layoutInflater.inflate(R.layout.item_tyre, p0, false))
+            }
+
+            override fun getItemCount(): Int = jsonArray.length()
+
+            override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+                val jsonObject: JSONObject = jsonArray.get(p1) as JSONObject
+
+                val tyreResponse: JSONObject = JSONObject(jsonObject.getString("tyre_response"))
+
+
+                //wetGrip
+                p0.title.text = tyreResponse.optString("manufacturer_description") + " " + tyreResponse.optString("wholesalerArticleNo")
+                loadImage(tyreResponse.optString("imageUrl"), p0.icon)
+                p0.matchCode.text = "ean ${tyreResponse.optString("ean_number")}"
+
+                if (jsonObject.getString("seller_price").isNullOrEmpty() || jsonObject.getString("seller_price") == "null") {
+                    p0.price.text = getString(R.string.prepend_euro_symbol_string, tyreResponse.optString("price"))
+                } else {
+                    p0.price.text = getString(R.string.prepend_euro_symbol_string, jsonObject.optString("seller_price"))
+                }
+
+                if (jsonObject.has("description") && !jsonObject.get("description").equals("null")) {
+                    p0.ourDescription.text = jsonObject.optString("description")
+                } else if (jsonObject.optString("our_description").isEmpty() || jsonObject.optString("our_description").equals("null")) {
+                    p0.ourDescription.text = tyreResponse.optString("manufacturer_description")
+                }
+
+                // set tyre icons
+                p0.tyreWetGripValue.text = jsonObject.optString("wetGrip")
+                p0.tyreFuelValue.text = jsonObject.optString("rollingResistance")
+                p0.tyreDbValue.text = jsonObject.optString("extRollingNoiseDb") + " db"
+
+                when (jsonObject.optString("type")) {
+                    "s" -> loadImageFromDrawable(R.drawable.summer_tyre, p0.tyreSeasonIcon)
+                    "w" -> loadImageFromDrawable(R.drawable.winter_tyre, p0.tyreSeasonIcon)
+                    "m" -> loadImageFromDrawable(R.drawable.quad_tyre, p0.tyreSeasonIcon)
+                    "g" -> loadImageFromDrawable(R.drawable.all_seasons_tyre, p0.tyreSeasonIcon)
+                    "o" -> loadImageFromDrawable(R.drawable.off_road_, p0.tyreSeasonIcon)
+                    "l" -> loadImageFromDrawable(R.drawable.truck, p0.tyreSeasonIcon)
+                }
+
+
+                p0.tireCellContainer.setOnClickListener {
+                    startActivity(intentFor<TyreDetailActivity>(
+                            Constant.Path.productDetails to JSONObject(jsonArray[p1].toString()).toString(),
+                            Constant.Path.productType to "Tyre").forwardResults())
+                }
+            }
+
+        }
+    }
+
+    private fun setBrandAdapter(brandList: ArrayList<Models.brand>, recyclerView: RecyclerView) {
+        var BrandArray: ArrayList<String> = ArrayList<String>()
+        if (!tyreDetail?.brands.isNullOrBlank()) {
+            var brand12 = tyreDetail?.brands?.split(",")
+            for (brandobj in brand12) {
+                BrandArray.add(brandobj)
+            }
+        }
+
+
+
+        class Holder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+        brandFilterAdapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+            override fun getItemCount(): Int {
+                return brandList.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.item_checkbox, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+                var brandName = brandList[position].brandName
+                holder.itemView.item_checkbox_text.setText(brandList[position].brandName)
+                holder.itemView.item_checkbox.setOnCheckedChangeListener { compoundButton, b ->
+
+                    if (b) {
+                        if (!filterBrandList.contains(brandName)) brandName?.let {
+                            filterBrandList.add(it)
+
+                        }
+                        brandList[position].isBrandchecked = true
+                    } else {
+                        brandList[position].isBrandchecked = false
+                        filterBrandList.remove(brandName)
+                        BrandArray.remove(brandName)
+
+                    }
+
+                }
+
+                if (BrandArray.contains(brandName) || brandList[position].isBrandchecked) {
+                    holder.itemView.item_checkbox.isChecked = true
+                    brandList[position].isBrandchecked = true
+
+                    if (!filterBrandList.contains(brandName)) {
+                        brandName?.let { filterBrandList.add(it) }
+                    }
+                } else {
+                    holder.itemView.item_checkbox.isChecked = false
+                    brandList[position].isBrandchecked = false
+                    filterBrandList.remove(brandName)
+                }
+
+            }
+        }
+
+
+        recyclerView.adapter = brandFilterAdapter
+    }
+
+}

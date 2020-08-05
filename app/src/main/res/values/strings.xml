@@ -1,0 +1,790 @@
+<resources>
+    <string name="app_name">Officine</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_feedback">Feedback</string>
+    <string name="tab_news">News</string>
+    <string name="tab_profile">Profile</string>
+    <string name="tab_carello">Carello</string>
+
+    <string name="sample">Sample</string>
+    <string name="string_not_found">0.0</string>
+    <string name="string_space">"    "</string>
+    <string name="related_part">-------- Selected part ----------</string>
+
+    <string name="sample_title">Sample title</string>
+    <string name="sample_product">Sample Product</string>
+    <string name="sample_workshop">Officina Cesena Workshop</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="sample_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat
+    </string>
+
+    <!--authentication-->
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_password">Enter your Password</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+
+    <string name="continue_without_login">Continue without login</string>
+    <string name="no_account">Don\'t have account?</string>
+    <string name="register">Register</string>
+    <string name="reset_password">Forgot Password?</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="mob_no">Mobile Number</string>
+    <string name="service_list">Service list</string>
+    <string name="confirm_pass">Confirm Password</string>
+
+    <!--facebook-->
+    <!--<string name="facebook_app_id">1183769028463257</string>
+    <string name="fb_login_protocol_scheme">fb1183769028463257</string>-->
+    <string name="facebook_app_id">566332697636167</string>
+    <string name="fb_login_protocol_scheme">fb566332697636167</string>
+
+    <!--virtual garage-->
+    <string name="virtual_garage_title">Fill in the car data</string>
+    <string name="add_car">Add Car</string>
+    <string name="modify_car">Update Car</string>
+    <string name="plate">Licence Plate</string>
+    <string name="plate_search_label">Or Search With Licence Plate</string>
+    <string name="modify">Modify</string>
+    <string name="remove">Remove</string>
+    <string name="my_car">My Cars</string>
+
+    <!--Home-->
+    <string name="car_parts">Spare Parts Type</string>
+
+    <!--Car parts-->
+    <string name="feedback">Feedback</string>
+
+    <string name="product">Product</string>
+    <string name="best_selling_product">Best selling products</string>
+    <string name="product_feedback">Product Feedback</string>
+    <string name="workshop_feedback">Workshop Feedback</string>
+    <string name="coupon_five">Coupon 5</string>
+    <string name="more">More</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="dialog_message_feedback">Submit your feedback to earn coupon.</string>
+
+    <string name="dialog_message_add_car">Add car details to get more suitable products and services.</string>
+    <string name="dialog_message_select_car">Select car details to get suitable products and services.</string>
+    <string name="select_spare_part">Select the type of Spare part</string>
+
+    <!--select parts-->
+    <string name="select_date">Select the date</string>
+    <string name="booking_time">Booking Time%s</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="map">Map</string>
+    <string name="sel_manufacturer">Select Brand</string>
+
+
+    <!--add car-->
+    <string name="sel_model">Select Model</string>
+    <string name="sel_version">Select Car Version</string>
+    <string name="sel_fuel">Select Fuel Type</string>
+    <string name="maker">Maker</string>
+
+    <string name="model">Model</string>
+    <string name="version">Version</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="car_km">Km of car</string>
+
+    <string name="car_km_hint">Enter km of car</string>
+    <string name="car_km_annual">Km travelled annually</string>
+    <string name="car_km_annual_hint">Enter km travelled annually</string>
+    <string name="car_revision">Revision Date</string>
+    <string name="car_revision_hint">Select Revision Date</string>
+    <string name="car_km_revision">Km on Revision Date</string>
+    <string name="car_km_revision_hint">Enter km on Revision Date</string>
+    <string name="alloy">Alloy Wheels</string>
+    <string name="not_logged_in">Not logged in.</string>
+
+    <!-- Login/logout-->
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="ok">OK</string>
+    <string name="logout">Logout</string>
+    <string name="opengmail">Go to Mail</string>
+    <string name="technical_characterictic">Technical Features</string>
+    <!--Product detail-->
+    <string name="address">Address</string>
+    <string name="intervention_setting">Intervention Settings</string>
+    <string name="book">Book</string>
+    <string name="services">Services</string>
+    <string name="see_all">See All</string>
+    <string name="feedback_">Feedback</string>
+    <string name="all">All</string>
+    <string name="price_range">Price Range</string>
+    <string name="clear_selection">Clear Selection</string>
+    <string name="Paypal">Add Debit/Credit/ATM Card</string>
+    <!--Online Payment-->
+    <string name="UPI">UPI</string>
+    <string name="paymet_type">Select a payment method</string>
+    <string name="paymet_name">Payment</string>
+    <string name="support">Support</string>
+    <string name="support_services">Select Complain Type</string>
+    <string name="google_pay">UPI</string>
+    <string name="amazon_pay">Amazon Pay</string>
+    <string name="COD">Pay on Delivery (Cash/Card)</string>
+    <string name="COD_facility">We also accept Credit/ Debit cards on delivery, subject to availability of the payment device. Please check with the delivery agent</string>
+    <string name="name_on_card">Name on Card</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="add_card">Pay Now</string>
+    <string name="ReferralCode">Referral Code</string>
+    <string name="type_here">Type here</string>
+    <string name="may_help">Hello, may i help you...</string>
+    <string name="entermessage">Enter message</string>
+    <string name="ticketClose">Ticket has been closed. You want to generate new ticket?</string>
+    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
+    <string name="euro_symbol">€</string>
+    <string name="prepend_euro_symbol_with_da">€ %d</string>
+    <string name="prepend_euro_symbol_with_da_string"> € %s</string>
+    <string name="prepend_euro_symbol">€ %d</string>
+    <string name="prepend_euro_symbol_string">€ %s</string>
+    <string name="tyre_detail">Tyre Detail</string>
+    <string name="tyre_price_text">Prezzo gomma: € %s</string> <!-- singola -->
+    <string name="tyre_price_one">%s ECO tassa PFU + 10%% tax</string> <!-- singola -->
+    <string name="tyre_price_total">Total: € %s </string>
+    <string name="append_km">%d Km</string>
+    <string name="distance">Distance</string>
+    <string name="rating">Rating</string>
+    <string name="other">Other</string>
+    <string name="side">Side</string>
+    <string name="url_not_found">Url not found</string>
+    <string name="zero">0</string>
+    <string name="empty_string"></string>
+    <string name="front">Front</string>
+    <string name="rear">Rear</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="speed_index_value">This tire is approved for speeds up to %s</string>
+    <string name="dummy_prepend_euro_symbol_with_da"> € 10</string>
+    <string name="show_only_fav">Show only Favourite</string>
+
+    <string name="show_only_offers">Show only Offers or Coupon</string>
+    <string name="proceed">Proceed</string>
+
+    <!-- Workshop detail -->
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="parts">Parts</string>
+    <string name="low_to_high">Low to High</string>
+    <string name="high_to_low">High to Low</string>
+    <string name="coupon_details">Coupon Details</string>
+    <string name="proceed_to_payment">Proceed To Payment</string>
+
+    <string name="no_phone_number">No associated phone number for the workshop</string>
+    <string name="recommendation_msg">Customers who have seen this article have also seen</string>
+    <string name="brand">Brand</string>
+    <string name="buy_with_assembly">Buy with assembly in workshop</string>
+
+    <string name="payable_amount">Payable Amount: € %s</string>
+    <string name="appointment_for_control">Set an Appointment For Control</string>
+    <string name="confirm_online_request_only">I Confirm I Send Online Request Only</string>
+    <string name="add_to_cart">Add it to the cart</string>
+    <string name="tyres">Tyres</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="tyre_type">Tyre Type</string>
+    <string name="season">Season</string>
+    <string name="width">Width</string>
+    <string name="aspect_ratio">Aspect Ratio</string>
+    <string name="speed_index">Speed Index</string>
+    <string name="additional_info">Additional Information</string>
+    <string name="run_flat">Run Flat</string>
+    <string name="reinforced">Reinforced</string>
+    <string name="find_tyre">Find Tyre</string>
+    <string name="diameter_msg">ATTENTION: The results that will be shown later are determined only and exclusively by the size of the tyres chosen.\nThe system does not take into account the possible incompatibilities with the individual car and motorcycle</string>
+    <string name="customize_measures">Customize measures</string>
+    <string name="revision">Revision</string>
+    <string name="revision_detail">General safety Regulation Revision\nFree Vehicle Inspection</string>
+    <string name="choose_workshop">Choose workshop</string>
+    <string name="vehicle_precheck_revision">Vehicle Check Pre + Revision</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="partlist">Part List</string>
+    <string name="sample_subtitle">Sample Subtitle</string>
+    <string name="register_privacy_text_1">By creating an account, you agree to Officine\'s  </string>
+    <string name="register_privacy_text_2">  Privacy Policy</string>
+    <string name="other_seller">Other Seller</string>
+    <string name="large_text">Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="name">Name</string>
+    <string name="busy">Busy</string>
+    <string name="not_applicable">Not Applicable</string>
+    <string name="officine_feedback">Officine Feedback</string>
+    <string name="diameter">Diameter</string>
+    <string name="rim_width">Rim Width</string>
+    <string name="title_activity_sos">SOS</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="no_location_detected">No location detected. Make sure location is enabled on the device.</string>
+
+    <string name="success">Success</string>
+    <string name="location_enabled">Location Enabled Success</string>
+    <string name="gps_not_on">"GPS is not on"</string>
+    <string name="settings_change_not_allowed">"Setting change not allowed"</string>
+    <string name="enable_location">Please Enable your Location</string>
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for corefunctionality.</string>
+    <string name="settings">Settings</string>
+    <string name="user_location">User Location</string>
+    <string name="quotes">Quotes</string>
+    <string name="letichettatura">EU tire labeling, in accordance with regulation (n. 1222/2009), is applied in all EU member states. The regulation applies to all tires for passenger cars, light and heavy trucks produced after 01.07.2012. With this labeling, all tires in the EU are classified according to 3 criteria.</string>
+
+    <string name="efficienza_del">Fuel efficiency depends on the vehicle itself and on driving conditions. A lane equipped with class A tires and fully equipped saves up to 7.5% of fuel in plu compared to a vehicle with class C tires.</string>
+    <string name="laderenza">The wet grip represents the difference in braking efficiency in the wet compared to the average grip on the road. A vehicle equipped with class A tires and fully equipped can boast a braking distance of 30% (18m) less than a lane with class F tires.</string>
+    <string name="ll_livello">The level of noise produced by pneumatic tires is measured in decibels. The noise level of each vehicle is measured in decibels, for a total of three assigned categories.</string>
+    <string name="tre_strisce">Three strices: compliant with EU regulations in force until 2016.</string>
+    <string name="due_strisce">Two strips: compliant with EU regulations in force since 2016 or the noise level and lower than the average of up to 3 decibels.</string>
+    <string name="una_strisce">One strice: compliant with EU regulations in force since 2016 or the noise level is below the average of over 3 decibels.</string>
+    <string name="current_km">Current KM</string>
+    <string name="current_Month">Current Month</string>
+    <string name="Find">Find</string>
+    <string name="MotServiceTitle">Smart solution for your car KM:</string>
+    <string name="changepassword">Change Password</string>
+
+    <!-- ////User Profile///////-->
+    <string name="oldpasword">Enter Old Password</string>
+    <string name="enterreferralcode">Enter Referral Code</string>
+    <string name="newpasword">Enter New Password</string>
+    <string name="retypepasword">Re-Type Password</string>
+    <string name="deleteaccount">Are you sure, want to delete account? Remove all saved information about vehicle.</string>
+    <string name="password_notmatched">Re-Type password not matched</string>
+    <string name="submit">Submit</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="update_pic">Change Picture</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="update">Update</string>
+    <string name="Address">Address</string>
+    <string name="Return">Order Return</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="entercontact_number">Enter Contact Number</string>
+    <string name="Landmark">Landmark -</string>
+    <string name="zipcode">Zip Code -</string>
+    <string name="street">Street and number,P.O.box</string>
+    <string name="apartment">Apartment,suit,building,floor etc.</string>
+    <string name="city">City</string>
+    <string name="state">State/Province/Region</string>
+    <string name="Replace">Replace</string>
+    <string name="blank">0</string>
+    <string name="partinfo">Parts Info</string>
+    <string name="retry">Retry</string>
+    <string name="emailblank">Enter email</string>
+    <string name="mobileblank">Enter mobile</string>
+    <string name="title_activity_contactlist_">Contactlist_Activity</string>
+    <string name="User_Contact">Contact List</string>
+    <string name="User_address">Address List</string>
+    <string name="add_contact">Add Contact Number</string>
+    <string name="enter_contact">Enter mobile number</string>
+    <string name="add_address">Add New Address</string>
+    <string name="referralcode">Referral Code</string>
+    <string name="invite">Invite &amp; Earn</string>
+    <string name="invitefirend">Share with your friends</string>
+    <string name="invitefirendoffers">Get Gift(Reward Points) after each friend\'s first order</string>
+    <string name="orders">Orders</string>
+    <string name="wishlist">WishList</string>
+    <string name="profilesettings">Settings</string>
+    <string name="notification">Notification</string>
+    <string name="wishList">Wish List</string>
+    <string name="language">Preferred Language</string>
+    <string name="language_eng">English(US)</string>
+    <string name="language_ita">Italian</string>
+    <string name="notification_setting">Notification Setting</string>
+    <string name="notification_newOffers">Send me mobile notification for all type of Offers</string>
+    <string name="notification_workshop">Car service offers from workshop</string>
+    <string name="notification_revision">Notify me about my car revision</string>
+    <string name="account_delete">Delete my account</string>
+    <string name="account_confirm">Account</string>
+    <string name="profile_setting">Settings</string>
+    <string name="contact_list">Contact List</string>
+    <string name="app_info">Information</string>
+    <string name="readme">Read</string>
+    <string name="whoweare">Who we are</string>
+    <string name="privacy">Privacy</string>
+    <string name="contactus">Contacts</string>
+    <string name="entercode">Enter Code</string>
+    <string name="condition">Condition &amp; Purchase</string>
+    <string name="checkreferral">Do you\'ve referral code?</string>
+    <string name="removereferral">Do you want to remove referral code?</string>
+    <string name="offermsg_referral">Chance to get 12 euro in your wallet after registration with referral code</string>
+    <string name="close">Close</string>
+    <string name="ticket">Ticket No. -</string>
+
+
+    <!-- Support-->
+
+    <string name="ticketType">Complain type -</string>
+    <string name="config_scheme">http</string>
+
+    <string name="config_host">officine</string>
+    <string name="config_path_salads">https://www.blueappsoftware.com/logo-1.png</string>
+    <string name="dynamic_links_uri_prefix">https://www.blueappsoftware.com</string>
+    <string name="costimizemessage">Add new customize measures</string>
+    <string name="orderId">Order Id -</string>
+
+
+    <!--  // BookedOrder////-->
+    <string name="delivery_address">Delivery Address</string>
+    <string name="paid_amount">Total Payment</string>
+    <string name="product_detail">Ordered Product</string>
+    <string name="shipment_tracking">Shipment Tracking</string>
+    <string name="shipment">Shipment</string>
+    <string name="expectedtime">Expected delivery :</string>
+    <string name="orderplaced">Order Placed :</string>
+
+    <string name="courier">Courier :</string>
+    <string name="tracking_id">Tracking Id :</string>
+
+    <string name="car_services">Car Services</string>
+    <string name="spare_part">Spare Parts</string>
+    <string name="car_rim">Wheel Rim</string>
+    <string name="Invoice">Download Invoice</string>
+    <string name="tracking">Track</string>
+    <string name="onTime">On Time</string>
+    <string name="SENDER_ID">850442644528</string>
+
+    <!-- //FCM Notification//-->
+    <string name="notifications_admin_channel_name">officinetop</string>
+    <string name="notifications_admin_channel_description">officinetop Firebase PushNotification</string>
+    <string name="notificationslist">Notification</string>
+    <string name="update_address">Update Address</string>
+    <string name="new_address">Address</string>
+    <string name="UpdateContact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
+    <string name="google_map_key">AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8<!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
+    <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
+    <!--   <string name="google_places_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
+    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
+
+    <!-- <string name="google_places_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
+    <!-- <string name="google_places_key">AIzaSyDINiRwiYc3b4LCuarw8OWmJSo15oUHqxs</string>-->
+    <string name="Please_Select_Address">Please Select Address</string>
+
+    <string name="enterZipCode">Enter Zip Code</string>
+    <string name="Zip_Code">Zip Code</string>
+    <string name="Address_type">Address Type</string>
+    <string name="enter_address_type">Address type</string>
+    <string name="selectAddressType">Select Address Type</string>
+    <string name="delete_AddressConfirmation"> Delete this address from address list?</string>
+    <string name="delete_ContactConfirmation"> Delete this contact from contact list?</string>
+    <string name="orderDetail">Order Detail</string>
+    <string name="Concat">-</string>
+    <string name="Comma">,</string>
+    <string name="Pending">Pending</string>
+    <string name="Paid">Paid</string>
+    <string name="ZeroValue">00.0</string>
+    <string name="carKM">KM:</string>
+    <string name="RemovewishList">Remove</string>
+    <string name="moreDetail">More Details</string>
+
+    <string name="Alphabetical">Alphabetical</string>
+    <string name="Ascending">Ascending</string>
+    <string name="Descending">Descending</string>
+    <string name="Server_Error">Login for details</string>
+    <string name="Edit">Edit</string>
+    <string name="Buy_Now">Buy Now</string>
+
+    <string name="Search">Search...</string>
+    <string name="CouponDetail">Coupon Detail</string>
+    <string name="tyreprice_text">Product price: € %s</string>
+    <string name="PFU_price">PFU: € %s</string>
+    <string name="Deliveryaddress">Delivery Address</string>
+    <string name="OutOfStock">Out of Stock</string>
+    <string name="ReMainingItem">Only %S quantity available In stock</string>
+    <string name="WorkshopNotProvideServices">service has been expired</string>
+    <string name="CartDataRemoved">Your Cart  Data will be Deleted ?</string>
+    <string name="AddFeedback">Add Feedback</string>
+
+    <string name="SeeFeedback">View Feedback</string>
+    <string name="AppliedCoupon"><!--Bonus:-->""</string>
+
+    <string name="updateCoupon"> Change Coupon</string>
+    <string name="Wallet">Wallet:  €</string>
+    <string name="WalletInfo"> Wallet Information </string>
+
+    <string name="inviteFriends">Invite Friends</string>
+    <string name="how_works">How It Works</string>
+    <string name="href_how_works">How it Works >></string>
+    <string name="pieces">pieces</string>
+
+
+    <string name="how_it_works">
+       Participation method:\n\n
+                1. Share the link to download the App with a friend. If your friend completes Fthe registration with your reference code, they will receive a credit of €6\n\n
+                2. if A invites B and B completes his first order, A gets a credit of €5. If B invites C to complete his first order, not only can B
+                get €5 of credit but also A can get €1 of credit.The more friends you invite, the more credit you will have at your disposal.\n\n\n
+                Release method:\n\n
+                The credit premium is loaded into your account and withdrawable when it exceeds €50\n\n\n\n
+                The same mobile phone number, license plate number and terminal device number are considered to be the same user.\n
+                Only the mobile number, the license plate number and the terminal device number are all new and registered with a reference code, it is considered as a
+                valid invitation report.\n
+                After completing the first order of the OfficineTop service, you can receive subsequent credit.OfficineTop has the right to withdraw
+                prizes and related orders in the event that prizes are obtained by improper means and reserves the right to pursue with legal responsibility.\n
+     </string>
+
+
+    <string name="select_diameter">Select a Diameter</string>
+    <string name="select_measurements">Selected measurements:</string>
+
+    <string name="with_diameter">with Diameter:</string>
+    <string name="select_car_measures">Select a Diameter for your car:</string>
+    <string name="btn_invite_frnds">Invite Friends</string>
+    <string name="invite_text_more_invite_more_earn">More you invite, more you earn</string>
+    <string name="i_invite_a_frnd">I invite a friend</string>
+    <string name="invite_two_frnds">Invite two friends</string>
+    <string name="invite_n_frnds">Invite N (infinite) friends</string>
+    <string name="participation_method">Participation method:</string>
+    <string name="text_participation_method">1. Share the link to download the App with a friend. If your friend completes the registration with your reference code, they will receive a credit of €6.\n\n 2. if A invites B and B completes his first order, A gets a credit of €5. If B invites C to complete his first order,  not only can B  get €5 of credit but also A can get €1 of credit.The more friends you invite, the more credit you will have at your disposal.</string>
+    <string name="release_method">Release Method:</string>
+    <string name="text_release_method">The credit premium is loaded into your account and withdrawable when it exceeds €50.\n\nThe same mobile phone number, license plate number and terminal device number are considered to be the same user.\n\nOnly the mobile number, the license plate number and the terminal device number are all new and registered with a reference code, it is considered as a valid invitation report. \n\nAfter completing the first order of the OfficineTop service, you can receive subsequent credit.\n\nOfficineTop has the right to withdraw prizes and related orders in the event that prizes are obtained by improper means and reserves the right to pursue with legal responsibility.</string>
+
+
+    <string name="total_products">Total Products</string>
+    <string name="total_services">Total Service</string>
+    <string name="are_u_sure_want_to_delete_this_item">Are you sure want to delete this item ?</string>
+
+    <string name="washing_type">Washing Type</string>
+    <string name="detail">Detail</string>
+    <string name="workshops">officina</string>
+    <string name="workshop_detail">Workshop Detail</string>
+
+
+    <!-- new String Convert Hardcode to String file-->
+
+    <string name="Comment">Comment:</string>
+    <string name="Media">Media</string>
+    <string name="WorkshopName">Workshop Name</string>
+    <string name="ServiceName">Services Name</string>
+    <string name="Failed_to_load_data">Failed to load data</string>
+
+    <string name="SelectCoupontype">Select the type of coupon</string>
+    <string name="Generic_coupon">Generic coupon</string>
+    <string name="Choose_Officina">Choose Officina</string>
+    <string name="SpareParts">Spare Parts product</string>
+    <!-- Seleziona il tipo di tagliando-->
+
+    <string name="Tyres">Tyres product</string>
+
+    <string name="Rim">Rim</string>
+    <string name="EngineCheck"> - Engine Oil Check</string>
+    <string name="onServices"> on service</string>
+    <string name="FindYourLocation"> Automatically find your position</string>
+    <string name="findClosestWorkshop"> In this way we will be able to find the workshops closest to you</string>
+
+    <string name="findmypostion"> Find my position automatically</string>
+    <string name="EnteritManually"> Enter it manually</string>
+    <string name="ConfirmationOnLocation">Your location will be shown below. If you do not want or want to perform automatic positioning, you can manually modify your data</string>
+    <string name="Latitude">Latitude</string>
+
+
+    <string name="Longitude">Longitude</string>
+    <string name="inputtextSingleline">Input text for a single line text</string>
+    <string name="Zero_fifty">0/50</string>
+    <string name="updateItmanually">Update it manually/50</string>
+    <string name="title">Title</string>
+    <string name="Description">Description</string>
+    <string name="Interval_Operation">Interval Operation</string>
+    <string name="upi_Mobileno">mobilenumber@upi</string>
+
+    <string name="DD">DD</string>
+    <string name="YYYY">YYYY</string>
+
+    <string name="SearchProducts">Search Products</string>
+    <string name="Qty">Qty </string>
+    <string name="Qty_order">Qty: </string>
+
+    <string name="one">1</string>
+    <string name="plus">+</string>
+
+
+    <string name="deliveryDate">Delivery Date</string>
+    <string name="sellerDetail">Seller details</string>
+
+
+    <string name="select_Categories">Select Categories</string>
+    <string name="describe_your_requestCompletely">Describe your request completely</string>
+    <string name="DescribeYourRequest">Describe your request</string>
+    <string name="upload_Protos">upload photos</string>
+
+
+    <string name="All_Searches">All Searches</string>
+    <string name="all_Categories">All Categories</string>
+    <string name="Search_History">Search History</string>
+    <string name="clear">Clear</string>
+    <string name="Search_for_Discovery">Search for Discovery</string>
+
+
+    <string name="Workshop_Description">Workshop Description</string>
+
+    <string name="Total_services">Total Services</string>
+    <string name="Total_order">Total Order</string>
+    <string name="Total_order_inciva22">Total Order (incl.IVA %s </string>
+
+
+    <string name="product_Description">Product Description</string>
+    <string name="Manufacturer">Manufacturer</string>
+    <string name="Wheel_size">Wheel size</string>
+    <string name="Season_Type">Season Type</string>
+
+    <string name="tyre_Grip">Tyre Grip</string>
+    <string name="Three_peak_mountain">Three peak mountain</string>
+    <string name="Ean">Ean</string>
+
+    <string name="Special_Condition">Special Condition</string>
+    <string name="Delivery_date">Delivery date</string>
+    <string name="Tipologio">Tipologio</string>
+    <string name="With_Service"> With Service</string>
+    <string name="Comment_by_user">Comment by user</string>
+    <string name="one_KM"> 1 Km</string>
+    <string name="hundred_KM">100 Km</string>
+    <string name="total">Total</string>
+    <string name="PFU">PFU</string>
+    <string name="Discount">Discount</string>
+
+    <string name="Vat">Vat</string>
+    <string name="Intervention_date">Intervention Date : </string>
+    <string name="Intervention_time">Intervention Time : </string>
+
+
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="MyReview">My Review</string>
+    <string name="AllReview">All Review</string>
+
+    <string name="buyWithAssemblyBooking">Buy With Assembly Booking:</string>
+    <string name="car_name">Car Name</string>
+    <string name="String_Unicode">\u20ac79.00</string>
+    <string name="Scheduled_auto_inspection">Scheduled auto inspection</string>
+    <string name="Capac_Battery">Capac. Battery (Ah)</string>
+    <string name="special20">special 20</string>
+    <string name="Not_Availabale">Not Available</string>
+    <string name="cutting_brakes">cutting brakes</string>
+    <string name="modification">Modification</string>
+    <string name="Shopping_Cart">Shopping Cart</string>
+    <string name="Item">Item</string>
+    <string name="Smart_solution_withCar">Smart solution for your car with</string>
+
+    <string name="Add_parts">Add Parts</string>
+    <string name="apply">Apply</string>
+    <string name="Emergency_Service_Details">Emergency Service Details</string>
+    <string name="Total_time_Arrives">Total Time Arrives</string>
+    <string name="Hourly_Cost">Hourly Cost</string>
+    <string name="Cost_KM">Cost/KM</string>
+    <string name="call_cost">Call Cost</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="Emergency">Emergency</string>
+    <string name="Appointment">Appointment</string>
+    <string name="fuel_Efficiency">FUEL EFFICIENCY (DAA AA G)</string>
+    <string name="adhesion_bath">ADHESION ON THE BATH (FROM AA F)</string>
+    <string name="noise_Emission">NOISE EMISSION (IN DECIBEL)</string>
+    <string name="feedback_Workshop">Feedback Workshop</string>
+    <string name="feedback_Product">Feedback Product</string>
+
+
+    <string name="request_invoice"> Request Invoice</string>
+    <string name="invoice_Request_inProcess">Invoice Request in process</string>
+    <string name="return_request_inProcess"> Return Request in Process</string>
+    <string name="return_request_accepted">Return Request has been Accepted</string>
+    <string name="return_request_rejected">Return Request has been Rejected</string>
+
+    <string name="product_name">Product Name</string>
+    <string name="PFU_Description">PFU Description</string>
+
+    <string name="Feedback_Detail">Feedback Detail</string>
+    <string name="Workshop"> Workshop</string>
+    <string name="Please_wait"> Please wait...</string>
+    <string name="iva_inc_22Percentage"> iva inc. %s </string>
+
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;new string of java file-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+    <string name="partNotFound"> Part not found for this services. Please try again</string>
+    <string name="Feedback_List"> Feedback List</string>
+    <string name="WorkshopDetail"> Workshop Detail</string>
+    <string name="DeleteFromCart"> Delete this item from cart?</string>
+    <string name="AreYouWanDelete"> Are you sure want to delete this item ?</string>
+    <string name="washingType"> Washing Type</string>
+    <string name="Search_Location"> Search Location</string>
+    <string name="Failed_load_product_detail"> Failed to load product detail</string>
+    <string name="MOT">MOT</string>
+    <string name="MOTDetail">MOT Details</string>
+    <string name="Product_detail">Product Detail</string>
+    <string name="PayOnDelivery">Pay on Delivery will proceed</string>
+    <string name="partNotAvailable">Part not available for service</string>
+    <string name="FiledRequired"> Field required</string>
+    <string name="Summer">Summer</string>
+    <string name="Winter">Winter</string>
+    <string name="All_Season">All Season</string>
+    <string name="LoginToAddMultipalCar">Login to add multiple cars in virtual garage. Continue to login?</string>
+    <string name="Delete_car_from_virtual_garage">Delete this car from virtual garage?</string>
+    <string name="Login_session_expired">Login session expired. Please login again to continue</string>
+    <string name="onResponseCode500">onResponse: error on 500 code -</string>
+    <string name="Filter_Workshops">Filter Workshops</string>
+    <!--new String of toast , snackbar, dialog-->
+
+
+    <string name="Servicedeletesuccessfully"> Service delete successfully !!!</string>
+    <string name="Successfully_addedProduct_to_wishlist"> Successfully added this Product to wishlist</string>
+    <string name="SuccessfullyaddedthisWorkshopfavorite">Successfully added this Workshop to favorite</string>
+    <string name="AddresUpdateSuccessFully">Address Update SuccessFully</string>
+    <string name="SearchProductNotFound">Search Product Not Found</string>
+
+
+    <string name="AddressDeletedSuccessFully"> Address Deleted SuccessFully</string>
+    <string name="AddressAddSuccessFully">Address Add SuccessFully</string>
+    <string name="Failed_pickplace">Failed to pick place</string>
+    <string name="postal_code">postal_code</string>
+    <string name="Home">Home</string>
+    <string name="Office"> Office</string>
+    <string name="Cardeletedfromvirtualgarage">Car deleted from virtual garage</string>
+    <string name="Car">Car</string>
+    <string name="Wheel_Quad_tyre"> 2-Wheel/Quad tyre</string>
+    <string name="Off_road_tyre"> Off-road tyre</string>
+    <string name="Truck">Truck</string>
+    <string name="All">All</string>
+
+    <string name="Connection_Error">Connection Error</string>
+    <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again</string>
+    <string name="data_fetched"> Data can not be fetched!</string>
+    <string name="productRemoved_formWishList"> This product Removed from wishlist</string>
+    <string name="WorkshopRemovedfromfavorite">This Workshop Removed from favorite</string>
+    <string name="ContactAddSuccessFully">Contact Add SuccessFully</string>
+    <string name="ContactUpdateSuccessFully">Contact Update SuccessFully</string>
+    <string name="ContactDeletedSuccessFully">Contact Deleted SuccessFully</string>
+    <string name="Searchingproductnotfound">Searching product not found</string>
+    <string name="Failedtofetchuserdata">Failed to fetch user data</string>
+    <string name="NoUPIappfoundpleaseinstallonetocontinue">No UPI app found, please install one to continue</string>
+    <string name="Failed"> Failed!</string>
+    <string name="ReferralCodeCopied">Referral Code Copied</string>
+    <string name="Noapplicationcanhandlethisrequest">No application can handle this request.</string>
+    <string name="PriceNotSpecified">Price Not Specified</string>
+    <string name="CallPermissionDenied">Call Permission Denied!!</string>
+    <string name="Timeout">Timeout</string>
+    <string name="TheInternetConnectionAppearstobeoffline">The Internet Connection Appears to be offline</string>
+    <string name="NoItemFound">No Item Found!</string>
+    <string name="TrackingIdnotFound"> Tracking Id not Found</string>
+    <string name="Pleaseinstallwebbrowser">Please install a webbrowser</string>
+    <string name="SyncFailed">Sync Failed</string>
+    <string name="Searchingresultfor">Searching result for</string>
+    <string name="PleaseDeleteOutOfStockProduct">Please Delete Out Of Stock Product!</string>
+    <string name="ConnectionErrorPleaseretry"> Connection Error, Please retry</string>
+    <string name="Servicenotavailablepleaseselectotherworkshop">Service not available! please select other workshop</string>
+    <string name="PleaseSelectRatings">Please Select Ratings</string>
+    <string name="PleaseSelect"> Please Select</string>
+    <string name="Gallery">Gallery</string>
+    <string name="Camera">Camera</string>
+    <string name="Invalidusernamepassword">Invalid username/password</string>
+    <string name="Unspecifiederroroccurred"> Unspecified error occurred</string>
+    <string name="Failedsendresetemail">Failed to send reset email</string>
+    <string name="FailedtologinCheckyourcredential">Failed to log in, Check your credential</string>
+    <string name="PleaseSelectContactNo">Please Select ContactNo</string>
+    <string name="Requesttimedout"> Request timed out</string>
+    <string name="PleaseSelectAddress">Please Select Address!</string>
+    <string name="AllFieldsRequired">All Fields Required</string>
+
+    <string name="MaxImagesnotmorethanthat"> Max Images is 5! not more than that</string>
+    <string name="PleaseEnterValidLicensePlateNumber">Please Enter Valid License Plate Number</string>
+
+    <string name="Deletedefaultimageforthiscar">Delete default image for this car</string>
+    <string name="CarDetailSavedSuccessfully">Car Detail Saved Successfully</string>
+    <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Do you want to complete the car details to get personalized suggestions ?</string>
+    <string name="Completelater">Complete later</string>
+    <string name="Failed_addcar">Failed to add car</string>
+    <string name="Caraddedsuccessfully">Car added successfully</string>
+    <string name="PleaseselectCarVersion">Please select Car Version</string>
+    <string name="Carmodifiedsuccessfully">Car modified successfully</string>
+    <string name="Thisslotisbusy">This slot is busy</string>
+    <string name="Thisslotnotapplicable">This slot is not applicable</string>
+    <string name="Invalidinterventiontime"> Invalid intervention time</string>
+    <string name="Pleaselogintocontinuewithslotbooking">Please login to continue with slot booking</string>
+    <string name="PaymentConfirmationinforeceivedfromPayPal">PaymentConfirmation info received from PayPal</string>
+    <string name="PleasedeleteOutofStockorExpiredservices">Please delete Out of Stock or Expired services</string>
+    <string name="Keywordcleared"> Keyword cleared</string>
+    <string name="Cannotclearsearchkeywords">Cannot clear search keywords</string>
+    <string name="AccountDeletedSuccessfully">Account Deleted Successfully</string>
+    <string name="Cannotloadsubgroups">Cannot load sub groups</string>
+    <string name="Enterkeywordwithminimumfourcharacters">Enter a keyword with minimum 4 characters</string>
+    <string name="SelectAction">Select Action</string>
+    <string name="Selectphotofromgallery">Select photo from gallery</string>
+    <string name="Capturephotofromcamera">Capture photo from camera</string>
+    <string name="PermissionDenied">Permission Denied</string>
+    <string name="Failed_to_load_Image">Failed to load Image</string>
+    <string name="Failed_to_load_Data">Failed to load Data</string>
+    <string name="Update_SuccessFully">Update SuccessFully</string>
+    <string name="id_is_required">id is required!!</string>
+    <string name="are_you_sure_to_book_this_slot">Are you sure to book this slot ?</string>
+
+
+    <string name="call_phone">Call Phone</string>
+    <string name="chat_online">Chat Online</string>
+    <string name="Email">Email</string>
+    <string name="FAQs">Frequently Asked Questions</string>
+    <string name="permission_Denied">Permission Denied</string>
+
+    <string name="phoneNo">3386450233</string>
+    <string name="emailAddress"> info@officinetop.com</string>
+    <string name="FAQtitle"> FAQ</string>
+    <string name="Add">Add</string>
+    <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registered Successfully, Verification link sent on your registered mail.Verify the same to activate your account.</string>
+
+    <string name="please_select_maintenance">Please Select Maintenance!</string>
+    <string name="cart_items">Cart Items</string>
+    <string name="Conditions">Conditions of Use</string>
+    <string name="and">and</string>
+    <string name="Add_address">Add address</string>
+    <string name="Add_mobile_number">Add mobile number</string>
+    <string name="useofficine_and_Get_cashback_in_your_wallet_Use_my_Code">"Use Officine and Get cashback in your wallet. Use my Code:- "</string>
+    <string name="news">NEWS</string>
+    <string name="videos">VIDEOS</string>
+    <string name="guides">GUIDES</string>
+    <string name="WorkshopSort">Sort</string>
+    <string name="DatanotFound">"Data not found "</string>
+    <string name="Apply_Coupon_Note">"You will receive this coupon once the service is complete or the product has been delivered if only the product without service has been purchased. The bonus will be automatically loaded into your account and you can use it for future orders"</string>
+    <string name="Note">"Note : "</string>
+    <string name="there_is_noBrowser">There is No Browser</string>
+    <string name="Delivery_date_predicted">Delivery date predicted</string>
+    <string name="Services_Name">Service Name</string>
+    <string name="prepend_percentage_symbol"> %</string>
+    <string name="coupon_list">Coupons List</string>
+
+    <string name="prepend_euro_symbol_with_from_string"> from: € %s</string>
+    <!-- Sceglie Officina-->
+
+
+    <string-array name="home_icon_titles">
+        <item>Tyre</item>
+        <item>Maintenance</item>
+        <item>Revision</item>
+        <item>Washing</item>0
+        <item>Parts</item>
+        <item>MOT</item>
+        <item>SOS</item>
+        <item>Quotes</item>
+    </string-array>
+    <string-array name="Address_Type">
+        <item>Home</item>
+        <item>Office</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="notify">
+
+        <item>immediately</item>
+        <item>Weakly</item>
+        <item>Monthly</item>
+        <item>No Email</item>
+
+    </string-array>
+
+
+</resources>

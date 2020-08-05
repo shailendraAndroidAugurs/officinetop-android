@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="listItemViewModel"
+            type="com.officinetop.officine.data.Models.ServiceProductDescription" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_white_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="@{listItemViewModel.serviceAssemblyProductDescription==null ?View.GONE :View.VISIBLE}"
+            android:weightSum="8">
+
+            <ImageView
+                android:id="@+id/cart_assembled_product_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
+                android:src="@drawable/no_image_placeholder"
+                app:imageResource="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.productImageUrl!=null ?listItemViewModel.serviceAssemblyProductDescription.productImageUrl :@string/url_not_found}" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:paddingStart="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_assemble_title"
+                        style="@style/TextViewHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:padding="0dp"
+                        android:text="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.productName!=null? listItemViewModel.serviceAssemblyProductDescription.productName : @string/orderDetail}"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_delete_white_24dp"
+                        android:tint="@color/gray_dark"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/item_assemble_product_subtitle"
+                    style="@style/TextViewHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:visibility="gone"
+                    android:padding="0dp"
+                    android:text="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.productDescription!=null? listItemViewModel.serviceAssemblyProductDescription.productDescription : @string/string_not_found}"
+                    android:textColor="@color/gray_dark" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/service_detail_container_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!--   <LinearLayout
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentStart="true"
+                           android:background="@drawable/shape_rectangle_gray">
+
+                           <Spinner
+                               android:id="@+id/product_qty_spinner"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:gravity="center"
+                               android:paddingLeft="30dp"
+                               android:paddingTop="0dp"
+                               android:paddingRight="50dp"
+                               android:paddingBottom="0dp"
+                               android:visibility="gone" />
+
+                       </LinearLayout>-->
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="left"
+                            android:padding="0dp"
+                            android:text="@string/Qty_order"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="left"
+                            android:padding="0dp"
+                            app:Order_Quantity="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.productQuantity!=null ?listItemViewModel.serviceAssemblyProductDescription.productQuantity :@string/zero}"
+                            app:Ispair="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.isProductPair!=null ?listItemViewModel.serviceAssemblyProductDescription.isProductPair :@string/zero}"
+
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_product_price"
+                        style="@style/TextViewHeadingWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:padding="0dp"
+                        android:textColor="@color/theme_orange"
+                        android:textSize="12sp"
+                        app:tyre_Order_price="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.finalOrderPrice!=null? listItemViewModel.serviceAssemblyProductDescription.finalOrderPrice : @string/zero}"
+
+                        app:tyrePfu="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.pfuTax!=null? listItemViewModel.serviceAssemblyProductDescription.pfuTax : @string/zero}"
+                        app:tyreQuantity="@{listItemViewModel.serviceAssemblyProductDescription!=null &amp; listItemViewModel.serviceAssemblyProductDescription.productQuantity!=null? listItemViewModel.serviceAssemblyProductDescription.productQuantity : @string/zero}"
+
+                    />
+                </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/ll_coupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{listItemViewModel.serviceAssemblyProductDescription.couponTitle!=null ? View.VISIBLE : View.GONE}"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:padding="0dp"
+                        android:text="@string/AppliedCoupon"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:id="@+id/couponTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_centerVertical="true"
+                        android:gravity="right"
+                        android:textSize="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        app:coupontitle="@{listItemViewModel.serviceAssemblyProductDescription.couponTitle!=null ? listItemViewModel.serviceAssemblyProductDescription.couponTitle: @string/Concat }"
+                        app:coupontype="@{listItemViewModel.serviceAssemblyProductDescription.couponType!=null ? listItemViewModel.serviceAssemblyProductDescription.couponType: @string/Concat }"
+                        app:couponPrices="@{listItemViewModel.serviceAssemblyProductDescription.couponPrices!=null ? listItemViewModel.serviceAssemblyProductDescription.couponPrices: @string/Concat }"
+
+                        android:textColor="@color/green" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
+                app:feedbackStatus="@{listItemViewModel.ServiceAssemblyProductDescription!= null  &amp;&amp; listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus!=null ? listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus : @string/string_not_found}"
+                app:feedbackvisibility="@{listItemViewModel.status}">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/gray">
+
+                </View>
+                <TextView
+                    android:id="@+id/tv_AddFeedbackProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:tag="100"
+                    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+                    android:text="@string/AddFeedback"
+                    android:textColor="@color/lite_blue"
+                    android:tint="@color/gray_dark"
+                    android:visibility="visible" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/gray">
+
+                </View>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layoutvisibility="@{listItemViewModel.ServiceAssemblyProductDescription!=null &amp;&amp; listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus!=null ?listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus :@string/Concat}">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/gray">
+
+                </View>
+                <TextView
+                    android:id="@+id/tv_SeeFeedBackProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:tag="101"
+                    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:src="@drawable/ic_cart_menu"
+                    android:text="@string/SeeFeedback"
+                    android:textColor="@color/lite_blue"
+                    android:tint="@color/gray_dark" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/gray"></View>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/rounded_white_background"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/item_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_delete_white_24dp"
+                    android:tint="@color/gray_dark"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/service_detail_container_margin_large"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/cart_assembled_service_image"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/service_detail_container_margin_small"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.serviceDetail!=null &amp; listItemViewModel.serviceDetail.catImageUrl!=null ?listItemViewModel.serviceDetail.catImageUrl:@string/url_not_found}" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:gravity="left"
+                            android:padding="0dp"
+                            android:text="@{listItemViewModel.serviceDetail.serviceName!=null ? listItemViewModel.serviceDetail.serviceName:@string/Concat}"
+                            android:textColor="@color/black" />
+
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        style="@style/TextViewHeading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/service_detail_container_margin_large"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:paddingStart="@dimen/service_detail_container_margin_large"
+                        android:text="@string/plus"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/cart_assembled_workshop_image"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/service_detail_container_margin_small"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.workshopDetails!=null &amp; listItemViewModel.workshopDetails.workShopImageUrl!=null?listItemViewModel.workshopDetails.workShopImageUrl:@string/url_not_found}" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp">
+
+                    <TextView
+                        android:id="@+id/item_assemble_workshop_subtitle"
+                        style="@style/TextViewHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:padding="0dp"
+                        android:text="@{listItemViewModel.workshopDetails.companyName!=null ? listItemViewModel.workshopDetails.companyName:@string/Concat}"
+                        android:textColor="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:weightSum="6">
+
+                        <TextView
+                            style="@style/TextViewWhite.VerySmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="@{listItemViewModel.workshopDetails.registeredOffice!=null? listItemViewModel.workshopDetails.registeredOffice:@string/Concat}"
+                            android:textColor="@color/gray_dark" />
+
+                        <TextView
+                            android:id="@+id/item_assemble_service_price"
+                            style="@style/TextViewWhite.VerySmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="2"
+                            android:gravity="end"
+                            android:padding="0dp"
+                            android:textColor="@color/theme_orange"
+                            app:price="@{listItemViewModel.afterDiscountPrice}" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            style="@style/TextViewWhite.VerySmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:padding="0dp"
+                            android:text="@string/Intervention_date"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/item_assemble_date"
+                            style="@style/TextViewWhite.VerySmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="end"
+                            android:padding="0dp"
+                            app:date="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/Concat}"
+                            android:textColor="@color/black" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            style="@style/TextViewWhite.VerySmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="0dp"
+                            android:text="@string/Intervention_time"
+                            android:textColor="@color/black" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
+
+                            <TextView
+                                android:id="@+id/item_assemble_time"
+                                style="@style/TextViewWhite.VerySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+
+                                android:padding="0dp"
+                                android:text="@{listItemViewModel.startTime!=null ? listItemViewModel.startTime :@string/ZeroValue}"
+                                android:textColor="@color/black" />
+
+                            <TextView
+
+                                style="@style/TextViewWhite.VerySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="end"
+                                android:padding="0dp"
+                                android:text="@string/Concat"
+                                android:textColor="@color/black" />
+
+                            <TextView
+
+                                style="@style/TextViewWhite.VerySmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="end"
+                                android:padding="0dp"
+                                android:text="@{listItemViewModel.endTime!=null ? listItemViewModel.endTime :@string/ZeroValue}"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_couponWorkshop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{listItemViewModel.couponTitle!=null ? View.VISIBLE : View.GONE}"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="left"
+                            android:padding="0dp"
+                            android:text="@string/AppliedCoupon"
+                            android:textColor="@color/green" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_centerVertical="true"
+                            android:gravity="right"
+                            android:textSize="@dimen/_10sdp"
+                            android:padding="@dimen/_5sdp"
+                            app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/Concat }"
+                            app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/Concat }"
+                            app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/Concat }"
+                            android:textColor="@color/green" />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/selected_car_name"
+                        style="@style/TextViewWhite.VerySmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:textColor="@color/black"
+                        app:carModelName="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/Concat }" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/gray"></View>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_weight="2"
+                app:feedbackvisibility="@{listItemViewModel.status}"
+                app:feedbackStatus="@{listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.feedbackstatus!=null ? listItemViewModel.serviceDetail.feedbackstatus : @string/Concat }"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/AddFeedback"
+                    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+                    android:textColor="@color/lite_blue"
+                    android:tint="@color/gray_dark"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_weight="2"
+                android:visibility="gone"
+                app:layoutvisibility="@{listItemViewModel.serviceDetail.feedbackstatus}"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:id="@+id/iv_AddtoCart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:src="@drawable/ic_cart_menu"
+                    android:text="@string/SeeFeedback"
+                    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:textColor="@color/lite_blue"
+                    android:tint="@color/gray_dark"
+                     />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

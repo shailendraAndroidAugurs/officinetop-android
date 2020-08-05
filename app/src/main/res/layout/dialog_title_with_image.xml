@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/rounded_white_background_2"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        style="@style/TextViewHeading"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/_15sdp"
+        android:text="@string/sample_title"
+        android:id="@+id/item_title"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/gray_dark"
+        style="@style/TextViewHeading"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/sample_title"
+        android:id="@+id/item_sub_title"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_5sdp"
+        />
+
+
+    <ImageView
+        android:id="@+id/alert_tyre_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140sdp"
+        android:src="@drawable/no_image_placeholder" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:gravity="center"
+        style="@style/TextViewHeading"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/close_popup"/>
+
+</LinearLayout>

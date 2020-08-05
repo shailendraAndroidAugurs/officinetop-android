@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "850442644528",
+    "firebase_url": "https://officine-android.firebaseio.com",
+    "project_id": "officine-android",
+    "storage_bucket": "officine-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850442644528:android:232a135838642ab8eb91f5",
+        "android_client_info": {
+          "package_name": "com.officinetop.officine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850442644528-70errqhj19unslm2iprcbjsqif6l9ac6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.officinetop.officine",
+            "certificate_hash": "79166bc2d541bb3095f463ceff5a900f2e15e598"
+          }
+        },
+        {
+          "client_id": "850442644528-ldorpqnv04ctfec75suostvagmu55stq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850442644528-ldorpqnv04ctfec75suostvagmu55stq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

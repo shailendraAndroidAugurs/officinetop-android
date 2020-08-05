@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="java.util.List"/>
+        <variable
+            name="listItemViewModel"
+            type="com.officinetop.officine.data.Models.Part"/>
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+   <!-- <LinearLayout
+        android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/_5sdp">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:imageResource="@{listItemViewModel.product_image_url!=null ? listItemViewModel.product_image_url : @string/url_not_found}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/parts_name"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_no_userprofile"
+                android:id="@+id/parts_image"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parts_price"
+                android:textColor="@color/colorAccent"
+                app:amount="@{listItemViewModel.sellerPrice!=null ? listItemViewModel.sellerPrice : @string/blank}"/>
+            <TextView
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parts_name"
+                android:textSize="@dimen/_14sdp"
+                android:text="@{listItemViewModel.listino}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parts_id"
+                android:textColor="@color/black"
+                android:text="@{listItemViewModel.kromedaProductsId}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parts_description"
+                android:textColor="@color/black"
+                android:text="@{listItemViewModel.descrizione}"/>
+        </LinearLayout>
+    </LinearLayout>-->
+
+        <LinearLayout
+            android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <TextView
+
+                    android:layout_weight="1.6"
+                    android:layout_marginLeft="10dp"
+                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
+                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:layout_weight=".8"
+                    android:id="@+id/item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/item_brand_image"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.partimage!=null ? listItemViewModel.partimage : @string/url_not_found}"
+                    />
+                <ImageView
+                    android:layout_weight="1.4"
+                    android:id="@+id/item_brand_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:scaleType="fitXY"
+                    app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}"
+                    android:src="@drawable/no_image_placeholder" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/item_title"
+                        style="@style/TextViewSubHeadingWhite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="5dp"
+                        android:text="@{listItemViewModel.listino}"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/Iv_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_favorite_border_black_empty_24dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_average_time_emergency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/average_time_emergency" />
+
+                    <TextView
+                        android:id="@+id/average_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:text="@{listItemViewModel.kromedaProductsId}"
+                        android:id="@+id/item_sub_title"
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:padding="0dp"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="12sp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_special_coupons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            app:couponvisivility="@{listItemViewModel.couponList.size()}"
+                            android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                            android:id="@+id/offer_badge"
+                            style="@style/TextViewSubHeadingBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_dotted_orange"
+                            android:padding="5dp"
+                            android:text="@string/special20"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/workshop_availability"
+                            style="@style/TextViewSubHeadingBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="@string/Not_Availabale"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/parts_description"
+                    android:textColor="@color/black"
+                    android:text="@{listItemViewModel.descrizione}"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
+
+                    <RatingBar
+                        app:rating="@{listItemViewModel.rating_star!=null ? listItemViewModel.rating_star : @string/blank}"
+                        android:id="@+id/item_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/item_rating_count"
+                        style="@style/TextViewWhite.VerySmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:padding="0dp"
+                        android:text="@{listItemViewModel.rating_count!=null ? listItemViewModel.rating_count : @string/blank}"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_price"
+                        style="@style/TextViewSubHeadingAccent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:padding="0dp"
+                        app:amount="@{listItemViewModel.sellerPrice!=null ? listItemViewModel.sellerPrice : @string/blank}"/>
+                        android:textColor="@color/theme_orange" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

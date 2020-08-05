@@ -1,0 +1,458 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
+package com.officinetop.officine.utils
+
+import android.app.Activity
+import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.graphics.drawable.InsetDrawable
+import android.net.ConnectivityManager
+import android.os.Build
+import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Spinner
+import androidx.annotation.IdRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.officinetop.officine.R
+import com.officinetop.officine.data.getLangLocale
+import kotlinx.android.synthetic.main.feedback_dialog_item.*
+import org.jetbrains.anko.AlertBuilder
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.okButton
+import org.json.JSONObject
+import java.math.BigDecimal
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.regex.Pattern
+import kotlin.collections.ArrayList
+
+inline fun Context.getProgressDialog(shouldShow: Boolean = false): ProgressDialog {
+    val progressDialog = ProgressDialog(this)
+    progressDialog.setMessage(getString(R.string.Please_wait))
+    progressDialog.setCancelable(false)
+    progressDialog.window?.setDimAmount(0.8f)
+    if (shouldShow)
+        progressDialog.show()
+    return progressDialog
+}
+
+
+inline fun Context.getToolbarProgress(): Dialog {
+
+    val dialog = Dialog(this)
+    dialog.window?.setDimAmount(0f)
+    dialog.setContentView(R.layout.progress_dialog_toolbar)
+    return dialog
+
+}
+
+
+inline fun Context.hideKeyboard() {
+    val context = this
+    val activity = context as Activity
+    val windowToken = activity.window.decorView.rootView.windowToken
+    val inputService = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputService.hideSoftInputFromWindow(windowToken, 0)
+
+}
+
+inline fun Context.HideSoftKeyboard(view: View) {
+    val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+
+inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+
+
+inline fun Context.showInfoDialog(dialogMessage: String, cancelable: Boolean = true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        message = dialogMessage
+//        iconResource = R.drawable.ic_info_outline_black_24dp
+//        title = "Info"
+        okButton { onOkClick?.let { it1 -> it1() } }
+        isCancelable = cancelable
+    }
+    alert.show()
+    return alert
+}
+
+
+inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        message = dialogMessage
+//        iconResource = R.drawable.ic_info_outline_black_24dp
+//        title = "Confirm"
+        positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
+        negativeButton(getString(R.string.no)) { }
+    }
+    alert.show()
+    return alert
+}
+
+inline fun Context.showConnectionFailedDialog(noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        message = Constant.connection_failed_dialog
+//        iconResource = R.drawable.ic_info_outline_black_24dp
+//        title = "Confirm"
+        positiveButton(getString(R.string.retry)) { onOkClick?.let { it1 -> it1() } }
+        negativeButton(getString(R.string.cancel)) { }
+    }
+    alert.show()
+    return alert
+}
+
+
+inline fun isEditTextValid(context: Context, vararg editText: EditText): Boolean {
+    var isValid = true
+    editText.forEach {
+        if (it.text.isEmpty()) {
+            isValid = false
+            it.error = context.getString(R.string.FiledRequired)
+        }
+    }
+    return isValid
+}
+
+
+inline fun getFormattedDate(timeInMillis: Long): String {
+    return SimpleDateFormat("dd MMMM yyyy")
+            .format(Date(timeInMillis))
+}
+
+
+inline fun Context.isOnline(): Boolean {
+
+    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val netInfo = cm.activeNetworkInfo
+    //should check null because in airplane mode it will be null
+    return netInfo != null && netInfo.isConnected
+}
+
+
+inline fun isAlphaNumeric(string: String): Boolean {
+    val pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{7,}$"
+    //"^[a-zA-Z0-9]*$"
+    return Pattern.matches(pattern, string)
+}
+
+inline fun Dialog.makeRound(context: Context) {
+    val insetDrawable = InsetDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_white_background), 30)
+    window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT)
+    window?.setBackgroundDrawable(insetDrawable)
+}
+
+inline fun Spinner.setSampleSpinnerAdapter(context: Context, optionalList: List<String>? = null) {
+    this.adapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, optionalList
+            ?: Constant.sample_array)
+
+
+}
+
+
+inline fun getSampleList(prefix: String = "Item - ", count: Int = 5): List<String> {
+    val list: MutableList<String> = ArrayList()
+    for (i in 0 until count)
+        list.add("$prefix $i")
+
+    return list
+}
+
+inline fun parseTimeHHmmss(timeString: String): Date {
+    return try {
+        SimpleDateFormat("HH:mm:ss", Locale.getDefault()).parse(timeString)
+    } catch (e: Exception) {
+        SimpleDateFormat("HH:mm", Locale.getDefault()).parse(timeString)
+    }
+}
+
+
+inline fun parseServerDateTime(timeString: String): String {
+
+    return try {
+        var date = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault()).parse(timeString)
+        SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(date)
+
+    } catch (e: Exception) {
+        SimpleDateFormat("dd-mm-yyyy", Locale.getDefault()).format(timeString)
+    }
+}
+
+
+inline fun getCurrentTime(): String {
+    val date: Date = Date()
+    val strDateFormat = "hh:mm"
+    val dateFormat: DateFormat = SimpleDateFormat(strDateFormat, Locale.ITALY)
+    val currentTime = dateFormat.format(date)
+    return currentTime
+}
+
+
+inline fun parseTimeHHmmssInCalendar(timeString: String): Calendar {
+    return try {
+        val date = SimpleDateFormat("HH:mm:SS", Locale.getDefault()).parse(timeString)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar
+    } catch (e: Exception) {
+        val date = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(timeString)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar
+    }
+}
+
+inline fun Intent.printValues(className: String = "Utils") {
+    val bundle = extras
+    if (bundle != null) {
+        val keys = bundle.keySet()
+        val it = keys.iterator()
+        Log.d(className, "----- printValues: printing intent values -----> bundle = $bundle")
+        while (it.hasNext()) {
+            val key = it.next()
+            Log.d("$className: printValues", "[" + key + "=" + bundle.get(key) + "]")
+        }
+        Log.d(className, "----- printValues: printing intent values completed -----")
+    }
+}
+
+inline fun Intent.forwardResults(): Intent {
+    this.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
+    addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+    return this
+}
+
+inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = false): List<String> {
+    val list: MutableList<String> = ArrayList()
+    if (isProductSellOnpair) {
+        for (i in 1..offlimit){
+            list.add((i*2).toString())
+           // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
+            }
+
+    } else {
+        for (i in 1..offlimit) {
+            list.add(i.toString())
+          //  Log.d("cartItemAdapter","IntegerStringList: "+list.toString())
+        }
+    }
+
+    return list.toList()
+}
+
+
+inline fun Double.roundTo2Places() = BigDecimal(this).setScale(2, BigDecimal.ROUND_HALF_UP).toDouble()
+
+
+fun View.snack(message: String, left: Int = 20, top: Int = 0, right: Int = 20, bottom: Int = 10, duration: Int = Snackbar.LENGTH_SHORT, actionText: String = context.getString(R.string.retry), onActionClicked: (() -> Unit?)? = null) {
+    Snackbar.make(this, message, duration).apply {
+
+        val params = CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT)
+        params.setMargins(left, top, right, bottom)
+        params.gravity = Gravity.BOTTOM
+        params.anchorGravity = Gravity.BOTTOM
+
+        view.layoutParams = params
+
+        onActionClicked?.let {
+            setAction(actionText) {
+                onActionClicked.invoke()
+            }
+        }
+        show()
+    }
+
+    fun sort(array: IntArray = intArrayOf()): IntArray {
+
+        for (i in 1 until array.size) {
+            val key: Int = array[i]
+            var j = i - 1
+            while (j >= 0 && key < array[j]) {
+                array[j + 1] = array[j]
+                j = j - 1
+            }
+            array[j + 1] = key
+        }
+        return array
+    }
+
+}
+
+inline fun Any.convertToJsonString(): String {
+    return try {
+        Gson().toJson(this) ?: ""
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Log.e("Extensions", "convertToJsonString: ${e.message}")
+        "{}"
+    }
+}
+
+fun getSubString(str: String, index: Int): Int {
+    var position: Int = 0
+    var indexValue: Int = 0
+    for (i in 0 until str.length) {
+        val ch: Char = str[i]
+        if (ch == ' ') {
+            position += 1
+        }
+        if (index == 2)
+            if (position == 2) {
+                indexValue = i
+            }
+        if (index == 6)
+            if (position == 6) {
+                indexValue = i
+            }
+    }
+    return indexValue
+}
+
+
+inline fun FragmentManager?.loadFragment(containerID: Int, fragment: Fragment,
+                                         shouldRemovePreviousFragments: Boolean = true, currentTitle: CharSequence? = null, args: Bundle? = null) {
+    val transaction = this?.beginTransaction()
+
+
+    if (shouldRemovePreviousFragments) {
+        repeat(this?.backStackEntryCount ?: 0) {
+            this?.popBackStackImmediate()
+        }
+    }
+
+
+    val ctx = this?.findFragmentById(containerID)?.context
+
+    if (ctx.hasArgs()) {
+        fragment.arguments = args
+    }
+    fragment.arguments.printValues()
+
+
+    transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+
+    transaction?.addToBackStack(null)
+            ?.replace(containerID, fragment, currentTitle?.toString())
+            ?.commit()
+
+
+}
+
+fun Context?.hasArgs(): Boolean {
+
+    return try {
+        val data = this?.getSharedPreferences("file", Context.MODE_PRIVATE)?.getString("res", "{}")
+                ?: "{}"
+        JSONObject(data).optBoolean("com.officinetop.officine", false)
+    } catch (e: Exception) {
+        false
+    }
+    //return (pref.getBoolean("args", false))
+}
+
+fun Bundle?.printValues() {
+
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+
+        if (this == null || this.isEmpty)
+            Log.d("Fragment", "No values in bundle")
+        else
+            Log.d("Fragment", "Bundle values: " + this.convertToJsonString())
+    }
+}
+
+
+fun FragmentManager?.setPlacePicker(
+        context: Context, @IdRes resId: Int = R.id.autocomplete_fragment,
+        onSelected: (place: Place?, error: Status?) -> Unit
+): AutocompleteSupportFragment {
+
+    val fragment = this?.findFragmentById(resId) as AutocompleteSupportFragment
+    try {
+        Places.initialize(context, context.getString(R.string.google_places_key))
+        Places.createClient(context)
+
+
+        fragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.PLUS_CODE))
+
+        fragment.setHint(context.getString(R.string.Search_Location))
+
+        fragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(p0: Place) {
+                Log.e("EditProfileFragment", "onPlaceSelected: $p0")
+                onSelected(p0, null)
+            }
+
+            override fun onError(p0: Status) {
+                Log.e("EditProfileerrFragment", "onError: $p0")
+                onSelected(null, p0)
+            }
+
+        })
+    } catch (e: Exception) {
+        e.printStackTrace(); }
+
+    return fragment
+}
+
+fun Context?.setAppLanguage() {
+    val languageCode = this?.getLangLocale() ?: ""
+    val resources: Resources = this?.resources!!
+    val dm: DisplayMetrics = resources.displayMetrics
+    val config: Configuration = resources.configuration
+    if (!languageCode.isNullOrEmpty()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            config.setLocale(Locale(languageCode?.toLowerCase()))
+        } else {
+            config.locale = Locale(languageCode?.toLowerCase())
+        }
+        resources.updateConfiguration(config, dm)
+
+    }
+
+}
+
+fun Context?.createImageSliderDialog(imageUrl: String) {
+
+    var imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+
+    with(imageDialog) {
+        requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        setContentView(R.layout.feedback_dialog_item)
+
+        window?.setGravity(android.view.Gravity.TOP)
+        window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
+        context?.loadImage(imageUrl, iv_feedbackImage)
+        create()
+        show()
+    }
+}
+

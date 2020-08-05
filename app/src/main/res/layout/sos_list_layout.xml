@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:gravity="center"
+    android:layout_margin="@dimen/_2sdp"
+    android:background="@color/white"
+    android:weightSum="4"
+    android:padding="@dimen/_2sdp"
+    android:id="@+id/wracker_services_rl">
+
+    <ImageView
+        android:id="@+id/workshop_images"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/workshop_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/_2sdp"
+        android:layout_toEndOf="@+id/workshop_images"/>
+
+    <Button
+        android:id="@+id/workshop_emergency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toEndOf="@+id/workshop_name"
+        android:background="@drawable/shape_rectangle_orange_filled"
+        android:text="@string/Emergency"
+        android:textSize="@dimen/_9sdp"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/workshop_appointment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="false"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/shape_rectangle_orange_filled"
+        android:layout_toEndOf="@+id/workshop_emergency"
+        android:textSize="@dimen/_8sdp"
+        android:text="@string/Appointment"/>
+
+
+
+</LinearLayout>

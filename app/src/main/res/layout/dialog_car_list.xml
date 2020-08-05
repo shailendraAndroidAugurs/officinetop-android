@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/dialog_top_layout"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:tint="@color/white"
+        android:id="@+id/dialog_up_arrow"
+        android:src="@drawable/ic_keyboard_arrow_up_dark_24dp"
+        android:layout_height="?actionBarSize" />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:tint="@color/white"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:id="@+id/dialog_refresh"
+            android:src="@drawable/ic_refresh_white_24dp"
+            android:layout_height="?actionBarSize" />
+
+    </FrameLayout>
+
+
+    <ListView
+        android:id="@+id/select_dialog_listview"
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:listSelector="@drawable/select_drawable"
+        android:background="@color/white"
+        android:dividerHeight="0dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/RoundButton"
+        android:textColor="@color/theme_orange"
+        android:text="@string/add_car"
+        android:textSize="20sp"
+        android:id="@+id/add_car"
+        android:background="@drawable/rounded_white_background_2"
+
+        />
+
+
+</LinearLayout>

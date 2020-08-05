@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".feedback.FeedbackListActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <include layout="@layout/include_toolbar"/>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_margin="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/user_image"
+            app:layout_constraintEnd_toStartOf="@+id/user_name"
+            android:src="@drawable/no_image_placeholder"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:id="@+id/user_name"
+
+            app:layout_constraintStart_toEndOf="@+id/user_image"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <RatingBar
+            style="@style/RatingBarSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:rating="5"
+            android:id="@+id/user_rating"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_name"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+
+            android:id="@+id/date"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/user_rating"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fedback_type"
+            style="@style/TextViewNormal"
+
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/user_image"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/fedback_type"
+            app:layout_constraintTop_toBottomOf="@+id/user_name"
+
+            android:gravity="center"
+            android:textStyle="italic"
+            android:id="@+id/fedback_name"
+            android:textColor="@color/black"
+            style="@style/TextViewNormal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_type"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:text="@string/product_name"
+            android:id="@+id/fedback_product"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/fedback_product"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_name"
+            style="@style/TextViewNormal"
+            android:id="@+id/fedback_product_name"
+            android:text="@string/product_name"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_product"
+            android:text="@string/ServiceName"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:id="@+id/fedback_service_type"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/fedback_service_type"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_product_name"
+            android:text="@string/ServiceName"
+            android:id="@+id/fedback_service_name"
+            style="@style/TextViewNormal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Comment"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_service_type"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:id="@+id/fedbcak_comment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@+id/fedbcak_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:id="@+id/fedback_comment_description"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Media"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_comment_description"
+            style="@style/TextViewNormal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:id="@+id/text_media"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/cam_icon"
+            android:layout_gravity="center"
+            android:id="@+id/capture_images"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_media"
+            app:layout_constraintTop_toBottomOf="@+id/fedback_comment_description"/>
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/text_media"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            android:id="@+id/fedback_images_recycler"/>
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

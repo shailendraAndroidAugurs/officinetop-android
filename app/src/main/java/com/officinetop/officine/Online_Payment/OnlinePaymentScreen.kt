@@ -1,0 +1,716 @@
+package com.officinetop.officine.Online_Payment
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Paint
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.RadioButton
+import android.widget.Toast
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.samples.wallet.PaymentsUtil
+import com.google.android.gms.wallet.*
+import com.google.android.material.snackbar.Snackbar
+import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.Orders.Order_List
+import com.officinetop.officine.R
+import com.officinetop.officine.data.*
+import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.userprofile.Addresslist_Activity
+import com.officinetop.officine.userprofile.Contactlist_Activity
+import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.onCall
+import com.officinetop.officine.utils.roundTo2Places
+import com.officinetop.officine.utils.showInfoDialog
+import com.paypal.android.sdk.payments.*
+import kotlinx.android.synthetic.main.activity_online_payment.*
+import kotlinx.android.synthetic.main.include_toolbar.*
+import org.jetbrains.anko.intentFor
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import java.math.BigDecimal
+
+class OnlinePaymentScreen : BaseActivity() {
+    lateinit var radioButton_googlepay: RadioButton
+    lateinit var radioButton_COD: RadioButton
+    private lateinit var paymentsClient: PaymentsClient
+    private val shippingCost = (90 * 1000000).toLong()
+    private lateinit var garmentList: JSONArray
+    private lateinit var selectedGarment: JSONObject
+    private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
+    internal val UPI_PAYMENT = 0
+    private var payableAmount: String = ""
+    private var TotalAmount: String = ""
+    var contactNo: String? = null
+    var contactId: String? = null
+    var Address: String? = null
+    var AddressId: String? = null
+    var IsCheckAvailablity: Boolean = false
+    lateinit var progressBar: ProgressBar
+    private var TotalDiscount: String = "0"
+    private var totalPrices: String = "0"
+    private var totalVat: String = "0"
+    private var totalPfu: String = "0"
+    private var user_WalletAmount: String = "0"
+    var AmazonPayRequestCode = 992
+    var usedWalletAmount = "0"
+    var HaveBrowser = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_online_payment)
+        setSupportActionBar(toolbar)
+        toolbar_title.text = getString(R.string.paymet_name)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initviews()
+    }
+
+    private fun initviews() {
+        if (intent.hasExtra(Constant.Path.totalAmount) && !intent.getStringExtra(Constant.Path.totalAmount).isNullOrEmpty())
+            TotalAmount = intent.getStringExtra(Constant.Path.totalAmount)
+
+        if (intent.hasExtra(Constant.Path.totalItemAmount) && !intent.getStringExtra(Constant.Path.totalItemAmount).isNullOrEmpty())
+            totalPrices = intent.getStringExtra(Constant.Path.totalItemAmount)
+        if (intent.hasExtra(Constant.Path.totalDiscount) && !intent.getStringExtra(Constant.Path.totalDiscount).isNullOrEmpty())
+            TotalDiscount = intent.getStringExtra(Constant.Path.totalDiscount)
+        if (intent.hasExtra(Constant.Path.totalVat) && !intent.getStringExtra(Constant.Path.totalVat).isNullOrEmpty())
+            totalVat = intent.getStringExtra(Constant.Path.totalVat)
+        if (intent.hasExtra(Constant.Path.totalPfu) && !intent.getStringExtra(Constant.Path.totalPfu).isNullOrEmpty())
+            totalPfu = intent.getStringExtra(Constant.Path.totalPfu)
+        if (intent.hasExtra(Constant.Path.user_WalletAmount) && !intent.getStringExtra(Constant.Path.user_WalletAmount).isNullOrEmpty())
+            user_WalletAmount = intent.getStringExtra(Constant.Path.user_WalletAmount)
+
+
+        tv_userWallet.text = getString(R.string.Wallet) + user_WalletAmount.toDouble().roundTo2Places().toString()
+
+        if (user_WalletAmount.equals("0") || user_WalletAmount.equals("")) {
+            tv_TotalAmount.visibility = View.GONE
+            tv_userWallet.text = getString(R.string.Wallet) + "0"
+            tv_payable_amount.text = getString(R.string.payable_amount, TotalAmount)
+            payableAmount = TotalAmount
+            usedWalletAmount = "0"
+        } else if (TotalAmount.toFloat() > user_WalletAmount.toFloat()) {
+            tv_TotalAmount.visibility = View.VISIBLE
+            tv_TotalAmount.text = getString(R.string.prepend_euro_symbol_string, TotalAmount.toDouble().roundTo2Places().toString())
+            tv_TotalAmount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            payableAmount = ((TotalAmount.toDouble() - user_WalletAmount.toDouble()).roundTo2Places()).toString()
+            tv_payable_amount.text = getString(R.string.payable_amount, payableAmount)
+            usedWalletAmount = user_WalletAmount.toDouble().roundTo2Places().toString()
+        } else if (user_WalletAmount.toFloat() >= TotalAmount.toFloat()) {
+            tv_TotalAmount.visibility = View.VISIBLE
+            tv_TotalAmount.text = getString(R.string.prepend_euro_symbol_string, TotalAmount.toDouble().roundTo2Places().toString())
+            tv_TotalAmount.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            payableAmount = "0"
+            usedWalletAmount = ((user_WalletAmount.toDouble() - TotalAmount.toDouble()).roundTo2Places()).toString()
+            tv_payable_amount.text = getString(R.string.payable_amount, payableAmount)
+        }
+
+        if (payableAmount == "0" || payableAmount.equals("0.0")) {
+            ll_PaymentLayout.visibility = View.GONE
+            ll_WalletPayment.visibility = View.VISIBLE
+        } else {
+            ll_PaymentLayout.visibility = View.VISIBLE
+            ll_WalletPayment.visibility = View.GONE
+        }
+        proceed_to_pay.setOnClickListener {
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+                updatePaymentStatusWithWallet()
+            }
+        }
+
+
+        Log.e("Totalprices", totalPrices)
+        Log.e("Totalpfu", totalPfu)
+        Log.e("TotalVat", totalVat)
+        Log.e("payableAmount", payableAmount)
+        Log.e("user_WalletAmount", user_WalletAmount)
+        Log.e("FinalPrices", TotalAmount)
+
+        radioButton_googlepay = findViewById(R.id.radio_button_googlepay)
+        radioButton_COD = findViewById(R.id.radio_button_cod)
+        val paypal_payment = findViewById<LinearLayout>(R.id.layout_cardpayment)
+        val layout_amazonupid = findViewById<LinearLayout>(R.id.layout_amazonupid)
+        progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+
+        paypal_payment.visibility = View.GONE
+        layout_amazonupid.visibility = View.GONE
+
+        radioButton_googlepay.setOnClickListener(View.OnClickListener {
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+
+                payUsingUpi()
+                paypal_payment.visibility = View.GONE
+                layout_amazonupid.visibility = View.GONE
+                radioButton_googlepay.setChecked(true)
+                radioButton_COD.setChecked(false)
+                //startUpiPayment()
+            }
+        })
+
+        radioButton_COD.setOnClickListener(View.OnClickListener {
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+                paypal_payment.visibility = View.GONE
+                layout_amazonupid.visibility = View.GONE
+                radioButton_COD.setChecked(true)
+                radioButton_googlepay.setChecked(false)
+                showInfoDialog(getString(R.string.PayOnDelivery)) {
+                    updatePaymentStatusForCOD()
+                }
+            }
+        })
+
+        ////////////////////////////////PayPal  payment///////////////////////////////////////////
+        val intent = Intent(this, PayPalService::class.java)
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
+        startService(intent)
+
+        btn_paypal_payment.setOnClickListener(View.OnClickListener {
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+                radioButton_COD.setChecked(false)
+                radioButton_googlepay.setChecked(false)
+                val thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE)
+                val intent = Intent(this@OnlinePaymentScreen, PaymentActivity::class.java)
+                // send the same configuration for restart resiliency
+                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
+                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy)
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT)
+
+            }
+
+        })
+        paymentsClient = PaymentsUtil.createPaymentsClient(this)
+        possiblyShowGooglePayButton()
+        googlePayButton.setOnClickListener {
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+                requestPayment()
+                radioButton_COD.setChecked(false)
+                radioButton_googlepay.setChecked(false)
+
+            }
+        }
+        btn_amazon_pay.setOnClickListener {
+
+
+            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+                ll_container_payment.visibility = View.GONE
+                /*val webSettings = webview!!.settings
+                webview!!.loadUrl("https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${getUserId()}&payble_amount=${payableAmount}")
+                webview.requestFocus();
+                webSettings.javaScriptEnabled = true
+                webSettings.setLoadWithOverviewMode(true);
+                webSettings.setUseWideViewPort(true);
+                webSettings.setAllowFileAccess(true);
+                webSettings.setAllowContentAccess(true);
+                webSettings.domStorageEnabled = true
+                webSettings.setSupportMultipleWindows(true)
+
+                //These two lines are specific for my need. These are not necessary
+                //These two lines are specific for my need. These are not necessary
+                if (Build.VERSION.SDK_INT >= 21) {
+                    webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                }
+
+                //Cookie manager for the webview
+                //Cookie manager for the webview
+                val cookieManager: CookieManager = CookieManager.getInstance()
+                cookieManager.setAcceptCookie(true)
+                webview!!.setInitialScale(1);
+
+                webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+                val webViewClient = WebViewClientImpl(this, progress_bar_webview)
+                webview!!.webViewClient = webViewClient*/
+                // https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=101&payble_amount=1.8&used_wallet_amount=0.2&address=188&contact=57
+                try {
+                    HaveBrowser = true
+                    val loadUrl: String = "https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${getUserId()}&payble_amount=${payableAmount}&used_wallet_amount=${usedWalletAmount}&address=${AddressId}&contact=${contactId}"
+                    Log.d("AmazonPayRequest :", loadUrl)
+                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(loadUrl)
+                    /*openURL.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    openURL.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY)*/
+                    startActivityForResult(openURL, AmazonPayRequestCode)
+
+                } catch (e: Exception) {
+                    HaveBrowser = false
+                    Toast.makeText(this, getString(R.string.there_is_noBrowser), Toast.LENGTH_LONG).show()
+                }
+
+
+            }
+        }
+        tv_contactNo.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, Contactlist_Activity::class.java)
+            intent.putExtra("FromPayment", true)
+            startActivityForResult(intent, 100)
+
+        })
+        tv_Address.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, Addresslist_Activity::class.java)
+            intent.putExtra("FromPayment", true)
+            startActivityForResult(intent, 101)
+
+        })
+
+
+        val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
+        contactNo = sharedPref.getString("contactNo", null)
+        Address = sharedPref.getString("Address", null)
+        AddressId = sharedPref.getString("AddressId", null)
+        contactId = sharedPref.getString("contactId", null)
+        if (contactNo != null) {
+            text_contactnumber.setText(contactNo)
+        }
+        if (Address != null) {
+            text_address.setText(Address)
+        }
+        if (contactId != null && AddressId != null) {
+            CheckCartItemAvailability()
+        }
+
+
+    }
+
+
+    ////////////////////////////GPAY/////////////////////////////////////////////
+    private fun possiblyShowGooglePayButton() {
+
+        val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
+        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
+        // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
+        // OnCompleteListener to be triggered when the result of the call is known.
+
+        val task = paymentsClient.isReadyToPay(request)
+        task.addOnCompleteListener { completedTask ->
+            try {
+                completedTask.getResult(ApiException::class.java)?.let(::setGooglePayAvailable)
+            } catch (exception: ApiException) {
+                // Process error
+                Log.w("isReadyToPay failed", exception)
+            }
+        }
+    }
+
+    private fun setGooglePayAvailable(available: Boolean) {
+        if (available) {
+            googlePayButton.visibility = View.VISIBLE
+        } else {
+            Toast.makeText(
+                    this,
+                    "Unfortunately, Google Pay is not available on this device",
+                    Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun requestPayment() {
+        // Disables the button to prevent multiple clicks.
+        googlePayButton.isClickable = false
+        // The price provided to the API should include taxes and shipping.
+        // This price is not displayed to the user.
+        //val garmentPriceMicros = (selectedGarment.getDouble("price") * 1000000).roundToLong()
+        // val price = (garmentPriceMicros + shippingCost).microsToString()
+
+        val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest("1")
+        if (paymentDataRequestJson == null) {
+            Log.e("RequestPayment", "Can't fetch payment data request")
+            return
+        }
+        val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+
+        // Since loadPaymentData may show the UI asking the user to select a payment method, we use
+        // AutoResolveHelper to wait for the user interacting with it. Once completed,
+        // onActivityResult will be called with the result.
+        if (request != null) {
+            AutoResolveHelper.resolveTask(
+                    paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)
+        }
+    }
+
+    private fun handlePaymentSuccess(paymentData: PaymentData) {
+        val paymentInformation = paymentData.toJson() ?: return
+        try {
+            // Token will be null if PaymentDataRequest was not constructed using fromJson(String).
+            val paymentMethodData = JSONObject(paymentInformation).getJSONObject("paymentMethodData")
+            // If the gateway is set to "example", no payment information is returned - instead, the
+            // token will only consist of "examplePaymentMethodToken".
+            if (paymentMethodData
+                            .getJSONObject("tokenizationData")
+                            .getString("type") == "PAYMENT_GATEWAY" && paymentMethodData
+                            .getJSONObject("tokenizationData")
+                            .getString("token") == "examplePaymentMethodToken") {
+
+                AlertDialog.Builder(this)
+                        .setTitle("Warning")
+                        .setMessage("Gateway name set to \"example\" - please modify " +
+                                "Constants.java and replace it with your own gateway.")
+                        .setPositiveButton("OK", null)
+                        .create()
+                        .show()
+            }
+
+            val billingName = paymentMethodData.getJSONObject("info")
+                    .getJSONObject("billingAddress").getString("name")
+            Log.d("BillingName", billingName)
+            Toast.makeText(this, getString(R.string.payments_show_name, billingName), Toast.LENGTH_LONG).show()
+            // Logging token string.
+            Log.d("GooglePaymentToken", paymentMethodData
+                    .getJSONObject("tokenizationData")
+                    .getString("token"))
+        } catch (e: JSONException) {
+            Log.e("handlePaymentSuccess", "Error: " + e.toString())
+        }
+    }
+
+    ///////////////////////////////paypal payment/////////////////////////
+    public override fun onDestroy() {
+        // Stop service when done
+        stopService(Intent(this, PayPalService::class.java))
+        super.onDestroy()
+    }
+
+    companion object {
+        private val TAG = "paymentExample"
+
+        private val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX
+
+        // note that these credentials will differ between live & sandbox environments.
+        private val CONFIG_CLIENT_ID = "ARJLfJNfSNkUyq1pzF5r2F9GPbgWrbKDf8jqVHTtIHEsvMBCZWdGR90MCEdWZGDrJV5bp2b9i-O6MkW3"//create at 18052020 - sandbox client id with xn32541bbbbb password- !D8@z%i$
+        //  "Ae-dgSrONxM4oozHBTjqIsqqCPBlX3o1KbWgJyOgWuGvZECGQ7K2xsNaA6bQWdpIZ1k59wDil5K88pmA"
+
+        //    "AQaROYvr5Gv9Fmu7OVGoIRtPjA359XD5F1oUVA4RFOfx0ZbPHDSkV-QvvGh9dl04oUb5Tpe3_R2Q6IJj" comment on 18052020
+
+
+        //  ATzTTqLAcY8X5GxCWFb52Do38kmnmgRfmtHwcmN_3LgHI05mC7JfHePaHHt0uXVrjxHJe_gRRXqYb7Dq
+        //  AZQj8TMgW9IRfmPZVmo0Nd_-WJOKsP-yx2NUFV2_AdskE6a_waYmxwPQNfUD4426YwFZhv_YIdYV6toq
+
+        private val REQUEST_CODE_PAYMENT = 1
+        private val REQUEST_CODE_FUTURE_PAYMENT = 2
+        private val REQUEST_CODE_PROFILE_SHARING = 3
+        private val config = PayPalConfiguration()
+                .environment(CONFIG_ENVIRONMENT)
+                .clientId(CONFIG_CLIENT_ID)
+                .merchantName("Example Merchant")
+                .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
+                .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"))
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                val confirm = data?.getParcelableExtra<PaymentConfirmation>(PaymentActivity.EXTRA_RESULT_CONFIRMATION)
+                if (confirm != null) {
+                    try {
+                        Log.i(TAG, confirm.toJSONObject().toString(4))
+                        Log.i(TAG, confirm.payment.toJSONObject().toString(4))
+
+                        Log.e("payment===", confirm.payment.toJSONObject().toString(4))
+                        //displayResultText("PaymentConfirmation info received from PayPal")
+                        showInfoDialog(getString(R.string.PaymentConfirmationinforeceivedfromPayPal)) {
+                            updatePaymentStatus(confirm.toJSONObject())
+                        }
+                    } catch (e: JSONException) {
+                        Log.e(TAG, "an extremely unlikely failure occurred: ", e)
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i(TAG, "The user canceled.")
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i(
+                        TAG,
+                        "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.")
+            }
+        } else if (requestCode == REQUEST_CODE_FUTURE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                val auth = data?.getParcelableExtra<PayPalAuthorization>(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION)
+                if (auth != null) {
+                    try {
+                        Log.i("FuturePaymentExample", auth.toJSONObject().toString(4))
+
+                        val authorization_code = auth.authorizationCode
+                        Log.i("FuturePaymentExample", authorization_code)
+
+                        sendAuthorizationToServer(auth)
+                        displayResultText("Future Payment code received from PayPal")
+
+                    } catch (e: JSONException) {
+                        Log.e("FuturePaymentExample", "an extremely unlikely failure occurred: ", e)
+                    }
+
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("FuturePaymentExample", "The user canceled.")
+            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i(
+                        "FuturePaymentExample",
+                        "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.")
+            }
+        } else if (requestCode == REQUEST_CODE_PROFILE_SHARING) {
+            if (resultCode == Activity.RESULT_OK) {
+                val auth = data?.getParcelableExtra<PayPalAuthorization>(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION)
+                if (auth != null) {
+                    try {
+                        Log.i("ProfileSharingExample", auth.toJSONObject().toString(4))
+
+                        val authorization_code = auth.authorizationCode
+                        Log.i("ProfileSharingExample", authorization_code)
+
+                        sendAuthorizationToServer(auth)
+                        displayResultText("Profile Sharing code received from PayPal")
+
+                    } catch (e: JSONException) {
+                        Log.e("ProfileSharingExample", "an extremely unlikely failure occurred: ", e)
+                    }
+
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("ProfileSharingExample", "The user canceled.")
+            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i(
+                        "ProfileSharingExample",
+                        "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.")
+            }
+        }
+        if (requestCode == 100) {
+            contactNo = data?.extras?.getString("contactno")
+            contactId = data?.extras?.getString("contactId")
+
+
+            if (contactNo != null) {
+                text_contactnumber.setText(contactNo)
+                saveContact_ContactForShipping(contactNo!!, contactId!!)
+                if (contactId != null && AddressId != null) {
+                    CheckCartItemAvailability()
+                }
+            }
+        } else if (requestCode == 101) {
+            Address = data?.extras?.getString("Address")
+            AddressId = data?.extras?.getString("Id")
+            if (Address != null) {
+                text_address.setText(Address)
+                saveAddress_ContactForShipping(Address!!, AddressId!!)
+                if (contactId != null && AddressId != null) {
+                    CheckCartItemAvailability()
+                }
+            }
+        } else if (requestCode == AmazonPayRequestCode) {
+            if (HaveBrowser) {
+                startActivity(intentFor<Order_List>())
+                finish()
+                saveIsAvailableDataInCart(true)
+            }
+        } else {
+            /////////////////////Upi pay//////////////////////////////////////
+            when (requestCode) {
+                UPI_PAYMENT -> if (Activity.RESULT_OK == resultCode || resultCode == 11) {
+                    if (data != null) {
+                        val trxt = data.getStringExtra("response")
+                        Log.d("UPI", "onActivityResult: $trxt")
+                        val dataList = ArrayList<String>()
+                        dataList.add(trxt)
+                        //upiPaymentDataOperation(dataList)
+                    } else {
+                        Log.d("UPI", "onActivityResult: " + "Return data is null")
+                        val dataList = ArrayList<String>()
+                        dataList.add("nothing")
+
+                        //upiPaymentDataOperation(dataList)
+                    }
+                } else {
+                    Log.d("UPI", "onActivityResult: " + "Return data is null") //when user simply back without payment
+                    val dataList = ArrayList<String>()
+                    dataList.add("nothing")
+                    // upiPaymentDataOperation(dataList)
+                }
+            }
+        }
+
+        /////////////////////Gpay onActivityresult//////////////////////////////////////
+
+
+    }
+
+    private fun displayResultText(result: String) {
+        /* var resultView: TextView = findViewById(R.id.txtResult)
+         resultView.text = "Result : " + result
+         Toast.makeText(
+                 applicationContext,
+                 result, Toast.LENGTH_LONG).show()*/
+    }
+
+    private fun sendAuthorizationToServer(authorization: PayPalAuthorization) {
+
+
+    }
+
+    private fun getThingToBuy(paymentIntent: String): PayPalPayment {
+        return PayPalPayment(BigDecimal(payableAmount), "USD", "sample item",
+                paymentIntent)
+    }
+
+    ////////////////////////////////////// UPI Payment method //////////////////////////////////////////
+    fun payUsingUpi() {
+        val uri = Uri.parse("upi://pay").buildUpon()
+                .appendQueryParameter("pa", "8418956190@ybl")
+                .appendQueryParameter("pn", "Amit Kumar")
+                .appendQueryParameter("tn", "")
+                .appendQueryParameter("am", "1.00")
+                .appendQueryParameter("cu", "INR")
+                .build()
+
+        val upiPayIntent = Intent(Intent.ACTION_VIEW)
+        upiPayIntent.data = uri
+        // will always show a dialog to user to choose an app
+        val chooser = Intent.createChooser(upiPayIntent, "Pay with")
+        // check if intent resolves
+        if (null != chooser.resolveActivity(packageManager)) {
+            startActivityForResult(chooser, UPI_PAYMENT)
+        } else {
+            Toast.makeText(this@OnlinePaymentScreen, "No UPI app found, please install one to continue", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
+    private fun updatePaymentStatus(paymentObject: JSONObject) {
+        Log.e("payment mode", "OnlinePayment :1")
+        var id = ""
+        if (paymentObject.has("response") && !paymentObject.isNull("response")) {
+            id = paymentObject.getJSONObject("response").get("id") as String
+        }
+        RetrofitClient.client.updatePaymentStatus(
+                getBearerToken()
+                        ?: "", id, "1", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+
+
+                //https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=101&payble_amount=1.8&used_wallet_amount=0.2&address=188&contact=57
+        ).onCall { networkException, response ->
+            response?.let {
+                if (response.isSuccessful) {
+
+                    val responseData = JSONObject(response?.body()?.string())
+                    if (responseData.has("message") && !responseData.isNull("message")) {
+                        showInfoDialog(responseData.get("message").toString()) {
+                            startActivity(intentFor<Order_List>())
+                            finish()
+                            saveIsAvailableDataInCart(false)
+                            //saveOrderId("")
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private fun Isaddress_ContactSelect(): Boolean {
+        if (contactNo.isNullOrBlank()) {
+
+            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectContactNo), Snackbar.LENGTH_SHORT).show()
+
+            return false
+
+
+        } else if (Address.isNullOrBlank() && AddressId.isNullOrBlank()) {
+            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectAddress), Snackbar.LENGTH_SHORT).show()
+
+            return false
+        } else
+            return true
+
+    }
+
+    private fun CheckCartItemAvailability() {
+        AddressId?.let {
+            contactId?.let { it1 ->
+                getBearerToken()?.let { it2 ->
+                    progressBar.visibility = View.VISIBLE
+                    RetrofitClient.client.checkUserCartItems(getOrderId(), it, it1, it2)
+                            .onCall { networkException, response ->
+                                networkException.let {
+                                    progressBar.visibility = View.GONE
+                                }
+                                response?.let {
+                                    progressBar.visibility = View.GONE
+                                    if (response.isSuccessful) {
+                                        response.body()?.string()?.let { body ->
+                                            if (isStatusCodeValid(body)) {
+                                                IsCheckAvailablity = true
+                                            } else {
+                                                showInfoDialog(getString(R.string.PleasedeleteOutofStockorExpiredservices))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                }
+            }
+
+
+        }
+
+    }
+
+    private fun updatePaymentStatusForCOD() {
+        Log.e("payment mode", "COD :2")
+
+        RetrofitClient.client.updatePaymentStatus(
+                getBearerToken()
+                        ?: "", "", "2", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+        ).onCall { networkException, response ->
+
+
+            response?.let {
+                if (response.isSuccessful) {
+
+                    val responseData = JSONObject(response?.body()?.string())
+                    if (responseData.has("message") && !responseData.isNull("message")) {
+                        showInfoDialog(responseData.get("message").toString()) {
+                            startActivity(intentFor<Order_List>())
+                            finish()
+                            saveIsAvailableDataInCart(false)
+                            //saveOrderId("")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun updatePaymentStatusWithWallet() {
+        Log.e("payment mode", "wallet :3")
+
+        RetrofitClient.client.updatePaymentStatus(
+                getBearerToken()
+                        ?: "", "", "3", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+        ).onCall { networkException, response ->
+            response?.let {
+                if (response.isSuccessful) {
+
+                    val responseData = JSONObject(response?.body()?.string())
+                    if (responseData.has("message") && !responseData.isNull("message")) {
+                        showInfoDialog(responseData.get("message").toString()) {
+                            startActivity(intentFor<Order_List>())
+                            finish()
+                            saveIsAvailableDataInCart(false)
+                            //saveOrderId("")
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+    }
+}

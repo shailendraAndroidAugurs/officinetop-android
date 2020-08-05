@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="listItemViewModel"
+            type="com.officinetop.officine.data.Models.Messages" />
+    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:paddingRight="15dp"
+    android:paddingLeft="60dp"
+    android:clipToPadding="false">
+
+
+
+    <TextView
+        android:layout_marginRight="@dimen/_3sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_body"
+        android:background="@drawable/mymessage"
+        android:textColor="#3A3A3A"
+        android:paddingVertical="@dimen/_15sdp"
+        android:paddingHorizontal="@dimen/_18sdp"
+        android:elevation="2dp"
+        android:textSize="@dimen/_15sdp"
+        android:layout_toLeftOf="@+id/image_user"
+        />
+    <TextView
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_below="@+id/message_body"
+        android:textSize="@dimen/_8sdp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_time"
+        android:textColor="#125F15"
+        />
+    <ImageView
+        android:layout_above="@+id/message_time"
+        android:src="@drawable/ic_user"
+        android:id="@+id/image_user"
+        android:layout_alignParentRight="true"
+        android:layout_width="25dp"
+        android:layout_height="25dp"/>
+
+</RelativeLayout></layout>

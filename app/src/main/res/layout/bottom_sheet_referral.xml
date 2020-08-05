@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="@dimen/_5sdp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/red"
+        android:id="@+id/dialogclose"
+        android:text="@string/close"
+        android:gravity="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:padding="@dimen/_25sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/offermsg_referral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:singleLine="true"
+            android:maxLength="100"
+            android:id="@+id/edt_referralcode"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/entercode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"/>
+
+        <Button
+            android:id="@+id/referralBtn"
+            android:layout_width="match_parent"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_height="wrap_content"
+            style="@style/RoundButton"
+            android:background="@drawable/rounded_theme_color_background"
+            android:text="@string/submit" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

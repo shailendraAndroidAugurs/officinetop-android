@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/ActionBarTheme"
+    android:layout_height="?actionBarSize">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_location"
+            android:adjustViewBounds="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/user_location"/>
+
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:gravity="center"
+           android:id="@+id/toolbar_title_layout"
+           android:orientation="horizontal"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp"
+           android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_marginStart="0dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_car"
+                android:padding="2dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:background="@android:color/transparent"
+                android:id="@+id/toolbar_image_view"
+                />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/toolbar_car_title"
+                style="@style/TextViewHeadingWhite"
+                android:layout_width="wrap_content"
+                android:padding="0dp"
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_car"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:inputType="none" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextViewWhite.VerySmall"
+                android:background="@android:color/transparent"
+                android:inputType="none"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:id="@+id/toolbar_car_subtitle"
+                />
+
+
+        </LinearLayout>
+
+       </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/image_support"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:padding="10dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_user_support"
+            />
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>
