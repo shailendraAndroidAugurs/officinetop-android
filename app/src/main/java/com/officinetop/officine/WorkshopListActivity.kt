@@ -691,7 +691,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
             RetrofitClient.client.getWorkshops(serviceID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(),user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -907,6 +907,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
                 reloadPage()
 
+
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
@@ -1054,8 +1055,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-               //  currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-              currentLatLong = LatLng(44.186516, 12.1662333)
+
+                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+               // currentLatLong = LatLng(44.186516, 12.1662333)
+
                 reloadPage()
                 isFirstTime = false
             }

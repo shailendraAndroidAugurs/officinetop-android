@@ -39,6 +39,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:background="@color/white"
                         android:layout_height="wrap_content">
 
                         <com.daimajia.slider.library.SliderLayout
@@ -49,6 +50,7 @@
                             android:clickable="false"
                             android:gravity="center"
                             app:auto_cycle="false"
+                            android:layout_marginTop="@dimen/_20sdp"
                             app:indicator_visibility="visible"
                             app:pager_animation="Default"
                             app:pager_animation_span="1000" />
@@ -58,13 +60,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/service_detail_container_margin_large"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/service_detail_container_margin_large"
                             android:background="@drawable/ic_favorite_border_black_empty_24dp" />
 
                         <ImageView
                             android:id="@+id/item_brand_image"
+                            android:layout_marginTop="@dimen/_3sdp"
                             android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/_3sdp"
                             android:layout_height="@dimen/brand_image_height" />
 
                     </RelativeLayout>
