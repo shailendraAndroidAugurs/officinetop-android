@@ -907,6 +907,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
                 reloadPage()
 
+
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
