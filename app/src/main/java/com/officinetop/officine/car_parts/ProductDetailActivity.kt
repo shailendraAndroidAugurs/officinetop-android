@@ -254,16 +254,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             itemQty(cartItem)
 
 
-            // set qty spinner
-            qty_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    product_price.text = getString(R.string.prepend_euro_symbol_string, ((position + 1) * cartItem.price).roundTo2Places().toString())
-
-                }
-
-            }
         }
 
 
@@ -357,7 +348,13 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             //productPrice = productDetails?.optString("price").takeIf { it.isNullOrEmpty() }?.toDouble()?.roundTo2Places()
                 productPrice = 0.0
             else
-                productPrice = productDetails?.optString("seller_price").takeIf { !it.isNullOrEmpty() }?.toDouble()?.roundTo2Places()
+
+                if(!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null")  && !productDetails?.optString("seller_price").equals("0")&& !productDetails?.optString("seller_price").equals("0.0"))
+                {
+                    productPrice =productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
+                }else{
+                    productPrice = 0.0
+                }
             Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--" + productPrice + "--" +
                     intent.hasExtra(Constant.Path.productType) + "--" + intent.getStringExtra(Constant.Path.productType).equals("tyre", true))
 
@@ -365,6 +362,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (intent.hasExtra(Constant.Path.productType) && intent.getStringExtra(Constant.Path.productType).equals("tyre", true)) {
                         getString(R.string.prepend_euro_symbol_string, productPrice.toString() + " PFU")
                     } else {
+
+
                         getString(R.string.prepend_euro_symbol_string, productPrice.toString())
                     }
 
@@ -486,7 +485,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
                     .description("Description")
-                    .image(imageRes)
+                    .image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside)
                     .empty(R.drawable.no_image_placeholder)
             dialogSlider.addSlider(scaledSlide)
 

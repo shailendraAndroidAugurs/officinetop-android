@@ -758,6 +758,11 @@
     <string name="coupon_list">Coupons List</string>
 
     <string name="prepend_euro_symbol_with_from_string"> from: € %s</string>
+    <string name="coupon_is_invalid">Coupon is invalid</string>
+
+    <string name="doyouwanttobookservices">Do you want to book services without coupon ?</string>
+
+
     <!-- Sceglie Officina-->
 
 

@@ -15,8 +15,6 @@ abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         clear()
     }
 
-/// add 
-
      fun getCurrentPosition(): Int? {
         return currentPosition
     }

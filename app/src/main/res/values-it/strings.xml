@@ -683,6 +683,8 @@
     <string name="prepend_percentage_symbol"> %</string>
     <string name="coupon_list">Elenco coupon</string>
     <string name="prepend_euro_symbol_with_from_string">  A partire da: € %s</string>
+    <string name="coupon_is_invalid">Il buono non è valido</string>
+    <string name="doyouwanttobookservices">Vuoi prenotare servizi senza coupon ?</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
