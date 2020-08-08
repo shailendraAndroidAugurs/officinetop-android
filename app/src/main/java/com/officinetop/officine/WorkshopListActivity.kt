@@ -1065,8 +1065,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+
+               currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
                //currentLatLong = LatLng(44.186516, 12.1662333)
+
                 reloadPage()
                 isFirstTime = false
             }
