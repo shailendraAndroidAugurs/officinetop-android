@@ -268,16 +268,6 @@
                         android:text=""
                         android:textColor="@color/gray_dark" />
 
-                    <TextView
-                        android:visibility="gone"
-                        android:id="@+id/product_price_total"
-                        style="@style/TextViewHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="0dp"
-
-                        android:textColor="@color/gray_dark" />
 
                     <TextView
                         android:visibility="visible"

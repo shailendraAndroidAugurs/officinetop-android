@@ -41,6 +41,7 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
+import com.paypal.android.sdk.payments.LoginActivity
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.dialog_booking_calendar.*
@@ -1390,7 +1391,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 val body = response.body()?.string()
                 if (body.isNullOrEmpty() || response.code() == 401)
-                    showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true)
+                    showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage() })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
 
                 body?.let {
@@ -1403,54 +1404,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
                             finish()
                         }
-                        /* if (bookingResponse.has("data") && !bookingResponse.isNull("data")) {
-                             if (bookingResponse.getJSONObject("data").has("product_order_id") && bookingResponse.getJSONObject("data").get("product_order_id") != null) {
-                                 //saveOrderId(bookingResponse.getJSONObject("data").get("product_order_id").toString())
-                             }
-                         }*/
-                        /*val serviceModel: Models.ServiceBookingModel
-
-                        if (isRevision) {
-                            Log.d("finalPrice", finalPrice.toString())
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, endTime, finalPrice, "Revision Service", currentWorkshopDetail, selectedDateFilter)
-                        } else if (isTyre) {
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, endTime, finalPrice, "Tyre Service", currentWorkshopDetail, selectedDateFilter)
-                        }
-                        *//* else if (!TextUtils.isEmpty(intent.getStringExtra(Constant.Key.workshopCategoryDetail))) {
-                             serviceModel = Models.ServiceBookingModel(
-                                     packageID, bookingStartTime, endTime, finalPrice, intent.getStringExtra(Constant.Key.workshopAssembledDetail), currentWorkshopDetail, selectedDateFilter)
-
-                         }*//*
-                        else if (isSOSService || isSosEmergency) {
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, "", finalPrice, "SOS Service", currentWorkshopDetail, selectedDateFilter)
-                        } else if (isCarMaintenanceService) {
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, "", carMaintenanceServicePrice.toDouble().roundTo2Places(), "Car Maintenance Service", currentWorkshopDetail, selectedDateFilter)
-                        } else if (isQuotesService) {
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, "", 0.0, "Quotes Service", currentWorkshopDetail, selectedDateFilter)
-                        } else if (isMotService) {
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, "", finalPrice, "Mot Service", currentWorkshopDetail, selectedDateFilter)
-                        } else
-                            serviceModel = Models.ServiceBookingModel(
-                                    packageID, bookingStartTime, endTime, finalPrice, intent.getStringExtra(Constant.Key.workshopCategoryDetail), currentWorkshopDetail, selectedDateFilter)
-
-
-                        val cartItem = Models.CartItem(serviceModel = serviceModel)
-
-
-
-                        if (isAssembly) {  //cartItem.productDetail != null  (if need replace this in if(cartItem.productDetail != null) statement)
-                            cartItem.type = Constant.type_assembled
-                        } else
-                            cartItem.type = Constant.type_workshop
-
-
-                        // setCartItem(cartItem)*/
 
 
                     } else {
@@ -1721,5 +1674,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    private fun movetologinPage(){
+        startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
     }
 }

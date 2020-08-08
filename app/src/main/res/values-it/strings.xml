@@ -5,12 +5,12 @@
     <string name="tab_news">notizia</string>
     <string name="tab_profile">Profilo</string>
     <string name="tab_carello">Carello</string>
-    <string name="sample">Campione</string>
+    <string name="sample">""</string>
     <string name="string_not_found">0.0</string>
     <string name="string_space">"    "</string>
     <string name="related_part">-------- Parte selezionata ----------</string>
-    <string name="sample_title">Titolo di esempio</string>
-    <string name="sample_product">Prodotto campione</string>
+    <string name="sample_title">""</string>
+    <string name="sample_product">""</string>
     <string name="sample_workshop">Officina Cesena Workshop</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

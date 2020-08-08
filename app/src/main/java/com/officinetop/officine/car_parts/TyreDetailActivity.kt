@@ -162,14 +162,14 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (productDetails?.quantity.isNullOrBlank() || productDetails?.quantity.equals("null") || productDetails?.quantity.equals("0")) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-                product_price_total.visibility = View.GONE
+
                 productTotalPrices.visibility = View.GONE
                 product_price_.text = getString(R.string.tyre_price_total, "0.0")
                 item_qty.text = "0"
             } else if (price.isNullOrEmpty() || price.equals("null") || price.equals("0") || price.equals("0.0")) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-                product_price_total.visibility = View.GONE
+
                 productTotalPrices.visibility = View.GONE
                 product_price_.text = getString(R.string.tyre_price_total, "0.0")
             } else {
@@ -180,9 +180,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                         tyreDetail = productDetails
 
                 )
-
-
-                product_price_total.visibility = View.GONE
                 productTotalPrices.visibility = View.VISIBLE
                 product_price_.visibility = View.VISIBLE
 
@@ -247,9 +244,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     )
 
-//                if (myIntent.hasExtra(Constant.Key.workshopCategoryDetail))
-//                        myIntent.putExtra(Constant.Key.workshopCategoryDetail, intent.)
-
 
                     startActivity(myIntent)
 
@@ -260,51 +254,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        //Log.d("TyreDetailActivity", "initViews: adding item = $cartItem")
-
-
-        // set qty spinner
-        /*qty_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val t_price = (position+1) * price.toFloat()
-                oneItemAdditionalPrice = ((position+1) * price.toFloat()/10)
-                product_price.text = getString(R.string.tyre_price_text, t_price.toDouble().roundTo2Places().toString())
-                totalPrice = t_price
-                val arra = arrayOf(2.75f,0.85f,8.60f)
-                when(productDetails?.type) {
-                    "w"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                        totalPrice = totalPrice + arra[0]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]}
-                    "s"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                        totalPrice = totalPrice + arra[0]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]}
-                    "m"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[1])
-                        totalPrice = totalPrice + arra[1]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[1]}
-                    "g"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                        totalPrice = totalPrice + arra[0]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]}
-                    "o"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                        totalPrice = totalPrice + arra[0]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]}
-                    "l"->   {
-                        //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[2])
-                        totalPrice = totalPrice + arra[2]
-                        oneItemAdditionalPrice = oneItemAdditionalPrice + arra[2]}
-                }
-                totalPrice = totalPrice+((t_price)/10)
-                product_price_total.text = getString(R.string.tyre_price_total,totalPrice.toString())//41.33+2.75+4.133
-            }
-        }*/
-
-
         try {
             getFeedbacks(this, "", selectedProductID.toString(), "1", "2")
         } catch (e: Exception) {
@@ -443,57 +392,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun setTotalPriceForQty(qty: Int) {
         val t_price = /*qty * */price.toFloat() + pfuAmount
-
-        // oneItemAdditionalPrice = (qty * price.toFloat()) / 10
         oneItemAdditionalPrice = t_price
         product_price_.text = getString(R.string.tyreprice_text, price.toFloat().toDouble().roundTo2Places().toString()) /*+ "," + getString(R.string.PFU_price, pfuAmount.toDouble().roundTo2Places().toString())*/
         productTotalPrices.text = getString(R.string.tyre_price_total, (price.toFloat().toDouble().roundTo2Places() * qty.toDouble()).toDouble().roundTo2Places().toString())
 
         totalPrice = t_price * qty
-        val arra = arrayOf(2.75f, 0.85f, 8.60f)
-        /*  when (productDetails?.type) {
-              "w" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                  totalPrice = totalPrice + arra[0]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]
-                  tyreTypeAmount = arra[0]
-              }
-              "s" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                  totalPrice = totalPrice + arra[0]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]
-                  tyreTypeAmount = arra[0]
-              }
-              "m" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[1])
-                  totalPrice = totalPrice + arra[1]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[1]
-                  tyreTypeAmount = arra[1]
-              }
-              "g" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                  totalPrice = totalPrice + arra[0]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]
-                  tyreTypeAmount = arra[0]
-              }
-              "o" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[0])
-                  totalPrice = totalPrice + arra[0]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[0]
-                  tyreTypeAmount = arra[0]
-              }
-              "l" -> {
-                  //product_price_.text = getString(R.string.tyre_price_one,"+"+arra[2])
-                  totalPrice = totalPrice + arra[2]
-                  oneItemAdditionalPrice = oneItemAdditionalPrice + arra[2]
-                  tyreTypeAmount = arra[0]
-              }
-          }*/
 
-        if (qty == 1) {
-            // calculatedPriceforSingleItem = totalPrice.toString()
-        }
-        product_price_total.text = getString(R.string.tyre_price_total, totalPrice.toString())
 
     }
 
@@ -775,7 +679,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     val imageRes = imagesArray.get(i).image_url
                     Log.d("Images", imageRes.toString())
                     val slide = TextSliderView(this)
-                            .image(imageRes.toString())
+                            .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)
                             .empty(R.drawable.no_image_placeholder)
                             .setScaleType(BaseSliderView.ScaleType.CenterInside)
                     image_slider.addSlider(slide)

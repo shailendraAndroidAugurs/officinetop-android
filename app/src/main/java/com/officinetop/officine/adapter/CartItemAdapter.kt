@@ -268,9 +268,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     }
                     if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType.equals("1")) {
 
-                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " :" + context.getString(R.string.euro_symbol)+ item.serviceAssemblyProductDescription.CouponPrices /*+ " %"*/
+                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol)+ item.serviceAssemblyProductDescription.CouponPrices /*+ " %"*/
                     } else if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType.equals("2")) {
-                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " :" + context.getString(R.string.euro_symbol) + item.serviceAssemblyProductDescription.CouponPrices
+                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.serviceAssemblyProductDescription.CouponPrices
                     }else{
                         tv_couponDetailProduct.visibility=View.GONE
                     }
@@ -281,9 +281,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
                 if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("1")) {
 
-                    tv_coupon_cart_services.text = item.couponTitle + " :"+context.getString(R.string.euro_symbol)+ item.CouponPrices /*+ " %"*/
+                    tv_coupon_cart_services.text = item.couponTitle + " : "+context.getString(R.string.euro_symbol)+ item.CouponPrices /*+ " %"*/
                 } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("2")) {
-                    tv_coupon_cart_services.text = item.couponTitle + " :" + context.getString(R.string.euro_symbol) + item.CouponPrices
+                    tv_coupon_cart_services.text = item.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.CouponPrices
                 }else
                 {
                     tv_coupon_cart_services.visibility=View.GONE
