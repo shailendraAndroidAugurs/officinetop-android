@@ -409,6 +409,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
         if (cartData.CartType.equals("SP")) {
+            IsServicesAvailable=true
             if (cartData.afterDiscountPrice != null && !cartData.afterDiscountPrice.equals("null") && !cartData.afterDiscountPrice.equals(""))
                 servicePrice += cartData.afterDiscountPrice.toDouble()
 
@@ -416,19 +417,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
 
 
             if (cartData.serviceAssemblyProductDescription != null) {
-                // this is commented as client required predicted date not caculate when cart have any services .
-                /* IsProductAvailable = false
-                 if (deliveryDatePridicted.isNullOrBlank()) {
-                     deliveryDatePridicted = cartData.bookingDate
-                 } else {
-                     var bookingDate = SimpleDateFormat("yyy-MM-dd").parse(cartData.bookingDate)
-                     var deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePridicted)
-                     if (deliveryDate < bookingDate) {
 
-                         deliveryDatePridicted = cartData.bookingDate
-                     }
-                 }*/
-                IsServicesAvailable=true
 
                 if (!cartData.serviceAssemblyProductDescription.totalPrice.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.totalPrice.equals("null"))
                     productPrice += cartData.serviceAssemblyProductDescription.totalPrice.toDouble()

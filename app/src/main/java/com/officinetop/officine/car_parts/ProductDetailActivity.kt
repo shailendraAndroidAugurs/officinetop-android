@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -63,8 +62,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.Product_detail)
 
-        qty_spinner.setSampleSpinnerAdapter(this, getIntegerStringList(10))
-        qty_spinner.setSelection(0)
         initViews()
         setImageSlider()
         loadProductDetails()
@@ -103,8 +100,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 productIsPair = true
                 item_qty.text = "2"
             }
-            /*if(price.isNullOrEmpty())
-                price = null*/
             if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
                 wish_list = intent.getStringExtra(Constant.Key.wishList)
                 if (wish_list == "1")
@@ -118,56 +113,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             Iv_favorite.setOnClickListener {
 
-                try {
-                    if (wish_list == "0") {
-                        RetrofitClient.client.addToFavorite(getBearerToken()
-                                ?: "", detail?.id.toString(), "1", "", getSelectedCar()?.carVersionModel?.idVehicle
-                                ?: "").onCall { networkException, response ->
-
-                            response.let {
-                                if (response?.isSuccessful!!) {
-                                    val body = JSONObject(response?.body()?.string())
-                                    if (body.has("message")) {
-                                        Iv_favorite.setImageResource(R.drawable.ic_heart)
-
-                                        wish_list = "1"
-
-
-                                        showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
-
-
-                                    }
-
-                                }
-
-                            }
-                        }
-
-                    } else {
-
-                        RetrofitClient.client.removeFromFavorite(getBearerToken()
-                                ?: "", detail?.id.toString(), "", "1").onCall { networkException, response ->
-
-                            response.let {
-                                if (response?.isSuccessful!!) {
-                                    val body = JSONObject(response?.body()?.string())
-                                    if (body.has("message")) {
-                                        Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                                        wish_list = "0"
-                                        showInfoDialog(getString(R.string.productRemoved_formWishList))
-
-                                    }
-
-                                }
-
-                            }
-                        }
-                    }
-
-
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
-                }
+                add_remove_product__Wishlist()
 
             }
             if (detail?.couponList != null && detail?.couponList?.size != 0) {
@@ -203,11 +149,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             add_product_to_cart.setOnClickListener {
                 Log.e("Sparepart Add to cart", "onClickCall:yes")
-                /*  if (productIsPair)
-                      cartItem.quantity = item_qty.text.toString().toInt() / 2
-                  else*/
                 cartItem.quantity = item_qty.text.toString().toInt()
-                ///qty_spinner.selectedItem.toString().toInt()
+
                 cartItem.finalPrice = cartItem.price * cartItem.quantity
                 try {
                     addToCartProducts(selectedProductID.toString(), cartItem?.quantity.toString(), "0.0",
@@ -223,15 +166,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             buy_product_with_assembly.setOnClickListener {
                 Log.e("Cartassembly", productDetails.toString())
                 if (productDetails != null) {
-//                startActivity(intentFor<WorkshopDetailActivity>(Constant.Path.workshopUsersId to productDetails!!.getInt("users_id")
-//                        , Constant.Path.workshopCategoryId to productDetails!!.getInt("category_id")
-//                        , Constant.Path.workshopFilterSelectedDate to ""))
-
-                    /*  if (productIsPair)
-                          cartItem.quantity = item_qty.text.toString().toInt() / 2
-                      else*/
                     cartItem.quantity = item_qty.text.toString().toInt()
-                    //qty_spinner.selectedItem.toString().toInt()
+
                     cartItem.finalPrice = cartItem.price * cartItem.quantity
                     cartItem?.Deliverydays = Deliverydays
                     Log.e("assembly", cartItem.finalPrice.toString())
@@ -243,10 +179,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                             Constant.Key.productDetail to productDetails?.toString(),
                             Constant.Key.cartItem to cartItem
                     )
-
-//                if (myIntent.hasExtra(Constant.Key.workshopCategoryDetail))
-//                        myIntent.putExtra(Constant.Key.workshopCategoryDetail, intent.)
-
                     startActivity(myIntent)
                 }
             }
@@ -254,10 +186,62 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             itemQty(cartItem)
 
 
-
         }
 
 
+    }
+
+    private fun add_remove_product__Wishlist() {
+        try {
+            if (wish_list == "0") {
+                RetrofitClient.client.addToFavorite(getBearerToken()
+                        ?: "", detail?.id.toString(), "1", "", getSelectedCar()?.carVersionModel?.idVehicle
+                        ?: "").onCall { networkException, response ->
+
+                    response.let {
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(response?.body()?.string())
+                            if (body.has("message")) {
+                                Iv_favorite.setImageResource(R.drawable.ic_heart)
+
+                                wish_list = "1"
+
+
+                                showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
+
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            } else {
+
+                RetrofitClient.client.removeFromFavorite(getBearerToken()
+                        ?: "", detail?.id.toString(), "", "1").onCall { networkException, response ->
+
+                    response.let {
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(response?.body()?.string())
+                            if (body.has("message")) {
+                                Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+                                wish_list = "0"
+                                showInfoDialog(getString(R.string.productRemoved_formWishList))
+
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun itemQty(cartItem: Models.CartItem): String {
@@ -283,7 +267,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
                     if (!min_price.equals("")) {
-                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text ).toString())})"
+                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
                     }
                 }
             }
@@ -349,25 +333,17 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 productPrice = 0.0
             else
 
-                if(!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null")  && !productDetails?.optString("seller_price").equals("0")&& !productDetails?.optString("seller_price").equals("0.0"))
-                {
-                    productPrice =productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
-                }else{
+                if (!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null") && !productDetails?.optString("seller_price").equals("0") && !productDetails?.optString("seller_price").equals("0.0")) {
+                    productPrice = productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
+                } else {
                     productPrice = 0.0
                 }
             Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--" + productPrice + "--" +
                     intent.hasExtra(Constant.Path.productType) + "--" + intent.getStringExtra(Constant.Path.productType).equals("tyre", true))
 
-            product_price.text =
-                    if (intent.hasExtra(Constant.Path.productType) && intent.getStringExtra(Constant.Path.productType).equals("tyre", true)) {
-                        getString(R.string.prepend_euro_symbol_string, productPrice.toString() + " PFU")
-                    } else {
+            product_price.text =getString(R.string.tyreprice_text, productPrice.toString())
 
-
-                        getString(R.string.prepend_euro_symbol_string, productPrice.toString())
-                    }
-
-
+            productTotalPrices. text =getString(R.string.tyre_price_total, productPrice.toString())
             if (productDetails!!.has("rating_star") && !productDetails!!.isNull("rating_star") && productDetails!!.getString("rating_star") != null && !productDetails!!.getString("rating_star").equals("")) {
                 product_rating.rating = productDetails!!.getString("rating_star").toFloat()
             } else
@@ -380,8 +356,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             //Add slider images
             if (productDetails!!.has("images") && !productDetails!!.isNull("images") && productDetails!!.getJSONArray("images").length() > 0) {
 
-//                createImageSliderDialog()
-
                 val imagesArray = productDetails!!.getJSONArray("images")
                 setImageSlider(imagesArray)
             }
@@ -393,25 +367,14 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (detail?.productsQuantiuty.isNullOrBlank() || detail?.productsQuantiuty.equals("null") || detail?.productsQuantiuty.equals("0")) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-                product_price_total.visibility = View.GONE
-                productTotalPrices.visibility = View.GONE
-                // productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text/2.toDouble()).toString())
 
-                product_price_.text = getString(R.string.tyre_price_total, "0.0")
                 item_qty.text = "0"
             } else if (productPrice == 0.0) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-                product_price_total.visibility = View.GONE
-                productTotalPrices.visibility = View.GONE
-                product_price_.text = getString(R.string.tyre_price_total, "0.0")
 
-            } else {
-                product_price_total.visibility = View.VISIBLE
-                product_price_.visibility = View.GONE
-                productTotalPrices.visibility = View.VISIBLE
-                // itemQty()
-                // setTotalPriceForQty(1)
+
+
 
             }
             Log.d("SparePart", "PartISAssemble:" + detail?.assembleStatus)
@@ -480,7 +443,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         for (i in 0 until imagesArray.length()) {
             //   val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
             val imageRes = imagesArray.getJSONObject(i).getString("image_url")
-            val slide = TextSliderView(this).image(imageRes).empty(R.drawable.no_image_placeholder)
+            val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
             image_slider.addSlider(slide)
 
             val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
@@ -674,18 +637,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 }
 
 
-            }
-
-
-
-            imageCross.setOnClickListener {
-                dialog.dismiss()
-            }
-            cancel_coupons.setOnClickListener {
-                dialog.dismiss()
-            }
-            apply_coupons.setOnClickListener {
-                dialog.dismiss()
             }
 
         }

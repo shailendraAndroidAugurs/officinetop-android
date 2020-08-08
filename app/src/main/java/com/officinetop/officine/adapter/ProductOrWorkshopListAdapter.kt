@@ -189,10 +189,12 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
                 subtitle.text = product_workshopList.registeredOffice
 
-                if (!product_workshopList.servicesPrice.isNullOrEmpty())
+                if (!product_workshopList.servicesPrice.isNullOrEmpty() && !product_workshopList.servicesPrice.equals("null")) {
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, product_workshopList.servicesPrice)
+                }else{
+                    price.text = mcontext.getString(R.string.prepend_euro_symbol_string, "0")
+                }
 
-                //distance.text = "(11.6 Km)"
                 if (!product_workshopList.ratingStar.isNullOrEmpty()) {
                     rating.rating = product_workshopList.ratingStar.toFloat()
                 } else
@@ -245,9 +247,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                         textview_quantity.text = "2 " + mcontext.getString(R.string.price)
                     }
                 }
-                price.text = if (productOrWorkshopList[p1].sellerPrice == null)
-                    mcontext.getString(R.string.prepend_euro_symbol_string, "0")
-                else mcontext.getString(R.string.prepend_euro_symbol_string, productOrWorkshopList[p1].sellerPrice)
+                price.text = if (!productOrWorkshopList[p1].sellerPrice.isNullOrBlank() && !productOrWorkshopList[p1].sellerPrice.equals("null"))
+                    mcontext.getString(R.string.prepend_euro_symbol_string, productOrWorkshopList[p1].sellerPrice)
+                else mcontext.getString(R.string.prepend_euro_symbol_string, "0")
 
 
 

@@ -83,8 +83,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
     var tempPriceFinal = -1
     var tempPriceInitial = 0
 
-    var distanceRangeFinal = 0
-    var distanceRangeInitial = 100
+    var distanceRangeFinal = 100
+    var distanceRangeInitial = 0
 
     var tempDistanceFinal = -1
     var tempDistanceInitial = 0
@@ -211,11 +211,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 if (DeleviryDate > SelectedWorkShopDate) {
                     var dateFormat = SimpleDateFormat("yyy-MM-dd");
                     selectedFormattedDate = dateFormat.format(DeleviryDate);
-                    // selectedFormattedDate = DeleviryDate.toString()
 
                 }
-
-                // Log.d("Date","selectedDateforBooking WorkshopList"+selectedDateFilter)
 
             }
         }
@@ -240,11 +237,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 if (DeleviryDate > SelectedWorkShopDate) {
                     var dateFormat = SimpleDateFormat("yyy-MM-dd");
                     selectedFormattedDate = dateFormat.format(DeleviryDate);
-                    // selectedFormattedDate = DeleviryDate.toString()
+
 
                 }
-
-                // Log.d("Date","selectedDateforBooking WorkshopList"+selectedDateFilter)
 
             }
 
@@ -276,7 +271,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             }
             if (intent.hasExtra("mot_type")) {
                 mot_type = intent.getStringExtra("mot_type").toString()
-                // Log.e("mutlsservice", motservices_time.toString())
+
             }
 
 
@@ -786,12 +781,23 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
         if (jsonArray.length() > 0) {
             try {
                 hasRecyclerLoadedOnce = true
-                // filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
+
                 filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
-                //filterDialog.dialog_price_range.=seekbarPriceFinalLimit.
+
                 filterDialog.clear_selection.callOnClick()
                 filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
                 filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
+
+
+
+                filterDialog.dialog_distance_range.setValue(0f, 25f)
+
+                filterDialog.distance_end_range.text =getString(R.string.append_km, 25)
+                filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
+
+
+
+
                 Log.d("WorkshopList", "max prices" + seekbarPriceFinalLimit.toString())
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -907,7 +913,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
                 reloadPage()
 
-
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
@@ -916,7 +921,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             dialog_distance_layout.visibility = View.VISIBLE
             dialog_distance_range.visibility = View.VISIBLE
 
-            //  dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
+
             dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
 
             toolbar.inflateMenu(R.menu.menu_single_item)
@@ -939,6 +944,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
                 priceRangeFinal = -1
                 try {
+
                     dialog_rating_five.isChecked = false
                     dialog_rating_four.isChecked = false
                     dialog_rating_three.isChecked = false
@@ -955,6 +961,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                     filterBrandList.clear()
                     isCheckboxCleared = true
                     brandFilterAdapter?.notifyDataSetChanged()
+                    filterDialog.dialog_distance_range.setValue(0f, 25f)
+
+                    filterDialog.distance_end_range.text = getString(R.string.prepend_euro_symbol_string, "25")
+                    filterDialog.distance_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
                 } catch (e: Exception) {
 
                 }
@@ -1055,8 +1065,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-               // currentLatLong = LatLng(44.186516, 12.1662333)
+                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+               //currentLatLong = LatLng(44.186516, 12.1662333)
                 reloadPage()
                 isFirstTime = false
             }
