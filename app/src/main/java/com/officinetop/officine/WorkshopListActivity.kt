@@ -130,6 +130,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
     private var googleApiClient: GoogleApiClient? = null
     var isFirstTime = true
     var WorkshopDistanceforDefault = "0,25"
+    private var tyre_mainCategory_id=""
+    private var washing_mainCategory_id=""
+    private var misdistancefilter=false
+    private var misclearselection=false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -193,8 +198,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
         if (intent.hasExtra(Constant.Path.washServiceDetails)) {
             val serviceDetail = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
-            if (serviceDetail != null)
+            if (serviceDetail != null) {
                 serviceID = serviceDetail.id!!
+                washing_mainCategory_id=serviceDetail.main_category_id!!
+            }
+
         }
 
 
@@ -231,6 +239,12 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
                 serviceID = productID
             }
+            if (intent.hasExtra("tyre_mainCategory_id")) {
+                tyre_mainCategory_id = intent.getStringExtra("tyre_mainCategory_id")
+
+            }
+
+
             if (!cartItem?.Deliverydays.isNullOrBlank() && (!cartItem?.Deliverydays.equals("0"))) {
                 var DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1!!))
                 var SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
@@ -305,7 +319,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
 
         if (!isSOSServiceEmergency)
-            getCalendarMinPriceRange()
+           // getCalendarMinPriceRange()
 
         intent.printValues(localClassName)
 
@@ -331,6 +345,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
         if (!isFirstTime) {
             Log.d("WorkshopList", "onResumeCall yes")
             reloadPage()
+            getCalendarMinPriceRange()
         }
 
     }
@@ -346,7 +361,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
         val nonAssemblyCall = RetrofitClient.client.getCalendarMinPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
-                getSelectedCar()?.carSize ?: "")
+                getSelectedCar()?.carSize ?: "",user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=washing_mainCategory_id)
 
         val assemblyCall = RetrofitClient.client.getAssemblyCalendarPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
@@ -354,13 +369,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                         ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
 
         val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate)
-        if (isTyreService) {
-            Log.d("Date", "DeliveryDate WorkshopList" + selectedFormattedDate)
-            Log.d("IsTyreAvailable", "yes")
-
-
-        }
-        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString())
+        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
 
         val quotesCalendarCall = RetrofitClient.client.getQuotesCalendar(serviceID, selectedFormattedDate, ratingString,
                 if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersion!!)
@@ -863,6 +872,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
                     distance_end_range.text = getString(R.string.append_km, tempDistanceFinal)
                     distance_start_range.text = getString(R.string.append_km, tempDistanceInitial)
+                    misdistancefilter=true
                 }
 
                 override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
@@ -912,6 +922,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 }
 
                 reloadPage()
+                if(misdistancefilter ||misclearselection){
+                    getCalendarMinPriceRange()
+                }
 
                 dismiss()
                 return@setOnMenuItemClickListener true
@@ -950,28 +963,25 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                     dialog_rating_three.isChecked = false
                     dialog_rating_two.isChecked = false
                     dialog_rating_one.isChecked = false
-
                     //reset other categories
                     dialog_favourite_check_box.isChecked = false
                     dialog_offers_check_box.isChecked = false
                     filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
                     filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
                     filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
-
                     filterBrandList.clear()
                     isCheckboxCleared = true
                     brandFilterAdapter?.notifyDataSetChanged()
                     filterDialog.dialog_distance_range.setValue(0f, 25f)
 
-                    filterDialog.distance_end_range.text = getString(R.string.prepend_euro_symbol_string, "25")
-                    filterDialog.distance_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
+                    filterDialog.distance_end_range.text = getString(R.string.append_km, 25)
+                    filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
+                    misclearselection=true
+                    misdistancefilter=false
                 } catch (e: Exception) {
 
                 }
-                //reset rating filter
 
-
-                //  reloadPage()
             }
 
             create()
@@ -1066,8 +1076,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-               //currentLatLong = LatLng(44.186516, 12.1662333)
+             //  currentLatLong = LatLng(44.186516, 12.1662333)
                 reloadPage()
+                getCalendarMinPriceRange()
                 isFirstTime = false
             }
         }

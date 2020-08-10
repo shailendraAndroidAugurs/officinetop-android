@@ -66,6 +66,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var productIsPair = false
     private var minimumServicePrices = ""
     private var Deliverydays = ""
+    private var tyre_mainCategory_id = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -240,7 +241,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                             Constant.Key.is_tyre to true,
                             Constant.Path.productId to selectedProductID,
                             Constant.Key.productDetail to productDetails?.toString(),
-                            Constant.Key.cartItem to cartItem
+                            Constant.Key.cartItem to cartItem,
+                                   "tyre_mainCategory_id" to tyre_mainCategory_id
 
                     )
 
@@ -457,7 +459,9 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         delivery_date.text = getDate(tyreDetailData.delivery_days.toInt() + 1)
                                         Deliverydays = tyreDetailData.delivery_days
                                     }
-
+                                    if (!tyreDetailData.delivery_days.isNullOrBlank()) {
+                                        tyre_mainCategory_id =tyreDetailData.tyre_mainCategory_id
+                                    }
 
                                     setDetailedInformation(tyreDetailData)
                                     seller_details.isEnabled = false

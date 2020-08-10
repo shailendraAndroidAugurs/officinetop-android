@@ -296,7 +296,12 @@ interface IRetrofitApis {
     fun getTyreCalendar(@Query(Constant.Path.productId) serviceId: Int,
                         @Query(Constant.Path.version_id) versionId: String,
                         @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                        @Query(Constant.Path.productqty) productqty: String
+                        @Query(Constant.Path.productqty) productqty: String,
+                        @Query("user_lat") user_lat: String,
+                        @Query("user_long") user_long: String,
+                        @Query("distance_range") distance_range: String,
+                        @Query("main_category_id") mainCategoryId: String
+
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getCalendarPrice)
@@ -307,7 +312,11 @@ interface IRetrofitApis {
                             @Query(Constant.Path.filterPriceRange) priceRange: String,
                             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
                             @Query(Constant.Path.workShopType) workShopType: Int,
-                            @Query(Constant.Path.carSize) carSize: String): Call<ResponseBody>
+                            @Query(Constant.Path.carSize) carSize: String,
+                            @Query("user_lat") user_lat: String,
+                            @Query("user_long") user_long: String,
+                            @Query("distance_range") distance_range: String,
+                            @Query("main_category_id") mainCategoryId: String): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getMotCalendar)
     fun getMotCalendar(@Query(Constant.Path.serviceID) serviceId: Int,

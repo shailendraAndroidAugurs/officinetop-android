@@ -199,8 +199,8 @@ object Models {
             @SerializedName("vat_percentage_set_by_admin")
             val vat_Admin: String,
             @SerializedName("images")
-
-            val itemImages: ArrayList<ItemImages>
+            val itemImages: ArrayList<ItemImages>,
+            val main_category_id: String?=""
     ) : Serializable
 
 
@@ -599,89 +599,11 @@ object Models {
             val rating: String
     ) : Serializable
 
-    data class TyreDetailItem(
-            val PFU: Any?,
-            val brand_image: String? = "",
-            val brands: String? = "",
-            val created_at: String? = "",
-            val deleted_at: Any?,
-            val delivery_days: Any?,
-            val description: String? = "",
-            val discount: Any?,
-            val ean_number: String? = "",
-            val noiseDb: String? = "",
-            val id: Int?,
-            val imageUrl: String? = "",
-            val images: List<TyreImage>? = null,
-            val tyre_label_images: List<TyreImage>? = null,
-            val itemId: Any?,
-            val manufacturer_description: String? = "",
-            val max_aspect_ratio: String? = "",
-            val max_diameter: String? = "",
-            val max_price: String? = "",
-            val max_width: String? = "",
-            val meta_key_title: Any?,
-            val meta_key_word: Any?,
-            val min_price: String? = "",
-            val our_description: Any?,
-            val pair: String?,
-            val pr_description: String? = "",
-            val price: String? = "",
-            val quantity: String?,
-            val reinforced: Any?,
-            val rollingResistance: String? = "",
-            val runflat: Any?,
-            val seller_price: String? = "",
-            val speed_index: String? = "",
-            val status: String? = "",
-            val stock_warning: Any?,
-            val tax: Any?,
-            val tax_value: Any?,
-            val type: String? = "",
-            val type_status: Any?,
-            val tyreLabelUrl: String? = "",
-            val tyre_max_size: String? = "",
-            val tyre_response: String? = "",
-            val unique_id: String? = "",
-            val unit: Any?,
-            val updated_at: String? = "",
-            val user_id: Int?,
-            val wetGrip: String? = "",
-            val wholesalerArticleNo: String? = "",
-            val is3PMSF: String? = "",
-            val vhicle_type: String? = "",
-            val vehicle_name: String? = "",
-            val season_name: String? = "",
-            val vehicle_tyre_type: String? = "",
-            val season_tyre_type: String? = "",
-            var wish_list: String? = "0",
-            @SerializedName("rating")
-            val rating: Rating?,
-            @SerializedName("rating_count")
-            val ratingCount: String,
-            @SerializedName("rating_star")
-            val ratingStar: String,
-            @SerializedName("coupon_list")
-            val couponList: List<Coupon>?,
-            @SerializedName("load_speed_index")
-            val load_speed_index: String = "",
-            @SerializedName("assemble_status")
-            val assemblestatus: String,
-            @SerializedName("tyre_season_image")
-            val tyreSeasonImageURL: String = "",
-            @SerializedName("tyre_type_image")
-            val tyreImageURL: String,
-            @SerializedName("pfu")
-            val tyrePfu: tyrePfu?,
-            var SelectedTyreCouponId: String? = ""
-
-    ) : Serializable
-
-
     data class tyrePfu(
             var price: String
 
     ) : Serializable
+
 
     data class TyreImage(
             var created_at: Any?,
@@ -922,6 +844,84 @@ object Models {
             val productkromedaid: Any?
 
     ) : ListItemViewModel()
+
+    data class TyreDetailItem(
+            val PFU: Any?,
+            val brand_image: String? = "",
+            val brands: String? = "",
+            val created_at: String? = "",
+            val deleted_at: Any?,
+            val delivery_days: Any?,
+            val description: String? = "",
+            val discount: Any?,
+            val ean_number: String? = "",
+            val noiseDb: String? = "",
+            val id: Int?,
+            val imageUrl: String? = "",
+            val images: List<TyreImage>? = null,
+            val tyre_label_images: List<TyreImage>? = null,
+            val itemId: Any?,
+            val manufacturer_description: String? = "",
+            val max_aspect_ratio: String? = "",
+            val max_diameter: String? = "",
+            val max_price: String? = "",
+            val max_width: String? = "",
+            val meta_key_title: Any?,
+            val meta_key_word: Any?,
+            val min_price: String? = "",
+            val our_description: Any?,
+            val pair: String?,
+            val pr_description: String? = "",
+            val price: String? = "",
+            val quantity: String?,
+            val reinforced: Any?,
+            val rollingResistance: String? = "",
+            val runflat: Any?,
+            val seller_price: String? = "",
+            val speed_index: String? = "",
+            val status: String? = "",
+            val stock_warning: Any?,
+            val tax: Any?,
+            val tax_value: Any?,
+            val type: String? = "",
+            val type_status: Any?,
+            val tyreLabelUrl: String? = "",
+            val tyre_max_size: String? = "",
+            val tyre_response: String? = "",
+            val unique_id: String? = "",
+            val unit: Any?,
+            val updated_at: String? = "",
+            val user_id: Int?,
+            val wetGrip: String? = "",
+            val wholesalerArticleNo: String? = "",
+            val is3PMSF: String? = "",
+            val vhicle_type: String? = "",
+            val vehicle_name: String? = "",
+            val season_name: String? = "",
+            val vehicle_tyre_type: String? = "",
+            val season_tyre_type: String? = "",
+            var wish_list: String? = "0",
+            @SerializedName("rating")
+            val rating: Rating?,
+            @SerializedName("rating_count")
+            val ratingCount: String,
+            @SerializedName("rating_star")
+            val ratingStar: String,
+            @SerializedName("coupon_list")
+            val couponList: List<Coupon>?,
+            @SerializedName("load_speed_index")
+            val load_speed_index: String = "",
+            @SerializedName("assemble_status")
+            val assemblestatus: String,
+            @SerializedName("tyre_season_image")
+            val tyreSeasonImageURL: String = "",
+            @SerializedName("tyre_type_image")
+            val tyreImageURL: String,
+            @SerializedName("pfu")
+            val tyrePfu: tyrePfu?,
+            var SelectedTyreCouponId: String? = ""
+
+    ) : Serializable
 
 
     data class SpecialCondition(
@@ -3181,11 +3181,13 @@ object Models {
 
     data class TyreDetailData(
             val noice_db_arr: NoiceDbArr,
-
             val rolling_resistance_arr: RollingResistanceArr,
             val wet_grip_arr: WetGripArr,
             @SerializedName("number_of_delivery_days")
-            val delivery_days: String
+            val delivery_days: String,
+            @SerializedName("main_category_id")
+            val tyre_mainCategory_id: String
+
     )
 
 
