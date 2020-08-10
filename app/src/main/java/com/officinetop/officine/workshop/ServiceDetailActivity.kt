@@ -149,8 +149,7 @@ class ServiceDetailActivity : BaseActivity() {
 
         createImageSliderDialog()
         //set slider
-//        for (i in 0..5) {
-//            val imageRes = if (i % 2 == 0) R.drawable.workshop1 else R.drawable.workshop2
+
 
         image_slider.removeAllSliders()
         for (i in 0 until imagesArray.size) {

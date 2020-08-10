@@ -326,24 +326,23 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             Log.d("product Description", detail?.Productdescription)
 
-
-
-            if (productDetails?.optString("seller_price", "null") == "null")
-            //productPrice = productDetails?.optString("price").takeIf { it.isNullOrEmpty() }?.toDouble()?.roundTo2Places()
+            if (!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null") && !productDetails?.optString("seller_price").equals("0") && !productDetails?.optString("seller_price").equals("0.0")) {
+                productPrice = productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
+            } else {
                 productPrice = 0.0
-            else
-
-                if (!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null") && !productDetails?.optString("seller_price").equals("0") && !productDetails?.optString("seller_price").equals("0.0")) {
-                    productPrice = productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
-                } else {
-                    productPrice = 0.0
-                }
+            }
             Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--" + productPrice + "--" +
                     intent.hasExtra(Constant.Path.productType) + "--" + intent.getStringExtra(Constant.Path.productType).equals("tyre", true))
 
-            product_price.text =getString(R.string.tyreprice_text, productPrice.toString())
+            product_price.text = getString(R.string.tyreprice_text, productPrice.toString())
+            if (productIsPair) {
+                if (productPrice != null) {
+                    productTotalPrices.text = getString(R.string.tyre_price_total, (productPrice * 2).toString())
+                }
+            } else {
+                productTotalPrices.text = getString(R.string.tyre_price_total, productPrice.toString())
+            }
 
-            productTotalPrices. text =getString(R.string.tyre_price_total, productPrice.toString())
             if (productDetails!!.has("rating_star") && !productDetails!!.isNull("rating_star") && productDetails!!.getString("rating_star") != null && !productDetails!!.getString("rating_star").equals("")) {
                 product_rating.rating = productDetails!!.getString("rating_star").toFloat()
             } else
@@ -372,8 +371,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             } else if (productPrice == 0.0) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-
-
 
 
             }
