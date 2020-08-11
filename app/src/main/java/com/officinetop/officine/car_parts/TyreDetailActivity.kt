@@ -406,7 +406,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun loadTyreDetails(id: Int, userId: Int) {
         try {
             val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
-            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!)
+            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),"0,25")
                     .onCall { _, response ->
 
                         response?.body()?.string()?.let {

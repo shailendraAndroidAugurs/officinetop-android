@@ -63,7 +63,10 @@ data class RevDataSetItem(
         val time: Any? = null,
 
         @field:SerializedName("status")
-        val status: Int? = null
+        val status: Int? = null,
+        @field:SerializedName("main_category")
+        val main_category: String = ""
+
 ) : Serializable
 
 data class ImagesItem(

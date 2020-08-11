@@ -102,6 +102,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
     var productID = 0
 
     var revisionServiceID = 0
+    var revisionMain_categoryId = ""
     var motServiceID = 0
     var motservices_time = ""
     var assembledProductDetail = ""
@@ -124,7 +125,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
 
     private var LOCATION_RQ = 10001
-    private var currentLatLong: LatLng? = LatLng(0.0, 0.0)
+    //public var currentLatLong: LatLng? = LatLng(0.0, 0.0)
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLocationRequest: LocationRequest? = null
     private var googleApiClient: GoogleApiClient? = null
@@ -229,8 +230,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
         if (isRevisonService) {
             if (intent.hasExtra(Constant.Path.revisionServiceDetails)) {
                 val revisionServiceDetails = intent.getSerializableExtra(Constant.Path.revisionServiceDetails) as? RevDataSetItem
-                if (revisionServiceDetails != null)
+                if (revisionServiceDetails != null){
                     revisionServiceID = revisionServiceDetails.id!!
+                    revisionMain_categoryId=revisionServiceDetails.main_category!!
+                }
             }
         }
 
@@ -368,7 +371,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 getSelectedCar()?.carSize
                         ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
 
-        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate)
+        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate,user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=revisionMain_categoryId)
         val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
 
         val quotesCalendarCall = RetrofitClient.client.getQuotesCalendar(serviceID, selectedFormattedDate, ratingString,
@@ -1076,10 +1079,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-             //  currentLatLong = LatLng(44.186516, 12.1662333)
-
-
-
                 reloadPage()
                 getCalendarMinPriceRange()
                 isFirstTime = false

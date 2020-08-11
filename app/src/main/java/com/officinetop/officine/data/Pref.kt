@@ -2,7 +2,6 @@
 
 package com.officinetop.officine.data
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
@@ -72,10 +71,11 @@ inline fun Context.saveOrderId(orderId: String) {
 
 inline fun Context.saveIsAvailableDataInCart(isavailable: Boolean) {
     val isdataStored = getSharedPreferences(Constant.Key.cart, Context.MODE_PRIVATE)
-    isdataStored.edit().putBoolean(Constant.Key.isCartDataAvailable,isavailable ).apply()
+    isdataStored.edit().putBoolean(Constant.Key.isCartDataAvailable, isavailable).apply()
     Log.d("cart data booking: ", isavailable.toString())
 }
-inline fun Context.getIsAvailableDataInCart():Boolean {
+
+inline fun Context.getIsAvailableDataInCart(): Boolean {
     val iscartDataStore = getSharedPreferences(Constant.Key.cart, Context.MODE_PRIVATE)
     return iscartDataStore.getBoolean(Constant.Key.isCartDataAvailable, false)
 }
@@ -448,7 +448,7 @@ inline fun Context.saveMotCarKM(MotCarKm: String) {
 
 inline fun Context.SaveUserWallet(WalletAmount: String) {
     val ueserWalletPref = getSharedPreferences("UserWallet", Context.MODE_PRIVATE)
-    ueserWalletPref.edit().putString( Constant.Path.user_WalletAmount, WalletAmount).apply()
+    ueserWalletPref.edit().putString(Constant.Path.user_WalletAmount, WalletAmount).apply()
 
 }
 
@@ -464,6 +464,7 @@ inline fun Context.saveAddress_ContactForShipping(Address: String, AddressId: St
     editor.apply()
 
 }
+
 inline fun Context.saveContact_ContactForShipping(contactNo: String, contactId: String) {
     val userData = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
     var editor = userData.edit()
@@ -483,7 +484,7 @@ inline fun Context.saveServicesType(servicestype: String) {
 }
 
 
-inline fun Context.saveCartPricesData(TotalVat: String,TotalDiscount: String,TotalPFU: String) {
+inline fun Context.saveCartPricesData(TotalVat: String, TotalDiscount: String, TotalPFU: String) {
     val cartData = getSharedPreferences("Cart", Context.MODE_PRIVATE)
     var editor = cartData.edit()
     editor.putString("TotalVat", TotalVat)
@@ -506,4 +507,24 @@ inline fun Context.storeLangLocale(language: String) {
 inline fun Context.getLangLocale(): String {
     val langCode = getSharedPreferences(Constant.Key.language_locale, Context.MODE_PRIVATE)
     return langCode.getString(Constant.Key.language_locale, "") ?: ""
+}
+
+
+inline fun Context.storeLatLong(Lat: Double, Long: Double) {
+    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    langCode.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).apply()
+}
+
+inline fun Context.getLat(): String {
+    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    return langCode.getString(Constant.Path.latitude, "0.0") ?: "0.0"
+}
+
+inline fun Context.getLong(): String {
+    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    return langCode.getString(Constant.Path.longitude, "0.0") ?: "0.0"
+}
+inline fun Context.clearStoreLatLong() {
+    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    langCode.edit().clear().apply()
 }

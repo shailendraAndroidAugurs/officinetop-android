@@ -64,7 +64,7 @@ object Constant {
         const val deleteCarImage = "garage/remove_car_image"
 
         const val carImage = "public/carlogo/{${Path.carBrandID}}.png"
-        const val getCategory = "get_car_wash_category/{${Path.categoryNumber}}/{${Path.carSize}}"
+        const val getCategory = "get_car_wash_category/{${Path.categoryNumber}}/{${Path.carSize}}/{${Path.userLat}}/{${Path.userLong}}/{${Path.distanceRange}}"
 //        const val getWorkshop = "get_workshop/{${Path.}}"
 
         const val getQuotesWorkshop = "request_quotes_workshop"
@@ -257,6 +257,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val isCartDataAvailable = "isCartDataAvailable"
         const val cart = "cart"
         const val is_car_wash = "is_car_wash"
+        const val currentLatLong = "currentLatLong"
     }
 
     object Fields {
@@ -293,6 +294,10 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val workshopUserDaysId = "workshop_user_days_id"
         const val carServicesId = "car_services_id"
         const val carSize = "car_size"
+        const val userLat = "user_lat"
+        const val userLong = "user_long"
+        const val distanceRange = "distance_range"
+
         const val productId = "products_id"
         const val productid = "product_id"
         const val productqty = "product_quantity"
