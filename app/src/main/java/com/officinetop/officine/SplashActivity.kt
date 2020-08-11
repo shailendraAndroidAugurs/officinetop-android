@@ -40,6 +40,7 @@ class SplashActivity : BaseActivity(){
         setContentView(R.layout.activity_splash)
        // getUserAppSettings()
         initView()
+        clearStoreLatLong()
         Handler().postDelayed({
 
             if (!isLoggedIn() && isFirstRun()) {

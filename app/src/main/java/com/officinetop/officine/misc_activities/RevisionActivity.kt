@@ -5,6 +5,8 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.RevisionServiceAdapter
 import com.officinetop.officine.data.RevDataSetItem
+import com.officinetop.officine.data.getLat
+import com.officinetop.officine.data.getLong
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.genericAPICall
@@ -34,7 +36,7 @@ class RevisionActivity : BaseActivity() {
     }
 
     private fun getRevisionServices() {
-        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!).genericAPICall { _, response ->
+        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),"0,25").genericAPICall { _, response ->
             response?.let {
                 val revisionServices = it.body()
 

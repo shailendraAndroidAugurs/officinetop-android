@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.LocationCallback
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getDataSetArrayFromResponse
-import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -43,7 +42,7 @@ class CarServiceListActivity : BaseActivity() {
         if (isOnline()) {
             val dialog = getProgressDialog(true)
 
-            RetrofitClient.client.getServiceCategory(1, getSelectedCar()?.carSize)
+            RetrofitClient.client.getServiceCategory(1, getSelectedCar()?.carSize, getLat(), getLong(), "0,25")
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             dialog.dismiss()

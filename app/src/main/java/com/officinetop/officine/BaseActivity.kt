@@ -1,75 +1,64 @@
 package com.officinetop.officine
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.content.IntentSender
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
-import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
-import androidx.fragment.app.FragmentTransaction
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
 import com.novoda.merlin.Merlin
-import com.officinetop.officine.authentication.LoginActivity
-import com.officinetop.officine.data.*
-import com.officinetop.officine.fragment.*
-import com.officinetop.officine.utils.Constant.UrlEndPoints.logout
+import com.officinetop.officine.data.getLangLocale
+import com.officinetop.officine.data.storeLangLocale
+import com.officinetop.officine.data.storeLatLong
 import com.officinetop.officine.utils.setAppLanguage
 import com.officinetop.officine.utils.showInfoDialog
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.layout_bottomnevigationbar.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.clearTop
+import com.officinetop.officine.utils.snack
+import kotlinx.android.synthetic.main.activity_product_list.*
 import org.jetbrains.anko.intentFor
 
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     lateinit var connectionCallback: Merlin
-
+    private var LOCATION_RQ = 10001
+    public var currentLatLong: LatLng? = LatLng(0.0, 0.0)
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var mLocationRequest: LocationRequest? = null
+    private var googleApiClient: GoogleApiClient? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.layout_bottomnevigationbar)
         connectionCallback = Merlin.Builder().withConnectableCallbacks()
                 .withDisconnectableCallbacks().build(this)
 
-//        connectionCallback.registerConnectable {
-//        }
 
         connectionCallback.registerDisconnectable {
             showInfoDialog(getString(R.string.Connection_Error))
         }
-     /*   bottom_navigation_view.setOnNavigationItemSelectedListener {
-           startActivity(intentFor<HomeActivity>("fragmentID" to it.itemId))
-
-
-         // bindFragment(it.itemId)
-
-            //  loadNavigationItems(it.itemId)
-            return@setOnNavigationItemSelectedListener true
-        }*/
-
-
-        /* setSupportActionBar(toolbar)
-         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-         Log.d("BaseActivity", "onCreate: ")
-
-         if(getStoredToken().isNullOrEmpty()){
-             alert { message = "You have been logged out. Please return to login page."
-                 okButton { startActivity(intentFor<LoginActivity>().clearTop().clearTask())
-                     finish() }
-             }.show()
-         }*/
         if (getLangLocale() != null && !getLangLocale().equals("")) {
             setAppLanguage()
         } else {
             storeLangLocale("it")
             setAppLanguage()
         }
+
+        mLocationRequest = LocationRequest()
+        mLocationRequest?.interval = 150000
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        checkRequestLocationPermission()
     }
 
     @Override
@@ -86,13 +75,6 @@ open class BaseActivity : AppCompatActivity() {
         connectionCallback.unbind()
         super.onPause()
     }
-
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var customMenuInflator = menuInflater
-        customMenuInflator.inflate(R.menu.menu_options_item, menu)
-
-        return true
-    }*/
 
     @SuppressLint("RestrictedApi")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -121,100 +103,103 @@ open class BaseActivity : AppCompatActivity() {
                 })
 
                 menuPopUpHelper.show()
-
-//                var popUp = PopupMenu(this, findViewById(R.id.item_home_options))
-//                popUp.inflate(R.menu.menu_navigation_options)
-//                popUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {item: MenuItem? ->
-//
-//
-//                    true
-//                })
-//                popUp.show()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
 
-  /*  fun loadNavigationItems(itemId: Int) {
-        when (itemId) {
-            R.id.action_menu_home, R.id.menu_home -> {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentHome())
-                        .commit()
+    private fun getFusedLocation() {
 
+        mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
 
-                bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
-            }
+    }
 
-            R.id.action_news, R.id.menu_news -> {
+    private fun checkRequestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            enableLocation()
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_RQ)
+        }
+    }
 
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, NewsFragment())
-                        .commit()
-
-                bottom_navigation_view.menu.findItem(R.id.action_news).isChecked = true
-            }
-
-            R.id.action_menu_profile, R.id.menu_profile -> {
-
-
-                if (!isLoggedIn()) {
-                    alert {
-                        message = getString(R.string.not_logged_in)
-                        positiveButton(getString(R.string.login)) {
-                            startActivity(intentFor<LoginActivity>().clearTop())
-//                                finish()
-                        }
-                        negativeButton(getString(R.string.ok)) {}
-                    }.show()
-                    //                        return@setOnNavigationItemSelectedListener true}
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .replace(R.id.container, ProfileFragment())
-                            .commit()
-                    alert {
-                        message = "Logged in as " + getStoredEmail()
-                        positiveButton(getString(R.string.logout)) {
-                            //logout(getBearerToken()!!)
-                        }
-                        negativeButton(getString(R.string.ok)) {}
-                    }.show()
+    private var mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+            var locationList = locationResult?.locations
+            if (locationList != null && locationList.size > 0) {
+                val latestLocation = locationList[locationList.size - 1]
+                // add marker
+                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+               // currentLatLong = LatLng(44.186516, 12.1662333)
+                if(currentLatLong?.latitude!=0.0 && currentLatLong?.longitude!=0.0  ){
+                    storeLatLong(currentLatLong!!.latitude,currentLatLong!!.longitude)
                 }
 
-                bottom_navigation_view.menu.findItem(R.id.action_menu_profile).isChecked = true
 
-            }
-
-
-            R.id.action_cart, R.id.menu_cart -> {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentCart())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
-                bottom_navigation_view.menu.findItem(R.id.action_cart).isChecked = true
-            }
-
-            R.id.action_feedback, R.id.menu_feedback -> {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, FragmentFeedback())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
-
-                bottom_navigation_view.menu.findItem(R.id.action_feedback).isChecked = true
-            }
-
-            else -> {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, NewsFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
-                // Log.d("HomeActivity", "onCreate: removing fragment")
-
-                bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
             }
         }
-    }*/
+    }
+
+    private fun enableLocation() {
+
+        if (googleApiClient == null) {
+            googleApiClient = GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API).addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this).build()
+            googleApiClient!!.connect()
+            val locationRequest: LocationRequest = LocationRequest.create()
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            locationRequest.setInterval(10 * 1000)
+            locationRequest.setFastestInterval(2 * 1000)
+            val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+            builder.setAlwaysShow(true)
+
+
+            val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+            result.setResultCallback {
+                val status: Status = it.status
+                val state: LocationSettingsStates = it.locationSettingsStates
+                when (status.statusCode) {
+                    LocationSettingsStatusCodes.SUCCESS -> {
+                        getFusedLocation()
+                        Log.d("WorkshopList", "Location Permission from sucess")
+
+
+                    }
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        try {
+                            status.startResolutionForResult(this@BaseActivity, 1000)
+                            Log.d("WorkshopList", "Location Permission RESOLUTION_REQUIRED")
+                        } catch (e: IntentSender.SendIntentException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                        Log.d("WorkshopList", "Location Permission SETTINGS_CHANGE_UNAVAILABLE")
+                        workshop_container.snack(getString(R.string.settings_change_not_allowed))
+                    }
+
+                }
+            }
+        }
+    }
+
+    override fun onConnected(p0: Bundle?) {
+
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+
+    }
+public fun getcurrent_lat_long():LatLng?{
+
+    return currentLatLong
+    }
+
+
 
 }

@@ -218,8 +218,15 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.getCategory)
     fun getServiceCategory(@Path(Constant.Path.categoryNumber) categoryNumber: Int = 2,
-                           @Path(Constant.Path.carSize) carSize: String? = "2"): Call<ResponseBody>
+                           @Path(Constant.Path.carSize) carSize: String? = "2",
+                           @Path(Constant.Path.userLat) user_lat: String? = "0",
+                           @Path(Constant.Path.userLong) user_long: String = "0",
+                           @Path(Constant.Path.distanceRange) distance_range: String? = "0,25"
+                           ): Call<ResponseBody>
 
+
+
+// https://services.officinetop.com/api/get_car_wash_category/1/2/1/2/0,10
 
 //    @GET(Constant.UrlEndPoints.getWorkshop)
 //    fun getWorkshops(@Path(Constant.Path.service_id) serviceID:Int = 2): Call<ResponseBody>
@@ -289,7 +296,11 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.getRevisionCalendar)
     fun getRevisionCalendar(@Query(Constant.Path.serviceID) serviceId: Int,
                             @Query(Constant.Path.version_id) versionId: String,
-                            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String
+                            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+                            @Query("user_lat") user_lat: String,
+                            @Query("user_long") user_long: String,
+                            @Query("distance_range") distance_range: String,
+                            @Query("main_category_id") mainCategoryId: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getTyreCalendar)
@@ -592,7 +603,10 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.revisionServices)
     fun getRevisionServices(@Query(Constant.Path.mainCategoryId) mainCategoryId: String,
-                            @Query(Constant.Path.version_id) version_id: String): Call<RevisionServicesResponse>
+                            @Query(Constant.Path.version_id) version_id: String,
+                            @Query(Constant.Path.userLat) user_lat: String,
+                            @Query(Constant.Path.userLong) user_long: String,
+                            @Query(Constant.Path.distanceRange) distance_range: String): Call<RevisionServicesResponse>
 
 
     @Headers(Constant.headerJSON)
@@ -870,7 +884,10 @@ interface IRetrofitApis {
             @Query("seller_id") sellerId: String,
             @Query("tyre_id") tyreId: String,
             @Query("selected_date") selectedDate: String,
-            @Query("version_id") versionId: String
+            @Query("version_id") versionId: String,
+            @Query(Constant.Path.userLat) user_lat: String,
+            @Query(Constant.Path.userLong) user_long: String,
+            @Query(Constant.Path.distanceRange) distance_range: String
     ): Call<ResponseBody>
 
 
