@@ -56,6 +56,7 @@ class MotDetailActivity : BaseActivity() {
             saveServicesType(motServiceObject.type.toString())
         }
 
+
         // Log.e("APPTYPE",appController.servicetype)
         button_proceed.setOnClickListener {
             var partId: ArrayList<String> = ArrayList()
