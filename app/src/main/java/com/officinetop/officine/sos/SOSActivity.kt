@@ -551,12 +551,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             if (location == null) {
                 requestNewLocationData()
             } else {
-
               mLatitude = location!!.latitude.toString()
              mLongitude = location!!.longitude.toString()
                 /* mLatitude = "44.186516"
                  mLongitude ="12.1662333"*/
-
                 loadmapview()
             }
         }

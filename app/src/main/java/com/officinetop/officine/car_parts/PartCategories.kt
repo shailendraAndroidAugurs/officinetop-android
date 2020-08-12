@@ -1,19 +1,29 @@
 package com.officinetop.officine.car_parts
 
 import adapter.SubPartCategoryAdapter
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.PopupWindow
+import android.widget.RelativeLayout
+import android.widget.TextView
+import com.cunoraz.tagview.Tag
+import com.cunoraz.tagview.TagView
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.PartCategoryAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.genericAPICall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_part_categories.*
-import kotlinx.android.synthetic.main.activity_part_categories.progress_bar
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
@@ -21,17 +31,6 @@ import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import android.graphics.drawable.ColorDrawable
-import android.widget.RelativeLayout
-import android.widget.PopupWindow
-import android.content.Context
-import android.graphics.Color
-import android.widget.EditText
-import android.widget.TextView
-import com.cunoraz.tagview.Tag
-import com.cunoraz.tagview.TagView
-import com.officinetop.officine.utils.genericAPICall
 import java.util.concurrent.Executors
 
 
@@ -88,6 +87,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         search_product.setOnClickListener {
+
+            val inputMethodManager =  getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+            inputMethodManager.toggleSoftInputFromWindow(
+                    search_product.getApplicationWindowToken(),
+                    InputMethodManager.SHOW_FORCED, 0);
             openSearchDialog()
         }
     }
@@ -151,7 +155,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 } else if (response.body() != null && response.body()?.message != null) {
                     val message = response.body()?.message
 
-                   // showInfoDialog(message?:"Cannot load groups")
+                    // showInfoDialog(message?:"Cannot load groups")
                 }
 
                 subCategoryAdapter.notifyDataSetChanged()

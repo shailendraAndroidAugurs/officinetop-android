@@ -1416,10 +1416,9 @@ interface IRetrofitApis {
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
-
-
-    //  https://services.officinetop.com/api/feedback_list_for_workshop_product?type=1
-
-
-    // https://services.officinetop.com/api/similar_for_parts?version_id=90326&product_type=2&product_id=609
+// get user saved address
+    @GET(Constant.UrlEndPoints.getUserSavedAddress)
+    fun getUserSavedAddress(
+            @Header(Constant.Fields.authorization) authToken: String
+    ): Call<ResponseBody>
 }

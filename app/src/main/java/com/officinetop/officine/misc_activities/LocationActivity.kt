@@ -5,28 +5,26 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
+import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_location.*
-import kotlinx.android.synthetic.main.dialog_add_address.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.json.JSONObject
-import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class LocationActivity : BaseActivity() {
@@ -64,7 +62,7 @@ class LocationActivity : BaseActivity() {
         toolbar_title.text = resources.getString(R.string.user_location)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        getSavedUserLocation()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (hasLocationPermission()) {
@@ -80,7 +78,7 @@ class LocationActivity : BaseActivity() {
         }
 
         aggioraBtn.setOnClickListener {
-            if (!isEditTextValid(this@LocationActivity,prov, cap, citta, via)) return@setOnClickListener
+            if (!isEditTextValid(this@LocationActivity, prov, cap, citta, via)) return@setOnClickListener
 
             RetrofitClient.client.saveUserLocation(getBearerToken()
                     ?: "", latitude, longitude, "", completeAddress, "", "",
@@ -92,7 +90,7 @@ class LocationActivity : BaseActivity() {
                             if (response.isSuccessful) {
                                 val jsonObject = JSONObject(response?.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code").equals("1") && jsonObject.has("message")) {
-                                    showInfoDialog(jsonObject.optString("message")){
+                                    showInfoDialog(jsonObject.optString("message")) {
                                         finish()
                                     }
 
@@ -102,6 +100,33 @@ class LocationActivity : BaseActivity() {
                         }
                     }
         }
+    }
+
+    private fun getSavedUserLocation() {
+        RetrofitClient.client.getUserSavedAddress(getBearerToken()
+                ?: "")
+                .onCall { networkException, response ->
+                    response?.let {
+                        if (response.isSuccessful) {
+                            val bodystring = response?.body()?.string()
+                            if (isStatusCodeValid(bodystring)) {
+                                val jsonObject = JSONObject(bodystring)
+
+                                if (jsonObject.has("data") && !jsonObject.getString("data").isNullOrBlank()) {
+
+                                    val dataModels = Gson().fromJson<Models.UserAddres>(jsonObject.getString("data").toString(), Models.UserAddres::class.java)
+                                    prov.setText(dataModels.latitude)
+                                    cap.setText(dataModels.longitude)
+                                    citta.setText(dataModels.cityName + " " + dataModels.stateName + " " + dataModels.countryName)
+                                    via.setText("${dataModels.address1}")
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
     }
 
 
@@ -203,43 +228,43 @@ class LocationActivity : BaseActivity() {
         Log.d("user current location: ", "${latitude} ${longitude}")
         location.text = "lat: " + latitude + ", long:" + longitude
 
-       // for (i in 0 until addressList.size) {
+        // for (i in 0 until addressList.size) {
 
-            completeAddress = addressList.get(0).getAddressLine(0)
-            cityName = addressList.get(0).locality.takeIf { !it.isNullOrEmpty() }
-            stateName = addressList.get(0).adminArea.takeIf { !it.isNullOrEmpty() }
-            countryName = addressList.get(0).countryName.takeIf { !it.isNullOrEmpty() }
-        if( addressList.get(0).postalCode !==null){
+        completeAddress = addressList.get(0).getAddressLine(0)
+        cityName = addressList.get(0).locality.takeIf { !it.isNullOrEmpty() }
+        stateName = addressList.get(0).adminArea.takeIf { !it.isNullOrEmpty() }
+        countryName = addressList.get(0).countryName.takeIf { !it.isNullOrEmpty() }
+        if (addressList.get(0).postalCode !== null) {
             zipCode = addressList.get(0).postalCode.takeIf { !it.isNullOrEmpty() }
-        }else{
-            zipCode="";
+        } else {
+            zipCode = "";
         }
 
-            streetName = addressList.get(0).featureName.takeIf { !it.isNullOrEmpty() }
-            val street = addressList.get(0).subLocality.takeIf { !it.isNullOrEmpty() }
-            val subArea = addressList.get(0).subAdminArea.takeIf { !it.isNullOrEmpty() }
-            val countryCode = addressList.get(0).countryCode.takeIf { !it.isNullOrEmpty() }
-            val extras = addressList.get(0).extras != null
-            val locale = addressList.get(0).locale.toString().takeIf { !it.isEmpty() }
-            val phone = addressList.get(0).phone.takeIf { !it.isNullOrEmpty() }
-            val premises = addressList.get(0).premises.takeIf { !it.isNullOrEmpty() }
-            val subThoroughfare = addressList.get(0).subThoroughfare.takeIf { !it.isNullOrEmpty() }
-            val thoroughfare = addressList.get(0).thoroughfare.takeIf { !it.isNullOrEmpty() }
-            val url = addressList.get(0).url.takeIf { !it.isNullOrEmpty() }
+        streetName = addressList.get(0).featureName.takeIf { !it.isNullOrEmpty() }
+        val street = addressList.get(0).subLocality.takeIf { !it.isNullOrEmpty() }
+        val subArea = addressList.get(0).subAdminArea.takeIf { !it.isNullOrEmpty() }
+        val countryCode = addressList.get(0).countryCode.takeIf { !it.isNullOrEmpty() }
+        val extras = addressList.get(0).extras != null
+        val locale = addressList.get(0).locale.toString().takeIf { !it.isEmpty() }
+        val phone = addressList.get(0).phone.takeIf { !it.isNullOrEmpty() }
+        val premises = addressList.get(0).premises.takeIf { !it.isNullOrEmpty() }
+        val subThoroughfare = addressList.get(0).subThoroughfare.takeIf { !it.isNullOrEmpty() }
+        val thoroughfare = addressList.get(0).thoroughfare.takeIf { !it.isNullOrEmpty() }
+        val url = addressList.get(0).url.takeIf { !it.isNullOrEmpty() }
 
-            Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
-                    + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
-                    + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)
+        Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
+                + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
+                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)
 
 
 
-            complete_address.visibility = View.VISIBLE
-            complete_address.text = completeAddress
+        complete_address.visibility = View.VISIBLE
+        complete_address.text = completeAddress
 
-            prov.setText(stateName)
-            cap.setText(countryName)
-            citta.setText(cityName)
-            via.setText("${streetName}")
-       // }
+        prov.setText(latitude)
+        cap.setText(longitude)
+        citta.setText(cityName + " " + stateName + " " + countryName)
+        via.setText("${streetName}")
+        // }
     }
 }

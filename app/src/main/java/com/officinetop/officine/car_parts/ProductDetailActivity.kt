@@ -92,7 +92,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             loadProductDetailApi(detail?.id ?: "")
             getSimilarProduct(detail?.id ?: "")
             val json = it
-
+            if(!detail?.productsName.isNullOrBlank()){
+                item_number.visibility=View.VISIBLE
+                item_number.text=getString(R.string.itemnumber,detail?.productsName)
+            }
             var price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
             else json.optString("seller_price")
             if (!detail?.forPair.isNullOrBlank() && !detail?.forPair.equals("0")) {

@@ -52,7 +52,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     lateinit var sortDialog: Dialog
     var isBestSelling = false
     val filterBrandList: MutableList<String> = ArrayList()
-    var selectedItemPosition = 0
     var selectedFormattedDate = ""
     var ratingString = ""
     var priceRangeInitial = 0
@@ -82,7 +81,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     var assembledProductDetail = ""
 
     var hasRecyclerLoadedOnce = false
-    //    var calendarPriceList: MutableList<Models.CalendarPrice> = ArrayList()
     var calendarPriceMap: HashMap<String, String> = HashMap()
 
     var searchedKeyWord = ""
@@ -126,74 +124,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         reloadPage()
     }
 
-    private fun setUpCalendarPrices(calendarDetailList: MutableList<Models.CalendarPrice>) {
-        val adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-
-                val selectedView = layoutInflater.inflate(R.layout.item_dateview_selected, p0, false)
-                val unselectedView = layoutInflater.inflate(R.layout.item_dateview_unselected, p0, false)
-
-                return if (p1 == 0) object : RecyclerView.ViewHolder(selectedView) {}
-                else object : RecyclerView.ViewHolder(unselectedView) {}
-
-            }
-
-            override fun getItemViewType(position: Int): Int {
-                return if (position == selectedItemPosition) 0 else 1
-            }
-
-            override fun getItemCount(): Int = calendarDetailList.size
-
-            override fun onBindViewHolder(p0: RecyclerView.ViewHolder, position: Int) {
-
-
-//                    val calendar = Calendar.getInstance()
-//                    calendar.time = dateList[p1]
-
-
-                with(p0.itemView) {
-                    var dateString = calendarDetailList[position].date
-
-                    setOnClickListener {
-                        hasRecyclerLoadedOnce = false
-                        selectedItemPosition = position
-//                            selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, Locale.ITALY).format(calendar.time)
-                        selectedFormattedDate = dateString
-                        reloadPage()
-                        notifyDataSetChanged()
-                    }
-
-                    val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
-                    try {
-                        val formattedDate = sdf.parse(dateString)
-                        item_text_middle.text = SimpleDateFormat("d - M", getLocale()).format(formattedDate)
-
-                        val format2 = SimpleDateFormat("E", getLocale())
-                        val finalDay = format2.format(formattedDate)
-
-                        item_text_top.text = finalDay
-
-                    } catch (ex: Exception) {
-                        Log.v("Exception", ex.getLocalizedMessage())
-                    }
-
-
-//
-//                        item_text_top.text = calendar.getDisplayName(Calendar.DAY_OF_WEEK,
-//                                Calendar.SHORT, Locale.getDefault())
-                    val minimumPrice = calendarDetailList[position].minPrice.toString()
-                    item_text_bottom.text = getString(R.string.prepend_euro_symbol_with_da_string, minimumPrice)
-
-//                    calendarPriceMap.put(dateString, minimumPrice)
-                }
-            }
-
-        }
-        horizontal_calendar_view.adapter = adapter
-        horizontal_calendar_view.addItemDecoration(DividerItemDecoration(this,
-                DividerItemDecoration.HORIZONTAL))
-
-    }
 
     private fun reloadPage() {
         horizontal_calendar_layout.visibility = View.VISIBLE
@@ -214,8 +144,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
 
             override fun onQueryTextChange(searchQuery: String?): Boolean {
-
-                //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
                 return true
             }
         })
@@ -225,7 +153,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun loadProductItems() {
 
         val partID = intent.getIntExtra(Constant.Key.partItemID, 0)
-        val partCategory = intent.getStringExtra(Constant.Key.partCategory)
 
         progress_bar.visibility = View.VISIBLE
 
@@ -334,7 +261,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
 
 
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, false, false, false, false, false, false, false, false, selectedFormattedDate, this, this, calendarPriceMap, hashMapOf(), hashMapOf(), null, "")
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, false, false, false, false, false, false, false, false, selectedFormattedDate, this, this, calendarPriceMap, hashMapOf(), hashMapOf(), "0.0", "0.0","")
 
         intent.printValues(localClassName)
 
@@ -360,9 +287,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         }
 
-//        seekbarPriceInitialLimit = list.min()?:0f
-//        seekbarPriceFinalLimit = list.max()?:1000f
-
         if (jsonArray.length() > 0) {
             hasRecyclerLoadedOnce = true
             filterDialog.dialog_price_range.setValue(0f, 100f)
@@ -376,8 +300,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun createFilterDialog(progress_bar: ProgressBar) {
         filterDialog = Dialog(this, R.style.DialogSlideAnimStyle)
         var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-        var isCheckboxCleared = false
-
         val drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)
         val drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)
 
@@ -504,59 +426,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                         val dataSet = getDataSetArrayFromResponse(it)
                         val gson = GsonBuilder().create()
                         var brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
-
-                        /*dataSet.forEach {
-
-
-                            filterBrandList.add(it.optString("brand_name"))
-
-
-
-
-                        }*/
                         brandlist.sortBy { it.brandName }
-
-                        // var  json =  Gson().toJson(filterBrandList);
-/*
-                        brandFilterAdapter = dialog_product_checkbox_recycler.setJSONArrayAdapter(context, dataSet, R.layout.item_checkbox)
-
-                        { itemView, _, jsonObject ->
-
-                            val brandName = jsonObject.optString("brand_name")
-                            itemView.item_checkbox_text.text = brandName
-                            itemView.item_checkbox.isChecked = false
-                            Log.d("brand loaded", brandName)
-
-                         //   progress_bar.visibility = View.GONE
-                            setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
-
-                            }
-
-
-
-                            itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
-
-                                if (isChecked) {
-                                    if (!filterBrandList.contains(brandName)) filterBrandList.add(brandName)
-                                } else filterBrandList.remove(brandName)
-
-                                Log.d("ProductOrWorkshopList", "createFilterDialog: brands = $filterBrandList")
-
-                            }
-
-
-
-                            if (itemView.item_checkbox.isChecked) {
-                                if (!filterBrandList.contains(brandName)) {
-                                    filterBrandList.add(brandName)
-                                }
-                            } else filterBrandList.remove(brandName)
-                        }
-
-                      //  brandFilterAdapter!!.setHasStableIds(true)*/
-
-
-
                         class Holder(view: View) : RecyclerView.ViewHolder(view) {
 
                         }
@@ -639,7 +509,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
 
                 filterBrandList.clear()
-                isCheckboxCleared = true
+
                 brandFilterAdapter?.notifyDataSetChanged()
 
                 reloadPage()
@@ -694,7 +564,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     }
 
     override fun onListFiltered(jsonArray: JSONArray) {
-        // listAdapter.notifyDataSetChanged()
         recycler_view.adapter = listAdapter
         recycler_view.adapter?.notifyDataSetChanged()
         Log.e("filteredJSONArray", jsonArray.toString())

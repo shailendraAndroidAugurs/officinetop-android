@@ -3248,5 +3248,21 @@ object Models {
             @SerializedName("tyre_parts")
             val tyreProductDetail: TyreDetailItem)
 
+    data class savedUserAddress(
+            @SerializedName("created_at")
+            val created_at: String,
+            @SerializedName("id")
+            val id: String,
+            @SerializedName("is_approve")
+            val is_approve: String,
+            @SerializedName("terms_conditions_detail")
+            val terms_conditions_detail: String,
+            @SerializedName("title")
+            val title: String,
+            @SerializedName("updated_at")
+            val updated_at: String
+    )
+
+
 }
 
