@@ -100,6 +100,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 })
 
                 menuPopUpHelper.show()
+
             }
         }
         return super.onOptionsItemSelected(item)
