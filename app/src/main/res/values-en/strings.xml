@@ -686,6 +686,7 @@
     <string name="prepend_euro_symbol_with_from_string"> from: € %s</string>
     <string name="coupon_is_invalid">Coupon is invalid</string>
     <string name="doyouwanttobookservices">Do you want to book services without coupon ?</string>
+    <string name="itemnumber">Item: %s</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

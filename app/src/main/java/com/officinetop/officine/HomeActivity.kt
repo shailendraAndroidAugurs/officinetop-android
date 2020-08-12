@@ -63,21 +63,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private val internetBroadcast = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-
-//            if(showInternetSnack){
-//                showInternetSnack = false
-//                return
-//            }
-//            val view = home_bottom_navigation_view
-//            if(context?.isOnline()!!){
-//                Snackbar.make(view, "Back Online", Snackbar.LENGTH_LONG)
-//                        .show()
-//            }
-//            else{
-//
-//                Snackbar.make(view, "Connection Error", Snackbar.LENGTH_LONG)
-//                        .show()
-//            }
         }
     }
 
@@ -129,24 +114,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         }
                         negativeButton(getString(R.string.ok)) {}
                     }.show()
-                    //                        return@setOnNavigationItemSelectedListener true}
                 } else {
                     supportFragmentManager.beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .replace(R.id.container, ProfileFragment())
                             .commit()
-                    /*    alert {
-                            message = "Logged in as " + getStoredEmail()
-                            positiveButton(getString(R.string.logout)) {
-                                logout(getBearerToken()!!)
-                            }
-                            negativeButton(getString(R.string.ok)) {}
-                        }.show()*/
                 }
-                /*   supportFragmentManager.beginTransaction()
-                           .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                           .replace(R.id.container, ProfileFragment())
-                           .commit()*/
+
 
                 home_bottom_navigation_view.menu.findItem(R.id.action_menu_profile).isChecked = true
 
@@ -249,9 +223,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         //setting initial car image
         Glide.with(this).load(R.drawable.ic_car).thumbnail(0.1f).into(toolbar_image_view)
 
-        /*getMerlinConnectionCallback().registerConnectable {
-            loadMyCars()
-        }*/
         loadMyCars()
 
         // load screens if navigated from options menu
@@ -274,9 +245,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         image_support.setOnClickListener(View.OnClickListener {
             startActivity(intentFor<Support_FAQ_Activity>())
         })
-        // initView()
-        //addBadgeView()
-
         if (intent.hasExtra("loadProfileFragment")) {
             val isTrue = intent?.getBooleanExtra("loadProfileFragment", false) ?: false
             if (isTrue) {
@@ -287,12 +255,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
-
-    /*private fun addBadgeView() {
-        home_bottom_navigation_view.getOrCreateBadge(R.id.action_news)
-        val badge = home_bottom_navigation_view.getBadge(R.id.action_news)
-        badge?.number = 50
-    }*/
 
     private fun initView() {
         Thread(Runnable {
@@ -375,7 +337,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     isConnectionError = false
 
                     if (response.code() == 500) {
-//                        toast("No Response from the server")
                         Log.e("HomeActivity", getString(R.string.onResponseCode500) + {response.errorBody()?.string()})
                         isConnectionError = true
                         return

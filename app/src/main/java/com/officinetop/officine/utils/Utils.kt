@@ -61,18 +61,6 @@ inline fun Context.getProgressDialog(shouldShow: Boolean = false): ProgressDialo
         progressDialog.show()
     return progressDialog
 }
-
-
-inline fun Context.getToolbarProgress(): Dialog {
-
-    val dialog = Dialog(this)
-    dialog.window?.setDimAmount(0f)
-    dialog.setContentView(R.layout.progress_dialog_toolbar)
-    return dialog
-
-}
-
-
 inline fun Context.hideKeyboard() {
     val context = this
     val activity = context as Activity
@@ -81,21 +69,12 @@ inline fun Context.hideKeyboard() {
     inputService.hideSoftInputFromWindow(windowToken, 0)
 
 }
-
-inline fun Context.HideSoftKeyboard(view: View) {
-    val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(view.windowToken, 0)
-}
-
-
 inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
 
 
 inline fun Context.showInfoDialog(dialogMessage: String, cancelable: Boolean = true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
-//        iconResource = R.drawable.ic_info_outline_black_24dp
-//        title = "Info"
         okButton { onOkClick?.let { it1 -> it1() } }
         isCancelable = cancelable
     }
@@ -107,8 +86,6 @@ inline fun Context.showInfoDialog(dialogMessage: String, cancelable: Boolean = t
 inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
-//        iconResource = R.drawable.ic_info_outline_black_24dp
-//        title = "Confirm"
         positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
         negativeButton(getString(R.string.no)) { }
     }
@@ -119,8 +96,6 @@ inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: 
 inline fun Context.showConnectionFailedDialog(noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = Constant.connection_failed_dialog
-//        iconResource = R.drawable.ic_info_outline_black_24dp
-//        title = "Confirm"
         positiveButton(getString(R.string.retry)) { onOkClick?.let { it1 -> it1() } }
         negativeButton(getString(R.string.cancel)) { }
     }
@@ -176,14 +151,6 @@ inline fun Spinner.setSampleSpinnerAdapter(context: Context, optionalList: List<
 
 }
 
-
-inline fun getSampleList(prefix: String = "Item - ", count: Int = 5): List<String> {
-    val list: MutableList<String> = ArrayList()
-    for (i in 0 until count)
-        list.add("$prefix $i")
-
-    return list
-}
 
 inline fun parseTimeHHmmss(timeString: String): Date {
     return try {
@@ -260,7 +227,6 @@ inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = fa
     } else {
         for (i in 1..offlimit) {
             list.add(i.toString())
-          //  Log.d("cartItemAdapter","IntegerStringList: "+list.toString())
         }
     }
 
@@ -336,35 +302,6 @@ fun getSubString(str: String, index: Int): Int {
 }
 
 
-inline fun FragmentManager?.loadFragment(containerID: Int, fragment: Fragment,
-                                         shouldRemovePreviousFragments: Boolean = true, currentTitle: CharSequence? = null, args: Bundle? = null) {
-    val transaction = this?.beginTransaction()
-
-
-    if (shouldRemovePreviousFragments) {
-        repeat(this?.backStackEntryCount ?: 0) {
-            this?.popBackStackImmediate()
-        }
-    }
-
-
-    val ctx = this?.findFragmentById(containerID)?.context
-
-    if (ctx.hasArgs()) {
-        fragment.arguments = args
-    }
-    fragment.arguments.printValues()
-
-
-    transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-
-    transaction?.addToBackStack(null)
-            ?.replace(containerID, fragment, currentTitle?.toString())
-            ?.commit()
-
-
-}
-
 fun Context?.hasArgs(): Boolean {
 
     return try {
@@ -374,7 +311,7 @@ fun Context?.hasArgs(): Boolean {
     } catch (e: Exception) {
         false
     }
-    //return (pref.getBoolean("args", false))
+
 }
 
 fun Bundle?.printValues() {

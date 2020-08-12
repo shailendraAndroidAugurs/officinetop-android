@@ -97,7 +97,6 @@ class FragmentHome : Fragment() {
         highRatingFeedback("1")
         if (context?.getSelectedCar() != null && context?.getSelectedCar()?.carVersionModel != null && context?.getSelectedCar()?.carVersionModel?.idVehicle != null) {
             bestSellingApi()
-            Log.d("bestSelling_apicall", "yes")
         }
 
         allAdvertisementApi()
@@ -145,7 +144,6 @@ class FragmentHome : Fragment() {
             }
         }
 
-        //  rootView.home_grid_product_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
 
 
         rootView.home_More_feedback.setOnClickListener {
@@ -182,8 +180,6 @@ class FragmentHome : Fragment() {
 
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                /* val data = context!!.getDataSetArrayFromResponse(response.body()?.string())
-                                 context!!.saveAllAdvertisement(data.toString())*/
                             }
                         }
                     }
@@ -229,8 +225,6 @@ class FragmentHome : Fragment() {
             val adapter = ViewPagerAdapter(childFragmentManager)
             adapter.addFragment(FragmentHomeSlider())
 
-
-//        rootView.slider_btn.setOnClickListener { context?.toast("Clicked") }
             if (AdvertisementImagearray.size != 0) {
                 for (i in 0 until AdvertisementImagearray.size) {
                     rootView.image_slider.addSlider(TextSliderView(context).image(AdvertisementImagearray[i].imageUrl).setScaleType(BaseSliderView.ScaleType.CenterInside)/*.description(AdvertisementImagearray[i].image)*/.setOnSliderClickListener(BaseSliderView.OnSliderClickListener {
@@ -251,9 +245,6 @@ class FragmentHome : Fragment() {
             val scroller = ViewPager::class.java.getDeclaredField("mScroller")
             scroller.isAccessible = true
             scroller.set(rootView.slider_viewpager, FixedSpeedScroller(context!!, AccelerateInterpolator()))
-
-
-//        rootView.slider_viewpager.adapter = adapter
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -387,8 +378,6 @@ class FragmentHome : Fragment() {
                     }
                     if (productFeedbackList[p1].feedback_image != null && productFeedbackList[p1].feedback_image.size != 0) {
                         p0.itemView.rv_feedbackImage.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
-                        // p0.itemView.rv_feedbackImage.setHasFixedSize(true)
-
                         p0.itemView.rv_feedbackImage.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
 
                             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
@@ -427,8 +416,7 @@ class FragmentHome : Fragment() {
 
                                 if (productFeedbackList[p1] != null && productFeedbackList[p1].feedback_image != null && productFeedbackList[p1].feedback_image.size != 0 && productFeedbackList[p1].feedback_image[postion].imageUrl != null) {
                                     context?.loadImage(productFeedbackList[p1].feedback_image[postion].imageUrl, viewHolder.itemView.item_image_view)
-                                    Log.d("Imagefeedback position", p1.toString())
-                                    Log.d("Imagefeedback data", productFeedbackList[p1].feedback_image.toString())
+
                                 }
                                 viewHolder.itemView.setOnClickListener {
                                     context?.createImageSliderDialog(productFeedbackList[p1].feedback_image[postion].imageUrl)

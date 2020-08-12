@@ -189,6 +189,8 @@ object Constant {
         const val loadKromedaParts = "load_car_main_kromeda_parts"
         const val customerInvoicePolicy = "customer_invoice_policy"
         const val getFAQ = "get_faq"
+        const val getUserSavedAddress = "customer_address"
+
 
     }
 

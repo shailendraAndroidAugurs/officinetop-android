@@ -1,6 +1,8 @@
 package com.officinetop.officine
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -27,6 +29,8 @@ import com.officinetop.officine.utils.setAppLanguage
 import com.officinetop.officine.utils.showInfoDialog
 import com.officinetop.officine.utils.snack
 import kotlinx.android.synthetic.main.activity_product_list.*
+import kotlinx.android.synthetic.main.layout_recycler_view.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.intentFor
 
 @SuppressLint("Registered")
@@ -35,7 +39,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     lateinit var connectionCallback: Merlin
     private var LOCATION_RQ = 10001
-    public var currentLatLong: LatLng? = LatLng(0.0, 0.0)
+    private var currentLatLong: LatLng? = LatLng(0.0, 0.0)
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLocationRequest: LocationRequest? = null
     private var googleApiClient: GoogleApiClient? = null
@@ -60,8 +64,11 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         checkRequestLocationPermission()
     }
+
     @Override
     fun getMerlinConnectionCallback() = connectionCallback
+
+
     override fun onResume() {
 
         connectionCallback.bind()
@@ -100,7 +107,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 })
 
                 menuPopUpHelper.show()
-
             }
         }
         return super.onOptionsItemSelected(item)
@@ -108,6 +114,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
 
     private fun getFusedLocation() {
+
         mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
 
     }
@@ -127,7 +134,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                  currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-               // currentLatLong = LatLng(44.186516, 12.1662333)
+              // currentLatLong = LatLng(44.186516, 12.1662333)
                 if(currentLatLong?.latitude!=0.0 && currentLatLong?.longitude!=0.0  ){
                     storeLatLong(currentLatLong!!.latitude,currentLatLong!!.longitude)
                 }
@@ -192,11 +199,14 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
     override fun onConnectionFailed(p0: ConnectionResult) {
 
     }
-public fun getcurrent_lat_long():LatLng?{
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
+            getFusedLocation()
+            Log.d("WorkshopList", "Location Permission sucess2")
+        }
 
-    return currentLatLong
+        super.onActivityResult(requestCode, resultCode, data)
     }
-
 
 
 }

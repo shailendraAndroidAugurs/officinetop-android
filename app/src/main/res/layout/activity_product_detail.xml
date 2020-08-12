@@ -328,7 +328,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/horizontal_divider_color" />
+                <TextView
+                    android:id="@+id/item_number"
+                    style="@style/TextViewHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:paddingTop="0dp"
+                    android:visibility="gone"
 
+                    android:textColor="@color/gray_dark" />
                 <TextView
                     android:id="@+id/product_description"
                     style="@style/TextViewHeading"

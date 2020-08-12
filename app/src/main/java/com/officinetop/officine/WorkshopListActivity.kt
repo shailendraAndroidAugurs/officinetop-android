@@ -52,8 +52,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     lateinit var filterDialog: Dialog
     lateinit var sortDialog: Dialog
@@ -122,13 +121,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
     var dataSet: JSONArray = JSONArray()
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap<String, Models.servicesCouponData>()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap<String, Models.MotservicesCouponData>()
-
-
-    private var LOCATION_RQ = 10001
-    //public var currentLatLong: LatLng? = LatLng(0.0, 0.0)
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var mLocationRequest: LocationRequest? = null
-    private var googleApiClient: GoogleApiClient? = null
     var isFirstTime = true
     var WorkshopDistanceforDefault = "0,25"
     private var tyre_mainCategory_id=""
@@ -145,11 +137,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
         toolbar_title.text = getString(R.string.Workshop)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mLocationRequest = LocationRequest()
-        mLocationRequest?.interval = 150000
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        checkRequestLocationPermission()
-        // getFusedLocation()
         filter_btn.setOnClickListener { filterDialog.show() }
         sort_btn.setOnClickListener { sortDialog.show() }
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
@@ -364,15 +351,15 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
         val nonAssemblyCall = RetrofitClient.client.getCalendarMinPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
-                getSelectedCar()?.carSize ?: "",user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=washing_mainCategory_id)
+                getSelectedCar()?.carSize ?: "",user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=washing_mainCategory_id)
 
         val assemblyCall = RetrofitClient.client.getAssemblyCalendarPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
                 getSelectedCar()?.carSize
                         ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
 
-        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate,user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=revisionMain_categoryId)
-        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
+        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate,user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=revisionMain_categoryId)
+        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
 
         val quotesCalendarCall = RetrofitClient.client.getQuotesCalendar(serviceID, selectedFormattedDate, ratingString,
                 if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersion!!)
@@ -454,18 +441,12 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, position: Int) {
 
-
-//                    val calendar = Calendar.getInstance()
-//                    calendar.time = dateList[p1]
-
-
                 with(p0.itemView) {
                     var dateString = calendarDetailList[position].date
 
                     setOnClickListener {
                         hasRecyclerLoadedOnce = false
                         selectedItemPosition = position
-//                            selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, Locale.ITALY).format(calendar.time)
                         selectedFormattedDate = dateString
                         reloadPage()
                         notifyDataSetChanged()
@@ -484,14 +465,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                     } catch (ex: Exception) {
                         Log.v("Exception", ex.getLocalizedMessage())
                     }
-
-//
-//                        item_text_top.text = calendar.getDisplayName(Calendar.DAY_OF_WEEK,
-//                       Calendar.SHORT, Locale.getDefault())
                     val minimumPrice = calendarDetailList[position].minPrice.toString()
                     item_text_bottom.text = getString(R.string.prepend_euro_symbol_string, minimumPrice)
 
-//                    calendarPriceMap.put(dateString, minimumPrice)
                 }
             }
 
@@ -503,11 +479,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
     }
 
     private fun reloadPage() {
-        //  setupCalendar()
-        // change visibilty to display the map filter for Workshop list
-
-        //map_btn.visibility = View.GONE
-
 
         if (!isSOSServiceEmergency)
             horizontal_calendar_layout.visibility = View.VISIBLE
@@ -554,7 +525,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
     }
 
-    // private fun loadWorkshops(workshopFilterDate: String, workshopFilterRating: String, workshopFilterPriceRange: String, workshopSortPriceLevel: Int) {
     private fun loadWorkshops() {
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
@@ -577,7 +547,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
             RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -597,7 +567,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             Log.d("Date", "DeliveryDate WorkshopList" + selectedFormattedDate)
             Log.d("IsTyreAvailable", "yes")
 
-            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSavedSelectedVehicleID(), user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), productqty = cartItem?.quantity.toString())
+            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), productqty = cartItem?.quantity.toString())
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -698,7 +668,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
 
             RetrofitClient.client.getWorkshops(serviceID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -745,9 +715,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
         val gson = GsonBuilder().create()
         var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
 
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, currentLatLong!!, motservices_time, mot_type)
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
 
-        Log.e("CurrentLatLong", currentLatLong.toString())
         listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId)
 
         if (intent.hasExtra(Constant.Key.cartItem))
@@ -1047,104 +1016,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
             recycler_view.snackbar(getString(R.string.Searchingresultfor) + " \"$query\"")
             search_view.setQuery(query, true)
 
-        } else if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
-            getFusedLocation()
-            Log.d("WorkshopList", "Location Permission sucess2")
-        } else {
+        }  else {
             search_view.setQuery("", true)
         }
 
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-
-    private fun getFusedLocation() {
-
-        mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-
-    }
-
-    private fun checkRequestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            enableLocation()
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_RQ)
-        }
-    }
-
-    private var mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult?) {
-            var locationList = locationResult?.locations
-            if (locationList != null && locationList.size > 0) {
-                val latestLocation = locationList[locationList.size - 1]
-                // add marker
-                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-                reloadPage()
-                getCalendarMinPriceRange()
-                isFirstTime = false
-            }
-        }
-    }
-
-    private fun enableLocation() {
-
-        if (googleApiClient == null) {
-            googleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API).addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build()
-            googleApiClient!!.connect()
-            val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            locationRequest.setInterval(10 * 1000)
-            locationRequest.setFastestInterval(2 * 1000)
-            val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-            builder.setAlwaysShow(true)
-
-
-            val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-            result.setResultCallback {
-                val status: Status = it.status
-                val state: LocationSettingsStates = it.locationSettingsStates
-                when (status.statusCode) {
-                    LocationSettingsStatusCodes.SUCCESS -> {
-                        getFusedLocation()
-                        Log.d("WorkshopList", "Location Permission from sucess")
-
-
-                    }
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        try {
-                            status.startResolutionForResult(this@WorkshopListActivity, 1000)
-                            Log.d("WorkshopList", "Location Permission RESOLUTION_REQUIRED")
-                        } catch (e: IntentSender.SendIntentException) {
-                            e.printStackTrace()
-                        }
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        Log.d("WorkshopList", "Location Permission SETTINGS_CHANGE_UNAVAILABLE")
-                        workshop_container.snack(getString(R.string.settings_change_not_allowed))
-                    }
-
-                }
-            }
-        }
-    }
-
-    override fun onConnected(p0: Bundle?) {
-
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-    }
-
-
     fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int) {
         Log.d("Revision", "DistanceInitial" + tempDistanceInitial.toString())
         Log.d("Revision", "DistanceFinal" + tempDistanceFinal.toString())
-        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = currentLatLong?.latitude.toString(), user_long = currentLatLong?.longitude.toString(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
+        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString())
                 .onCall { networkException, response ->
                     networkException?.let {
                     }

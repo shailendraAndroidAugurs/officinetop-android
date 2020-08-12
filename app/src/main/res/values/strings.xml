@@ -761,7 +761,7 @@
     <string name="coupon_is_invalid">Coupon is invalid</string>
 
     <string name="doyouwanttobookservices">Do you want to book services without coupon ?</string>
-
+    <string name="itemnumber">Item: %s</string>
 
     <!-- Sceglie Officina-->
 
