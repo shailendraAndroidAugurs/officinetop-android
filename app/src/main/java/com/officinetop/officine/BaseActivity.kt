@@ -60,11 +60,8 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         checkRequestLocationPermission()
     }
-
     @Override
     fun getMerlinConnectionCallback() = connectionCallback
-
-
     override fun onResume() {
 
         connectionCallback.bind()
@@ -103,6 +100,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 })
 
                 menuPopUpHelper.show()
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -110,7 +108,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
 
     private fun getFusedLocation() {
-
         mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
 
     }
