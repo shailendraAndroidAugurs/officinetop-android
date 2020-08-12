@@ -1079,7 +1079,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface, GoogleApiClien
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-               //currentLatLong = LatLng(44.186516, 12.1662333)
                 reloadPage()
                 getCalendarMinPriceRange()
                 isFirstTime = false
