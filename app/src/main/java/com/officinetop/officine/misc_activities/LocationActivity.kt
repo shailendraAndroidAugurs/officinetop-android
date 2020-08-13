@@ -79,10 +79,10 @@ class LocationActivity : BaseActivity() {
 
         aggioraBtn.setOnClickListener {
             if (!isEditTextValid(this@LocationActivity, prov, cap, citta, via)) return@setOnClickListener
-
+            completeAddress=via.text.toString()+" "+ zipCode+" "+citta.text.toString()+" "+prov.text.toString()+" "+cap.text.toString()
             RetrofitClient.client.saveUserLocation(getBearerToken()
                     ?: "", latitude, longitude, "", completeAddress, "", "",
-                    streetName, zipCode, countryName, stateName, cityName)
+                    via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
                     .onCall { networkException, response ->
 
 
@@ -115,10 +115,21 @@ class LocationActivity : BaseActivity() {
                                 if (jsonObject.has("data") && !jsonObject.getString("data").isNullOrBlank()) {
 
                                     val dataModels = Gson().fromJson<Models.UserAddres>(jsonObject.getString("data").toString(), Models.UserAddres::class.java)
-                                    prov.setText(dataModels.latitude)
-                                    cap.setText(dataModels.longitude)
-                                    citta.setText(dataModels.cityName + " " + dataModels.stateName + " " + dataModels.countryName)
-                                    via.setText("${dataModels.address1}")
+                                    prov.setText(dataModels.stateName ?: "")
+                                    cap.setText(dataModels.countryName?: "")
+                                    citta.setText(dataModels.cityName?: "")
+                                    via.setText(dataModels.address1?: "")
+
+                                    location.text = "Lat: " + (dataModels.latitude?: "") + ", Long:" + (dataModels.longitude?: "")
+                                    completeAddress = (dataModels.address1?: "")+" "+(dataModels.zipCode?: "")+" "+(dataModels.cityName?: "")+" "+(dataModels.stateName?: "")+" "+(dataModels.countryName?: "")
+
+                                    complete_address.visibility = View.VISIBLE
+                                    complete_address.text = completeAddress
+
+                                    latitude=(dataModels.latitude?: "")
+                                    longitude= dataModels.longitude?: ""
+                                    zipCode=dataModels.zipCode?: ""
+
                                 }
 
                             }
@@ -261,9 +272,9 @@ class LocationActivity : BaseActivity() {
         complete_address.visibility = View.VISIBLE
         complete_address.text = completeAddress
 
-        prov.setText(latitude)
-        cap.setText(longitude)
-        citta.setText(cityName + " " + stateName + " " + countryName)
+        prov.setText(stateName)
+        cap.setText(countryName)
+        citta.setText(cityName)
         via.setText("${streetName}")
         // }
     }

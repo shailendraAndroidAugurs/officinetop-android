@@ -686,6 +686,8 @@
     <string name="coupon_is_invalid">Il buono non è valido</string>
     <string name="doyouwanttobookservices">Vuoi prenotare servizi senza coupon ?</string>
     <string name="itemnumber">Articolo: %s</string>
+    <string name="Prov">Prov.</string>
+    <string name="Cap">Cap.</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

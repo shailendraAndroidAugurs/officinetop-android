@@ -762,7 +762,8 @@
 
     <string name="doyouwanttobookservices">Do you want to book services without coupon ?</string>
     <string name="itemnumber">Item: %s</string>
-
+    <string name="Prov">Prov.</string>
+    <string name="Cap">Cap.</string>
     <!-- Sceglie Officina-->
 
 

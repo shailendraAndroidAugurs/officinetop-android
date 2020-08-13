@@ -687,6 +687,8 @@
     <string name="coupon_is_invalid">Coupon is invalid</string>
     <string name="doyouwanttobookservices">Do you want to book services without coupon ?</string>
     <string name="itemnumber">Item: %s</string>
+    <string name="Prov">Prov.</string>
+    <string name="Cap">Cap.</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
