@@ -121,7 +121,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     var dataSet: JSONArray = JSONArray()
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap<String, Models.servicesCouponData>()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap<String, Models.MotservicesCouponData>()
-    var isFirstTime = true
     var WorkshopDistanceforDefault = "0,25"
     private var tyre_mainCategory_id=""
     private var washing_mainCategory_id=""
