@@ -332,15 +332,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     override fun onResume() {
         super.onResume()
-        if (!isFirstTime) {
+
             Log.d("WorkshopList", "onResumeCall yes")
             reloadPage()
             getCalendarMinPriceRange()
-        }
+
 
     }
 
     private fun getCalendarMinPriceRange() {
+        Log.d("workshop","calendar api call")
         var pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
@@ -357,6 +358,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
                 getSelectedCar()?.carSize
                         ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
+
 
         val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate,user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=revisionMain_categoryId)
         val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
@@ -456,7 +458,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     try {
                         val formattedDate = sdf.parse(dateString)
                         item_text_middle.text = SimpleDateFormat("d - M", getLocale()).format(formattedDate)
-
                         val format2 = SimpleDateFormat("E", getLocale())
                         val finalDay = format2.format(formattedDate)
 
@@ -526,6 +527,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun loadWorkshops() {
+        Log.d("workshoplist","loadworkshop call")
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
 

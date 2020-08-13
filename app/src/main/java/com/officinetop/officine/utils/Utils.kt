@@ -67,6 +67,7 @@ inline fun Context.hideKeyboard() {
     val windowToken = activity.window.decorView.rootView.windowToken
     val inputService = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputService.hideSoftInputFromWindow(windowToken, 0)
+    Log.d("hidekeyboardcall","yes")
 
 }
 inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)

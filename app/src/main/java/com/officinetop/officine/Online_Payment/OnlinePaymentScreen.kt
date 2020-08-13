@@ -167,21 +167,36 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         })
 
-        ////////////////////////////////PayPal  payment///////////////////////////////////////////
-        val intent = Intent(this, PayPalService::class.java)
+        ////////////////////////////////PayPal  payment/////////////////////////////////////////
+        /*val intent = Intent(this, PayPalService::class.java)
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
-        startService(intent)
+        startService(intent)*/
 
         btn_paypal_payment.setOnClickListener(View.OnClickListener {
             if (Isaddress_ContactSelect() && IsCheckAvailablity) {
                 radioButton_COD.setChecked(false)
                 radioButton_googlepay.setChecked(false)
-                val thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE)
+                // paypal sdk implement for payment through paypal , now it is commented as a client requirement
+                /*val thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE)
                 val intent = Intent(this@OnlinePaymentScreen, PaymentActivity::class.java)
                 // send the same configuration for restart resiliency
                 intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy)
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT)
+                startActivityForResult(intent, REQUEST_CODE_PAYMENT)*/
+                try {
+                    HaveBrowser = true
+
+                    val loadUrl: String = "https://services.officinetop.com/public/paypal_home?order=${getOrderId()}&used_wallet_amount=${usedWalletAmount}&address=${AddressId}&contact=${contactId}"
+                    Log.d("PayPalRequest :", loadUrl)
+                    val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(loadUrl)
+                    startActivityForResult(openURL, AmazonPayRequestCode)
+
+                } catch (e: Exception) {
+                    HaveBrowser = false
+                    Toast.makeText(this, getString(R.string.there_is_noBrowser), Toast.LENGTH_LONG).show()
+                }
+
 
             }
 
