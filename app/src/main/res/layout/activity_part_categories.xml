@@ -23,7 +23,6 @@
         android:singleLine="true"
         android:id="@+id/search_product"
         android:hint="@string/SearchProducts"
-        android:focusable="false"
         android:layout_weight="1"/>
 
         <EditText

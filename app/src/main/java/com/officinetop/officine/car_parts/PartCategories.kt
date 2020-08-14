@@ -88,10 +88,10 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
         search_product.setOnClickListener {
 
-            val inputMethodManager =  getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager;
+            /*val inputMethodManager =  getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager;
             inputMethodManager.toggleSoftInputFromWindow(
                     search_product.getApplicationWindowToken(),
-                    InputMethodManager.SHOW_FORCED, 0);
+                    InputMethodManager.SHOW_FORCED, 0);*/
             openSearchDialog()
         }
     }

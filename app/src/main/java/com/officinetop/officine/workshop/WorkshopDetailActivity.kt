@@ -610,7 +610,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         for (i in 0 until imagesArray.length()) {
             val imageRes = imagesArray.getJSONObject(i).getString("image_url")
-            //  val  imageRes=  "https://www1.tyre24.com/images_ts/tyre/15492-tssoap_1606510719_1572955934-w300-h300-br1-1606510719.jpg"
+
             Log.d("workshopsliderimage", imageRes.toString())
             val slide = TextSliderView(this@WorkshopDetailActivity)
                     .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)

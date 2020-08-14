@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
+import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.daimajia.slider.library.Tricks.ViewPagerEx
 import com.officinetop.officine.BaseActivity
@@ -155,7 +156,7 @@ class ServiceDetailActivity : BaseActivity() {
         for (i in 0 until imagesArray.size) {
             val imageRes = Constant.itemImageBaseURL + imagesArray[i].imageName
 
-            val slide = TextSliderView(this).image(imageRes).empty(R.drawable.no_image_placeholder)
+            val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
             image_slider.addSlider(slide)
 
             val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)

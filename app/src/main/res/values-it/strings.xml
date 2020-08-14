@@ -204,7 +204,7 @@
     <string name="latitude_label">Latitudine</string>
     <string name="longitude_label">Longitudine</string>
     <string name="permission_rationale">L\'autorizzazione alla posizione è necessaria per le funzionalità principali</string>
-    <string name="permission_denied_explanation">L\'autorizzazione è stata negata, ma è necessaria per la funzionalità principale.</string>
+    <string name="permission_denied_explanation">L\'autorizzazione è stata negata, ma è necessaria per ottenere la tua posizione.</string>
     <string name="settings">impostazioni</string>
     <string name="user_location">Posizione dell\'utente</string>
     <string name="quotes">Citazioni</string>

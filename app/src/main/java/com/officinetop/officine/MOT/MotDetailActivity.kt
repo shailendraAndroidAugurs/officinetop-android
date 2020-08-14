@@ -34,8 +34,6 @@ class MotDetailActivity : BaseActivity() {
     private var mOPerationServicesList: ArrayList<Models.Operation> = ArrayList()
     lateinit var motServiceObject: Models.MotServicesList
     lateinit var itemsData: Models.MotDetail
-
-
     var selectitem_position: Int = 0
     var genericAdapter: GenericAdapter<Models.Part>? = null
     var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()

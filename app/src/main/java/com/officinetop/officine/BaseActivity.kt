@@ -2,6 +2,7 @@ package com.officinetop.officine
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
@@ -25,12 +26,11 @@ import com.novoda.merlin.Merlin
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
 import com.officinetop.officine.data.storeLatLong
+import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.setAppLanguage
 import com.officinetop.officine.utils.showInfoDialog
 import com.officinetop.officine.utils.snack
 import kotlinx.android.synthetic.main.activity_product_list.*
-import kotlinx.android.synthetic.main.layout_recycler_view.*
-import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.intentFor
 
 @SuppressLint("Registered")
@@ -133,12 +133,19 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-             //  currentLatLong = LatLng(44.186516, 12.1662333)
-                if(currentLatLong?.latitude!=0.0 && currentLatLong?.longitude!=0.0  ){
-                    storeLatLong(currentLatLong!!.latitude,currentLatLong!!.longitude)
-                }
+                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+               // currentLatLong = LatLng(44.186516, 12.1662333)
+                val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+                val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
+                val UserSavedLogitude = langCode.getString(Constant.Path.latitude, "0.0")
+                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() &&!UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                    storeLatLong(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
+                else {
+                    if (currentLatLong?.latitude != 0.0 && currentLatLong?.longitude != 0.0) {
+                        storeLatLong(currentLatLong!!.latitude, currentLatLong!!.longitude)
+                    }
 
+                }
 
             }
         }
@@ -157,12 +164,9 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             locationRequest.setFastestInterval(2 * 1000)
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
-
-
             val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
             result.setResultCallback {
                 val status: Status = it.status
-                val state: LocationSettingsStates = it.locationSettingsStates
                 when (status.statusCode) {
                     LocationSettingsStatusCodes.SUCCESS -> {
                         getFusedLocation()
@@ -199,6 +203,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
     override fun onConnectionFailed(p0: ConnectionResult) {
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
             getFusedLocation()

@@ -260,6 +260,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val cart = "cart"
         const val is_car_wash = "is_car_wash"
         const val currentLatLong = "currentLatLong"
+        const val usertLatLong = "usertLatLong"
     }
 
     object Fields {

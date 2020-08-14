@@ -382,9 +382,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progress_bar.visibility = View.GONE
-
-//              recycler_view.visibility = View.VISIBLE
-
                 body?.let {
 
                     if (isStatusCodeValid(body)) {
@@ -394,7 +391,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         for (i in 0 until dataSet.length()) {
                             val serviceCategory = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
                             arrayList.add(serviceCategory)
-//                          calendarPriceList.add(serviceCategory)
                             calendarPriceMap.put(arrayList[i].date, arrayList[i].minPrice.toString())
 
                         }

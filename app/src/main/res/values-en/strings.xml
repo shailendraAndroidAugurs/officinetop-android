@@ -202,7 +202,7 @@
     <string name="latitude_label">Latitude</string>
     <string name="longitude_label">Longitude</string>
     <string name="permission_rationale">Location permission is needed for core functionality</string>
-    <string name="permission_denied_explanation">Permission was denied, but is needed for corefunctionality.</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for getting your location.</string>
     <string name="settings">Settings</string>
     <string name="user_location">User Location</string>
     <string name="quotes">Quotes</string>
