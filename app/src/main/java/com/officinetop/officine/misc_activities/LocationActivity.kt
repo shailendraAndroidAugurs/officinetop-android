@@ -16,9 +16,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.isStatusCodeValid
+import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_location.*
@@ -62,24 +60,22 @@ class LocationActivity : BaseActivity() {
         toolbar_title.text = resources.getString(R.string.user_location)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        getSavedUserLocation()
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (hasLocationPermission()) {
             setPlacePicker()
         }
-
+        getSavedUserLocation()
 
         locationBtn.setOnClickListener {
 
-            if (hasLocationPermission()) {
-                getLastLocation()
-            }
+            getcurrentLocation()
         }
 
         aggioraBtn.setOnClickListener {
             if (!isEditTextValid(this@LocationActivity, prov, cap, citta, via)) return@setOnClickListener
-            completeAddress=via.text.toString()+" "+ zipCode+" "+citta.text.toString()+" "+prov.text.toString()+" "+cap.text.toString()
+            completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
             RetrofitClient.client.saveUserLocation(getBearerToken()
                     ?: "", latitude, longitude, "", completeAddress, "", "",
                     via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
@@ -90,6 +86,8 @@ class LocationActivity : BaseActivity() {
                             if (response.isSuccessful) {
                                 val jsonObject = JSONObject(response?.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code").equals("1") && jsonObject.has("message")) {
+
+                                    UserAddressLatLong(latitude?.toDouble()!!,longitude?.toDouble()!!)
                                     showInfoDialog(jsonObject.optString("message")) {
                                         finish()
                                     }
@@ -116,24 +114,36 @@ class LocationActivity : BaseActivity() {
 
                                     val dataModels = Gson().fromJson<Models.UserAddres>(jsonObject.getString("data").toString(), Models.UserAddres::class.java)
                                     prov.setText(dataModels.stateName ?: "")
-                                    cap.setText(dataModels.countryName?: "")
-                                    citta.setText(dataModels.cityName?: "")
-                                    via.setText(dataModels.address1?: "")
+                                    cap.setText(dataModels.countryName ?: "")
+                                    citta.setText(dataModels.cityName ?: "")
+                                    via.setText(dataModels.address1 ?: "")
 
-                                    location.text = "Lat: " + (dataModels.latitude?: "") + ", Long:" + (dataModels.longitude?: "")
-                                    completeAddress = (dataModels.address1?: "")+" "+(dataModels.zipCode?: "")+" "+(dataModels.cityName?: "")+" "+(dataModels.stateName?: "")+" "+(dataModels.countryName?: "")
+                                    location.text = "Lat: " + (dataModels.latitude
+                                            ?: "") + ", Long:" + (dataModels.longitude ?: "")
+                                    completeAddress = (dataModels.address1
+                                            ?: "") + " " + (dataModels.zipCode
+                                            ?: "") + " " + (dataModels.cityName
+                                            ?: "") + " " + (dataModels.stateName
+                                            ?: "") + " " + (dataModels.countryName ?: "")
 
                                     complete_address.visibility = View.VISIBLE
                                     complete_address.text = completeAddress
 
-                                    latitude=(dataModels.latitude?: "")
-                                    longitude= dataModels.longitude?: ""
-                                    zipCode=dataModels.zipCode?: ""
+                                    latitude = (dataModels.latitude ?: "")
+                                    longitude = dataModels.longitude ?: ""
+                                    zipCode = dataModels.zipCode ?: ""
+                                    disableTextField()
 
+                                } else {
+                                    getcurrentLocation()
                                 }
 
+                            } else {
+                                getcurrentLocation()
                             }
 
+                        } else {
+                            showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
                         }
 
                     }
@@ -276,6 +286,22 @@ class LocationActivity : BaseActivity() {
         cap.setText(countryName)
         citta.setText(cityName)
         via.setText("${streetName}")
+        disableTextField()
         // }
+    }
+
+    private fun getcurrentLocation() {
+        if (hasLocationPermission()) {
+            getLastLocation()
+        } else {
+            showSnackbar(R.string.permission_denied_explanation)
+        }
+    }
+
+    private fun disableTextField(){
+        prov.isEnabled=false
+        cap.isEnabled=false
+        citta.isEnabled=false
+        via.isEnabled=false
     }
 }

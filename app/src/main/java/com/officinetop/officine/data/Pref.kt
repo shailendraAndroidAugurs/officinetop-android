@@ -511,13 +511,18 @@ inline fun Context.getLangLocale(): String {
 
 
 inline fun Context.storeLatLong(Lat: Double, Long: Double) {
-    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    langCode.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).apply()
+    val sharedPreferences_current_latlong = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).apply()
+}
+
+inline fun Context.UserAddressLatLong(Lat: Double, Long: Double) {
+    val sharedPreferences_UserStore_latlong = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+    sharedPreferences_UserStore_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).apply()
 }
 
 inline fun Context.getLat(): String {
-    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    return langCode.getString(Constant.Path.latitude, "0.0") ?: "0.0"
+    val sharedPreferences = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    return sharedPreferences.getString(Constant.Path.latitude, "0.0") ?: "0.0"
 }
 
 inline fun Context.getLong(): String {
@@ -525,6 +530,7 @@ inline fun Context.getLong(): String {
     return langCode.getString(Constant.Path.longitude, "0.0") ?: "0.0"
 }
 inline fun Context.clearStoreLatLong() {
-    val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
     langCode.edit().clear().apply()
 }
+

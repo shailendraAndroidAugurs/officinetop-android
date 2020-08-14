@@ -131,6 +131,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".car_parts.PartCategories"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".car_parts.SearchActivity"

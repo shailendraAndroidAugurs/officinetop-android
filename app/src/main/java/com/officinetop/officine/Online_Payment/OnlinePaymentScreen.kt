@@ -121,7 +121,7 @@ class OnlinePaymentScreen : BaseActivity() {
             ll_WalletPayment.visibility = View.GONE
         }
         proceed_to_pay.setOnClickListener {
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 updatePaymentStatusWithWallet()
             }
         }
@@ -144,7 +144,7 @@ class OnlinePaymentScreen : BaseActivity() {
         layout_amazonupid.visibility = View.GONE
 
         radioButton_googlepay.setOnClickListener(View.OnClickListener {
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
 
                 payUsingUpi()
                 paypal_payment.visibility = View.GONE
@@ -152,11 +152,13 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.setChecked(true)
                 radioButton_COD.setChecked(false)
                 //startUpiPayment()
+            }else{
+                radioButton_googlepay.isChecked=false
             }
         })
 
         radioButton_COD.setOnClickListener(View.OnClickListener {
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 paypal_payment.visibility = View.GONE
                 layout_amazonupid.visibility = View.GONE
                 radioButton_COD.setChecked(true)
@@ -164,6 +166,8 @@ class OnlinePaymentScreen : BaseActivity() {
                 showInfoDialog(getString(R.string.PayOnDelivery)) {
                     updatePaymentStatusForCOD()
                 }
+            } else{
+                radioButton_COD.isChecked=false
             }
         })
 
@@ -173,7 +177,7 @@ class OnlinePaymentScreen : BaseActivity() {
         startService(intent)*/
 
         btn_paypal_payment.setOnClickListener(View.OnClickListener {
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 radioButton_COD.setChecked(false)
                 radioButton_googlepay.setChecked(false)
                 // paypal sdk implement for payment through paypal , now it is commented as a client requirement
@@ -204,7 +208,7 @@ class OnlinePaymentScreen : BaseActivity() {
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
         googlePayButton.setOnClickListener {
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 requestPayment()
                 radioButton_COD.setChecked(false)
                 radioButton_googlepay.setChecked(false)
@@ -214,7 +218,7 @@ class OnlinePaymentScreen : BaseActivity() {
         btn_amazon_pay.setOnClickListener {
 
 
-            if (Isaddress_ContactSelect() && IsCheckAvailablity) {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 ll_container_payment.visibility = View.GONE
                 /*val webSettings = webview!!.settings
                 webview!!.loadUrl("https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${getUserId()}&payble_amount=${payableAmount}")
@@ -627,7 +631,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun Isaddress_ContactSelect(): Boolean {
+    private fun isaddress_ContactSelect(): Boolean {
         if (contactNo.isNullOrBlank()) {
 
             Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectContactNo), Snackbar.LENGTH_SHORT).show()
@@ -643,7 +647,18 @@ class OnlinePaymentScreen : BaseActivity() {
             return true
 
     }
+    private fun isCartDataAvailable(): Boolean {
+        return if (!IsCheckAvailablity) {
 
+            Snackbar.make(ll_container_payment, getString(R.string.Something_went_wrong_Please_try_again), Snackbar.LENGTH_SHORT).show()
+
+            false
+
+
+        } else
+            true
+
+    }
     private fun CheckCartItemAvailability() {
         AddressId?.let {
             contactId?.let { it1 ->
@@ -664,6 +679,8 @@ class OnlinePaymentScreen : BaseActivity() {
                                                 showInfoDialog(getString(R.string.PleasedeleteOutofStockorExpiredservices))
                                             }
                                         }
+                                    }else{
+                                        showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
                                     }
                                 }
                             }
