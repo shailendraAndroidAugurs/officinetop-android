@@ -12,6 +12,7 @@ import com.officinetop.officine.adapter.SimpleTextListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.genericAPICall
+import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.activity_tyre_diameter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -19,7 +20,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 
 class TyreDiameterActivity : BaseActivity() {
-
+     var selectedTyreDetail: String=""
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +35,20 @@ class TyreDiameterActivity : BaseActivity() {
         getSelectedCar()?.let {
             title_tyre.text = "${resources.getString(R.string.select_car_measures)} \n${it.carMakeName} - ${it.carModelName} (${it.carModel.modelYear})"
         }
+        if(intent.extras!=null && intent.hasExtra("currentlySelectedMeasurement") ){
+             selectedTyreDetail    =intent.getStringExtra("currentlySelectedMeasurement")
+
+        }
+
 
         customize_measure_btn.setOnClickListener {
-            startActivityForResult(intentFor<TyreCustomizationActivity>(), 200)
-            //finish()
+            if(!selectedTyreDetail.isNullOrBlank()){
+                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement",selectedTyreDetail), 200)
+            }else{
+                startActivityForResult(intentFor<TyreCustomizationActivity>(), 200)
+            }
+
+
         }
 
         getUserTyreDetailsApi()
@@ -161,7 +172,11 @@ class TyreDiameterActivity : BaseActivity() {
                                         filter_SpeedIndexId = speed_index,
                                         speedIndex = if (it.speedindexStatus == null) "" else it.speedindexStatus,
                                         runFlat = runFlat,
-                                        reinforced = reinforced
+                                        reinforced = reinforced,
+                                        SeasonId = season,
+                                        SpeedindexId = speed_index,
+                                        selected_runFlat=runFlat,
+                                        selected_reinforced=reinforced
 
 
                                 )

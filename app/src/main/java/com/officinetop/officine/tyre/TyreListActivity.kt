@@ -2,6 +2,7 @@ package com.officinetop.officine.tyre
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -123,20 +124,8 @@ class TyreListActivity : BaseActivity() {
             tyreDetail = getTyreDetail()!!
             tyreDetailFilter = getTyreDetail()!!
             tyreDetail?.let {
-                title_tyre.text = resources.getString(R.string.select_measurements) + "\n" +
-                        (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " + it.speedIndex
-
-                /*       "${it.vehicleTypeName} ${resources.getString(R.string.with_diameter)} ${it.diameter} , ${resources.getString(R.string.width)}: ${it.width}" +
-                       ",${resources.getString(R.string.aspect_ratio)}: ${it.aspectRatio}"
-
-n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
-
-
-*/
-///*, Speed Index : ${it.speedIndex}*/
+                title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " + it.speedIndex
                 searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
-
-
                 progress_bar.visibility = View.VISIBLE
 
                 loadTyreData()
@@ -191,7 +180,7 @@ n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (ite
 
         edit_tyre.setOnClickListener {
             finish()
-            startActivityForResult(intentFor<TyreDiameterActivity>(), 100)
+            startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement",tyreDetail.convertToJsonString()), 100)
         }
 
         filter_btn.setOnClickListener {
@@ -220,15 +209,6 @@ n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (ite
     }
 
     private fun loadTyreData() {
-
-        /*  tyreDetail?.let {
-              title_tyre.text = resources.getString(R.string.select_measurements) + "\n" +
-                      (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " + it.speedIndex
-
-              Log.d("speedIndexvalue", it.speedIndex)
-          }*/
-
-
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -439,33 +419,9 @@ n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (ite
                     //priceRangeSeekerBar.setValue(0f, dialog_price_range.maxProgress)
                     this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
-
-                    /*       dialog_rating_five.isChecked = false
-                           //reset rating filter
-                           dialog_rating_four.isChecked = false
-                           dialog_rating_three.isChecked = false
-                           dialog_rating_two.isChecked = false
-                           dialog_rating_one.isChecked = false
-
-                           //reset other categories
-                           dialog_favourite_check_box.isChecked = false
-                           dialog_offers_check_box.isChecked = false*/
-
-
                     filterBrandList.clear()
                     filterTyreSeasonList.clear()
                     filterTyreSpeedIndexList.clear()
-                    /*   filterBrandList.clear()
-                       filterTyreAspectRatioList.clear()
-                       filterTyreDiameterList.clear()
-                       filterTyreSeasonList.clear()
-                       filterTyreTypeList.clear()
-                       filterTyreSpeedIndexList.clear()
-                       filterTyreWidthList.clear()
-                       brandFilterAdapter?.notifyDataSetChanged()
-                       tyreSeasonFilterAdapter?.notifyDataSetChanged()
-                       tyreSpeedIndexFilterAdapter?.notifyDataSetChanged()*/
-
                     tv_Brand_name.setText("")
                     tv_Rating_name.setText("")
                     tv_season_name.setText("")
@@ -508,7 +464,7 @@ n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (ite
 
     private fun setCheckedListener(layout: View, checkbox: CheckBox, onCheckedChanged: ((isChecked: Boolean) -> Unit)? = null) {
         layout.setOnClickListener {
-            checkbox.isChecked = !checkbox.isChecked; //onCheckedChanged?.invoke(checkbox.isChecked)
+            checkbox.isChecked = !checkbox.isChecked
         }
         checkbox.setOnCheckedChangeListener { _, isChecked -> onCheckedChanged?.invoke(isChecked) }
     }

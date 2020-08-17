@@ -53,7 +53,6 @@ import kotlin.collections.HashMap
 
 
 class WorkshopListActivity : BaseActivity(), FilterListInterface {
-
     lateinit var filterDialog: Dialog
     lateinit var sortDialog: Dialog
     var isAssemblyService = false
@@ -232,8 +231,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 tyre_mainCategory_id = intent.getStringExtra("tyre_mainCategory_id")
 
             }
-
-
             if (!cartItem?.Deliverydays.isNullOrBlank() && (!cartItem?.Deliverydays.equals("0"))) {
                 var DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1!!))
                 var SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
@@ -706,16 +703,12 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     fun bindRecyclerView(jsonArray: JSONArray) {
-
         if (calendarPriceMap == null)
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-
         listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
-
         listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId)
-
         if (intent.hasExtra(Constant.Key.cartItem))
             listAdapter.getCartItem(cartItem!!)
 
@@ -723,7 +716,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
             listAdapter.userLocationSOS(isSOSServiceEmergency, latitude, longitude, serviceID, workshopUserId, addressId, workshopWreckerId)
         }
-
         listAdapter.setWorkshopCategory(convertToJson(intent.getSerializableExtra(Constant.Path.washServiceDetails)
                 ?: Any()))
 
@@ -752,10 +744,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             seekbarPriceFinalLimit = if (!json.isNull("max_price")) json.optString("max_price", "0").toFloat() else 0f
             Log.d("WorkshopList", "max prices" + seekbarPriceFinalLimit.toString() + jsonArray.length().toString())
         }
-
-//        seekbarPriceInitialLimit = list.min()?:0f
-//        seekbarPriceFinalLimit = list.max()?:1000f
-
         if (jsonArray.length() > 0) {
             try {
                 hasRecyclerLoadedOnce = true

@@ -23,6 +23,7 @@ import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.storeLatLong
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.loadImageWithName
 import kotlinx.android.synthetic.main.activity_map_filter.*
@@ -71,7 +72,17 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                val currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+                var currentLatLong=LatLng(0.0,0.0)
+
+                val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+                val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
+                val UserSavedLogitude = langCode.getString(Constant.Path.latitude, "0.0")
+                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() &&!UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                {
+                    currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
+                }else{
+                    currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+                }
 
                 mGoogleMap?.addMarker(MarkerOptions()
                         .position(currentLatLong)/*.icon(BitmapDescriptorFactory.fromBitmap(
