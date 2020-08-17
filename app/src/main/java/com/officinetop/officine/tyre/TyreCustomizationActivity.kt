@@ -30,6 +30,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.stream.IntStream
 
 
 class TyreCustomizationActivity : BaseActivity() {
@@ -50,6 +51,8 @@ class TyreCustomizationActivity : BaseActivity() {
     private val widthList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     private val diameterList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     private val aspectRatioList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
+    lateinit var selectedTyreDetail:Models.TyreDetail
+    private var isPreviousSelectedMeasurement=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tyre_customization)
@@ -63,7 +66,10 @@ class TyreCustomizationActivity : BaseActivity() {
         info_btn.setOnClickListener {
             showDialog()
         }
-
+        if(intent.extras!=null && intent.hasExtra("currentlySelectedMeasurement") ){
+            selectedTyreDetail    = Gson().fromJson(intent.getStringExtra("currentlySelectedMeasurement") , Models.TyreDetail::class.java)
+            isPreviousSelectedMeasurement=true
+        }
         getTyreSpecificationApi()
 
         submit.setOnClickListener {
@@ -83,7 +89,11 @@ class TyreCustomizationActivity : BaseActivity() {
                     speedIndex = speedIndexName, vehicleTypeName = vehicleTypeName,
                     seasonTypeName = seasonTypeName,
                     filter_SeasonTypeId = seasonType,
-                    filter_SpeedIndexId = speedIndex
+                    filter_SpeedIndexId = speedIndex,
+                    SeasonId = seasonType,
+                    SpeedindexId = speedIndex,
+                            selected_runFlat=checkbox_run_flat.isChecked,
+                    selected_reinforced=checkbox_reinforced.isChecked
 
             )
 
@@ -196,13 +206,56 @@ class TyreCustomizationActivity : BaseActivity() {
                                 spinner_aspect_ratio.adapter = SpinnerAdapter(applicationContext, aspectRatioList.distinct())
                                 spinner_vehicle_type.adapter = SpinnerAdapterForVehicalType(applicationContext, tyreTypeList.distinct())
                                 spinner_season_type.adapter = SpinnerAdapterForSeason(applicationContext, tyreSeasonList.distinct())
-
-
-
-
-
-
                                 spinner_speed_limit.adapter = SpinnerAdapter(applicationContext, speedIndexList.distinct())
+
+                                if(isPreviousSelectedMeasurement){
+                                    if(selectedTyreDetail!=null){
+
+                                        if(!selectedTyreDetail.width.equals("0.0")) {
+                                           var tyreWidth= widthList.find { it.name==selectedTyreDetail.width.toInt().toString() }
+                                           val selectedWidthPotion= widthList.indexOf(tyreWidth)
+                                            spinner_width.setSelection(selectedWidthPotion)
+                                        }
+                                        if(!selectedTyreDetail.diameter.equals("0.0")) {
+                                            var tyreDiameter= diameterList.find { it.name==selectedTyreDetail.diameter.toInt().toString() }
+                                            val selectedWidthPotion= diameterList.indexOf(tyreDiameter)
+                                            spinner_diameter.setSelection(selectedWidthPotion)
+                                        }
+                                        if(!selectedTyreDetail.aspectRatio.equals("")) {
+                                            var tyre_aspectRatio= aspectRatioList.find { it.name==selectedTyreDetail.aspectRatio.toInt().toString() }
+                                            val selected_aspectRatio= aspectRatioList.indexOf(tyre_aspectRatio)
+                                            spinner_aspect_ratio.setSelection(selected_aspectRatio)
+                                        }
+                                        if(!selectedTyreDetail.vehicleType.equals("")) {
+                                            var tyreVehicalType= tyreTypeList.find { it.id==selectedTyreDetail.vehicleType.toString() }
+                                            val selectedVehicalTypePotion= tyreTypeList.indexOf(tyreVehicalType)
+                                            spinner_vehicle_type.setSelection(selectedVehicalTypePotion)
+                                        }
+
+
+
+
+                                        if(!selectedTyreDetail.SeasonId.equals("")) {
+                                            var tyre_Season= tyreSeasonList.find { it.id==selectedTyreDetail.SeasonId.toString() }
+                                            val selected_Season= tyreSeasonList.indexOf(tyre_Season)
+                                            spinner_season_type.setSelection(selected_Season)
+                                        }
+                                        if(!selectedTyreDetail.SpeedindexId.equals("")) {
+                                            var tyreSpeedIndex= speedIndexList.find { it.code==selectedTyreDetail.SpeedindexId.toString() }
+                                            val selectedSpeedIndex= speedIndexList.indexOf(tyreSpeedIndex)
+                                            spinner_speed_limit.setSelection(selectedSpeedIndex)
+                                        }
+
+                                        if(selectedTyreDetail.selected_runFlat) {
+                                            checkbox_run_flat.isChecked=true
+                                        }
+                                        if(selectedTyreDetail.selected_reinforced) {
+                                            checkbox_reinforced.isChecked=true
+                                        }
+
+
+                                    }
+                                }
                                 spinner_width.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                                         val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification

@@ -36,7 +36,6 @@ import org.jetbrains.anko.intentFor
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-
     lateinit var connectionCallback: Merlin
     private var LOCATION_RQ = 10001
     private var currentLatLong: LatLng? = LatLng(0.0, 0.0)
@@ -47,8 +46,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         super.onCreate(savedInstanceState)
         connectionCallback = Merlin.Builder().withConnectableCallbacks()
                 .withDisconnectableCallbacks().build(this)
-
-
         connectionCallback.registerDisconnectable {
             showInfoDialog(getString(R.string.Connection_Error))
         }
@@ -58,7 +55,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             storeLangLocale("it")
             setAppLanguage()
         }
-
         mLocationRequest = LocationRequest()
         mLocationRequest?.interval = 150000
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -79,15 +75,12 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         connectionCallback.unbind()
         super.onPause()
     }
-
     @SuppressLint("RestrictedApi")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
             android.R.id.home -> finish()
-
             R.id.item_home_options -> {
-
                 var menuBuilder = MenuBuilder(this)
                 var menuInflater = MenuInflater(this)
                 menuInflater.inflate(R.menu.menu_navigation_options, menuBuilder)
@@ -133,7 +126,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+               currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
               // currentLatLong = LatLng(44.186516, 12.1662333)
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
@@ -195,7 +188,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
     override fun onConnected(p0: Bundle?) {
 
     }
-
     override fun onConnectionSuspended(p0: Int) {
 
     }
@@ -209,7 +201,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             getFusedLocation()
             Log.d("WorkshopList", "Location Permission sucess2")
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 

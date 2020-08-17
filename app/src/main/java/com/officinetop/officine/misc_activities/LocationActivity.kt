@@ -16,7 +16,10 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.*
+import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.UserAddressLatLong
+import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_location.*
@@ -33,10 +36,6 @@ class LocationActivity : BaseActivity() {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
 
     private var mLastLocation: Location? = null
-
-    private var mLatitude: String? = null
-    private var mLongitude: String? = null
-
     var container: ConstraintLayout? = null
 
     var geoCoder: Geocoder? = null
@@ -50,6 +49,7 @@ class LocationActivity : BaseActivity() {
     private var countryName: String? = null
     private var stateName: String? = null
     private var streetName: String? = null
+    private var isAutomaticLocationSave=false
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,34 +69,12 @@ class LocationActivity : BaseActivity() {
         getSavedUserLocation()
 
         locationBtn.setOnClickListener {
-
+            isAutomaticLocationSave=true
             getcurrentLocation()
         }
 
         aggioraBtn.setOnClickListener {
-            if (!isEditTextValid(this@LocationActivity, prov, cap, citta, via)) return@setOnClickListener
-            completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
-            RetrofitClient.client.saveUserLocation(getBearerToken()
-                    ?: "", latitude, longitude, "", completeAddress, "", "",
-                    via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
-                    .onCall { networkException, response ->
-
-
-                        response?.let {
-                            if (response.isSuccessful) {
-                                val jsonObject = JSONObject(response?.body()?.string())
-                                if (jsonObject.has("status_code") && jsonObject.optString("status_code").equals("1") && jsonObject.has("message")) {
-
-                                    UserAddressLatLong(latitude?.toDouble()!!,longitude?.toDouble()!!)
-                                    showInfoDialog(jsonObject.optString("message")) {
-                                        finish()
-                                    }
-
-                                }
-
-                            }
-                        }
-                    }
+            saveLocation()
         }
     }
 
@@ -249,7 +227,6 @@ class LocationActivity : BaseActivity() {
         Log.d("user current location: ", "${latitude} ${longitude}")
         location.text = "lat: " + latitude + ", long:" + longitude
 
-        // for (i in 0 until addressList.size) {
 
         completeAddress = addressList.get(0).getAddressLine(0)
         cityName = addressList.get(0).locality.takeIf { !it.isNullOrEmpty() }
@@ -287,7 +264,9 @@ class LocationActivity : BaseActivity() {
         citta.setText(cityName)
         via.setText("${streetName}")
         disableTextField()
-        // }
+       if(isAutomaticLocationSave){
+           saveLocation()
+       }
     }
 
     private fun getcurrentLocation() {
@@ -298,10 +277,38 @@ class LocationActivity : BaseActivity() {
         }
     }
 
-    private fun disableTextField(){
-        prov.isEnabled=false
-        cap.isEnabled=false
-        citta.isEnabled=false
-        via.isEnabled=false
+    private fun disableTextField() {
+        prov.isEnabled = false
+        cap.isEnabled = false
+        citta.isEnabled = false
+        via.isEnabled = false
     }
+
+    private fun saveLocation(){
+        if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)){
+
+
+        completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
+        RetrofitClient.client.saveUserLocation(getBearerToken()
+                ?: "", latitude, longitude, "", completeAddress, "", "",
+                via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
+                .onCall { networkException, response ->
+
+
+                    response?.let {
+                        if (response.isSuccessful) {
+                            val jsonObject = JSONObject(response?.body()?.string())
+                            if (jsonObject.has("status_code") && jsonObject.optString("status_code").equals("1") && jsonObject.has("message")) {
+
+                                UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                                showInfoDialog(jsonObject.optString("message")) {
+                                    finish()
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+    }}
 }
