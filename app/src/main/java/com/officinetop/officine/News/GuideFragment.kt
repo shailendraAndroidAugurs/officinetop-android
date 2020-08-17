@@ -43,14 +43,4 @@ class GuideFragment : Fragment() {
         return rootview
     }
 
-
-    /* override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-         if (keyCode == KeyEvent.KEYCODE_BACK && this.webView!!.canGoBack()) {
-             this.webView?.goBack()
-             return true
-         }
-         return super.onKeyDown(keyCode, event)
-     }*/
-
-
 }

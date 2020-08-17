@@ -525,7 +525,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     }
 
     private fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
-        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLat.equals("0.0") && !currentLong.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
+        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank()  && !currentLat.equals("0.0") && !currentLong.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
             val Radius = 6371
             var lat1 = currentLat.toDouble();
             val lat2 = latitude.toDouble();
