@@ -47,7 +47,6 @@
                         android:background="@color/white"
                         android:clickable="false"
                         android:gravity="center"
-
                         app:auto_cycle="false"
                         app:indicator_visibility="visible"
                         app:pager_animation="Default"
