@@ -34,17 +34,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <RatingBar
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    style="@style/customratingBar"
+                    android:layout_width="@dimen/_80sdp"
                     android:id="@+id/ratings"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
+                    android:layout_height="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:numStars="5"
                     app:layout_constraintEnd_toStartOf="@+id/date"
                     app:layout_constraintStart_toEndOf="@+id/profile_pic"
                     app:layout_constraintTop_toBottomOf="@+id/name"
-                    app:rating="@{listItemViewModel.avgRatings!=null ? listItemViewModel.avgRatings.toString(): Integer.toString(0)}" />
+                    app:bindrating="@{listItemViewModel.avgRatings!=null ? listItemViewModel.avgRatings.toString(): Integer.toString(0)}" />
 
                 <TextView
                     android:id="@+id/name"

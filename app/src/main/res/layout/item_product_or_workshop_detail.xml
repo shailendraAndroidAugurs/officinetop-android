@@ -245,11 +245,11 @@ android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:gravity="center">
 
-                <RatingBar
-                    android:id="@+id/item_rating"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    style="@style/customratingBar"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:id="@+id/item_rating"/>
 
                 <TextView
                     android:id="@+id/item_rating_count"

@@ -48,12 +48,12 @@
 
             app:layout_constraintStart_toEndOf="@+id/user_image"
             app:layout_constraintTop_toTopOf="parent"/>
-        <RatingBar
-            style="@style/RatingBarSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            style="@style/customratingBar"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_height="@dimen/_10sdp"
             android:layout_gravity="center_vertical"
-            android:rating="5"
             android:id="@+id/user_rating"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_name"/>

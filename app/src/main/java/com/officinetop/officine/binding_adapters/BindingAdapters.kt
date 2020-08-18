@@ -11,6 +11,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
+import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
@@ -39,6 +40,13 @@ fun bindPrice(textView: TextView, price: String) {
 
 @BindingAdapter("rating")
 fun bindRating(ratingBar: RatingBar, rating: String) {
+    if (!rating.isNullOrEmpty()) {
+        ratingBar.rating = rating.toDouble().roundTo2Places().toFloat()
+    }
+}
+
+@BindingAdapter("bindrating")
+fun bindRating(ratingBar: SimpleRatingBar, rating: String) {
     if (!rating.isNullOrEmpty()) {
         ratingBar.rating = rating.toDouble().roundTo2Places().toFloat()
     }

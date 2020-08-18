@@ -70,7 +70,9 @@ class FeedbackAddActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.add_feedback)
 
-        //hideKeyboard()
+        ratings.setOnClickListener {
+            Log.d("rating",ratings.rating.toString())
+        }
 
         if (intent.hasExtra(Constant.Path.workshopId))
             workshopId = intent?.getStringExtra(Constant.Path.workshopId) ?: ""

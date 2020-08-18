@@ -67,12 +67,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     }
 
     private lateinit var mMap: GoogleMap
-
-
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-
-    private var mLastLocation: Location? = null
-
     private var mLatitude: String? = null
     private var mLongitude: String? = null
 
@@ -93,22 +88,13 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sos)
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.title_activity_sos)
-
-
-        //check location permission.
-
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        //this.infoWindow = layoutInflater.inflate(R.layout.)
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (hasLocationPermission()) {
@@ -205,46 +191,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     override fun onInfoWindowClick(p0: Marker?) {
 
     }
-
-
-    /* private fun getLastLocation() {
-         mFusedLocationClient!!.lastLocation
-                 .addOnCompleteListener(this) { task ->
-                     if (task.isSuccessful && task.result != null) {
-
-                         mLastLocation = task.result
-
-                         mLatitude = mLastLocation!!.latitude.toString()
-                         mLongitude = mLastLocation!!.longitude.toString()
-
-                         //container.snack(getString(R.string.location_enabled))
-
-                         getAllWrackerWorkshopAddressInfo()
-
-                         Log.d("user current location: ", "${mLastLocation!!.latitude} ${mLastLocation!!.longitude}")
-
-                         mMap.isMyLocationEnabled = true
-
-                         if (mLatitude != null && mLongitude != null) {
-                             var myLocation = LatLng(mLatitude!!.toDouble(),
-                                     mLongitude!!.toDouble());
-                             var center: CameraUpdate =
-                                     CameraUpdateFactory.newLatLng(myLocation);
-                             var zoom: CameraUpdate = CameraUpdateFactory.zoomTo(13.0F);
-
-                             mMap.moveCamera(center);
-                             mMap.animateCamera(zoom);
-                         }
-
-
-                     } else {
-                         Log.w("SOSActivity", "getLastLocation:exception", task.exception)
-
-                         //container.snack(getString(R.string.no_location_detected))
-                         //enableLocation()
-                     }
-                 }
-     }*/
 
     override fun onStart() {
         super.onStart()
@@ -551,10 +497,18 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             if (location == null) {
                 requestNewLocationData()
             } else {
-              mLatitude = location!!.latitude.toString()
-             mLongitude = location!!.longitude.toString()
-                /* mLatitude = "44.186516"
-                 mLongitude ="12.1662333"*/
+                val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+                val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
+                val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
+                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() &&!UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                {
+                    mLatitude=UserSavedLatitude
+                            mLongitude=UserSavedLogitude
+                   // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
+                }else{
+                    mLatitude=location!!.latitude.toString()
+                    mLongitude=location!!.longitude.toString()
+                }
                 loadmapview()
             }
         }

@@ -40,12 +40,12 @@
             android:text="@string/sample_title"
             />
 
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                style="@style/customratingBar"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_10sdp"
                 android:paddingTop="2dp"
                 android:id="@+id/item_rating"
-                style="@style/Widget.AppCompat.RatingBar.Small"
                 />
 
         </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     android:background="?selectableItemBackground"
     android:gravity="center"
@@ -319,11 +320,11 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <RatingBar
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/item_rating"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    style="@style/customratingBar"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/item_rating_count"

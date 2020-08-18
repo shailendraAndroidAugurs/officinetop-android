@@ -52,12 +52,13 @@
 
 
 
-        <RatingBar
-            style="@style/RatingBarSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+
+            style="@style/customratingBar"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_10sdp"
             android:layout_gravity="center_vertical"
-            app:rating="@{listItemViewModel.avgRatings!=null? listItemViewModel.avgRatings : Integer.toString(0)}"
+            app:bindrating="@{listItemViewModel.avgRatings!=null? listItemViewModel.avgRatings : Integer.toString(0)}"
             android:id="@+id/user_rating"
             android:layout_margin="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@+id/fedback_given_by"
