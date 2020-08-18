@@ -688,6 +688,7 @@
     <string name="itemnumber">Articolo: %s</string>
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
+    <string name="add_feedback">Add Feedback</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
