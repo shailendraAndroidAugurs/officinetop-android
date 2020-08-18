@@ -166,11 +166,13 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <RatingBar
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+
             android:id="@+id/workshop_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
+            style="@style/customratingBar"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/workshop_rating_count"

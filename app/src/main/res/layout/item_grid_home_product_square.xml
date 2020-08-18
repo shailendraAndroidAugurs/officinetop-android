@@ -47,13 +47,14 @@
                 android:text="@string/sample_product"
                 android:textColor="@color/black" />
 
-            <RatingBar
-                android:id="@+id/ratngbar_rating"
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                style="@style/customratingBar"
                 android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:id="@+id/ratngbar_rating"
+
                 android:layout_gravity="center"
-                android:paddingBottom="10dp"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="10dp"/>
 
         </LinearLayout>
 

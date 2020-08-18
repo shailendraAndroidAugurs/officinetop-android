@@ -337,11 +337,15 @@ android:visibility="visible"
 
                             android:gravity="center">
 
-                            <RatingBar
-                                android:id="@+id/item_tyrerating"
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                app:srb_isIndicator="true"
+                                app:srb_borderColor="@color/theme_orange"
+                                app:srb_fillColor="@color/theme_orange"
                                 style="?android:attr/ratingBarStyleSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:id="@+id/item_tyrerating"
+
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="@dimen/_10sdp" />
 
                             <TextView
                                 android:id="@+id/item_rating_tyrecount"
@@ -538,11 +542,12 @@ android:visibility="visible"
                             android:layout_marginTop="5dp"
                             android:gravity="center">
 
-                            <RatingBar
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+
                                 android:id="@+id/workshop_item_rating"
-                                style="?android:attr/ratingBarStyleSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                style="@style/customratingBar"
+                                android:layout_width="@dimen/_80sdp"
+                                android:layout_height="@dimen/_10sdp" />
 
                             <TextView
                                 android:id="@+id/wishList_item_rating_count"
