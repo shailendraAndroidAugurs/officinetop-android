@@ -111,13 +111,22 @@ class LocationActivity : BaseActivity() {
                                     longitude = dataModels.longitude ?: ""
                                     zipCode = dataModels.zipCode ?: ""
                                     disableTextField()
+                                    if(!dataModels.latitude.isNullOrBlank() && !dataModels.longitude.isNullOrBlank() ){
+                                        UserAddressLatLong(dataModels.latitude.toDouble(),dataModels.longitude.toDouble())
+
+                                    }else{
+                                        UserAddressLatLong(0.0,0.0)
+
+                                    }
 
                                 } else {
                                     getcurrentLocation()
+                                    UserAddressLatLong(0.0,0.0)
                                 }
 
                             } else {
                                 getcurrentLocation()
+                                UserAddressLatLong(0.0,0.0)
                             }
 
                         } else {
@@ -293,8 +302,6 @@ class LocationActivity : BaseActivity() {
                 ?: "", latitude, longitude, "", completeAddress, "", "",
                 via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
                 .onCall { networkException, response ->
-
-
                     response?.let {
                         if (response.isSuccessful) {
                             val jsonObject = JSONObject(response?.body()?.string())

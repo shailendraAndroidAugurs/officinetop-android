@@ -68,7 +68,7 @@ class FeedbackAddActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar_title.text = "Add Feedback"
+        toolbar_title.text = getString(R.string.add_feedback)
 
         //hideKeyboard()
 
