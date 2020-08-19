@@ -64,7 +64,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private val internetBroadcast = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
         }
-    }bas
+    }
 
     private fun showOnlineSnack(progressDialog: ProgressDialog?): Boolean {
         val view = home_bottom_navigation_view
@@ -76,11 +76,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         return isOnline()
     }
 
+
     fun loadNavigationItems(itemId: Int) {
         when (itemId) {
             R.id.action_menu_home, R.id.menu_home -> {
 
                 if (!(supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
+
 
                    supportFragmentManager.beginTransaction()
                             .replace(R.id.container, FragmentHome(), "Home")
