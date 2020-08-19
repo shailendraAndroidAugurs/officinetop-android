@@ -190,7 +190,7 @@ object Constant {
         const val customerInvoicePolicy = "customer_invoice_policy"
         const val getFAQ = "get_faq"
         const val getUserSavedAddress = "customer_address"
-
+        const val kromedaCall = "save_maintenance_kromeda_call"
 
     }
 

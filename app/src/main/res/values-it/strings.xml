@@ -208,7 +208,7 @@
     <string name="settings">impostazioni</string>
     <string name="user_location">Posizione dell\'utente</string>
     <string name="quotes">Citazioni</string>
-    <string name="letichettatura">L\'etichettatura dei pneumatici UE, conformemente al regolamento(n. 1222/2009), viene applicata in tutti gli Stati membri dell\'UE. ll regolamento si applica a tutti i pneumatici di autovetture, autocarri leggeri e pesanti prodotti dopo il 01.07.2012 Con questa etichettatura tutti i pneumatici nell\'UE sono classificati in base a 3 criteri.</string>
+    <string name="letichettatura">L\'etichettatura dei pneumatici UE, conformemente al regolamento(n. 1222/2009), viene applicata in tutti gli Stati membri dell\'UE. ll regolamento si applica a tutti i pneumatici di autovetture, autocarri leggeri e pesanti prodotti dopo il 01.07.2012 Con questa etichettatura tutti i pneumatici nell \'UE sono classificati in base a 3 criteri .</string>
     <string name="efficienza_del">L\'efficienza del carburante dipende dal viecolo stesso a daile condizioni di guida. Un viecolo dotato di pneumatici di classe A e attrezzato in modo completo risparmia fino a 7.5% di carburante in plu rispetto a un veicoio con pneumatici di classe C.</string>
     <string name="laderenza">L\'aderenza sul bagnato rappresenta la differenza di efficienza frenante sul bagnato rispetto all\'aderenza media su strada. Un veicolo dotato di pneumatici di classe A e attrezzato in modo completo puo vantare una distanza di frenata del 30%(18m) inferiore rispetto a un viecolo con pneumatici di classe F.</string>
     <string name="ll_livello">ll livello di rumore prodotto dai pnemuatici \'e misurato in decibel. ll livello di rumore di ogni veicolo viene misurato in decibel, per un totale di tre categorie assegnate.</string>
@@ -689,6 +689,8 @@
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Add Feedback</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="customer_rating">Customer rating</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -310,6 +310,18 @@ class AddVehicleActivity : BaseActivity() {
                 || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0) {
             snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
             return
+        }else {
+            val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
+            RetrofitClient.client.kromedaCall(idVehicle)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        }
+
+                    })
+
         }
 
         if (!isLoggedIn()) {
@@ -409,6 +421,8 @@ class AddVehicleActivity : BaseActivity() {
 
             val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
 
+
+
             RetrofitClient.client.addCar(manufacturers[spinner_manufacturer.selectedItemPosition].brandID,
                     model[spinner_model.selectedItemPosition].modelID + "/" + model[spinner_model.selectedItemPosition].modelYear,
                     idVehicle,
@@ -429,28 +443,6 @@ class AddVehicleActivity : BaseActivity() {
                                 if (!isForEdit) {
 
                                     handleAddCarResponse(body)
-
-                                    /*  if(!isStatusCodeValid(body)){
-                                          showInfoDialog(if(messageString.isEmpty()) "Something went wrong" else messageString, true){}
-                                          return
-                                      }
-
-                                      alert { message = "Do you want to complete the car details to get personalized suggestions?"
-                                          positiveButton("Yes"){
-                                              val lastCarIntent = getLastCarIntent(body)
-                                              val car = lastCarIntent.getSerializableExtra(Constant.Key.myCar)
-
-                                              myCar = car as Models.MyCarDataSet
-                                              isForEdit = true
-                                              setEditMode()
-                                              }
-
-                                          negativeButton("Complete later"){
-                                              setResult(Activity.RESULT_OK, getLastCarIntent(body))
-                                              finish()
-                                              }
-                                          isCancelable = false
-                                          }.show()*/
 
                                 } else {
                                     showInfoDialog(if (messageString.isEmpty()) getString(R.string.Caraddedsuccessfully) else messageString, !isStatusCodeValid(body)) {
