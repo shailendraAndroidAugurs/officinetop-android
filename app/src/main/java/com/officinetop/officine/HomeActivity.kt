@@ -76,6 +76,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         return isOnline()
     }
 
+
     fun loadNavigationItems(itemId: Int) {
         when (itemId) {
             R.id.action_menu_home, R.id.menu_home -> {
