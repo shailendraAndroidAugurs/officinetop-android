@@ -22,13 +22,10 @@ import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
 import org.jetbrains.anko.support.v4.intentFor
-
-
 class FragmentWorkshopFeedback : Fragment() {
 
     private lateinit var rootView: View
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

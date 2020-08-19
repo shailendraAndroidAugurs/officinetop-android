@@ -28,8 +28,6 @@ import kotlinx.android.synthetic.main.recycler_view_for_dialog.view.*
 import org.json.JSONObject
 
 class CartItemAdapter(private var context: Context, view: Button) : RecyclerView.Adapter<CartItemAdapter.CartViewHolder>() {
-
-
     private var cartItems: MutableList<Models.CartDataList> = ArrayList()
     private var onItemChanged: OnItemChanged? = null
     private var onCartListCallback: OnCartListCallback? = null
