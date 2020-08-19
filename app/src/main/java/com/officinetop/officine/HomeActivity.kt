@@ -83,6 +83,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 if (!(supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
 
+
                    supportFragmentManager.beginTransaction()
                             .replace(R.id.container, FragmentHome(), "Home")
                             .commit()
