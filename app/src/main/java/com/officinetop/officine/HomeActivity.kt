@@ -64,7 +64,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private val internetBroadcast = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
         }
-    }bas
+    }
 
     private fun showOnlineSnack(progressDialog: ProgressDialog?): Boolean {
         val view = home_bottom_navigation_view
