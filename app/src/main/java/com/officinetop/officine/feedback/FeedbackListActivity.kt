@@ -30,7 +30,6 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
     private var productorWorkshopName: String = ""
     private var sellerId: String = ""
 
-
     private var productType: String = ""//type for product type, type for tyre is 2, type for spare parts for 1 and type for rim 3
     private var mainCategoryId: String = ""
     private var serviceID: String = ""
@@ -103,26 +102,11 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
 
     private fun bindFeedbackList() {
-/*
-        val genericAdapter = GenericAdapter<Models.FeedbacksList>(this@FeedbackListActivity, R.layout.feedback_items_layout)
-
-        genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
-            override fun onClick(view: View, position: Int) {
-
-                displayDetails(feedbackList[position])
-            }
-
-            override fun onItemClick(view: View, position: Int) {
-
-            }
-        })
-
-        fedback_recycler_view.adapter = genericAdapter
-        if (feedbackList.size > 0) feedbackList.reverse()
-        genericAdapter.addItems(feedbackList)*/
-
-
         if (fedback_recycler_view != null) {
+            overall_rating.rating=list[0].avgRatings.toFloat()
+            tv_rating_count.text=list[0].avgRatings.toFloat().toString()+" "+"out of 5"
+            tv_overAll_rating_count.text=list[0].noOfPeople
+
             fedback_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 

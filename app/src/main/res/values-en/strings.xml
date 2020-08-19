@@ -206,7 +206,8 @@
     <string name="settings">Settings</string>
     <string name="user_location">User Location</string>
     <string name="quotes">Quotes</string>
-    <string name="letichettatura">EU tire labeling, in accordance with regulation (n. 1222/2009), is applied in all EU member states. The regulation applies to all tires for passenger cars, light and heavy trucks produced after 01.07.2012. With this labeling, all tires in the EU are classified according to 3 criteria.</string>
+    <string name="letichettatura">L\'etichettatura dei pneumatici UE, conformemente al regolamento(n. 1222/2009), viene applicata in tutti gli Stati membri dell\'UE. ll regolamento si applica a tutti i pneumatici di autovetture, autocarri leggeri e pesanti prodotti dopo il 01.07.2012 Con questa etichettatura tutti i pneumatici nell \'UE sono classificati in base a 3 criteri .</string>
+
     <string name="efficienza_del">Fuel efficiency depends on the vehicle itself and on driving conditions. A lane equipped with class A tires and fully equipped saves up to 7.5% of fuel in plu compared to a vehicle with class C tires.</string>
     <string name="laderenza">The wet grip represents the difference in braking efficiency in the wet compared to the average grip on the road. A vehicle equipped with class A tires and fully equipped can boast a braking distance of 30% (18m) less than a lane with class F tires.</string>
     <string name="ll_livello">The level of noise produced by pneumatic tires is measured in decibels. The noise level of each vehicle is measured in decibels, for a total of three assigned categories.</string>
@@ -690,6 +691,8 @@
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Add Feedback</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="customer_rating">Customer rating</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

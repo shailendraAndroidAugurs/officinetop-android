@@ -1421,4 +1421,11 @@ interface IRetrofitApis {
     fun getUserSavedAddress(
             @Header(Constant.Fields.authorization) authToken: String
     ): Call<ResponseBody>
+
+    // call kromeda part
+   // https://services.officinetop.com/api/save_maintenance_kromeda_call?version=95794
+    @GET(Constant.UrlEndPoints.kromedaCall)
+    fun kromedaCall(
+            @Header(Constant.Path.version) versionId:  String
+    ): Call<ResponseBody>
 }

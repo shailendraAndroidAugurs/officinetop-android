@@ -1609,7 +1609,6 @@ object Models {
             var fName: String = "",
             @SerializedName("customer_profile_image")
             var profile_image: String,
-
             @SerializedName("id")
             val id: String,
             @SerializedName("images")
@@ -1640,6 +1639,7 @@ object Models {
             @SerializedName("productorWorkshopName")
             var ProductOrWorkshopName: String = "",
             var product_type: String = ""
+
 
 
     ) : ListItemViewModel()
