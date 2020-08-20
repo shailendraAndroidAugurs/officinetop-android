@@ -31,7 +31,7 @@
                 android:orientation="horizontal">
 
 
-                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                <com.officinetop.officine.utils.CustomRatingBar
                     android:id="@+id/overall_rating"
                     style="@style/customratingBar"
                     android:layout_width="@dimen/_80sdp"

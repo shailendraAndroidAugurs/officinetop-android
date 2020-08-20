@@ -282,10 +282,25 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 item_price.text = getString(R.string.prepend_euro_symbol_with_da_string, jsonObject.optString("services_price"))
 
 
-            if (!jsonObject.optString("rating_star").isNullOrEmpty() && !jsonObject.optString("rating_star").equals("null")) {
+          /*  if (!jsonObject.optString("rating_star").isNullOrEmpty() && !jsonObject.optString("rating_star").equals("null")) {
                 item_rating.rating = jsonObject.optString("rating_star").toFloat()
             } else
-                item_rating.rating = 0f
+                item_rating.rating = 0f*/
+
+
+
+            if(jsonObject.has("rating")){
+                var jsonObjectRating = JSONObject(jsonObject.optString("rating"))
+                if (jsonObjectRating!=null && jsonObjectRating.has("rating")&&!jsonObjectRating.optString("rating").isNullOrEmpty() && !jsonObjectRating.optString("rating").equals("null")) {
+                    item_rating.rating = jsonObjectRating.optString("rating").toFloat()
+                } else
+                    item_rating.rating = 0f
+
+            }
+
+
+
+
 
             if (!jsonObject.optString("rating_count").isNullOrEmpty() && !jsonObject.optString("rating_count").equals("null")) {
                 item_rating_count.text = jsonObject.optString("rating_count")

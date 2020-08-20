@@ -46,7 +46,7 @@
                 android:singleLine="true"
                 android:text="@string/sample_workshop"
                 android:textColor="@color/black" />
-            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            <com.officinetop.officine.utils.CustomRatingBar
 
                 style="@style/customratingBar"
                 android:layout_width="@dimen/_80sdp"

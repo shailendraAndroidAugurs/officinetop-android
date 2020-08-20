@@ -692,7 +692,7 @@
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Add Feedback</string>
     <string name="write_a_review">Write a review</string>
-    <string name="customer_rating">Customer rating</string>
+    <string name="customer_rating">customer evaluation</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

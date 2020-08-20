@@ -26,7 +26,7 @@
         android:text="@string/rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+    <com.officinetop.officine.utils.CustomRatingBar
         android:id="@+id/rating"
         style="@style/customratingBar"
         android:layout_width="wrap_content"

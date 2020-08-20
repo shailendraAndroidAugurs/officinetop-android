@@ -47,7 +47,7 @@
                 android:text="@string/sample_product"
                 android:textColor="@color/black" />
 
-            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            <com.officinetop.officine.utils.CustomRatingBar
                 style="@style/customratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_20sdp"

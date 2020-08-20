@@ -23,6 +23,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.daimajia.slider.library.Tricks.ViewPagerEx
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -41,7 +42,6 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
-import com.paypal.android.sdk.payments.LoginActivity
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.dialog_booking_calendar.*
@@ -749,18 +749,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 setImageSlider(json.getJSONArray("service_images"))
                                 Log.d("workshop_gallery", "service_images")
                             }
-                        } /*else {
-                            val jsonArray = JSONArray()
-                            val jsonObj = JSONObject()
-                            jsonObj.put("image_url", "image_url")
-                            jsonArray.put(jsonObj)
-                            setImageSlider(jsonArray)
-                        }*/
+                        }
 
                         workshop_address.text = if (json.has("registered_office") && json.get("registered_office") != null) json.optString("registered_office") else ""
                         workshop_address.setOnClickListener {
-                            var workshopLat = 26.846695
-                            var workshopLng = 80.946167
 
                             var mapUri = Uri.parse("geo:0,0?q=${workshop_address.text.toString().trim().takeIf { !it.isNullOrEmpty() }}")
                             var mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
@@ -779,11 +771,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         if (json.has("rating_count") && json.getString("rating_count") != null && !json.getString("rating_count").equals("") && !json.getString("rating_count").equals("null"))
                             workshop_rating_count.text = json.getInt("rating_count").toString()
 
+                        if (json.has("rating")) {
+                        val    jsonRating=JSONObject(json.getString("rating"))
+                            if (jsonRating.has("rating") && !jsonRating.isNull("rating") && !jsonRating.getString("rating").equals("") && !jsonRating.getString("rating").equals("null"))
+                                workshop_rating.rating = jsonRating.getString("rating").toFloat()
+                            else
+                                workshop_rating.rating = 0f
+                        }
 
-                        if (json.has("rating_star") && !json.isNull("rating_star") && !json.getString("rating_star").equals("") && !json.getString("rating_star").equals("null"))
-                            workshop_rating.rating = json.getString("rating_star").toFloat()
-                        else
-                            workshop_rating.rating = 0f
 
                         if (json.has("profile_image"))
                             loadImage(json.getString("profile_image"), workshop_image, R.drawable.no_image_placeholder)
@@ -1243,9 +1238,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         //check for timeslot
         val packageID = packageDetail.getInt("id")
-       if(bookServicesWithoutCoupon){
-           workshopCouponId = ""
-       }
+        if (bookServicesWithoutCoupon) {
+            workshopCouponId = ""
+        }
 
 
         if (isRevision) {
@@ -1398,7 +1393,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (isStatusCodeValid(body)) {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status").equals("1")) {
-                            createDialogforInvalidCoupon(packageDetail,bookingStartTime)
+                            createDialogforInvalidCoupon(packageDetail, bookingStartTime)
 
                         } else {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
@@ -1409,7 +1404,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     } else {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status").equals("1")) {
-                            createDialogforInvalidCoupon(packageDetail,bookingStartTime)
+                            createDialogforInvalidCoupon(packageDetail, bookingStartTime)
 
                         } else {
                             showInfoDialog(getMessageFromJSON(it), true)
@@ -1664,7 +1659,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //performing positive action
         builder.setPositiveButton("Yes") { dialogInterface, which ->
             bookServicesWithoutCoupon = true
-            checkAndBookService(packageDetail,bookingStartTime)
+            checkAndBookService(packageDetail, bookingStartTime)
         }
 
         //performing negative action
@@ -1676,7 +1671,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         alertDialog.show()
     }
 
-    private fun movetologinPage(){
+    private fun movetologinPage() {
         startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
     }
 }

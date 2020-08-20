@@ -689,8 +689,8 @@
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Add Feedback</string>
-    <string name="write_a_review">Write a review</string>
-    <string name="customer_rating">Customer rating</string>
+    <string name="write_a_review">Scriviuna recensione</string>
+    <string name="customer_rating">valutazione clienti</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

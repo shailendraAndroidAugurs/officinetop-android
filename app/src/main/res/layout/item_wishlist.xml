@@ -337,7 +337,7 @@ android:visibility="visible"
 
                             android:gravity="center">
 
-                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            <com.officinetop.officine.utils.CustomRatingBar
                                 app:srb_isIndicator="true"
                                 app:srb_borderColor="@color/theme_orange"
                                 app:srb_fillColor="@color/theme_orange"
@@ -542,7 +542,7 @@ android:visibility="visible"
                             android:layout_marginTop="5dp"
                             android:gravity="center">
 
-                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            <com.officinetop.officine.utils.CustomRatingBar
 
                                 android:id="@+id/workshop_item_rating"
                                 style="@style/customratingBar"
