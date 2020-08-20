@@ -34,7 +34,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                <com.officinetop.officine.utils.CustomRatingBar
                     style="@style/customratingBar"
                     android:layout_width="@dimen/_80sdp"
                     android:id="@+id/ratings"

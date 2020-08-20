@@ -170,7 +170,7 @@ dependencies {
                 exclude group: 'io.card'
 
             }
-    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
+    
 
     implementation "com.github.skydoves:progressview:1.0.5"
     //implementation 'com.google.firebase:firebase-invites:17.0.0'

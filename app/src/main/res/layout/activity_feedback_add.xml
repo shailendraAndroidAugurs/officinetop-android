@@ -48,10 +48,10 @@
 
             app:layout_constraintStart_toEndOf="@+id/user_image"
             app:layout_constraintTop_toTopOf="parent"/>
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        <com.officinetop.officine.utils.CustomRatingBar
             style="@style/customratingBar"
             android:layout_width="@dimen/_80sdp"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:layout_height="@dimen/_10sdp"
             android:layout_gravity="center_vertical"
             android:id="@+id/user_rating"

@@ -579,8 +579,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         /* ll_delivery_date.visibility = View.VISIBLE*/
 
 
-        if (!productDetails!!.ratingStar.isNullOrBlank()) {
-            product_rating.rating = productDetails!!.ratingStar.toFloat()
+        if (productDetails!!.rating!=null  && !productDetails!!.rating!!.rating.isNullOrBlank()) {
+            product_rating.rating = productDetails!!.rating!!.rating.toFloat()
         } else
             product_rating.rating = 0f
 

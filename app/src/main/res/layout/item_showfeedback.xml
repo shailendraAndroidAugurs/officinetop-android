@@ -83,11 +83,10 @@
                     android:layout_gravity="center"
                     android:layout_weight="1">
 
-                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    <com.officinetop.officine.utils.CustomRatingBar
                         android:id="@+id/ratngbar_ratingFeedback"
                         style="@style/customratingBar"
                         android:layout_width="wrap_content"
-                        app:srb_stepSize="0.25"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_gravity="center"
                         android:gravity="center" />

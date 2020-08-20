@@ -11,14 +11,10 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
-import com.iarcuschin.simpleratingbar.SimpleRatingBar
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.utils.DateFormatChangeYearToMonth
-import com.officinetop.officine.utils.loadImage
-import com.officinetop.officine.utils.parseServerDateTime
-import com.officinetop.officine.utils.roundTo2Places
+import com.officinetop.officine.utils.*
 
 
 @BindingAdapter("imageResource")
@@ -46,7 +42,7 @@ fun bindRating(ratingBar: RatingBar, rating: String) {
 }
 
 @BindingAdapter("bindrating")
-fun bindRating(ratingBar: SimpleRatingBar, rating: String) {
+fun bindRating(ratingBar: CustomRatingBar, rating: String) {
     if (!rating.isNullOrEmpty()) {
         ratingBar.rating = rating.toDouble().roundTo2Places().toFloat()
     }

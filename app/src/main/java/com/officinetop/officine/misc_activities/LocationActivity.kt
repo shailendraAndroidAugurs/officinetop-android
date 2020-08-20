@@ -213,6 +213,7 @@ class LocationActivity : BaseActivity() {
             longitude = place?.latLng?.longitude.toString()
             Address = place?.address.toString()
             if (place != null) {
+                isAutomaticLocationSave=false
                 setLocationInView(place?.latLng?.latitude, place?.latLng?.longitude)
 
 

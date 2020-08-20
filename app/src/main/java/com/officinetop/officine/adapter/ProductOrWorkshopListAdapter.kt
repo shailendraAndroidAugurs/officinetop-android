@@ -188,8 +188,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, "0")
                 }
 
-                if (!product_workshopList.ratingStar.isNullOrEmpty()) {
-                    rating.rating = product_workshopList.ratingStar.toFloat()
+                if (product_workshopList.rating!=null &&!product_workshopList.rating.rating.isNullOrEmpty()) {
+                    rating.rating = product_workshopList.rating.rating.toFloat()
                 } else
                     rating.rating = 0f
                 if (!product_workshopList.ratingCount.isNullOrEmpty()) {

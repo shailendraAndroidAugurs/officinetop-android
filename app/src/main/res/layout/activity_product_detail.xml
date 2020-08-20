@@ -93,11 +93,11 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    <com.officinetop.officine.utils.CustomRatingBar
                         android:id="@+id/product_rating"
                         style="@style/customratingBar"
                         android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_10sdp" />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/ratingCount"

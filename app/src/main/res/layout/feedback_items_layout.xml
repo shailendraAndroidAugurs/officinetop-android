@@ -52,11 +52,11 @@
 
 
 
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        <com.officinetop.officine.utils.CustomRatingBar
 
             style="@style/customratingBar"
             android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_10sdp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             app:bindrating="@{listItemViewModel.avgRatings!=null? listItemViewModel.avgRatings : Integer.toString(0)}"
             android:id="@+id/user_rating"
