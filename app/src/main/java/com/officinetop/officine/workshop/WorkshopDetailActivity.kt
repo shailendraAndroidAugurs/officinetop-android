@@ -158,7 +158,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             R.drawable.ic_scheduled_car_inspection, R.drawable.ic_sos, R.drawable.ic_estimate)
     var wishList = "0"
     var WorkshopJson: JSONObject = JSONObject()
-
+    private var feedbackMain_categoryId = ""
+    private var feedbackServices_id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workshop_detail)
@@ -380,8 +381,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(Constant.Path.workshopId to workshopUsersId.toString()
                     , Constant.Path.ProductOrWorkshopName to company_name.takeIf { !it.isNullOrEmpty() }
-                    , Constant.Path.type to "", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""
+                    , Constant.Path.type to "2", Constant.Path.mainCategoryId to feedbackMain_categoryId, Constant.Path.serviceID to feedbackServices_id
             ))
+
+
+            //workshopId=250,productId=,ratings=3.5,images=[],comments=workshop feedback,sellerId=,productType=,mainCategoryId=,type=,serviceID=
+            //workshopId=490,productId=,ratings=2.5,images=[],comments=officien top  wor,sellerId=,productType=,mainCategoryId=1,type=2,serviceID=164
         }
 
         if (isSosEmergency) {
@@ -817,6 +822,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             averageServiceTime = json.optDouble("service_average_time", 0.0) * 60
                             Log.d("mot avarageTime", json.optDouble("service_average_time").toString())
                         }
+
+
+                        if(json.has("main_category_id") && !json.optInt("main_category_id").toString().isNullOrBlank()){
+                            feedbackMain_categoryId=json.optInt("main_category_id").toString();
+                        }
+                        if(json.has("service_id") && !json.optString("service_id").toString().isNullOrBlank()){
+                            feedbackServices_id=json.optInt("service_id").toString();
+                        }
+
 
                         // set up workshop working time slots
                         if (json.has("package_list") && !json.isNull("package_list") && json.getJSONArray("package_list") != null

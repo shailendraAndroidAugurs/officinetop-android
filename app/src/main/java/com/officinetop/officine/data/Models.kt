@@ -3073,21 +3073,31 @@ object Models {
     data class NoiceDbArr(
             val description: String,
             val icon: String,
-            val name: String
+            val name: String,
+            val graphical_image: String,
+            @SerializedName("name_2")
+            val title: String
     )
 
 
     data class RollingResistanceArr(
             val description: String,
             val icon: String,
-            val name: String
+            val name: String,
+            val graphical_image: String,
+            @SerializedName("name_2")
+            val title: String
+
     )
 
 
     data class WetGripArr(
             val description: String,
             val icon: String,
-            val name: String
+            val name: String,
+            val graphical_image: String,
+            @SerializedName("name_2")
+            val title: String
     )
 
 

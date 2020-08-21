@@ -151,21 +151,21 @@ android:id="@+id/tv_noice_dbValue"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="@string/fuel_Efficiency"/>
+                    android:text=""/>
 
                 <TextView
                     android:id="@+id/tv_fuelEfficiencyDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/efficienza_del"/>
+                    android:text=""/>
 
                 <ImageView
                     android:id="@+id/iv_FuelEfficiencyGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:src="@drawable/graph"/>
+                    android:scaleType="centerInside"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginTop="@dimen/_10sdp" />
 
 
             </LinearLayout>
@@ -209,21 +209,20 @@ android:id="@+id/tv_noice_dbValue"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="@string/adhesion_bath"/>
+                    />
 
                 <TextView
                     android:id="@+id/tv_wetgripDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/laderenza"/>
+                    android:layout_marginTop="@dimen/_10sdp" />
 
                 <ImageView
+                    android:scaleType="centerInside"
                     android:id="@+id/Iv_WetgripGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:src="@drawable/graph1"/>
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginTop="@dimen/_10sdp" />
 
 
             </LinearLayout>
@@ -255,68 +254,22 @@ android:id="@+id/tv_noice_dbValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="@string/noise_Emission"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tv_NoiseDbDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/ll_livello"/>
+                    android:layout_marginTop="@dimen/_10sdp"/>
 
-              <LinearLayout
-                  android:id="@+id/ll_noiseGraph"
+              <ImageView
+                  android:id="@+id/Iv_noiseGraph"
+                  android:scaleType="centerInside"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginTop="@dimen/_10sdp">
+                  android:layout_height="@dimen/_80sdp">
 
-                      <ImageView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:src="@drawable/img7"/>
-                      <TextView
-                          android:layout_width="match_parent"
-                          android:text="@string/tre_strisce"
-                          android:layout_height="wrap_content"/>
-                  </LinearLayout>
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginTop="@dimen/_10sdp">
 
-                      <ImageView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:src="@drawable/img7"/>
-                      <TextView
-                          android:layout_width="match_parent"
-                          android:text="@string/due_strisce"
-                          android:layout_height="wrap_content"/>
-                  </LinearLayout>
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginTop="@dimen/_10sdp">
-
-                      <ImageView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:src="@drawable/img7"/>
-                      <TextView
-                          android:layout_width="match_parent"
-                          android:text="@string/una_strisce"
-                          android:layout_height="wrap_content"/>
-                  </LinearLayout>
-
-              </LinearLayout>
+              </ImageView>
 
 
             </LinearLayout>
