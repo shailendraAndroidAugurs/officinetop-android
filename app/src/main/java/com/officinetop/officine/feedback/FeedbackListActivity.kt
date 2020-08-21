@@ -104,7 +104,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
     private fun bindFeedbackList() {
         if (fedback_recycler_view != null) {
             overall_rating.rating=list[0].avgRatings.toFloat()
-            tv_rating_count.text=list[0].avgRatings.toFloat().toString()+" "+"out of 5"
+            tv_rating_count.text=list[0].avgRatings.toFloat().toDouble().roundTo2Places().toString()+" "+"out of 5"
             tv_overAll_rating_count.text=list[0].noOfPeople
 
             fedback_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

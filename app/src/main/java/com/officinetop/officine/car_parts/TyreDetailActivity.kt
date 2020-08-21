@@ -83,11 +83,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         speedIndexMapFun()
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(Constant.Path.productId to selectedProductID.toString(),
-                    Constant.Path.productType to "2", Constant.Path.sellerId to productDetails?.user_id, Constant.Path.ProductOrWorkshopName to productDetails?.manufacturer_description.takeIf { !it.isNullOrEmpty() }
+                    Constant.Path.productType to "2", Constant.Path.sellerId to productDetails?.user_id.toString(), Constant.Path.ProductOrWorkshopName to productDetails?.manufacturer_description.takeIf { !it.isNullOrEmpty() }
                     , Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""
 
             ))
-
 
         }
         if (intent.hasExtra(Constant.Path.productDetails))

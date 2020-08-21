@@ -684,16 +684,16 @@ class MaintenanceActivity : BaseActivity() {
                     ratingString += "1,"
 
                 if (right_check_box.isChecked)
-                    leftRight = "${"rh."}"
+                    leftRight = /*"${"rh."}"*/"${"sx."}"
 
                 if (left_check_box.isChecked)
-                    leftRight = "${"lh."}"
+                    leftRight = /*"${"lh."}"*/"${"dx."}"
 
                 if (rear_check_box.isChecked)
-                    frontRear = "${"rear"}"
+                    frontRear = /*"${"rear"}"*/"${"post."}"
 
                 if (front_check_box.isChecked)
-                    frontRear = "${"front"}"
+                    frontRear = /*"${"front"}"*/"${"ant."}"
 
                 if (all_check_box.isChecked) {
                     frontRear = ""
