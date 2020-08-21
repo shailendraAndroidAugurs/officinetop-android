@@ -243,7 +243,7 @@ class FeedbackAddActivity : BaseActivity() {
                                 val data = JSONObject(response.body()?.string())
                                 if (data.has("message") && !data.isNull("message")) {
                                     showInfoDialog(data.get("message").toString())
-                                    startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                   // startActivity(intentFor<Order_List>().clearTask().clearTop())
                                     finish()
 
                                     Log.d("Feedback","yes")

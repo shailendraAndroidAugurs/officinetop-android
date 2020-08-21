@@ -196,9 +196,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             add_product_to_cart.setOnClickListener {
-                /*   if (productIsPair)
-                       cartItem?.quantity = item_qty.text.toString().toInt() // for / 2 // this is comment in intial if product is on pair then only show piese 2 but in backend it gose actual quantity
-                   else*/
                 cartItem?.quantity = item_qty.text.toString().toInt()
 
 
@@ -224,10 +221,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             buy_product_with_assembly.setOnClickListener {
 
                 if (productDetails != null) {
-
-                    /* if (productIsPair)
-                         cartItem?.quantity = item_qty.text.toString().toInt() / 2
-                     else*/
                     cartItem?.quantity = item_qty.text.toString().toInt()
                     cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
                     cartItem?.finalPrice = ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
@@ -414,46 +407,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 val data = getDataFromResponse(it)
                                 data?.let {
 
-
-                                    // Log.d("tyreDetail api call:", it.toString())
-                                    /*if (it.has("pfu_detail")) {
-                                        val pfu_detail: JSONArray = it.getJSONArray("pfu_detail")
-                                        seller_details.isEnabled = !pfu_detail.isEmpty()
-
-                                        val otherSeller = SpannableString(getString(R.string.other_seller))
-                                        otherSeller.setSpan(object : ClickableSpan() {
-                                            override fun onClick(widget: View) {
-
-                                                val intent = Intent(this@TyreDetailActivity, TyreSellerDetailsActivity::class.java)
-                                                intent.putExtra("tyreSellerDetails", pfu_detail.toString())
-                                                startActivityForResult(intent, 1001)
-                                            }
-
-                                        }, 0, otherSeller.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-                                        seller_details.text = TextUtils.concat("", otherSeller)
-                                        seller_details.movementMethod = LinkMovementMethod.getInstance()
-                                        seller_details.highlightColor = Color.TRANSPARENT
-
-                                        if (!pfu_detail.isEmpty()) {
-                                            val pfuObj = pfu_detail.get(0) as JSONObject
-                                            pfuAmount = pfuObj.getString("add_money").toFloat()
-                                            //totalPrice += pfuAmount
-                                            oneItemAdditionalPrice += pfuAmount
-                                            delivery_date.text = getDate(pfuObj.getString("no_of_days").toInt())
-                                            product_price_total.text = getString(R.string.tyre_price_total, (totalPrice + pfuAmount).toString())//41.33+2.75+4.133
-
-
-                                            *//*seller_details.setOnClickListener {
-                                                val intent = Intent(this,TyreSellerDetailsActivity::class.java)
-                                                    intent.putExtra("tyreSellerDetails", pfu_detail.toString())
-                                                    startActivityForResult(intent, 1001)
-                                            }*//*
-                                        } else {
-                                            ll_delivery_date.visibility = View.GONE
-                                        }
-                                    }*/
-
                                     var tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it.toString(), Models.TyreDetailData::class.java)
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
                                         delivery_date.text = getDate(tyreDetailData.delivery_days.toInt() + 1)
@@ -507,15 +460,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun loadProductDetails(detail: Models.TyreDetailItem) {
-
-        /*var productDetailsString = intent.getStringExtra(Constant.Path.productDetails)*/
         var productPrice = ""
-
-        /*if (productDetailsString != null)
-            productDetails = JSONObject(productDetailsString)*/
-
-        /* if (productDetails != null) {*/
-        //productDetails?.seller_price?.takeIf { it.isNotEmpty() }?:productDetails?.price
         val maxWidth = detail.max_width
         val maxDiameter = detail.max_diameter
         val maxAspectRatio = detail.max_aspect_ratio
@@ -566,18 +511,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (TextUtils.isEmpty(detail.seller_price) && detail.seller_price == null) productPrice = detail.price!!
         else productPrice = detail.seller_price.toString()
 
-        /*Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--"+ productPrice+"--" +
-                intent.hasExtra(Constant.Path.productType)+ "--"+intent.getStringExtra(Constant.Path.productType).equals("tyre", true))*/
-
         product_price.text =
                 if (intent.hasExtra(Constant.Path.productType) && intent.getStringExtra(Constant.Path.productType).equals("tyre", true)) {
                     getString(R.string.prepend_euro_symbol_string, productPrice + " PFU")
                 } else {
                     getString(R.string.prepend_euro_symbol_string, productPrice)
                 }
-
-        /* ll_delivery_date.visibility = View.VISIBLE*/
-
 
         if (productDetails!!.rating!=null  && !productDetails!!.rating!!.rating.isNullOrBlank()) {
             product_rating.rating = productDetails!!.rating!!.rating.toFloat()
@@ -587,17 +526,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (!productDetails!!.ratingCount.isNullOrBlank())
             ratingCount.text = productDetails!!.ratingCount
 
-        /*if (productDetails!!.has("description") && !productDetails!!.isNull("description"))*/
         product_description.text = productDetails!!.description
 
-        //Add slider images
-        /*if (productDetails!!.has("images") && !productDetails!!.isNull("images") && productDetails!!.getJSONArray("images").length() > 0) {*/
-
-//          createImageSliderDialog()
         val imagesArray: MutableList<Models.TyreImage> = ArrayList()
 
-        /*imagesArray.add(Models.TyreImage("","",0,"",image_url = detail.imageUrl!!,
-                tyre24_id = "",tyre_item_id = 0,updated_at = ""))*/
 
         if (productDetails?.images != null && productDetails?.images!!.size > 0) {
             productDetails!!.images?.let {
@@ -627,56 +559,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-    private fun setImageSlider() {
-        //set slider
-        image_slider.removeAllSliders()
-        createImageSliderDialog()
-        for (i in 0..1) {
-            val imageRes = if (i % 2 == 0) R.drawable.no_image_placeholder else R.drawable.no_image_placeholder
-
-            val slide = TextSliderView(this).image(imageRes).empty(R.drawable.no_image_placeholder)
-
-            image_slider.addSlider(slide)
-
-            val scaledSlide = DialogTouchImageSlider(this, imageRes)
-                    .description("Description")
-                    .image(imageRes)
-            dialogSlider.addSlider(scaledSlide)
-
-            slide.setOnSliderClickListener {
-
-                if (disableSliderTouch)
-                    return@setOnSliderClickListener
-
-                dialogSlider.currentPosition = i
-                imageDialog.show()
-            }
-        }
-
-
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-            }
-
-        })
-    }
-
     private fun setImageSlider(imagesArray: List<Models.TyreImage>?) {
         //set slider
         createImageSliderDialog()
         image_slider.removeAllSliders()
 
         for (i in 0 until imagesArray!!.size) {
-//            val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
-
             try {
                 if (imagesArray.get(i).image_url != null && !imagesArray.get(i).image_url.toString().isEmpty()) {
 
@@ -734,11 +622,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         slider.stopAutoCycle()
         slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//        slider.setCustomIndicator(PagerIndicator(this).apply {
-//            setDefaultIndicatorColor(Color.BLACK, Color.GRAY)
-//            indicatorVisibility =  PagerIndicator.IndicatorVisibility.Visible
-//        })
-
         dialogSlider = slider
 
         with(imageDialog) {
@@ -875,8 +758,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                                 Log.e("data is null", "${productData}")
                                             }
                                         } catch (e: Exception) {
-//                                    toast("Failed to load some product detail")
-//                                finish()
                                             Log.e("ProductDetailActivity", "onResponse: onResponse", e)
                                         }
                                     }
