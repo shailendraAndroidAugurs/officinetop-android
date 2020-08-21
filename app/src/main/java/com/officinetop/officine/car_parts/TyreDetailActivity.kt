@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -234,7 +235,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                             Constant.Path.productId to selectedProductID,
                             Constant.Key.productDetail to productDetails?.toString(),
                             Constant.Key.cartItem to cartItem,
-                                   "tyre_mainCategory_id" to tyre_mainCategory_id
+                            "tyre_mainCategory_id" to tyre_mainCategory_id
 
                     )
 
@@ -398,7 +399,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun loadTyreDetails(id: Int, userId: Int) {
         try {
             val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
-            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),"0,25")
+            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), "0,25")
                     .onCall { _, response ->
 
                         response?.body()?.string()?.let {
@@ -412,7 +413,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         Deliverydays = tyreDetailData.delivery_days
                                     }
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
-                                        tyre_mainCategory_id =tyreDetailData.tyre_mainCategory_id
+                                        tyre_mainCategory_id = tyreDetailData.tyre_mainCategory_id
                                     }
 
                                     setDetailedInformation(tyreDetailData)
@@ -517,7 +518,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getString(R.string.prepend_euro_symbol_string, productPrice)
                 }
 
-        if (productDetails!!.rating!=null  && !productDetails!!.rating!!.rating.isNullOrBlank()) {
+        if (productDetails!!.rating != null && !productDetails!!.rating!!.rating.isNullOrBlank()) {
             product_rating.rating = productDetails!!.rating!!.rating.toFloat()
         } else
             product_rating.rating = 0f
@@ -780,11 +781,18 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 tv_Rolling_Resistance.text = tyreDetailData.rolling_resistance_arr.name
             }
             if (tyreDetailData.rolling_resistance_arr.description != null) {
-                tv_fuelEfficiencyDescription.text = tyreDetailData.rolling_resistance_arr.description
-            } else {
-                iv_FuelEfficiencyGraph.visibility = View.GONE
-                tv_fuleEfficincyTitle.visibility = View.GONE
+                tv_fuelEfficiencyDescription.text = Html.fromHtml(tyreDetailData.rolling_resistance_arr.description)
             }
+            if (!tyreDetailData.rolling_resistance_arr.graphical_image.isNullOrBlank()) {
+                loadImage(tyreDetailData.rolling_resistance_arr.graphical_image, iv_FuelEfficiencyGraph)
+
+            }else{
+                iv_FuelEfficiencyGraph.visibility=View.GONE
+            }
+            if (tyreDetailData.rolling_resistance_arr.title != null) {
+                tv_fuleEfficincyTitle.text = tyreDetailData.rolling_resistance_arr.title
+            }
+
 
         } else {
             iv_FuelEfficiencyGraph.visibility = View.GONE
@@ -808,12 +816,16 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 tv_wetgripValue.text = tyreDetailData.wet_grip_arr.name
             }
             if (tyreDetailData.wet_grip_arr.description != null) {
-                tv_wetgripDescription.text = tyreDetailData.wet_grip_arr.description
+                tv_wetgripDescription.text = Html.fromHtml(tyreDetailData.wet_grip_arr.description)
                 Iv_WetgripGraph.visibility = View.VISIBLE
-            } else {
-                Iv_WetgripGraph.visibility = View.GONE
-                tv_wetgripDescriptionTitle.visibility = View.GONE
-
+            }
+            if (tyreDetailData.wet_grip_arr.title != null) {
+                tv_wetgripDescriptionTitle.text = tyreDetailData.wet_grip_arr.title
+            }
+            if (!tyreDetailData.wet_grip_arr.graphical_image.isNullOrBlank()) {
+                loadImage(tyreDetailData.wet_grip_arr.graphical_image, Iv_WetgripGraph)
+            }else{
+                Iv_WetgripGraph.visibility=View.GONE
             }
 
         } else {
@@ -839,14 +851,18 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 tv_noice_dbValue.text = tyreDetailData.noice_db_arr.name + " " + "db"
             }
             if (tyreDetailData.noice_db_arr.description != null) {
-                tv_NoiseDbDescription.text = tyreDetailData.noice_db_arr.description
-                ll_noiseGraph.visibility = View.VISIBLE
-            } else {
-
-                tv_NoiseDbDescriptionTitle.visibility = View.GONE
-                ll_noiseGraph.visibility = View.GONE
+                tv_NoiseDbDescription.text =Html.fromHtml(tyreDetailData.noice_db_arr.description)
 
             }
+            if (!tyreDetailData.noice_db_arr.graphical_image.isNullOrBlank()) {
+                loadImage(tyreDetailData.noice_db_arr.graphical_image, Iv_noiseGraph)
+            }else{
+                Iv_noiseGraph.visibility=View.GONE
+            }
+            if (tyreDetailData.noice_db_arr.title != null) {
+                tv_NoiseDbDescriptionTitle.text = tyreDetailData.noice_db_arr.title
+            }
+
 
         } else {
 
@@ -855,7 +871,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             tv_noice_dbValue.visibility = View.GONE
             iv_noices_db.visibility = View.GONE
             iv_noiseDB_Image.visibility = View.GONE
-            ll_noiseGraph.visibility = View.GONE
+            Iv_noiseGraph.visibility = View.GONE
             Log.d("Detail:", "noise: null")
         }
 
