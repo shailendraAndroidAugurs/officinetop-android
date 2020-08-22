@@ -101,6 +101,12 @@ class TyreCustomizationActivity : BaseActivity() {
             var run_flat = if (checkbox_run_flat.isChecked) 1 else 0
             var reinforced = if (checkbox_reinforced.isChecked) 1 else 0
             var progressDialog = getProgressDialog(true)
+            if(!seasonType.isNullOrBlank() && seasonType.equals("0")){
+                seasonType=""
+            }
+            if(!speedIndex.isNullOrBlank() && speedIndex.equals("0")){
+                speedIndex=""
+            }
             RetrofitClient.client.saveUserTyreDetails(
                     getUserId(),
                     vehicleType,
@@ -181,9 +187,12 @@ class TyreCustomizationActivity : BaseActivity() {
                                     val diameterobjdata: JSONObject = diameter.get(diameterobj) as JSONObject
                                     diameterList.add(Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
+                                speedIndexList.clear()
+                                speedIndexList.add(0,Models.TypeSpecification("All", "0"))
                                 for (speedindex in 0 until speed_index.length()) {
                                     val speedindexObj: JSONObject = speed_index.get(speedindex) as JSONObject
-                                    speedIndexList.add(Models.TypeSpecification(speedindexObj.optString("name"), speedindexObj.optString("id")))
+
+                                    speedIndexList.add(speedindex+1,Models.TypeSpecification(speedindexObj.optString("name"), speedindexObj.optString("id")))
                                 }
 
                                 for (tyretype in 0 until tyre_type.length()) {
@@ -197,6 +206,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 }
                                 for (season in 0 until season_tyre_type.length()) {
                                     val seasonObj: JSONObject = season_tyre_type.get(season) as JSONObject
+                                    tyreSeasonList.add(0,Models.TypeSpecificationForSeason("All", "0", ""))
                                     tyreSeasonList.add(Models.TypeSpecificationForSeason(seasonObj.optString("name"), seasonObj.optString("id"), seasonObj.optString("code2")))
                                 }
 
@@ -206,6 +216,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 spinner_aspect_ratio.adapter = SpinnerAdapter(applicationContext, aspectRatioList.distinct())
                                 spinner_vehicle_type.adapter = SpinnerAdapterForVehicalType(applicationContext, tyreTypeList.distinct())
                                 spinner_season_type.adapter = SpinnerAdapterForSeason(applicationContext, tyreSeasonList.distinct())
+                                Log.d("SpeedIndexData",speedIndexList.toString())
                                 spinner_speed_limit.adapter = SpinnerAdapter(applicationContext, speedIndexList.distinct())
 
                                 if(isPreviousSelectedMeasurement){
