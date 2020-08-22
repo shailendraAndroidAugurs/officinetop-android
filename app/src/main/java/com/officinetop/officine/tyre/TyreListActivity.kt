@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
@@ -85,7 +86,7 @@ class TyreListActivity : BaseActivity() {
     lateinit var isSwitch_RunFlat: Switch
     lateinit var priceRangeSeekerBar: RangeSeekBar
     var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    var tyre_type: JSONArray = JSONArray()
+    var season_type: JSONArray = JSONArray()
     var speed_index: JSONArray = JSONArray()
     lateinit var brandList: ArrayList<Models.brand>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -149,15 +150,17 @@ class TyreListActivity : BaseActivity() {
                                     val jsonObject = JSONObject(body)
                                     val data = jsonObject.getJSONObject("data") as JSONObject
                                     speed_index = data.getJSONArray("speed_index") as JSONArray
-                                    tyre_type = data.getJSONArray("season_tyre_type") as JSONArray
+                                    season_type = data.getJSONArray("season_tyre_type") as JSONArray
 
                                     var PriceObject = data.getJSONObject("price")
 
                                     filterTyreSeasonList.clear()
                                     filterTyreSpeedIndexList.clear()
-                                    for (tyreType in 0 until tyre_type.length()) {
-                                        val tyreTypeObject: JSONObject = tyre_type.get(tyreType) as JSONObject
-                                        filterTyreSeasonList.add(Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
+                                    for (tyreType in 0 until season_type.length()) {
+                                        val tyreTypeObject: JSONObject = season_type.get(tyreType) as JSONObject
+                                        filterTyreSeasonList.add(0,Models.TypeSpecification("All", "0"))
+
+                                        filterTyreSeasonList.add(tyreType+1,Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
                                     }
 
                                     for (speedIndex in 0 until speed_index.length()) {
@@ -209,13 +212,25 @@ class TyreListActivity : BaseActivity() {
     }
 
     private fun loadTyreData() {
+        var seasonId=""
+        var speedindexId=""
+        if(tyreDetail.filter_SeasonTypeId.equals("0")){
+            seasonId=""
+        }else{
+            seasonId=tyreDetail.filter_SeasonTypeId
+        }
+        if(tyreDetail.filter_SpeedIndexId.equals("0")){
+            speedindexId=""
+        }else{
+            speedindexId=tyreDetail.filter_SpeedIndexId
+        }
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
                     searchString,
                     tyreDetail.brands,
-                    tyreDetail.filter_SeasonTypeId,
-                    tyreDetail.filter_SpeedIndexId,
+                    seasonId,
+                    speedindexId,
                     current_page.toString(),
                     if (tyreDetail.onlyFav) "1" else "0",
                     if (tyreDetail.offerOrCoupon) "1" else "0",
@@ -644,8 +659,16 @@ class TyreListActivity : BaseActivity() {
 
             var tyreSeasonFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
+            var season_typeArray: JSONArray = JSONArray()
+            val     season_typeobject = JSONObject()
+            season_typeobject.put("name","All")
+            season_typeobject.put("id","0")
+            season_typeArray.put(0,season_typeobject)
+            for (n  in 0 until  season_type.length()){
+                season_typeArray.put(n+1,season_type[n])
+            }
 
-            tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, tyre_type, R.layout.item_checkbox) { itemView, _, jsonObject ->
+            tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, season_typeArray, R.layout.item_checkbox) { itemView, _, jsonObject ->
                 val tyreSeasonName = jsonObject.optString("name")
                 val tyreSeasonCode = jsonObject.optString("id")
 
@@ -690,9 +713,16 @@ class TyreListActivity : BaseActivity() {
             var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
             var SpeedIndexDialog = CreateSubDialog(getString(R.string.speed_index))
+            var speed_indexArray: JSONArray = JSONArray()
+            val     speed_indexobject = JSONObject()
+            speed_indexobject.put("name","All")
+            speed_indexobject.put("id","0")
+            speed_indexArray.put(0,speed_indexobject)
+            for (n  in 0 until  speed_index.length()){
+                speed_indexArray.put(n+1,season_type[n])
+            }
 
-
-            tyreSpeedIndexFilterAdapter = SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_index, R.layout.item_checkbox) { itemView, position, jsonObject ->
+            tyreSpeedIndexFilterAdapter = SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_indexArray, R.layout.item_checkbox) { itemView, position, jsonObject ->
                 val tyreSpeedIndexName = jsonObject.optString("name")
                 val tyreSpeedIndexCode = jsonObject.optString("id")
                 itemView.item_checkbox_text.text = tyreSpeedIndexName
