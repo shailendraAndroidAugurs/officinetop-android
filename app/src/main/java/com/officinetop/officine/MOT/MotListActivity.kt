@@ -36,12 +36,7 @@ class MotListActivity : BaseActivity() {
         ed_search_km.isEnabled = false
         ed_search_km.setText(getMotKm())
         motServive(getMotKm()!!, "0")
-
-
-
-
-
-            btn_edit.setOnClickListener {
+        btn_edit.setOnClickListener {
             ed_search_km.isEnabled = true
             if (btn_edit.text == getString(R.string.add_car)){
                 motServive(ed_search_km.text.toString(), "1")
@@ -53,24 +48,6 @@ class MotListActivity : BaseActivity() {
 
 
         }
-/*        btn_edit.addTextChangedListener(
-
-                object : TextWatcher {
-                    override fun afterTextChanged(p0: Editable?) {
-                    }
-
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    }
-
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                        if (p0.toString().isBlank()) {
-                           // CallMotService()
-                        }
-                    }
-                }
-
-        )*/
 
     }
 
