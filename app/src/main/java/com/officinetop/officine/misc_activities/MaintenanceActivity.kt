@@ -352,32 +352,6 @@ class MaintenanceActivity : BaseActivity() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
             }
         } catch (e: Exception) {

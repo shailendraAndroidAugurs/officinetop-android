@@ -592,7 +592,11 @@ interface IRetrofitApis {
                             @Field("execute") execute: Int,
                             @Field("aspect_ratio") aspectRatio: String,
                             @Field("rim_diameter") rimDiameter: String,
-                            @Field("car_version_id") carVersionId: String
+                            @Field("car_version_id") carVersionId: String,
+                            @Field("load_index") load_index: String
+
+
+
     ): Call<ResponseBody>
 
 
@@ -627,7 +631,11 @@ interface IRetrofitApis {
 
                  @Query("rating") rating: String,
                  @Query("product_type") product_type: String,
-                 @Query("user_id") user_id: String): Call<ResponseBody>
+                 @Query("user_id") user_id: String,
+                 @Query("load_index") load_index: String
+
+
+    ): Call<ResponseBody>
 
 
     //vehicle_tyre_type=39,41&search_string=2056517&brand=PIRELLI&season_type=36,37&limit=20&favourite=1&offer_coupon&rein_forced&run_flat&price_level=1&price_range=0.0,26.0

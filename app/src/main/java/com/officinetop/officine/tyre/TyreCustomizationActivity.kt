@@ -30,7 +30,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.stream.IntStream
 
 
 class TyreCustomizationActivity : BaseActivity() {
@@ -39,6 +38,7 @@ class TyreCustomizationActivity : BaseActivity() {
     private var seasonType: String = ""
     private var seasonTypeName: String = ""
     private var speedIndex: String = ""
+    private var speedLoadIndex: String = ""
     private var tyreAlertImage: String = ""
     private var tyreAlertDescription: String = "Refer below measurements to enter correct tyre data."
     private var widthId: String = ""
@@ -51,8 +51,8 @@ class TyreCustomizationActivity : BaseActivity() {
     private val widthList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     private val diameterList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     private val aspectRatioList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
-    lateinit var selectedTyreDetail:Models.TyreDetail
-    private var isPreviousSelectedMeasurement=false
+    lateinit var selectedTyreDetail: Models.TyreDetail
+    private var isPreviousSelectedMeasurement = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tyre_customization)
@@ -66,9 +66,9 @@ class TyreCustomizationActivity : BaseActivity() {
         info_btn.setOnClickListener {
             showDialog()
         }
-        if(intent.extras!=null && intent.hasExtra("currentlySelectedMeasurement") ){
-            selectedTyreDetail    = Gson().fromJson(intent.getStringExtra("currentlySelectedMeasurement") , Models.TyreDetail::class.java)
-            isPreviousSelectedMeasurement=true
+        if (intent.extras != null && intent.hasExtra("currentlySelectedMeasurement")) {
+            selectedTyreDetail = Gson().fromJson(intent.getStringExtra("currentlySelectedMeasurement"), Models.TyreDetail::class.java)
+            isPreviousSelectedMeasurement = true
         }
         getTyreSpecificationApi()
 
@@ -92,68 +92,82 @@ class TyreCustomizationActivity : BaseActivity() {
                     filter_SpeedIndexId = speedIndex,
                     SeasonId = seasonType,
                     SpeedindexId = speedIndex,
-                            selected_runFlat=checkbox_run_flat.isChecked,
-                    selected_reinforced=checkbox_reinforced.isChecked
-
+                    selected_runFlat = checkbox_run_flat.isChecked,
+                    selected_reinforced = checkbox_reinforced.isChecked,
+                    speed_load_index = speedLoadIndex,
+                            Selected_speed_load_index=speedLoadIndex
             )
 
 
             var run_flat = if (checkbox_run_flat.isChecked) 1 else 0
             var reinforced = if (checkbox_reinforced.isChecked) 1 else 0
             var progressDialog = getProgressDialog(true)
-            if(!seasonType.isNullOrBlank() && seasonType.equals("0")){
-                seasonType=""
+            if (!seasonType.isNullOrBlank() && seasonType.equals("0")) {
+                seasonType = ""
             }
-            if(!speedIndex.isNullOrBlank() && speedIndex.equals("0")){
-                speedIndex=""
+            if (!speedIndex.isNullOrBlank() && speedIndex.equals("0")) {
+                speedIndex = ""
             }
-            RetrofitClient.client.saveUserTyreDetails(
-                    getUserId(),
-                    vehicleType,
-                    seasonType,
-                    widthName.toInt(),
-                    speedIndex,
-                    run_flat,
-                    reinforced,
-                    1,
-                    aspectRatioName,
-                    diameterName,
-                    getSelectedCar()?.carVersionModel?.idVehicle ?: "")
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            progressDialog.dismiss()
-                        }
 
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            val body = response.body()?.string()
-                            progressDialog.dismiss()
-                            Log.d("SAVE TYRE DETAILS", "API CALL SAVE TYRE DETAILS${getUserId()}${body}")
-                            if (response.isSuccessful) {
-                                try {
-                                    val jsonObject = JSONObject(body)
-                                    Toast.makeText(applicationContext, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
-                                    setTyreDetail(tyre)//save tyre details to local(shared preferences)
-                                    Handler().postDelayed({
-                                        val intent = Intent(applicationContext, TyreListActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                    }, 500)
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
+            if (!speedLoadIndex.isNullOrBlank() && speedLoadIndex.equals("0")) {
+                speedLoadIndex = ""
+            }
+            if (getUserId().isNullOrBlank()) {
+                setTyreDetail(tyre)//save tyre details to local(shared preferences)
+                progressDialog.dismiss()
+                val intent = Intent(applicationContext, TyreListActivity::class.java)
+                startActivity(intent)
+                finish()
 
+            } else {
+                RetrofitClient.client.saveUserTyreDetails(
+                        getUserId(),
+                        vehicleType,
+                        seasonType,
+                        widthName.toInt(),
+                        speedIndex,
+                        run_flat,
+                        reinforced,
+                        1,
+                        aspectRatioName,
+                        diameterName,
+                        getSelectedCar()?.carVersionModel?.idVehicle ?: "",speedLoadIndex)
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                progressDialog.dismiss()
                             }
-                        }
-                    })
+
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                val body = response.body()?.string()
+                                progressDialog.dismiss()
+                                Log.d("SAVE TYRE DETAILS", "API CALL SAVE TYRE DETAILS${getUserId()}${body}")
+                                if (response.isSuccessful) {
+                                    try {
+                                        val jsonObject = JSONObject(body)
+                                        Toast.makeText(applicationContext, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
+                                        setTyreDetail(tyre)//save tyre details to local(shared preferences)
+                                        Handler().postDelayed({
+                                            val intent = Intent(applicationContext, TyreListActivity::class.java)
+                                            startActivity(intent)
+                                            finish()
+                                        }, 500)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
+                                }
+                            }
+                        })
+
+
+            }
 
 
         }
-
-
     }
 
     private fun getTyreSpecificationApi() {
-        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(),"")
+        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), "")
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
@@ -167,6 +181,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 val tyreTypeList: ArrayList<Models.TypeSpecificationForVehicalType> = ArrayList<Models.TypeSpecificationForVehicalType>()
                                 val tyreSeasonList: ArrayList<Models.TypeSpecificationForSeason> = ArrayList<Models.TypeSpecificationForSeason>()
                                 val speedIndexList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
+                                val speedLoadIndexList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
 
                                 val data = jsonObject.getJSONObject("data") as JSONObject
                                 val width = data.getJSONArray("width") as JSONArray
@@ -175,6 +190,9 @@ class TyreCustomizationActivity : BaseActivity() {
                                 val speed_index = data.getJSONArray("speed_index") as JSONArray
                                 val tyre_type = data.getJSONArray("tyre_type") as JSONArray
                                 val season_tyre_type = data.getJSONArray("season_tyre_type") as JSONArray
+                                val speed_load_index = data.getJSONArray("load_index") as JSONArray
+
+
                                 for (widthobj in 0 until width.length()) {
                                     val widthobjdata: JSONObject = width.get(widthobj) as JSONObject
                                     widthList.add(Models.TypeSpecification(widthobjdata.optString("value"), widthobjdata.optString("id")))
@@ -188,11 +206,20 @@ class TyreCustomizationActivity : BaseActivity() {
                                     diameterList.add(Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
                                 speedIndexList.clear()
-                                speedIndexList.add(0,Models.TypeSpecification("All", "0"))
+                                speedIndexList.add(0, Models.TypeSpecification("All", "0"))
                                 for (speedindex in 0 until speed_index.length()) {
                                     val speedindexObj: JSONObject = speed_index.get(speedindex) as JSONObject
 
-                                    speedIndexList.add(speedindex+1,Models.TypeSpecification(speedindexObj.optString("name"), speedindexObj.optString("id")))
+                                    speedIndexList.add(speedindex + 1, Models.TypeSpecification(speedindexObj.optString("name"), speedindexObj.optString("id")))
+                                }
+
+
+                                speedLoadIndexList.clear()
+                                speedLoadIndexList.add(0, Models.TypeSpecification("All", "0"))
+                                for (loadindex in 0 until speed_load_index.length()) {
+                                    val speedindexObj: JSONObject = speed_load_index.get(loadindex) as JSONObject
+                                    if (speedindexObj != null)
+                                        speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("load_speed_index"), ""))
                                 }
 
                                 for (tyretype in 0 until tyre_type.length()) {
@@ -206,7 +233,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 }
                                 for (season in 0 until season_tyre_type.length()) {
                                     val seasonObj: JSONObject = season_tyre_type.get(season) as JSONObject
-                                    tyreSeasonList.add(0,Models.TypeSpecificationForSeason("All", "0", ""))
+                                    tyreSeasonList.add(0, Models.TypeSpecificationForSeason("All", "0", ""))
                                     tyreSeasonList.add(Models.TypeSpecificationForSeason(seasonObj.optString("name"), seasonObj.optString("id"), seasonObj.optString("code2")))
                                 }
 
@@ -216,52 +243,58 @@ class TyreCustomizationActivity : BaseActivity() {
                                 spinner_aspect_ratio.adapter = SpinnerAdapter(applicationContext, aspectRatioList.distinct())
                                 spinner_vehicle_type.adapter = SpinnerAdapterForVehicalType(applicationContext, tyreTypeList.distinct())
                                 spinner_season_type.adapter = SpinnerAdapterForSeason(applicationContext, tyreSeasonList.distinct())
-                                Log.d("SpeedIndexData",speedIndexList.toString())
+                                Log.d("SpeedIndexData", speedIndexList.toString())
                                 spinner_speed_limit.adapter = SpinnerAdapter(applicationContext, speedIndexList.distinct())
+                                spinner_speed_load_index.adapter = SpinnerAdapter(applicationContext, speedLoadIndexList.distinct())
+                                if (isPreviousSelectedMeasurement) {
+                                    if (selectedTyreDetail != null) {
 
-                                if(isPreviousSelectedMeasurement){
-                                    if(selectedTyreDetail!=null){
-
-                                        if(!selectedTyreDetail.width.equals("0.0")) {
-                                           var tyreWidth= widthList.find { it.name==selectedTyreDetail.width.toInt().toString() }
-                                           val selectedWidthPotion= widthList.indexOf(tyreWidth)
+                                        if (!selectedTyreDetail.width.equals("0.0")) {
+                                            var tyreWidth = widthList.find { it.name == selectedTyreDetail.width.toInt().toString() }
+                                            val selectedWidthPotion = widthList.indexOf(tyreWidth)
                                             spinner_width.setSelection(selectedWidthPotion)
                                         }
-                                        if(!selectedTyreDetail.diameter.equals("0.0")) {
-                                            var tyreDiameter= diameterList.find { it.name==selectedTyreDetail.diameter.toInt().toString() }
-                                            val selectedWidthPotion= diameterList.indexOf(tyreDiameter)
+                                        if (!selectedTyreDetail.diameter.equals("0.0")) {
+                                            var tyreDiameter = diameterList.find { it.name == selectedTyreDetail.diameter.toInt().toString() }
+                                            val selectedWidthPotion = diameterList.indexOf(tyreDiameter)
                                             spinner_diameter.setSelection(selectedWidthPotion)
                                         }
-                                        if(!selectedTyreDetail.aspectRatio.equals("")) {
-                                            var tyre_aspectRatio= aspectRatioList.find { it.name==selectedTyreDetail.aspectRatio.toInt().toString() }
-                                            val selected_aspectRatio= aspectRatioList.indexOf(tyre_aspectRatio)
+                                        if (!selectedTyreDetail.aspectRatio.equals("")) {
+                                            var tyre_aspectRatio = aspectRatioList.find { it.name == selectedTyreDetail.aspectRatio.toInt().toString() }
+                                            val selected_aspectRatio = aspectRatioList.indexOf(tyre_aspectRatio)
                                             spinner_aspect_ratio.setSelection(selected_aspectRatio)
                                         }
-                                        if(!selectedTyreDetail.vehicleType.equals("")) {
-                                            var tyreVehicalType= tyreTypeList.find { it.id==selectedTyreDetail.vehicleType.toString() }
-                                            val selectedVehicalTypePotion= tyreTypeList.indexOf(tyreVehicalType)
+                                        if (!selectedTyreDetail.vehicleType.equals("")) {
+                                            var tyreVehicalType = tyreTypeList.find { it.id == selectedTyreDetail.vehicleType.toString() }
+                                            val selectedVehicalTypePotion = tyreTypeList.indexOf(tyreVehicalType)
                                             spinner_vehicle_type.setSelection(selectedVehicalTypePotion)
                                         }
 
 
 
 
-                                        if(!selectedTyreDetail.SeasonId.equals("")) {
-                                            var tyre_Season= tyreSeasonList.find { it.id==selectedTyreDetail.SeasonId.toString() }
-                                            val selected_Season= tyreSeasonList.indexOf(tyre_Season)
+                                        if (!selectedTyreDetail.SeasonId.equals("")) {
+                                            var tyre_Season = tyreSeasonList.find { it.id == selectedTyreDetail.SeasonId.toString() }
+                                            val selected_Season = tyreSeasonList.indexOf(tyre_Season)
                                             spinner_season_type.setSelection(selected_Season)
                                         }
-                                        if(!selectedTyreDetail.SpeedindexId.equals("")) {
-                                            var tyreSpeedIndex= speedIndexList.find { it.code==selectedTyreDetail.SpeedindexId.toString() }
-                                            val selectedSpeedIndex= speedIndexList.indexOf(tyreSpeedIndex)
+                                        if (!selectedTyreDetail.SpeedindexId.equals("")) {
+                                            var tyreSpeedIndex = speedIndexList.find { it.code == selectedTyreDetail.SpeedindexId.toString() }
+                                            val selectedSpeedIndex = speedIndexList.indexOf(tyreSpeedIndex)
                                             spinner_speed_limit.setSelection(selectedSpeedIndex)
                                         }
-
-                                        if(selectedTyreDetail.selected_runFlat) {
-                                            checkbox_run_flat.isChecked=true
+                                        if (!selectedTyreDetail.Selected_speed_load_index.equals("")) {
+                                            var tyreSpeedloadIndex = speedLoadIndexList.find { it.name == selectedTyreDetail.Selected_speed_load_index.toString() }
+                                            val selectedSpeedloadIndex = speedLoadIndexList.indexOf(tyreSpeedloadIndex)
+                                            spinner_speed_load_index.setSelection(selectedSpeedloadIndex)
                                         }
-                                        if(selectedTyreDetail.selected_reinforced) {
-                                            checkbox_reinforced.isChecked=true
+
+
+                                        if (selectedTyreDetail.selected_runFlat) {
+                                            checkbox_run_flat.isChecked = true
+                                        }
+                                        if (selectedTyreDetail.selected_reinforced) {
+                                            checkbox_reinforced.isChecked = true
                                         }
 
 
@@ -356,6 +389,20 @@ class TyreCustomizationActivity : BaseActivity() {
                                         Log.d("selected speed type: ", items.code)
                                         speedIndex = items.code
                                         speedIndexName = items.name
+                                    }
+
+                                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                                    }
+                                }
+
+
+
+
+                                spinner_speed_load_index.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                        val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification
+                                        speedLoadIndex = items.name
                                     }
 
                                     override fun onNothingSelected(p0: AdapterView<*>?) {

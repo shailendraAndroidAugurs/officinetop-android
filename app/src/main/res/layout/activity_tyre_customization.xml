@@ -209,7 +209,28 @@
 
 
             </LinearLayout>
+            <TextView
+                style="@style/TextViewHeadingWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/speed_load_index"
+                android:textColor="@color/gray_dark"
+                android:textSize="12sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rectangle_gray">
+
+                <Spinner
+                    android:id="@+id/spinner_speed_load_index"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/TextViewHeadingWhite"

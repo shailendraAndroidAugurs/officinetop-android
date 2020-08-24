@@ -157,6 +157,7 @@ class TyreDiameterActivity : BaseActivity() {
                         diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString().equals("null")) "0" else it.rimDiameter.toString()
                         runFlat = if (it.runFlat == null) false else if (it.runFlat.toString().isNullOrBlank() || it.runFlat.toString().equals("null") || it.runFlat.toString().equals("0")) false else true
                         reinforced = if (it.reinforced == null) false else if (it.reinforced.toString().isNullOrBlank() || it.reinforced.toString().equals("null") || it.reinforced.toString().equals("0")) false else true
+                    val    speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString().equals("null")) "" else it.speed_load_index.toString()
 
 
                         val tyre =
@@ -176,8 +177,9 @@ class TyreDiameterActivity : BaseActivity() {
                                         SeasonId = season,
                                         SpeedindexId = speed_index,
                                         selected_runFlat=runFlat,
-                                        selected_reinforced=reinforced
-
+                                        selected_reinforced=reinforced,
+                                        speed_load_index = speed_load_index,
+                                        Selected_speed_load_index=speed_load_index
 
                                 )
 

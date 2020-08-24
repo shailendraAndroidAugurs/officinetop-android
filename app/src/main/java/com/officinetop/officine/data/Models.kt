@@ -428,7 +428,9 @@ object Models {
                           var SpeedindexId: String = "",
                           var SeasonId: String = "",
                           var selected_runFlat: Boolean = false,
-                          var selected_reinforced: Boolean = false
+                          var selected_reinforced: Boolean = false,
+                          var speed_load_index: String = "",
+                          var Selected_speed_load_index: String = ""
     )
 
 

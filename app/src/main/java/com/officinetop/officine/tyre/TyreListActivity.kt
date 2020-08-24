@@ -2,7 +2,6 @@ package com.officinetop.officine.tyre
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
@@ -45,7 +43,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.ceil
-
 import kotlin.math.floor
 
 class TyreListActivity : BaseActivity() {
@@ -59,6 +56,8 @@ class TyreListActivity : BaseActivity() {
     val filterBrandList: MutableList<String> = ArrayList()
     val filterTyreSeasonList: MutableList<Models.TypeSpecification> = ArrayList()
     val filterTyreSpeedIndexList: MutableList<Models.TypeSpecification> = ArrayList()
+
+    val filterTyreSpeedLoadIndexList: MutableList<Models.TypeSpecification> = ArrayList()
     private var searchString: String = ""
     private var priceSortLevel: Int = 0
     private var priceRange: String = ""
@@ -80,6 +79,7 @@ class TyreListActivity : BaseActivity() {
     lateinit var textView_Rating_name: TextView
     lateinit var textView_season_name: TextView
     lateinit var textView_Speed_Index_name: TextView
+    lateinit var textView_Speed_Load_Index_name: TextView
     lateinit var isSwitch_OfferCoupon: Switch
     lateinit var isSwitch_OnlyFav: Switch
     lateinit var isSwitch_Reinforced: Switch
@@ -88,6 +88,8 @@ class TyreListActivity : BaseActivity() {
     var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     var season_type: JSONArray = JSONArray()
     var speed_index: JSONArray = JSONArray()
+    var speed_load_index: JSONArray = JSONArray()
+
     lateinit var brandList: ArrayList<Models.brand>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,22 +153,31 @@ class TyreListActivity : BaseActivity() {
                                     val data = jsonObject.getJSONObject("data") as JSONObject
                                     speed_index = data.getJSONArray("speed_index") as JSONArray
                                     season_type = data.getJSONArray("season_tyre_type") as JSONArray
-
+                                    speed_load_index = data.getJSONArray("load_index") as JSONArray
                                     var PriceObject = data.getJSONObject("price")
 
                                     filterTyreSeasonList.clear()
                                     filterTyreSpeedIndexList.clear()
+                                    filterTyreSpeedLoadIndexList.clear()
                                     for (tyreType in 0 until season_type.length()) {
                                         val tyreTypeObject: JSONObject = season_type.get(tyreType) as JSONObject
-                                        filterTyreSeasonList.add(0,Models.TypeSpecification("All", "0"))
+                                        filterTyreSeasonList.add(0, Models.TypeSpecification("All", "0"))
 
-                                        filterTyreSeasonList.add(tyreType+1,Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
+                                        filterTyreSeasonList.add(tyreType + 1, Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
                                     }
 
                                     for (speedIndex in 0 until speed_index.length()) {
                                         val speedIndexObject: JSONObject = speed_index.get(speedIndex) as JSONObject
+                                        filterTyreSpeedIndexList.add(0, Models.TypeSpecification("All", "0"))
                                         filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("name"), speedIndexObject.optString("id")))
                                     }
+
+                                    for (speedLoadIndexObj in 0 until speed_load_index.length()) {
+                                        val speedLoadIndexObject: JSONObject = speed_load_index.get(speedLoadIndexObj) as JSONObject
+                                        filterTyreSpeedLoadIndexList.add(0, Models.TypeSpecification("All", "0"))
+                                        filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(speedLoadIndexObject.optString("load_speed_index"), ""))
+                                    }
+
 
                                 } catch (e: Exception) {
                                     e.message
@@ -183,7 +194,7 @@ class TyreListActivity : BaseActivity() {
 
         edit_tyre.setOnClickListener {
             finish()
-            startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement",tyreDetail.convertToJsonString()), 100)
+            startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement", tyreDetail.convertToJsonString()), 100)
         }
 
         filter_btn.setOnClickListener {
@@ -212,17 +223,23 @@ class TyreListActivity : BaseActivity() {
     }
 
     private fun loadTyreData() {
-        var seasonId=""
-        var speedindexId=""
-        if(tyreDetail.filter_SeasonTypeId.equals("0")){
-            seasonId=""
-        }else{
-            seasonId=tyreDetail.filter_SeasonTypeId
+        var seasonId = ""
+        var speedindexId = ""
+        var speedloadindex = ""
+        if (tyreDetail.filter_SeasonTypeId.equals("0")) {
+            seasonId = ""
+        } else {
+            seasonId = tyreDetail.filter_SeasonTypeId
         }
-        if(tyreDetail.filter_SpeedIndexId.equals("0")){
-            speedindexId=""
-        }else{
-            speedindexId=tyreDetail.filter_SpeedIndexId
+        if (tyreDetail.filter_SpeedIndexId.equals("0")) {
+            speedindexId = ""
+        } else {
+            speedindexId = tyreDetail.filter_SpeedIndexId
+        }
+        if (tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals("All")) {
+            speedloadindex = ""
+        } else {
+            speedloadindex = tyreDetail.speed_load_index
         }
         try {
             RetrofitClient.client.tyreList(
@@ -238,7 +255,7 @@ class TyreListActivity : BaseActivity() {
                     if (tyreDetail.runFlat) "1" else "0",
                     priceSortLevel.toString(),
                     tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/tyreDetail.Rating,
-                    "2", getUserId()
+                    "2", getUserId(), speedloadindex
             )
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -301,6 +318,7 @@ class TyreListActivity : BaseActivity() {
             isSwitch_OnlyFav = switch_OnlyFav
             isSwitch_Reinforced = switch_Reinforced
             isSwitch_RunFlat = switch_RunFlat
+            textView_Speed_Load_Index_name = tv_Speed_load_Index_name
 
 
 
@@ -401,7 +419,7 @@ class TyreListActivity : BaseActivity() {
 
                 Log.d("seasonType", tyreDetail.seasonType)
                 tv_Speed_Index_name.setText(tyreDetail.speedIndex)
-
+                tv_Speed_load_Index_name.setText(tyreDetail.speed_load_index)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -427,20 +445,22 @@ class TyreListActivity : BaseActivity() {
 
             clearselection.setOnClickListener {
                 try {
-                   // priceRangeSeekerBar.setRange(minPrice, maxPrice)
-                   priceRangeSeekerBar.setValue(minPrice, maxPrice)
-                    Log.d("tyre_list","clearselection"+minPrice)
-                    Log.d("tyre_list","clearselection"+maxPrice)
+                    // priceRangeSeekerBar.setRange(minPrice, maxPrice)
+                    priceRangeSeekerBar.setValue(minPrice, maxPrice)
+                    Log.d("tyre_list", "clearselection" + minPrice)
+                    Log.d("tyre_list", "clearselection" + maxPrice)
                     //priceRangeSeekerBar.setValue(0f, dialog_price_range.maxProgress)
                     this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                     filterBrandList.clear()
                     filterTyreSeasonList.clear()
                     filterTyreSpeedIndexList.clear()
+                    filterTyreSpeedLoadIndexList.clear()
                     tv_Brand_name.setText("")
                     tv_Rating_name.setText("")
                     tv_season_name.setText("")
                     tv_Speed_Index_name.setText("")
+                    tv_Speed_load_Index_name.setText("")
                     tyreDetail.brands = ""
                     tyreDetail.Rating = ""
 
@@ -463,6 +483,7 @@ class TyreListActivity : BaseActivity() {
                     switch_Reinforced.isChecked = false
                     switch_OfferCoupon.isChecked = false
                     switch_OnlyFav.isChecked = false
+                    tyreDetail.speed_load_index = ""
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -660,12 +681,12 @@ class TyreListActivity : BaseActivity() {
             var tyreSeasonFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
             var season_typeArray: JSONArray = JSONArray()
-            val     season_typeobject = JSONObject()
-            season_typeobject.put("name","All")
-            season_typeobject.put("id","0")
-            season_typeArray.put(0,season_typeobject)
-            for (n  in 0 until  season_type.length()){
-                season_typeArray.put(n+1,season_type[n])
+            val season_typeobject = JSONObject()
+            season_typeobject.put("name", "All")
+            season_typeobject.put("id", "0")
+            season_typeArray.put(0, season_typeobject)
+            for (n in 0 until season_type.length()) {
+                season_typeArray.put(n + 1, season_type[n])
             }
 
             tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, season_typeArray, R.layout.item_checkbox) { itemView, _, jsonObject ->
@@ -709,18 +730,37 @@ class TyreListActivity : BaseActivity() {
         }
 
 
+        dialog.ll_item_Speed_load_index.setOnClickListener {
+            var SpeedLoadIndexDialog = CreateSubDialog(getString(R.string.speed_load_index))
+            var speed_load_indexArray: JSONArray = JSONArray()
+            val speed_load_indexobject = JSONObject()
+            speed_load_indexobject.put("load_speed_index", "All")
+            speed_load_indexobject.put("id", "0")
+            speed_load_indexArray.put(0, speed_load_indexobject)
+            for (n in 0 until speed_load_index.length()) {
+                speed_load_indexArray.put(n + 1, speed_load_index[n])
+            }
+
+            speedLoadindexCheckboxBinding(SpeedLoadIndexDialog, speed_load_indexArray)
+
+            SpeedLoadIndexDialog.create()
+            SpeedLoadIndexDialog.show()
+        }
+
+
         dialog.ll_item_Speed_index.setOnClickListener {
-            var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+
 
             var SpeedIndexDialog = CreateSubDialog(getString(R.string.speed_index))
             var speed_indexArray: JSONArray = JSONArray()
-            val     speed_indexobject = JSONObject()
-            speed_indexobject.put("name","All")
-            speed_indexobject.put("id","0")
-            speed_indexArray.put(0,speed_indexobject)
-            for (n  in 0 until  speed_index.length()){
-                speed_indexArray.put(n+1,season_type[n])
+            val speed_indexobject = JSONObject()
+            speed_indexobject.put("name", "All")
+            speed_indexobject.put("id", "0")
+            speed_indexArray.put(0, speed_indexobject)
+            for (n in 0 until speed_index.length()) {
+                speed_indexArray.put(n + 1, speed_index[n])
             }
+            var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
             tyreSpeedIndexFilterAdapter = SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_indexArray, R.layout.item_checkbox) { itemView, position, jsonObject ->
                 val tyreSpeedIndexName = jsonObject.optString("name")
@@ -757,6 +797,48 @@ class TyreListActivity : BaseActivity() {
 
     }
 
+    private fun speedLoadindexCheckboxBinding(SpeedLoadIndexDialog: Dialog, speed_load_indexArray: JSONArray) {
+        var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+        tyreSpeedIndexFilterAdapter = SpeedLoadIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_load_indexArray, R.layout.item_checkbox) { itemView, position, jsonObject ->
+            val tyreSpeedloadIndex = jsonObject.optString("load_speed_index")
+            val tyreSpeedloadIndexCode = jsonObject.optString("id")
+            itemView.item_checkbox_text.text = tyreSpeedloadIndex
+            if (tyreDetail.speed_load_index != null) {
+                var loadIndexArray = tyreDetail.speed_load_index.split(",")
+                itemView.item_checkbox.isChecked = loadIndexArray.contains(tyreSpeedloadIndex)
+
+            } else itemView.item_checkbox.isChecked = false
+
+            setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
+
+            }
+            itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
+
+                if (isChecked) {
+                    if (!filterTyreSpeedLoadIndexList.contains(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))) {
+                        filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))
+                    }
+                } else filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))
+
+                if (itemView.item_checkbox.text.toString().equals("All")) {
+                    filterTyreSpeedLoadIndexList.clear()
+                    filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))
+                    tyreDetail.speed_load_index="All"
+                    speedLoadindexCheckboxBinding(SpeedLoadIndexDialog,speed_load_indexArray)
+                }else {
+                    if (!filterTyreSpeedLoadIndexList.contains(Models.TypeSpecification("All", "0")))
+                        filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification("All", "0"))}
+
+
+            }
+            if (itemView.item_checkbox.isChecked) {
+                if (!filterTyreSpeedLoadIndexList.contains(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))) {
+                    filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))
+                }
+            } else filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification(tyreSpeedloadIndex, tyreSpeedloadIndexCode))
+        }
+
+    }
 
     private fun CreateSubDialog(toolbarTitle: String): Dialog {
         var brandsDialog = Dialog(this@TyreListActivity, R.style.DialogSlideAnimStyle)
@@ -836,6 +918,28 @@ class TyreListActivity : BaseActivity() {
 
         } else if (toolbarTitle.equals(getString(R.string.speed_index))) {
             setSpeedIndexToTyreList()
+        } else if (toolbarTitle.equals(getString(R.string.speed_load_index))) {
+            setSpeedLoadIndexToTyreList()
+        }
+    }
+
+    private fun setSpeedLoadIndexToTyreList() {
+        var speed_load_IndexName = ""
+        val tyreSpeed_load_Index: MutableList<String> = ArrayList()
+        val tyreSpeed_load_IndexId: MutableList<String> = ArrayList()
+        for (i in 0 until filterTyreSpeedLoadIndexList.size) {
+            val item = filterTyreSpeedLoadIndexList.get(i)
+            tyreSpeed_load_Index.add(item.name)
+            tyreSpeed_load_IndexId.add((item.code))
+        }
+        if (tyreSpeed_load_Index.size > 0) {
+            speed_load_IndexName = tyreSpeed_load_Index.joinToString(",")
+            tyreDetail.speed_load_index = speed_load_IndexName
+
+        } else {
+            textView_Speed_Load_Index_name.setText("")
+            tyreDetail.speed_load_index = ""
+
         }
     }
 
