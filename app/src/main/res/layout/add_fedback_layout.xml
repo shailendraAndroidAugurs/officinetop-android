@@ -120,7 +120,7 @@
                 app:srb_starSize="40dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
-                app:srb_stepSize="0.25"
+                app:srb_stepSize="1"
                 app:srb_borderColor="@color/theme_orange"
                 app:srb_fillColor="@color/theme_orange"
                 app:srb_numberOfStars="5"

@@ -769,7 +769,6 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
 
                 response?.let {
                     if (response.isSuccessful) {
-                        //{"status_code":0,"message":"No Feedback Avilable .","data":null,"data_set":null}
                         feedbackList.clear()
                         val data = JSONObject(response?.body()?.string())
                         if (data.has("data_set") && !data.isNull("data_set")) {
