@@ -206,7 +206,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                     diameterList.add(Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
                                 speedIndexList.clear()
-                                speedIndexList.add(0, Models.TypeSpecification("All", "0"))
+                                speedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
                                 for (speedindex in 0 until speed_index.length()) {
                                     val speedindexObj: JSONObject = speed_index.get(speedindex) as JSONObject
 
@@ -215,7 +215,7 @@ class TyreCustomizationActivity : BaseActivity() {
 
 
                                 speedLoadIndexList.clear()
-                                speedLoadIndexList.add(0, Models.TypeSpecification("All", "0"))
+                                speedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
                                 for (loadindex in 0 until speed_load_index.length()) {
                                     val speedindexObj: JSONObject = speed_load_index.get(loadindex) as JSONObject
                                     if (speedindexObj != null)
@@ -231,10 +231,11 @@ class TyreCustomizationActivity : BaseActivity() {
 
 
                                 }
+
+                                tyreSeasonList.add(0, Models.TypeSpecificationForSeason(getString(R.string.all), "0", ""))
                                 for (season in 0 until season_tyre_type.length()) {
                                     val seasonObj: JSONObject = season_tyre_type.get(season) as JSONObject
-                                    tyreSeasonList.add(0, Models.TypeSpecificationForSeason("All", "0", ""))
-                                    tyreSeasonList.add(Models.TypeSpecificationForSeason(seasonObj.optString("name"), seasonObj.optString("id"), seasonObj.optString("code2")))
+                                    tyreSeasonList.add(season+1,Models.TypeSpecificationForSeason(seasonObj.optString("name"), seasonObj.optString("id"), seasonObj.optString("code2")))
                                 }
 
 
@@ -243,7 +244,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                 spinner_aspect_ratio.adapter = SpinnerAdapter(applicationContext, aspectRatioList.distinct())
                                 spinner_vehicle_type.adapter = SpinnerAdapterForVehicalType(applicationContext, tyreTypeList.distinct())
                                 spinner_season_type.adapter = SpinnerAdapterForSeason(applicationContext, tyreSeasonList.distinct())
-                                Log.d("SpeedIndexData", speedIndexList.toString())
                                 spinner_speed_limit.adapter = SpinnerAdapter(applicationContext, speedIndexList.distinct())
                                 spinner_speed_load_index.adapter = SpinnerAdapter(applicationContext, speedLoadIndexList.distinct())
                                 if (isPreviousSelectedMeasurement) {
@@ -347,19 +347,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                         vehicleType = items.id
                                         vehicleTypeName = items.name
 
-                                        /*val tyreSeasonList1: ArrayList<Models.TypeSpecificationForSeason> = ArrayList<Models.TypeSpecificationForSeason>()
-                                        if (items.vhicle_type_arr != null) {
-                                            for (code in items.vhicle_type_arr!!) {
-
-                                                tyreSeasonList1.addAll(tyreSeasonList.filter { it.CodeName == code })
-                                            }
-                                        }
-                                        if (tyreSeasonList1.size == 0) {
-                                            seasonType = ""
-                                            seasonTypeName = "items.name"
-                                        }
-                                        spinner_season_type.adapter = SpinnerAdapterForSeason(applicationContext, tyreSeasonList1.distinct())
-*/
                                     }
 
                                     override fun onNothingSelected(p0: AdapterView<*>?) {

@@ -76,12 +76,10 @@ class TyreDiameterActivity : BaseActivity() {
                                             finish()
                                         }
                                         negativeButton(getString(R.string.no)) {
-                                            //finish()
                                         }
                                     }.show()
 
 
-                                    /*customize_measure_btn.isEnabled = false*/
                                 }
                             }
                         }
@@ -89,47 +87,20 @@ class TyreDiameterActivity : BaseActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
-        /*RetrofitClient.client.getUserTyreDetails(
-                getUserId()!!,
-                getSelectedCar()?.carVersionModel?.idVehicle ?: "")
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        val body : String = response.body().toString()
-                        if (response.isSuccessful){
-                            if (!isStatusCodeValid(body)){
-                                 //bind tyre list recycler
-                                bindTyreRecycler(body)
-                            }
-                        }
-                    }
-                }) */
     }
 
     private fun bindTyreRecycler(body: UserTyreMeasurementResponse) {
         val tyreStringList: MutableList<MeasurementDataSetItem> = ArrayList()
-//        val tyres:MutableList<Models.TyreDetails> = ArrayList()
-//        val gson = Gson()
-//        val jsonString = gson.toJson(body)
-//        val listType = object : TypeToken<List<Models.TyreDetails>>() { }.type
-//        val tyreDetails  = gson.fromJson<List<Models.TyreDetails>>(jsonString, listType)
-
         val tyreMeasurementDetailList: MutableList<MeasurementDataSetItem?>? = body.mDataSet
         tyreMeasurementDetailList?.let {
             tyreMeasurementDetailList.reverse()
             for (measurePosition in 0 until tyreMeasurementDetailList.size) {
-                //                val tyre:
-//                val tyre = Gson().fromJson<Models.TyreDetails>(body, Models.TyreDetails::class.java)
                 tyreMeasurementDetailList[measurePosition]?.let {
-                    /*tyreStringList.add("${it.vehicleName} with Diameter: ${it.rimDiameter} , Width: ${it.width}, Speed Index : ${it.speedindex}" +
-                            ", Aspect Ratio : ${it.aspectRatio}")*/
                     tyreStringList.add(it)
-//                tyres.add(tyre)
+
 
                 }
-            }//${items.max_width}${items.max_aspect_ratio} R${items.max_diameter}"/
+            }
 
             recycler_view.adapter = SimpleTextListAdapter(this, tyreStringList, object : SimpleTextListAdapter.OnRecyclerItemClickListener {
 
@@ -139,14 +110,11 @@ class TyreDiameterActivity : BaseActivity() {
                     tyreMeasurementDetailList[position]?.let {
 
                         var tyre_type: String = ""
-                        var tyre_type_name: String = ""
                         var aspect_ratio: String = ""
                         var speed_index: String = ""
                         var season: String = ""
-                        var season_type_name: String = ""
                         var width: String = ""
                         var diameter: String = ""
-                        var speed_indexId: String = ""
                         var runFlat = false
                         var reinforced = false
                         tyre_type = if (it.vehicleType == null) " " else if (it.vehicleType.toString().isEmpty() || it.vehicleType.toString().equals("null")) "" else it.vehicleType.toString()
@@ -187,7 +155,6 @@ class TyreDiameterActivity : BaseActivity() {
                     }
                     startActivity(intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                     finish()
-//                        toast(convertToJson(tyreMeasurementDetailList[position]))
                 }
 
 
@@ -198,16 +165,6 @@ class TyreDiameterActivity : BaseActivity() {
                 }
             })
 
-//        for (item in 0 until tyreDetails.size) {
-//            val tyre = Gson().fromJson<Models.TyreDetails>(body, Models.TyreDetails::class.java)
-//            tyreStringList.add("Diameter: ${tyreDetails.get(item).width} , Width: ${tyreDetails.get(item).width}, Rim Width : ${tyreDetails.get(item).vehicle_type}")
-//            tyres.add(tyre)
-//        }
-            /*getStoredTyres().forEach {
-                val tyre = Gson().fromJson(it.value.toString(), Models.TyreDetail::class.java )
-                tyreStringList.add("Diameter: ${tyre.diameter} , Width: ${tyre.width}, Rim Width : ${tyre.rimWidth}")
-                tyres.add(tyre)
-            }*/
 
         }
     }
