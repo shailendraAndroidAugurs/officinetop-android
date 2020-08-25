@@ -561,7 +561,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             Log.d("Date", "DeliveryDate WorkshopList" + selectedFormattedDate)
             Log.d("IsTyreAvailable", "yes")
 
-            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), productqty = cartItem?.quantity.toString())
+            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), productqty = cartItem?.quantity.toString())
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -569,7 +569,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         }
                     }
         } else if (isMotService) {
-            RetrofitClient.client.getMotWorkshops(motServiceID, mot_type, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSavedSelectedVehicleID(), motservices_time)
+            RetrofitClient.client.getMotWorkshops(motServiceID, mot_type, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, motservices_time)
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -582,7 +582,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     authToken = getBearerToken()
                             ?: "", categoryType = serviceID, workshopFilterSelectedDate = selectedFormattedDate,
                     rating = ratingString, priceRange = if (priceRangeFinal == -1) "" else priceRangeString,
-                    priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersion!!
+                    priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!
             ).onCall { networkException, response ->
 
                 response?.let {
@@ -599,7 +599,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         } else if (isCarMaintenanceService) {
-            RetrofitClient.client.getCarMaintenanceWorkshop(getSelectedCar()?.carVersion,
+            RetrofitClient.client.getCarMaintenanceWorkshop(getSelectedCar()?.carVersionModel?.idVehicle!!,
                     "en", selectedFormattedDate, multipleServiceIdOfCarMaintenance, ratingString, if (priceRangeFinal == -1) "" else priceRangeString,
                     priceSortLevel, getSavedSelectedVehicleID(), getUserId()).onCall { networkException, response ->
 

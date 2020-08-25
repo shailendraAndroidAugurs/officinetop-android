@@ -221,6 +221,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                     if (speedindexObj != null)
                                         speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("load_speed_index"), ""))
                                 }
+                                speedLoadIndexList.sortBy { it.name }
 
                                 for (tyretype in 0 until tyre_type.length()) {
                                     val vehicaltypeObject: JSONObject = tyre_type.get(tyretype) as JSONObject
