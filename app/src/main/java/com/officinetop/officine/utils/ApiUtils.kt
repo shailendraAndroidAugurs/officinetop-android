@@ -1148,10 +1148,13 @@ fun Activity.addToCartProducts(productId: String, productQuantity: String, pfuAm
             ?: "").onCall { networkException, response ->
 
         response?.let {
+            val body = response.body()?.string()
+            if (body.isNullOrEmpty() || response.code() == 401)
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
 
             if (response.isSuccessful) {
                 try {
-                    val responseData = JSONObject(response?.body()?.string())
+                    val responseData = JSONObject(body)
 
                     if (responseData.has("data") && !responseData.isNull("data")) {
                         if (responseData.get("data") is JSONObject) {
@@ -1185,8 +1188,13 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
             ?: "").onCall { networkException, response ->
 
         response.let {
+            val body = response?.body()?.string()
+            if (body.isNullOrEmpty() || response.code() == 401)
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+
             if (response?.isSuccessful!!) {
-                val body = JSONObject(response?.body()?.string())
+                val body = JSONObject(body)
                 if (body.has("message")) {
                     Iv_favorite.setImageResource(R.drawable.ic_heart)
 
@@ -1216,8 +1224,12 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
             ?: "", productId, workshopId, productType).onCall { networkException, response ->
 
         response.let {
+            val body = response?.body()?.string()
+            if (body.isNullOrEmpty() || response.code() == 401)
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
             if (response?.isSuccessful!!) {
-                val body = JSONObject(response?.body()?.string())
+                val body = JSONObject(body)
                 if (body.has("message")) {
                     Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                     if (item != null) {

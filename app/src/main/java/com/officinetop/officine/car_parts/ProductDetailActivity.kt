@@ -202,8 +202,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                         ?: "").onCall { networkException, response ->
 
                     response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
                         if (response?.isSuccessful!!) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(body)
                             if (body.has("message")) {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
@@ -226,8 +230,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                         ?: "", detail?.id.toString(), "", "1").onCall { networkException, response ->
 
                     response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
                         if (response?.isSuccessful!!) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(body)
                             if (body.has("message")) {
                                 Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                                 wish_list = "0"

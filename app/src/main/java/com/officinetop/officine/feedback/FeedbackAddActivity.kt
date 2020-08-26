@@ -208,63 +208,64 @@ class FeedbackAddActivity : BaseActivity() {
 
     }
 
-    private fun sendFeedback() {
-
-        try {
-           var ProgressDialog =getProgressDialog(true)
+    private fun sendFeedback() = try {
+       var ProgressDialog =getProgressDialog(true)
 
 
-            val imageList: ArrayList<MultipartBody.Part?> = ArrayList()
-            for (i in 0 until images.size) {
-                val file = File(images.get(i))
-                imageList.add(file?.toMultipartBody("images[]"))
-            }
+        val imageList: ArrayList<MultipartBody.Part?> = ArrayList()
+        for (i in 0 until images.size) {
+            val file = File(images.get(i))
+            imageList.add(file?.toMultipartBody("images[]"))
+        }
 
-            if (motservicetype == null) {
+        if (motservicetype == null) {
 
-                motservicetype = ""
-            }
-            var res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID
-            Log.v("FEEDBACK", res)
+            motservicetype = ""
+        }
+        var res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID
+        Log.v("FEEDBACK", res)
 
-            RetrofitClient.client.addFeedback(authToken = getBearerToken()
-                    ?: "", workshopId = workshopId.toRequestBody(),
-                    productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
-                    comments = comments.text.toString().toRequestBody(), sellerId = sellerId.toRequestBody(), productType = productType.toRequestBody(), mainCategoryId = mainCategoryId.toRequestBody(),
-                    serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody()
-            )
-                    .onCall { networkException, response ->
+        RetrofitClient.client.addFeedback(authToken = getBearerToken()
+                ?: "", workshopId = workshopId.toRequestBody(),
+                productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
+                comments = comments.text.toString().toRequestBody(), sellerId = sellerId.toRequestBody(), productType = productType.toRequestBody(), mainCategoryId = mainCategoryId.toRequestBody(),
+                serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody()
+        )
+                .onCall { networkException, response ->
+                    ProgressDialog.dismiss()
+
+                    response?.let {
                         ProgressDialog.dismiss()
 
-                        response?.let {
-                            ProgressDialog.dismiss()
-                            if (response.isSuccessful) {
+                        val body = response.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                        if (response.isSuccessful) {
 
-                                val data = JSONObject(response.body()?.string())
-                                if (data.has("message") && !data.isNull("message")) {
-                                    showInfoDialog(data.get("message").toString())
-                                   // startActivity(intentFor<Order_List>().clearTask().clearTop())
-                                    finish()
+                            val data = JSONObject(body)
+                            if (data.has("message") && !data.isNull("message")) {
+                                showInfoDialog(data.get("message").toString())
+                               // startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                finish()
 
-                                    Log.d("Feedback","yes")
-                                }
-
-                                imagesList.clear()
-                                images.clear()
-                                comments.setText("")
-                                attachedImagePath = null
-                                attachedImage = null
-                                imagesAdapter?.removeAll()
-                                ratings.rating = 0.0f
-
+                                Log.d("Feedback","yes")
                             }
 
-                        }
-                    }
-        } catch (e: Exception) {
+                            imagesList.clear()
+                            images.clear()
+                            comments.setText("")
+                            attachedImagePath = null
+                            attachedImage = null
+                            imagesAdapter?.removeAll()
+                            ratings.rating = 0.0f
 
-            e.printStackTrace()
-        }
+                        }
+
+                    }
+                }
+    } catch (e: Exception) {
+
+        e.printStackTrace()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

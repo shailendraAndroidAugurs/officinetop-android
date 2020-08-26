@@ -812,6 +812,7 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
 
             setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
 
+
             }
             itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
 

@@ -258,100 +258,6 @@ class MaintenanceActivity : BaseActivity() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
             }
         } catch (e: Exception) {
@@ -623,24 +529,25 @@ class MaintenanceActivity : BaseActivity() {
                     rear_check_box.isChecked = false
                     all_check_box.isChecked = false
                 }
+                else  frontRear=""
             }
             rear_check_box.setOnCheckedChangeListener { compoundButton, b ->
                 if (b) {
                     front_check_box.isChecked = false
                     all_check_box.isChecked = false
-                }
+                }else  frontRear=""
             }
             left_check_box.setOnCheckedChangeListener { compoundButton, b ->
                 if (b) {
                     right_check_box.isChecked = false
                     all_check_box.isChecked = false
-                }
+                }else leftRight=""
             }
             right_check_box.setOnCheckedChangeListener { compoundButton, b ->
                 if (b) {
                     left_check_box.isChecked = false
                     all_check_box.isChecked = false
-                }
+                }else leftRight=""
             }
 
             toolbar.setOnMenuItemClickListener {

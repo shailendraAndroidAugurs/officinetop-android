@@ -43,6 +43,7 @@ import com.officinetop.officine.data.getLangLocale
 import kotlinx.android.synthetic.main.feedback_dialog_item.*
 import org.jetbrains.anko.AlertBuilder
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.okButton
 import org.json.JSONObject
 import java.math.BigDecimal
@@ -392,5 +393,10 @@ fun Context?.createImageSliderDialog(imageUrl: String) {
         create()
         show()
     }
+}
+
+
+fun Context.movetologinPage() {
+    startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
 }
 

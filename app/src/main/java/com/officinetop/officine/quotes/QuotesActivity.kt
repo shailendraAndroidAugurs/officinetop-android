@@ -91,6 +91,9 @@ class QuotesActivity : BaseActivity() {
                    }
                }catch (e:Exception){
                    e.printStackTrace()
+
+
+
                }
             }
 
