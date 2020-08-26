@@ -280,8 +280,13 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                         ?: "").onCall { networkException, response ->
 
                     response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+
                         if (response?.isSuccessful!!) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(body)
                             if (body.has("message")) {
                                 iv_wishList.setImageResource(R.drawable.ic_heart)
 
@@ -304,8 +309,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                         ?: "", productDetails?.id.toString(), "", "2").onCall { networkException, response ->
 
                     response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
                         if (response?.isSuccessful!!) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(body)
                             if (body.has("message")) {
                                 iv_wishList!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                                 productDetails?.wish_list = "0"

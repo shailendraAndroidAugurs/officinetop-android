@@ -148,7 +148,10 @@ object Models {
             @SerializedName("car_size")
             val carSize: String = "",
             @SerializedName("selected")
-            val selected: String = "0"
+            val selected: String = "0",
+            @SerializedName("number_plate")
+            val numberPlate: String = ""
+
     ) : Serializable
 
     data class CarImages(

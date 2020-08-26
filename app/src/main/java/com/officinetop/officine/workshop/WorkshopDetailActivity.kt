@@ -289,8 +289,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             ?: "").onCall { networkException, response ->
 
                         response.let {
+                            val body = response?.body()?.string()
+                            if (body.isNullOrEmpty() || response.code() == 401)
+                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
                             if (response?.isSuccessful!!) {
-                                val body = JSONObject(response?.body()?.string())
+                                val body = JSONObject(body)
                                 if (body.has("message")) {
                                     Iv_favorite.setImageResource(R.drawable.ic_heart)
 
@@ -313,8 +317,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             ?: "", "", workshopUsersId.toString(), "").onCall { networkException, response ->
 
                         response.let {
+                            val body = response?.body()?.string()
+                            if (body.isNullOrEmpty() || response.code() == 401)
+                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
                             if (response?.isSuccessful!!) {
-                                val body = JSONObject(response?.body()?.string())
+                                val body = JSONObject(body)
                                 if (body.has("message")) {
                                     Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                                     wishList = "0"
@@ -1685,7 +1693,5 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         alertDialog.show()
     }
 
-    private fun movetologinPage() {
-        startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
-    }
+
 }

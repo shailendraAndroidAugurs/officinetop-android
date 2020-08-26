@@ -692,6 +692,7 @@
     <string name="write_a_review">Scriviuna recensione</string>
     <string name="customer_rating">valutazione clienti</string>
     <string name="speed_load_index">Speed load index</string>
+    <string name="license_plate">Targa :</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -282,6 +282,11 @@ class AddVehicleActivity : BaseActivity() {
             text_revision_date.text = it.carRevisionDate
             edit_text_km_on_revision_date.setText(it.carRevisionDateOnKm)
             alloy.isChecked = it.alloy_wheels == "1"
+            if(!it.numberPlate.isNullOrBlank()){
+                ll_plate_number_layout.visibility=View.VISIBLE
+                tv_plate_number.text=it.numberPlate
+            }
+
         }
     }
 
@@ -958,14 +963,15 @@ class AddVehicleActivity : BaseActivity() {
 
 
     private fun getLastCarIntent(bodyString: String): Intent {
-
-        val dataSet = getDataSetArrayFromResponse(bodyString)
-        val last = (dataSet[dataSet.length() - 1].toString())
-        val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
-
         val carIntent = Intent()
-        carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
+        val dataSet = getDataSetArrayFromResponse(bodyString)
+        if(!dataSet.isEmpty()) {
+            val last = (dataSet[dataSet.length() - 1].toString())
+            val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
 
+
+            carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
+        }
 
         return carIntent
     }
@@ -983,12 +989,6 @@ class AddVehicleActivity : BaseActivity() {
 
                 uploadCarImageToServer(resultUri, "1")
 
-//                alert {
-//                    isCancelable = false
-//                    message =  "Do you want to set this as default car image?"
-//                positiveButton("Yes"){ uploadCarImageToServer(resultUri, "1") }
-//                    negativeButton("No") { uploadCarImageToServer(resultUri, "0") }
-//                }.show()
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

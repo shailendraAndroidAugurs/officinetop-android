@@ -36,7 +36,7 @@ class SimpleTextListAdapter(private var context:Context, private var titleList:M
         val viewHolder = p0
         //"Front: ${it.width}/${it.aspectRatio} R${it.rimDiameter} ${it.speedindex} . Rear: ${it.width}/${it.aspectRatio} R${it.rimDiameter} ${it.speedindex}"
         val data : MeasurementDataSetItem = titleList.get(p1)
-        val item = "${context.resources.getString(R.string.front)}: ${data.width}/${data.aspectRatio} R${data.rimDiameter} ${data.speedindex} . ${context.resources.getString(R.string.rear)}: ${data.width}/${data.aspectRatio} R${data.rimDiameter} ${data.speedindex}"
+        val item = "${context.resources.getString(R.string.front)}: ${data.width}/${data.aspectRatio} R${data.rimDiameter} ${if(!data.speedindexStatus.isNullOrBlank() && !data.speedindexStatus.equals("0") && !data.speedindexStatus.equals("All"))data.speedindexStatus else ""} ${if(!data.speed_load_index.isNullOrBlank() &&  !data.speed_load_index.equals("0") && !data.speed_load_index.equals("All") )data.speed_load_index else ""} . ${context.resources.getString(R.string.rear)}: ${data.width}/${data.aspectRatio} R${data.rimDiameter} ${if(!data.speedindexStatus.isNullOrBlank() && !data.speedindexStatus.equals("0") && !data.speedindexStatus.equals("All"))data.speedindexStatus else ""} ${if(!data.speed_load_index.isNullOrBlank() &&  !data.speed_load_index.equals("0") && !data.speed_load_index.equals("All") )data.speed_load_index else ""}"
         viewHolder.bindView(item, data.id.toString())
 
     }
