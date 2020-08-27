@@ -236,7 +236,7 @@ class TyreListActivity : BaseActivity() {
         } else {
             speedindexId = tyreDetail.filter_SpeedIndexId
         }
-        if (tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals(getString(R.string.all))) {
+        if (tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals(getString(R.string.all_in_italin))||tyreDetail.speed_load_index.equals(getString(R.string.all))) {
             speedloadindex = ""
         } else {
             speedloadindex = tyreDetail.speed_load_index
@@ -713,7 +713,7 @@ class TyreListActivity : BaseActivity() {
 
 
             }
-            SpeedLoadIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals(getString(R.string.all))
+            SpeedLoadIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speed_load_index.equals(getString(R.string.all_in_italin)) || tyreDetail.speed_load_index.equals(getString(R.string.all))
 
 
             speedLoadindexCheckboxBinding(SpeedLoadIndexDialog)
@@ -743,7 +743,7 @@ class TyreListActivity : BaseActivity() {
 
 
             }
-            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndex.equals("0") || tyreDetail.speedIndex.equals(getString(R.string.all))
+            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndex.equals("0") || tyreDetail.speedIndex.equals(getString(R.string.all_in_italin))||tyreDetail.speedIndex.equals(getString(R.string.all))
 
 
             SpeedIndexCheckBox(SpeedIndexDialog)

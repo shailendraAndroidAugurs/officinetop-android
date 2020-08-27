@@ -8,21 +8,20 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.isapanah.awesomespinner.AwesomeSpinner
@@ -53,6 +52,7 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
+//AX123YY, EN301MW licience nn
 class AddVehicleActivity : BaseActivity() {
 
     lateinit var progressDialog: ProgressDialog
@@ -66,6 +66,7 @@ class AddVehicleActivity : BaseActivity() {
     var myCar: Models.MyCarDataSet? = null
 
     var isForEdit = false
+    var isForPlateno = false
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
 
@@ -164,10 +165,9 @@ class AddVehicleActivity : BaseActivity() {
     private fun bindOnCreateValues() {
 
         getMerlinConnectionCallback().registerConnectable {
-            if (isForEdit)
+            if (isForEdit) {
                 bindEditables()
-
-
+            }
             loadCarManufacturer()
         }
     }
@@ -282,9 +282,11 @@ class AddVehicleActivity : BaseActivity() {
             text_revision_date.text = it.carRevisionDate
             edit_text_km_on_revision_date.setText(it.carRevisionDateOnKm)
             alloy.isChecked = it.alloy_wheels == "1"
-            if(!it.numberPlate.isNullOrBlank()){
-                ll_plate_number_layout.visibility=View.VISIBLE
-                tv_plate_number.text=it.numberPlate
+            if (!it.numberPlate.isNullOrBlank()) {
+                isForPlateno = true
+                ll_plate_number_layout.visibility = View.VISIBLE
+                tv_plate_number.text = it.numberPlate
+
             }
 
         }
@@ -315,7 +317,7 @@ class AddVehicleActivity : BaseActivity() {
                 || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0) {
             snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
             return
-        }else {
+        } else {
             val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
             RetrofitClient.client.kromedaCall(idVehicle)
                     .enqueue(object : Callback<ResponseBody> {
@@ -574,7 +576,8 @@ class AddVehicleActivity : BaseActivity() {
                         manufacturers.add(data)
                         brandTitle.add(data.brand)
 
-                        if (isForEdit) {
+                        if (isForEdit || isForPlateno) {
+
                             if (data.brandID == myCar?.carMakeName)
                                 selectedIndex = i
                         }
@@ -712,14 +715,13 @@ class AddVehicleActivity : BaseActivity() {
                         if (currentFuelType == null || currentFuelType?.isEmpty()!!)
                             currentFuelType = "Other"
                         var index = 0
-                        if(currentFuelType.equals("Others")|| currentFuelType.equals("Other")){
+                        if (currentFuelType.equals("Others") || currentFuelType.equals("Other")) {
                             if (fuelType.indexOf("Others") > -1) {
                                 index = fuelType.indexOf("Others")
 
-                            }else
+                            } else
                                 index = fuelType.indexOf(currentFuelType)
-                        }
-                        else {
+                        } else {
                             index = fuelType.indexOf(currentFuelType)
                         }
 
@@ -796,7 +798,10 @@ class AddVehicleActivity : BaseActivity() {
         if (selIndex > -1 && titles.size > selIndex) {
             spinner_version.setSelection(selIndex)
         }
-
+        if (isForPlateno) {
+            Log.d("isForPlateno :  ",isForPlateno.toString())
+            setNotEditable_SeachFromPlatno()
+        }
 
     }
 
@@ -859,6 +864,7 @@ class AddVehicleActivity : BaseActivity() {
                         Log.d("AddVehicleActivity", "onResponse: add car from plate = $body")
 
                         if (response.code() == 200) {
+                            isForPlateno = true
                             handleAddCarResponse(body)
                         }
                     }
@@ -894,7 +900,7 @@ class AddVehicleActivity : BaseActivity() {
                             val json = dataJson.getString("data")
 
                             alert {
-                                message =getString(R.string.Doyouwanttocompletethecardetailspersonalizedsuggestions)
+                                message = getString(R.string.Doyouwanttocompletethecardetailspersonalizedsuggestions)
                                 positiveButton(getString(R.string.yes)) {
                                     val lastCarIntent = getLastCarIntent(body!!)
                                     val car = lastCarIntent.getSerializableExtra(Constant.Key.myCar)
@@ -948,6 +954,10 @@ class AddVehicleActivity : BaseActivity() {
 
                 myCar = car as Models.MyCarDataSet
                 isForEdit = true
+                if (isForPlateno) {
+                    loadCarManufacturer()
+                    bindEditables()
+                }
                 setEditMode()
             }
 
@@ -965,7 +975,7 @@ class AddVehicleActivity : BaseActivity() {
     private fun getLastCarIntent(bodyString: String): Intent {
         val carIntent = Intent()
         val dataSet = getDataSetArrayFromResponse(bodyString)
-        if(!dataSet.isEmpty()) {
+        if (!dataSet.isEmpty()) {
             val last = (dataSet[dataSet.length() - 1].toString())
             val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
 
@@ -988,7 +998,6 @@ class AddVehicleActivity : BaseActivity() {
                 progressDialog.show()
 
                 uploadCarImageToServer(resultUri, "1")
-
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -1139,4 +1148,14 @@ class AddVehicleActivity : BaseActivity() {
 
 
     private fun getEmptyAdapter() = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOf())
+
+    private fun setNotEditable_SeachFromPlatno() {
+        spinner_manufacturer.setSpinnerEnable(false)
+        spinner_model.setSpinnerEnable(false)
+        spinner_fuel.setSpinnerEnable(false)
+        spinner_version.setSpinnerEnable(false)
+
+
+
+    }
 }

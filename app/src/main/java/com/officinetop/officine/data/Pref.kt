@@ -398,21 +398,12 @@ inline fun Context.getTyreDetail(): Models.TyreDetail? {
         null
     }
 }
+inline fun Context.clearTyreDetail() {
+   getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).edit().remove("tyre_detail").apply()
+
+}
 
 
-//inline fun Context.setSelectedTyreDetails(tyreDetail: ){
-//    getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).edit()
-//            .putString("selected_tyre", convertToJson(tyreDetail)).apply()
-//}
-//
-//inline fun Context.getSelectedTyre(): Models.TyreDetail?{
-//    return try {
-//        Gson().fromJson(getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).getString("selected_tyre", ""),
-//                Models.TyreDetail::class.java)
-//    } catch (e: Exception) {
-//        null
-//    }
-//}
 
 inline fun Context.setSelectedTyreDetails(tyreDetail: MeasurementDataSetItem) {
     getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).edit()
