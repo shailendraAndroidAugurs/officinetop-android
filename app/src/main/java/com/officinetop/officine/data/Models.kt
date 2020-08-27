@@ -87,6 +87,8 @@ object Models {
             val fuelType: String = "",
             @SerializedName("fueltype")
             val fueltype: String = "",
+
+
             @SerializedName("Valvole")
             val valvole: String = "",
             @SerializedName("Versione")

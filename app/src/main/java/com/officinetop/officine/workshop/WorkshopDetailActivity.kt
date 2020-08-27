@@ -392,9 +392,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     , Constant.Path.type to "2", Constant.Path.mainCategoryId to feedbackMain_categoryId, Constant.Path.serviceID to feedbackServices_id
             ))
 
-
-            //workshopId=250,productId=,ratings=3.5,images=[],comments=workshop feedback,sellerId=,productType=,mainCategoryId=,type=,serviceID=
-            //workshopId=490,productId=,ratings=2.5,images=[],comments=officien top  wor,sellerId=,productType=,mainCategoryId=1,type=2,serviceID=164
         }
 
         if (isSosEmergency) {
@@ -456,7 +453,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         with(dialogView) {
-            //            requestWindowFeature(Window.FEATURE_NO_TITLE)
+
             setContentView(R.layout.dialog_booking_calendar)
             window?.setGravity(Gravity.CENTER)
             window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
@@ -558,16 +555,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             val resourceId = resources.getIdentifier(dynamicViewID, "id", packageName)
 
                             var textView: TextView = container.legendLayout.findViewById(resourceId) as TextView
-//                        var textView: TextView = container.legendLayout.getChildAt(index) as TextView
                             textView.text = daysOfWeek[index].name.take(3)
                             textView.setTextColorRes(R.color.black)
                             textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
                         }
-//                    container.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
-//                        tv.text = daysOfWeek[index].name.take(3)
-//                        tv.setTextColorRes(R.color.example_5_text_grey)
-//                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-//                    }
+
                         month.yearMonth
                     }
                 }
@@ -697,9 +689,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 dialog.dismiss()
                 val body = response.body()?.string()
 
-                //set workshop data
-
-                //Log.d("WorkshopDetailActivity", "onResponse: $body")
 
                 body?.let {
 
@@ -884,10 +873,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (isAssembly)
             RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, averageServiceTime.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(callback)
 
-
-        /* @Query(Constant.Path.categoryId) categoryId: String,
-         @Query(Constant.Path.service_average_time) service_average_time: String,
-         @Query(Constant.Path.version_id) version_id: String*/
         else if (isRevision) {
 
             if (WorkshopJson != null && !WorkshopJson.equals("")) {
@@ -896,9 +881,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
             RetrofitClient.client.getCarRevisionPackageDetail(workshopUsersId, selectedDateFilter, getSelectedCar()?.carVersionModel?.idVehicle!!, serviceID, main_category_id, getUserId(), if (getBearerToken().isNullOrBlank()) "" else getBearerToken()!!).enqueue(callback) // use for Revision, api call.
 
-            /* @Query(Constant.Path.serviceID) service_id: String,
-         @Query(Constant.Path.mainCategoryId) : String,
-     */
         } else if (isTyre) {
 
             var maincategoryId = intent.getStringExtra(Constant.Path.mainCategoryIdTyre)
@@ -1374,7 +1356,24 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
 
 
-        } else {
+        }else if(isCarWash)
+        {
+            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
+           // val additionalDelay = (20 * 60 * 1000)
+            var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
+            bookingDuration /= 60000
+            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
+            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
+            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
+            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            var hourlyRate = 0.0
+            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
+                hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
+            finalPrice = (hourlyRate / 60) * bookingDuration
+            finalPrice = finalPrice.roundTo2Places()
+        }
+
+        else {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) + additionalDelay // add 20 min
