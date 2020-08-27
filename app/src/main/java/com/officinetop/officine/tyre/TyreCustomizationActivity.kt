@@ -215,13 +215,14 @@ class TyreCustomizationActivity : BaseActivity() {
 
 
                                 speedLoadIndexList.clear()
-
-                                for (loadindex in 0 until speed_load_index.length()) { val speedindexObj: JSONObject = speed_load_index.get(loadindex) as JSONObject
+                                speedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
+                                for (loadindex in 0 until speed_load_index.length()) {
+                                    val speedindexObj: JSONObject = speed_load_index.get(loadindex) as JSONObject
                                     if (speedindexObj != null)
                                         speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("load_speed_index"), ""))
                                 }
-                                speedLoadIndexList.sortBy { it.name }
-                                speedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
+                               /* speedLoadIndexList.sortBy { it.name }*/
+
                                 for (tyretype in 0 until tyre_type.length()) {
                                     val vehicaltypeObject: JSONObject = tyre_type.get(tyretype) as JSONObject
                                     val tyretypeObj = Gson().fromJson(vehicaltypeObject.toString(), Models.TypeSpecificationForVehicalType::class.java)
