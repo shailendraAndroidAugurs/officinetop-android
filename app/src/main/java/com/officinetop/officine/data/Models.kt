@@ -1645,7 +1645,10 @@ object Models {
             var feedbackType: String = "",
             @SerializedName("productorWorkshopName")
             var ProductOrWorkshopName: String = "",
-            var product_type: String = ""
+            var product_type: String = "",
+
+            @SerializedName("without_purchase")
+            var withoutPurchase: String = ""
 
 
 

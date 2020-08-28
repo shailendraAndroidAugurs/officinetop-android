@@ -573,8 +573,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 })
     }
 
-    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
-        bindFeedbackList(list, this)
+    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
+        bindFeedbackList(list, this,feedbackwithoutPurchage)
     }
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, couponType: String, AppliedCouponName: TextView) {

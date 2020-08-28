@@ -11,11 +11,9 @@ import com.google.gson.Gson
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_feedback_list.*
-import kotlinx.android.synthetic.main.activity_workshop_detail.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
@@ -84,7 +82,9 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     Constant.Path.ProductOrWorkshopName to productorWorkshopName,
                     Constant.Path.mainCategoryId to mainCategoryId,
                     Constant.Path.serviceID to serviceID,
-                    Constant.Path.type to type
+                    Constant.Path.type to type,
+                    Constant.Path.withoutPurchase to "1"
+
 
             ), 102)
         }
@@ -103,9 +103,9 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun bindFeedbackList() {
         if (fedback_recycler_view != null) {
-            overall_rating.rating=list[0].avgRatings.toFloat()
-            tv_rating_count.text=list[0].avgRatings.toFloat().toDouble().roundTo2Places().toString()+" "+"out of 5"
-            tv_overAll_rating_count.text=list[0].noOfPeople
+            overall_rating.rating = list[0].avgRatings.toFloat()
+            tv_rating_count.text = list[0].avgRatings.toFloat().toDouble().roundTo2Places().toString() + " " + "out of 5"
+            tv_overAll_rating_count.text = list[0].noOfPeople
 
             fedback_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -121,7 +121,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
                 override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
-                    if ( !list[p1].ProductOrWorkshopName.isNullOrBlank()) {
+                    if (!list[p1].ProductOrWorkshopName.isNullOrBlank()) {
                         p0.itemView.tv_NameofProductorWorkshop.text = list[p1].ProductOrWorkshopName
                     } else {
                         p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
@@ -150,12 +150,14 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                         p0.itemView.tv_product_type.text = getString(R.string.Workshop)
                     } else if (list[p1].product_type.equals("1")) {
                         p0.itemView.tv_product_type.text = getString(R.string.spare_part)
-                    }
-                    else  if (list[p1].product_type.equals("2")) {
+                    } else if (list[p1].product_type.equals("2")) {
                         p0.itemView.tv_product_type.text = getString(R.string.tyres)
                     }
 
+                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase.equals("1")) {
+                        btn_addfedback.visibility = View.GONE
 
+                    }
 
 
                     if (!list[p1].createdAt.isNullOrBlank()) {
@@ -194,27 +196,27 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                         }
 
                         );
-                         p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-                             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-                                 val view = layoutInflater.inflate(R.layout.item_image, p0, false)
-                                 return object : RecyclerView.ViewHolder(view) {}
-                             }
+                        p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
+                                val view = layoutInflater.inflate(R.layout.item_image, p0, false)
+                                return object : RecyclerView.ViewHolder(view) {}
+                            }
 
-                             override fun getItemCount(): Int = list[p1].images.size
+                            override fun getItemCount(): Int = list[p1].images.size
 
-                             override fun onBindViewHolder(view: RecyclerView.ViewHolder, position: Int) {
-                                 loadImage(list[p1].images[position].imageUrl, view.itemView.item_image_view)
+                            override fun onBindViewHolder(view: RecyclerView.ViewHolder, position: Int) {
+                                loadImage(list[p1].images[position].imageUrl, view.itemView.item_image_view)
 
-                                 view.itemView.setOnClickListener {
-                                     createImageSliderDialog(list[p1].images[position].imageUrl)
+                                view.itemView.setOnClickListener {
+                                    createImageSliderDialog(list[p1].images[position].imageUrl)
 
-                                 }
-                             }
-                         }
+                                }
+                            }
+                        }
 
 
-                    }else{
-                        p0.itemView.rv_feedbackImage.adapter=null
+                    } else {
+                        p0.itemView.rv_feedbackImage.adapter = null
                     }
 
                     p0.itemView.setOnClickListener {
@@ -238,14 +240,21 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-    override fun getFeedbackList(feedbacklist: MutableList<Models.FeedbacksList>) {
+    override fun getFeedbackList(feedbacklist: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
         if (feed_back_swipe_layout != null) feed_back_swipe_layout.isRefreshing = false
         list = feedbacklist
+
+        if (!feedbackwithoutPurchage.isNullOrBlank() && feedbackwithoutPurchage.equals("0")) {
+            btn_addfedback.visibility = View.VISIBLE
+
+        } else {
+            btn_addfedback.visibility = View.GONE
+        }
         bindFeedbackList()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        getFeedbacks(this, workshopId, productId, type,productType)
+        getFeedbacks(this, workshopId, productId, type, productType)
     }
 }

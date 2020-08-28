@@ -66,6 +66,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@color/colorPrimaryDark"
                     android:padding="@dimen/_5sdp"
+
                     android:text="@string/write_a_review"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
