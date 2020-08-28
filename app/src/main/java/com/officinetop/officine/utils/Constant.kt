@@ -406,7 +406,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val user_WalletAmount = "user_WalletAmount"
         const val payableAmount = "payable_amount"
         const val walletAmount = "used_wallet_amount"
-
+        const val withoutPurchase = "without_purchase"
 
     }
 

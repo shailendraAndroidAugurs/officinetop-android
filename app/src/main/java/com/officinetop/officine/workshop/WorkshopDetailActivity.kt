@@ -1577,9 +1577,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
 
-    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
+   /* override fun getFeedbackList(list: MutableList<Models.FeedbacksList>,isFeedbackDone:String) {
         bindFeedbackList(list, this)
-    }
+    }*/
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {
         val dialog = Dialog(this@WorkshopDetailActivity)
@@ -1690,6 +1690,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
+        bindFeedbackList(list, this,feedbackwithoutPurchage)
     }
 
 

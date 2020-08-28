@@ -761,11 +761,10 @@ data class ResponseError(val message: String, val errorCode: Int)
 fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, productId: String, type: String, productType: String) {
 
     RetrofitClient.client.getfeedbackList(getBearerToken()
-            ?: "", workshopId, productId, type, productType)
+            ?: "", workshopId, productId, type, productType,getUserId())
             .onCall { networkException, response ->
 
                 val feedbackList: MutableList<Models.FeedbacksList> = ArrayList()
-                /*feed_back_swipe_layout.isRefreshing = false*/
 
                 response?.let {
                     if (response.isSuccessful) {
@@ -785,7 +784,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
                             /*bindFeedbackList()*/
 
                             if (getfedback != null) {
-                                getfedback.getFeedbackList(feedbackList)
+                                getfedback.getFeedbackList(feedbackList,if(data.has("data") && !data.getInt("data").toString().isNullOrBlank())data.getInt("data").toString() else "1")
                             }
 
                         } else {
@@ -799,7 +798,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
             }
 }
 
-inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, context: Context?) {
+inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, context: Context?,feedbackwithoutPurchage:String) {
     val feedbackList: MutableList<Models.FeedbacksList> = ArrayList()
     val feedbackItems = if (list.size > 5) 4 else list.size//to display only 4 items
     for (i in 0 until feedbackItems) {

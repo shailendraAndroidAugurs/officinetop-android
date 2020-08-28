@@ -56,9 +56,9 @@ class FeedbackAddActivity : BaseActivity() {
     private var serviceID: String = ""
     private var productType: String = ""//type for product type, type for tyre is 2, type for spare parts for 1 and type for rim 3
     private var type: String = ""// for product or services
-
-
     private var feedbackType: String = ""
+
+    private var withoutPurchase: String = "" // when a customer logs in with an account without a purchase, he can only release one feedback for each product and workshop.
     private var productorWorkshopName: String = ""
     private var motservicetype: String = ""
 
@@ -106,7 +106,9 @@ class FeedbackAddActivity : BaseActivity() {
         if (intent.hasExtra(Constant.Path.orderid))
             orderid = intent?.getStringExtra(Constant.Path.orderid)
                     ?: ""
-
+        if (intent.hasExtra(Constant.Path.withoutPurchase))
+            withoutPurchase = intent?.getStringExtra(Constant.Path.withoutPurchase)
+                    ?: ""
 
         capture_images_for_fedback.setOnClickListener {
             if (images.size < 5) {
@@ -222,14 +224,14 @@ class FeedbackAddActivity : BaseActivity() {
 
             motservicetype = ""
         }
-        var res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID
+        var res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID+", withoutPurchase"+withoutPurchase
         Log.v("FEEDBACK", res)
 
         RetrofitClient.client.addFeedback(authToken = getBearerToken()
                 ?: "", workshopId = workshopId.toRequestBody(),
                 productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
                 comments = comments.text.toString().toRequestBody(), sellerId = sellerId.toRequestBody(), productType = productType.toRequestBody(), mainCategoryId = mainCategoryId.toRequestBody(),
-                serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody()
+                serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody(),withoutPurchase=withoutPurchase.toRequestBody()
         )
                 .onCall { networkException, response ->
                     ProgressDialog.dismiss()

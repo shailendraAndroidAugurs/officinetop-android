@@ -1129,8 +1129,8 @@ interface IRetrofitApis {
             @Query(Constant.Path.workshopId) workshopId: String,
             @Query(Constant.Path.productid) productId: String,
             @Query(Constant.Path.type) type: String,
-            @Query(Constant.Path.productType) productType: String
-
+            @Query(Constant.Path.productType) productType: String,
+            @Query("users_id") users_id: String
     ): Call<ResponseBody>
 
     @Multipart
@@ -1148,7 +1148,8 @@ interface IRetrofitApis {
             @Part(Constant.Path.serviceID) serviceID: RequestBody,
             @Part(Constant.Path.type) type: RequestBody,
             @Part(Constant.Path.orderid) orderid: RequestBody,
-            @Part(Constant.Path.motservicetype) motservicetype: RequestBody
+            @Part(Constant.Path.motservicetype) motservicetype: RequestBody,
+            @Part(Constant.Path.withoutPurchase) withoutPurchase: RequestBody
 
 
     ): Call<ResponseBody>
