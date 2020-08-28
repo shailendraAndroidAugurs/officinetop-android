@@ -154,7 +154,10 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                         p0.itemView.tv_product_type.text = getString(R.string.tyres)
                     }
 
+                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase.equals("1")) {
+                        btn_addfedback.visibility = View.GONE
 
+                    }
 
 
                     if (!list[p1].createdAt.isNullOrBlank()) {
@@ -242,14 +245,12 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
         list = feedbacklist
 
         if (!feedbackwithoutPurchage.isNullOrBlank() && feedbackwithoutPurchage.equals("0")) {
-            btn_addfedback.visibility=View.VISIBLE
+            btn_addfedback.visibility = View.VISIBLE
 
+        } else {
+            btn_addfedback.visibility = View.GONE
         }
-
-        else {
-            btn_addfedback.visibility= View.GONE
-        }
-        bindFeedbackList ()
+        bindFeedbackList()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
