@@ -21,6 +21,7 @@ import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.movetologinPage
@@ -67,7 +68,10 @@ class PartList_Replacement : BaseActivity() {
             response.let {
 
                     if (response!!.isSuccessful) {
+
+
                         val body = JSONObject(response?.body()?.string())
+
                         if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                             progressDialog.dismiss()
                             for (i in 0 until body.getJSONArray("data_set").length()) {
@@ -82,8 +86,16 @@ class PartList_Replacement : BaseActivity() {
                             }
                             setAdapter()
                         }
+                        else{
+                            progressDialog.dismiss()
+                            showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                        }
 
-                }
+                }else{
+                        progressDialog.dismiss()
+                        showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                    }
+
             }
         }
     }
@@ -101,6 +113,7 @@ class PartList_Replacement : BaseActivity() {
 
             override fun onItemClick(view: View, position: Int) {
                 if(view.tag==102){
+                    Log.d("favoritecall","mot")
                     add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,Iv_favorite_mot_part,carMaintenanceServiceList[position].productId,position)
                 }else{
                 if (carMaintenanceServiceList[position].couponList != null) {

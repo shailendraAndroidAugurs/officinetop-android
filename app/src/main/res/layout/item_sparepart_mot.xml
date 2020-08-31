@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_2sdp"
                    android:paddingRight="@dimen/_10sdp"
-                    android:text="@{listItemViewModel.productName!=null ? listItemViewModel.descrizione:@string/Concat}"
+                    android:text="@{listItemViewModel.productName!=null ? listItemViewModel.productName:@string/Concat}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
 
