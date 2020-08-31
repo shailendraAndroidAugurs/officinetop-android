@@ -160,6 +160,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     }
 
 
+
                     if (!list[p1].createdAt.isNullOrBlank()) {
                         p0.itemView.tv_date.text = DateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
                     } else {

@@ -363,3 +363,14 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
 fun setcouponDetail(text: TextView, coupontitle: String, coupontype: String,couponPrices:String) {
     text.text=coupontitle+" :"+" €" +couponPrices
 }
+
+@BindingAdapter("wishlist")
+ fun setWishlist(Iv_favorite:ImageView,wish_list:String){
+
+    if (wish_list == "1")
+        Iv_favorite.setImageResource(R.drawable.ic_heart)
+    else {
+        Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+    }
+
+}

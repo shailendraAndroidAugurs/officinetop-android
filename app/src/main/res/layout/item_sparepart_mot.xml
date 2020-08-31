@@ -3,7 +3,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_margin="@dimen/_10sdp"
         android:background="@color/white"
         android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
@@ -51,113 +51,84 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/_10sdp"
             android:paddingRight="@dimen/_10sdp">
-
-            <LinearLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
+                app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
-                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
 
-                <TextView
-                    android:id="@+id/item_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{listItemViewModel.listino!=null ? listItemViewModel.listino:@string/Concat}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
 
 
                 <TextView
+                    android:layout_alignParentStart="true"
                     android:id="@+id/item_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sample_product"
-                    android:text="@{listItemViewModel.descrizione!=null ? listItemViewModel.descrizione:@string/Concat}"
+                    android:paddingTop="@dimen/_2sdp"
+                   android:paddingRight="@dimen/_10sdp"
+                    android:text="@{listItemViewModel.productName!=null ? listItemViewModel.productName:@string/Concat}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
 
-                <!-- <ImageView
+                 <ImageView
+                     android:layout_alignParentEnd="true"
+                     app:wishlist="@{listItemViewModel.wishlist}"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:src="@drawable/ic_favorite_border_black_empty_24dp" />-->
+                     android:src="@drawable/ic_favorite_border_black_empty_24dp" />
 
 
-            </LinearLayout>
-
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/AppliedCouponName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?listItemViewModel.couponList[0].couponTitle:@string/sample}"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_8sdp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/season_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@android:drawable/ic_delete"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center">
+                <com.officinetop.officine.utils.CustomRatingBar
+                    android:id="@+id/item_rating"
+                    style="@style/customratingBar"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    app:bindrating="@{listItemViewModel.rating_star!=null ? listItemViewModel.rating_star : @string/blank}" />
+                android:textColor="@color/theme_orange" />
+                <TextView
+                    android:id="@+id/item_rating_count"
+                    style="@style/TextViewWhite.VerySmall"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
 
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/minus"
-                        android:visibility="gone" />
-
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/plus"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/item_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="start"
-                        android:maxLines="2"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="@dimen/_20sdp"
-                        android:paddingBottom="5dp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <!-- <RatingBar
-                     android:id="@+id/item_rating"
-                     style="?android:attr/ratingBarStyleSmall"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content" />-->
-
+                    android:layout_marginLeft="5dp"
+                    android:padding="0dp"
+                    android:layout_centerInParent="true"
+                    android:text="@{listItemViewModel.rating_count!=null ? listItemViewModel.rating_count : @string/blank}"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/item_price_Mot"
+                    android:id="@+id/item_price"
+                    style="@style/TextViewSubHeadingAccent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_weight="1"
-                    android:gravity="bottom|end"
-                    android:textColor="@color/theme_orange"
-                    app:amount="@{listItemViewModel.sellerPrice!=null? listItemViewModel.sellerPrice:@string/ZeroValue}" />
+                    android:gravity="end"
+                    android:padding="0dp"
+                    app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}" />
+
 
             </LinearLayout>
 

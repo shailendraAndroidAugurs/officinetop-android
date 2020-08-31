@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +19,18 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.getProgressDialog
+import com.officinetop.officine.utils.movetologinPage
 import com.officinetop.officine.utils.onCall
+import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
+import kotlinx.android.synthetic.main.maintenance_part_replacement.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -61,7 +68,10 @@ class PartList_Replacement : BaseActivity() {
             response.let {
 
                     if (response!!.isSuccessful) {
+
+
                         val body = JSONObject(response?.body()?.string())
+
                         if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                             progressDialog.dismiss()
                             for (i in 0 until body.getJSONArray("data_set").length()) {
@@ -76,8 +86,16 @@ class PartList_Replacement : BaseActivity() {
                             }
                             setAdapter()
                         }
+                        else{
+                            progressDialog.dismiss()
+                            showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                        }
 
-                }
+                }else{
+                        progressDialog.dismiss()
+                        showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                    }
+
             }
         }
     }
@@ -94,10 +112,13 @@ class PartList_Replacement : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                Log.e("itemsObjetData::", "${carMaintenanceServiceList[position]}")
+                if(view.tag==102){
+                    Log.d("favoritecall","mot")
+                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,Iv_favorite_mot_part,carMaintenanceServiceList[position].productId,position)
+                }else{
                 if (carMaintenanceServiceList[position].couponList != null) {
                     displayCoupons(carMaintenanceServiceList[position].couponList, "workshop_coupon")
-                }
+                }}
             }
         })
         recycler_view.adapter = genericAdapter
@@ -156,6 +177,66 @@ class PartList_Replacement : BaseActivity() {
             }
         }
         dialog.show()
+    }
+    private fun add_remove_product__Wishlist(wish_list:String, Iv_favorite: ImageView, ProductId:String, position:Int) {
+        try {
+            if (wish_list.isNullOrBlank()||wish_list == "0") {
+                RetrofitClient.client.addToFavorite(getBearerToken()
+                        ?: "", ProductId, "1", "", getSelectedCar()?.carVersionModel?.idVehicle
+                        ?: "").onCall { networkException, response ->
+
+                    response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(body)
+                            if (body.has("message")) {
+                                Iv_favorite.setImageResource(R.drawable.ic_heart)
+
+
+                                carMaintenanceServiceList[position].wishlist="1"
+
+                                showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
+
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            } else {
+
+                RetrofitClient.client.removeFromFavorite(getBearerToken()
+                        ?: "", ProductId, "", "1").onCall { networkException, response ->
+
+                    response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(body)
+                            if (body.has("message")) {
+                                Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+                                carMaintenanceServiceList[position].wishlist="1"
+                                showInfoDialog(getString(R.string.productRemoved_formWishList))
+
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

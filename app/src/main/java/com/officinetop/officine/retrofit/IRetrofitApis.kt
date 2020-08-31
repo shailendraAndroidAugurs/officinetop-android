@@ -992,7 +992,8 @@ interface IRetrofitApis {
             @Query("front_rear") frontRear: String,
             @Query("left_right") leftRight: String,
             @Query(Constant.Path.filterPriceRange) priceRange: String,
-            @Query(Constant.Path.sortPrice) priceSortLevel: Int
+            @Query(Constant.Path.sortPrice) priceSortLevel: Int,
+            @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 
@@ -1401,7 +1402,8 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.loadKromedaParts)
     fun kromedaParts(
             @Header(Constant.Fields.authorization) authToken: String,
-            @Query("id") id: String
+            @Query("id") id: String,
+            @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 

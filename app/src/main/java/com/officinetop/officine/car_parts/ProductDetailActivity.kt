@@ -104,7 +104,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 item_qty.text = "2"
             }
             if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
-                wish_list = intent.getStringExtra(Constant.Key.wishList)
+               wish_list = intent.getStringExtra(Constant.Key.wishList)
                 if (wish_list == "1")
                     Iv_favorite.setImageResource(R.drawable.ic_heart)
                 else {
