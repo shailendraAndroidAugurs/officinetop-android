@@ -184,6 +184,7 @@ class MotDetailActivity : BaseActivity() {
     }
 
     private fun bindMotPartNumberServices() {
+        Log.d("motSparePartList",mKPartServicesList.toString())
         genericAdapter = GenericAdapter<Models.Part>(this@MotDetailActivity, R.layout.item_sparepart_mot)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
@@ -229,6 +230,11 @@ class MotDetailActivity : BaseActivity() {
                 partmod.brandImageURL = partmod.brandImage.takeIf { !it.isNullOrEmpty() }!!
             }
             mKPartServicesList[selectitem_position] = partmod
+            partmod.productName = partmod.productName
+            partmod.rating_count = partmod.rating_count
+            partmod.rating_star = partmod.rating_star
+            partmod.wishlist = partmod.wishlist
+
             Log.e("replaceSelectID", partmod.toString())
             bindMotPartNumberServices()
             recycler_view.getLayoutManager()!!.scrollToPosition(selectitem_position)

@@ -968,7 +968,15 @@ object Models {
             var CouponTitle: String = "",
             var CouponId: String = "",
             @SerializedName("coupon_list")
-            var couponList: ArrayList<Coupon>
+            var couponList: ArrayList<Coupon>,
+            @SerializedName("p_name")
+            var productName: String,
+            @SerializedName("rating_star")
+            var rating_star: String = "",
+            @SerializedName("rating_count")
+            var rating_count: String = "",
+            @SerializedName("wish_list")
+            var wishlist: String = ""
     ) : ListItemViewModel()
 
     data class Part(
@@ -1079,9 +1087,9 @@ object Models {
             @SerializedName("product_type")
             val productType: String = "",
             @SerializedName("rating_star")
-            val rating_star: String = "",
+            var rating_star: String = "",
             @SerializedName("rating_count")
-            val rating_count: String = "",
+            var rating_count: String = "",
             @SerializedName("brand_image")
             val brandImage: String = "",
             @SerializedName("brand_image_url")
@@ -1099,7 +1107,9 @@ object Models {
             val version_id: String = "",
 
             @SerializedName("n3_service_id")
-            val n3_service_id: String = ""
+            val n3_service_id: String = "",
+            @SerializedName("wish_list")
+            var wishlist: String = ""
 
 
     ) : ListItemViewModel()
@@ -1363,8 +1373,6 @@ object Models {
             val kPartList: List<Part>,
             @SerializedName("language")
             val language: String,
-            @SerializedName("mot_part_numbers")
-            val motPartNumbers: List<MotPartNumber>,
             @SerializedName("operations")
             val operations: List<Operation>,
             @SerializedName("service_advisory_message")
@@ -1488,56 +1496,7 @@ object Models {
             val v: String = ""
     ) : ListItemViewModel()
 
-    data class MotPartNumber(
-            @SerializedName("brand_logo")
-            val brandLogo: BrandLogo,
-            @SerializedName("CS")
-            val cS: String,
-            @SerializedName("CodiceArticolo")
-            val codiceArticolo: String,
-            @SerializedName("CodiceListino")
-            val codiceListino: String,
-            @SerializedName("CodiceOE")
-            val codiceOE: String,
-            @SerializedName("created_at")
-            val createdAt: Any?,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("Descrizione")
-            val descrizione: String,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("image_name")
-            val imageName: Any?,
-            @SerializedName("image_url")
-            val imageUrl: String,
-            @SerializedName("kr_part_lists_id")
-            val krPartListsId: Int,
-            @SerializedName("Listino")
-            val listino: String,
-            @SerializedName("ls_CodiceListino")
-            val lsCodiceListino: String,
-            @SerializedName("mot_item_parts_id")
-            val motItemPartsId: Int,
-            @SerializedName("N")
-            val n: String,
-            @SerializedName("Prezzo")
-            val prezzo: String? = "",
-            @SerializedName("primary_status")
-            val primaryStatus: String,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("Tipo")
-            val tipo: String,
-            @SerializedName("unique_id")
-            val uniqueId: String,
-            @SerializedName("updated_at")
-            val updatedAt: Any?,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("V")
-            val v: String
-    ) : ListItemViewModel()
+
 
     data class BrandLogo(
             @SerializedName("brand_name")
@@ -1649,7 +1608,6 @@ object Models {
 
             @SerializedName("without_purchase")
             var withoutPurchase: String = ""
-
 
 
     ) : ListItemViewModel()
