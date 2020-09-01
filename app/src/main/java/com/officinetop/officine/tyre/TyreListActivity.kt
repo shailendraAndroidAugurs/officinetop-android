@@ -129,8 +129,9 @@ class TyreListActivity : BaseActivity() {
             tyreDetail?.let {
                 title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " +
 
-                        if(it.speedIndex.equals("0")||it.speedIndex.equals(getString(R.string.All))||it.speedIndex.equals(getString(R.string.all_in_italin)))getString(R.string.all) else  it.speedIndex +
-                                if(it.speed_load_index.equals("0")||it.speed_load_index.equals(getString(R.string.All))||it.speed_load_index.equals(getString(R.string.all_in_italin)))getString(R.string.all)  else  it.speed_load_index
+                        if(it.speed_load_index.equals("0")||it.speed_load_index.equals(getString(R.string.All))||it.speed_load_index.equals(getString(R.string.all_in_italin)))getString(R.string.all)  else  it.speed_load_index +
+
+                        if(it.speedIndex.equals("0")||it.speedIndex.equals(getString(R.string.All))||it.speedIndex.equals(getString(R.string.all_in_italin)))getString(R.string.all) else  it.speedIndex
                 searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
                 progress_bar.visibility = View.VISIBLE
 

@@ -694,6 +694,7 @@
     <string name="speed_load_index">Speed load index</string>
     <string name="license_plate">Targa :</string>
     <string name="all_in_italin">All</string>
+    <string name="car_conditions">Condizioni auto</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

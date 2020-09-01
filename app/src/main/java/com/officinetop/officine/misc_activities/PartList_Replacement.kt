@@ -18,10 +18,7 @@ import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.data.isStatusCodeValid
+import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.movetologinPage
@@ -54,14 +51,14 @@ class PartList_Replacement : BaseActivity() {
         n3_services_id = intent?.getStringExtra("n3_services_Id") ?: ""
         versionId = intent?.getStringExtra("version_id") ?: ""
         mottype = intent?.getStringExtra("Mot_type") ?: ""
-        N3partList(partID)
+        Log.d("mottype",mottype)
+        N3partList()
     }
 
-    private fun N3partList(partID: String) {
-        // PartList(partID)
+    private fun N3partList() {
        val progressDialog= getProgressDialog()
         progressDialog.show()
-        RetrofitClient.client.PartListForMotReplacement(n3_services_id,versionId,mottype).onCall { networkException, response ->
+        RetrofitClient.client.PartListForMotReplacement(n3_services_id,versionId,mottype,getUserId()).onCall { networkException, response ->
             networkException?.let {
                 progressDialog.dismiss()
             }
@@ -112,12 +109,12 @@ class PartList_Replacement : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                if(view.tag==102){
-                    Log.d("favoritecall","mot")
-                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,Iv_favorite_mot_part,carMaintenanceServiceList[position].productId,position)
+                if(view.tag=="103"){
+                    Log.d("partist_Replacement","listPosition"+position.toString())
+                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,view.findViewById(R.id.Iv_favorite_mot_part),carMaintenanceServiceList[position].id,position)
                 }else{
                 if (carMaintenanceServiceList[position].couponList != null) {
-                    displayCoupons(carMaintenanceServiceList[position].couponList, "workshop_coupon")
+                    displayCoupons(carMaintenanceServiceList[position].couponList)
                 }}
             }
         })
@@ -126,9 +123,8 @@ class PartList_Replacement : BaseActivity() {
         genericAdapter.addItems(carMaintenanceServiceList)
     }
 
-    private fun displayCoupons(couponsList: List<Models.Coupon>, couponType: String) {
-        /*  val couponsList: MutableList<Models.Coupon> = ArrayList()
-          couponsList.add(couponsArray)*/
+    private fun displayCoupons(couponsList: List<Models.Coupon>) {
+
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -138,12 +134,8 @@ class PartList_Replacement : BaseActivity() {
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView
-        val ll_coupons = dialog.findViewById(R.id.ll_coupons) as LinearLayout
-        val apply_coupons = dialog.findViewById(R.id.apply_coupons) as Button
-        val cancel_coupons = dialog.findViewById(R.id.cancel_coupons) as Button
-        ll_coupons.visibility = View.VISIBLE
-        apply_coupons.visibility = View.GONE
-        title.text = "Coupons List"
+
+        title.text = getString(R.string.coupon_list)
         with(dialog) {
             var selectedPosition: Int = -1
 
@@ -169,18 +161,15 @@ class PartList_Replacement : BaseActivity() {
             imageCross.setOnClickListener {
                 dialog.dismiss()
             }
-            cancel_coupons.setOnClickListener {
-                dialog.dismiss()
-            }
-            apply_coupons.setOnClickListener {
-                dialog.dismiss()
-            }
+
         }
         dialog.show()
     }
     private fun add_remove_product__Wishlist(wish_list:String, Iv_favorite: ImageView, ProductId:String, position:Int) {
         try {
             if (wish_list.isNullOrBlank()||wish_list == "0") {
+
+                Log.d("perameterAddtoWishlist","Productid: "+ProductId+ " ")
                 RetrofitClient.client.addToFavorite(getBearerToken()
                         ?: "", ProductId, "1", "", getSelectedCar()?.carVersionModel?.idVehicle
                         ?: "").onCall { networkException, response ->
@@ -198,7 +187,7 @@ class PartList_Replacement : BaseActivity() {
 
                                 carMaintenanceServiceList[position].wishlist="1"
 
-                                showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
+                                showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
 
                             }
@@ -222,7 +211,7 @@ class PartList_Replacement : BaseActivity() {
                             val body = JSONObject(body)
                             if (body.has("message")) {
                                 Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                                carMaintenanceServiceList[position].wishlist="1"
+                                carMaintenanceServiceList[position].wishlist="0"
                                 showInfoDialog(getString(R.string.productRemoved_formWishList))
 
                             }
