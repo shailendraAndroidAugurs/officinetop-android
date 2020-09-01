@@ -1,17 +1,174 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_7sdp"
         android:background="@color/white"
         android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
         android:orientation="horizontal"
         android:padding="@dimen/_5sdp">
-
-
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+
+            app:layout_constraintTop_toBottomOf="@+id/text_partinfo"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="101dp"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/parts_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.product_image_url!=null ? listItemViewModel.product_image_url : @string/url_not_found}"
+                    app:layout_constraintEnd_toStartOf="@+id/parts_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
+                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:id="@+id/item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/theme_orange"
+                    app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon" />
+
+
+                <TextView
+                    android:id="@+id/tv_changecoupon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:background="@drawable/shape_dotted_orange"
+                    android:gravity="center"
+                    android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:padding="@dimen/_5sdp"
+                    android:tag="102"
+                    android:text="@string/updateCoupon"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_CouponTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/parts_title" />
+
+
+                <TextView
+                    android:id="@+id/tv_CouponTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@{ listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?listItemViewModel.couponTitle:@string/blank}"
+                    android:textColor="@color/md_teal_700"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_changecoupon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/parts_title" />
+
+                <TextView
+                    android:id="@+id/parts_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{listItemViewModel.productName}"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintEnd_toStartOf="@+id/Iv_favorite_mainPart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair" />
+
+
+
+                <ImageView
+                    android:id="@+id/Iv_favorite_mainPart"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:src="@drawable/ic_favorite_border_black_empty_24dp"
+                    android:tag="103"
+                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/item_rating_count"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{listItemViewModel.rating_count!=null ? listItemViewModel.rating_count : @string/blank}"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toEndOf="@+id/item_rating"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
+
+                <TextView
+                    android:id="@+id/tv_for_pair"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_teal_700"
+                    android:visibility="@{listItemViewModel.forPair ==null ? View.GONE : View.VISIBLE}"
+                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
+                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.officinetop.officine.utils.CustomRatingBar
+                    android:id="@+id/item_rating"
+                    style="@style/customratingBar"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:bindrating="@{listItemViewModel.rating_star!=null ? listItemViewModel.rating_star : @string/blank}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -85,6 +242,7 @@
 
 
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/AppliedCouponName"
                 android:layout_width="match_parent"
@@ -132,12 +290,12 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="listItemViewModel"
             type="com.officinetop.officine.data.Models.Part" />
@@ -146,3 +304,7 @@
 
 
 </layout>
+
+<!--
+    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
+-->

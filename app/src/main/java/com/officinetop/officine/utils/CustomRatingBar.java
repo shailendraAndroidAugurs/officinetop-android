@@ -35,9 +35,6 @@ import static android.util.TypedValue.applyDimension;
 
 public class CustomRatingBar extends View {
 
-    /**
-     * Represents gravity of the fill in the bar.
-     */
     public enum Gravity {
         /**
          * Left gravity is default: the bar will be filled starting from left to right.

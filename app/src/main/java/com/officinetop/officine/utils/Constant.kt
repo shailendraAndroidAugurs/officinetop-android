@@ -191,6 +191,7 @@ object Constant {
         const val getFAQ = "get_faq"
         const val getUserSavedAddress = "customer_address"
         const val kromedaCall = "save_maintenance_kromeda_call"
+        const val motServiceSchedule = "mot_service_schedule"
 
     }
 

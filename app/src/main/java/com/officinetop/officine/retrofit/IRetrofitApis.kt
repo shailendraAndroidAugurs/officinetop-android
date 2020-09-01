@@ -1083,13 +1083,17 @@ interface IRetrofitApis {
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
             @Query(Constant.Path.servicekm) servicekm: String,
             @Query(Constant.Path.editStatus) edit_status: String,
-            @Query(Constant.Path.language) language: String
+            @Query(Constant.Path.language) language: String,
+
+            @Query(Constant.Path.version_id) version_id: String,
+            @Query("schedule_id") schedule_id: String
+
 
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getMotServiceDetail)
     fun getmotserviceDetail(
-            @Query(Constant.Path.mot_id) mot_id: String, @Query(Constant.Path.type) type: String, @Query(Constant.Path.version) version: String
+            @Query(Constant.Path.mot_id) mot_id: String, @Query(Constant.Path.type) type: String, @Query(Constant.Path.version) version: String, @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 
@@ -1353,7 +1357,7 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.getPartForMotReplacement)
-    fun PartListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String,@Query(Constant.Path.version_id) version_id: String,@Query(Constant.Path.motservicetype) motservicetype: String
+    fun PartListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String,@Query(Constant.Path.version_id) version_id: String,@Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 
@@ -1437,6 +1441,12 @@ interface IRetrofitApis {
    // https://services.officinetop.com/api/save_maintenance_kromeda_call?version=95794
     @GET(Constant.UrlEndPoints.kromedaCall)
     fun kromedaCall(
-            @Query(Constant.Path.version) versionId:  String
+            @Query(Constant.Path.version_id) versionId:  String
     ): Call<ResponseBody>
+
+    @GET(Constant.UrlEndPoints.motServiceSchedule)
+    fun getMotServiceSchedule(
+            @Query(Constant.Path.version_id) versionId:  String
+    ): Call<ResponseBody>
+
 }

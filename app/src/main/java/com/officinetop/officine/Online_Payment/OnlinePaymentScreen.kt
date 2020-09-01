@@ -456,8 +456,7 @@ class OnlinePaymentScreen : BaseActivity() {
                         val authorization_code = auth.authorizationCode
                         Log.i("FuturePaymentExample", authorization_code)
 
-                        sendAuthorizationToServer(auth)
-                        displayResultText("Future Payment code received from PayPal")
+
 
                     } catch (e: JSONException) {
                         Log.e("FuturePaymentExample", "an extremely unlikely failure occurred: ", e)
@@ -481,8 +480,7 @@ class OnlinePaymentScreen : BaseActivity() {
                         val authorization_code = auth.authorizationCode
                         Log.i("ProfileSharingExample", authorization_code)
 
-                        sendAuthorizationToServer(auth)
-                        displayResultText("Profile Sharing code received from PayPal")
+
 
                     } catch (e: JSONException) {
                         Log.e("ProfileSharingExample", "an extremely unlikely failure occurred: ", e)
@@ -556,23 +554,13 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun displayResultText(result: String) {
-        /* var resultView: TextView = findViewById(R.id.txtResult)
-         resultView.text = "Result : " + result
-         Toast.makeText(
-                 applicationContext,
-                 result, Toast.LENGTH_LONG).show()*/
-    }
-
-    private fun sendAuthorizationToServer(authorization: PayPalAuthorization) {
 
 
-    }
 
-    private fun getThingToBuy(paymentIntent: String): PayPalPayment {
+   /* private fun getThingToBuy(paymentIntent: String): PayPalPayment {
         return PayPalPayment(BigDecimal(payableAmount), "USD", "sample item",
                 paymentIntent)
-    }
+    }*/
 
     ////////////////////////////////////// UPI Payment method //////////////////////////////////////////
     fun payUsingUpi() {
@@ -608,8 +596,6 @@ class OnlinePaymentScreen : BaseActivity() {
                 getBearerToken()
                         ?: "", id, "1", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
 
-
-                //https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=101&payble_amount=1.8&used_wallet_amount=0.2&address=188&contact=57
         ).onCall { networkException, response ->
             response?.let {
                 if (response.isSuccessful) {
@@ -620,7 +606,7 @@ class OnlinePaymentScreen : BaseActivity() {
                             startActivity(intentFor<Order_List>())
                             finish()
                             saveIsAvailableDataInCart(false)
-                            //saveOrderId("")
+
                         }
 
                     }
@@ -710,7 +696,6 @@ class OnlinePaymentScreen : BaseActivity() {
                             startActivity(intentFor<Order_List>())
                             finish()
                             saveIsAvailableDataInCart(false)
-                            //saveOrderId("")
                         }
                     }
                 }
@@ -725,7 +710,7 @@ class OnlinePaymentScreen : BaseActivity() {
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
                         ?: "", "", "3", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
-        ).onCall { networkException, response ->
+        ).onCall { eeeseeewwenetworkException, response ->
             response?.let {
                 if (response.isSuccessful) {
 

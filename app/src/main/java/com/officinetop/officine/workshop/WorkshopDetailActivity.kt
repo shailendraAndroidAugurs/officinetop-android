@@ -923,7 +923,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                         if (response.isSuccessful) {
                             try {
-                                val body = JSONObject(response.body()?.string()) as JSONObject
+                                val body = JSONObject(response.body()?.string())
 
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     if (body.get("data_set") is JSONArray) {
@@ -1577,9 +1577,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
 
-   /* override fun getFeedbackList(list: MutableList<Models.FeedbacksList>,isFeedbackDone:String) {
-        bindFeedbackList(list, this)
-    }*/
+
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {
         val dialog = Dialog(this@WorkshopDetailActivity)
@@ -1591,13 +1589,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, /*1200*/LinearLayout.LayoutParams.MATCH_PARENT)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView
-        // val textview_quantity = dialog.findViewById(R.id.textview_quantity) as TextView
-        val ll_coupons = dialog.findViewById(R.id.ll_coupons) as LinearLayout
-        val apply_coupons = dialog.findViewById(R.id.apply_coupons) as Button
-        val cancel_coupons = dialog.findViewById(R.id.cancel_coupons) as Button
-        ll_coupons.visibility = View.VISIBLE
-        apply_coupons.visibility = View.GONE
-        title.text = "Coupons List"
+
+        title.text = getString(R.string.coupon_list)
 
 
         with(dialog) {
@@ -1606,7 +1599,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val couponsName = view.coupons_name
                 val couponsQuantity = view.coupons_quantity
-                val couponsCheck = view.coupons_check
                 val couponsAmount = view.coupons_amount
             }
 
@@ -1655,12 +1647,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             imageCross.setOnClickListener {
                 dialog.dismiss()
             }
-            cancel_coupons.setOnClickListener {
-                dialog.dismiss()
-            }
-            apply_coupons.setOnClickListener {
-                dialog.dismiss()
-            }
+
 
         }
 

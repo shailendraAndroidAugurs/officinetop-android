@@ -1109,7 +1109,9 @@ object Models {
             @SerializedName("n3_service_id")
             val n3_service_id: String = "",
             @SerializedName("wish_list")
-            var wishlist: String = ""
+            var wishlist: String = "",
+            var couponTitle: String = "",
+            var couponId: String = ""
 
 
     ) : ListItemViewModel()
@@ -1495,7 +1497,6 @@ object Models {
             @SerializedName("v")
             val v: String = ""
     ) : ListItemViewModel()
-
 
 
     data class BrandLogo(
@@ -3105,9 +3106,13 @@ object Models {
             @SerializedName("tyre_parts")
             val tyreProductDetail: TyreDetailItem)
 
-    data class data1(
-
-            val name: String
+    data class MotSchedule(
+            val id: Int,
+            val schedule_id: String,
+            val service_schedule_description: String,
+            val service_schedule_id: String,
+            val sort_order: String,
+            val version_id: String
     )
 
 

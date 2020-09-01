@@ -2,27 +2,36 @@ package com.officinetop.officine.MOT
 
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.WorkshopListActivity
 import com.officinetop.officine.adapter.GenericAdapter
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.data.saveServicesType
+import com.officinetop.officine.data.*
 import com.officinetop.officine.misc_activities.PartList_Replacement
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.movetologinPage
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_mot_detail.*
+import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.Serializable
@@ -54,7 +63,6 @@ class MotDetailActivity : BaseActivity() {
             saveServicesType(motServiceObject.type.toString())
         }
 
-        // Log.e("APPTYPE",appController.servicetype)
         button_proceed.setOnClickListener {
             var partId: ArrayList<String> = ArrayList()
             var couponId: ArrayList<String> = ArrayList()
@@ -64,8 +72,8 @@ class MotDetailActivity : BaseActivity() {
 
                 for (i in 0 until mKPartServicesList.size) {
                     val product_Id = mKPartServicesList[i].id
-                    if (mKPartServicesList[i].couponList != null && mKPartServicesList[i].couponList.size != 0) {
-                        couponId.add(mKPartServicesList[i].couponList[0].id)
+                    if (!mKPartServicesList[i].couponId.isNullOrBlank()) {
+                        couponId.add(mKPartServicesList[i].couponId)
                     } else {
                         couponId.add("")
                     }
@@ -96,7 +104,7 @@ class MotDetailActivity : BaseActivity() {
         val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
         progress_bar.visibility = View.VISIBLE
-        RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID)
+        RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID,getUserId())
                 .onCall { networkException, response ->
                     response?.let {
                         progress_bar.visibility = View.GONE
@@ -115,13 +123,13 @@ class MotDetailActivity : BaseActivity() {
                                         mOPerationServicesList.add(itemsData?.data?.operations[i])
                                     }
                                 }
-                                if (itemsData?.data?.kPartList != null) {
-                                    for (i in 0 until itemsData?.data?.kPartList.size) {
-                                        mKPartServicesList.add(itemsData?.data?.kPartList[i])
+                                for (i in 0 until itemsData?.data?.kPartList.size) {
+                                    if (!(itemsData.data.kPartList[i].couponList == null || itemsData?.data?.kPartList[i].couponList.size == 0)) {
+                                        itemsData.data.kPartList[i].couponTitle = itemsData.data.kPartList[i].couponList[0].couponTitle
+                                        itemsData.data.kPartList[i].couponId = itemsData.data.kPartList[i].couponList[0].id
                                     }
+                                    mKPartServicesList.add(itemsData?.data?.kPartList[i])
                                 }
-                                /* bindMotOPerationServices()
-                                   bindMotPartNumberServices()*/
                                 binndDataInRecyclerview()
 
                             } else {
@@ -170,9 +178,7 @@ class MotDetailActivity : BaseActivity() {
         val genericAdapter = GenericAdapter<Models.Operation>(this@MotDetailActivity, R.layout.item_mot_operation_detail)
         genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                /* val intent = Intent(this@MotDetailActivity, MotDetailActivity::class.java)
-                   intent.putExtra("motObject", Gson().toJson(mServicesList[position]))
-                   startActivity(intent)*/
+
             }
 
             override fun onItemClick(view: View, position: Int) {
@@ -184,32 +190,30 @@ class MotDetailActivity : BaseActivity() {
     }
 
     private fun bindMotPartNumberServices() {
-        Log.d("motSparePartList",mKPartServicesList.toString())
+        Log.d("motSparePartList", mKPartServicesList.toString())
         genericAdapter = GenericAdapter<Models.Part>(this@MotDetailActivity, R.layout.item_sparepart_mot)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MotDetailActivity, PartList_Replacement::class.java)
                 intent.putExtra("n3_services_Id", mKPartServicesList[position].n3_service_id)
                 intent.putExtra("version_id", mKPartServicesList[position].version_id)
-                intent.putExtra("Mot_type", mKPartServicesList[position].mot_type)
+                intent.putExtra("Mot_type", if (mKPartServicesList[position].mot_type.isNullOrBlank()) motServiceObject.type.toString() else mKPartServicesList[position].mot_type)
                 startActivityForResult(intent, 100)
                 selectitem_position = position
-                Log.e("SelectID", mKPartServicesList[position].productsName)
+
             }
 
             override fun onItemClick(view: View, position: Int) {
-
+                 if (view.tag == "102") {
+                    if (mKPartServicesList[position].couponList != null) {
+                        displayCoupons(mKPartServicesList[position].couponList , view.findViewById(R.id.tv_CouponTitle), mKPartServicesList[position])
+                    }
+                }else if(view.tag=="103"){
+                     add_remove_product__Wishlist(mKPartServicesList[position].wishlist,view.findViewById(R.id.Iv_favorite_mainPart),mKPartServicesList[position].id.toString(),position)
+                 }
             }
         })
-        /*if (mKPartServicesList.size <= 2) {
-            val params = recycler_view.layoutParams
-            params.height = RecyclerView.LayoutParams.WRAP_CONTENT
-            recycler_view.layoutParams = params
-        } else {
-            val params: ViewGroup.LayoutParams = recycler_view.getLayoutParams()
-            params.height = 700
-            recycler_view.setLayoutParams(params)
-        }*/
+
         recycler_view
 
                 .adapter = genericAdapter
@@ -238,6 +242,126 @@ class MotDetailActivity : BaseActivity() {
             Log.e("replaceSelectID", partmod.toString())
             bindMotPartNumberServices()
             recycler_view.getLayoutManager()!!.scrollToPosition(selectitem_position)
+        }
+    }
+
+    private fun displayCoupons(couponsList: ArrayList<Models.Coupon>,  textView: TextView, MotPart: Models.Part) {
+
+        val dialog = Dialog(this)
+        val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(dialogView)
+        val window: Window = dialog!!.window!!
+        window.setDimAmount(0f)
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height should be fixed
+        val title = dialog.findViewById(R.id.title) as TextView
+        title.text = getString(R.string.coupon_list)
+
+
+        with(dialog) {
+
+
+            class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+                val couponsName = view.coupons_name
+                val couponsQuantity = view.coupons_quantity
+                val couponsAmount = view.coupons_amount
+            }
+
+            dialog_recycler_view.adapter = object : RecyclerView.Adapter<ViewHolder>() {
+                override fun getItemCount(): Int = couponsList.size
+
+                override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+                    val items = couponsList[position]
+                    holder.couponsName.text = items.couponTitle
+                    holder.couponsQuantity.text = items.couponQuantity.toString()
+                    if (!items.offerType.isNullOrBlank()) {
+
+                        if (items.offerType.equals("2")) {
+                            holder.couponsAmount.text = getString(R.string.prepend_euro_symbol_string, items.amount.toString())
+                        } else {
+                            holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)
+                        }
+                    }
+                    holder.itemView.setOnClickListener {
+                        textView.setText(items.couponTitle)
+                        MotPart.couponTitle = items.couponTitle
+                        MotPart.couponId = items.id
+                        dismiss()
+                    }
+                }
+
+                override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+                    return ViewHolder(layoutInflater.inflate(R.layout.dialog_offer_coupons_layout, parent, false))
+                }
+
+            }
+            imageCross.setOnClickListener {
+                dialog.dismiss()
+            }
+
+
+        }
+        dialog.show()
+    }
+
+    private fun add_remove_product__Wishlist(wish_list: String, Iv_favorite: ImageView, ProductId: String, position: Int) {
+        try {
+            if (wish_list.isNullOrBlank() || wish_list == "0") {
+                RetrofitClient.client.addToFavorite(getBearerToken()
+                        ?: "", ProductId, "1", "", getSelectedCar()?.carVersionModel?.idVehicle
+                        ?: "").onCall { networkException, response ->
+
+                    response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(body)
+                            if (body.has("message")) {
+                                Iv_favorite.setImageResource(R.drawable.ic_heart)
+
+                                mKPartServicesList[position].wishlist="1"
+                                showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
+
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            } else {
+
+                RetrofitClient.client.removeFromFavorite(getBearerToken()
+                        ?: "", ProductId, "", "1").onCall { networkException, response ->
+
+                    response.let {
+                        val body = response?.body()?.string()
+                        if (body.isNullOrEmpty() || response.code() == 401)
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+
+                        if (response?.isSuccessful!!) {
+                            val body = JSONObject(body)
+                            if (body.has("message")) {
+                                Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+
+                                mKPartServicesList[position].wishlist="0"
+                                showInfoDialog(getString(R.string.productRemoved_formWishList))
+
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
     }
 

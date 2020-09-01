@@ -1,11 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/theme_orange"
+                android:text="@string/Edit"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
+
+            <EditText
+                android:id="@+id/ed_search_km"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/shape_border_gray"
+                android:inputType="number"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/btn_edit"
+                app:layout_constraintStart_toEndOf="@+id/text_km"
+                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
+
+
+            <LinearLayout
+
+                android:id="@+id/ll_carcondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_margin="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_car">
+                <TextView
+                    android:id="@+id/tv_schedule"
+                    android:layout_width="0dp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    style="@style/TextViewNormal"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/car_conditions"
+                    android:textColor="@color/black"
+                    android:visibility="visible" />
+                <Spinner
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:id="@+id/spinner_schedule"
+                    android:layout_width="0dp"
+                    android:background="@drawable/shape_rectangle_gray"
+                    android:layout_weight="2"
+
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/tv_schedule"
+                    app:layout_constraintTop_toBottomOf="@+id/text_car" />
+
+
+
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_km"
+                style="@style/TextViewNormal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="@string/current_km"
+                android:textColor="@color/black"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
+
+            <TextView
+                android:id="@+id/text_car"
+                style="@style/TextViewNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/Smart_solution_withCar"
+                android:textColor="@color/black"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_mot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/gray"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_search_km" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -25,90 +152,6 @@
 
 
         </com.google.android.material.appbar.AppBarLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <TextView
-                android:id="@+id/text_car"
-                style="@style/TextViewNormal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/_10sdp"
-                android:text="@string/Smart_solution_withCar"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text_km"
-                style="@style/TextViewNormal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/current_km"
-                android:paddingTop="@dimen/_10sdp"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_car" />
-
-            <EditText
-                android:id="@+id/ed_search_km"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/shape_border_gray"
-                android:inputType="number"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/btn_edit"
-                app:layout_constraintStart_toEndOf="@+id/text_km"
-                app:layout_constraintTop_toBottomOf="@+id/text_car" />
-
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/theme_orange"
-                android:text="@string/Edit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_car" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_mot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@color/gray"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_search_km" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

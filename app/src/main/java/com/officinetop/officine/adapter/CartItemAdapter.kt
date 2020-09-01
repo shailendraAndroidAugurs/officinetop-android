@@ -601,11 +601,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             view.imageCross.setOnClickListener {
                 dialog!!.dismiss()
             }
-            view.apply_coupons.setOnClickListener(android.view.View.OnClickListener {
-                dialog!!.dismiss()
 
-
-            })
 
             view.dialog_recycler_view.adapter = genericAdapterParts
             genericAdapterParts!!.addItems(parts)

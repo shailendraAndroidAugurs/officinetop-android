@@ -127,7 +127,7 @@
 
                 <TextView
                     android:id="@+id/parts_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{listItemViewModel.productName}"
                     android:textColor="@color/black"
@@ -148,7 +148,7 @@
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:src="@drawable/ic_favorite_border_black_empty_24dp"
                     android:tag="103"
-                    app:wishlist="@{listItemViewModel.wishlist}"
+                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}"
                     android:visibility="visible" />
 
 

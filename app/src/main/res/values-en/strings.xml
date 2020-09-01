@@ -696,6 +696,7 @@
     <string name="speed_load_index">Speed load index</string>
     <string name="license_plate">License plate :</string>
     <string name="all_in_italin">Tutti</string>
+    <string name="car_conditions">Car Conditions</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

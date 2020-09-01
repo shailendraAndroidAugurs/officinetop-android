@@ -621,7 +621,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforAppointment(getBearerToken()
                     ?: "", getSavedSelectedVehicleID(), selectedFormattedDate, serviceID.toString(),
                     latitude, longitude).onCall { networkException, response ->
-0
+
                 response?.let {
                     progress_bar.visibility = View.GONE
                     if (response.isSuccessful) {
