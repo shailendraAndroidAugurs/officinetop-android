@@ -187,6 +187,7 @@ class MotListActivity : BaseActivity() {
                 val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification
                 Log.d("selected vehi type: ", items.code)
                 scheduleId=items.code
+                motServive(getMotKm()!!, "0")
 
             }
 
