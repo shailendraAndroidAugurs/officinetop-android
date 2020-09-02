@@ -203,6 +203,7 @@ class MotDetailActivity : BaseActivity() {
 
             }
 
+
             override fun onItemClick(view: View, position: Int) {
                 if (view.tag == "102") {
                     if (mKPartServicesList[position].couponList != null) {
