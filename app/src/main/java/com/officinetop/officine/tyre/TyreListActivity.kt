@@ -127,11 +127,7 @@ class TyreListActivity : BaseActivity() {
             tyreDetail = getTyreDetail()!!
             tyreDetailFilter = getTyreDetail()!!
             tyreDetail?.let {
-                title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " +
-
-                        if(it.speed_load_index.equals("0")||it.speed_load_index.equals(getString(R.string.All))||it.speed_load_index.equals(getString(R.string.all_in_italin)))getString(R.string.all)  else  it.speed_load_index +
-
-                        if(it.speedIndex.equals("0")||it.speedIndex.equals(getString(R.string.All))||it.speedIndex.equals(getString(R.string.all_in_italin)))getString(R.string.all) else  it.speedIndex
+                setTyreTitle()
                 searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
                 progress_bar.visibility = View.VISIBLE
 
@@ -213,12 +209,7 @@ class TyreListActivity : BaseActivity() {
 
         // createFilterDialog()
         createSortDialog()
-        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
-        drawableRight?.setBounds(100, 100, 100, 100)
-        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || priceRangeFinal.toInt() - priceRangeInitial.toInt() != 1000) {
 
-            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -227,20 +218,27 @@ class TyreListActivity : BaseActivity() {
     }
 
     private fun loadTyreData() {
+        setTyreTitle()
+        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
+        drawableRight?.setBounds(100, 100, 100, 100)
+        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonId.equals("") || !tyreDetail.seasonId.equals("0") || !tyreDetail.speedIndexId.equals("") || !tyreDetail.speedIndexId.equals("0") || !priceRange.isNullOrBlank()) {
+
+            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+        }
         var seasonId = ""
         var speedindexId = ""
         var speedloadindex = ""
-        if (tyreDetail.filter_SeasonTypeId.equals("0")) {
+        if (tyreDetail.seasonId.equals("0")) {
             seasonId = ""
         } else {
-            seasonId = tyreDetail.filter_SeasonTypeId
+            seasonId = tyreDetail.seasonId
         }
-        if (tyreDetail.filter_SpeedIndexId.equals("0")) {
+        if (tyreDetail.speedIndexId.equals("0")) {
             speedindexId = ""
         } else {
-            speedindexId = tyreDetail.filter_SpeedIndexId
+            speedindexId = tyreDetail.speedIndexId
         }
-        if (tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals(getString(R.string.all_in_italin))||tyreDetail.speed_load_index.equals(getString(R.string.all))) {
+        if (tyreDetail.speed_load_index.equals("0") || tyreDetail.speed_load_index.equals(getString(R.string.all_in_italin)) || tyreDetail.speed_load_index.equals(getString(R.string.all))) {
             speedloadindex = ""
         } else {
             speedloadindex = tyreDetail.speed_load_index
@@ -310,9 +308,6 @@ class TyreListActivity : BaseActivity() {
             initDialogCategory(filterDialog)
             window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
-            val drawableLeft = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.ic_sort_black_24dp)
-            val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
-            drawableRight?.setBounds(100, 100, 100, 100)
             textView_Brand_name = tv_Brand_name
             textView_Rating_name = tv_Rating_name
             textView_season_name = tv_season_name
@@ -410,15 +405,10 @@ class TyreListActivity : BaseActivity() {
 
                 tv_Brand_name.setText(tyreDetail.brands)
                 tv_Rating_name.setText(if (tyreDetail.Rating.equals("0")) "" else tyreDetail.Rating)
-                if (!tyreDetail.seasonType.isNullOrBlank()) {
-                    tv_season_name.setText(tyreDetail.seasonType)
-                } else {
-                    tv_season_name.setText(tyreDetail.seasonTypeName)
 
-                }
 
-                Log.d("seasonType", tyreDetail.seasonType)
-                tv_Speed_Index_name.setText(tyreDetail.speedIndex)
+                tv_season_name.setText(tyreDetail.seasonName)
+                tv_Speed_Index_name.setText(tyreDetail.speedIndexName)
                 tv_Speed_load_Index_name.setText(tyreDetail.speed_load_index)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -435,11 +425,6 @@ class TyreListActivity : BaseActivity() {
                 setTyreDetail(tyreDetailFilter)
                 dismiss()
             }
-            if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || priceRangeFinal.toInt() - priceRangeInitial.toInt() != 1000) {
-
-                this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
-            }
-
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar_title.text = getText(R.string.filter)
 
@@ -449,7 +434,8 @@ class TyreListActivity : BaseActivity() {
                     priceRangeSeekerBar.setValue(minPrice, maxPrice)
                     Log.d("tyre_list", "clearselection" + minPrice)
                     Log.d("tyre_list", "clearselection" + maxPrice)
-                    //priceRangeSeekerBar.setValue(0f, dialog_price_range.maxProgress)
+                    val drawableLeft = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.ic_sort_black_24dp)
+
                     this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                     filterBrandList.clear()
@@ -464,11 +450,11 @@ class TyreListActivity : BaseActivity() {
                     tyreDetail.brands = ""
                     tyreDetail.Rating = ""
 
-                    tyreDetail.seasonType = ""
+                    tyreDetail.seasonName = ""
+                    tyreDetail.seasonId = ""
+                    tyreDetail.speedIndexName = ""
+                    tyreDetail.speedIndexName = ""
 
-                    tyreDetail.filter_SpeedIndexId = ""
-                    tyreDetail.filter_SeasonTypeId = ""
-                    tyreDetail.speedIndex = ""
                     isRunFlat = false
                     tyreDetail.runFlat = false
                     isReinforced = false
@@ -478,7 +464,7 @@ class TyreListActivity : BaseActivity() {
                     isFavouriteChecked = false
                     tyreDetail.onlyFav = false
                     tyreDetail.priceRange = ""
-                    tyreDetail.seasonTypeName = ""
+
                     switch_RunFlat.isChecked = false
                     switch_Reinforced.isChecked = false
                     switch_OfferCoupon.isChecked = false
@@ -557,12 +543,7 @@ class TyreListActivity : BaseActivity() {
         tyreDetailFilter = getTyreDetail()!!
         current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
         recyclerViewAdapter!!.clear()
-        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
-        drawableRight?.setBounds(100, 100, 100, 100)
-        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || !tyreDetail.brands.equals("") || !tyreDetail.seasonType.equals("") || !tyreDetail.speedIndex.equals("") || !priceRange.isNullOrBlank()) {
 
-            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
-        }
         loadTyreData()
 
     }
@@ -678,21 +659,21 @@ class TyreListActivity : BaseActivity() {
         dialog.ll_item_Season.setOnClickListener {
             var SeasonDialog = CreateSubDialog(getString(R.string.season))
             SeasonDialog.item_All_category_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if(isChecked){
-                    tyreDetail.filter_SeasonTypeId="0"
-                    tyreDetail.seasonType=getString(R.string.all)
+                if (isChecked) {
+                    tyreDetail.seasonId = "0"
+                    tyreDetail.seasonName = getString(R.string.all)
                     filterTyreSeasonList.clear()
                     filterTyreSeasonList.add(Models.TypeSpecification(getString(R.string.all), "0"))
                     SeasonTypeCheckboxBinding(SeasonDialog)
-                }else{
+                } else {
                     filterTyreSeasonList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-                    tyreDetail.filter_SeasonTypeId=""
-                    tyreDetail.seasonType=""
+                    tyreDetail.seasonId = ""
+                    tyreDetail.seasonName = ""
                 }
 
 
             }
-            SeasonDialog.item_All_category_checkbox.isChecked = tyreDetail.filter_SeasonTypeId.equals("0") || tyreDetail.seasonType.equals(getString(R.string.all))
+            SeasonDialog.item_All_category_checkbox.isChecked = tyreDetail.seasonId.equals("0") || tyreDetail.seasonName.equals(getString(R.string.all)) || tyreDetail.seasonName.equals(getString(R.string.all_in_italin))
             SeasonTypeCheckboxBinding(SeasonDialog)
             SeasonDialog.create()
             SeasonDialog.show()
@@ -702,16 +683,16 @@ class TyreListActivity : BaseActivity() {
         dialog.ll_item_Speed_load_index.setOnClickListener {
             var SpeedLoadIndexDialog = CreateSubDialog(getString(R.string.speed_load_index))
             SpeedLoadIndexDialog.item_All_category_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if(isChecked){
-                    tyreDetail.speed_load_index=getString(R.string.all)
+                if (isChecked) {
+                    tyreDetail.speed_load_index = getString(R.string.all)
 
                     filterTyreSpeedLoadIndexList.clear()
                     filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(getString(R.string.all), "0"))
                     speedLoadindexCheckboxBinding(SpeedLoadIndexDialog)
-                }else{
+                } else {
                     filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
 
-                    tyreDetail.speed_load_index=""
+                    tyreDetail.speed_load_index = ""
 
                 }
 
@@ -733,21 +714,21 @@ class TyreListActivity : BaseActivity() {
             var SpeedIndexDialog = CreateSubDialog(getString(R.string.speed_index))
 
             SpeedIndexDialog.item_All_category_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if(isChecked){
-                    tyreDetail.speedIndex=getString(R.string.all)
-
+                if (isChecked) {
+                    tyreDetail.speedIndexName = getString(R.string.all)
+                    tyreDetail.speedIndexId = "0"
                     filterTyreSpeedIndexList.clear()
                     filterTyreSpeedIndexList.add(Models.TypeSpecification(getString(R.string.all), "0"))
                     SpeedIndexCheckBox(SpeedIndexDialog)
-                }else{
+                } else {
                     filterTyreSpeedIndexList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-
-                    tyreDetail.speedIndex=""
+                    tyreDetail.speedIndexName = ""
+                    tyreDetail.speedIndexId = ""
                 }
 
 
             }
-            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndex.equals("0") || tyreDetail.speedIndex.equals(getString(R.string.all_in_italin))||tyreDetail.speedIndex.equals(getString(R.string.all))
+            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndexId.equals("0") || tyreDetail.speedIndexName.equals(getString(R.string.all_in_italin)) || tyreDetail.speedIndexName.equals(getString(R.string.all))
 
 
             SpeedIndexCheckBox(SpeedIndexDialog)
@@ -757,52 +738,54 @@ class TyreListActivity : BaseActivity() {
         }
 
     }
-private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
-    var tyreSeasonFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, season_type, R.layout.item_checkbox) { itemView, _, jsonObject ->
-        val tyreSeasonName = jsonObject.optString("name")
-        val tyreSeasonCode = jsonObject.optString("id")
 
-        itemView.item_checkbox_text.text = tyreSeasonName?.toUpperCase()
-        if (tyreDetail.seasonType != null) {
+    private fun SeasonTypeCheckboxBinding(SeasonDialog: Dialog) {
+        var tyreSeasonFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+        tyreSeasonFilterAdapter = SeasonDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, season_type, R.layout.item_checkbox) { itemView, _, jsonObject ->
+            val tyreSeasonName = jsonObject.optString("name")
+            val tyreSeasonCode = jsonObject.optString("id")
 
-            var seasonType = tyreDetail.filter_SeasonTypeId.split(",")
-            var seasonTypename = tyreDetail.seasonType.split(",")
-            itemView.item_checkbox.isChecked = seasonType.contains(tyreSeasonCode) || seasonTypename.contains(tyreSeasonName)
+            itemView.item_checkbox_text.text = tyreSeasonName?.toUpperCase()
+            if (tyreDetail.seasonName != null) {
 
-        } else itemView.item_checkbox.isChecked = false
+                var seasonType = tyreDetail.seasonId.split(",")
+                var seasonTypename = tyreDetail.seasonName.split(",")
+                itemView.item_checkbox.isChecked = seasonType.contains(tyreSeasonCode) || seasonTypename.contains(tyreSeasonName)
+
+            } else itemView.item_checkbox.isChecked = false
 
 
-        setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
+            setCheckedListener(itemView.item_checkbox_container, itemView.item_checkbox) { isChecked ->
 
-        }
+            }
 
-        itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
-           if( SeasonDialog.item_All_category_checkbox.isChecked){
-               SeasonDialog.item_All_category_checkbox.isChecked=false
-               filterTyreSeasonList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-               tyreDetail.filter_SeasonTypeId=""
-               tyreDetail.seasonType=""
-           }
-            if (isChecked) {
+            itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
+                if (SeasonDialog.item_All_category_checkbox.isChecked) {
+                    SeasonDialog.item_All_category_checkbox.isChecked = false
+                    filterTyreSeasonList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
+                    tyreDetail.seasonId = ""
+                    tyreDetail.seasonName = ""
+                }
+                if (isChecked) {
 
-                filterTyreSeasonList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-                if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode)))
+                    filterTyreSeasonList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
+                    if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode)))
+                        filterTyreSeasonList.add(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+                } else filterTyreSeasonList.remove(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+
+            }
+
+            if (itemView.item_checkbox.isChecked) {
+                if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))) {
                     filterTyreSeasonList.add(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
+                }
             } else filterTyreSeasonList.remove(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
 
+
         }
-
-        if (itemView.item_checkbox.isChecked) {
-            if (!filterTyreSeasonList.contains(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))) {
-                filterTyreSeasonList.add(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
-            }
-        } else filterTyreSeasonList.remove(Models.TypeSpecification(tyreSeasonName, tyreSeasonCode))
-
 
     }
 
-}
     private fun speedLoadindexCheckboxBinding(SpeedLoadIndexDialog: Dialog) {
         var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
         tyreSpeedIndexFilterAdapter = SpeedLoadIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_load_index, R.layout.item_checkbox) { itemView, position, jsonObject ->
@@ -820,10 +803,10 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
             }
             itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
 
-                if( SpeedLoadIndexDialog.item_All_category_checkbox.isChecked){
-                    SpeedLoadIndexDialog.item_All_category_checkbox.isChecked=false
+                if (SpeedLoadIndexDialog.item_All_category_checkbox.isChecked) {
+                    SpeedLoadIndexDialog.item_All_category_checkbox.isChecked = false
                     filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-                    tyreDetail.speed_load_index=""
+                    tyreDetail.speed_load_index = ""
 
                 }
                 if (isChecked) {
@@ -832,8 +815,6 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
                         filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(tyreSpeedloadIndex, ""))
                     }
                 } else filterTyreSpeedLoadIndexList.remove(Models.TypeSpecification(tyreSpeedloadIndex, ""))
-
-
 
 
             }
@@ -845,16 +826,17 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
         }
 
     }
-    private fun SpeedIndexCheckBox(SpeedIndexDialog:Dialog){
+
+    private fun SpeedIndexCheckBox(SpeedIndexDialog: Dialog) {
         var tyreSpeedIndexFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
         tyreSpeedIndexFilterAdapter = SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speed_index, R.layout.item_checkbox) { itemView, position, jsonObject ->
             val tyreSpeedIndexName = jsonObject.optString("name")
             val tyreSpeedIndexCode = jsonObject.optString("id")
             itemView.item_checkbox_text.text = tyreSpeedIndexName
-            if (tyreDetail.speedIndex != null) {
-                var brandArray = tyreDetail.speedIndex.split(",")
-                itemView.item_checkbox.isChecked = brandArray.contains(tyreSpeedIndexName)
+            if (tyreDetail.speedIndexName != null) {
+                var speedIdexArray = tyreDetail.speedIndexName.split(",")
+                itemView.item_checkbox.isChecked = speedIdexArray.contains(tyreSpeedIndexName)
 
             } else itemView.item_checkbox.isChecked = false
 
@@ -863,10 +845,11 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
             }
             itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
 
-                if( SpeedIndexDialog.item_All_category_checkbox.isChecked){
-                    SpeedIndexDialog.item_All_category_checkbox.isChecked=false
+                if (SpeedIndexDialog.item_All_category_checkbox.isChecked) {
+                    SpeedIndexDialog.item_All_category_checkbox.isChecked = false
                     filterTyreSpeedIndexList.remove(Models.TypeSpecification(getString(R.string.all), "0"))
-                    tyreDetail.speedIndex=""
+                    tyreDetail.speedIndexId = ""
+                    tyreDetail.speedIndexName = ""
 
                 }
                 if (isChecked) {
@@ -1002,13 +985,13 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
         Log.d("speedIndexvalue", filterTyreSpeedIndexList.size.toString())
         if (tyreSpeedIndex.size > 0) {
             speedIndexName = tyreSpeedIndex.joinToString(",")
-            tyreDetail.speedIndex = speedIndexName
-            tyreDetail.filter_SpeedIndexId = tyreSpeedIndexId.joinToString(",")
+            tyreDetail.speedIndexName = speedIndexName
+            tyreDetail.speedIndexId = tyreSpeedIndexId.joinToString(",")
             textView_Speed_Index_name.setText(speedIndexName)
         } else {
             textView_Speed_Index_name.setText("")
-            tyreDetail.speedIndex = ""
-            tyreDetail.filter_SpeedIndexId = ""
+            tyreDetail.speedIndexName = ""
+            tyreDetail.speedIndexId = ""
         }
     }
 
@@ -1024,15 +1007,14 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
         }
         if (tyreSeason.size > 0) {
             seasonType = tyreSeason.joinToString(",")
-            tyreDetail.seasonType = seasonType
-            tyreDetail.filter_SeasonTypeId = tyreSeasonTypeId.joinToString(",")
-
+            tyreDetail.seasonName = seasonType
+            tyreDetail.seasonId = tyreSeasonTypeId.joinToString(",")
             textView_season_name.setText(seasonType)
         } else {
             textView_season_name.setText("")
-            tyreDetail.seasonType = ""
-            tyreDetail.seasonTypeName = ""
-            tyreDetail.filter_SeasonTypeId = ""
+            tyreDetail.seasonName = ""
+            tyreDetail.seasonId = ""
+
         }
 
     }
@@ -1081,8 +1063,6 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
     }
 
     private fun FinalFilter(isSort: Boolean) {
-        val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
-        drawableRight?.setBounds(100, 100, 100, 100)
         if (!isSort) {
             tyreDetail.onlyFav = isSwitch_OnlyFav.isChecked
             tyreDetail.offerOrCoupon = isSwitch_OfferCoupon.isChecked
@@ -1281,4 +1261,15 @@ private fun SeasonTypeCheckboxBinding(SeasonDialog:Dialog){
         recyclerView.adapter = brandFilterAdapter
     }
 
+    private fun setTyreTitle() {
+        Log.d("tyreDetail", tyreDetail.toString())
+        tyreDetail?.let {
+            title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " +
+
+                    if (it.speed_load_index.equals("0") || it.speed_load_index.equals(getString(R.string.All)) || it.speed_load_index.equals(getString(R.string.all_in_italin))) "" else it.speed_load_index + " " +
+
+                            if (it.speedIndexId.equals("0") || it.speedIndexName.equals(getString(R.string.All)) || it.speedIndexName.equals(getString(R.string.all_in_italin))) "" else it.speedIndexName
+
+        }
+    }
 }

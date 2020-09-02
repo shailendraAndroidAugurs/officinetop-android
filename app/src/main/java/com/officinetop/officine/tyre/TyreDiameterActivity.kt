@@ -136,18 +136,15 @@ class TyreDiameterActivity : BaseActivity() {
                                         diameter = diameter.toFloat(),
                                         rimWidth = width.toFloat(),
                                         vehicleTypeName = if (it.vehicleTypeStatus == null) "" else it.vehicleTypeStatus,
-                                        seasonTypeName = if (it.seasonStatus == null) "" else it.seasonStatus,
-                                        filter_SeasonTypeId = season,
-                                        filter_SpeedIndexId = speed_index,
-                                        speedIndex = if (it.speedindexStatus == null) "" else it.speedindexStatus,
+                                        seasonName = if (it.seasonStatus == null) "" else it.seasonStatus,
+                                        seasonId = season,
+                                        speedIndexId = speed_index,
+                                        speedIndexName = if (it.speedindexStatus == null) "" else it.speedindexStatus,
                                         runFlat = runFlat,
                                         reinforced = reinforced,
-                                        SeasonId = season,
-                                        SpeedindexId = speed_index,
-                                        selected_runFlat=runFlat,
-                                        selected_reinforced=reinforced,
-                                        speed_load_index = speed_load_index,
-                                        Selected_speed_load_index=speed_load_index
+
+                                        speed_load_index = speed_load_index
+
 
                                 )
 

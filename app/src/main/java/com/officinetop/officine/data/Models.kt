@@ -401,19 +401,16 @@ object Models {
 
     data class TyreDetail(var id: String = "",
                           var vehicleType: String = "",
-                          var seasonType: String = "",
                           var aspectRatio: String = "",
                           var width: Float = 0f,
                           var diameter: Float = 0f,
                           var rimWidth: Float = 0f,
                           var imageUrl: String = "",
-                          var speedIndex: String = "",
                           var runFlat: Boolean = false,
                           var reinforced: Boolean = false,
                           val addedOn: Long = System.currentTimeMillis(),
                           val reverseTimeStamp: Long = addedOn * -1,
                           var vehicleTypeName: String = "",
-                          var seasonTypeName: String = "",
                           var minWidth: Int = 0,
                           var maxWidth: Int = 0,
                           var minAspectRatio: Int = 0,
@@ -428,14 +425,12 @@ object Models {
                           var Rating: String = "",
                           var AlphabeticalOrder: String = "0",
                           var filter_brandsId: String = "",
-                          var filter_SpeedIndexId: String = "",
-                          var filter_SeasonTypeId: String = "",
-                          var SpeedindexId: String = "",
-                          var SeasonId: String = "",
-                          var selected_runFlat: Boolean = false,
-                          var selected_reinforced: Boolean = false,
-                          var speed_load_index: String = "",
-                          var Selected_speed_load_index: String = ""
+                          var seasonId: String = "",
+                          var speedIndexId: String = "",
+                          var seasonName: String = "",
+                          var speedIndexName: String = "",
+                          var speed_load_index: String = ""
+
     )
 
 

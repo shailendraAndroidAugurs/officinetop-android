@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -31,6 +30,7 @@ import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_mot_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.item_sparepart_mot.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
@@ -104,7 +104,7 @@ class MotDetailActivity : BaseActivity() {
         val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
         progress_bar.visibility = View.VISIBLE
-        RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID,getUserId())
+        RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID, getUserId())
                 .onCall { networkException, response ->
                     response?.let {
                         progress_bar.visibility = View.GONE
@@ -204,13 +204,13 @@ class MotDetailActivity : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                 if (view.tag == "102") {
+                if (view.tag == "102") {
                     if (mKPartServicesList[position].couponList != null) {
-                        displayCoupons(mKPartServicesList[position].couponList , view.findViewById(R.id.tv_CouponTitle), mKPartServicesList[position])
+                        displayCoupons(mKPartServicesList[position].couponList, tv_CouponTitle_mot, mKPartServicesList[position])
                     }
-                }else if(view.tag=="103"){
-                     add_remove_product__Wishlist(mKPartServicesList[position].wishlist,view.findViewById(R.id.Iv_favorite_mainPart),mKPartServicesList[position].id.toString(),position)
-                 }
+                } else if (view.tag == "103") {
+                    add_remove_product__Wishlist(mKPartServicesList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), mKPartServicesList[position].id.toString(), position)
+                }
             }
         })
 
@@ -238,6 +238,11 @@ class MotDetailActivity : BaseActivity() {
             partmod.rating_count = partmod.rating_count
             partmod.rating_star = partmod.rating_star
             partmod.wishlist = partmod.wishlist
+            if (partmod.couponList != null && partmod.couponList.size != 0) {
+                partmod.couponTitle = partmod.couponList[0].couponTitle
+                partmod.couponId = partmod.couponList[0].id
+
+            }
 
             Log.e("replaceSelectID", partmod.toString())
             bindMotPartNumberServices()
@@ -245,7 +250,7 @@ class MotDetailActivity : BaseActivity() {
         }
     }
 
-    private fun displayCoupons(couponsList: ArrayList<Models.Coupon>,  textView: TextView, MotPart: Models.Part) {
+    private fun displayCoupons(couponsList: ArrayList<Models.Coupon>, textView: TextView, MotPart: Models.Part) {
 
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
@@ -322,7 +327,7 @@ class MotDetailActivity : BaseActivity() {
                             if (body.has("message")) {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
-                                mKPartServicesList[position].wishlist="1"
+                                mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
 
@@ -348,7 +353,7 @@ class MotDetailActivity : BaseActivity() {
                             if (body.has("message")) {
                                 Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
 
-                                mKPartServicesList[position].wishlist="0"
+                                mKPartServicesList[position].wishlist = "0"
                                 showInfoDialog(getString(R.string.productRemoved_formWishList))
 
                             }

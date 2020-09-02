@@ -52,7 +52,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_car">
@@ -61,22 +63,30 @@
                     android:layout_width="0dp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
+                   android:paddingTop="@dimen/_5sdp"
                     style="@style/TextViewNormal"
+                    android:gravity="center_horizontal|center_vertical"
                     android:layout_height="wrap_content"
-
                     android:text="@string/car_conditions"
                     android:textColor="@color/black"
                     android:visibility="visible" />
-                <Spinner
+                <LinearLayout
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:id="@+id/spinner_schedule"
+                    style="@style/TextViewNormal"
                     android:layout_width="0dp"
                     android:background="@drawable/shape_rectangle_gray"
                     android:layout_weight="2"
 
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@+id/tv_schedule"
-                    app:layout_constraintTop_toBottomOf="@+id/text_car" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_car">
+
+                    <Spinner
+                        android:id="@+id/spinner_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
 
 
 

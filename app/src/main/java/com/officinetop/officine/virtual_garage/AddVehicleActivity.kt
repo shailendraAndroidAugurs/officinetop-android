@@ -729,6 +729,7 @@ class AddVehicleActivity : BaseActivity() {
                         if (index > -1) {
                             spinner_fuel.setSelection(index)
                             if (spinner_fuel.selectedItem != null) {
+
                                 loadVersionAccordingToFuel(carVersions, spinner_fuel.selectedItem,
                                         fuelType.size == 1 && (spinner_fuel.selectedItem == "Other" || spinner_fuel.selectedItem == "Others"))
                             }
@@ -762,10 +763,10 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun loadVersionAccordingToFuel(carVersions: MutableList<Models.CarVersion>, fuelType: String?, shouldBindAll: Boolean) {
 
-//        if(isForEdit)
+
         spinner_version.clearSelection()
 
-
+        Log.d("AddVehicleActivity","onResponse: carversionsize before "+carVersions.size.toString())
         var list = carVersions.filter { it.fueltype == fuelType }
         if (fuelType?.isEmpty()!!)
             list = carVersions
@@ -774,21 +775,22 @@ class AddVehicleActivity : BaseActivity() {
             list = carVersions
 
         finalCarVersion = list as MutableList<Models.CarVersion>
-
+        Log.d("AddVehicleActivity","onResponse: carversionsize After according to fule type  "+finalCarVersion.size.toString())
 
         val titles: MutableList<String> = ArrayList()
         titles.clear()
         var selIndex = -1
         list.forEachWithIndex { i, it ->
-            /* val title = "${it.version} (${it.kw}/${it.cv}) (${it.dal})"*/
             val title = "${it.version + ","}${it.motore + ","} ${it.modelloCodice + ","} ${it.idVehicle + ","} ${it.body + ","} ${it.cm3}"
             if (true) {
                 titles.add(title)
 
                 if (isForEdit) {
                     if (it.idVehicle == myCar?.carVersionModel?.idVehicle)
+
                         selIndex = i
                 }
+
             } else finalCarVersion.removeAt(i)
         }
 
@@ -798,6 +800,12 @@ class AddVehicleActivity : BaseActivity() {
         if (selIndex > -1 && titles.size > selIndex) {
             spinner_version.setSelection(selIndex)
         }
+       /* Log.d("AddVehicleActivity","onResponse: carversion  car version id  "+myCar?.carVersionModel?.idVehicle.toString())
+        Log.d("AddVehicleActivity","onResponse: carversion  car index  "+ selIndex)
+        Log.d("AddVehicleActivity","onResponse: carversion data  "+ carVersions.toString())
+*/
+
+
         if (isForPlateno) {
             Log.d("isForPlateno :  ",isForPlateno.toString())
             setNotEditable_SeachFromPlatno()
@@ -820,9 +828,6 @@ class AddVehicleActivity : BaseActivity() {
 
         spinner.setAdapter(adapter)
 
-//        Handler().postDelayed({
-//            spinner.clearSelection()
-//        },50)
 
 
     }

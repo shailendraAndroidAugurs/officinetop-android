@@ -3,24 +3,14 @@ package com.officinetop.officine
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.content.IntentSender
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jaygoo.widget.OnRangeChangedListener
@@ -121,10 +111,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap<String, Models.servicesCouponData>()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap<String, Models.MotservicesCouponData>()
     var WorkshopDistanceforDefault = "0,25"
-    private var tyre_mainCategory_id=""
-    private var washing_mainCategory_id=""
-    private var misdistancefilter=false
-    private var misclearselection=false
+    private var tyre_mainCategory_id = ""
+    private var washing_mainCategory_id = ""
+    private var misdistancefilter = false
+    private var misclearselection = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,16 +167,15 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra(Constant.Path.mainCategoryId))
                 quotesMainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
         }
-        //bindRecyclerView(JSONArray())
-        createFilterDialog()
-        createSortDialog()
+
+
 
 
         if (intent.hasExtra(Constant.Path.washServiceDetails)) {
             val serviceDetail = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
             if (serviceDetail != null) {
                 serviceID = serviceDetail.id!!
-                washing_mainCategory_id=serviceDetail.main_category_id!!
+                washing_mainCategory_id = serviceDetail.main_category_id!!
             }
 
         }
@@ -215,9 +204,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (isRevisonService) {
             if (intent.hasExtra(Constant.Path.revisionServiceDetails)) {
                 val revisionServiceDetails = intent.getSerializableExtra(Constant.Path.revisionServiceDetails) as? RevDataSetItem
-                if (revisionServiceDetails != null){
+                if (revisionServiceDetails != null) {
                     revisionServiceID = revisionServiceDetails.id!!
-                    revisionMain_categoryId=revisionServiceDetails.main_category!!
+                    revisionMain_categoryId = revisionServiceDetails.main_category!!
                 }
             }
         }
@@ -302,14 +291,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
         }
 
+        reloadPage()
+        getCalendarMinPriceRange()
+        createFilterDialog()
+        createSortDialog()
 
 
-        if (!isSOSServiceEmergency)
-           // getCalendarMinPriceRange()
 
-        intent.printValues(localClassName)
-
-        // push up the progress bar
         app_bar.post {
             val params = progress_bar.layoutParams as FrameLayout.LayoutParams
             params.setMargins(0, 0, 0, app_bar.height / 2)
@@ -326,18 +314,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             ll_filter.visibility = View.VISIBLE
     }
 
-    override fun onResume() {
-        super.onResume()
-
-            Log.d("WorkshopList", "onResumeCall yes")
-            reloadPage()
-            getCalendarMinPriceRange()
-
-
-    }
-
     private fun getCalendarMinPriceRange() {
-        Log.d("workshop","calendar api call")
+        Log.d("workshop", "calendar api call")
         var pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
@@ -348,7 +326,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
         val nonAssemblyCall = RetrofitClient.client.getCalendarMinPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
-                getSelectedCar()?.carSize ?: "",user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=washing_mainCategory_id)
+                getSelectedCar()?.carSize
+                        ?: "", user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), mainCategoryId = washing_mainCategory_id)
 
         val assemblyCall = RetrofitClient.client.getAssemblyCalendarPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
@@ -356,8 +335,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
 
 
-        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate,user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=revisionMain_categoryId)
-        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(),user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(),mainCategoryId=tyre_mainCategory_id)
+        val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), mainCategoryId = revisionMain_categoryId)
+        val tyreServiceCall = RetrofitClient.client.getTyreCalendar(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString().equals("0") && tempDistanceFinal.toString().equals("100"))) WorkshopDistanceforDefault else tempDistanceInitial.toString() + "," + tempDistanceFinal.toString(), mainCategoryId = tyre_mainCategory_id)
 
         val quotesCalendarCall = RetrofitClient.client.getQuotesCalendar(serviceID, selectedFormattedDate, ratingString,
                 if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersion!!)
@@ -519,7 +498,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun loadWorkshops() {
-        Log.d("workshoplist","loadworkshop call")
+        Log.d("workshoplist", "loadworkshop call")
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
 
@@ -758,7 +737,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
                 filterDialog.dialog_distance_range.setValue(0f, 25f)
 
-                filterDialog.distance_end_range.text =getString(R.string.append_km, 25)
+                filterDialog.distance_end_range.text = getString(R.string.append_km, 25)
                 filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
 
 
@@ -829,7 +808,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
                     distance_end_range.text = getString(R.string.append_km, tempDistanceFinal)
                     distance_start_range.text = getString(R.string.append_km, tempDistanceInitial)
-                    misdistancefilter=true
+                    misdistancefilter = true
                 }
 
                 override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
@@ -879,7 +858,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
 
                 reloadPage()
-                if(misdistancefilter ||misclearselection){
+                if (misdistancefilter || misclearselection) {
                     getCalendarMinPriceRange()
                 }
 
@@ -933,8 +912,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
                     filterDialog.distance_end_range.text = getString(R.string.append_km, 25)
                     filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
-                    misclearselection=true
-                    misdistancefilter=false
+                    misclearselection = true
+                    misdistancefilter = false
                 } catch (e: Exception) {
 
                 }
@@ -1001,7 +980,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             recycler_view.snackbar(getString(R.string.Searchingresultfor) + " \"$query\"")
             search_view.setQuery(query, true)
 
-        }  else {
+        } else {
             search_view.setQuery("", true)
         }
 

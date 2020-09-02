@@ -60,7 +60,8 @@
                     android:id="@+id/item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_2sdp"
                     android:textColor="@color/theme_orange"
                     app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}"
 
@@ -74,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:visibility="gone"
+                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     android:background="@drawable/shape_dotted_orange"
                     android:gravity="center"
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
@@ -83,17 +84,18 @@
                     android:text="@string/updateCoupon"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_CouponTitle"
+                    app:layout_constraintStart_toEndOf="@+id/tv_CouponTitle_mot"
                     app:layout_constraintTop_toBottomOf="@+id/parts_title" />
 
 
                 <TextView
-                    android:id="@+id/tv_CouponTitle"
+                    android:id="@+id/tv_CouponTitle_mot"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
+                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
+
                     android:text="@{ listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?listItemViewModel.couponTitle:@string/blank}"
                     android:textColor="@color/md_teal_700"
                     app:layout_constraintEnd_toStartOf="@+id/tv_changecoupon"
@@ -102,12 +104,13 @@
 
                 <TextView
                     android:id="@+id/parts_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_170sdp"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
                     android:text="@{listItemViewModel.productName}"
                     android:textColor="@color/black"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintEnd_toStartOf="@+id/Iv_favorite_mainPart"
+                    android:maxLines="2"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_for_pair" />
 
@@ -118,7 +121,7 @@
                     android:padding="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
@@ -134,12 +137,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="@{listItemViewModel.rating_count!=null ? listItemViewModel.rating_count : @string/blank}"
                     android:textColor="@color/gray_dark"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toEndOf="@+id/item_rating"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle_mot" />
 
                 <TextView
                     android:id="@+id/tv_for_pair"
@@ -156,11 +159,11 @@
                     android:id="@+id/item_rating"
                     style="@style/customratingBar"
                     android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:bindrating="@{listItemViewModel.rating_star!=null ? listItemViewModel.rating_star : @string/blank}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle_mot" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -306,5 +309,4 @@
 </layout>
 
 <!--
-    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
 -->
