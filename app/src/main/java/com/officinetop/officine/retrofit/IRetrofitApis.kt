@@ -1449,4 +1449,12 @@ interface IRetrofitApis {
             @Query(Constant.Path.version_id) versionId:  String
     ): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.carMaintenanceCriteria)
+    fun getCarMaintenanceCriteria(
+            @Query(Constant.Path.version_id) versionId:  String,
+            @Query(Constant.Path.language) language:  String
+    ): Call<ResponseBody>
+
+   // https://services.officinetop.com/api/car_maintenance_criteria?version_id=95794&language=ITA
+
 }

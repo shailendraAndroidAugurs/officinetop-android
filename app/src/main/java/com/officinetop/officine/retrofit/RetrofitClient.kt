@@ -12,7 +12,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
-object RetrofitClient {
+object  RetrofitClient {
 
 
     val client: IRetrofitApis
