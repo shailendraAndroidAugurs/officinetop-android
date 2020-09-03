@@ -237,6 +237,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val productDetail = "productDetail"
         const val workshopCategoryDetail = "workshopCategoryDetail"
         const val workshopAssembledDetail = "workshopAssembledDetail"
+
         const val workshopCalendarPrice = "workshopCalendarPrice"
 
         const val PartIdMap = "partIdmap"
