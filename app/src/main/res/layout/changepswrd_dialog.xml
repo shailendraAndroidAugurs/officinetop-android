@@ -46,7 +46,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
     <LinearLayout
@@ -70,7 +71,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
     <LinearLayout
@@ -94,7 +96,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
     <Button

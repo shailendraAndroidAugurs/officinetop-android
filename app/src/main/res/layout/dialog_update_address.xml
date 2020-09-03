@@ -71,7 +71,8 @@
                     android:hint="@string/enterZipCode"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:layout_width="match_parent"

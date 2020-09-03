@@ -142,7 +142,7 @@
     <string name="add_card">Pay Now</string>
     <string name="ReferralCode">Referral Code</string>
     <string name="type_here">Type here</string>
-    <string name="may_help">Hello, may i help you...</string>
+    <string name="may_help">Hello, may i help you…</string>
     <string name="entermessage">Enter message</string>
     <string name="ticketClose">Ticket has been closed. You want to generate new ticket?</string>
     <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
@@ -162,7 +162,7 @@
     <string name="side">Side</string>
     <string name="url_not_found">Url not found</string>
     <string name="zero">0</string>
-    <string name="empty_string"></string>
+
     <string name="front">Front</string>
     <string name="rear">Rear</string>
     <string name="left">Left</string>
@@ -281,7 +281,7 @@
     <string name="retry">Retry</string>
     <string name="emailblank">Enter email</string>
     <string name="mobileblank">Enter mobile</string>
-    <string name="title_activity_contactlist_">Contactlist_Activity</string>
+
     <string name="User_Contact">Contact List</string>
     <string name="User_address">Address List</string>
     <string name="add_contact">Add Contact Number</string>
@@ -393,7 +393,7 @@
     <string name="Edit">Edit</string>
     <string name="Buy_Now">Buy Now</string>
 
-    <string name="Search">Search...</string>
+    <string name="Search">Search…</string>
     <string name="CouponDetail">Coupon Detail</string>
     <string name="tyreprice_text">Product price: € %s</string>
     <string name="PFU_price">PFU: € %s</string>
@@ -602,7 +602,7 @@
 
     <string name="Feedback_Detail">Feedback Detail</string>
     <string name="Workshop"> Workshop</string>
-    <string name="Please_wait"> Please wait...</string>
+    <string name="Please_wait"> Please wait…</string>
     <string name="iva_inc_22Percentage"> iva inc. %s </string>
 
     <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;new string of java file-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
@@ -770,6 +770,7 @@
     <string name="license_plate">License plate :</string>
     <string name="all_in_italin">Tutti</string>
     <string name="car_conditions">Car Conditions</string>
+    <string name="criteria">Criteria</string>
     <!-- Sceglie Officina-->
 
 

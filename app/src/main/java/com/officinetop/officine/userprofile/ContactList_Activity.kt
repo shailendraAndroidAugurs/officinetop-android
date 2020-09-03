@@ -1,7 +1,5 @@
 package com.officinetop.officine.userprofile
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,39 +8,25 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 
 import kotlinx.android.synthetic.main.activity_contactlist.*
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_workshop_detail.*
-import kotlinx.android.synthetic.main.changepswrd_dialog.view.*
 import kotlinx.android.synthetic.main.changepswrd_dialog.view.close_dialog
 import kotlinx.android.synthetic.main.changepswrd_dialog.view.submit_change_password
 import kotlinx.android.synthetic.main.dialog_add_contact.view.*
-import kotlinx.android.synthetic.main.dialog_tyre_filter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import kotlinx.android.synthetic.main.item_checkbox.view.*
-import kotlinx.android.synthetic.main.item_list_address.view.*
 import kotlinx.android.synthetic.main.item_list_contact.view.*
 import kotlinx.android.synthetic.main.item_list_contact.view.item_delete_car
 import kotlinx.android.synthetic.main.item_list_contact.view.swipelayout
-import kotlinx.android.synthetic.main.layout_recycler_view.*
-import org.jetbrains.anko.okButton
-import org.json.JSONArray
-import org.json.JSONObject
 
-class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
+class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     var fromPayment = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +84,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
     override fun getUserDetailData(ApiRespoinse: Models.UserDetailData?, ApiRespoinsewallet: Models.UserWallet?) {
 
 
-        var UserContactList: List<Models.UserContact> = ApiRespoinse!!.userContact
+        val UserContactList: List<Models.UserContact> = ApiRespoinse!!.userContact
 
         class Holder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -119,7 +103,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
-                holder.itemView.text_contactno.setText(UserContactList[position].mobile)
+                holder.itemView.text_contactno.text = UserContactList[position].mobile
                 viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString());
                 holder.itemView.item_edit_contact.setOnClickListener {
 
@@ -152,7 +136,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun AddcontactToServer(mobileNo: String) {
 
-        RetrofitClient.client.addUserContactList(this@Contactlist_Activity.getBearerToken(), mobileNo).onCall { networkException, response ->
+        RetrofitClient.client.addUserContactList(this@ContactList_Activity.getBearerToken(), mobileNo).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactAddSuccessFully), false, { getUserDetail(this, this) })
@@ -167,7 +151,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun UpdateContactFromServer(mobileNo: String, ContactId: String) {
 
-        RetrofitClient.client.UpdateContact(this@Contactlist_Activity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
+        RetrofitClient.client.UpdateContact(this@ContactList_Activity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactUpdateSuccessFully), false, { getUserDetail(this, this) })
@@ -183,7 +167,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun deleteContact(ContactId: String) {
 
-        RetrofitClient.client.DeleteContact(this@Contactlist_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
+        RetrofitClient.client.DeleteContact(this@ContactList_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactDeletedSuccessFully), true, { getUserDetail(this, this) })
@@ -200,7 +184,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun UpdateContact(contactId: String, mobileNo: String) {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_contact, null)
-        mDialogView.tv_ContactNoTitle.setText("Update Contact Number")
+        mDialogView.tv_ContactNoTitle.text = "Update Contact Number"
         mDialogView.Tv_enterMobileNoTitle.visibility = View.GONE
         //AlertDialogBuilder
         val mBuilder = this?.let {
@@ -220,7 +204,7 @@ class Contactlist_Activity : BaseActivity(), OnGetLoginUserDetail {
             if (edt_entered_mobile.text.isEmpty()) {
                 Toast.makeText(this, getString(R.string.entercontact_number), Toast.LENGTH_LONG).show()
 
-            } else if (mobileNo.equals(edt_entered_mobile.text.toString())) {
+            } else if (mobileNo == edt_entered_mobile.text.toString()) {
                 Toast.makeText(this, getString(R.string.UpdateContact), Toast.LENGTH_LONG).show()
             } else {
 

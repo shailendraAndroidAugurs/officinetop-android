@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     android:background="?selectableItemBackground"
     android:gravity="center"
@@ -279,7 +278,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <ImageView
                     android:id="@+id/season_icon"
@@ -322,7 +321,7 @@
 
                 <com.officinetop.officine.utils.CustomRatingBar
                     android:id="@+id/item_rating"
-                    style="@style/customratingBar"
+                    style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="wrap_content" />
 

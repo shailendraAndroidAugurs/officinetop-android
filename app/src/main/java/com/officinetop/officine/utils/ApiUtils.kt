@@ -377,9 +377,9 @@ fun calculateCartViews(view: View, context: Context?) {
             val item = it.value
             /*val serviceModel = item.serviceModel*/
 
-            when {
-                item.type == Constant.type_product -> productPrice += item.finalPrice
-                item.type == Constant.type_workshop -> servicePrice += item.serviceModel?.finalPrice
+            when (item.type) {
+                Constant.type_product -> productPrice += item.finalPrice
+                Constant.type_workshop -> servicePrice += item.serviceModel?.finalPrice
                         ?: 0.0
                 else -> {
                     productPrice += item.finalPrice
@@ -408,9 +408,9 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     var TotalPFU = 0.0
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
-        if (cartData.CartType.equals("SP")) {
+        if (cartData.CartType == "SP") {
             IsServicesAvailable=true
-            if (cartData.afterDiscountPrice != null && !cartData.afterDiscountPrice.equals("null") && !cartData.afterDiscountPrice.equals(""))
+            if (cartData.afterDiscountPrice != null && cartData.afterDiscountPrice != "null" && cartData.afterDiscountPrice != "")
                 servicePrice += cartData.afterDiscountPrice.toDouble()
 
 
@@ -419,61 +419,61 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
             if (cartData.serviceAssemblyProductDescription != null) {
 
 
-                if (!cartData.serviceAssemblyProductDescription.totalPrice.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.totalPrice.equals("null"))
+                if (!cartData.serviceAssemblyProductDescription.totalPrice.isNullOrBlank() && cartData.serviceAssemblyProductDescription.totalPrice != "null")
                     productPrice += cartData.serviceAssemblyProductDescription.totalPrice.toDouble()
 
-                if (!cartData.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.pfuTax.equals("0") && !cartData.serviceAssemblyProductDescription.pfuTax.equals("0.0") && !cartData.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.productQuantity.equals("0")) {
+                if (!cartData.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() && cartData.serviceAssemblyProductDescription.pfuTax != "0" && cartData.serviceAssemblyProductDescription.pfuTax != "0.0" && !cartData.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && cartData.serviceAssemblyProductDescription.productQuantity != "0") {
                     TotalPFU += cartData.serviceAssemblyProductDescription.pfuTax.toDouble().roundTo2Places() * cartData.serviceAssemblyProductDescription.productQuantity.toInt()
                 }
-                if (cartData.serviceAssemblyProductDescription.finalOrderPrice != null && !cartData.serviceAssemblyProductDescription.finalOrderPrice.equals("null") && !cartData.serviceAssemblyProductDescription.finalOrderPrice.equals(""))
+                if (cartData.serviceAssemblyProductDescription.finalOrderPrice != null && cartData.serviceAssemblyProductDescription.finalOrderPrice != "null" && cartData.serviceAssemblyProductDescription.finalOrderPrice != "")
                     productPricewithVat_Discount += cartData.serviceAssemblyProductDescription.finalOrderPrice.toDouble()
-                if (!cartData.serviceAssemblyProductDescription.discount.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.discount.equals("null"))
+                if (!cartData.serviceAssemblyProductDescription.discount.isNullOrBlank() && cartData.serviceAssemblyProductDescription.discount != "null")
                     TotalDiscount += cartData.serviceAssemblyProductDescription.discount.toDouble()
 
-                if (!cartData.serviceAssemblyProductDescription.product_vat.isNullOrBlank() && !cartData.serviceAssemblyProductDescription.product_vat.equals("null"))
+                if (!cartData.serviceAssemblyProductDescription.product_vat.isNullOrBlank() && cartData.serviceAssemblyProductDescription.product_vat != "null")
                     Totalvat += cartData.serviceAssemblyProductDescription.product_vat.toDouble()
             }
-            if (!cartData.afterDiscountPrice.isNullOrBlank() && !cartData.afterDiscountPrice.equals("null"))
+            if (!cartData.afterDiscountPrice.isNullOrBlank() && cartData.afterDiscountPrice != "null")
                 ServicesPricewithVat_Discount += cartData.afterDiscountPrice.toDouble()
 
 
 
 
-            if (!cartData.discount.isNullOrBlank() && !cartData.discount.equals("null"))
+            if (!cartData.discount.isNullOrBlank() && cartData.discount != "null")
                 TotalDiscount += cartData.discount.toDouble()
-            if (!cartData.serviceVat.isNullOrBlank() && !cartData.serviceVat.equals("null"))
+            if (!cartData.serviceVat.isNullOrBlank() && cartData.serviceVat != "null")
                 Totalvat += cartData.serviceVat.toDouble()
 
 
-        } else if (cartData.CartType.equals("T") || cartData.CartType.equals("S")) {
+        } else if (cartData.CartType == "T" || cartData.CartType == "S") {
 
-            var bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() + 1 else 0))
+            val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() + 1 else 0))
             if (deliveryDatePridicted.isNullOrBlank()) {
-                var dateFormat = SimpleDateFormat("yyy-MM-dd");
+                val dateFormat = SimpleDateFormat("yyy-MM-dd");
                 deliveryDatePridicted = dateFormat.format(bookingDate);
             } else {
 
-                var deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePridicted)
+                val deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePridicted)
                 if (deliveryDate < bookingDate) {
-                    var dateFormat = SimpleDateFormat("yyy-MM-dd");
+                    val dateFormat = SimpleDateFormat("yyy-MM-dd");
                     deliveryDatePridicted = dateFormat.format(bookingDate);
 
                 }
             }
-            if (!cartData.totalPrice.isNullOrBlank() && !cartData.totalPrice.equals("null"))
+            if (!cartData.totalPrice.isNullOrBlank() && cartData.totalPrice != "null")
                 productPrice += cartData.totalPrice.toDouble()
 
-            if (!cartData.pfuTax.isNullOrBlank() && !cartData.pfuTax.equals("0") && !cartData.pfuTax.equals("0.0") && !cartData.productQuantity.isNullOrBlank() && !cartData.productQuantity.equals("0")) {
+            if (!cartData.pfuTax.isNullOrBlank() && cartData.pfuTax != "0" && cartData.pfuTax != "0.0" && !cartData.productQuantity.isNullOrBlank() && cartData.productQuantity != "0") {
                 TotalPFU += cartData.pfuTax.toDouble().roundTo2Places() * cartData.productQuantity.toInt()
             }
 
-            if (cartData.finalOrderPrice != null && !cartData.finalOrderPrice.equals("null") && !cartData.finalOrderPrice.equals(""))
+            if (cartData.finalOrderPrice != null && cartData.finalOrderPrice != "null" && cartData.finalOrderPrice != "")
                 productPricewithVat_Discount += cartData.finalOrderPrice.toDouble()
 
-            if (!cartData.discount.isNullOrBlank() && !cartData.discount.equals("null"))
+            if (!cartData.discount.isNullOrBlank() && cartData.discount != "null")
                 TotalDiscount += cartData.discount.toDouble()
 
-            if (!cartData.ProductVat.isNullOrBlank() && !cartData.ProductVat.equals("null"))
+            if (!cartData.ProductVat.isNullOrBlank() && cartData.ProductVat != "null")
                 Totalvat += cartData.ProductVat.toDouble()
 
         }
@@ -783,9 +783,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
 
                             /*bindFeedbackList()*/
 
-                            if (getfedback != null) {
-                                getfedback.getFeedbackList(feedbackList,if(data.has("data") && !data.getInt("data").toString().isNullOrBlank())data.getInt("data").toString() else "1")
-                            }
+                            getfedback?.getFeedbackList(feedbackList)
 
                         } else {
                             if (data.has("message") && !data.isNull("message")) {
@@ -798,7 +796,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
             }
 }
 
-inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, context: Context?,feedbackwithoutPurchage:String) {
+inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, context: Context?) {
     val feedbackList: MutableList<Models.FeedbacksList> = ArrayList()
     val feedbackItems = if (list.size > 5) 4 else list.size//to display only 4 items
     for (i in 0 until feedbackItems) {
@@ -848,9 +846,9 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                 }
                 if (list[p1].workshopId != null) {
                     p0.itemView.tv_product_type.text = getString(R.string.Workshop)
-                } else if (list[p1].product_type.equals("1")) {
+                } else if (list[p1].product_type == "1") {
                     p0.itemView.tv_product_type.text = getString(R.string.spare_part)
-                } else if (list[p1].product_type.equals("2")) {
+                } else if (list[p1].product_type == "2") {
                     p0.itemView.tv_product_type.text = getString(R.string.tyres)
                 }
 
@@ -878,10 +876,10 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                         }
 
                         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                            var action: Int = e.getAction();
+                            val action: Int = e.action;
                             when (action) {
                                 MotionEvent.ACTION_MOVE ->
-                                    rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                    rv.parent.requestDisallowInterceptTouchEvent(true);
 
                             }
                             return false;
@@ -948,7 +946,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
 fun getUserDetail(loginUserDetail: OnGetLoginUserDetail, activity: Activity) {
-    var ProgressDialog = activity?.getProgressDialog(true)
+    val ProgressDialog = activity?.getProgressDialog(true)
     RetrofitClient.client.getUserDetails(activity.getBearerToken() ?: "")
             .onCall { networkException, response ->
                 networkException.let {
@@ -1123,7 +1121,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
 }
 
 fun insertInCartList(modelData: Any, cartType: String, modelCart: Models.CartData): ArrayList<Models.CartDataList> {
-    var data = Gson().toJson(modelData)
+    val data = Gson().toJson(modelData)
     val modelCartList1 = Gson().fromJson<Models.CartDataList>(data.toString(), Models.CartDataList::class.java)
     modelCartList1.CartType = cartType
     if (modelCart.CartDataList == null) {
@@ -1203,7 +1201,7 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
                         productorworkshopObject?.wish_list = "1"
                     }
 
-                    if (productId != null && !productId.equals(""))
+                    if (productId != null && productId != "")
                         showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
                     else
                         showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
@@ -1236,7 +1234,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject?.wish_list = "0"
                     }
-                    if (productId != null && !productId.equals(""))
+                    if (productId != null && productId != "")
                         showInfoDialog(getString(R.string.productRemoved_formWishList))
                     else
                         showInfoDialog(getString(R.string.WorkshopRemovedfromfavorite))
@@ -1288,7 +1286,7 @@ inline fun getLastLocation(mFusedLocationClient: FusedLocationProviderClient, ac
 
 fun Context.getLocale(): Locale {
     var locale = Locale.getDefault()
-    if (getLangLocale() != null && !getLangLocale().equals("")) {
+    if (getLangLocale() != null && getLangLocale() != "") {
         locale = Locale(getLangLocale()?.toLowerCase())
     }
     return locale

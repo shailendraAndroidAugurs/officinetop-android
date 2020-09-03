@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".feedback.Support_FAQ_Activity">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/ll_colapsed"
+        android:id="@+id/ll_collapsed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:liftOnScroll="true">
@@ -135,13 +135,14 @@
             android:background="@color/black">
 
         </View>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
             android:text="@string/FAQs"
             android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp"></TextView>
+            android:textSize="@dimen/_15sdp" />
 
 
 

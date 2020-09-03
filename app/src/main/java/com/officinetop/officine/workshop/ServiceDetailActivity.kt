@@ -27,8 +27,8 @@ class ServiceDetailActivity : BaseActivity() {
 
     public var service_id = 0
 
-    lateinit var imageDialog: Dialog
-    lateinit var dialogSlider: SliderLayout
+    private lateinit var imageDialog: Dialog
+    private lateinit var dialogSlider: SliderLayout
     var disableSliderTouch = false
     var serviceList: ArrayList<Models.ServiceCategory> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +87,7 @@ class ServiceDetailActivity : BaseActivity() {
             }
 
             if (intent.extras != null && intent.hasExtra("servicesList")) {
-                var serviceListfilter: ArrayList<Models.ServiceCategory> = ArrayList()
+                val serviceListfilter: ArrayList<Models.ServiceCategory> = ArrayList()
                 serviceList = intent.getSerializableExtra("servicesList") as ArrayList<Models.ServiceCategory>
                 serviceList.forEach {
 
@@ -218,7 +218,7 @@ class ServiceDetailActivity : BaseActivity() {
         }
     }
 
-    inline fun Activity.loadProductRecommendationGridList(recyclerView: androidx.recyclerview.widget.RecyclerView, serviceListFiletr: ArrayList<Models.ServiceCategory>) {
+    private inline fun Activity.loadProductRecommendationGridList(recyclerView: androidx.recyclerview.widget.RecyclerView, serviceListFiletr: ArrayList<Models.ServiceCategory>) {
 
         //product recycler
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)

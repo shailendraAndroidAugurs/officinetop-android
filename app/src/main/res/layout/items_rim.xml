@@ -285,7 +285,7 @@
                 android:layout_marginTop="5dp">
 
                 <com.officinetop.officine.utils.CustomRatingBar
-                    style="@style/customratingBar"
+                    style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_10sdp"
                     android:id="@+id/item_rating"/>

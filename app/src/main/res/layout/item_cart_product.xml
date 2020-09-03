@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="android.view.View"></import>
+        <import type="android.view.View" />
 
         <variable
             name="listItemViewModel"
@@ -194,11 +194,12 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/gray"></View>
+            android:background="@color/gray" />
 
         <LinearLayout
             android:orientation="vertical"

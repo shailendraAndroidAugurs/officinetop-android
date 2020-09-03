@@ -211,7 +211,7 @@ class FeedbackAddActivity : BaseActivity() {
     }
 
     private fun sendFeedback() = try {
-       var ProgressDialog =getProgressDialog(true)
+       val ProgressDialog =getProgressDialog(true)
 
 
         val imageList: ArrayList<MultipartBody.Part?> = ArrayList()
@@ -224,7 +224,7 @@ class FeedbackAddActivity : BaseActivity() {
 
             motservicetype = ""
         }
-        var res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID+", withoutPurchase"+withoutPurchase
+        val res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID+", withoutPurchase"+withoutPurchase
         Log.v("FEEDBACK", res)
 
         RetrofitClient.client.addFeedback(authToken = getBearerToken()

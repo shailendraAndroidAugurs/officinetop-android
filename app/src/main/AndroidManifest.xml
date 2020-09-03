@@ -53,7 +53,7 @@
             android:name=".Orders.Order_List"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userprofile.Contactlist_Activity"
+            android:name=".userprofile.ContactList_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".userprofile.Addresslist_Activity"

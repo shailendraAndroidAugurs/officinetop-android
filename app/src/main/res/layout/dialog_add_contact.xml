@@ -49,7 +49,8 @@
                     android:background="@drawable/rectangle_gray_empty"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 

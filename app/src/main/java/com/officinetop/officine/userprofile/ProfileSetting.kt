@@ -32,13 +32,13 @@ class ProfileSetting : BaseActivity() {
 
 
     private var lang: String = "it"
-    var notification: String = ""
+    private var notification: String = ""
     var carservices: String = ""
     var carRevision: String = ""
-    var privacy_policy: String? = null
-    var Terms_and_Conditions: String? = null
-    var Cookies_information: String? = null
-    var How_does_it_work: String? = null
+    private var privacy_policy: String? = null
+    private var Terms_and_Conditions: String? = null
+    private var Cookies_information: String? = null
+    private var How_does_it_work: String? = null
 
     private var isLanguageChanged = false
 
@@ -92,11 +92,11 @@ class ProfileSetting : BaseActivity() {
             }.show()
         })
         val language = getLangLocale()
-        if (language != null && !language.equals("") && language.equals("en")) {
+        if (language != null && language != "" && language == "en") {
             radiobuton_english.isChecked = true
             radiobuton_italy.isChecked = false
             lang = "en"
-        } else if (language != null && !language.equals("") && language.equals("it")) {
+        } else if (language != null && language != "" && language == "it") {
             radiobuton_italy.isChecked = true
             radiobuton_english.isChecked = false
             lang = "it"
@@ -114,7 +114,7 @@ class ProfileSetting : BaseActivity() {
             notification = "0"
         }
 
-        var adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this, R.array.notify, android.R.layout.simple_spinner_item)
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this, R.array.notify, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_carservices.adapter = adapter
         spinner_carRevision.adapter=adapter
@@ -268,7 +268,7 @@ class ProfileSetting : BaseActivity() {
                                             How_does_it_work = fulldata.getString("How_does_it_work")
 
 
-                                        if (!getLangLocale().equals(lang)) {
+                                        if (getLangLocale() != lang) {
                                             UpdateSettings(getLangLocale())
                                         }
 

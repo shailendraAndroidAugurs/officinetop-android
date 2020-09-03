@@ -42,7 +42,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var mMapMarker: Marker? = null
     private var mSupportMapFragment: SupportMapFragment? = null
     private var LOCATION_RQ = 10001
-    var WorkShopJSonArray: JSONArray? = null
+    private var WorkShopJSonArray: JSONArray? = null
     private var latLngArray: ArrayList<LatLng> = ArrayList()
 
     private var isSOSAppointment = false
@@ -57,18 +57,18 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var mIsWorkshop = false
     private var mIsRevision = false
     private var mIsTyre = false
-    var motservices_time = ""
+    private var motservices_time = ""
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap<String, Models.servicesCouponData>()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap<String, Models.MotservicesCouponData>()
 
-    var selectedFormattedDate = ""
-    var motType = ""
-    var calendarPriceMap: HashMap<String, String> = HashMap()
+    private var selectedFormattedDate = ""
+    private var motType = ""
+    private var calendarPriceMap: HashMap<String, String> = HashMap()
     private var workshopCategoryDetail = ""
     // set location callback
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
-            var locationList = locationResult?.locations
+            val locationList = locationResult?.locations
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
@@ -76,7 +76,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() &&!UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
                 {
                     currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 }else{
@@ -105,7 +105,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
         if (!intent.extras!!.getString("WorkshopList").isNullOrBlank()) {
-            var data = intent.extras!!.getString("WorkshopList")
+            val data = intent.extras!!.getString("WorkshopList")
             WorkShopJSonArray = JSONArray(data)
 
         }
@@ -233,16 +233,16 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             checkRequestLocationPermission()
 
             for (n in 0 until WorkShopJSonArray!!.length()) {
-                var jsondata: JSONObject = (WorkShopJSonArray?.get(n)) as JSONObject
+                val jsondata: JSONObject = (WorkShopJSonArray?.get(n)) as JSONObject
                 if (jsondata != null) {
-                    var latitude: String = jsondata.getDouble("latitude").toString()
-                    var longitude: String = jsondata.getDouble("longitude").toString()
+                    val latitude: String = jsondata.getDouble("latitude").toString()
+                    val longitude: String = jsondata.getDouble("longitude").toString()
                     var workshopPrices = jsondata.get("services_price")
 
-                    if (workshopPrices == null || workshopPrices.equals("null")) {
+                    if (workshopPrices == null || workshopPrices == "null") {
                         workshopPrices = "0.0"
                     }
-                    if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && !latitude.equals("null") && !longitude.equals("null") && !latitude.equals("0.0") && !longitude.equals("0.0")) {
+                    if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && latitude != "null" && longitude != "null" && latitude != "0.0" && longitude != "0.0") {
                         mGoogleMap?.addMarker(MarkerOptions()
                                 .position(LatLng(latitude.toDouble(), longitude.toDouble())).icon(BitmapDescriptorFactory.fromBitmap(
                                         createDrawableFromView(this@MapFilterActivity, workshopPrices.toString())))
@@ -271,7 +271,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMarkerClick(marker: Marker?): Boolean {
         if (marker?.tag != null) {
-            var jsonObject = JSONObject(marker.tag.toString())
+            val jsonObject = JSONObject(marker.tag.toString())
 
             workshop_name.text = jsonObject.optString("company_name")
             workshop_description.text = jsonObject.optString("registered_office")
@@ -290,8 +290,8 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
             if(jsonObject.has("rating")){
-                var jsonObjectRating = JSONObject(jsonObject.optString("rating"))
-                if (jsonObjectRating!=null && jsonObjectRating.has("rating")&&!jsonObjectRating.optString("rating").isNullOrEmpty() && !jsonObjectRating.optString("rating").equals("null")) {
+                val jsonObjectRating = JSONObject(jsonObject.optString("rating"))
+                if (jsonObjectRating!=null && jsonObjectRating.has("rating")&&!jsonObjectRating.optString("rating").isNullOrEmpty() && jsonObjectRating.optString("rating") != "null") {
                     item_rating.rating = jsonObjectRating.optString("rating").toFloat()
                 } else
                     item_rating.rating = 0f
@@ -302,14 +302,14 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
 
-            if (!jsonObject.optString("rating_count").isNullOrEmpty() && !jsonObject.optString("rating_count").equals("null")) {
+            if (!jsonObject.optString("rating_count").isNullOrEmpty() && jsonObject.optString("rating_count") != "null") {
                 item_rating_count.text = jsonObject.optString("rating_count")
             } else
                 item_rating_count.text = ""
 
             var couponList: List<Models.Coupon>? = null
-            if (jsonObject.has("coupon_list") && jsonObject.getString("coupon_list") != null && !jsonObject.getString("coupon_list").equals("null")) {
-                var jsonArray = JSONArray(jsonObject.getString("coupon_list")).toString()
+            if (jsonObject.has("coupon_list") && jsonObject.getString("coupon_list") != null && jsonObject.getString("coupon_list") != "null") {
+                val jsonArray = JSONArray(jsonObject.getString("coupon_list")).toString()
                 val gson = GsonBuilder().create()
                 couponList = gson.fromJson(jsonArray.toString(), Array<Models.Coupon>::class.java).toCollection(java.util.ArrayList<Models.Coupon>())
 
@@ -411,21 +411,21 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    fun createDrawableFromView(context: Context, price: String): Bitmap {
-        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var view = layoutInflater.inflate(R.layout.custom_marker_mapfilter, null)
+    private fun createDrawableFromView(context: Context, price: String): Bitmap {
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = layoutInflater.inflate(R.layout.custom_marker_mapfilter, null)
 
 
-        view.tv_workshopPrices.setText(getString(R.string.prepend_euro_symbol_with_da_string, price))
-        view.tv_workshopPrices.setTextSize(10.0f)
+        view.tv_workshopPrices.text = getString(R.string.prepend_euro_symbol_with_da_string, price)
+        view.tv_workshopPrices.textSize = 10.0f
         view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         view.layout(0, 0, view.measuredWidth, view.measuredHeight)
         view.isDrawingCacheEnabled = true
         view.invalidate()
         view.buildDrawingCache(false)
-        var bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888);
 
-        var canvas = Canvas(bitmap);
+        val canvas = Canvas(bitmap);
         view.draw(canvas);
 
         return bitmap;

@@ -45,8 +45,8 @@ import retrofit2.Response
 class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
-    lateinit var imageDialog: Dialog
-    lateinit var dialogSlider: SliderLayout
+    private lateinit var imageDialog: Dialog
+    private lateinit var dialogSlider: SliderLayout
     var disableSliderTouch = false
     private var productDetails: JSONObject? = JSONObject()
     private var selectedProductID = 0
@@ -96,7 +96,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 item_number.visibility=View.VISIBLE
                 item_number.text=getString(R.string.itemnumber,detail?.productsName)
             }
-            var price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
+            val price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
             else json.optString("seller_price")
             if (!detail?.forPair.isNullOrBlank() && !detail?.forPair.equals("0")) {
                 Log.d("spare part", "is pair")
@@ -268,7 +268,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     qty_text += 2
                     item_qty.text = (qty_text).toString()
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
-                    if (!min_price.equals("")) {
+                    if (min_price != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
                     }
 
@@ -277,7 +277,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     item_qty.text = qty_text.toString()
 
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
-                    if (!min_price.equals("")) {
+                    if (min_price != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
                     }
                 }
@@ -291,7 +291,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 if (productIsPair) {
                     qty_text -= 2
                     item_qty.text = (qty_text).toString()
-                    if (!min_price.equals("")) {
+                    if (min_price != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
                     }
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
@@ -300,7 +300,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     qty_text -= 1
                     item_qty.text = qty_text.toString()
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
-                    if (!min_price.equals("")) {
+                    if (min_price != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
                     }
                 }
@@ -312,7 +312,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun loadProductDetails() {
 
-        var productDetailsString = intent.getStringExtra(Constant.Path.productDetails)
+        val productDetailsString = intent.getStringExtra(Constant.Path.productDetails)
         var productPrice: Double? = 0.0
 
         if (productDetailsString != null)
@@ -354,12 +354,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 productTotalPrices.text = getString(R.string.tyre_price_total, productPrice.toString())
             }
 
-            if (productDetails!!.has("rating_star") && !productDetails!!.isNull("rating_star") && productDetails!!.getString("rating_star") != null && !productDetails!!.getString("rating_star").equals("")) {
+            if (productDetails!!.has("rating_star") && !productDetails!!.isNull("rating_star") && productDetails!!.getString("rating_star") != null && productDetails!!.getString("rating_star") != "") {
                 product_rating.rating = productDetails!!.getString("rating_star").toFloat()
             } else
                 product_rating.rating = 0f
 
-            if (productDetails!!.has("rating_count") && !productDetails!!.isNull("rating_count") && !productDetails!!.getString("rating_count").equals(""))
+            if (productDetails!!.has("rating_count") && !productDetails!!.isNull("rating_count") && productDetails!!.getString("rating_count") != "")
                 ratingCount.text = productDetails!!.getString("rating_count")
 
 
@@ -395,7 +395,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         }
-        Log.d("SparePart", "JSON ***************** " + productDetails)
+        Log.d("SparePart", "JSON ***************** $productDetails")
 
     }
 
@@ -548,8 +548,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                             else buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, min_price)})"
 
                                         }
-                                        Log.d("Product_Detail", "min_price" + min_price)
-                                        if (data.has("number_of_delivery_days") && !data.getString("number_of_delivery_days").isNullOrBlank() && !data.getString("number_of_delivery_days").equals("null")) {
+                                        Log.d("Product_Detail", "min_price$min_price")
+                                        if (data.has("number_of_delivery_days") && !data.getString("number_of_delivery_days").isNullOrBlank() && data.getString("number_of_delivery_days") != "null") {
 
                                             ll_delivery_date.visibility = View.VISIBLE
                                             delivery_date.text = getDate(data.getString("number_of_delivery_days").toInt() + 1)
@@ -573,8 +573,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 })
     }
 
-    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
-        bindFeedbackList(list, this,feedbackwithoutPurchage)
+    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
+        bindFeedbackList(list, this)
     }
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, couponType: String, AppliedCouponName: TextView) {
@@ -612,7 +612,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     holder.couponsQuantity.text = items.couponQuantity.toString()
                     if (!items.offerType.isNullOrBlank()) {
 
-                        if (items.offerType.equals("2")) {
+                        if (items.offerType == "2") {
                             holder.couponsAmount.text = getString(R.string.prepend_euro_symbol_string, items.amount.toString())
                         } else {
                             holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)
@@ -647,7 +647,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.show()
     }
 
-    fun getSimilarProduct(productId: String) {
+    private fun getSimilarProduct(productId: String) {
         val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
@@ -670,7 +670,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                             if (productData.has("data_set") && !productData.isNull("data_set")) {
                                                 val jsonArray = JSONArray(JSONObject(it).getString("data_set"))
                                                 val gson = GsonBuilder().create()
-                                                var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
+                                                val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
                                                 loadProductRecommendationGridList(product_recommendation_recycler_view, productOrWorkshopList)
 
                                             } else {

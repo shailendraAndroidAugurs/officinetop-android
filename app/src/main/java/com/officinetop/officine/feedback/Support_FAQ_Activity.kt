@@ -70,12 +70,12 @@ class Support_FAQ_Activity : BaseActivity() {
                         progress_bar.visibility= View.GONE
                         if (response.isSuccessful) {
                             try {
-                                var body = JSONObject(response.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 Log.d("FAQ_Api_Call", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
-                                    var fAQ_Question_AnswerList = gson.fromJson(jsonarray.toString(), Array<Models.FAQ_Question_Answer>::class.java).toCollection(java.util.ArrayList<Models.FAQ_Question_Answer>())
+                                    val fAQ_Question_AnswerList = gson.fromJson(jsonarray.toString(), Array<Models.FAQ_Question_Answer>::class.java).toCollection(java.util.ArrayList<Models.FAQ_Question_Answer>())
                                     rv_FaqQuestion_Answer.adapter = FAQ_Adapter(this@Support_FAQ_Activity, fAQ_Question_AnswerList)
                                 }
 

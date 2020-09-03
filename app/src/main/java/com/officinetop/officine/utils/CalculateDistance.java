@@ -15,18 +15,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CalculateDistance extends AsyncTask<String, String, String> {
-    Context context;
-    String SourcesLat;
-    String SourcesLong;
-    String DesLat;
-    String DestLong;
-    TextView tv_workshopKm;
+class CalculateDistance extends AsyncTask<String, String, String> {
+    private final Context context;
+    private final String SourcesLat;
+    private final String SourcesLong;
+    private final String DesLat;
+    private final String DestLong;
+    private final TextView tv_workshopKm;
 
     public CalculateDistance(Context context, String SourcesLat, String SourcesLong, String DesLat, String DestLong, TextView textView) {
         this.context = context;
@@ -47,8 +46,8 @@ public class CalculateDistance extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         BufferedReader reader = null;
         HttpsURLConnection urlConnection = null;
-        URL url = null;
-        String forecastJsonStr = null;
+        URL url;
+        String forecastJsonStr;
         try {
 
             /*Log.d("CalculateDistanceClass", "SLat" +SourcesLat);
@@ -74,8 +73,9 @@ public class CalculateDistance extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
 
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
+            assert urlConnection != null;
             inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {

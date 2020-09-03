@@ -44,19 +44,19 @@ import java.security.MessageDigest
 
 class LoginActivity : BaseActivity() {
 
-    lateinit var googleSignInOptions: GoogleSignInOptions
-    lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
 
-    lateinit var facebookCallbackManager: CallbackManager
+    private lateinit var facebookCallbackManager: CallbackManager
     private val RC_GOOGLE = 101
     private val RC_LINKEDIN = 102
 
     lateinit var progressDialog: ProgressDialog
 
-    lateinit var referralCode: String
+    private lateinit var referralCode: String
 
-    var socialmediaflag: Int? = null
-    var uniqueId: String? = null
+    private var socialmediaflag: Int? = null
+    private var uniqueId: String? = null
 
     //0=facebook 1=google  2=linkdin
 
@@ -126,7 +126,7 @@ class LoginActivity : BaseActivity() {
 
 
 //            startActivityForResult(intent, Constant.RC.onCarAdded)
-        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from).equals("AddSecondVehicle"))
+        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle")
         // Just finish the current screen
         else
             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop())
@@ -150,7 +150,7 @@ class LoginActivity : BaseActivity() {
 
 
     private fun initFacebookLogin() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(applicationContext);
         facebookCallbackManager = CallbackManager.Factory.create()
 
     }
@@ -468,7 +468,7 @@ class LoginActivity : BaseActivity() {
         startActivityForResult(intentFor<LinkedInWebView>(), RC_LINKEDIN)
     }
 
-    fun disconnectFromFacebook() {
+    private fun disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return
         }

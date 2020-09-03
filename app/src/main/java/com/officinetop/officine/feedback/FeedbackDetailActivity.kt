@@ -1,3 +1,5 @@
+@file:Suppress("Annotator")
+
 package com.officinetop.officine.feedback
 
 import androidx.appcompat.app.AppCompatActivity
@@ -99,7 +101,7 @@ class FeedbackDetailActivity : BaseActivity() {
             "3" -> feedbackList?.feedbackType = getString(R.string.Rim)
             else -> feedbackList?.feedbackType = getString(R.string.Workshop)
         }
-        if (type.equals("")) {
+        if (type == "") {
             nome_prodoto.text = getString(R.string.WorkshopName)
         }
         feedbackList?.ProductOrWorkshopName = productorWorkshopName

@@ -24,7 +24,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.userprofile.Addresslist_Activity
-import com.officinetop.officine.userprofile.Contactlist_Activity
+import com.officinetop.officine.userprofile.ContactList_Activity
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.roundTo2Places
@@ -36,33 +36,32 @@ import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.math.BigDecimal
 
 class OnlinePaymentScreen : BaseActivity() {
-    lateinit var radioButton_googlepay: RadioButton
-    lateinit var radioButton_COD: RadioButton
+    private lateinit var radioButton_googlepay: RadioButton
+    private lateinit var radioButton_COD: RadioButton
     private lateinit var paymentsClient: PaymentsClient
     private val shippingCost = (90 * 1000000).toLong()
     private lateinit var garmentList: JSONArray
     private lateinit var selectedGarment: JSONObject
     private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
-    internal val UPI_PAYMENT = 0
+    private val UPI_PAYMENT = 0
     private var payableAmount: String = ""
     private var TotalAmount: String = ""
-    var contactNo: String? = null
-    var contactId: String? = null
+    private var contactNo: String? = null
+    private var contactId: String? = null
     var Address: String? = null
-    var AddressId: String? = null
-    var IsCheckAvailablity: Boolean = false
-    lateinit var progressBar: ProgressBar
+    private var AddressId: String? = null
+    private var IsCheckAvailablity: Boolean = false
+    private lateinit var progressBar: ProgressBar
     private var TotalDiscount: String = "0"
     private var totalPrices: String = "0"
     private var totalVat: String = "0"
     private var totalPfu: String = "0"
     private var user_WalletAmount: String = "0"
-    var AmazonPayRequestCode = 992
-    var usedWalletAmount = "0"
-    var HaveBrowser = true
+    private var AmazonPayRequestCode = 992
+    private var usedWalletAmount = "0"
+    private var HaveBrowser = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +90,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
         tv_userWallet.text = getString(R.string.Wallet) + user_WalletAmount.toDouble().roundTo2Places().toString()
 
-        if (user_WalletAmount.equals("0") || user_WalletAmount.equals("")) {
+        if (user_WalletAmount == "0" || user_WalletAmount == "") {
             tv_TotalAmount.visibility = View.GONE
             tv_userWallet.text = getString(R.string.Wallet) + "0"
             tv_payable_amount.text = getString(R.string.payable_amount, TotalAmount)
@@ -113,7 +112,7 @@ class OnlinePaymentScreen : BaseActivity() {
             tv_payable_amount.text = getString(R.string.payable_amount, payableAmount)
         }
 
-        if (payableAmount == "0" || payableAmount.equals("0.0")) {
+        if (payableAmount == "0" || payableAmount == "0.0") {
             ll_PaymentLayout.visibility = View.GONE
             ll_WalletPayment.visibility = View.VISIBLE
         } else {
@@ -149,8 +148,8 @@ class OnlinePaymentScreen : BaseActivity() {
                 payUsingUpi()
                 paypal_payment.visibility = View.GONE
                 layout_amazonupid.visibility = View.GONE
-                radioButton_googlepay.setChecked(true)
-                radioButton_COD.setChecked(false)
+                radioButton_googlepay.isChecked = true
+                radioButton_COD.isChecked = false
                 //startUpiPayment()
             }else{
                 radioButton_googlepay.isChecked=false
@@ -161,8 +160,8 @@ class OnlinePaymentScreen : BaseActivity() {
             if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 paypal_payment.visibility = View.GONE
                 layout_amazonupid.visibility = View.GONE
-                radioButton_COD.setChecked(true)
-                radioButton_googlepay.setChecked(false)
+                radioButton_COD.isChecked = true
+                radioButton_googlepay.isChecked = false
                 showInfoDialog(getString(R.string.PayOnDelivery)) {
                     updatePaymentStatusForCOD()
                 }
@@ -178,8 +177,8 @@ class OnlinePaymentScreen : BaseActivity() {
 
         btn_paypal_payment.setOnClickListener(View.OnClickListener {
             if (isaddress_ContactSelect() && isCartDataAvailable()) {
-                radioButton_COD.setChecked(false)
-                radioButton_googlepay.setChecked(false)
+                radioButton_COD.isChecked = false
+                radioButton_googlepay.isChecked = false
                 // paypal sdk implement for payment through paypal , now it is commented as a client requirement
                 /*val thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE)
                 val intent = Intent(this@OnlinePaymentScreen, PaymentActivity::class.java)
@@ -210,8 +209,8 @@ class OnlinePaymentScreen : BaseActivity() {
         googlePayButton.setOnClickListener {
             if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 requestPayment()
-                radioButton_COD.setChecked(false)
-                radioButton_googlepay.setChecked(false)
+                radioButton_COD.isChecked = false
+                radioButton_googlepay.isChecked = false
 
             }
         }
@@ -266,7 +265,7 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         }
         tv_contactNo.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, Contactlist_Activity::class.java)
+            val intent = Intent(this, ContactList_Activity::class.java)
             intent.putExtra("FromPayment", true)
             startActivityForResult(intent, 100)
 
@@ -285,10 +284,10 @@ class OnlinePaymentScreen : BaseActivity() {
         AddressId = sharedPref.getString("AddressId", null)
         contactId = sharedPref.getString("contactId", null)
         if (contactNo != null) {
-            text_contactnumber.setText(contactNo)
+            text_contactnumber.text = contactNo
         }
         if (Address != null) {
-            text_address.setText(Address)
+            text_address.text = Address
         }
         if (contactId != null && AddressId != null) {
             CheckCartItemAvailability()
@@ -383,7 +382,7 @@ class OnlinePaymentScreen : BaseActivity() {
                     .getJSONObject("tokenizationData")
                     .getString("token"))
         } catch (e: JSONException) {
-            Log.e("handlePaymentSuccess", "Error: " + e.toString())
+            Log.e("handlePaymentSuccess", "Error: $e")
         }
     }
 
@@ -395,12 +394,12 @@ class OnlinePaymentScreen : BaseActivity() {
     }
 
     companion object {
-        private val TAG = "paymentExample"
+        private const val TAG = "paymentExample"
 
-        private val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX
+        private const val CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX
 
         // note that these credentials will differ between live & sandbox environments.
-        private val CONFIG_CLIENT_ID = "ARJLfJNfSNkUyq1pzF5r2F9GPbgWrbKDf8jqVHTtIHEsvMBCZWdGR90MCEdWZGDrJV5bp2b9i-O6MkW3"//create at 18052020 - sandbox client id with xn32541bbbbb password- !D8@z%i$
+        private const val CONFIG_CLIENT_ID = "ARJLfJNfSNkUyq1pzF5r2F9GPbgWrbKDf8jqVHTtIHEsvMBCZWdGR90MCEdWZGDrJV5bp2b9i-O6MkW3"//create at 18052020 - sandbox client id with xn32541bbbbb password- !D8@z%i$
         //  "Ae-dgSrONxM4oozHBTjqIsqqCPBlX3o1KbWgJyOgWuGvZECGQ7K2xsNaA6bQWdpIZ1k59wDil5K88pmA"
 
         //    "AQaROYvr5Gv9Fmu7OVGoIRtPjA359XD5F1oUVA4RFOfx0ZbPHDSkV-QvvGh9dl04oUb5Tpe3_R2Q6IJj" comment on 18052020
@@ -409,9 +408,9 @@ class OnlinePaymentScreen : BaseActivity() {
         //  ATzTTqLAcY8X5GxCWFb52Do38kmnmgRfmtHwcmN_3LgHI05mC7JfHePaHHt0uXVrjxHJe_gRRXqYb7Dq
         //  AZQj8TMgW9IRfmPZVmo0Nd_-WJOKsP-yx2NUFV2_AdskE6a_waYmxwPQNfUD4426YwFZhv_YIdYV6toq
 
-        private val REQUEST_CODE_PAYMENT = 1
-        private val REQUEST_CODE_FUTURE_PAYMENT = 2
-        private val REQUEST_CODE_PROFILE_SHARING = 3
+        private const val REQUEST_CODE_PAYMENT = 1
+        private const val REQUEST_CODE_FUTURE_PAYMENT = 2
+        private const val REQUEST_CODE_PROFILE_SHARING = 3
         private val config = PayPalConfiguration()
                 .environment(CONFIG_ENVIRONMENT)
                 .clientId(CONFIG_CLIENT_ID)
@@ -501,7 +500,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
 
             if (contactNo != null) {
-                text_contactnumber.setText(contactNo)
+                text_contactnumber.text = contactNo
                 saveContact_ContactForShipping(contactNo!!, contactId!!)
                 if (contactId != null && AddressId != null) {
                     CheckCartItemAvailability()
@@ -511,7 +510,7 @@ class OnlinePaymentScreen : BaseActivity() {
             Address = data?.extras?.getString("Address")
             AddressId = data?.extras?.getString("Id")
             if (Address != null) {
-                text_address.setText(Address)
+                text_address.text = Address
                 saveAddress_ContactForShipping(Address!!, AddressId!!)
                 if (contactId != null && AddressId != null) {
                     CheckCartItemAvailability()
@@ -563,7 +562,7 @@ class OnlinePaymentScreen : BaseActivity() {
     }*/
 
     ////////////////////////////////////// UPI Payment method //////////////////////////////////////////
-    fun payUsingUpi() {
+    private fun payUsingUpi() {
         val uri = Uri.parse("upi://pay").buildUpon()
                 .appendQueryParameter("pa", "8418956190@ybl")
                 .appendQueryParameter("pn", "Amit Kumar")

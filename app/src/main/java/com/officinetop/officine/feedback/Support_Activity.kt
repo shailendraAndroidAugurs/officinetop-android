@@ -23,8 +23,8 @@ import org.json.JSONObject
 class Support_Activity : BaseActivity() {
 
     var mListRecyclerView = null
-    var selecttokenid = ""
-    var selectcat_id = ""
+    private var selecttokenid = ""
+    private var selectcat_id = ""
 
     private var recyclerViewAdapter: RecyclerViewAdapterChating? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +37,15 @@ class Support_Activity : BaseActivity() {
     }
 
     private fun intiView() {
-        var Cat_Id = intent.getStringExtra("Cat_Id")
+        val Cat_Id = intent.getStringExtra("Cat_Id")
         if (Cat_Id != null) {
             selectcat_id = Cat_Id
             selecttokenid = ""
             text_tagline.visibility = VISIBLE
         } else {
-            var message_string = JSONObject(intent.getStringExtra("MSG"))
+            val message_string = JSONObject(intent.getStringExtra("MSG"))
 
-            if (message_string.has("status") && message_string.optString("status").equals("C")) {
+            if (message_string.has("status") && message_string.optString("status") == "C") {
                 ll_forSendMessage.visibility=View.GONE
             } else {
                 ll_forSendMessage.visibility=View.VISIBLE
@@ -53,14 +53,14 @@ class Support_Activity : BaseActivity() {
             if (message_string != null) {
                 text_tagline.visibility = GONE
                 val messageList = Gson().fromJson<Models.TicketList>(message_string.toString(), Models.TicketList::class.java)
-                var messagemodel = messageList.messages
+                val messagemodel = messageList.messages
                 selecttokenid = messageList.ticketId
                 selectcat_id = messageList.ticket_type
                 val linearLayoutManager = LinearLayoutManager(this)
                 recycler_view_chatlist.layoutManager = linearLayoutManager
                 recyclerViewAdapter = RecyclerViewAdapterChating(messagemodel as MutableList<Models.Messages>, this)
                 recycler_view_chatlist.adapter = recyclerViewAdapter
-                var count = recyclerViewAdapter!!.changeposition()
+                val count = recyclerViewAdapter!!.changeposition()
                 recycler_view_chatlist.scrollToPosition(count)
             } else {
                 text_tagline.visibility = VISIBLE
@@ -81,7 +81,7 @@ class Support_Activity : BaseActivity() {
         })
     }
 
-    fun sendMessage(message: String, keytype: String, tokenid: String) {
+    private fun sendMessage(message: String, keytype: String, tokenid: String) {
         RetrofitClient.client.generatesupportticket(
                 getBearerToken() ?: "", message, tokenid, keytype
         ).onCall { networkException, response ->
@@ -125,12 +125,12 @@ class Support_Activity : BaseActivity() {
     }
 
     private fun bindView(messageList: Models.TicketList) {
-        var messagemodel = messageList.messages
+        val messagemodel = messageList.messages
         val linearLayoutManager = LinearLayoutManager(this)
         recycler_view_chatlist.layoutManager = linearLayoutManager
         recyclerViewAdapter = RecyclerViewAdapterChating(messagemodel as MutableList<Models.Messages>, this)
         recycler_view_chatlist.adapter = recyclerViewAdapter
-        var count = recyclerViewAdapter!!.changeposition()
+        val count = recyclerViewAdapter!!.changeposition()
         recycler_view_chatlist.scrollToPosition(count)
 
     }

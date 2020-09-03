@@ -14,9 +14,9 @@ class AutoViewPager : ViewPager, Runnable {
 
     var duration = DEFAULT_DURATION
 
-    var indeterminate = false
+    private var indeterminate = false
 
-    var autoScroll = false
+    private var autoScroll = false
         set(value) {
             field = value
             if (value) start() else stop()
@@ -74,9 +74,9 @@ class AutoViewPager : ViewPager, Runnable {
 
     fun start() = postDelayed(this, duration.toLong())
 
-    fun stop() = removeCallbacks(this)
+    private fun stop() = removeCallbacks(this)
 
-    fun reset() {
+    private fun reset() {
         stop()
         start()
     }
@@ -86,6 +86,6 @@ class AutoViewPager : ViewPager, Runnable {
     }
 
 
-    val ViewPager.lastItem: Int?
+    private val ViewPager.lastItem: Int?
         get() = adapter?.count?.minus(1)
 }

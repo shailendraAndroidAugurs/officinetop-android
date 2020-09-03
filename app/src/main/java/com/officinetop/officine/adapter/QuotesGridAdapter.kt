@@ -12,7 +12,7 @@ import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.quotes_images_item_view.view.*
 import java.lang.Exception
 
-class QuotesGridAdapter(val isFeedback:Boolean,val context: Context, val imagesList : MutableList<String>,private var listenerRecycler: OnRecyclerItemClickListener)
+class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private val imagesList : MutableList<String>, private var listenerRecycler: OnRecyclerItemClickListener)
     : RecyclerView.Adapter<QuotesGridAdapter.QuotesImagesViewHolder> (){
 
 
@@ -55,8 +55,8 @@ class QuotesGridAdapter(val isFeedback:Boolean,val context: Context, val imagesL
 
    inner class QuotesImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-       val image_view = itemView.quotation_images
-       val delete_image = itemView.delete_image
+       private val image_view = itemView.quotation_images
+       private val delete_image = itemView.delete_image
 
         fun bindView(item: String){
             Log.e("imagesPath==", item)

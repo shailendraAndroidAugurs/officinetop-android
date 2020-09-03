@@ -190,7 +190,7 @@
 
                 <com.officinetop.officine.utils.CustomRatingBar
                     android:id="@+id/item_rating"
-                    style="@style/customratingBar"
+                    style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"

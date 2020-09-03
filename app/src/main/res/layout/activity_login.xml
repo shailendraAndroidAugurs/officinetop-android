@@ -89,7 +89,8 @@
                         android:background="@drawable/rectangle_gray_empty"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:importantForAutofill="no" />
 
 
                     <TextView
@@ -108,7 +109,8 @@
                         android:background="@drawable/rectangle_gray_empty"
                         android:hint="@string/password"
                         android:inputType="textPassword"
-                        android:padding="10dp" />
+                        android:padding="10dp"
+                        android:importantForAutofill="no" />
 
                     <TextView
                         android:textColor="@color/black"

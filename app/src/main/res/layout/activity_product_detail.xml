@@ -95,7 +95,7 @@
 
                     <com.officinetop.officine.utils.CustomRatingBar
                         android:id="@+id/product_rating"
-                        style="@style/customratingBar"
+                        style="@style/custom_ratingBar"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="wrap_content" />
 
@@ -149,7 +149,7 @@
                         android:textAllCaps="false"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 

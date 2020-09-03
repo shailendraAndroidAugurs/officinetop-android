@@ -71,12 +71,12 @@ class MaintenanceActivity : BaseActivity() {
     private var maxPrice = 0f
 
     private var selectedServicesTotalPrice: Double = 0.0
-    var genericAdapterParts: GenericAdapter<Models.Part>? = null
+    private var genericAdapterParts: GenericAdapter<Models.Part>? = null
     var genericAdapter: GenericAdapter<Models.CarMaintenanceServices>? = null
-    var selectitem_position: Int = 0
+    private var selectitem_position: Int = 0
     var selectservice_position: Int = 0
     var dialog: Dialog? = null
-    var hashMap: HashMap<String, Models.servicesCouponData> = HashMap<String, Models.servicesCouponData>()
+    private var hashMap: HashMap<String, Models.servicesCouponData> = HashMap<String, Models.servicesCouponData>()
     var partId: ArrayList<String> = ArrayList()
     lateinit var checkBox: CheckBox
 
@@ -106,12 +106,12 @@ class MaintenanceActivity : BaseActivity() {
 
         btn_choose_workshop.setOnClickListener {
             if (selectedCarMaintenanceServices.size > 0) {
-                var serviceId: MutableList<String> = ArrayList()
+                val serviceId: MutableList<String> = ArrayList()
 
                 for (j in 0 until selectedCarMaintenanceServices.size) {
                     serviceId.add(selectedCarMaintenanceServices.get(j).id.toString())
                     for (i in 0 until carMaintenanceServiceList.size) {
-                        if (selectedCarMaintenanceServices.get(j).id.toString().equals(carMaintenanceServiceList[i].id)) {
+                        if (selectedCarMaintenanceServices.get(j).id.toString() == carMaintenanceServiceList[i].id) {
 
                             Log.e("PARTIDSSERVICES", carMaintenanceServiceList[i].productId)
                             if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
@@ -230,7 +230,7 @@ class MaintenanceActivity : BaseActivity() {
             }
         } catch (e: Exception) {
             Log.e("Exception::", "${e}")
-            Log.d("Maintenance", "part info" + e.toString())
+            Log.d("Maintenance", "part info$e")
             e.printStackTrace()
         }
         genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
@@ -238,7 +238,7 @@ class MaintenanceActivity : BaseActivity() {
             override fun onClick(view: View, position: Int) {
                 //Log.e("itemsObjetData::", "${carMaintenanceServiceList[position]}")
 
-                if (!carMaintenanceServiceList[position].ourDescription.isNullOrEmpty() && !carMaintenanceServiceList[position].ourDescription.equals("null")) {
+                if (!carMaintenanceServiceList[position].ourDescription.isNullOrEmpty() && carMaintenanceServiceList[position].ourDescription != "null") {
 
                     val message = carMaintenanceServiceList[position].ourDescription
                     showInfoDialog(message)
@@ -459,7 +459,7 @@ class MaintenanceActivity : BaseActivity() {
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
 
                                 } else {
-                                  var list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId==ProductId }
+                                  val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId==ProductId }
                                     list[0].wishlist="1"
 
                                 }
@@ -493,7 +493,7 @@ class MaintenanceActivity : BaseActivity() {
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "0"
 
                                 } else {
-                                    var list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId==ProductId }
+                                    val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId==ProductId }
                                     list[0].wishlist="0"
 
                                 }
@@ -743,7 +743,7 @@ class MaintenanceActivity : BaseActivity() {
                     holder.couponsQuantity.text = items.couponQuantity.toString()
                     if (!items.offerType.isNullOrBlank()) {
 
-                        if (items.offerType.equals("2")) {
+                        if (items.offerType == "2") {
                             holder.couponsAmount.text = getString(R.string.prepend_euro_symbol_string, items.amount.toString())
                         } else {
                             holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)

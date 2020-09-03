@@ -157,7 +157,7 @@
 
                 <com.officinetop.officine.utils.CustomRatingBar
                     android:id="@+id/item_rating"
-                    style="@style/customratingBar"
+                    style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -308,5 +308,3 @@
 
 </layout>
 
-<!--
--->

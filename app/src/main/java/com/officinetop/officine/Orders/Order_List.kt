@@ -49,7 +49,7 @@ class Order_List : BaseActivity() {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
                                 bindView(dataSetArray)
-                            } else if (body.has("message") && !body.isNull("message") && !body.equals("")) {
+                            } else if (body.has("message") && !body.isNull("message") ) {
                                 showInfoDialog(body.getString("message"))
                             }
 
@@ -71,43 +71,43 @@ class Order_List : BaseActivity() {
 
             override fun onItemClick(view: View, position: Int) {
                 Log.e("ClickedItems::", "${couponsListItem[position]}")
-                Log.e("ClickedView::", "${view.getTag()}")
+                Log.e("ClickedView::", "${view.tag}")
 
-                if (view.getTag().equals("100")) {
+                if (view.tag == "100") {
                     val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                     intent.putExtra("OrderDetailList", couponsListItem[position].serviceProductDescription as Serializable)
                     intent.putExtra("forwhich", "SP")
                     intent.putExtra("orderid", couponsListItem[position].id)
                     startActivity(intent)
-                } else if (view.getTag().equals("101")) {
+                } else if (view.tag == "101") {
                     val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                     intent.putExtra("OrderDetailList", couponsListItem[position].tyreProductDescription as Serializable)
                     intent.putExtra("orderid", couponsListItem[position].id)
                     intent.putExtra("forwhich", "T")
 
                     startActivity(intent)
-                } else if (view.getTag().equals("102")) {
+                } else if (view.tag == "102") {
                     val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                     intent.putExtra("OrderDetailList", couponsListItem[position].spareProductDescription as Serializable)
                     intent.putExtra("orderid", couponsListItem[position].id)
                     intent.putExtra("forwhich", "S")
 
                     startActivity(intent)
-                } else if (view.getTag().equals("103")) {
+                } else if (view.tag == "103") {
                     /* val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                      intent.putExtra("productList", couponsListItem[position].serviceProductDescription as Serializable)
                      startActivity(intent)*/
-                } else if (view.getTag().equals("104")) {
+                } else if (view.tag == "104") {
                     val intent = Intent(this@Order_List, Order_Tracking::class.java)
                     startActivity(intent)
-                } else if (view.getTag().equals("105")) {
+                } else if (view.tag == "105") {
                     try {
 
                         if (!couponsListItem[position].orderTracking.trackingUrl.startsWith("http://") && !couponsListItem[position].orderTracking.trackingUrl.startsWith("https://")) {
                             // val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://" + couponsListItem[position].orderTracking.trackingUrl + "?number=" + couponsListItem[position].orderTracking.trackingId))
                             if (couponsListItem[position].orderTracking.sample_tracking_id != null && couponsListItem[position].orderTracking.trackingUrl.contains(couponsListItem[position].orderTracking.sample_tracking_id)) {
 
-                                var trackingurl = "http://" + couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
+                                val trackingurl = "http://" + couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
                                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(trackingurl))
                                 startActivity(browserIntent)
                             }
@@ -116,7 +116,7 @@ class Order_List : BaseActivity() {
                         } else {
                             if (couponsListItem[position].orderTracking.sample_tracking_id != null && couponsListItem[position].orderTracking.trackingUrl.contains(couponsListItem[position].orderTracking.sample_tracking_id)) {
 
-                                var trackingurl = couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
+                                val trackingurl = couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
                                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(trackingurl))
                                 startActivity(browserIntent)
                             }
@@ -132,25 +132,25 @@ class Order_List : BaseActivity() {
                     }
 
 
-                } else if (view.getTag().equals("200")) {
+                } else if (view.tag == "200") {
                     if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank())
                         DownloadInvoice(couponsListItem[position].orderTracking.id, true)
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
-                } else if (view.getTag().equals("201")) {
+                } else if (view.tag == "201") {
                     if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank())
                         DownloadInvoice(couponsListItem[position].orderTracking.id, false)
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
-                } else if (view.getTag().equals("203")) {
+                } else if (view.tag == "203") {
                     if (couponsListItem[position].orderTracking != null && !couponsListItem[position].id.isNullOrBlank())
                         Returnpolicy(couponsListItem[position].id, position)
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
-                } else if (view.getTag().equals("500")) {
+                } else if (view.tag == "500") {
                     RequestInvoicesPolicy(couponsListItem[position].id)
 
                 }
@@ -209,7 +209,7 @@ class Order_List : BaseActivity() {
                         if (response.isSuccessful) {
                             val body = JSONObject(response?.body()?.string())
                             Log.e("RETURN", body.toString())
-                            if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code").equals("1")) {
+                            if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
                                 //couponsListItem[potion].returnRequest="C"
                                 initview()
@@ -229,7 +229,7 @@ class Order_List : BaseActivity() {
                         if (response.isSuccessful) {
                             val body = JSONObject(response?.body()?.string())
                             Log.e("RETURN", body.toString())
-                            if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code").equals("1")) {
+                            if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
                                 initview()
 

@@ -29,7 +29,7 @@ import retrofit2.Response
 class FragmentFeedback : Fragment() {
     private var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
-    var MyFeedBackReview: TextView? = null
+    private var MyFeedBackReview: TextView? = null
     var MyReview: Boolean = false
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
     private var ProductFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
@@ -63,7 +63,7 @@ class FragmentFeedback : Fragment() {
                     viewPager?.isSaveFromParentEnabled = false
                     setupViewPager(viewPager!!)
 
-                    var fragmenttransaction = childFragmentManager.beginTransaction()
+                    val fragmenttransaction = childFragmentManager.beginTransaction()
                     fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit();
                     //   fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
                     Log.d("Tag", "value" + MyFeedBackReview?.tag)
@@ -74,7 +74,7 @@ class FragmentFeedback : Fragment() {
                     viewPager?.isSaveFromParentEnabled = false
                     setupViewPager(viewPager!!)
                     Log.d("Tag", "value" + MyFeedBackReview?.tag)
-                    var fragmenttransaction = childFragmentManager.beginTransaction()
+                    val fragmenttransaction = childFragmentManager.beginTransaction()
                     fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit();
                     //  fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
                 }
@@ -82,8 +82,8 @@ class FragmentFeedback : Fragment() {
             }
 
 
-            viewPager = findViewById(R.id.feedback_viewpager) as ViewPager
-            tabLayout = findViewById(R.id.tabs) as TabLayout
+            viewPager = findViewById(R.id.feedback_viewpager)
+            tabLayout = findViewById(R.id.tabs)
             tabLayout!!.setupWithViewPager(viewPager)
         }
 
@@ -109,19 +109,19 @@ class FragmentFeedback : Fragment() {
 
         override fun getItem(position: Int): Fragment {
 
-            var bundle: Bundle = Bundle()
+            val bundle: Bundle = Bundle()
             if (position == 1) {
                 bundle.putSerializable("list", ProductFeedBackList)
                 bundle.putBoolean("product", true)
                 bundle.putBoolean("MyReview", MyReview)
-                Log.d("MyReview", "MyReview" + MyReview.toString())
+                Log.d("MyReview", "MyReview$MyReview")
                 Log.d("FragmnetFor", "Product" + "true")
                 Log.d("list", "ProductFeedBackList" + ProductFeedBackList.size)
             } else {
                 bundle.putSerializable("list", WorkshopFeedBackList)
                 bundle.putBoolean("product", false)
                 bundle.putBoolean("MyReview", MyReview)
-                Log.d("MyReview", "MyReview" + MyReview.toString())
+                Log.d("MyReview", "MyReview$MyReview")
                 Log.d("FragmnetFor", "workhsop" + "true")
                 Log.d("list", "WorkshopFeedBackList" + WorkshopFeedBackList.size)
             }
@@ -155,12 +155,12 @@ class FragmentFeedback : Fragment() {
 
                         if (response.isSuccessful) {
                             try {
-                                var body = JSONObject(response.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 Log.d("highRatingfromFragment", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
-                                    var productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
+                                    val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
 
                                     if (type == "1") {
                                         ProductFeedBackList.addAll(productOrworkshopFeedback)

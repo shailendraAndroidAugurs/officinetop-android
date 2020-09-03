@@ -25,7 +25,7 @@ class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var content = inflater.inflate(R.layout.fragment_base, container, false)
+        val content = inflater.inflate(R.layout.fragment_base, container, false)
         val fragmentHome = FragmentHome()
         childFragmentManager.beginTransaction()
                 .replace(R.id.baseFragment, fragmentHome)

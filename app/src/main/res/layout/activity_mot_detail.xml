@@ -8,7 +8,7 @@
     tools:context=".coupons.CouponsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/ll_colapsed"
+        android:id="@+id/ll_collapsed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:liftOnScroll="true">
@@ -57,19 +57,21 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@color/white"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_title"
                         style="@style/TextViewNormal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/title"
-                        android:textColor="@color/black"></TextView>
+                        android:textColor="@color/black" />
+
                     <TextView
                         android:id="@+id/tv_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5sdp"
-                        android:text="@string/Description"></TextView>
+                        android:text="@string/Description" />
 
 
                 </LinearLayout>
@@ -122,7 +124,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/white"
                     android:text="@string/Interval_Operation"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
 
                 <LinearLayout
                     android:id="@+id/ll_intervalOperation"
@@ -157,7 +159,7 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:text="@string/proceed"
-            android:visibility="gone"></Button>
+            android:visibility="gone" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

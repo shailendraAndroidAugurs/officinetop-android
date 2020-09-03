@@ -31,7 +31,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
     private var productType: String = ""//type for product type, type for tyre is 2, type for spare parts for 1 and type for rim 3
     private var mainCategoryId: String = ""
     private var serviceID: String = ""
-    private var orderid: String = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,13 +148,13 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     }
                     if (list[p1].workshopId != null) {
                         p0.itemView.tv_product_type.text = getString(R.string.Workshop)
-                    } else if (list[p1].product_type.equals("1")) {
+                    } else if (list[p1].product_type == "1") {
                         p0.itemView.tv_product_type.text = getString(R.string.spare_part)
-                    } else if (list[p1].product_type.equals("2")) {
+                    } else if (list[p1].product_type == "2") {
                         p0.itemView.tv_product_type.text = getString(R.string.tyres)
                     }
 
-                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase.equals("1")) {
+                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase == "1") {
                         btn_addfedback.visibility = View.GONE
 
                     }
@@ -182,10 +182,10 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                var action: Int = e.getAction();
+                                val action: Int = e.action;
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true);
 
                                 }
                                 return false;
@@ -241,16 +241,11 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-    override fun getFeedbackList(feedbacklist: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
+    override fun getFeedbackList(feedbacklist: MutableList<Models.FeedbacksList>) {
         if (feed_back_swipe_layout != null) feed_back_swipe_layout.isRefreshing = false
         list = feedbacklist
 
-        if (!feedbackwithoutPurchage.isNullOrBlank() && feedbackwithoutPurchage.equals("0")) {
-            btn_addfedback.visibility = View.VISIBLE
 
-        } else {
-            btn_addfedback.visibility = View.GONE
-        }
         bindFeedbackList()
     }
 

@@ -123,7 +123,7 @@
                                     android:text="@string/special20"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
-                                    android:textSize="11sp"
+                                    android:textSize="@dimen/_12sdp"
                                     android:visibility="gone" />
 
                                 <TextView
@@ -291,7 +291,7 @@
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:textAllCaps="true"
                                 android:textColor="@color/black"
-                                android:textSize="11sp" />
+                                android:textSize="@dimen/_12sdp" />
                             <ImageView
                                 android:id="@+id/wishlist_season_icon"
                                 android:layout_width="40dp"
@@ -491,7 +491,7 @@ android:visibility="visible"
                                     android:text="@string/special20"
                                     android:textAllCaps="true"
                                     android:textColor="@color/black"
-                                    android:textSize="11sp"
+                                    android:textSize="@dimen/_12sdp"
                                     android:visibility="visible" />
 
                                 <TextView
@@ -545,7 +545,7 @@ android:visibility="visible"
                             <com.officinetop.officine.utils.CustomRatingBar
 
                                 android:id="@+id/workshop_item_rating"
-                                style="@style/customratingBar"
+                                style="@style/custom_ratingBar"
                                 android:layout_width="@dimen/_80sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
@@ -584,7 +584,7 @@ android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -448,7 +448,7 @@ inline fun Context.getMotKm() = getSharedPreferences("MotCarKM", Context.MODE_PR
 
 inline fun Context.saveAddress_ContactForShipping(Address: String, AddressId: String) {
     val userData = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
-    var editor = userData.edit()
+    val editor = userData.edit()
 
     editor.putString("Address", Address)
     editor.putString("AddressId", AddressId)
@@ -458,7 +458,7 @@ inline fun Context.saveAddress_ContactForShipping(Address: String, AddressId: St
 
 inline fun Context.saveContact_ContactForShipping(contactNo: String, contactId: String) {
     val userData = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
-    var editor = userData.edit()
+    val editor = userData.edit()
 
     editor.putString("contactNo", contactNo)
     editor.putString("contactId", contactId)
@@ -468,7 +468,7 @@ inline fun Context.saveContact_ContactForShipping(contactNo: String, contactId: 
 
 inline fun Context.saveServicesType(servicestype: String) {
     val userData = getSharedPreferences("Service", Context.MODE_PRIVATE)
-    var editor = userData.edit()
+    val editor = userData.edit()
     editor.putString("ServicesType", servicestype)
     editor.apply()
 
@@ -477,7 +477,7 @@ inline fun Context.saveServicesType(servicestype: String) {
 
 inline fun Context.saveCartPricesData(TotalVat: String, TotalDiscount: String, TotalPFU: String) {
     val cartData = getSharedPreferences("Cart", Context.MODE_PRIVATE)
-    var editor = cartData.edit()
+    val editor = cartData.edit()
     editor.putString("TotalVat", TotalVat)
     editor.putString("TotalDiscount", TotalDiscount)
     editor.putString("TotalPFU", TotalPFU)

@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.item_wishlist.view.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 
-class WishListAdapter(var context: Context, var wishListIterator: ArrayList<Models.WishList>) : RecyclerView.Adapter<wishListViewholder>() {
+class WishListAdapter(var context: Context, private var wishListIterator: ArrayList<Models.WishList>) : RecyclerView.Adapter<wishListViewholder>() {
 
     class wishListViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -57,8 +57,8 @@ class WishListAdapter(var context: Context, var wishListIterator: ArrayList<Mode
                 context.startActivity(context.intentFor<ProductDetailActivity>(
                         Constant.Path.productDetails to Gson().toJson(wishListIterator[position].spareProductDetail).toString(), Constant.Key.wishList to "1").forwardResults())
             } else if (wishListIterator[position].tyreProductDetail != null) {
-                var tyreString = Gson().toJson(wishListIterator[position].tyreProductDetail)
-                var selectedData: Models.TyreDetailItem = Gson().fromJson<Models.TyreDetailItem>(tyreString, Models.TyreDetailItem::class.java)
+                val tyreString = Gson().toJson(wishListIterator[position].tyreProductDetail)
+                val selectedData: Models.TyreDetailItem = Gson().fromJson<Models.TyreDetailItem>(tyreString, Models.TyreDetailItem::class.java)
                 try {
                     context.startActivity(context.intentFor<TyreDetailActivity>(
                             Constant.Path.productDetails to selectedData,

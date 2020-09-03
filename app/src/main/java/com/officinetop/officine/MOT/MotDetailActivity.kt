@@ -42,10 +42,10 @@ class MotDetailActivity : BaseActivity() {
     private var motdeatilsList: ArrayList<Models.Data> = ArrayList()
     private var mOPerationServicesList: ArrayList<Models.Operation> = ArrayList()
     lateinit var motServiceObject: Models.MotServicesList
-    lateinit var itemsData: Models.MotDetail
+    private lateinit var itemsData: Models.MotDetail
     var selectitem_position: Int = 0
     var genericAdapter: GenericAdapter<Models.Part>? = null
-    var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
+    private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     lateinit var motdata: Models.MotservicesCouponData
 
 
@@ -64,9 +64,9 @@ class MotDetailActivity : BaseActivity() {
         }
 
         button_proceed.setOnClickListener {
-            var partId: ArrayList<String> = ArrayList()
-            var couponId: ArrayList<String> = ArrayList()
-            var sellerId: ArrayList<String> = ArrayList()
+            val partId: ArrayList<String> = ArrayList()
+            val couponId: ArrayList<String> = ArrayList()
+            val sellerId: ArrayList<String> = ArrayList()
 
             if (mKPartServicesList.size != 0) {
 
@@ -150,14 +150,14 @@ class MotDetailActivity : BaseActivity() {
         val height = displayMetrics.heightPixels
         val width = displayMetrics.widthPixels
         if (mOPerationServicesList.size != 0 && mKPartServicesList.size == 0) {
-            var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                     width, height / 2)
             ll_intervalOperation.layoutParams = params
             ll_sparePart.visibility = View.GONE
             ll_intervalOperation.visibility = View.VISIBLE
             bindMotOPerationServices()
         } else if (mKPartServicesList.size != 0 && mOPerationServicesList.size == 0) {
-            var params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                     width, height / 2)
             ll_sparePart.layoutParams = params
             ll_intervalOperation.visibility = View.GONE
@@ -247,7 +247,7 @@ class MotDetailActivity : BaseActivity() {
 
             Log.e("replaceSelectID", partmod.toString())
             bindMotPartNumberServices()
-            recycler_view.getLayoutManager()!!.scrollToPosition(selectitem_position)
+            recycler_view.layoutManager!!.scrollToPosition(selectitem_position)
         }
     }
 
@@ -283,14 +283,14 @@ class MotDetailActivity : BaseActivity() {
                     holder.couponsQuantity.text = items.couponQuantity.toString()
                     if (!items.offerType.isNullOrBlank()) {
 
-                        if (items.offerType.equals("2")) {
+                        if (items.offerType == "2") {
                             holder.couponsAmount.text = getString(R.string.prepend_euro_symbol_string, items.amount.toString())
                         } else {
                             holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)
                         }
                     }
                     holder.itemView.setOnClickListener {
-                        textView.setText(items.couponTitle)
+                        textView.text = items.couponTitle
                         MotPart.couponTitle = items.couponTitle
                         MotPart.couponId = items.id
                         dismiss()

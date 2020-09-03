@@ -1,6 +1,7 @@
 package com.officinetop.officine.userprofile
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -30,14 +31,14 @@ import java.io.FileOutputStream
 
 class SyncMyContact : BaseActivity() {
 
-    var contactsInfoList: MutableList<ContactsInfo> = ArrayList()
-    lateinit var UserMobile: String
-    lateinit var ReferralCode: String
-    lateinit var shortlink: String
+    private var contactsInfoList: MutableList<ContactsInfo> = ArrayList()
+    private lateinit var UserMobile: String
+    private lateinit var ReferralCode: String
+    private lateinit var shortlink: String
 
 
     companion object {
-        val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+        const val PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +64,7 @@ class SyncMyContact : BaseActivity() {
             }
 
             override fun onQueryTextChange(searchQuery: String?): Boolean {
-                var contactsInfoList: MutableList<ContactsInfo> = ArrayList()
+                val contactsInfoList: MutableList<ContactsInfo> = ArrayList()
                 if (searchQuery?.length!! > 0) {
                     for (i in 0 until contactsInfoList.size) {
                         //Log.e("Name ===>",searchQuery)
@@ -127,7 +128,7 @@ class SyncMyContact : BaseActivity() {
                             val phoneNumValue = cursorPhone.getString(cursorPhone!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             builder.append("Contact: ").append(name).append(", Phone Number: ").append(
                                     phoneNumValue).append("\n\n")
-                            Log.e("Name ===>", phoneNumValue + "/" + name)
+                            Log.e("Name ===>", "$phoneNumValue/$name")
                             //ContactsInfo.phoneNumber=phoneNumValue
                             contactsInfoList.add(ContactsInfo(id, name, phoneNumValue))
                         }
@@ -165,12 +166,13 @@ class SyncMyContact : BaseActivity() {
                 .subscribeOn(Schedulers.newThread())
                 // .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action1 { t ->
-                    Log.v("link", "shortenUrlByGoogle" + t)
+                    Log.v("link", "shortenUrlByGoogle$t")
                     shortlink = t
                     shareimage()
                 })
     }
 
+    @SuppressLint("SetWorldReadable")
     private fun shareimage() {
         val post_image = findViewById<View>(R.id.share_image) as ImageView
         val drawable = post_image!!.drawable as BitmapDrawable
@@ -184,7 +186,7 @@ class SyncMyContact : BaseActivity() {
             file.setReadable(true, false)
             val intent = Intent(Intent.ACTION_SEND)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra(Intent.EXTRA_TEXT, "Use OfficineTop app. and Get cashback in your wallet. Use my link " + shortlink)
+            intent.putExtra(Intent.EXTRA_TEXT, "Use OfficineTop app. and Get cashback in your wallet. Use my link $shortlink")
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(file.toString()))
             intent.type = "image/png"

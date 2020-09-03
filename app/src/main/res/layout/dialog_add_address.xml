@@ -66,7 +66,8 @@
                     android:hint="@string/street"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
 
                 <EditText
                     android:visibility="gone"
@@ -79,7 +80,8 @@
                     android:hint="@string/apartment"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
                 <EditText
                     android:visibility="gone"
                     android:id="@+id/edt_entered_city"
@@ -91,7 +93,8 @@
                     android:hint="@string/city"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
                 <EditText
                     android:visibility="gone"
                     android:id="@+id/edt_entered_state"
@@ -103,7 +106,8 @@
                     android:hint="@string/state"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
 
 
 
@@ -118,7 +122,8 @@
                     android:hint="@string/Zip_Code"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:layout_width="match_parent"

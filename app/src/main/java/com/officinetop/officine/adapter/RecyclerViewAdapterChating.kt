@@ -12,7 +12,7 @@ import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.Support_Activity
 import com.officinetop.officine.utils.parseServerDateTime
 
-class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, val supportActivity: Support_Activity) : RecyclerView.Adapter<RecyclerViewAdapterChating.ChatViewHolder>() {
+class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, private val supportActivity: Support_Activity) : RecyclerView.Adapter<RecyclerViewAdapterChating.ChatViewHolder>() {
 
     private var VIEW_TYPE_SEND: Int = 0
 
@@ -63,7 +63,7 @@ class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, val sup
             val message_body = itemView.findViewById(R.id.message_body) as TextView
             Log.d("sendString support", chat.messages)
             val message_time = itemView.findViewById(R.id.message_time) as TextView
-            var special = "'"
+            val special = "'"
             if (chat.messages.contains(special)){
                 message_body.text= chat.messages.substring(1, chat.messages.length-1);
 

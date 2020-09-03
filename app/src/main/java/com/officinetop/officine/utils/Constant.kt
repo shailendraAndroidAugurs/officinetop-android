@@ -192,6 +192,7 @@ object Constant {
         const val getUserSavedAddress = "customer_address"
         const val kromedaCall = "save_maintenance_kromeda_call"
         const val motServiceSchedule = "mot_service_schedule"
+        const val carMaintenanceCriteria = "car_maintenance_criteria"
 
     }
 
@@ -224,6 +225,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val saved_car_json = "saved_car_json"
         const val show_add_car_dialog = "show_add_car_dialog"
         const val is_quotes = "is_quotes"
+
         const val is_workshop = "is_workshop"
         const val is_revision = "is_revision"
         const val is_tyre = "is_tyre"
@@ -236,6 +238,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val productDetail = "productDetail"
         const val workshopCategoryDetail = "workshopCategoryDetail"
         const val workshopAssembledDetail = "workshopAssembledDetail"
+
         const val workshopCalendarPrice = "workshopCalendarPrice"
 
         const val PartIdMap = "partIdmap"

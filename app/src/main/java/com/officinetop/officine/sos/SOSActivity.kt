@@ -139,9 +139,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     .addOnConnectionFailedListener(this).build()
             googleApiClient!!.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            locationRequest.setInterval(10 * 1000)
-            locationRequest.setFastestInterval(2 * 1000)
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 10 * 1000
+            locationRequest.fastestInterval = 2 * 1000
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
 
@@ -240,10 +240,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     //val view = LayoutInflater.from(this@SOSActivity).inflate(R.layout.map_layout,null)
                     val binding: MapLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(this@SOSActivity), R.layout.map_layout, null, false)
                     binding.data = allWrakerService
-                    binding.address1.text = if (!allWrakerService.address1.toString().isNullOrBlank() && !allWrakerService.address1.toString().equals("null")) allWrakerService.address1.toString() else "" //allWrakerService.address1.takeIf { !it.isNullOrEmpty() }
-                    binding.address2.text = if (!allWrakerService.address2.toString().isNullOrBlank() && !allWrakerService.address2.toString().equals("null")) allWrakerService.address2.toString() else ""
-                    binding.mobileNumber.text = if (!allWrakerService.mobileNumber.toString().isNullOrBlank() && !allWrakerService.mobileNumber.toString().equals("null")) allWrakerService.mobileNumber.toString() else ""//allWrakerService.mobileNumber.toString().takeIf { !it.isNullOrEmpty() }
-                    binding.workshopName.text = if (!allWrakerService.WorkshopName.toString().isNullOrBlank() && !allWrakerService.WorkshopName.toString().equals("null")) allWrakerService.WorkshopName.toString() else ""//allWrakerService.WorkshopName.toString().takeIf { !it.isNullOrEmpty() }
+                    binding.address1.text = if (!allWrakerService.address1.toString().isNullOrBlank() && allWrakerService.address1.toString() != "null") allWrakerService.address1.toString() else "" //allWrakerService.address1.takeIf { !it.isNullOrEmpty() }
+                    binding.address2.text = if (!allWrakerService.address2.toString().isNullOrBlank() && allWrakerService.address2.toString() != "null") allWrakerService.address2.toString() else ""
+                    binding.mobileNumber.text = if (!allWrakerService.mobileNumber.toString().isNullOrBlank() && allWrakerService.mobileNumber.toString() != "null") allWrakerService.mobileNumber.toString() else ""//allWrakerService.mobileNumber.toString().takeIf { !it.isNullOrEmpty() }
+                    binding.workshopName.text = if (!allWrakerService.WorkshopName.toString().isNullOrBlank() && allWrakerService.WorkshopName.toString() != "null") allWrakerService.WorkshopName.toString() else ""//allWrakerService.WorkshopName.toString().takeIf { !it.isNullOrEmpty() }
 
                     return binding.root
                 }
@@ -335,7 +335,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                     showInfoDialog(body.optString("message")) {
                                         //check also by status code , if 1 then booking inserted .
                                         if (body.has("status_code") && body.get("status_code") != null) {
-                                            if (body.get("status_code").equals(1)) {
+                                            if (body.get("status_code") == 1) {
                                                 val serviceModel: Models.ServiceBookingModel = Models.ServiceBookingModel(0, getCurrentTime(), "", 0.0, "SOS Service", Gson().toJson(items).toString(), selectedFormattedDate)
                                                 val cartItem = Models.CartItem(serviceModel = serviceModel)
                                                 cartItem.type = Constant.type_workshop
@@ -400,10 +400,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 holder.rootview.setOnClickListener {}
                 holder.workshopEmergency.setOnClickListener {
                     /*dialogForEmergency(items)*/
-                    navigateToWorkshopList(items, userId, true, false)
+                    navigateToWorkshopList(items, userId, isEmergency = true, isAppointment = false)
                 }
                 holder.workshopAppointment.setOnClickListener {
-                    navigateToWorkshopList(items, userId, false, true)
+                    navigateToWorkshopList(items, userId, isEmergency = false, isAppointment = true)
                 }
             }
 
@@ -454,7 +454,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         fun onClickEvent(flag: Boolean)
     }
 
-    fun setSOSListener(sosActivityListener: SOSActivityListener, items: Models.WrackerServices) {
+    private fun setSOSListener(sosActivityListener: SOSActivityListener, items: Models.WrackerServices) {
         this.sosActivityListener = sosActivityListener
         sosActivityListener.let {
             items.sosActivityListener = it
@@ -489,10 +489,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun getcurrentlocation() {
+    private fun getcurrentlocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient?.lastLocation?.addOnCompleteListener(this) { task ->
-            var location: Location? = task.result
+            val location: Location? = task.result
             Log.e("latitudecurrentlocation", location.toString() + "location")
             if (location == null) {
                 requestNewLocationData()
@@ -500,7 +500,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() &&!UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
                 {
                     mLatitude=UserSavedLatitude
                             mLongitude=UserSavedLogitude
@@ -516,7 +516,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        var mLocationRequest = LocationRequest()
+        val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
@@ -530,7 +530,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
+            val mLastLocation: Location = locationResult.lastLocation
             Log.e("latitudemLastLocation", mLastLocation?.latitude.toString())
             mLatitude = mLastLocation!!.latitude.toString()
             mLongitude = mLastLocation!!.longitude.toString()
@@ -541,7 +541,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     private fun loadmapview() {
         mMap.isMyLocationEnabled = true
         if (mLatitude != null && mLongitude != null) {
-            var myLocation = LatLng(mLatitude!!.toDouble(),
+            val myLocation = LatLng(mLatitude!!.toDouble(),
                     mLongitude!!.toDouble())
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10f))
             mMap?.addMarker(MarkerOptions()

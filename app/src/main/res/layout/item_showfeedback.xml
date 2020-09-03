@@ -85,7 +85,7 @@
 
                     <com.officinetop.officine.utils.CustomRatingBar
                         android:id="@+id/ratngbar_ratingFeedback"
-                        style="@style/customratingBar"
+                        style="@style/custom_ratingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_gravity="center"

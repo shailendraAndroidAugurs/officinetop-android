@@ -140,7 +140,30 @@
                         app:spinnerHint="@string/sel_version" />
 
                 </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_criteria"
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:visibility="gone"
+                    android:paddingBottom="0dp"
+                    android:text="@string/criteria" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.isapanah.awesomespinner.AwesomeSpinner
+                        android:id="@+id/spinner_criteria"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:spinnerHint="@string/sel_version" />
+
+                </FrameLayout>
 
 
               <LinearLayout
@@ -170,7 +193,8 @@
                           android:layout_height="match_parent"
                           android:hint="@string/car_km_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -195,7 +219,8 @@
                           android:layout_height="match_parent"
                           android:hint="@string/car_km_annual_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -250,7 +275,8 @@
 
                           android:hint="@string/car_km_revision_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -359,7 +385,8 @@
                             android:maxLines="1"
                             android:padding="10dp"
 
-                            android:textAllCaps="true" />
+                            android:textAllCaps="true"
+                            android:importantForAutofill="no" />
 
                         <ImageView
                             android:id="@+id/search_plate"

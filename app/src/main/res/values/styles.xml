@@ -225,7 +225,7 @@
         <item name="cardBackgroundColor">@color/gray</item>
         <item name="android:paddingBottom">@dimen/_5sdp</item>
     </style>
-    <style name="customratingBar" parent="RatingBarSmall">
+    <style name="custom_ratingBar" parent="RatingBarSmall">
         <item name="srb_isIndicator">true</item>
         <item name="srb_borderColor">@color/theme_orange</item>
         <item name="srb_fillColor">@color/theme_orange</item>

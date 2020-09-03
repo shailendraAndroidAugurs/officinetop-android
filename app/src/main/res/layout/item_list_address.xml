@@ -73,13 +73,13 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_5sdp"
 
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_landMark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"></TextView>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_ZipCode"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_5sdp"
 
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>

@@ -36,7 +36,7 @@ import org.jetbrains.anko.intentFor
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-    lateinit var connectionCallback: Merlin
+    private lateinit var connectionCallback: Merlin
     private var LOCATION_RQ = 10001
     private var currentLatLong: LatLng? = LatLng(0.0, 0.0)
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -49,7 +49,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         connectionCallback.registerDisconnectable {
             showInfoDialog(getString(R.string.Connection_Error))
         }
-        if (getLangLocale() != null && !getLangLocale().equals("")) {
+        if ( getLangLocale() != "") {
             setAppLanguage()
         } else {
             storeLangLocale("it")
@@ -82,16 +82,16 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         when (item?.itemId) {
             android.R.id.home -> finish()
             R.id.item_home_options -> {
-                var menuBuilder = MenuBuilder(this)
-                var menuInflater = MenuInflater(this)
+                val menuBuilder = MenuBuilder(this)
+                val menuInflater = MenuInflater(this)
                 menuInflater.inflate(R.menu.menu_navigation_options, menuBuilder)
 
-                var menuPopUpHelper = MenuPopupHelper(this, menuBuilder, findViewById(R.id.item_home_options))
+                val menuPopUpHelper = MenuPopupHelper(this, menuBuilder, findViewById(R.id.item_home_options))
                 menuPopUpHelper.setForceShowIcon(true)
 
                 menuBuilder.setCallback(object : MenuBuilder.Callback {
                     override fun onMenuItemSelected(menu: MenuBuilder, item: MenuItem): Boolean {
-                        startActivity(intentFor<HomeActivity>("fragmentID" to item?.itemId))
+                        startActivity(intentFor<HomeActivity>("fragmentID" to item.itemId))
                         finishAffinity()
 
                         return true
@@ -123,7 +123,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
-            var locationList = locationResult?.locations
+            val locationList = locationResult?.locations
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
@@ -133,7 +133,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && !UserSavedLatitude.equals("0.0") && !UserSavedLogitude.equals("0.0"))
+                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
                     storeLatLong(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 else {
                     if (currentLatLong?.latitude != 0.0 && currentLatLong?.longitude != 0.0) {
@@ -154,9 +154,9 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                     .addOnConnectionFailedListener(this).build()
             googleApiClient!!.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            locationRequest.setInterval(10 * 1000)
-            locationRequest.setFastestInterval(2 * 1000)
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 10 * 1000
+            locationRequest.fastestInterval = 2 * 1000
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
             val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())

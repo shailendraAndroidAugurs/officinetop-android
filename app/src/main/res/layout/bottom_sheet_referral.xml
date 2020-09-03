@@ -34,7 +34,9 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/entercode"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"/>
+            android:layout_height="@dimen/_45sdp"
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/referralBtn"

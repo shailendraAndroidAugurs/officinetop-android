@@ -56,7 +56,7 @@ import retrofit2.Response
 
 class FragmentHome : Fragment() {
 
-    var AdvertisementImagearray: ArrayList<Models.AdvertisingImages> = ArrayList<Models.AdvertisingImages>()
+    private var AdvertisementImagearray: ArrayList<Models.AdvertisingImages> = ArrayList<Models.AdvertisingImages>()
 
     private lateinit var rootView: View
 
@@ -147,10 +147,8 @@ class FragmentHome : Fragment() {
 
 
         rootView.home_More_feedback.setOnClickListener {
-            var fragmentChangeListener: FragmentChangeListener = (activity) as FragmentChangeListener
-            if (fragmentChangeListener != null) {
-                fragmentChangeListener.replaceFragment(FragmentFeedback())
-            }
+            val fragmentChangeListener: FragmentChangeListener = (activity) as FragmentChangeListener
+            fragmentChangeListener?.replaceFragment(FragmentFeedback())
 
         }
     }
@@ -163,11 +161,11 @@ class FragmentHome : Fragment() {
                     response?.let {
                         if (response.isSuccessful) {
                             try {
-                                var body = JSONObject(response.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
-                                    var allAdvertismentList = gson.fromJson(jsonarray.toString(), Array<Models.AllAdvertisment>::class.java).toCollection(java.util.ArrayList<Models.AllAdvertisment>())
+                                    val allAdvertismentList = gson.fromJson(jsonarray.toString(), Array<Models.AllAdvertisment>::class.java).toCollection(java.util.ArrayList<Models.AllAdvertisment>())
                                     for (n in 0 until allAdvertismentList.size) {
                                         if (!allAdvertismentList[n].addLocation.isNullOrBlank() && allAdvertismentList[n].addLocation == "HOME" && allAdvertismentList[n].advertisingImages.size != 0) {
                                             AdvertisementImagearray.addAll(allAdvertismentList[n].advertisingImages)
@@ -283,12 +281,12 @@ class FragmentHome : Fragment() {
 
                         if (response.isSuccessful) {
                             try {
-                                var body = JSONObject(response.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 Log.d("highRatingApicall", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
-                                    var productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
+                                    val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
 
                                     if (type == "1") {
                                         getHighRatingProductData(productOrworkshopFeedback)
@@ -385,10 +383,10 @@ class FragmentHome : Fragment() {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                var action: Int = e.getAction();
+                                val action: Int = e.action;
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true);
 
                                 }
                                 return false;
@@ -523,10 +521,10 @@ class FragmentHome : Fragment() {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                var action: Int = e.getAction();
+                                val action: Int = e.action;
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true);
 
                                 }
                                 return false;

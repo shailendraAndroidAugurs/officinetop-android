@@ -25,7 +25,9 @@
             android:singleLine="true"
             android:id="@+id/search_field"
             android:hint="@string/SearchProducts"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/search_btn"

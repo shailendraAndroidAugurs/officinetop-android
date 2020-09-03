@@ -61,7 +61,9 @@ class AddVehicleActivity : BaseActivity() {
     val manufacturers: MutableList<Models.Manufacturer> = ArrayList()
     val model: MutableList<Models.CarModels> = ArrayList()
     var carVersions: MutableList<Models.CarVersion> = ArrayList()
-    var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
+    var carCriteriaList: MutableList<Models.MotSchedule> = ArrayList()
+
+    private var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
 
     var myCar: Models.MyCarDataSet? = null
 
@@ -69,7 +71,7 @@ class AddVehicleActivity : BaseActivity() {
     var isForPlateno = false
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
-
+private var carcriteriaId=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_vehicle)
@@ -85,7 +87,7 @@ class AddVehicleActivity : BaseActivity() {
         spinner_manufacturer.setDownArrowTintColor(Color.LTGRAY)
         spinner_version.setDownArrowTintColor(Color.LTGRAY)
         spinner_fuel.setDownArrowTintColor(Color.LTGRAY)
-
+        spinner_criteria.setDownArrowTintColor(Color.LTGRAY)
         spinner_fuel.setSpinnerHint("Select Fuel Type")
 
         myCar = intent.getSerializableExtra(Constant.Key.myCar) as Models.MyCarDataSet?
@@ -194,6 +196,7 @@ class AddVehicleActivity : BaseActivity() {
     private fun clearSpinners() {
         spinner_model.clearSelection()
         spinner_version.clearSelection()
+        spinner_criteria.clearSelection()
         spinner_fuel.clearSelection()
     }
 
@@ -213,7 +216,7 @@ class AddVehicleActivity : BaseActivity() {
         override fun onBindViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
 
             if (viewHolder is FooterHolderView) {
-                var itemHolder: FooterHolderView = viewHolder
+                val itemHolder: FooterHolderView = viewHolder
                 itemHolder.itemView.image_picker.setOnClickListener {
 
                     val permission = ContextCompat.checkSelfPermission(this@AddVehicleActivity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -226,14 +229,14 @@ class AddVehicleActivity : BaseActivity() {
             } else if (viewHolder is CarImageHolderView) {
 
                 try {
-                    var itemHolder: CarImageHolderView = viewHolder
+                    val itemHolder: CarImageHolderView = viewHolder
 
-                    var carImage: ImageView = itemHolder.itemView.findViewById(R.id.car_image)
-                    var deleteCarImage: ImageView = itemHolder.itemView.findViewById(R.id.delete_car_image)
+                    val carImage: ImageView = itemHolder.itemView.findViewById(R.id.car_image)
+                    val deleteCarImage: ImageView = itemHolder.itemView.findViewById(R.id.delete_car_image)
 
                     if (position < carImageList.size) {
-                        var carImageModel = myCar!!.carImages[position]
-                        var carImageURL = Constant.imageBaseURL + carImageModel.imageName
+                        val carImageModel = myCar!!.carImages[position]
+                        val carImageURL = Constant.imageBaseURL + carImageModel.imageName
                         Glide.with(this@AddVehicleActivity)
                                 .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_car).error(R.drawable.ic_car))
                                 .load(carImageURL)
@@ -254,7 +257,7 @@ class AddVehicleActivity : BaseActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-            var view: View
+            val view: View
             if (viewType == TYPE_FOOTER) {
                 view = LayoutInflater.from(this@AddVehicleActivity).inflate(R.layout.item_add_car_image, parent, false)
                 return FooterHolderView(view)
@@ -314,7 +317,7 @@ class AddVehicleActivity : BaseActivity() {
 
 
         if (spinner_version.selectedItemPosition < 0 || spinner_manufacturer.selectedItemPosition < 0
-                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0) {
+                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0||carcriteriaId!=null) {
             snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
             return
         } else {
@@ -660,7 +663,85 @@ class AddVehicleActivity : BaseActivity() {
 
         })
     }
+    private fun loadCarCriteria(SelectedVersioId: String) {
 
+        progressDialog.show()
+
+        RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId,"ITA" ).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                progressDialog.dismiss()
+                snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("AddVehicleActivity", "onResponse: car criteria")
+                val body = response.body()?.string()
+                progressDialog.dismiss()
+
+                if (isStatusCodeValid(body)) {
+                    carCriteriaList.clear()
+
+                    val dataset = getDataSetArrayFromResponse(body)
+
+                    for (i in 0 until dataset.length()) {
+                        Log.d("AddVehicleActivity", "onResponse: forloop criteria")
+                        val carCriteria = dataset.getJSONObject(i)
+                        val criteria = Gson().fromJson<Models.MotSchedule>(carCriteria.toString(), Models.MotSchedule::class.java)
+                        Log.d("AddVehicleActivity", "onResponse: forloop ${criteria}")
+
+                        carCriteriaList.add(criteria)
+
+
+                    }
+
+                    val titlesfor: MutableList<String> = ArrayList()
+                    titlesfor.clear()
+                 if(carCriteriaList.size>1) {
+                     var selectedIndex = -1
+                     tv_criteria.visibility=View.VISIBLE
+                     spinner_criteria.visibility=View.VISIBLE
+                     carCriteriaList.forEachWithIndex { i, it ->
+                         val title = "${it.service_schedule_description + ","}"
+                         if (true) {
+                             titlesfor.add(title)
+
+                             if (isForEdit) {
+                                 if (it.schedule_id == myCar?.carVersionModel?.idVehicle)
+
+                                     selectedIndex = i
+                             }
+
+                         } else carCriteriaList.removeAt(i)
+                     }
+
+                     bindSpinner(spinner_criteria, titlesfor)
+
+                     if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
+                         spinner_criteria.setSelection(selectedIndex)
+                     }
+
+                 }else if(carCriteriaList.size==1){
+                     carcriteriaId=carCriteriaList[0].schedule_id
+                 }
+
+                    spinner_criteria.setOnSpinnerItemClickListener { position, _ ->
+                        carcriteriaId=carCriteriaList[position].schedule_id
+
+                    }
+
+
+
+                    isLoaded = true
+
+                }
+
+            }
+
+
+        })
+
+
+    }
     private fun loadCarVersion(modelID: String, year: String) {
 
         progressDialog.show()
@@ -800,15 +881,15 @@ class AddVehicleActivity : BaseActivity() {
         if (selIndex > -1 && titles.size > selIndex) {
             spinner_version.setSelection(selIndex)
         }
-       /* Log.d("AddVehicleActivity","onResponse: carversion  car version id  "+myCar?.carVersionModel?.idVehicle.toString())
-        Log.d("AddVehicleActivity","onResponse: carversion  car index  "+ selIndex)
-        Log.d("AddVehicleActivity","onResponse: carversion data  "+ carVersions.toString())
-*/
+        spinner_version.setOnSpinnerItemClickListener { position, _ ->
+
+            loadCarCriteria(finalCarVersion[position].version)
+        }
 
 
         if (isForPlateno) {
             Log.d("isForPlateno :  ",isForPlateno.toString())
-            setNotEditable_SeachFromPlatno()
+            setNotEditable_SearchFromPlatno()
         }
 
     }
@@ -1154,11 +1235,11 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun getEmptyAdapter() = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOf())
 
-    private fun setNotEditable_SeachFromPlatno() {
-        spinner_manufacturer.setSpinnerEnable(false)
-        spinner_model.setSpinnerEnable(false)
-        spinner_fuel.setSpinnerEnable(false)
-        spinner_version.setSpinnerEnable(false)
+    private fun setNotEditable_SearchFromPlatno() {
+        spinner_manufacturer.isSpinnerEnable = false
+        spinner_model.isSpinnerEnable = false
+        spinner_fuel.isSpinnerEnable = false
+        spinner_version.isSpinnerEnable = false
 
 
 

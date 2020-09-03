@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 
 class RevisionActivity : BaseActivity() {
 
-    lateinit var revisionServiceAdapter: RevisionServiceAdapter
-    var revisionServiceList: MutableList<RevDataSetItem?>? = ArrayList()
+    private lateinit var revisionServiceAdapter: RevisionServiceAdapter
+    private var revisionServiceList: MutableList<RevDataSetItem?>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

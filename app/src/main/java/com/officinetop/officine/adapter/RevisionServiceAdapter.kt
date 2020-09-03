@@ -14,8 +14,8 @@ import org.jetbrains.anko.intentFor
 
 class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<RevDataSetItem?>?): RecyclerView.Adapter<RevisionServiceAdapter.RevisionServiceViewHolder>() {
 
-    lateinit var mContext: Context
-    var mRevisionServiceList: MutableList<RevDataSetItem?>?
+    private lateinit var mContext: Context
+    private var mRevisionServiceList: MutableList<RevDataSetItem?>?
 
     init {
         mContext = context
@@ -23,7 +23,7 @@ class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RevisionServiceViewHolder {
-    var view = LayoutInflater.from(mContext).inflate(R.layout.item_revision_service_cell, parent, false)
+    val view = LayoutInflater.from(mContext).inflate(R.layout.item_revision_service_cell, parent, false)
         return RevisionServiceViewHolder(view)
     }
 

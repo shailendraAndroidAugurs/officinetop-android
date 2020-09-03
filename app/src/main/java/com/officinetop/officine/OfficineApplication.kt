@@ -25,7 +25,7 @@ class OfficineApplication : Application() {
         if (isLoggedIn()) {
             getUserAppSettings()
         }
-        if (getLangLocale() != null && !getLangLocale().equals("")) {
+        if (getLangLocale() != null && getLangLocale() != "") {
             setAppLanguage()
         } else {
             storeLangLocale("it")
@@ -50,7 +50,7 @@ class OfficineApplication : Application() {
 
                                     val fulldata = data.getJSONObject("data")
                                     Log.d("DefaultLanguage", "From Login:" + fulldata.getString("lang"))
-                                    if (!getLangLocale().equals(fulldata.getString("lang"))) {
+                                    if (getLangLocale() != fulldata.getString("lang")) {
                                         UpdateSettings(getLangLocale())
 
                                     }

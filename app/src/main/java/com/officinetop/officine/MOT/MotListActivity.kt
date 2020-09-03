@@ -148,7 +148,7 @@ class MotListActivity : BaseActivity() {
 
                                         }
                                         if (mMotScheduleData.size > 1) {
-                                            Log.d("MotList","mMotScheduleData  "+mMotScheduleData.toString())
+                                            Log.d("MotList", "mMotScheduleData  $mMotScheduleData")
 
                                             ll_carcondition.visibility = View.VISIBLE
                                             bindSpinner()

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_checkbox.view.*
 
 class CheckboxAdapter(private val titles: List<String>) : RecyclerView.Adapter<CheckboxAdapter.ViewHolder>() {
 
-    var onCheckedListener: OnCheckedListener? = null
+    private var onCheckedListener: OnCheckedListener? = null
         set(listener) {
             field = listener
         }

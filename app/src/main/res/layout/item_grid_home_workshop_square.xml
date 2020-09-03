@@ -48,7 +48,7 @@
                 android:textColor="@color/black" />
             <com.officinetop.officine.utils.CustomRatingBar
 
-                style="@style/customratingBar"
+                style="@style/custom_ratingBar"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:id="@+id/ratngbar_rating"

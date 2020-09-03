@@ -98,7 +98,7 @@ object Constants {
      *
      * @value #PAYMENT_GATEWAY_TOKENIZATION_NAME
      */
-    const val PAYMENT_GATEWAY_TOKENIZATION_NAME = "example"
+    private const val PAYMENT_GATEWAY_TOKENIZATION_NAME = "example"
 
     /**
      * Custom parameters required by the processor/gateway.

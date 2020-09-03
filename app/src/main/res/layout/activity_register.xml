@@ -54,7 +54,8 @@
             android:hint="@string/name"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textCapWords" />
+            android:inputType="textCapWords"
+            android:importantForAutofill="no" />
 
 
         <TextView
@@ -77,7 +78,8 @@
             android:visibility="gone"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textCapWords" />
+            android:inputType="textCapWords"
+            android:importantForAutofill="no" />
 
 
 
@@ -98,7 +100,8 @@
             android:hint="@string/email"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -119,7 +122,7 @@
             android:background="@drawable/rectangle_gray_empty"
             android:inputType="phone"
             android:maxLength="14"
-            />
+            android:importantForAutofill="no" />
 
 
         <TextView
@@ -140,7 +143,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:maxLength="50"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:importantForAutofill="no" />
 
 
             <CheckBox
@@ -170,7 +174,7 @@
             android:padding="10dp"
             android:inputType="textPassword"
             android:visibility="gone"
-            />
+            android:importantForAutofill="no" />
     </LinearLayout>
 
 

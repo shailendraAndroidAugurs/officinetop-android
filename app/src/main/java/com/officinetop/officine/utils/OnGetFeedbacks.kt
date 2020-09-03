@@ -4,6 +4,6 @@ import com.officinetop.officine.data.Models
 
 interface OnGetFeedbacks {
 
-    fun getFeedbackList(list: MutableList<Models.FeedbacksList>,feedbackwithoutPurchage:String)
+    fun getFeedbackList(list: MutableList<Models.FeedbacksList>)
 
 }
