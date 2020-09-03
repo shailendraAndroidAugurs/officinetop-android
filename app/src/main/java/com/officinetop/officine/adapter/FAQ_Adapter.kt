@@ -26,7 +26,7 @@ class FAQ_Adapter(private val context :Context,private val faqList: List<Models.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-           if(!faqList[position].title.isNullOrBlank() || !faqList[position].title.equals("")) {
+           if(!faqList[position].title.isNullOrBlank() || faqList[position].title != "") {
                holder.question.text=faqList[position].title
 
                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -40,7 +40,7 @@ class FAQ_Adapter(private val context :Context,private val faqList: List<Models.
            }
 
 
-            if(!faqList[position].terms_conditions_detail.isNullOrBlank() || !faqList[position].terms_conditions_detail.equals("")) {
+            if(!faqList[position].terms_conditions_detail.isNullOrBlank() || faqList[position].terms_conditions_detail != "") {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     holder.answers.text= Html.fromHtml(faqList[position].terms_conditions_detail,Html.FROM_HTML_MODE_LEGACY)
                 }else{

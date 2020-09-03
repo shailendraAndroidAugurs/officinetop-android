@@ -30,9 +30,9 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
 
         getCartApi()
 
-        val btn_click_me = findViewById(R.id.proceed_to_pay) as Button
+
         // set on-click listener
-        btn_click_me.setOnClickListener {
+        proceed_to_pay.setOnClickListener {
             if (!cart_total_item_price.text.isNullOrEmpty() && !cart_total_price.text.isNullOrBlank()&& !cart_total_service_price.text.isNullOrBlank()) {
 
 

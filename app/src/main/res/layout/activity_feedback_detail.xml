@@ -35,7 +35,7 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <com.officinetop.officine.utils.CustomRatingBar
-                    style="@style/customratingBar"
+                    style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_80sdp"
                     android:id="@+id/ratings"
 

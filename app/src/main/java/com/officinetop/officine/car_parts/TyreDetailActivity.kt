@@ -51,8 +51,8 @@ import kotlin.collections.HashMap
 
 class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var tyreType: String = ""
-    lateinit var imageDialog: Dialog
-    lateinit var dialogSlider: SliderLayout
+    private lateinit var imageDialog: Dialog
+    private lateinit var dialogSlider: SliderLayout
     private var disableSliderTouch = false
     private var productDetails: Models.TyreDetailItem? = null
     private var selectedProductID = 0
@@ -167,7 +167,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 productTotalPrices.visibility = View.GONE
                 product_price_.text = getString(R.string.tyre_price_total, "0.0")
                 item_qty.text = "0"
-            } else if (price.isNullOrEmpty() || price.equals("null") || price.equals("0") || price.equals("0.0")) {
+            } else if (price.isNullOrEmpty() || price == "null" || price == "0" || price == "0.0") {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
 
@@ -349,7 +349,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 if (productIsPair) {
                     qty_text += 2
                     setTotalPriceForQty(qty_text.toString().toInt())
-                    if (!minimumServicePrices.equals("")) {
+                    if (minimumServicePrices != "") {
                         Log.d("tyre", "minimum prices * quntity" + (minimumServicePrices.toDouble() * qty_text).toString())
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (minimumServicePrices.toDouble() * qty_text).toString())})"
                     }
@@ -359,7 +359,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     Log.d("tyreDetail", "nonpair" + "yes")
                     qty_text += 1
                     setTotalPriceForQty(qty_text.toString().toInt())
-                    if (!minimumServicePrices.equals("")) {
+                    if (minimumServicePrices != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (minimumServicePrices.toDouble() * qty_text).toString())})"
                     }
                     item_qty.text = qty_text.toString()
@@ -375,13 +375,13 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     qty_text -= 2
                     item_qty.text = (qty_text).toString()
                     setTotalPriceForQty(item_qty.text.toString().toInt())
-                    if (!minimumServicePrices.equals("")) {
+                    if (minimumServicePrices != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (minimumServicePrices.toDouble() * qty_text).toString())})"
                     }
                 } else {
                     qty_text -= 1
                     item_qty.text = qty_text.toString()
-                    if (!minimumServicePrices.equals("")) {
+                    if (minimumServicePrices != "") {
                         buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (minimumServicePrices.toDouble() * qty_text).toString())})"
                     }
 
@@ -416,7 +416,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 val data = getDataFromResponse(it)
                                 data?.let {
 
-                                    var tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it.toString(), Models.TyreDetailData::class.java)
+                                    val tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it.toString(), Models.TyreDetailData::class.java)
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
                                         delivery_date.text = getDate(tyreDetailData.delivery_days.toInt() + 1)
                                         Deliverydays = tyreDetailData.delivery_days
@@ -478,7 +478,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         ll_wheel_size.visibility = if (!detail.max_width.isNullOrEmpty() && !detail.max_aspect_ratio.isNullOrEmpty() && !detail.max_diameter.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_seson_type.visibility = if (!detail.type.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_speed_index.visibility = if (!detail.speed_index.isNullOrEmpty()) View.VISIBLE else View.GONE
-        ll_tyre_grip.visibility = if (!detail.equals("--") || !detail.wetGrip.isNullOrEmpty()) View.VISIBLE else View.GONE
+        ll_tyre_grip.visibility = if ( !detail.wetGrip.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_ean_no.visibility = if (!detail.ean_number.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_three_peak_mountain_snowflake.visibility = if (detail.type.equals("w")) View.VISIBLE else View.GONE
 
@@ -522,7 +522,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         product_price.text =
                 if (intent.hasExtra(Constant.Path.productType) && intent.getStringExtra(Constant.Path.productType).equals("tyre", true)) {
-                    getString(R.string.prepend_euro_symbol_string, productPrice + " PFU")
+                    getString(R.string.prepend_euro_symbol_string, "$productPrice PFU")
                 } else {
                     getString(R.string.prepend_euro_symbol_string, productPrice)
                 }
@@ -645,8 +645,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
     }
 
-    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>, feedbackwithoutPurchage: String) {
-        bindFeedbackList(list, this,feedbackwithoutPurchage)
+    override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
+        bindFeedbackList(list, this)
     }
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, couponType: String, AppliedCouponName: TextView, productDetails: Models.TyreDetailItem?) {
@@ -684,7 +684,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     holder.couponsQuantity.text = items.couponQuantity.toString()
                     if (!items.offerType.isNullOrBlank()) {
 
-                        if (items.offerType.equals("2")) {
+                        if (items.offerType == "2") {
                             holder.couponsAmount.text = getString(R.string.prepend_euro_symbol_string, items.amount.toString())
                         } else {
                             holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)
@@ -727,7 +727,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.show()
     }
 
-    fun getSimilarProduct(productId: String) {
+    private fun getSimilarProduct(productId: String) {
         //val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
@@ -750,7 +750,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                                             if (productData.has("data_set") && !productData.isNull("data_set")) {
                                                 val jsonArray = JSONArray(JSONObject(it).getString("data_set"))
                                                 val gson = GsonBuilder().create()
-                                                var Smilar_Product: ArrayList<Models.TyreDetailItem> = gson.fromJson(jsonArray.toString(), Array<Models.TyreDetailItem>::class.java).toCollection(java.util.ArrayList<Models.TyreDetailItem>())
+                                                val Smilar_Product: ArrayList<Models.TyreDetailItem> = gson.fromJson(jsonArray.toString(), Array<Models.TyreDetailItem>::class.java).toCollection(java.util.ArrayList<Models.TyreDetailItem>())
                                                 loadProductRecommendationGridListForTyre(product_recommendation_recycler_view, Smilar_Product)
 
                                             } else {
@@ -767,7 +767,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                         })
     }
 
-    fun setDetailedInformation(tyreDetailData: Models.TyreDetailData) {
+    private fun setDetailedInformation(tyreDetailData: Models.TyreDetailData) {
         Log.d("setDatainUI:", "yes")
         if (tyreDetailData.rolling_resistance_arr != null) {
 

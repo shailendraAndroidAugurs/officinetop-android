@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:rsb="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -87,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -100,7 +99,7 @@
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/brand"></TextView>
+                    android:text="@string/brand" />
 
                 <TextView
                    android:paddingLeft="@dimen/_15sdp"
@@ -117,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -130,7 +129,7 @@
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/rating"></TextView>
+                    android:text="@string/rating" />
 
                 <TextView
                     android:id="@+id/tv_Rating_name"
@@ -147,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -160,7 +159,7 @@
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/season"></TextView>
+                    android:text="@string/season" />
 
                 <TextView
                     android:id="@+id/tv_season_name"
@@ -177,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -191,7 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/speed_load_index"></TextView>
+                    android:text="@string/speed_load_index" />
 
                 <TextView
                     android:id="@+id/tv_Speed_load_Index_name"
@@ -208,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:id="@+id/ll_item_Speed_index"
@@ -220,7 +219,7 @@
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/speed_index"></TextView>
+                    android:text="@string/speed_index" />
 
                 <TextView
                     android:id="@+id/tv_Speed_Index_name"
@@ -237,7 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -251,14 +250,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/show_only_fav"></TextView>
+                    android:text="@string/show_only_fav" />
 
                 <Switch
                     android:id="@+id/switch_OnlyFav"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_weight="1"></Switch>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -266,7 +265,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -280,14 +279,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/show_only_offers"></TextView>
+                    android:text="@string/show_only_offers" />
 
                 <Switch
                     android:id="@+id/switch_OfferCoupon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_weight="1"></Switch>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -295,7 +294,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
 
             <LinearLayout
@@ -309,14 +308,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/run_flat"></TextView>
+                    android:text="@string/run_flat" />
 
                 <Switch
                     android:id="@+id/switch_RunFlat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_weight="1"></Switch>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -324,7 +323,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:background="@color/gray"></View>
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -337,14 +336,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="@string/reinforced"></TextView>
+                    android:text="@string/reinforced" />
 
                 <Switch
                     android:id="@+id/switch_Reinforced"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_weight="1"></Switch>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 

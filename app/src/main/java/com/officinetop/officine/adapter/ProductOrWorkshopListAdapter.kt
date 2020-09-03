@@ -32,38 +32,38 @@ import kotlin.math.roundToInt
 
 class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
 
-                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>,val currentLat:String="0",val currentLong:String="0", motservicesTime: String, mot_type: String = "")
+                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>, private val currentLat:String="0", private val currentLong:String="0", motservicesTime: String, mot_type: String = "")
 
     : RecyclerView.Adapter<ProductOrWorkshopListAdapter.ViewHolder>(), Filterable {
-    var productOrWorkshopListParent = productOrWorkshopList
+    private var productOrWorkshopListParent = productOrWorkshopList
     var productOrWorkshopList = productOrWorkshopList
     var jsonArray: JSONArray
-    var isWorkshop: Boolean
-    var selectedFormattedDate: String
+    private var isWorkshop: Boolean
+    private var selectedFormattedDate: String
     var mcontext: Context
     var mView: FilterListInterface
 
-    var assembledProductDetail = ""
-    var isAssembly = false
-    var isRevision = false
-    var isTyre = false
-    var isCarMaintenanceServices = false
-    var isQuotesServices = false
-    var isSOSAppointment = false
-    var isMotService = false
-    val search_view: androidx.appcompat.widget.SearchView = search_view
-    var quotesServiceQuotesInsertedId = ""
-    var quotesMainCategoryId = ""
-    var workshopCouponId: String = ""
+    private var assembledProductDetail = ""
+    private var isAssembly = false
+    private var isRevision = false
+    private var isTyre = false
+    private var isCarMaintenanceServices = false
+    private var isQuotesServices = false
+    private var isSOSAppointment = false
+    private var isMotService = false
+    private val search_view: androidx.appcompat.widget.SearchView = search_view
+    private var quotesServiceQuotesInsertedId = ""
+    private var quotesMainCategoryId = ""
+    private var workshopCouponId: String = ""
 
 
-    var quotesWorkshopUserDaysId: String = ""
+    private var quotesWorkshopUserDaysId: String = ""
 
 
     private var workshopCategoryDetail = ""
-    var calendarPriceMap: HashMap<String, String> = HashMap()
-    var mPartIdMap: HashMap<String, Models.servicesCouponData> = HashMap()
-    var motPartIdMap: HashMap<String, Models.MotservicesCouponData> = HashMap()
+    private var calendarPriceMap: HashMap<String, String> = HashMap()
+    private var mPartIdMap: HashMap<String, Models.servicesCouponData> = HashMap()
+    private var motPartIdMap: HashMap<String, Models.MotservicesCouponData> = HashMap()
 
     private var latitude: String = ""
     private var longitude: String = ""
@@ -144,7 +144,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
         with(p0) {
-            var product_workshopList = productOrWorkshopList[p1]
+            val product_workshopList = productOrWorkshopList[p1]
             if (isQuotesServices) {
                 llayoutSpecialCoupons.visibility = View.GONE
             }
@@ -156,15 +156,15 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 if (isSosEmergency) {
                     llAverageTimeEmergency.visibility = View.VISIBLE
                     if (!product_workshopList.average_time_in_min.isNullOrBlank()) {
-                        var time = product_workshopList.average_time_in_min.toDouble().roundToInt()
-                        var hr = time / 60
-                        var minute = time % 60
+                        val time = product_workshopList.average_time_in_min.toDouble().roundToInt()
+                        val hr = time / 60
+                        val minute = time % 60
                         if (hr == 0)
-                            averageTimeInMin.text = minute.toString() + " min"
+                            averageTimeInMin.text = "$minute min"
                         else if (minute == 0)
-                            averageTimeInMin.text = hr.toString() + " hr"
+                            averageTimeInMin.text = "$hr hr"
                         else {
-                            averageTimeInMin.text = hr.toString() + " hr" + "," + minute.toString() + " min"
+                            averageTimeInMin.text = "$hr hr,$minute min"
 
                         }
 
@@ -182,7 +182,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
                 subtitle.text = product_workshopList.registeredOffice
 
-                if (!product_workshopList.servicesPrice.isNullOrEmpty() && !product_workshopList.servicesPrice.equals("null")) {
+                if (!product_workshopList.servicesPrice.isNullOrEmpty() && product_workshopList.servicesPrice != "null") {
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, product_workshopList.servicesPrice)
                 }else{
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, "0")
@@ -349,7 +349,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             , Constant.Key.cartItem to cartItem, Constant.Key.wishList to productOrWorkshopList[p1].wish_list
                             , Constant.Key.mot_type to mot_type
                             , "WorkshopJson" to json.toString()
-                            , "QutoesServiceAverageTime" to if (json.has("service_average_time") && json.optString("service_average_time") != null && !json.optString("service_average_time").equals("null")) json.optString("service_average_time") else ""
+                            , "QutoesServiceAverageTime" to if (json.has("service_average_time") && json.optString("service_average_time") != null && json.optString("service_average_time") != "null") json.optString("service_average_time") else ""
 
                     ).putExtras(bundle)
 
@@ -434,8 +434,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     for (i in 0 until jsonArray.length()) {
                         val json = JSONObject(jsonArray[i].toString())
 
-                        var titleString = json.getString("listino")
-                        var productNo = json.getString("products_name")
+                        val titleString = json.getString("listino")
+                        val productNo = json.getString("products_name")
                         if (titleString.toLowerCase().contains(constraint.toString().toLowerCase()) || productNo.toLowerCase().contains(constraint.toString().toLowerCase())) {
 
                             filteredList.put(json)
@@ -499,7 +499,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
     }
 
-    fun getProductOrWorkshopListAdapter(): Int {
+    private fun getProductOrWorkshopListAdapter(): Int {
 
         if (productOrWorkshopList.size != 0 && search_view.query.isNullOrBlank()) {
 
@@ -511,37 +511,37 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     }
 
     private fun getDistancebetweenTwoLatLong1(currentLatLong: LatLng, latitude: String, longitude: String, tv_workshopKm: TextView) {
-        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLatLong.latitude.equals("0.0") && !currentLatLong.latitude.equals("0.0") && !latitude.equals("0") && !latitude.equals("0")) {
-            var currentLocation = Location("")
+        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLatLong.latitude.equals("0.0") && !currentLatLong.latitude.equals("0.0") && latitude != "0" && latitude != "0") {
+            val currentLocation = Location("")
             currentLocation.latitude = currentLatLong.latitude
             currentLocation.longitude = currentLatLong.longitude
-            var workshopLocation = Location("")
+            val workshopLocation = Location("")
             workshopLocation.latitude = latitude.toDouble()
             workshopLocation.longitude = longitude.toDouble()
-            var distance = (currentLocation.distanceTo(workshopLocation).roundToInt()) / 1000;
+            val distance = (currentLocation.distanceTo(workshopLocation).roundToInt()) / 1000;
             tv_workshopKm.text = mcontext.getString(R.string.append_km, distance)
 
         }
     }
 
     private fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
-        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank()  && !currentLat.equals("0.0") && !currentLong.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
+        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank()  && currentLat != "0.0" && currentLong != "0.0" && latitude != "0" && latitude != "0" && latitude != "0" && latitude != "0") {
             val Radius = 6371
-            var lat1 = currentLat.toDouble();
+            val lat1 = currentLat.toDouble();
             val lat2 = latitude.toDouble();
             val lon1 = currentLong.toDouble();
             val lon2 = longitude.toDouble();
-            var dLat = Math.toRadians(lat2 - lat1);
-            var dLon = Math.toRadians(lon2 - lon1);
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.asin(Math.sqrt(a));
-            var valueResult = Radius * c;
-            var km = valueResult / 1;
-            var newFormat: DecimalFormat = DecimalFormat("####");
+            val dLat = Math.toRadians(lat2 - lat1);
+            val dLon = Math.toRadians(lon2 - lon1);
+            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            val c = 2 * Math.asin(Math.sqrt(a));
+            val valueResult = Radius * c;
+            val km = valueResult / 1;
+            val newFormat: DecimalFormat = DecimalFormat("####");
             var kmInDec = Integer.valueOf(newFormat.format(km));
-            var meter = valueResult % 1000;
+            val meter = valueResult % 1000;
             val meterInDec = Integer.valueOf(newFormat.format(meter));
-            var distance = (Radius * c).roundToInt();
+            val distance = (Radius * c).roundToInt();
             Log.d(" test Distance", distance.toString())
             tv_workshopKm.text = mcontext.getString(R.string.append_km, distance)
         }

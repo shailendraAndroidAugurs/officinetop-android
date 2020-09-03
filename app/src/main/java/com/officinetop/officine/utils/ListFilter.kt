@@ -6,8 +6,8 @@ import org.json.JSONObject
 
 class ListFilter(originalArray:JSONArray, filterKey: String): Filter() {
 
-    var mOriginalArray:JSONArray
-    var mFilterKey: String
+    private var mOriginalArray:JSONArray
+    private var mFilterKey: String
 
     init {
         mOriginalArray = originalArray
@@ -15,11 +15,11 @@ class ListFilter(originalArray:JSONArray, filterKey: String): Filter() {
     }
 
     override fun performFiltering(constraint: CharSequence?): FilterResults {
-        var filterResults = FilterResults()
+        val filterResults = FilterResults()
 
         if(constraint!= null && constraint.isNotEmpty())
         {
-            var filteredList = ArrayList<JSONObject>()
+            val filteredList = ArrayList<JSONObject>()
 
 //            constraint = constraint.toString().toLowerCase()
 

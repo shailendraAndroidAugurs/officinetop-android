@@ -196,7 +196,7 @@ class QuotesActivity : BaseActivity() {
                                         if (body.has("message"))
                                             showInfoDialog(body.optString("message")) //{
 
-                                                    if (btnType.equals("2")) {
+                                                    if (btnType == "2") {
 
                                                         if (body.has("data")&& !body.isNull("data") && body.get("data") is JSONObject) {
                                                             val data = body.getJSONObject("data")

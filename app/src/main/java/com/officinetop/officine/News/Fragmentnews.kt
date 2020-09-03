@@ -48,12 +48,12 @@ class Fragmentnews : Fragment() {
 
             webview.requestFocus();
             webSettings.javaScriptEnabled = true
-            webSettings.setLoadWithOverviewMode(true);
-            webSettings.setUseWideViewPort(true);
-            webSettings.setAllowFileAccess(true);
-            webSettings.setAllowContentAccess(true);
+            webSettings.loadWithOverviewMode = true;
+            webSettings.useWideViewPort = true;
+            webSettings.allowFileAccess = true;
+            webSettings.allowContentAccess = true;
             webview!!.setInitialScale(1);
-            webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+            webSettings.javaScriptCanOpenWindowsAutomatically = true;
           /*  webview.setWebViewClient(UriWebViewClient())
             webview.setWebChromeClient(UriChromeClient())*/
             val webViewClient = WebViewClientImpl(activity, progress_bar_webview)
@@ -74,12 +74,12 @@ class Fragmentnews : Fragment() {
 
     private class UriWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val host: String = Uri.parse(url).getHost()
+            val host: String = Uri.parse(url).host
             //Log.d("shouldOverrideUrlLoading", url);
             if (host == target_url_prefix) { // This is my web site, so do not override; let my WebView load
 // the page
                 if (mWebviewPop != null) {
-                    mWebviewPop!!.setVisibility(View.GONE)
+                    mWebviewPop!!.visibility = View.GONE
                     mContainer?.removeView(mWebviewPop)
                     mWebviewPop = null
                 }
@@ -105,13 +105,13 @@ class Fragmentnews : Fragment() {
         override fun onCreateWindow(view: WebView?, isDialog: Boolean,
                                     isUserGesture: Boolean, resultMsg: Message): Boolean {
             mWebviewPop = WebView(mContext)
-            mWebviewPop!!.setVerticalScrollBarEnabled(false)
-            mWebviewPop!!.setHorizontalScrollBarEnabled(false)
-            mWebviewPop!!.setWebViewClient(UriWebViewClient())
-            mWebviewPop!!.getSettings().setJavaScriptEnabled(true)
-            mWebviewPop!!.getSettings().setSavePassword(false)
-            mWebviewPop!!.setLayoutParams(FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT))
+            mWebviewPop!!.isVerticalScrollBarEnabled = false
+            mWebviewPop!!.isHorizontalScrollBarEnabled = false
+            mWebviewPop!!.webViewClient = UriWebViewClient()
+            mWebviewPop!!.settings.javaScriptEnabled = true
+            mWebviewPop!!.settings.savePassword = false
+            mWebviewPop!!.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT)
             mContainer?.addView(mWebviewPop)
             val transport = resultMsg.obj as WebViewTransport
             transport.webView = mWebviewPop

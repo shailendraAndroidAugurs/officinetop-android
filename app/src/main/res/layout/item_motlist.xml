@@ -32,7 +32,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_Description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_Description"
@@ -42,7 +42,7 @@
             android:text="@{listItemViewModel.intervalDescriptionForKms}"
             app:layout_constraintEnd_toStartOf="@id/tv_Price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_Price"></TextView>
+            app:layout_constraintTop_toBottomOf="@id/tv_Price" />
 
 
         <TextView
@@ -57,7 +57,7 @@
             android:textColor="@color/theme_orange"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -72,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_Description"
 
-            ></TextView>
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

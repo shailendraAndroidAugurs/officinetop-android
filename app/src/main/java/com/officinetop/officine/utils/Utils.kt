@@ -166,7 +166,7 @@ inline fun parseTimeHHmmss(timeString: String): Date {
 inline fun parseServerDateTime(timeString: String): String {
 
     return try {
-        var date = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault()).parse(timeString)
+        val date = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault()).parse(timeString)
         SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(date)
 
     } catch (e: Exception) {
@@ -264,7 +264,7 @@ fun View.snack(message: String, left: Int = 20, top: Int = 0, right: Int = 20, b
             var j = i - 1
             while (j >= 0 && key < array[j]) {
                 array[j + 1] = array[j]
-                j = j - 1
+                j -= 1
             }
             array[j + 1] = key
         }
@@ -380,7 +380,7 @@ fun Context?.setAppLanguage() {
 
 fun Context?.createImageSliderDialog(imageUrl: String) {
 
-    var imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+    val imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
 
     with(imageDialog) {
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)

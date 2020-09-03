@@ -26,7 +26,7 @@ import com.officinetop.officine.invite_frnds.InviteFriendsActivity
 import com.officinetop.officine.push_notification.NotificationList
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.userprofile.Addresslist_Activity
-import com.officinetop.officine.userprofile.Contactlist_Activity
+import com.officinetop.officine.userprofile.ContactList_Activity
 import com.officinetop.officine.userprofile.Edit_Profile
 import com.officinetop.officine.userprofile.ProfileSetting
 import com.officinetop.officine.utils.*
@@ -145,7 +145,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         })
 
         layout_addcontact.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, Contactlist_Activity::class.java)
+            val intent = Intent(context, ContactList_Activity::class.java)
             startActivityForResult(intent, 100)
 
         })
@@ -159,7 +159,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         })
         copyreferral.setOnClickListener(View.OnClickListener {
             myClip = ClipData.newPlainText("text", txt_referralcode.text)
-            myClipboard?.setPrimaryClip(myClip!!)
+            myClipboard?.primaryClip = myClip!!
 
             Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
 
@@ -271,7 +271,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                                     val jsonObject = JSONObject(body)
                                     val status_code = jsonObject.optString("status_code")
                                     val msg = jsonObject.optString("message")
-                                    if (status_code.equals("1")) {
+                                    if (status_code == "1") {
                                         alert {
                                             message = msg
                                             positiveButton(getString(R.string.ok)) {
@@ -336,7 +336,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
     private fun uicontents(mobileNumber: String?, email: String?, unername: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
         if (!isAdded) return
-        if (walletamount.equals("null"))
+        if (walletamount == "null")
             textview_walletamount.text = getString(R.string.euro_symbol) + " 0"
         else
             textview_walletamount.text = getString(R.string.euro_symbol) + " " + walletamount
@@ -354,8 +354,8 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
 
     private fun SetDataInView(userDetailData: Models.UserDetailData?, apiRespoinsewallet: Models.UserWallet?) {
-        var userContact: Models.UserContact
-        var userAddress: Models.UserAddres
+        val userContact: Models.UserContact
+        val userAddress: Models.UserAddres
         if (userDetailData?.userContact != null && userDetailData?.userContact?.size!! > 0 && userDetailData?.userAddress?.size!! > 0) {
             if (userDetailData?.userDetails != null && userDetailData?.userDetails.size != 0) {
                 val userDetail = userDetailData?.userDetails?.get(0)

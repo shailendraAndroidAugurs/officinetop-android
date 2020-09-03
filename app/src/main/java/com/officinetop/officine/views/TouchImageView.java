@@ -195,7 +195,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      *
      * @return true if image is zoomed
      */
-    public boolean isZoomed() {
+    private boolean isZoomed() {
         return normalizedScale != 1;
     }
 
@@ -326,14 +326,14 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      *
      * @return current zoom multiplier.
      */
-    public float getCurrentZoom() {
+    private float getCurrentZoom() {
         return normalizedScale;
     }
 
     /**
      * Reset zoom and translation to initial state.
      */
-    public void resetZoom() {
+    private void resetZoom() {
         normalizedScale = 1;
         fitImageToView();
     }
@@ -357,7 +357,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      * @param focusX
      * @param focusY
      */
-    public void setZoom(float scale, float focusX, float focusY) {
+    private void setZoom(float scale, float focusX, float focusY) {
         setZoom(scale, focusX, focusY, mScaleType);
     }
 
@@ -372,7 +372,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      * @param focusY
      * @param scaleType
      */
-    public void setZoom(float scale, float focusX, float focusY, ScaleType scaleType) {
+    private void setZoom(float scale, float focusX, float focusY, ScaleType scaleType) {
         //
         // setZoom can be called before the image is on the screen, but at this point,
         // image and view sizes have not yet been calculated in onMeasure. Thus, we should
@@ -402,7 +402,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      *
      * @param TouchImageView
      */
-    public void setZoom(TouchImageView img) {
+    private void setZoom(TouchImageView img) {
         PointF center = img.getScrollPosition();
         setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
     }
@@ -415,7 +415,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
      *
      * @return PointF representing the scroll position of the zoomed image.
      */
-    public PointF getScrollPosition() {
+    private PointF getScrollPosition() {
         Drawable drawable = getDrawable();
         if (drawable == null) {
             return null;
@@ -736,11 +736,8 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
         } else if (x >= -1 && direction < 0) {
             return false;
 
-        } else if (Math.abs(x) + viewWidth + 1 >= getImageWidth() && direction > 0) {
-            return false;
-        }
+        } else return !(Math.abs(x) + viewWidth + 1 >= getImageWidth()) || direction <= 0;
 
-        return true;
     }
 
     private void scaleImage(double deltaScale, float focusX, float focusY, boolean stretchImageToSuper) {
@@ -833,7 +830,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
 
     private enum State {NONE, DRAG, ZOOM, FLING, ANIMATE_ZOOM}
 
-    public interface OnTouchImageViewListener {
+    interface OnTouchImageViewListener {
         void onMove();
     }
 
@@ -907,7 +904,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
         //
         // Remember last point position for dragging
         //
-        private PointF last = new PointF();
+        private final PointF last = new PointF();
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1022,13 +1019,15 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
     private class DoubleTapZoom implements Runnable {
 
         private static final float ZOOM_TIME = 500;
-        private long startTime;
-        private float startZoom, targetZoom;
-        private float bitmapX, bitmapY;
-        private boolean stretchImageToSuper;
-        private AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
-        private PointF startTouch;
-        private PointF endTouch;
+        private final long startTime;
+        private final float startZoom;
+        private final float targetZoom;
+        private final float bitmapX;
+        private final float bitmapY;
+        private final boolean stretchImageToSuper;
+        private final AccelerateDecelerateInterpolator interpolator = new AccelerateDecelerateInterpolator();
+        private final PointF startTouch;
+        private final PointF endTouch;
 
         DoubleTapZoom(float targetZoom, float focusX, float focusY, boolean stretchImageToSuper) {
             setState(State.ANIMATE_ZOOM);
@@ -1160,7 +1159,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             currY = startY;
         }
 
-        public void cancelFling() {
+        void cancelFling() {
             if (scroller != null) {
                 setState(State.NONE);
                 scroller.forceFinished(true);
@@ -1202,9 +1201,9 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
     private class CompatScroller {
         Scroller scroller;
         OverScroller overScroller;
-        boolean isPreGingerbread;
+        final boolean isPreGingerbread;
 
-        public CompatScroller(Context context) {
+        CompatScroller(Context context) {
             if (VERSION.SDK_INT < VERSION_CODES.GINGERBREAD) {
                 isPreGingerbread = true;
                 scroller = new Scroller(context);
@@ -1215,7 +1214,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX, int minY, int maxY) {
+        void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX, int minY, int maxY) {
             if (isPreGingerbread) {
                 scroller.fling(startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
             } else {
@@ -1223,7 +1222,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public void forceFinished(boolean finished) {
+        void forceFinished(boolean finished) {
             if (isPreGingerbread) {
                 scroller.forceFinished(finished);
             } else {
@@ -1231,7 +1230,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public boolean isFinished() {
+        boolean isFinished() {
             if (isPreGingerbread) {
                 return scroller.isFinished();
             } else {
@@ -1239,7 +1238,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public boolean computeScrollOffset() {
+        boolean computeScrollOffset() {
             if (isPreGingerbread) {
                 return scroller.computeScrollOffset();
             } else {
@@ -1248,7 +1247,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public int getCurrX() {
+        int getCurrX() {
             if (isPreGingerbread) {
                 return scroller.getCurrX();
             } else {
@@ -1256,7 +1255,7 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
             }
         }
 
-        public int getCurrY() {
+        int getCurrY() {
             if (isPreGingerbread) {
                 return scroller.getCurrY();
             } else {
@@ -1266,12 +1265,12 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
     }
 
     private class ZoomVariables {
-        public float scale;
-        public float focusX;
-        public float focusY;
-        public ScaleType scaleType;
+        final float scale;
+        final float focusX;
+        final float focusY;
+        final ScaleType scaleType;
 
-        public ZoomVariables(float scale, float focusX, float focusY, ScaleType scaleType) {
+        ZoomVariables(float scale, float focusX, float focusY, ScaleType scaleType) {
             this.scale = scale;
             this.focusX = focusX;
             this.focusY = focusY;

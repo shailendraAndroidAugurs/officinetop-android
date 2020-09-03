@@ -52,7 +52,7 @@ fun bindRating(ratingBar: CustomRatingBar, rating: String) {
 @BindingAdapter("date")
 fun bindDate(date: TextView, dateText: String) {
 
-    if (!dateText.isNullOrEmpty() && !dateText.equals("0.0") && !dateText.equals("0") && !dateText.equals("-")) {
+    if (!dateText.isNullOrEmpty() && dateText != "0.0" && dateText != "0" && dateText != "-") {
         try {
             date.text = DateFormatChangeYearToMonth(dateText.split(" ")[0])
         } catch (e: Exception) {
@@ -98,17 +98,17 @@ fun setVisibility(text: TextView, flag: Boolean) {
 @BindingAdapter("time")
 fun settime(textview: TextView, startTime: String) {
     if (startTime != null) {
-        var starttime = startTime.split("-")[0]
-        var endtime = startTime.split("-")[1]
-        if (starttime.equals("null") && endtime.equals("")) {
+        val starttime = startTime.split("-")[0]
+        val endtime = startTime.split("-")[1]
+        if (starttime == "null" && endtime == "") {
             textview.text = ""
 
         } else {
-            if (!starttime.equals("null") && !endtime.equals("null")) {
+            if (starttime != "null" && endtime != "null") {
                 textview.text = "${starttime.removeSuffix(":00")}  -  ${endtime.removeSuffix(":00")}"
-            } else if (starttime.equals("null") && !endtime.equals("null")) {
+            } else if (starttime == "null" && endtime != "null") {
                 textview.text = "${endtime.removeSuffix(":00")}"
-            } else if (!starttime.equals("null") && endtime.equals("null")) {
+            } else if (starttime != "null" && endtime == "null") {
                 textview.text = "${starttime.removeSuffix(":00")}"
             }
         }
@@ -151,7 +151,7 @@ fun settyreOrderprice(textView: TextView, price: String, tyrePfu: String, tyreQu
     if (price.contains(".")) {
         amount = price.toDouble().roundTo2Places()
     }
-    if (!tyrePfu.isNullOrBlank() && !tyrePfu.equals("0") && !tyreQuantity.isNullOrBlank() && !tyreQuantity.equals("0")) {
+    if (!tyrePfu.isNullOrBlank() && tyrePfu != "0" && !tyreQuantity.isNullOrBlank() && tyreQuantity != "0") {
         amount += tyrePfu.toDouble().roundTo2Places() * tyreQuantity.toInt()
     }
 
@@ -187,7 +187,7 @@ fun setQuantity(text: TextView, status: String, pairText: String) {
             if (status == "0") {
                 text.text = ""
             } else {
-                text.text = "2 " + pairText
+                text.text = "2 $pairText"
             }
 
         } catch (e: Exception) {
@@ -200,7 +200,7 @@ fun setQuantity(text: TextView, status: String, pairText: String) {
 @BindingAdapter("payment")
 fun payment(textView: TextView, status: String) {
 
-    if (status.equals("C")) {
+    if (status == "C") {
         textView.text = textView.context.getString(R.string.Paid)
     } else {
         textView.text = textView.context.getString(R.string.Pending)
@@ -221,7 +221,7 @@ fun CarKM(textView: TextView, CarKM: String) {
 
 @BindingAdapter("orderDelivered")
 fun orderDelivered(linearLayout: LinearLayout, status: String) {
-    if (!status.isNullOrBlank() && !status.equals("null") && status.equals("F"))
+    if (!status.isNullOrBlank() && status != "null" && status == "F")
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -232,15 +232,15 @@ fun orderDelivered(linearLayout: LinearLayout, status: String) {
 @BindingAdapter("orderReturn")
 fun orderReturn(textview: TextView, status: String) {
 
-    if (!status.isNullOrBlank() && !status.equals("null") && status != null) {
+    if (!status.isNullOrBlank() && status != "null" && status != null) {
         textview.visibility = View.VISIBLE
-        if (status.equals("P")) {
+        if (status == "P") {
             textview.setText(R.string.return_request_inProcess)
             textview.setTextColor(Color.parseColor("#2E7D32"))
-        } else if (status.equals("C")) {
+        } else if (status == "C") {
             textview.setTextColor(Color.parseColor("#2E7D32"))
             textview.setText(R.string.return_request_accepted)
-        } else if (status.equals("CA")) {
+        } else if (status == "CA") {
             textview.setTextColor(Color.parseColor("#DD2600"))
 
             textview.setText(R.string.return_request_rejected)
@@ -257,10 +257,10 @@ fun orderReturn(textview: TextView, status: String) {
 @BindingAdapter("InvoiceRequest")
 fun InvoiceRequest(textview: TextView, status: String) {
     textview.visibility = View.VISIBLE
-    if (status.isNullOrBlank() || status.equals("-") || status.equals("p")) {
+    if (status.isNullOrBlank() || status == "-" || status == "p") {
         textview.text = R.string.request_invoice.toString()
         textview.setTextColor(Color.parseColor("#2E7D32"))
-    } else if (status.equals("c")) {
+    } else if (status == "c") {
         textview.setTextColor(Color.parseColor("#2E7D32"))
         textview.text = R.string.invoice_Request_inProcess.toString()
     }
@@ -272,7 +272,7 @@ fun InvoiceRequest(textview: TextView, status: String) {
 @BindingAdapter("orderReturnbutton")
 fun orderReturnbutton(textview: TextView, status: String) {
 
-    if (!status.isNullOrBlank() && !status.equals("null")) {
+    if (!status.isNullOrBlank() && status != "null") {
         textview.visibility = View.GONE
     } else if (status == null)
         textview.visibility = View.VISIBLE
@@ -282,20 +282,11 @@ fun orderReturnbutton(textview: TextView, status: String) {
 }
 
 
-@BindingAdapter("couponvisivility")
-fun couponvisivility(textview: TextView, status: Integer) {
 
-    if (status.equals(0)) {
-        textview.visibility = View.GONE
-    } else
-        textview.visibility = View.VISIBLE
-
-
-}
 
 @BindingAdapter("orderProgress")
 fun orderProgress(linearLayout: LinearLayout, status: String) {
-    if (!status.isNullOrBlank() && !status.equals("null") && !status.equals("-") && !status.equals("F"))
+    if (!status.isNullOrBlank() && status != "null" && status != "-" && status != "F")
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -305,7 +296,7 @@ fun orderProgress(linearLayout: LinearLayout, status: String) {
 
 @BindingAdapter("feedbackvisibility", "feedbackStatus")
 fun feedbackvisibility(linearLayout: LinearLayout, status: String, feedbackStatus: String) {
-    if (feedbackStatus.equals("0") && status.equals("F"))
+    if (feedbackStatus == "0" && status == "F")
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -324,7 +315,7 @@ fun feedbackvisibility(linearLayout: LinearLayout, status: String, feedbackStatu
 
 @BindingAdapter("layoutvisibility")
 fun layoutvisibility(linearLayout: LinearLayout, status: String) {
-    if (status.equals("1"))
+    if (status == "1")
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -347,7 +338,7 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
             if (quantity == "0") {
                 text.text = ""
             } else {
-                if (!ispair.isNullOrBlank() && !ispair.equals("0"))
+                if (!ispair.isNullOrBlank() && ispair != "0")
                     text.text = (quantity.toInt() /** 2*/).toString()
                 else
                     text.text = quantity
@@ -361,7 +352,7 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
 
 @BindingAdapter("coupontitle", "coupontype","couponPrices")
 fun setcouponDetail(text: TextView, coupontitle: String, coupontype: String,couponPrices:String) {
-    text.text=coupontitle+" :"+" €" +couponPrices
+    text.text= "$coupontitle : €$couponPrices"
 }
 
 @BindingAdapter("wishlist")

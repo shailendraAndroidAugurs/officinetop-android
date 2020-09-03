@@ -60,7 +60,7 @@ class Edit_Profile : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.edit_profile)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        profile_imagefull = findViewById(R.id.profile_imagefull) as ImageView
+        profile_imagefull = findViewById(R.id.profile_imagefull)
         edittext_mobile = findViewById(R.id.EditText_mobile)
         edittext_email = findViewById(R.id.EditText_email)
         textview_changepic = findViewById(R.id.textview_changepic)
@@ -70,8 +70,8 @@ class Edit_Profile : BaseActivity() {
             val user_mobile = intent?.getStringExtra("Mobile") ?: ""
             val user_picurl = intent?.getStringExtra("Pic_url") ?: ""
             val authtoken = intent?.getStringExtra("Token") ?: ""
-            edittext_mobile.setText(user_mobile)
-            edittext_email.setText(user_email)
+            edittext_mobile.text = user_mobile
+            edittext_email.text = user_email
             loadImageprofile(user_picurl,profile_imagefull)
         }
 
@@ -90,7 +90,7 @@ class Edit_Profile : BaseActivity() {
             }else if(edittext_email.text.isEmpty()){
                 Toast.makeText(this@Edit_Profile,getString(R.string.emailblank), Toast.LENGTH_LONG).show()
             }else{
-                var imagedata =attachedImage?.toMultipartBody("profile_pic")
+                val imagedata =attachedImage?.toMultipartBody("profile_pic")
                 val emailid=edittext_email.text.toString()
                 val mobileno=edittext_mobile.text.toString()
                 updateuserprofile(emailid,mobileno,imagedata)
@@ -123,7 +123,7 @@ class Edit_Profile : BaseActivity() {
                                     val jsonObject = JSONObject(body)
                                     val status_code=jsonObject.optString("status_code")
                                     val msg=jsonObject.optString("message")
-                                    if(status_code.equals("1")){
+                                    if(status_code == "1"){
                                         alert {
                                             message = msg
                                             positiveButton(getString(R.string.ok)) {
@@ -186,7 +186,7 @@ class Edit_Profile : BaseActivity() {
         }
         pictureDialog.show()
     }
-    fun choosePhotoFromGallary() {
+    private fun choosePhotoFromGallary() {
         val galleryIntent = Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
@@ -285,17 +285,17 @@ class Edit_Profile : BaseActivity() {
         {
             Log.d("heel",wallpaperDirectory.toString())
             val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                    .getTimeInMillis()).toString() + ".jpg"))
+                    .timeInMillis).toString() + ".jpg"))
             f.createNewFile()
             val fo = FileOutputStream(f)
             fo.write(bytes.toByteArray())
             MediaScannerConnection.scanFile(this,
-                    arrayOf(f.getPath()),
+                    arrayOf(f.path),
                     arrayOf("image/jpeg"), null)
             fo.close()
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
+            Log.d("TAG", "File Saved::--->" + f.absolutePath)
 
-            return f.getAbsolutePath()
+            return f.absolutePath
         }
         catch (e1: IOException) {
             e1.printStackTrace()
@@ -305,6 +305,6 @@ class Edit_Profile : BaseActivity() {
     }
 
     companion object {
-        private val IMAGE_DIRECTORY = "/demonuts"
+        private const val IMAGE_DIRECTORY = "/demonuts"
     }
 }

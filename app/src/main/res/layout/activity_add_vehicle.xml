@@ -170,7 +170,8 @@
                           android:layout_height="match_parent"
                           android:hint="@string/car_km_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -195,7 +196,8 @@
                           android:layout_height="match_parent"
                           android:hint="@string/car_km_annual_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -250,7 +252,8 @@
 
                           android:hint="@string/car_km_revision_hint"
                           android:inputType="number"
-                          android:padding="10dp" />
+                          android:padding="10dp"
+                          android:importantForAutofill="no" />
 
                   </FrameLayout>
 
@@ -359,7 +362,8 @@
                             android:maxLines="1"
                             android:padding="10dp"
 
-                            android:textAllCaps="true" />
+                            android:textAllCaps="true"
+                            android:importantForAutofill="no" />
 
                         <ImageView
                             android:id="@+id/search_plate"

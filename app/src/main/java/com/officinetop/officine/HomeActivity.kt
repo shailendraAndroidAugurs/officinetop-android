@@ -48,11 +48,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     lateinit var dialog: Dialog
     val carList: MutableList<Models.MyCarDataSet> = ArrayList()
-    lateinit var carListAdapter: BaseAdapter
-    var lastListSize = -1
-    var hasAddedCar = false
+    private lateinit var carListAdapter: BaseAdapter
+    private var lastListSize = -1
+    private var hasAddedCar = false
     lateinit var progressDialog: ProgressDialog
-    var hasSelectedCar = false
+    private var hasSelectedCar = false
     var isConnectionError = false
     private val TAG = "MyFirebaseToken"
     private var googleApiClient: GoogleApiClient? = null
@@ -77,7 +77,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    fun loadNavigationItems(itemId: Int) {
+    private fun loadNavigationItems(itemId: Int) {
         when (itemId) {
             R.id.action_menu_home, R.id.menu_home -> {
 
@@ -492,7 +492,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
 
                     try {
-                        view.item_sub_title_car.text = ("${car.carVersionModel?.version} (${car.carVersionModel.kw}/${car.carVersionModel.cv}) (${car.carVersionModel.dal})")
+                        view.item_sub_title_car.text = ("${car.carVersionModel.version} (${car.carVersionModel.kw}/${car.carVersionModel.cv}) (${car.carVersionModel.dal})")
                     } catch (e: Exception) {
                         Log.d("HomeActivity", "getView: ${e.message}")
                         view.item_sub_title_car.text = ""
@@ -500,7 +500,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     val carDefaultImage = car.carDefaultImage ?: ""
 
                     try {
-                        loadCarImage(carDefaultImage, car.carMakeModel?.brandID, view.item_car_image_view)
+                        loadCarImage(carDefaultImage, car.carMakeModel.brandID, view.item_car_image_view)
                     } catch (e: java.lang.Exception) {
                     }
 
@@ -524,10 +524,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     view.item_edit_car.setOnClickListener {
 
-                        if (car.carVersionModel == null || car.carMakeModel == null || car.carModel == null) {
-                            toast(getString(R.string.Failed_to_load_data))
-                            return@setOnClickListener
-                        }
 
                         startActivityForResult(intentFor<AddVehicleActivity>(
                                 Constant.Key.myCar to car as Serializable
@@ -601,8 +597,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 toolbar_car_subtitle.text = "${car?.carModel?.model} (${car?.carModel?.modelYear})"
                 toolbar_car_subtitle.visibility = View.VISIBLE
 
-                val carDefaultImage = car?.carDefaultImage ?: ""
-                loadCarImage(carDefaultImage, car?.carMakeModel?.brandID, toolbar_image_view)
+                val carDefaultImage = car.carDefaultImage ?: ""
+                loadCarImage(carDefaultImage, car.carMakeModel?.brandID, toolbar_image_view)
 
                 Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
@@ -736,7 +732,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 getCarListAPI()
             }
             requestCode == 108 -> {
-                if (!getMotKm().equals(getSelectedCar()?.km_of_cars))
+                if (getMotKm() != getSelectedCar()?.km_of_cars)
                     getCarListAPI()
             }
         }
@@ -929,9 +925,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     .addOnConnectionFailedListener(this).build()
             googleApiClient!!.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            locationRequest.setInterval(10 * 1000)
-            locationRequest.setFastestInterval(2 * 1000)
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 10 * 1000
+            locationRequest.fastestInterval = 2 * 1000
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
 
@@ -972,11 +968,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-    fun bindFragment(FragmentId: Int) {
+    private fun bindFragment(FragmentId: Int) {
         loadNavigationItems(FragmentId)
     }
 
-    fun DeleteCartData(car: Models.MyCarDataSet?) {
+    private fun DeleteCartData(car: Models.MyCarDataSet?) {
         getBearerToken()?.let {
             RetrofitClient.client.RemoveCart(it)
                     .enqueue(object : Callback<ResponseBody> {

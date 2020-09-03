@@ -34,10 +34,10 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     var latitude = ""
     var longitude = ""
-    var postalCode = ""
+    private var postalCode = ""
 
     var Address = ""
-    lateinit var mDialogView: View
+    private lateinit var mDialogView: View
     var fromPayment = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,9 +108,9 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 DismissFragment()
                 mAlertDialog?.dismiss()
                 var addresType = ""
-                if (mDialogView.spinner_AddressType.selectedItem.equals("Home")) {
+                if (mDialogView.spinner_AddressType.selectedItem == "Home") {
                     addresType = "H"
-                } else if (mDialogView.spinner_AddressType.selectedItem.equals("Office")) {
+                } else if (mDialogView.spinner_AddressType.selectedItem == "Office") {
                     addresType = "O"
                 } else
                     addresType = "Ot"
@@ -136,8 +136,8 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     }
 
-    var selectedPlace: Place? = null
-    var placePickerFragment: AutocompleteSupportFragment? = null
+    private var selectedPlace: Place? = null
+    private var placePickerFragment: AutocompleteSupportFragment? = null
     private fun setPlacePicker(address: String?) {
 
         placePickerFragment = supportFragmentManager.setPlacePicker(this@Addresslist_Activity) { place, error ->
@@ -150,7 +150,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 for (i in 0 until place?.addressComponents?.asList()?.size!!) {
 
                     for (j in 0 until place?.addressComponents?.asList()!![i].types.size!!) {
-                        if (place?.addressComponents?.asList()!![i].types[j].equals(getString(R.string.postal_code))) {
+                        if (place?.addressComponents?.asList()!![i].types[j] == getString(R.string.postal_code)) {
                             postalCode = place?.addressComponents?.asList()!![i].name
                             mDialogView.edt_entered_ZipCode.setText(postalCode)
                         }
@@ -262,8 +262,8 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
-                holder.itemView.tv_Address.setText(UserContactList[position].address1)
-                holder.itemView.tv_ZipCode.setText(UserContactList[position].zipCode)
+                holder.itemView.tv_Address.text = UserContactList[position].address1
+                holder.itemView.tv_ZipCode.text = UserContactList[position].zipCode
                 viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString());
                 holder.itemView.item_edit.setOnClickListener {
 

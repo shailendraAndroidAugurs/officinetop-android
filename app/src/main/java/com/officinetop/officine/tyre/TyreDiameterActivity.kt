@@ -20,7 +20,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 
 class TyreDiameterActivity : BaseActivity() {
-     var selectedTyreDetail: String=""
+     private var selectedTyreDetail: String=""
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,15 +117,15 @@ class TyreDiameterActivity : BaseActivity() {
                         var diameter: String = ""
                         var runFlat = false
                         var reinforced = false
-                        tyre_type = if (it.vehicleType == null) " " else if (it.vehicleType.toString().isEmpty() || it.vehicleType.toString().equals("null")) "" else it.vehicleType.toString()
-                        aspect_ratio = if (it.aspectRatio == null) "0 " else if (it.aspectRatio.toString().isEmpty() || it.aspectRatio.toString().equals("null")) "0" else it.aspectRatio.toString()
-                        speed_index = if (it.speedindex == null) " " else if (it.speedindex.toString().isEmpty() || it.speedindex.toString().equals("null")) "" else it.speedindex.toString()
-                        season = if (it.season == null) " " else if (it.season.toString().isEmpty() || it.season.toString().equals("null")) "" else it.season.toString()
-                        width = if (it.width == null) "0 " else if (it.width.toString().isEmpty() || it.width.toString().equals("null")) "0" else it.width.toString()
-                        diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString().equals("null")) "0" else it.rimDiameter.toString()
-                        runFlat = if (it.runFlat == null) false else if (it.runFlat.toString().isNullOrBlank() || it.runFlat.toString().equals("null") || it.runFlat.toString().equals("0")) false else true
-                        reinforced = if (it.reinforced == null) false else if (it.reinforced.toString().isNullOrBlank() || it.reinforced.toString().equals("null") || it.reinforced.toString().equals("0")) false else true
-                    val    speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString().equals("null")) "" else it.speed_load_index.toString()
+                        tyre_type = if (it.vehicleType == null) " " else if (it.vehicleType.toString().isEmpty() || it.vehicleType.toString() == "null") "" else it.vehicleType.toString()
+                        aspect_ratio = if (it.aspectRatio == null) "0 " else if (it.aspectRatio.toString().isEmpty() || it.aspectRatio.toString() == "null") "0" else it.aspectRatio.toString()
+                        speed_index = if (it.speedindex == null) " " else if (it.speedindex.toString().isEmpty() || it.speedindex.toString() == "null") "" else it.speedindex.toString()
+                        season = if (it.season == null) " " else if (it.season.toString().isEmpty() || it.season.toString() == "null") "" else it.season.toString()
+                        width = if (it.width == null) "0 " else if (it.width.toString().isEmpty() || it.width.toString() == "null") "0" else it.width.toString()
+                        diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString() == "null") "0" else it.rimDiameter.toString()
+                        runFlat = if (it.runFlat == null) false else if (it.runFlat.toString().isNullOrBlank() || it.runFlat.toString() == "null" || it.runFlat.toString() == "0") false else true
+                        reinforced = if (it.reinforced == null) false else if (it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0") false else true
+                    val    speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
 
 
                         val tyre =

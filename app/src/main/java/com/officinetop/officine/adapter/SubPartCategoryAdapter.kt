@@ -19,10 +19,10 @@ import com.officinetop.officine.utils.loadImageWithName
 
 class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>, partCategoryInterface: PartCategoryInterface) : BaseExpandableListAdapter() {
 
-    lateinit var mSubGroupArrayList: MutableList<DataSetItem?>
-    lateinit var mSubN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>
-    lateinit var mView: PartCategoryInterface
-    var mContext: Context? = null
+    private lateinit var mSubGroupArrayList: MutableList<DataSetItem?>
+    private lateinit var mSubN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>
+    private lateinit var mView: PartCategoryInterface
+    private var mContext: Context? = null
 
     init {
         mSubGroupArrayList = subGroupArrayList
@@ -61,7 +61,7 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
     }
 
     override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-        var childView = LayoutInflater.from(parent?.context).inflate(R.layout.item_subgroup_child, parent, false)
+        val childView = LayoutInflater.from(parent?.context).inflate(R.layout.item_subgroup_child, parent, false)
 
         val childGridView = childView.findViewById(R.id.n3_subgroup_category) as RecyclerView
         childGridView.adapter = ChildViewAdapter(mSubN3GroupArrayList, mContext, mView) //GridView(parent.getContext(), groupPosition + 1)
@@ -98,15 +98,15 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
 
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         mContext = parent?.context
-        var groupView = LayoutInflater.from(mContext).inflate(R.layout.item_group_header, parent, false)
+        val groupView = LayoutInflater.from(mContext).inflate(R.layout.item_group_header, parent, false)
         try {
 
 
-            var subCategoryDetails = mSubGroupArrayList.get(groupPosition)
-            var subCategoryName = subCategoryDetails?.groupName
+            val subCategoryDetails = mSubGroupArrayList.get(groupPosition)
+            val subCategoryName = subCategoryDetails?.groupName
 
-            var title = groupView.findViewById<TextView>(R.id.sub_category_title)
-            var subCategoryImage = groupView.findViewById<ImageView>(R.id.sub_category_image)
+            val title = groupView.findViewById<TextView>(R.id.sub_category_title)
+            val subCategoryImage = groupView.findViewById<ImageView>(R.id.sub_category_image)
 
             title.text = subCategoryName
 
@@ -114,8 +114,8 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
                 mContext?.loadImage(subCategoryDetails?.images[0].imageUrl, subCategoryImage)
 
             // set expanded/ collapsed arrow image
-            var groupIndicator = groupView.findViewById<ImageView>(R.id.group_indicator)
-            var groupImageRotation = if (isExpanded) 180.0f else 0.0f
+            val groupIndicator = groupView.findViewById<ImageView>(R.id.group_indicator)
+            val groupImageRotation = if (isExpanded) 180.0f else 0.0f
             groupIndicator.rotation = groupImageRotation
 
         } catch (e: Exception) {
@@ -132,9 +132,9 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
 
     // Child GridView adapter
     class ChildViewAdapter(subN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>, context: Context?, partCategoryInterface: PartCategoryInterface) : RecyclerView.Adapter<ChildViewAdapter.SubGroupViewHolder>() {
-        lateinit var mSubN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>
-        var mContext: Context?
-        lateinit var mView: PartCategoryInterface
+        private lateinit var mSubN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>
+        private var mContext: Context?
+        private lateinit var mView: PartCategoryInterface
 
         init {
             mSubN3GroupArrayList = subN3GroupArrayList
@@ -143,12 +143,12 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildViewAdapter.SubGroupViewHolder {
-            var subGroupLayout = LayoutInflater.from(parent?.context).inflate(R.layout.item_grid_part_detail, parent, false)
+            val subGroupLayout = LayoutInflater.from(parent?.context).inflate(R.layout.item_grid_part_detail, parent, false)
             return SubGroupViewHolder(subGroupLayout)
         }
 
         override fun onBindViewHolder(holder: ChildViewAdapter.SubGroupViewHolder, position: Int) {
-            var productDetails = mSubN3GroupArrayList[position]
+            val productDetails = mSubN3GroupArrayList[position]
 
             if (productDetails != null) {
 

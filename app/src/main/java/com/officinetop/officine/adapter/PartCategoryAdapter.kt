@@ -17,7 +17,7 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
 
     private var mCategoryArrayList: JSONArray
     lateinit var context: Context
-    var mView: PartCategoryInterface
+    private var mView: PartCategoryInterface
 
     init {
         mCategoryArrayList = categoryArray
@@ -26,14 +26,14 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartViewHolder {
         context = parent.context
-        var view = LayoutInflater.from(context).inflate(R.layout.item_part_detail, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_part_detail, parent, false)
         return PartViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PartViewHolder, position: Int) {
 
         //get details of each category
-        var categoryDetails = mCategoryArrayList.getJSONObject(position)
+        val categoryDetails = mCategoryArrayList.getJSONObject(position)
 
         if(!categoryDetails.isNull("images")) {
             context.loadImage(categoryDetails.getJSONArray("images").getJSONObject(0).getString("image_url"), holder.partImage)

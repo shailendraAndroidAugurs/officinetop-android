@@ -35,10 +35,10 @@ import org.json.JSONObject
 class PartList_Replacement : BaseActivity() {
 
     private var carMaintenanceServiceList: MutableList<Models.Part> = ArrayList()
-    lateinit var partID: String
-    lateinit var versionId: String
-    lateinit var n3_services_id: String
-    lateinit var mottype: String
+    private lateinit var partID: String
+    private lateinit var versionId: String
+    private lateinit var n3_services_id: String
+    private lateinit var mottype: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,7 +110,7 @@ class PartList_Replacement : BaseActivity() {
 
             override fun onItemClick(view: View, position: Int) {
                 if(view.tag=="103"){
-                    Log.d("partist_Replacement","listPosition"+position.toString())
+                    Log.d("partist_Replacement", "listPosition$position")
                     add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,view.findViewById(R.id.Iv_favorite_mot_part),carMaintenanceServiceList[position].id,position)
                 }else{
                 if (carMaintenanceServiceList[position].couponList != null) {
@@ -124,6 +124,44 @@ class PartList_Replacement : BaseActivity() {
     }
 
     private fun displayCoupons(couponsList: List<Models.Coupon>) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
@@ -169,7 +207,7 @@ class PartList_Replacement : BaseActivity() {
         try {
             if (wish_list.isNullOrBlank()||wish_list == "0") {
 
-                Log.d("perameterAddtoWishlist","Productid: "+ProductId+ " ")
+                Log.d("perameterAddtoWishlist", "Productid: $ProductId ")
                 RetrofitClient.client.addToFavorite(getBearerToken()
                         ?: "", ProductId, "1", "", getSelectedCar()?.carVersionModel?.idVehicle
                         ?: "").onCall { networkException, response ->

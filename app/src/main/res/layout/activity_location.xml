@@ -152,7 +152,9 @@ android:text="@string/ConfirmationOnLocation"
                 android:maxLines="2"
                 app:layout_constraintEnd_toStartOf="@+id/cap"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/provtext" />
+                app:layout_constraintTop_toBottomOf="@+id/provtext"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
 
             <TextView
@@ -181,7 +183,9 @@ android:text="@string/ConfirmationOnLocation"
                 android:paddingStart="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/prov"
-                app:layout_constraintTop_toBottomOf="@+id/captext" />
+                app:layout_constraintTop_toBottomOf="@+id/captext"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/cittatxt"
@@ -208,7 +212,9 @@ android:text="@string/ConfirmationOnLocation"
                 android:maxLines="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cittatxt" />
+                app:layout_constraintTop_toBottomOf="@+id/cittatxt"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/cittavalue"
@@ -244,7 +250,9 @@ android:text="@string/ConfirmationOnLocation"
                 android:maxLines="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viatxt" />
+                app:layout_constraintTop_toBottomOf="@+id/viatxt"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/viavalue"

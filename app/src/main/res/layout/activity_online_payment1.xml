@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    android:orientation="vertical"
-
-    tools:context=".Online_Payment.OnlinePayment">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -301,7 +299,9 @@
 
                                     <EditText
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        android:importantForAutofill="no"
+                                        android:inputType="text" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -317,7 +317,9 @@
 
                                     <EditText
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        android:importantForAutofill="no"
+                                        android:inputType="text" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -343,7 +345,8 @@
                                             android:gravity="center"
                                             android:hint="@string/dummy_prepend_euro_symbol_with_da"
                                             android:inputType="number"
-                                            android:maxLength="2" />
+                                            android:maxLength="2"
+                                            android:importantForAutofill="no" />
 
                                         <EditText
                                             android:layout_width="match_parent"
@@ -352,7 +355,8 @@
                                             android:gravity="center"
                                             android:hint="@string/YYYY"
                                             android:inputType="number"
-                                            android:maxLength="4" />
+                                            android:maxLength="4"
+                                            android:importantForAutofill="no" />
                                     </LinearLayout>
 
                                 </LinearLayout>
@@ -479,7 +483,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/rectangle_gray_empty"
                             android:hint="@string/upi_Mobileno"
-                            android:paddingLeft="5dp" />
+                            android:paddingLeft="5dp"
+                            android:importantForAutofill="no"
+                            android:inputType="text" />
 
 
                         <Button
@@ -526,13 +532,14 @@
                 android:layout_height="match_parent"
 
                 />
+
             <ProgressBar
                 android:id="@+id/progress_bar_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:visibility="gone"
-                android:gravity="center"></ProgressBar>
+                android:gravity="center" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

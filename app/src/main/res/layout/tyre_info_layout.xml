@@ -12,111 +12,107 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:weightSum="6">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:weightSum="6">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/iv_Rolling_Resistance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_weight="1.5"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/no_image_placeholder" />
 
-                <ImageView
-                    android:id="@+id/iv_Rolling_Resistance"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/no_image_placeholder" />
-
-                <TextView
-                    android:id="@+id/tv_Rolling_Resistance"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_left_arrow"
-
-                    android:padding="@dimen/_5sdp"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_Rolling_Resistance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/ic_left_arrow"
 
-                <ImageView
-                    android:id="@+id/iv_wetgrip"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/no_image_placeholder" />
-
-                <TextView
-                    android:id="@+id/tv_wetgripValue"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_left_arrow"
-
-                    android:padding="@dimen/_5sdp"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:id="@+id/iv_noices_db"
-                    android:layout_weight="1.5"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/no_image_placeholder" />
-
-                <TextView
-android:id="@+id/tv_noice_dbValue"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_left_arrow"
-                    android:padding="@dimen/_5sdp"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-
+                android:padding="@dimen/_5sdp"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/iv_wetgrip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/no_image_placeholder" />
+
+            <TextView
+                android:id="@+id/tv_wetgripValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/ic_left_arrow"
+
+                android:padding="@dimen/_5sdp"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/iv_noices_db"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/no_image_placeholder" />
+
+            <TextView
+                android:id="@+id/tv_noice_dbValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
+                android:background="@drawable/ic_left_arrow"
+                android:padding="@dimen/_5sdp"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
     </LinearLayout>
-        <TextView
+
+    <TextView
             android:id="@+id/tv_TyreDetailinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

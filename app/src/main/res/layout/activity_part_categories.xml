@@ -23,7 +23,9 @@
         android:singleLine="true"
         android:id="@+id/search_product"
         android:hint="@string/SearchProducts"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <EditText
             android:layout_width="0dp"
@@ -34,7 +36,9 @@
             android:id="@+id/search_field_edit"
             android:hint="@string/SearchProducts"
             android:layout_weight="1"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/search_btn"

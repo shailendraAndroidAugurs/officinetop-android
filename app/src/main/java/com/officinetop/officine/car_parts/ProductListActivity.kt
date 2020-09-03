@@ -48,20 +48,20 @@ import kotlin.math.floor
 
 class ProductListActivity : BaseActivity(), FilterListInterface {
 
-    lateinit var filterDialog: Dialog
-    lateinit var sortDialog: Dialog
-    var isBestSelling = false
+    private lateinit var filterDialog: Dialog
+    private lateinit var sortDialog: Dialog
+    private var isBestSelling = false
     val filterBrandList: MutableList<String> = ArrayList()
-    var selectedFormattedDate = ""
-    var ratingString = ""
-    var priceRangeInitial = 0
-    var priceRangeFinal = -1
+    private var selectedFormattedDate = ""
+    private var ratingString = ""
+    private var priceRangeInitial = 0
+    private var priceRangeFinal = -1
 
     var tempPriceFinal = -1
     var tempPriceInitial = 0
 
-    var distanceRangeFinal = 0
-    var distanceRangeInitial = 100
+    private var distanceRangeFinal = 0
+    private var distanceRangeInitial = 100
 
     var tempDistanceFinal = -1
     var tempDistanceInitial = 0
@@ -70,21 +70,21 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private var seekbarPriceFinalLimit = 1000f
 
 
-    var isFavouriteChecked = false
-    var isOfferChecked = false
+    private var isFavouriteChecked = false
+    private var isOfferChecked = false
 
-    var isPriceLowToHigh = true
-    var isDistanceLowToHigh = true
+    private var isPriceLowToHigh = true
+    private var isDistanceLowToHigh = true
     var serviceID = 0
     var productID = 0
 
-    var assembledProductDetail = ""
+    private var assembledProductDetail = ""
 
-    var hasRecyclerLoadedOnce = false
-    var calendarPriceMap: HashMap<String, String> = HashMap()
+    private var hasRecyclerLoadedOnce = false
+    private var calendarPriceMap: HashMap<String, String> = HashMap()
 
-    var searchedKeyWord = ""
-    var searchedCategoryType: String? = null
+    private var searchedKeyWord = ""
+    private var searchedCategoryType: String? = null
 
     lateinit var listAdapter: ProductOrWorkshopListAdapter
 
@@ -172,7 +172,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         var coupon = ""
 
         var CategoryType = searchedCategoryType
-        if (ratingString != null && !ratingString.equals("")) {
+        if (ratingString != null && ratingString != "") {
             ratingLevel = "2"
         }
         var favorite: String = "0"
@@ -258,10 +258,10 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         if (calendarPriceMap == null)
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
-        var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
+        val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
 
 
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, false, false, false, false, false, false, false, false, selectedFormattedDate, this, this, calendarPriceMap, hashMapOf(), hashMapOf(), "0.0", "0.0","")
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
 
         intent.printValues(localClassName)
 
@@ -278,11 +278,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         for (i in 0 until jsonArray.length()) {
             val json = JSONObject(jsonArray[i].toString())
             val priceString = json.optString("price")
-            list.add(if (priceString.isNullOrBlank() || priceString.equals("null")) 0f else priceString.replace(",", "").trim().toFloat())
-            seekbarPriceInitialLimit = if (json.has("min_price") && !json.isNull("min_price") && !json.getString("min_price").equals("") && !json.getString("min_price").equals("null"))
+            list.add(if (priceString.isNullOrBlank() || priceString == "null") 0f else priceString.replace(",", "").trim().toFloat())
+            seekbarPriceInitialLimit = if (json.has("min_price") && !json.isNull("min_price") && json.getString("min_price") != "" && json.getString("min_price") != "null")
                 json.optString("min_price", "0").toFloat() else 0.0f
 
-            seekbarPriceFinalLimit = if (json.has("max_price") && !json.isNull("max_price") && !json.getString("max_price").equals("") && !json.getString("max_price").equals("null"))
+            seekbarPriceFinalLimit = if (json.has("max_price") && !json.isNull("max_price") && json.getString("max_price") != "" && json.getString("max_price") != "null")
                 json.optString("max_price", "0").toFloat() else 0.0f
 
         }
@@ -299,7 +299,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     private fun createFilterDialog(progress_bar: ProgressBar) {
         filterDialog = Dialog(this, R.style.DialogSlideAnimStyle)
-        var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+        val brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
         val drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)
         val drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)
 
@@ -425,7 +425,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                     if (isStatusCodeValid(it)) {
                         val dataSet = getDataSetArrayFromResponse(it)
                         val gson = GsonBuilder().create()
-                        var brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+                        val brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
                         brandlist.sortBy { it.brandName }
                         class Holder(view: View) : RecyclerView.ViewHolder(view) {
 

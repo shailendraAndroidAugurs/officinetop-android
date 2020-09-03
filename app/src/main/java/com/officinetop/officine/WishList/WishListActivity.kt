@@ -32,7 +32,7 @@ class WishListActivity : BaseActivity() {
     }
 
     private fun bindRecyclerView(WishListAdapter: ArrayList<Models.WishList>) {
-        var wishListadpater = WishListAdapter(this, WishListAdapter)
+        val wishListadpater = WishListAdapter(this, WishListAdapter)
         recycler_view_WishList.adapter = wishListadpater
     }
 
@@ -40,7 +40,7 @@ class WishListActivity : BaseActivity() {
     private fun getWishList() {
 
         var wishListIterator: ArrayList<Models.WishList> = ArrayList<Models.WishList>()
-        var ProgressDialog = getProgressDialog(true)
+        val ProgressDialog = getProgressDialog(true)
         RetrofitClient.client.getUserWishList(getBearerToken() ?: "")
                 .onCall { networkException, response ->
                     networkException.let {

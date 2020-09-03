@@ -121,7 +121,6 @@
     <string name="may_help">Ciao, posso aiutarti</string>
     <string name="entermessage">Inserisci il messaggio</string>
     <string name="ticketClose">Il biglietto è stato chiuso. Vuoi generare un nuovo biglietto?</string>
-    <string name="payments_show_name" translatable="false">Dati di pagamento ricevuti con successo per %s!</string>
     <string name="euro_symbol">€</string>
     <string name="prepend_euro_symbol_with_da"> € %d</string>
     <string name="prepend_euro_symbol_with_da_string">€ %s</string>
@@ -138,7 +137,7 @@
     <string name="side">Lato</string>
     <string name="url_not_found">URL non trovato</string>
     <string name="zero">0</string>
-    <string name="empty_string"></string>
+
     <string name="front">Anteriore</string>
     <string name="rear">Posteriore</string>
     <string name="left">Sinistra</string>
@@ -247,7 +246,7 @@
     <string name="retry">riprova</string>
     <string name="emailblank">Inserisci l\'email</string>
     <string name="mobileblank">Inserisci cellulare</string>
-    <string name="title_activity_contactlist_"></string>
+
     <string name="User_Contact">Lista dei contatti</string>
     <string name="User_address">Elenco indirizzi</string>
     <string name="add_contact">Aggiungi numero di contatto</string>
@@ -339,7 +338,7 @@
     <string name="Server_Error">Accedi per i dettagli</string>
     <string name="Edit">modificare</string>
     <string name="Buy_Now">Acquista ora</string>
-    <string name="Search">Cerca...</string>
+    <string name="Search">Cerca…</string>
     <string name="CouponDetail">Dettaglio coupon</string>
     <string name="tyreprice_text">Prezzo: € %s</string>
     <string name="PFU_price">PFU: € %s</string>
@@ -536,7 +535,7 @@
     <string name="PFU_Description">Descrizione PFU</string>
     <string name="Feedback_Detail">Dettaglio feedback</string>
     <string name="Workshop"> Officine</string>
-    <string name="Please_wait"> Attendere prego...</string>
+    <string name="Please_wait"> Attendere prego…</string>
     <string name="partNotFound"> Parte non trovata per questo servizio. Per favore riprova</string>
     <string name="Feedback_List"> Elenco di feedback</string>
     <string name="WorkshopDetail"> Prenotazione</string>

@@ -102,7 +102,7 @@ class SplashActivity : BaseActivity(){
                 .subscribeOn(Schedulers.newThread())
                // .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action1 { t ->
-                    Log.v(TAG, "shortenUrlByGoogle " + t)
+                    Log.v(TAG, "shortenUrlByGoogle $t")
 
 
                 })

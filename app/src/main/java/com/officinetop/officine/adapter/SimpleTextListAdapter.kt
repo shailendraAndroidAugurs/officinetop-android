@@ -37,7 +37,7 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
 
 
 
-        val item = "${data.width}/${data.aspectRatio}  R${data.rimDiameter}  ${if (!data.speed_load_index.isNullOrBlank() && !data.speed_load_index.trim().equals("0") && !data.speed_load_index.trim().equals(context.getString(R.string.all)) && !data.speed_load_index.trim().equals(context.getString(R.string.all_in_italin))) data.speed_load_index.trim() else " "}   ${if (!data.speedindexStatus.isNullOrBlank() && !data.speedindexStatus.equals("0") && !data.speedindexStatus.trim().equals(context.getString(R.string.All)) && !data.speedindexStatus.trim().equals(context.getString(R.string.all_in_italin))) data.speedindexStatus else " "} "
+        val item = "${data.width}/${data.aspectRatio}  R${data.rimDiameter}  ${if (!data.speed_load_index.isNullOrBlank() && data.speed_load_index.trim() != "0" && data.speed_load_index.trim() != context.getString(R.string.all) && data.speed_load_index.trim() != context.getString(R.string.all_in_italin)) data.speed_load_index.trim() else " "}   ${if (!data.speedindexStatus.isNullOrBlank() && data.speedindexStatus != "0" && data.speedindexStatus.trim() != context.getString(R.string.All) && data.speedindexStatus.trim() != context.getString(R.string.all_in_italin)) data.speedindexStatus else " "} "
 
         viewHolder.bindView(item, data.id.toString())
 
@@ -46,8 +46,8 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
 
     inner class SimpleTextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val itemTitle = itemView.item_title
-        val deleteItem = itemView.delete_item
+        private val itemTitle = itemView.item_title
+        private val deleteItem = itemView.delete_item
 
         fun bindView(item: String, id: String) {
             itemTitle.text = item

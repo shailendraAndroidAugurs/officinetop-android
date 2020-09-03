@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
 
 class  OrderDetailActivity : BaseActivity() {
-    lateinit var forWhich: String
+    private lateinit var forWhich: String
     lateinit var orderid: String
     lateinit var Orderstatus: String
     var SpareProductList: ArrayList<Models.SpareProductDescription> = ArrayList<Models.SpareProductDescription>()
@@ -33,15 +33,15 @@ class  OrderDetailActivity : BaseActivity() {
         orderid = intent.extras!!.get("orderid") as String
 
         if (intent.getSerializableExtra("OrderDetailList") != null) {
-            if (forWhich.equals("S")) {
+            if (forWhich == "S") {
                 SpareProductList = intent.getSerializableExtra("OrderDetailList") as ArrayList<Models.SpareProductDescription>
                 bindViewForSpareProduct()
 
-            } else if (forWhich.equals("T")) {
+            } else if (forWhich == "T") {
 
                 TyreProductList = intent.getSerializableExtra("OrderDetailList") as ArrayList<Models.TyreProductDescription>
                 bindViewForTyre()
-            } else if (forWhich.equals("SP")) {
+            } else if (forWhich == "SP") {
                 ServiceProductList = intent.getSerializableExtra("OrderDetailList") as ArrayList<Models.ServiceProductDescription>
                 bindViewForServiceProduct()
             }
@@ -125,7 +125,7 @@ class  OrderDetailActivity : BaseActivity() {
 
         serviceProductAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                if (view.tag != null && view.tag.equals("100") && ServiceProductList[position].serviceAssemblyProductDescription != null && ServiceProductList[position].serviceDetail != null) {
+                if (view.tag != null && view.tag == "100" && ServiceProductList[position].serviceAssemblyProductDescription != null && ServiceProductList[position].serviceDetail != null) {
 
                     startActivityForResult(intentFor<FeedbackAddActivity>(
                             Constant.Path.workshopId to ServiceProductList[position].workshopDetails.id.toString(),
@@ -159,7 +159,7 @@ class  OrderDetailActivity : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                if (view.tag != null && view.tag.equals("101")) {
+                if (view.tag != null && view.tag == "101") {
                     if (ServiceProductList[position].serviceAssemblyProductDescription != null && ServiceProductList[position].serviceAssemblyProductDescription.feedbackdetail != null) {
                         showrating(ServiceProductList[position].serviceAssemblyProductDescription.feedbackdetail.comments, ServiceProductList[position].serviceAssemblyProductDescription.feedbackdetail.rating)
                     }

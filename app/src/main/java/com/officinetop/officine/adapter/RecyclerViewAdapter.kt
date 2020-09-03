@@ -107,26 +107,26 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
         val icon = view.item_image
         val price = view.item_price
         val rating = view.item_rating
-        val ratingCount = view.item_rating_count
-        val tireCellContainer = view.tire_cell
-        val matchCode = view.item_sub_title
-        val ourDescription = view.item_description
-        val tyreTypeIcon = view.tyre_season_icon
-        val tyreFuelValue = view.tyre_fuel_value
-        val tyreWetGripValue = view.tyre_wet_grip_value
-        val tyreDbValue = view.tyre_db_value
-        val season_icon = view.season_icon
-        val brand_image = view.item__brand_image
+        private val ratingCount = view.item_rating_count
+        private val tireCellContainer = view.tire_cell
+        private val matchCode = view.item_sub_title
+        private val ourDescription = view.item_description
+        private val tyreTypeIcon = view.tyre_season_icon
+        private val tyreFuelValue = view.tyre_fuel_value
+        private val tyreWetGripValue = view.tyre_wet_grip_value
+        private val tyreDbValue = view.tyre_db_value
+        private val season_icon = view.season_icon
+        private val brand_image = view.item__brand_image
         val Iv_favorite = view.Iv_favorite
         val AppliedCouponName = view.tv_AppliedCoupon
-        val CouponLabel = view.tv_couponLabel
-        val offerBadge = view.offer_badge
+        private val CouponLabel = view.tv_couponLabel
+        private val offerBadge = view.offer_badge
         override fun clear() {
         }
 
         override fun onBind(position: Int) {
 
-            var items: Models.TyreDetailItem = listItems.get(position)
+            val items: Models.TyreDetailItem = listItems.get(position)
             context.loadImage(items.imageUrl, icon)
             context.loadImage(items.brand_image, brand_image)
             matchCode.text = "ean ${items.ean_number}"
@@ -139,7 +139,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
             if (!items.description.equals("null")) {
                 ourDescription.text = items.description
-            } else if (items.our_description.toString().isEmpty() || items.our_description!!.equals("null")) {
+            } else if (items.our_description.toString().isEmpty() || items.our_description!! == "null") {
                 ourDescription.text = items.manufacturer_description
             }
             rating.rating = if (!items.ratingStar.isNullOrEmpty()) items.ratingStar.toFloat() else 0.0F

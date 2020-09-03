@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/grey_light"
-                android:textSize="10sp" />
+                android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
 

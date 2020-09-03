@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -85,7 +84,7 @@
         android:textAllCaps="false"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="11sp" />
+        android:textSize="@dimen/_12sdp" />
 </LinearLayout>
 
                 <LinearLayout
@@ -122,7 +121,7 @@
                     <com.officinetop.officine.utils.CustomRatingBar
 
                         android:id="@+id/item_rating"
-                        style="@style/customratingBar"
+                        style="@style/custom_ratingBar"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_10sdp" />
 

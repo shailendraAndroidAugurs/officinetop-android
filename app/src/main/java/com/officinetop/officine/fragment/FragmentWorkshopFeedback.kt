@@ -34,7 +34,7 @@ class FragmentWorkshopFeedback : Fragment() {
             WorkshopFeedBackList = arguments!!.getSerializable("list") as ArrayList<Models.HighRatingfeedback>
             if (!arguments!!.getBoolean("product")) {
                 if (arguments!!.getBoolean("MyReview")) {
-                    var WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
+                    val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
 
                     WorkshopFeedBackListfilter.addAll(WorkshopFeedBackList.filter {
                         Log.d("MyReview", "userid:" + it.users_id)
@@ -129,10 +129,10 @@ class FragmentWorkshopFeedback : Fragment() {
                         }
 
                         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                            var action: Int = e.getAction();
+                            val action: Int = e.action;
                             when (action) {
                                 MotionEvent.ACTION_MOVE ->
-                                    rv.getParent().requestDisallowInterceptTouchEvent(true);
+                                    rv.parent.requestDisallowInterceptTouchEvent(true);
 
                             }
                             return false;

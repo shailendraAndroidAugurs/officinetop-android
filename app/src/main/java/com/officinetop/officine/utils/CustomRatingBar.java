@@ -36,16 +36,11 @@ import static android.util.TypedValue.applyDimension;
 public class CustomRatingBar extends View {
 
     public enum Gravity {
-        /**
-         * Left gravity is default: the bar will be filled starting from left to right.
-         */
+
         Left(0),
-        /**
-         * Right gravity: the bar will be filled starting from right to left.
-         */
         Right(1);
 
-        int id;
+        final int id;
         Gravity(int id) {
             this.id = id;
         }
@@ -251,16 +246,13 @@ public class CustomRatingBar extends View {
             //Be whatever you want
             if (desiredStarSize != Integer.MAX_VALUE) {
                 // user specified a specific star size, so there is a desired width
-                int desiredWidth = calculateTotalWidth(desiredStarSize, numberOfStars, starsSeparation, true);
-                width = desiredWidth;
+                width = calculateTotalWidth(desiredStarSize, numberOfStars, starsSeparation, true);
             } else if (maxStarSize != Integer.MAX_VALUE) {
                 // user specified a max star size, so there is a desired width
-                int desiredWidth = calculateTotalWidth(maxStarSize, numberOfStars, starsSeparation, true);
-                width = desiredWidth;
+                width = calculateTotalWidth(maxStarSize, numberOfStars, starsSeparation, true);
             } else {
                 // using defaults
-                int desiredWidth = calculateTotalWidth(defaultStarSize, numberOfStars, starsSeparation, true);
-                width = desiredWidth;
+                width = calculateTotalWidth(defaultStarSize, numberOfStars, starsSeparation, true);
             }
         }
 
@@ -274,31 +266,28 @@ public class CustomRatingBar extends View {
             //Can't be bigger than...
             if (desiredStarSize != Integer.MAX_VALUE) {
                 // user specified a specific star size, so there is a desired width
-                int desiredHeight = calculateTotalHeight(desiredStarSize, numberOfStars, starsSeparation, true);
+                int desiredHeight = calculateTotalHeight(desiredStarSize, true);
                 height = Math.min(desiredHeight, heightSize);
             } else if (maxStarSize != Integer.MAX_VALUE) {
                 // user specified a max star size, so there is a desired width
-                int desiredHeight = calculateTotalHeight(maxStarSize, numberOfStars, starsSeparation, true);
+                int desiredHeight = calculateTotalHeight(maxStarSize, true);
                 height = Math.min(desiredHeight, heightSize);
             } else {
                 // using defaults
-                int desiredHeight = calculateTotalHeight(tentativeStarSize, numberOfStars, starsSeparation, true);
+                int desiredHeight = calculateTotalHeight(tentativeStarSize, true);
                 height = Math.min(desiredHeight, heightSize);
             }
         } else {
             //Be whatever you want
             if (desiredStarSize != Integer.MAX_VALUE) {
                 // user specified a specific star size, so there is a desired width
-                int desiredHeight = calculateTotalHeight(desiredStarSize, numberOfStars, starsSeparation, true);
-                height = desiredHeight;
+                height = calculateTotalHeight(desiredStarSize, true);
             } else if (maxStarSize != Integer.MAX_VALUE) {
                 // user specified a max star size, so there is a desired width
-                int desiredHeight = calculateTotalHeight(maxStarSize, numberOfStars, starsSeparation, true);
-                height = desiredHeight;
+                height = calculateTotalHeight(maxStarSize, true);
             } else {
                 // using defaults
-                int desiredHeight = calculateTotalHeight(tentativeStarSize, numberOfStars, starsSeparation, true);
-                height = desiredHeight;
+                height = calculateTotalHeight(tentativeStarSize, true);
             }
         }
 
@@ -328,7 +317,7 @@ public class CustomRatingBar extends View {
     private float calculateBestStarSize(int width, int height) {
         if (maxStarSize != Integer.MAX_VALUE) {
             float desiredTotalWidth = calculateTotalWidth(maxStarSize, numberOfStars, starsSeparation, true);
-            float desiredTotalHeight = calculateTotalHeight(maxStarSize, numberOfStars, starsSeparation, true);
+            float desiredTotalHeight = calculateTotalHeight(maxStarSize, true);
             if (desiredTotalWidth >= width || desiredTotalHeight >= height) {
                 // we need to shrink the size of the stars
                 float sizeBasedOnWidth = (width - getPaddingLeft() - getPaddingRight() - starsSeparation * (numberOfStars - 1)) / numberOfStars;
@@ -352,7 +341,7 @@ public class CustomRatingBar extends View {
      */
     private void performStarSizeAssociatedCalculations(int width, int height) {
         float totalStarsWidth = calculateTotalWidth(currentStarSize, numberOfStars, starsSeparation, false);
-        float totalStarsHeight = calculateTotalHeight(currentStarSize, numberOfStars, starsSeparation, false);
+        float totalStarsHeight = calculateTotalHeight(currentStarSize, false);
         float startingX = (width - getPaddingLeft() - getPaddingRight())/2 - totalStarsWidth/2 + getPaddingLeft();
         float startingY = (height - getPaddingTop() - getPaddingBottom())/2 - totalStarsHeight/2 + getPaddingTop();
         starsDrawingSpace = new RectF(startingX, startingY, startingX + totalStarsWidth, startingY + totalStarsHeight);
@@ -399,12 +388,10 @@ public class CustomRatingBar extends View {
     /**
      * Calculates total height to occupy based on several parameters
      * @param starSize
-     * @param numberOfStars
-     * @param starsSeparation
      * @param padding
      * @return
      */
-    private int calculateTotalHeight(float starSize, int numberOfStars, float starsSeparation, boolean padding) {
+    private int calculateTotalHeight(float starSize, boolean padding) {
         return Math.round(starSize) + (padding ? getPaddingTop() + getPaddingBottom() : 0);
     }
 
@@ -599,7 +586,7 @@ public class CustomRatingBar extends View {
                 // check if action is performed on stars
                 if (starsTouchSpace.contains(event.getX(), event.getY())) {
                     touchInProgress = true;
-                    setNewRatingFromTouch(event.getX(), event.getY());
+                    setNewRatingFromTouch(event.getX());
                 } else {
                     if (touchInProgress && ratingListener != null) {
                         ratingListener.onRatingChanged(this, rating, true);
@@ -609,7 +596,7 @@ public class CustomRatingBar extends View {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                setNewRatingFromTouch(event.getX(), event.getY());
+                setNewRatingFromTouch(event.getX());
                 if (clickListener != null) {
                     clickListener.onClick(this);
                 }
@@ -629,9 +616,9 @@ public class CustomRatingBar extends View {
     /**
      * Assigns a rating to the touch event.
      * @param x
-     * @param y
+     *
      */
-    private void setNewRatingFromTouch(float x, float y) {
+    private void setNewRatingFromTouch(float x) {
         // normalize x to inside starsDrawinSpace
         if (gravity != CustomRatingBar.Gravity.Left) {
             x = getWidth() - x;
@@ -690,7 +677,7 @@ public class CustomRatingBar extends View {
         };
         private float rating = 0.0f;
 
-        protected SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             rating = source.readFloat();
         }
@@ -700,7 +687,7 @@ public class CustomRatingBar extends View {
             super(source, loader);
         }
 
-        protected SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 
@@ -765,28 +752,11 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Returns max star size in pixels.
-     * @return
-     */
-    public float getMaxStarSize() {
-        return maxStarSize;
-    }
-
-    /**
-     * Returns max star size in the requested dimension.
-     * @param dimen
-     * @return
-     */
-    public float getMaxStarSize(@Dimension int dimen) {
-        return valueFromPixels(maxStarSize, dimen);
-    }
-
-    /**
      * Sets maximum star size in pixels.
      * If current star size is less than provided value, this has no effect on the view.
      * @param maxStarSize
      */
-    public void setMaxStarSize(float maxStarSize) {
+    private void setMaxStarSize(float maxStarSize) {
         this.maxStarSize = maxStarSize;
         if (currentStarSize > maxStarSize) {
             // force re-calculating the layout dimension
@@ -807,14 +777,6 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Return star size in pixels.
-     * @return
-     */
-    public float getStarSize() {
-        return currentStarSize;
-    }
-
-    /**
      * Return star size in the requested dimension.
      * @param dimen
      * @return
@@ -827,7 +789,7 @@ public class CustomRatingBar extends View {
      * Sets exact star size in pixels.
      * @param starSize
      */
-    public void setStarSize(float starSize) {
+    private void setStarSize(float starSize) {
         this.desiredStarSize = starSize;
         if (starSize != Integer.MAX_VALUE && maxStarSize != Integer.MAX_VALUE && starSize > maxStarSize) {
             Log.w("CustomRatingBar", String.format("Initialized with conflicting values: starSize is greater than maxStarSize (%f > %f). I will ignore maxStarSize", starSize, maxStarSize));
@@ -869,7 +831,7 @@ public class CustomRatingBar extends View {
      * Sets separation between stars in pixels.
      * @param starsSeparation
      */
-    public void setStarsSeparation(float starsSeparation) {
+    private void setStarsSeparation(float starsSeparation) {
         this.starsSeparation = starsSeparation;
         // force re-calculating the layout dimension
         requestLayout();
@@ -886,7 +848,7 @@ public class CustomRatingBar extends View {
         setStarsSeparation(valueToPixels(starsSeparation, dimen));
     }
 
-    public int getNumberOfStars() {
+    private int getNumberOfStars() {
         return numberOfStars;
     }
 
@@ -910,28 +872,11 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Returns star border width in pixels.
-     * @return
-     */
-    public float getStarBorderWidth() {
-        return starBorderWidth;
-    }
-
-    /**
-     * Returns star border width in the requested dimension.
-     * @param dimen
-     * @return
-     */
-    public float getStarBorderWidth(@Dimension int dimen) {
-        return valueFromPixels(starBorderWidth, dimen);
-    }
-
-    /**
      * Sets border width of stars in pixels.
      * Throws IllegalArgumentException if provided value is less or equal than zero.
      * @param starBorderWidth
      */
-    public void setStarBorderWidth(float starBorderWidth) {
+    private void setStarBorderWidth(float starBorderWidth) {
         this.starBorderWidth = starBorderWidth;
         if (starBorderWidth <= 0) {
             throw new IllegalArgumentException(String.format("CustomRatingBar initialized with invalid value for starBorderWidth. Found %f, but should be greater than 0",
@@ -953,28 +898,11 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Returns start corner radius in pixels,
-     * @return
-     */
-    public float getStarCornerRadius() {
-        return starCornerRadius;
-    }
-
-    /**
-     * Returns start corner radius in the requested dimension,
-     * @param dimen
-     * @return
-     */
-    public float getStarCornerRadius(@Dimension int dimen) {
-        return valueFromPixels(starCornerRadius, dimen);
-    }
-
-    /**
      * Sets radius of star corner in pixels.
      * Throws IllegalArgumentException if provided value is less than zero.
      * @param starCornerRadius
      */
-    public void setStarCornerRadius(float starCornerRadius) {
+    private void setStarCornerRadius(float starCornerRadius) {
         this.starCornerRadius = starCornerRadius;
         if (starCornerRadius < 0) {
             throw new IllegalArgumentException(String.format("CustomRatingBar initialized with invalid value for starCornerRadius. Found %f, but should be greater or equal than 0",
@@ -995,10 +923,6 @@ public class CustomRatingBar extends View {
      */
     public void setStarCornerRadius(float starCornerRadius, @Dimension int dimen) {
         setStarCornerRadius(valueToPixels(starCornerRadius, dimen));
-    }
-
-    public @ColorInt int getBorderColor() {
-        return borderColor;
     }
 
     /**
@@ -1025,10 +949,6 @@ public class CustomRatingBar extends View {
         invalidate();
     }
 
-    public @ColorInt int getStarBackgroundColor() {
-        return starBackgroundColor;
-    }
-
     /**
      * Sets background color of stars in normal state.
      * @param starBackgroundColor
@@ -1037,10 +957,6 @@ public class CustomRatingBar extends View {
         this.starBackgroundColor = starBackgroundColor;
         // request redraw of the view
         invalidate();
-    }
-
-    public @ColorInt int getPressedBorderColor() {
-        return pressedBorderColor;
     }
 
     /**
@@ -1053,10 +969,6 @@ public class CustomRatingBar extends View {
         invalidate();
     }
 
-    public @ColorInt int getPressedFillColor() {
-        return pressedFillColor;
-    }
-
     /**
      * Sets fill color of stars in pressed state.
      * @param pressedFillColor
@@ -1065,10 +977,6 @@ public class CustomRatingBar extends View {
         this.pressedFillColor = pressedFillColor;
         // request redraw of the view
         invalidate();
-    }
-
-    public @ColorInt int getPressedStarBackgroundColor() {
-        return pressedStarBackgroundColor;
     }
 
     /**
@@ -1201,14 +1109,6 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Returns a new AnimationBuilder.
-     * @return
-     */
-    public CustomRatingBar.AnimationBuilder getAnimationBuilder() {
-        return new CustomRatingBar.AnimationBuilder(this);
-    }
-
-    /**
      * Normalizes rating passed by argument between 0 and numberOfStars.
      * @param rating
      * @return
@@ -1241,7 +1141,7 @@ public class CustomRatingBar extends View {
         this.ratingListener = listener;
     }
 
-    public interface OnRatingBarChangeListener {
+    interface OnRatingBarChangeListener {
 
         /**
          * Notification that the rating has changed. Clients can use the
@@ -1268,7 +1168,7 @@ public class CustomRatingBar extends View {
      * - Duration: 2s
      */
     public class AnimationBuilder {
-        private CustomRatingBar ratingBar;
+        private final CustomRatingBar ratingBar;
         private long duration;
         private Interpolator interpolator;
         private float ratingTarget;
@@ -1335,19 +1235,12 @@ public class CustomRatingBar extends View {
             return this;
         }
 
-        /**
-         * Sets AnimatorListener.
-         * @param animatorListener
-         * @return
-         */
+
         public CustomRatingBar.AnimationBuilder setAnimatorListener(Animator.AnimatorListener animatorListener) {
             this.animatorListener = animatorListener;
             return this;
         }
 
-        /**
-         * Starts animation.
-         */
         public void start() {
             ratingBar.animateRating(this);
         }

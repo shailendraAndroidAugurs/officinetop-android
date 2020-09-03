@@ -38,8 +38,8 @@ class LocationActivity : BaseActivity() {
     private var mLastLocation: Location? = null
     var container: ConstraintLayout? = null
 
-    var geoCoder: Geocoder? = null
-    var addressList: MutableList<Address> = ArrayList()
+    private var geoCoder: Geocoder? = null
+    private var addressList: MutableList<Address> = ArrayList()
 
     private var latitude: String? = null
     private var longitude: String? = null
@@ -198,13 +198,13 @@ class LocationActivity : BaseActivity() {
 
     companion object {
 
-        private val TAG = "LocationProvider"
+        private const val TAG = "LocationProvider"
 
 
     }
 
-    var selectedPlace: Place? = null
-    var placePickerFragment: AutocompleteSupportFragment? = null
+    private var selectedPlace: Place? = null
+    private var placePickerFragment: AutocompleteSupportFragment? = null
     private fun setPlacePicker() {
 
         placePickerFragment = supportFragmentManager.setPlacePicker(this@LocationActivity) { place, error ->
@@ -235,7 +235,7 @@ class LocationActivity : BaseActivity() {
         longitude = long.toString()
 
         Log.d("user current location: ", "${latitude} ${longitude}")
-        location.text = "lat: " + latitude + ", long:" + longitude
+        location.text = "lat: $latitude, long:$longitude"
 
 
         completeAddress = addressList.get(0).getAddressLine(0)
@@ -306,7 +306,7 @@ class LocationActivity : BaseActivity() {
                     response?.let {
                         if (response.isSuccessful) {
                             val jsonObject = JSONObject(response?.body()?.string())
-                            if (jsonObject.has("status_code") && jsonObject.optString("status_code").equals("1") && jsonObject.has("message")) {
+                            if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
                                 UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
                                 showInfoDialog(jsonObject.optString("message")) {

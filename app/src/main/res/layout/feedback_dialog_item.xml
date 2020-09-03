@@ -7,5 +7,5 @@
         android:id="@+id/iv_feedbackImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/no_image_placeholder"></ImageView>
+        android:src="@drawable/no_image_placeholder" />
 </LinearLayout>

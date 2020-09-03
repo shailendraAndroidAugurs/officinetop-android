@@ -76,8 +76,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             else {
                 collapseHeaderGroup()
                 previousExpandedGroupPosition = groupPosition
-                var subCategoryDetails = subGroupCategoryArrayList.get(groupPosition)
-                var subCategoryId = subCategoryDetails?.id
+                val subCategoryDetails = subGroupCategoryArrayList.get(groupPosition)
+                val subCategoryId = subCategoryDetails?.id
 
                 if (subCategoryId != null)
                     loadN3Groups(RetrofitClient.client.spareN3GroupsUpdated(subCategoryId), groupPosition)
@@ -115,7 +115,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 progress_bar.visibility = View.GONE
 
-                var body = response.body()?.string()
+                val body = response.body()?.string()
                 body?.let {
 
                     if (isStatusCodeValid(body)) {
@@ -147,7 +147,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 subGroupCategoryArrayList.clear()
 
                 if (response.body() != null && response.body()?.statusCode == 1) {
-                    var dataSetList: MutableList<DataSetItem?>? = response.body()?.dataSet
+                    val dataSetList: MutableList<DataSetItem?>? = response.body()?.dataSet
 
                     if (dataSetList != null) {
                         subGroupCategoryArrayList.addAll(dataSetList)
@@ -175,7 +175,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 progress_bar.visibility = View.GONE
 
                 if (response.body() != null && response.body()?.statusCode == 1) {
-                    var dataSetList: MutableList<DataSetSubGroupCatItem?>? = response.body()?.dataSetSubGroupCat
+                    val dataSetList: MutableList<DataSetSubGroupCatItem?>? = response.body()?.dataSetSubGroupCat
 
                     if (dataSetList != null) {
                         subN3GroupCategoryArrayList.clear()
@@ -275,10 +275,10 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
         Executors.newSingleThreadExecutor().submit {
 
-            Log.v("Save QUERY", "************* " + query)
+            Log.v("Save QUERY", "************* $query")
             RetrofitClient.client.addSearchQuery(query, getBearerToken()
                     ?: "").genericAPICall { _, response ->
-                Log.v("Save QUERY", "************* response " + response)
+                Log.v("Save QUERY", "************* response $response")
             }
 
         }

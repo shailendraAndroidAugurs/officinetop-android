@@ -40,9 +40,9 @@ import retrofit2.Response
 class RegisterActivity : BaseActivity() {
 
 
-    lateinit var referralCode: String
-    lateinit var checkbox_referral: CheckBox
-    var uniqueId: String? = null
+    private lateinit var referralCode: String
+    private lateinit var checkbox_referral: CheckBox
+    private var uniqueId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

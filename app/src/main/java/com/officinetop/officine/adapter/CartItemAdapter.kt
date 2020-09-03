@@ -36,7 +36,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
     private var ProceedToPay: Button? = null
 
     var dialog: Dialog? = null
-    var genericAdapterParts: GenericAdapter<Models.Part>? = null
+    private var genericAdapterParts: GenericAdapter<Models.Part>? = null
 
     init {
         ProceedToPay = view
@@ -118,8 +118,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             var productID: String = ""
             var quantity: Int = 1
 
-            if (item.CartType.equals("T") || item.CartType.equals("S")) {
-                if (item.CartType.equals("T")) {
+            if (item.CartType == "T" || item.CartType == "S") {
+                if (item.CartType == "T") {
                     ProductPFU.visibility = View.VISIBLE
 
                 } else {
@@ -128,15 +128,15 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     product_Vat.visibility = View.GONE
 
                 }
-                isProductSellOnpair = !item.IsProductPair.isNullOrBlank() && !item.IsProductPair.equals("0")
-                Log.d("cartItemAdapter", "isProductSellOnpair: " + isProductSellOnpair.toString())
-                Log.d("cartItemAdapter", "quantity:Sp : " + quantity.toString())
+                isProductSellOnpair = !item.IsProductPair.isNullOrBlank() && item.IsProductPair != "0"
+                Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
+                Log.d("cartItemAdapter", "quantity:Sp : $quantity")
                 if (item.pfuDesc.isNullOrBlank()) {
                     product_Vat.text = context.getString(R.string.Concat)
                 } else {
                     product_Vat.text = item.pfuDesc
                 }
-                if (item.discount.isNullOrBlank() || item.discount.equals("0") || item.discount.equals("0.0")) {
+                if (item.discount.isNullOrBlank() || item.discount == "0" || item.discount == "0.0") {
                     ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
                     ProductDiscount.visibility = View.GONE
                     tv_labeldiscount.visibility = View.GONE
@@ -158,7 +158,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 cartItemServiceLayout.visibility = View.GONE
                 context.loadImage(item.productImageUrl, cartItemProductImage)
                 productPrice.text = context.getString(R.string.prepend_euro_symbol_string, item.price.takeIf { !it.isNullOrEmpty() })
-                if (!item.productQuantity.equals("0"))
+                if (item.productQuantity != "0")
                     quantity = item.productQuantity.toInt()
                 productID = item.id
 
@@ -181,7 +181,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
                 if (quantitySpinner.isVisible) {
-                    if (item.pfuTax.isNullOrBlank() || item.pfuTax.equals("0")) {
+                    if (item.pfuTax.isNullOrBlank() || item.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
                         ProductPFU.visibility = View.GONE
                         product_Vat.visibility = View.GONE
@@ -205,10 +205,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
 
-                if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("1")) {
+                if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "1") {
 
                     tv_couponDetailProduct.text = item.couponTitle + " :"+ context.getString(R.string.euro_symbol) + item.CouponPrices /*+ " %"*/
-                } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("2")) {
+                } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "2") {
                     tv_couponDetailProduct.text = item.couponTitle + " :" + context.getString(R.string.euro_symbol) + item.CouponPrices
                 } else {
                     tv_couponDetailProduct.visibility=View.GONE
@@ -216,7 +216,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-            } else if (item.CartType.equals("SP")) {
+            } else if (item.CartType == "SP") {
 
                 if (item.serviceAssemblyProductDescription != null) {
                     productName.text = item.serviceAssemblyProductDescription.productName.takeIf { !it.isNullOrEmpty() }
@@ -225,10 +225,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     cartItemServiceLayout.visibility = View.VISIBLE
                     context.loadImage(item.serviceAssemblyProductDescription.productImageUrl, cartItemProductImage)
                     productID = item.serviceAssemblyProductDescription.id
-                    isProductSellOnpair = !item.serviceAssemblyProductDescription.IsProductPair.isNullOrBlank() && !item.serviceAssemblyProductDescription.IsProductPair.equals("0")
+                    isProductSellOnpair = !item.serviceAssemblyProductDescription.IsProductPair.isNullOrBlank() && item.serviceAssemblyProductDescription.IsProductPair != "0"
 
                     productPrice.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.price.takeIf { !it.isNullOrEmpty() })
-                    if (!item.serviceAssemblyProductDescription.productQuantity.equals("0"))
+                    if (item.serviceAssemblyProductDescription.productQuantity != "0")
                         quantity = item.serviceAssemblyProductDescription.productQuantity.toInt()
                     if (item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank()) {
                         product_Vat.text = context.getString(R.string.Concat)
@@ -239,9 +239,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         product_Vat.text = item.serviceAssemblyProductDescription.pfuDesc
                     }
 
-                    Log.d("cartItemAdapter", "isProductSellOnpair: " + isProductSellOnpair.toString())
-                    Log.d("cartItemAdapter", "quantity:Sp : " + quantity.toString())
-                    if (item.serviceAssemblyProductDescription.discount.isNullOrBlank() || item.serviceAssemblyProductDescription.discount.equals("0") || item.serviceAssemblyProductDescription.discount.equals("0.0")) {
+                    Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
+                    Log.d("cartItemAdapter", "quantity:Sp : $quantity")
+                    if (item.serviceAssemblyProductDescription.discount.isNullOrBlank() || item.serviceAssemblyProductDescription.discount == "0" || item.serviceAssemblyProductDescription.discount == "0.0") {
                         ProductDiscount.visibility = View.GONE
                         tv_labeldiscount.visibility = View.GONE
                         ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
@@ -250,7 +250,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         tv_labeldiscount.visibility = View.VISIBLE
                         ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.discount)
                     }
-                    if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax.equals("0")) {
+                    if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
                         ProductPFU.visibility = View.GONE
                         product_Vat.visibility = View.GONE
@@ -264,10 +264,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     } else {
                         ProductTotal.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.finalOrderPrice)
                     }
-                    if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType.equals("1")) {
+                    if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "1") {
 
                         tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol)+ item.serviceAssemblyProductDescription.CouponPrices /*+ " %"*/
-                    } else if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType.equals("2")) {
+                    } else if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "2") {
                         tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.serviceAssemblyProductDescription.CouponPrices
                     }else{
                         tv_couponDetailProduct.visibility=View.GONE
@@ -277,17 +277,17 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     cartItemProductLayout.visibility = View.GONE
                     cartItemServiceLayout.visibility = View.VISIBLE
                 }
-                if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("1")) {
+                if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "1") {
 
                     tv_coupon_cart_services.text = item.couponTitle + " : "+context.getString(R.string.euro_symbol)+ item.CouponPrices /*+ " %"*/
-                } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType.equals("2")) {
+                } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "2") {
                     tv_coupon_cart_services.text = item.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.CouponPrices
                 }else
                 {
                     tv_coupon_cart_services.visibility=View.GONE
                 }
                 //  Log.d("discount", item.discount.toString())
-                if (!item.discount.isNullOrBlank() && !item.discount.equals("0")) {
+                if (!item.discount.isNullOrBlank() && item.discount != "0") {
                     servicesVat.visibility = View.VISIBLE
                     tv_discount.visibility = View.VISIBLE
                     servicesVat.text = context.getString(R.string.prepend_euro_symbol_string, item.discount)
@@ -338,7 +338,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
 
 
-                    servicePrice.text = if (!item.price.isNullOrEmpty() && !item.price.equals("null")) context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
+                    servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
 
                 }
                 if (item.workshopDetail != null) {
@@ -351,9 +351,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 } else {
                     (item.bookingDate).takeIf { !it.isNullOrEmpty() }
                 }
-                time.text = "${item.startTime.takeIf { !it.isNullOrEmpty() }?.removeSuffix(":00")}  -  ${if (!item.endTime.isNullOrBlank() && !item.endTime.equals("null")) item.endTime.removeSuffix(":00") else "--"}"
+                time.text = "${item.startTime.takeIf { !it.isNullOrEmpty() }?.removeSuffix(":00")}  -  ${if (!item.endTime.isNullOrBlank() && item.endTime != "null") item.endTime.removeSuffix(":00") else "--"}"
                 selectedCar.text = context.getSelectedCar()?.carMakeName
-                item.endTime.takeIf { !it.isNullOrEmpty() && !it.equals("null") }?.removeSuffix(":00")
+                item.endTime.takeIf { !it.isNullOrEmpty() && it != "null" }?.removeSuffix(":00")
 
 
                 if (!item.avilability.isNullOrBlank() && item.avilability.equals("0")) {
@@ -379,7 +379,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 }
                 if (item.serviceAssemblyProductDescription != null) {
-                    if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax.equals("0")) {
+                    if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
                         ProductPFU.visibility = View.GONE
                         product_Vat.visibility = View.GONE
@@ -393,15 +393,15 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
             product_Vat.setOnClickListener {
-                if (item.CartType.equals("SP") && item.serviceAssemblyProductDescription != null && !item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank() && !item.serviceAssemblyProductDescription.pfuDesc.equals("-")) {
+                if (item.CartType == "SP" && item.serviceAssemblyProductDescription != null && !item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank() && item.serviceAssemblyProductDescription.pfuDesc != "-") {
                     context.showInfoDialog(item.serviceAssemblyProductDescription.pfuDesc)
-                } else if (!item.pfuDesc.isNullOrBlank() && !item.pfuDesc.equals("-")) {
+                } else if (!item.pfuDesc.isNullOrBlank() && item.pfuDesc != "-") {
                     context.showInfoDialog(item.pfuDesc)
                 }
 
             }
             var ProductMaxQuantity = 1
-            if (item.CartType.equals("SP")) {
+            if (item.CartType == "SP") {
                 if (item.serviceAssemblyProductDescription?.maxProductQuantity != null) {
                     ProductMaxQuantity = if (item.serviceAssemblyProductDescription.maxProductQuantity.isNullOrBlank()) 1 else item.serviceAssemblyProductDescription.maxProductQuantity?.toInt()
                 }
@@ -412,25 +412,25 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
             val list = getIntegerStringList(ProductMaxQuantity, isProductSellOnpair)
             quantitySpinner.setSampleSpinnerAdapter(context, list)
-            if (item.CartType.equals("SP")) {
+            if (item.CartType == "SP") {
 
-                quantitySpinner.setEnabled(false);
-                quantitySpinner.setClickable(false);
+                quantitySpinner.isEnabled = false;
+                quantitySpinner.isClickable = false;
             } else {
-                quantitySpinner.setEnabled(true);
-                quantitySpinner.setClickable(true);
+                quantitySpinner.isEnabled = true;
+                quantitySpinner.isClickable = true;
             }
 
             quantitySpinner.setSelection(list.indexOf(quantity.toString()))
 
 
-            Log.d("cartItemAdapter", "quantity1 : " + quantity)
+            Log.d("cartItemAdapter", "quantity1 : $quantity")
             quantitySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (isProductSellOnpair) {
-                        if (!(quantity).toString().equals(quantitySpinner.selectedItem)) {
+                        if ((quantity).toString() != quantitySpinner.selectedItem) {
                             updateCartQuantity(position + 1, item, productID)
                         }
                     }
@@ -500,19 +500,19 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         var selectedQuantity = selectedQuantityofProduct
         if (isProductSellOnpair)
             selectedQuantity = selectedQuantityofProduct / 2
-        if (item.CartType.equals("T") || item.CartType.equals("S")) {
+        if (item.CartType == "T" || item.CartType == "S") {
             if (!item.price.isNullOrEmpty() && !item.pfuTax.isNullOrEmpty()) {
                 totalPrice = item.price.toDouble() - item.pfuTax.toDouble()
                 totalPrice = (selectedQuantity * totalPrice) + item.pfuTax.toDouble()
             }
             price = item.price
-        } else if (item.CartType.equals("SP")) {
+        } else if (item.CartType == "SP") {
             if (!item.serviceAssemblyProductDescription.price.isNullOrEmpty() && !item.serviceAssemblyProductDescription.pfuTax.isNullOrEmpty()) {
                 totalPrice = item.serviceAssemblyProductDescription.price.toDouble() - item.serviceAssemblyProductDescription.pfuTax.toDouble()
                 totalPrice = (selectedQuantity * totalPrice) + item.serviceAssemblyProductDescription.pfuTax.toDouble()
             } else if (!item.serviceAssemblyProductDescription.price.isNullOrEmpty() && item.serviceAssemblyProductDescription.pfuTax.isNullOrEmpty()) {
                 totalPrice = item.serviceAssemblyProductDescription.price.toDouble()
-                totalPrice = selectedQuantity * totalPrice
+                totalPrice *= selectedQuantity
             }
             price = item.serviceAssemblyProductDescription.price
         }
@@ -549,10 +549,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
                 if (response.isSuccessful) {
-                    var body = response.body()?.string()
+                    val body = response.body()?.string()
                     if (isStatusCodeValid(body)) {
                         ProceedToPay?.isEnabled = true
-                        var data = JSONObject(body)
+                        val data = JSONObject(body)
                         if (onCartListCallback == null) {
 
                         } else {

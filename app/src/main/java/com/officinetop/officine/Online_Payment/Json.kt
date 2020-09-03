@@ -9,7 +9,7 @@ class Json {
     companion object {
         fun readFromFile(context: Context, fileName: String) : JSONArray {
             try {
-                val inputStream:InputStream = context.getAssets().open(fileName)
+                val inputStream:InputStream = context.assets.open(fileName)
                 val inputString = inputStream.bufferedReader().use{it.readText()}
                 return JSONArray(inputString)
 

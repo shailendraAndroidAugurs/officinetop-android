@@ -61,7 +61,7 @@ class AddVehicleActivity : BaseActivity() {
     val manufacturers: MutableList<Models.Manufacturer> = ArrayList()
     val model: MutableList<Models.CarModels> = ArrayList()
     var carVersions: MutableList<Models.CarVersion> = ArrayList()
-    var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
+    private var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
 
     var myCar: Models.MyCarDataSet? = null
 
@@ -213,7 +213,7 @@ class AddVehicleActivity : BaseActivity() {
         override fun onBindViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
 
             if (viewHolder is FooterHolderView) {
-                var itemHolder: FooterHolderView = viewHolder
+                val itemHolder: FooterHolderView = viewHolder
                 itemHolder.itemView.image_picker.setOnClickListener {
 
                     val permission = ContextCompat.checkSelfPermission(this@AddVehicleActivity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -226,14 +226,14 @@ class AddVehicleActivity : BaseActivity() {
             } else if (viewHolder is CarImageHolderView) {
 
                 try {
-                    var itemHolder: CarImageHolderView = viewHolder
+                    val itemHolder: CarImageHolderView = viewHolder
 
-                    var carImage: ImageView = itemHolder.itemView.findViewById(R.id.car_image)
-                    var deleteCarImage: ImageView = itemHolder.itemView.findViewById(R.id.delete_car_image)
+                    val carImage: ImageView = itemHolder.itemView.findViewById(R.id.car_image)
+                    val deleteCarImage: ImageView = itemHolder.itemView.findViewById(R.id.delete_car_image)
 
                     if (position < carImageList.size) {
-                        var carImageModel = myCar!!.carImages[position]
-                        var carImageURL = Constant.imageBaseURL + carImageModel.imageName
+                        val carImageModel = myCar!!.carImages[position]
+                        val carImageURL = Constant.imageBaseURL + carImageModel.imageName
                         Glide.with(this@AddVehicleActivity)
                                 .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_car).error(R.drawable.ic_car))
                                 .load(carImageURL)
@@ -254,7 +254,7 @@ class AddVehicleActivity : BaseActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-            var view: View
+            val view: View
             if (viewType == TYPE_FOOTER) {
                 view = LayoutInflater.from(this@AddVehicleActivity).inflate(R.layout.item_add_car_image, parent, false)
                 return FooterHolderView(view)
@@ -1155,10 +1155,10 @@ class AddVehicleActivity : BaseActivity() {
     private fun getEmptyAdapter() = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOf())
 
     private fun setNotEditable_SeachFromPlatno() {
-        spinner_manufacturer.setSpinnerEnable(false)
-        spinner_model.setSpinnerEnable(false)
-        spinner_fuel.setSpinnerEnable(false)
-        spinner_version.setSpinnerEnable(false)
+        spinner_manufacturer.isSpinnerEnable = false
+        spinner_model.isSpinnerEnable = false
+        spinner_fuel.isSpinnerEnable = false
+        spinner_version.isSpinnerEnable = false
 
 
 

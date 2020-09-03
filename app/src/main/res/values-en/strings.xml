@@ -119,7 +119,6 @@
     <string name="may_help">Hello, may i help you</string>
     <string name="entermessage">Enter message</string>
     <string name="ticketClose">Ticket has been closed. You want to generate new ticket?</string>
-    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
     <string name="euro_symbol">€</string>
     <string name="prepend_euro_symbol_with_da"> € %d</string>
     <string name="prepend_euro_symbol_with_da_string"> € %s</string>
@@ -136,7 +135,7 @@
     <string name="side">Side</string>
     <string name="url_not_found">Url not found</string>
     <string name="zero">0</string>
-    <string name="empty_string"></string>
+
     <string name="front">Front</string>
     <string name="rear">Rear</string>
     <string name="left">Left</string>
@@ -246,7 +245,7 @@
     <string name="retry">Retry</string>
     <string name="emailblank">Enter email</string>
     <string name="mobileblank">Enter mobile</string>
-    <string name="title_activity_contactlist_">Contactlist_Activity</string>
+
     <string name="User_Contact">Contact List</string>
     <string name="User_address">Address List</string>
     <string name="add_contact">Add Contact Number</string>
@@ -339,7 +338,7 @@
     <string name="Server_Error">Login for details</string>
     <string name="Edit">Edit</string>
     <string name="Buy_Now">Buy Now</string>
-    <string name="Search">Search...</string>
+    <string name="Search">Search…</string>
     <string name="CouponDetail">Coupon Detail</string>
     <string name="tyreprice_text">Product price: € %s</string>
     <string name="PFU_price">PFU: € %s</string>
@@ -538,7 +537,7 @@
     <string name="Feedback_Detail">Feedback Detail</string>
     <string name="Workshop"> Workshop</string>
 
-    <string name="Please_wait"> Please wait...</string>
+    <string name="Please_wait"> Please wait…</string>
     <string name="partNotFound"> Part not found for this services. Please try again</string>
     <string name="Feedback_List"> Feedback List</string>
     <string name="WorkshopDetail"> Workshop Detail</string>

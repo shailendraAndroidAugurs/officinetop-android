@@ -15,7 +15,7 @@
         android:background="@color/red"
         android:padding="3dp"
         android:textColor="@color/black"
-        android:textSize="10sp"
+        android:textSize="@dimen/_12sdp"
         tools:text="9+" />
 
 </FrameLayout>

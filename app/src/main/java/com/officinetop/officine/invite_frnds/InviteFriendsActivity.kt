@@ -35,7 +35,7 @@ class InviteFriendsActivity : BaseActivity() {
     }
 
     var bannerImage : Bitmap? = null
-    var inviteCode = ""
+    private var inviteCode = ""
 
 
     private fun initview(){
