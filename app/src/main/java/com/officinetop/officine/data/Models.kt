@@ -128,6 +128,10 @@ object Models {
             @SerializedName("carModel")
             val carModel: CarModels = CarModels(),
 
+            @SerializedName("criteriaResponse")
+            val carCriteria: CarCriteria=CarCriteria(),
+
+
             @SerializedName("km_of_cars") val km_of_cars: String = "",
             @SerializedName("km_traveled_annually") val km_traveled_annually: String = "",
             @SerializedName("revision_date_km") val carRevisionDate: String = "",
@@ -3109,7 +3113,18 @@ object Models {
             val sort_order: String,
             val version_id: String
     )
-
+     data class CarCriteria(
+            val created_at: String="",
+            val cron_executed_status: String="",
+            val id: String="",
+            val language: String="",
+            val repair_times_description: String="",
+            val repair_times_id: String="",
+            val unique_id: String="",
+            val updated_at: String="",
+            val users_id: String="",
+            val version_id: String=""
+    )
 
 }
 

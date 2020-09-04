@@ -161,7 +161,7 @@
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:spinnerHint="@string/sel_version" />
+                        app:spinnerHint="@string/select_car_criteria" />
 
                 </FrameLayout>
 

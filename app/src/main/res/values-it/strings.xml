@@ -695,6 +695,7 @@
     <string name="all_in_italin">All</string>
     <string name="car_conditions">Condizioni auto</string>
     <string name="criteria">Criteria</string>
+    <string name="select_car_criteria">Select Car Criteria</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

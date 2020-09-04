@@ -61,7 +61,7 @@ class AddVehicleActivity : BaseActivity() {
     val manufacturers: MutableList<Models.Manufacturer> = ArrayList()
     val model: MutableList<Models.CarModels> = ArrayList()
     var carVersions: MutableList<Models.CarVersion> = ArrayList()
-    var carCriteriaList: MutableList<Models.MotSchedule> = ArrayList()
+    var carCriteriaList: MutableList<Models.CarCriteria> = ArrayList()
 
     private var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
 
@@ -71,7 +71,7 @@ class AddVehicleActivity : BaseActivity() {
     var isForPlateno = false
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
-private var carcriteriaId=""
+    private var carcriteriaId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_vehicle)
@@ -317,21 +317,9 @@ private var carcriteriaId=""
 
 
         if (spinner_version.selectedItemPosition < 0 || spinner_manufacturer.selectedItemPosition < 0
-                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0||carcriteriaId!=null) {
+                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0 && !carcriteriaId.equals("")) {
             snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
             return
-        } else {
-            val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
-            RetrofitClient.client.kromedaCall(idVehicle)
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        }
-
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        }
-
-                    })
-
         }
 
         if (!isLoggedIn()) {
@@ -437,7 +425,7 @@ private var carcriteriaId=""
                     model[spinner_model.selectedItemPosition].modelID + "/" + model[spinner_model.selectedItemPosition].modelYear,
                     idVehicle,
                     finalCarVersion[spinner_version.selectedItemPosition].body,
-                    getBearerToken() ?: "")
+                    getBearerToken() ?: "", versionCriteria = carcriteriaId)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()
@@ -508,7 +496,7 @@ private var carcriteriaId=""
                     if (alloy.isChecked) "1" else "0",
                     if (spinner_fuel.selectedItem != null) spinner_fuel.selectedItem else "",
                     if (spinner_version.selectedItemPosition != null && spinner_version.selectedItemPosition != -1) finalCarVersion[spinner_version.selectedItemPosition].body else "",
-                    "Bearer ${getStoredToken()}").enqueue(object : Callback<ResponseBody> {
+                    "Bearer ${getStoredToken()}",versionCriteria = carcriteriaId).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     progressDialog.dismiss()
                     snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
@@ -663,11 +651,12 @@ private var carcriteriaId=""
 
         })
     }
+
     private fun loadCarCriteria(SelectedVersioId: String) {
 
         progressDialog.show()
 
-        RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId,"ITA" ).enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId, "ita").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
                 snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
@@ -686,7 +675,7 @@ private var carcriteriaId=""
                     for (i in 0 until dataset.length()) {
                         Log.d("AddVehicleActivity", "onResponse: forloop criteria")
                         val carCriteria = dataset.getJSONObject(i)
-                        val criteria = Gson().fromJson<Models.MotSchedule>(carCriteria.toString(), Models.MotSchedule::class.java)
+                        val criteria = Gson().fromJson<Models.CarCriteria>(carCriteria.toString(), Models.CarCriteria::class.java)
                         Log.d("AddVehicleActivity", "onResponse: forloop ${criteria}")
 
                         carCriteriaList.add(criteria)
@@ -696,36 +685,44 @@ private var carcriteriaId=""
 
                     val titlesfor: MutableList<String> = ArrayList()
                     titlesfor.clear()
-                 if(carCriteriaList.size>1) {
-                     var selectedIndex = -1
-                     tv_criteria.visibility=View.VISIBLE
-                     spinner_criteria.visibility=View.VISIBLE
-                     carCriteriaList.forEachWithIndex { i, it ->
-                         val title = "${it.service_schedule_description + ","}"
-                         if (true) {
-                             titlesfor.add(title)
+                    Log.d("carCriteriaList_size", carCriteriaList.size.toString())
+                    if (carCriteriaList.size > 1) {
+                        var selectedIndex = -1
+                        Log.d("carCriteriaList_size", tv_criteria.visibility.toString())
+                        tv_criteria.visibility = View.VISIBLE
+                        spinner_criteria.visibility = View.VISIBLE
+                        carCriteriaList.forEachWithIndex { i, it ->
+                            val title = "${it.repair_times_description + ","}"
+                            if (true) {
+                                titlesfor.add(title)
 
-                             if (isForEdit) {
-                                 if (it.schedule_id == myCar?.carVersionModel?.idVehicle)
+                                if (isForEdit) {
+                                    if (it.repair_times_id == myCar?.carCriteria?.repair_times_id)
 
-                                     selectedIndex = i
-                             }
+                                        selectedIndex = i
+                                }
 
-                         } else carCriteriaList.removeAt(i)
-                     }
+                            } else carCriteriaList.removeAt(i)
+                        }
+                        carcriteriaId = carCriteriaList[0].repair_times_id
+                        bindSpinner(spinner_criteria, titlesfor)
 
-                     bindSpinner(spinner_criteria, titlesfor)
+                        if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
+                            spinner_criteria.setSelection(selectedIndex)
+                        }
 
-                     if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
-                         spinner_criteria.setSelection(selectedIndex)
-                     }
-
-                 }else if(carCriteriaList.size==1){
-                     carcriteriaId=carCriteriaList[0].schedule_id
-                 }
+                    } else if (carCriteriaList.size == 1) {
+                        tv_criteria.visibility = View.GONE
+                        spinner_criteria.visibility = View.GONE
+                        carcriteriaId = carCriteriaList[0].repair_times_id
+                        Log.d("AddVehicalActivity","carcriteriaId"+carcriteriaId)
+                    } else {
+                        tv_criteria.visibility = View.GONE
+                        spinner_criteria.visibility = View.GONE
+                    }
 
                     spinner_criteria.setOnSpinnerItemClickListener { position, _ ->
-                        carcriteriaId=carCriteriaList[position].schedule_id
+                        carcriteriaId = carCriteriaList[position].repair_times_id
 
                     }
 
@@ -742,6 +739,7 @@ private var carcriteriaId=""
 
 
     }
+
     private fun loadCarVersion(modelID: String, year: String) {
 
         progressDialog.show()
@@ -847,7 +845,7 @@ private var carcriteriaId=""
 
         spinner_version.clearSelection()
 
-        Log.d("AddVehicleActivity","onResponse: carversionsize before "+carVersions.size.toString())
+        Log.d("AddVehicleActivity", "onResponse: carversionsize before " + carVersions.size.toString())
         var list = carVersions.filter { it.fueltype == fuelType }
         if (fuelType?.isEmpty()!!)
             list = carVersions
@@ -856,7 +854,7 @@ private var carcriteriaId=""
             list = carVersions
 
         finalCarVersion = list as MutableList<Models.CarVersion>
-        Log.d("AddVehicleActivity","onResponse: carversionsize After according to fule type  "+finalCarVersion.size.toString())
+        Log.d("AddVehicleActivity", "onResponse: carversionsize After according to fule type  " + finalCarVersion.size.toString())
 
         val titles: MutableList<String> = ArrayList()
         titles.clear()
@@ -882,13 +880,27 @@ private var carcriteriaId=""
             spinner_version.setSelection(selIndex)
         }
         spinner_version.setOnSpinnerItemClickListener { position, _ ->
+            Log.d("car_criteria_vehical_id", finalCarVersion[position].idVehicle)
 
-            loadCarCriteria(finalCarVersion[position].version)
+
+            val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
+            RetrofitClient.client.kromedaCall(idVehicle)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        }
+
+                    })
+
+            loadCarCriteria(finalCarVersion[position].idVehicle)
+
         }
 
 
         if (isForPlateno) {
-            Log.d("isForPlateno :  ",isForPlateno.toString())
+            Log.d("isForPlateno :  ", isForPlateno.toString())
             setNotEditable_SearchFromPlatno()
         }
 
@@ -908,7 +920,6 @@ private var carcriteriaId=""
         spinner.setOnSpinnerItemClickListener { _, _ -> }
 
         spinner.setAdapter(adapter)
-
 
 
     }
@@ -1240,7 +1251,6 @@ private var carcriteriaId=""
         spinner_model.isSpinnerEnable = false
         spinner_fuel.isSpinnerEnable = false
         spinner_version.isSpinnerEnable = false
-
 
 
     }

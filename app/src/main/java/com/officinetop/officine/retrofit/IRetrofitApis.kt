@@ -95,6 +95,8 @@ interface IRetrofitApis {
                @Field("carBody") carBody: String,
                @Header(Constant.Fields.authorization) authToken: String,
                @Field("lang") language: String = "ENG",
+               @Field(Constant.Path.versionCriteria) versionCriteria:String,
+
                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -113,6 +115,7 @@ interface IRetrofitApis {
                 @Field("fueltype") fuelType: String,
                 @Field("carBody") carBody: String,
                 @Header(Constant.Fields.authorization) authToken: String,
+                @Field(Constant.Path.versionCriteria) versionCriteria:String,
                 @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -254,7 +257,11 @@ interface IRetrofitApis {
                      @Query(Constant.Path.selectedCarId) selectedCarId: String,
                      @Query("user_lat") user_lat: String,
                      @Query("user_long") user_long: String,
-                     @Query("distance_range") distance_range: String
+                     @Query("distance_range") distance_range: String,
+
+
+                     @Query(Constant.Path.favorite) favorite: String,
+                     @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshopRevision)
@@ -270,6 +277,10 @@ interface IRetrofitApis {
                             @Query("user_lat") user_lat: String,
                             @Query("user_long") user_long: String,
                             @Query("distance_range") distance_range: String
+                            ,
+
+                            @Query(Constant.Path.favorite) favorite: String,
+                            @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
 
 
@@ -668,7 +679,11 @@ interface IRetrofitApis {
                          @Query("user_lat") user_lat: String,
                          @Query("user_long") user_long: String,
                          @Query("distance_range") distance_range: String,
-                         @Query(Constant.Path.productqty) productqty: String
+                         @Query(Constant.Path.productqty) productqty: String,
+
+                         @Query(Constant.Path.favorite) favorite: String,
+                         @Query(Constant.Path.couponFilter) couponfilter: String
+
 
     ): Call<ResponseBody>
 
@@ -1441,7 +1456,7 @@ interface IRetrofitApis {
    // https://services.officinetop.com/api/save_maintenance_kromeda_call?version=95794
     @GET(Constant.UrlEndPoints.kromedaCall)
     fun kromedaCall(
-            @Query(Constant.Path.version_id) versionId:  String
+            @Query(Constant.Path.version) versionId:  String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.motServiceSchedule)
@@ -1454,7 +1469,4 @@ interface IRetrofitApis {
             @Query(Constant.Path.version_id) versionId:  String,
             @Query(Constant.Path.language) language:  String
     ): Call<ResponseBody>
-
-   // https://services.officinetop.com/api/car_maintenance_criteria?version_id=95794&language=ITA
-
 }

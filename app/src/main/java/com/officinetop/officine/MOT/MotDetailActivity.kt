@@ -36,7 +36,6 @@ import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.Serializable
 import java.util.*
-
 class MotDetailActivity : BaseActivity() {
     private var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
     private var motdeatilsList: ArrayList<Models.Data> = ArrayList()
@@ -47,7 +46,6 @@ class MotDetailActivity : BaseActivity() {
     var genericAdapter: GenericAdapter<Models.Part>? = null
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     lateinit var motdata: Models.MotservicesCouponData
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
