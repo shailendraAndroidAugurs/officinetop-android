@@ -22,11 +22,6 @@ class VideoFragment : Fragment() {
         rootview = inflater.inflate(R.layout.fragment_guide, container, false)
         with(rootview) {
             val webSettings = webview!!.settings
-            /* val up: String = mUserName.toString() + ":" + mPassC
-             val authEncoded = String(Base64.encodeBase64(up.toByteArray()))
-             val authHeader = "Basic $authEncoded"
-             val headers: MutableMap<String, String> = HashMap()
-             headers["Authorization"] = authHeader*/
             webview!!.loadUrl("https://www.officinetop.com/video/"/*, headers*/)
             webview.requestFocus();
             webSettings.javaScriptEnabled = true

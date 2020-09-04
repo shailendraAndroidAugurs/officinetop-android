@@ -31,7 +31,6 @@ class MotListActivity : BaseActivity() {
     private var mMotSchedule: MutableList<Models.MotSchedule> = ArrayList()
     private  var scheduleId=""
     private val mMotScheduleData: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mot_search_activity)

@@ -539,7 +539,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
 
-            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString())
+            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString(),favorite=if(isFavouriteChecked) "1" else "0",couponfilter= if(isOfferChecked) "1" else "0")
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -640,7 +640,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
             RetrofitClient.client.getWorkshops(serviceID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal",favorite=if(isFavouriteChecked) "1" else "0",couponfilter= if(isOfferChecked) "1" else "0")
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -776,17 +776,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             dialog_price_range.setOnRangeChangedListener(object : OnRangeChangedListener {
                 override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
-                    /* tempPriceInitial = floor(leftValue).toInt()
-                     tempPriceFinal = ceil(rightValue).toInt()
 
-                     val seekPriceFinal = (floor(rightValue) / 100) * seekbarPriceFinalLimit
-                     val seekPriceInitial = (floor(leftValue) / 100) * seekbarPriceFinalLimit
-
-                     val priceFinalString = String.format("%.2f", seekPriceFinal)
-                     val priceInitialString = String.format("%.2f", seekPriceInitial)
-
-                     tempPriceInitial = floor(seekPriceInitial).toInt()
-                     tempPriceFinal = ceil(seekPriceFinal).toInt()*/
 
                     tempPriceInitial = leftValue.toInt()
                     tempPriceFinal = rightValue.toInt() /*+ 1*/
@@ -989,7 +979,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int) {
         Log.d("Revision", "DistanceInitial$tempDistanceInitial")
         Log.d("Revision", "DistanceFinal$tempDistanceFinal")
-        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal",favorite=if(isFavouriteChecked) "1" else "0",couponfilter= if(isOfferChecked) "1" else "0")
                 .onCall { networkException, response ->
                     networkException?.let {
                     }

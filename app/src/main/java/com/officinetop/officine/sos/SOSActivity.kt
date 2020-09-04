@@ -250,7 +250,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 return View(this@SOSActivity)
             }
         })
-
         var position: LatLng?
         allWrackerServicesWorkshopList.forEach { listData ->
             listData?.let {
