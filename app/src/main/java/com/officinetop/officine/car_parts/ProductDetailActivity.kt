@@ -520,6 +520,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         if (id.isEmpty()) {
             Log.e("ProductDetailActivity", "loadProductDetailApi: loadProductDetailApi , invalid id ")
+            3
             return
         }
         val dialog = getProgressDialog(true)

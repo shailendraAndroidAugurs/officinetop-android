@@ -41,8 +41,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import java.io.Serializable
-
-
 class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,FragmentChangeListener {
 

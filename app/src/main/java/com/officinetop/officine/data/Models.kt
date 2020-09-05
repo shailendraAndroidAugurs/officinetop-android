@@ -3112,7 +3112,7 @@ object Models {
             val service_schedule_id: String,
             val sort_order: String,
             val version_id: String
-    )
+    ): Serializable
      data class CarCriteria(
             val created_at: String="",
             val cron_executed_status: String="",
@@ -3124,7 +3124,7 @@ object Models {
             val updated_at: String="",
             val users_id: String="",
             val version_id: String=""
-    )
+    ): Serializable
 
 }
 

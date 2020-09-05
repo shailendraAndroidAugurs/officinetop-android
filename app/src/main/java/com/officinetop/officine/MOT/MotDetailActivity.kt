@@ -36,6 +36,7 @@ import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.Serializable
 import java.util.*
+
 class MotDetailActivity : BaseActivity() {
     private var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
     private var motdeatilsList: ArrayList<Models.Data> = ArrayList()
@@ -250,7 +251,7 @@ class MotDetailActivity : BaseActivity() {
     }
 
     private fun displayCoupons(couponsList: ArrayList<Models.Coupon>, textView: TextView, MotPart: Models.Part) {
-
+        Log.d("couponList", couponsList.size.toString())
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -279,6 +280,7 @@ class MotDetailActivity : BaseActivity() {
                     val items = couponsList[position]
                     holder.couponsName.text = items.couponTitle
                     holder.couponsQuantity.text = items.couponQuantity.toString()
+                    Log.d("couponList", items.couponQuantity.toString())
                     if (!items.offerType.isNullOrBlank()) {
 
                         if (items.offerType == "2") {
