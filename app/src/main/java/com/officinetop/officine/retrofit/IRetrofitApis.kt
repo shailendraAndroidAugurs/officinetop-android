@@ -344,7 +344,10 @@ interface IRetrofitApis {
     fun getMotCalendar(@Query(Constant.Path.serviceID) serviceId: Int,
                        @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
 
-                       @Query(Constant.Path.type) type: Int
+                       @Query(Constant.Path.type) type: String,
+                       @Query("user_lat") user_lat: String,
+                       @Query("user_long") user_long: String,
+                       @Query("distance_range") distance_range: String
     ): Call<ResponseBody>
 
 
@@ -696,7 +699,13 @@ interface IRetrofitApis {
                         @Query(Constant.Path.sortPrice) sortPrice: Int,
                         @Query("user_id") user_id: String,
                         @Query(Constant.Path.selectedCarId) selectedCarId: String?,
-                        @Query(Constant.Path.motservices_time) motservicestime: String?
+                        @Query(Constant.Path.motservices_time) motservicestime: String?,
+                        @Query("user_lat") user_lat: String,
+                        @Query("user_long") user_long: String,
+                        @Query("distance_range") distance_range: String
+                        ,
+                        @Query(Constant.Path.favorite) favorite: String,
+                        @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
 
 

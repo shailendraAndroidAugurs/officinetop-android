@@ -704,6 +704,10 @@ class AddVehicleActivity : BaseActivity() {
 
                             } else carCriteriaList.removeAt(i)
                         }
+
+                        if(isForPlateno && myCar?.carCriteria==null){
+                            selectedIndex=0
+                        }
                         carcriteriaId = carCriteriaList[0].repair_times_id
                         bindSpinner(spinner_criteria, titlesfor)
 
