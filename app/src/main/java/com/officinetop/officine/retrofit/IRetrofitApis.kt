@@ -78,12 +78,6 @@ interface IRetrofitApis {
     fun carVersion(@Path("modelID") modelID: String, @Path("year") year: String): Call<ResponseBody>
 
 
-//    case kmCarTotal = "km_of_cars"
-//    case kmTraveledAnnually = "km_traveled_annually"
-//    case revisionDate = "revision_date_km"
-//    case revisionDateKm = "revesion_km"
-//    case alloyWheels = "alloy_wheels"
-
     /**Allow wheel accept 0,1 value 0 - false, 1 - true*/
 
     @FormUrlEncoded
@@ -139,11 +133,6 @@ interface IRetrofitApis {
     fun myCars(@Header(Constant.Fields.authorization) authToken: String,
                @Header("accept") accept: String = "application/json"): Call<Models.MyCar>
 
-//    @GET(Constant.UrlEndPoints.carParts+"/{idVehicle}/{lang}")
-//    fun carParts(@Path("idVehicle") vehicleID:String,
-//                 @Path("lang") language: String = "eng"):Call<ResponseBody>
-
-    //http://officine.augurstech.com/officineTop/api/get_spare_group/{car_version_id}/{lang}
     @GET(Constant.UrlEndPoints.sparePartGroup + "/{car_version_id}/{lang}")
     fun sparePartsGroup(@Path("car_version_id") carVersionId: String,
                         @Path("lang") language: String = "ENG"): Call<ResponseBody>
@@ -165,13 +154,6 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.getSearchKeywords)
     fun getSearchKeyWords(@Header(Constant.Fields.authorization) authToken: String,
                           @Header("accept") accept: String = "application/json"): Call<SearchKeywordResponse>
-
-    /**
-     * Call this API with the domain endpoint
-     */
-//    @Headers(Constant.headerJSON)
-//    @GET(Constant.UrlEndPoints.carImage)
-//    fun getCarImage(@Path(Constant.Path.carBrandID) brandID:String):Call<ResponseBody>
 
     @Headers(Constant.headerJSON)
     @FormUrlEncoded
@@ -214,10 +196,6 @@ interface IRetrofitApis {
                        @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
-//    @Headers(Constant.headerJSON)
-//    @GET(Constant.UrlEndPoints.myCarList)
-//    fun myCars(@Header(Constant.Fields.authorization) authToken: String,
-//               @Header("accept") accept: String = "application/json"): Call<Models.MyCar>
 
     @GET(Constant.UrlEndPoints.getCategory)
     fun getServiceCategory(@Path(Constant.Path.categoryNumber) categoryNumber: Int = 2,
@@ -227,21 +205,6 @@ interface IRetrofitApis {
                            @Path(Constant.Path.distanceRange) distance_range: String? = "0,25"
                            ): Call<ResponseBody>
 
-
-
-// https://services.officinetop.com/api/get_car_wash_category/1/2/1/2/0,10
-
-//    @GET(Constant.UrlEndPoints.getWorkshop)
-//    fun getWorkshops(@Path(Constant.Path.service_id) serviceID:Int = 2): Call<ResponseBody>
-
-    /*api/get_workshop?category_id=2&selected_date=2019-05-15&price_level=2&price_range=1,600
-    &price_level=2&price_range=1,600
-1) price_level 1or2
-2) price_range 0,500
-3) rating
-4) selected_date
-5) category_id
-*/
     @GET(Constant.UrlEndPoints.getWorkshop)
 
     fun getWorkshops(@Query(Constant.Path.categoryId) categoryId: Int,
@@ -364,8 +327,6 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.productqty) productqty: String
     ): Call<ResponseBody>
 
-
-    //http://officine.augurstech.com/officineTop/api/get_calendar_with_price?category_id=3
     @GET(Constant.UrlEndPoints.getWorkshopPackageDetail)
     fun getWorkshopPackageDetail(@Path(Constant.Path.workshopUsersId) workshopUserId: Int, @Path(Constant.Path.categoryId) categoryId: Int,
                                  @Path(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
@@ -396,14 +357,6 @@ interface IRetrofitApis {
 
 
     ): Call<ResponseBody>
-// workshop_id=199&selected_date=2020-05-25&version_id=95794&service_id=193&main_category_id=2&users_id
-    /*  @GET(Constant.UrlEndPoints.getAssemblyWorkshopPackageDetail + "/{${Constant.Path.workshopUsersId}}/{${Constant.Path.workshopFilterSelectedDate}}/{${Constant.Path.productId}}/{${Constant.Path.selectedCarId}}/{${Constant.Path.userid}}")
-      fun getAssemblyWorkshopPackageDetail(@Path(Constant.Path.workshopUsersId) workshopUserId: Int,
-                                           @Path(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                                           @Path(Constant.Path.productId) productId: String,
-                                           @Path(Constant.Path.selectedCarId) selectedCarId: String,
-                                           @Path(Constant.Path.userid) userid: String
-      ): Call<ResponseBody>*/
 
 
     @GET(Constant.UrlEndPoints.getAssembleWorkshopPackageNew)
@@ -423,12 +376,6 @@ interface IRetrofitApis {
                                               , @Path(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
                                               @Path("productID") productID: String): Call<ResponseBody>
 
-
-    //http://officine.augurstech.com/officineTop/api/get_products/car_version_id/group_id
-//    @GET("${Constant.UrlEndPoints.carPartsItem}/{${Constant.Path.car_version_id}}/{${Constant.Path.group_id}}")///{${Constant.Path.language}}
-//    fun carPartsItem(@Path(Constant.Path.car_version_id) carVersionID: String, @Path(Constant.Path.group_id) groupID:String):Call<ResponseBody>
-
-//    @GET("${Constant.UrlEndPoints.carPartsItem}/{${Constant.Path.car_version_id}}/{${Constant.Path.group_id}}")///{${Constant.Path.language}}
 
     /** Brands must be comma seperated*/
     @GET(Constant.UrlEndPoints.get_products)
@@ -724,8 +671,6 @@ interface IRetrofitApis {
                              @Query(Constant.Path.service_average_time) service_average_time: String
 
 
-//  workshop_id=250&selected_date=2020-02-20&service_id=155&main_category_id=23&products_id=775&quantity=1&coupon_id=
-
     ): Call<ResponseBody>
 
 
@@ -926,22 +871,6 @@ interface IRetrofitApis {
     @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.getUserDetails)
     fun getUserDetails(@Header("Authorization") authToken: String): Call<ResponseBody>
-
-
-    /*
-    * http://services.officinetop.com/api/save_users_address?
-    * latitude=213123&
-    * longitude=123123&
-    * address=lorem psum &
-    * address_1&
-    * address_2&
-    * address_3&
-    * landmark=Gomti nagar &
-    * zip_code=208027&
-    * country_name=India &
-    * state_name=U.P&
-    * city_name
-    * */
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.saveUserLocation)
     fun saveUserLocation(
@@ -1462,7 +1391,6 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
     // call kromeda part
-   // https://services.officinetop.com/api/save_maintenance_kromeda_call?version=95794
     @GET(Constant.UrlEndPoints.kromedaCall)
     fun kromedaCall(
             @Query(Constant.Path.version) versionId:  String

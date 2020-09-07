@@ -58,30 +58,21 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var isCarMaintenanceService = false
     private var isMotService = false
     private var isCarWash = false
-
     private var mot_type = ""
-
     private val filterBrandList: MutableList<String> = ArrayList()
     var selectedItemPosition = 0
     var selectedFormattedDate = ""
     private var ratingString = ""
     private var priceRangeInitial = 0
     private var priceRangeFinal = -1
-
-
     var tempPriceFinal = -1
     var tempPriceInitial = 0
-
-
     var tempDistanceFinal = 100
     var tempDistanceInitial = 0
-
     private var seekbarPriceInitialLimit = 0f
     private var seekbarPriceFinalLimit = 0f
-
     private var isFavouriteChecked = false
     private var isOfferChecked = false
-
     private var isPriceLowToHigh = true
     private var isDistanceLowToHigh = true
     var serviceID = 0
@@ -117,6 +108,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private lateinit var drawableLeft: Drawable
     private lateinit var drawableRight: Drawable
 
+    private var pricesFilter = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -152,7 +144,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
 
         }
-
         if (intent.hasExtra(Constant.Path.PartID))
             partidhasMap = intent.getSerializableExtra(Constant.Path.PartID) as HashMap<String, Models.servicesCouponData>
 
@@ -317,6 +308,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     private fun getCalendarMinPriceRange() {
         Log.d("workshop", "calendar api call")
+        Log.d("getCalendarMin","getcalendarMiniPricesRange")
         val pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
@@ -422,6 +414,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         hasRecyclerLoadedOnce = false
                         selectedItemPosition = position
                         selectedFormattedDate = dateString
+                        misdistancefilter=false
+                        pricesFilter=false
+
+
+                        tempDistanceInitial = 0
+                        tempDistanceFinal= 100
+                        ratingString=""
+                        isFavouriteChecked=false
+                        isOfferChecked=false
+                        misclearselection = false
+                        createFilterDialog()
                         reloadPage()
                         notifyDataSetChanged()
                     }
@@ -452,16 +455,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun reloadPage() {
-
-        if (isFavouriteChecked || isOfferChecked || priceRangeFinal - priceRangeInitial != 1000
-                || tempDistanceFinal - tempDistanceInitial != 100) {
-
-            this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
-        } else {
-            Log.d("reloadpage", "drawableleft")
-            this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null,null , null)
-
-        }
 
 
         if (!isSOSServiceEmergency)
@@ -513,13 +506,38 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         Log.d("workshoplist", "loadworkshop call")
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
-
+        misclearselection = false
         var workshopType = 1
         if (isAssemblyService)
             workshopType = 2
         val pricesFinal = priceRangeFinal + 1
         var priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
+
+        if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") ||  misdistancefilter||pricesFilter) {
+            Log.d("WorkshopList", "FilterDot : " + "yes")
+            this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
+        } else {
+            Log.d("reloadpage", "drawableleft")
+            this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+
+        }
+
+
+
+        if (isFavouriteChecked) {
+            Log.d("WorkshopList", "FilterDot : " + "1")
+        } else if (isOfferChecked) {
+            Log.d("WorkshopList", "FilterDot : " + "2")
+        } else if (!ratingString.equals("")) {
+            Log.d("WorkshopList", "FilterDot : " + "3")
+        } else if (misdistancefilter ) {
+            Log.d("WorkshopList", "FilterDot : " + "4")
+        }else if(pricesFilter){
+            Log.d("WorkshopList", "FilterDot : " + "5")
+        }
+
+
 
         if (!hasRecyclerLoadedOnce) {
             priceRangeString = ""
@@ -748,6 +766,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
 
                 filterDialog.dialog_distance_range.setValue(0f, 25f)
+                misdistancefilter=false
 
                 filterDialog.distance_end_range.text = getString(R.string.append_km, 25)
                 filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
@@ -796,6 +815,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     //  price_start_range.text = getString(R.string.prepend_euro_symbol_string, priceInitialString)
                     price_end_range.text = getString(R.string.prepend_euro_symbol_string, rightValue.toString())
                     price_start_range.text = getString(R.string.prepend_euro_symbol_string, leftValue.toString() /*seekPriceInitial.toString()*/)
+                    pricesFilter=true
 
                 }
 
@@ -811,6 +831,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     distance_end_range.text = getString(R.string.append_km, tempDistanceFinal)
                     distance_start_range.text = getString(R.string.append_km, tempDistanceInitial)
                     misdistancefilter = true
+                    Log.d("WorkshopList", "FilterDot : " + "4"+"  distance filtercall")
                 }
 
                 override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
@@ -834,13 +855,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 isFavouriteChecked = dialog_favourite_check_box.isChecked
                 isOfferChecked = dialog_offers_check_box.isChecked
 
-
-                this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
                 if (ratingString.isNotEmpty()) {
                     if (ratingString.toCharArray()[ratingString.lastIndex] == ',')
                         ratingString = ratingString.substring(0, ratingString.lastIndex).trim()
-                    this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
                 }
 
 
@@ -848,19 +865,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 priceRangeFinal = tempPriceFinal
 
 
-
-
-                if (isFavouriteChecked || isOfferChecked || priceRangeFinal - priceRangeInitial != 1000
-                        || tempDistanceFinal - tempDistanceInitial != 100) {
-
-                    this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
-                } else {
-                    this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
-                }
-
                 reloadPage()
                 if (misdistancefilter || misclearselection) {
+                    Log.d("getCalendarMin","misdistancefilter : "+misdistancefilter.toString()+" misclearselection : "+misclearselection.toString())
+                    Log.d("getCalendarMin","distance filter or clear selection")
                     getCalendarMinPriceRange()
                 }
 
@@ -871,9 +879,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
             dialog_distance_layout.visibility = View.VISIBLE
             dialog_distance_range.visibility = View.VISIBLE
-
-
-            dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
 
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar_title.text = getText(R.string.filter)
@@ -890,10 +895,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             dialog_brand_layout.visibility = View.GONE
 
             clear_selection.setOnClickListener {
-                // dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
-                dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
-                this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-                this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+
                 priceRangeFinal = -1
                 try {
 
@@ -917,6 +919,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     filterDialog.distance_start_range.text = getString(R.string.append_km, 0)
                     misclearselection = true
                     misdistancefilter = false
+                    pricesFilter=false
+
                 } catch (e: Exception) {
 
                 }

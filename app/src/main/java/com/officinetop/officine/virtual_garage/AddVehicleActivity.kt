@@ -341,7 +341,6 @@ class AddVehicleActivity : BaseActivity() {
             carDetails.addProperty("created_at", "")
             carDetails.addProperty("updated_at", "")
 
-
             carDetails.addProperty("km_of_cars", edit_text_km_car.text.toString())
             carDetails.addProperty("km_traveled_annually", edit_text_km_annual.text.toString())
             carDetails.addProperty("revision_date_km", text_revision_date.text.toString())
@@ -692,7 +691,12 @@ class AddVehicleActivity : BaseActivity() {
                         tv_criteria.visibility = View.VISIBLE
                         spinner_criteria.visibility = View.VISIBLE
                         carCriteriaList.forEachWithIndex { i, it ->
-                            val title = "${it.repair_times_description + ","}"
+                            val title = if(it.repair_times_id!=null && it.repair_times_description!=null ){
+                                it.repair_times_id+" "+it.repair_times_description
+                            }else {
+                                it.repair_times_id
+                            }
+
                             if (true) {
                                 titlesfor.add(title)
 
