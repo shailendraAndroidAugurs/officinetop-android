@@ -217,17 +217,47 @@ class TyreListActivity : BaseActivity() {
         super.onResume()
     }
 
+    
     private fun loadTyreData() {
         setTyreTitle()
         val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
         drawableRight?.setBounds(100, 100, 100, 100)
-        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || tyreDetail.brands != "" || tyreDetail.seasonId != "" || tyreDetail.seasonId != "0" || tyreDetail.speedIndexId != "" || tyreDetail.speedIndexId != "0" || !priceRange.isNullOrBlank()) {
+        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || tyreDetail.brands != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0")) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0")) || !tyreDetail.priceRange.isNullOrBlank()) {
 
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+        }else{
+            this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
+
         }
+
+        if(tyreDetail.onlyFav){
+          Log.d("tyre_filter","1")
+        }else if(tyreDetail.offerOrCoupon){
+            Log.d("tyre_filter","2")
+        }
+        else if(tyreDetail.runFlat){
+            Log.d("tyre_filter","3")
+        }
+        else if(tyreDetail.reinforced){
+            Log.d("tyre_filter","4")
+        }
+        else if(tyreDetail.brands != ""){
+            Log.d("tyre_filter","5")
+        }
+        else if(!tyreDetail.seasonId.trim().equals("") || !tyreDetail.seasonId.trim().equals("0")|| !tyreDetail.seasonId.equals(" ")){
+
+            Log.d("tyre_filter","6:"+tyreDetail.seasonId)
+        }
+        else if(!tyreDetail.speedIndexId.trim().equals("") || !tyreDetail.speedIndexId.trim().equals("0")){
+            Log.d("tyre_filter","7:"+tyreDetail.speedIndexId)
+        } else if(!tyreDetail.priceRange.isNullOrBlank()){
+            Log.d("tyre_filter","8")
+        }
+
         var seasonId = ""
         var speedindexId = ""
         var speedloadindex = ""
+        var rating = ""
         if (tyreDetail.seasonId == "0") {
             seasonId = ""
         } else {
@@ -243,6 +273,17 @@ class TyreListActivity : BaseActivity() {
         } else {
             speedloadindex = tyreDetail.speed_load_index
         }
+
+        if (!tyreDetail.Rating.isNullOrBlank()) {
+
+            var ratingArray = tyreDetail.Rating.split(",")
+            rating = if (ratingArray.size == 1) {
+                "0," + ratingArray[0]
+            } else {
+                (ratingArray[0] + "," + ratingArray[ratingArray.size-1])
+            }
+
+        }
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -256,7 +297,7 @@ class TyreListActivity : BaseActivity() {
                     if (tyreDetail.reinforced) "1" else "0",
                     if (tyreDetail.runFlat) "1" else "0",
                     priceSortLevel.toString(),
-                    tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/tyreDetail.Rating,
+                    tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/rating,
                     "2", getUserId(), speedloadindex
             )
                     .enqueue(object : Callback<ResponseBody> {
@@ -470,7 +511,7 @@ class TyreListActivity : BaseActivity() {
                     switch_OfferCoupon.isChecked = false
                     switch_OnlyFav.isChecked = false
                     tyreDetail.speed_load_index = ""
-
+                    priceRange=""
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -1047,6 +1088,7 @@ class TyreListActivity : BaseActivity() {
 
     private fun setRatingToTyreDetail(filterTyreRatingList: MutableList<String>) {
         var ratingString = ""
+        filterTyreRatingList.sort()
         for (n in 0 until filterTyreRatingList.size) {
             if (n == filterTyreRatingList.size - 1) {
                 ratingString += filterTyreRatingList[n]
@@ -1055,6 +1097,8 @@ class TyreListActivity : BaseActivity() {
             }
 
         }
+
+
 
 
         tyreDetail.Rating = ratingString

@@ -230,7 +230,7 @@
         <item name="srb_borderColor">@color/theme_orange</item>
         <item name="srb_fillColor">@color/theme_orange</item>
         <item name="android:maxWidth">@dimen/_80sdp</item>
-        <item name="srb_stepSize">0.25</item>
+        <item name="srb_stepSize">0.5</item>
 
 
 
