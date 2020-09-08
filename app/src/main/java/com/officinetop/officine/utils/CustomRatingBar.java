@@ -174,7 +174,7 @@ public class CustomRatingBar extends View {
         starsSeparation = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_starsSeparation, (int)valueToPixels(4, Dimension.DP));
         maxStarSize = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_maxStarSize, Integer.MAX_VALUE);
         desiredStarSize = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_starSize, Integer.MAX_VALUE);
-        stepSize = arr.getFloat(R.styleable.SimpleRatingBar_srb_stepSize, 0.25f);
+        stepSize = arr.getFloat(R.styleable.SimpleRatingBar_srb_stepSize, 0.5f);
         starBorderWidth = arr.getFloat(R.styleable.SimpleRatingBar_srb_starBorderWidth, 2f);
         starCornerRadius = arr.getFloat(R.styleable.SimpleRatingBar_srb_starCornerRadius, 3f);
 
