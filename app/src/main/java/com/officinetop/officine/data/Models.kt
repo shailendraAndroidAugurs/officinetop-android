@@ -433,7 +433,14 @@ object Models {
                           var speedIndexId: String = "",
                           var seasonName: String = "",
                           var speedIndexName: String = "",
-                          var speed_load_index: String = ""
+                          var speed_load_index: String = "",
+                          var cust_speedIndexId: String = "",
+                          var cust_seasonId: String = "",
+                          var cust_speedLoad_indexId: String = "",
+                          var cust_seasonName: String = "",
+                          var cust_speed_indexName: String = "",
+                          var cust_runflat: Boolean = false,
+                          var cust_reinforced: Boolean = false
 
     )
 
@@ -958,6 +965,8 @@ object Models {
             var seller_price: String = "",
             @SerializedName("product_image_url")
             var product_image_url: String = "",
+            @SerializedName("brand_image_url")
+            var brandImageURL: String = "",
             @SerializedName("for_pair")
             var forPair: String = "",
             @SerializedName("product_id")

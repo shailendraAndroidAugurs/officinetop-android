@@ -580,7 +580,7 @@
     <string name="Wheel_Quad_tyre"> Pneumatico a 2 ruote / quad</string>
     <string name="Off_road_tyre"> Pneumatico fuoristrada</string>
     <string name="Truck">Camion</string>cart
-    <string name="All">Tutte</string>
+    <string name="All">Tutti</string>
     <string name="Connection_Error">Errore di connessione</string>
     <string name="Something_went_wrong_Please_try_again">Qualcosa è andato storto. Per favore riprova</string>
     <string name="data_fetched"> I dati non possono essere recuperati!</string>

@@ -89,7 +89,7 @@ interface IRetrofitApis {
                @Field("carBody") carBody: String,
                @Header(Constant.Fields.authorization) authToken: String,
                @Field("lang") language: String = "ENG",
-               @Field(Constant.Path.versionCriteria) versionCriteria:String,
+               @Field(Constant.Path.versionCriteria) versionCriteria: String,
 
                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
@@ -109,7 +109,7 @@ interface IRetrofitApis {
                 @Field("fueltype") fuelType: String,
                 @Field("carBody") carBody: String,
                 @Header(Constant.Fields.authorization) authToken: String,
-                @Field(Constant.Path.versionCriteria) versionCriteria:String,
+                @Field(Constant.Path.versionCriteria) versionCriteria: String,
                 @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -196,14 +196,13 @@ interface IRetrofitApis {
                        @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
-
     @GET(Constant.UrlEndPoints.getCategory)
     fun getServiceCategory(@Path(Constant.Path.categoryNumber) categoryNumber: Int = 2,
                            @Path(Constant.Path.carSize) carSize: String? = "2",
                            @Path(Constant.Path.userLat) user_lat: String? = "0",
                            @Path(Constant.Path.userLong) user_long: String = "0",
                            @Path(Constant.Path.distanceRange) distance_range: String? = "0,25"
-                           ): Call<ResponseBody>
+    ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshop)
 
@@ -557,7 +556,6 @@ interface IRetrofitApis {
                             @Field("load_index") load_index: String
 
 
-
     ): Call<ResponseBody>
 
 
@@ -871,6 +869,7 @@ interface IRetrofitApis {
     @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.getUserDetails)
     fun getUserDetails(@Header("Authorization") authToken: String): Call<ResponseBody>
+
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.saveUserLocation)
     fun saveUserLocation(
@@ -1310,7 +1309,7 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.getPartForMotReplacement)
-    fun PartListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String,@Query(Constant.Path.version_id) version_id: String,@Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
+    fun PartListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String, @Query(Constant.Path.version_id) version_id: String, @Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 
@@ -1384,7 +1383,8 @@ interface IRetrofitApis {
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
-// get user saved address
+
+    // get user saved address
     @GET(Constant.UrlEndPoints.getUserSavedAddress)
     fun getUserSavedAddress(
             @Header(Constant.Fields.authorization) authToken: String
@@ -1393,17 +1393,28 @@ interface IRetrofitApis {
     // call kromeda part
     @GET(Constant.UrlEndPoints.kromedaCall)
     fun kromedaCall(
-            @Query(Constant.Path.version) versionId:  String
+            @Query(Constant.Path.version) versionId: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.motServiceSchedule)
     fun getMotServiceSchedule(
-            @Query(Constant.Path.version_id) versionId:  String
+            @Query(Constant.Path.version_id) versionId: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.carMaintenanceCriteria)
     fun getCarMaintenanceCriteria(
-            @Query(Constant.Path.version_id) versionId:  String,
-            @Query(Constant.Path.language) language:  String
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query(Constant.Path.language) language: String
     ): Call<ResponseBody>
+
+
+    @GET(Constant.UrlEndPoints.carMaintenanceParts)
+    fun getCarMaintenancePart(
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query(Constant.Path.serviceid) serviceid: String,
+            @Query(Constant.Path.userid) userid: String
+
+    ): Call<ResponseBody>
+
+    // https://services.officinetop.com/api/car_maintenance_parts?service_id=4502&version_id=109615&user_id
 }
