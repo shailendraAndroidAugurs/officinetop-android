@@ -69,8 +69,6 @@ class TyreListActivity : BaseActivity() {
     private var isLoading = false
     private var maxPrice: Float = 1f
     private var minPrice: Float = 0f
-    private var isRunFlat: Boolean = false
-    private var isReinforced: Boolean = false
     private var isFavouriteChecked = false
     private var isOfferChecked = false
     private lateinit var tyreDetail: Models.TyreDetail
@@ -217,7 +215,7 @@ class TyreListActivity : BaseActivity() {
         super.onResume()
     }
 
-    
+
     private fun loadTyreData() {
         setTyreTitle()
         val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
@@ -225,33 +223,28 @@ class TyreListActivity : BaseActivity() {
         if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || tyreDetail.brands != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0")) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0")) || !tyreDetail.priceRange.isNullOrBlank()) {
 
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
-        }else{
+        } else {
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
 
         }
 
-        if(tyreDetail.onlyFav){
-          Log.d("tyre_filter","1")
-        }else if(tyreDetail.offerOrCoupon){
-            Log.d("tyre_filter","2")
-        }
-        else if(tyreDetail.runFlat){
-            Log.d("tyre_filter","3")
-        }
-        else if(tyreDetail.reinforced){
-            Log.d("tyre_filter","4")
-        }
-        else if(tyreDetail.brands != ""){
-            Log.d("tyre_filter","5")
-        }
-        else if(!tyreDetail.seasonId.trim().equals("") || !tyreDetail.seasonId.trim().equals("0")|| !tyreDetail.seasonId.equals(" ")){
+        if (tyreDetail.onlyFav) {
+            Log.d("tyre_filter", "1")
+        } else if (tyreDetail.offerOrCoupon) {
+            Log.d("tyre_filter", "2")
+        } else if (tyreDetail.runFlat) {
+            Log.d("tyre_filter", "3")
+        } else if (tyreDetail.reinforced) {
+            Log.d("tyre_filter", "4")
+        } else if (tyreDetail.brands != "") {
+            Log.d("tyre_filter", "5")
+        } else if (!tyreDetail.seasonId.trim().equals("") || !tyreDetail.seasonId.trim().equals("0") || !tyreDetail.seasonId.equals(" ")) {
 
-            Log.d("tyre_filter","6:"+tyreDetail.seasonId)
-        }
-        else if(!tyreDetail.speedIndexId.trim().equals("") || !tyreDetail.speedIndexId.trim().equals("0")){
-            Log.d("tyre_filter","7:"+tyreDetail.speedIndexId)
-        } else if(!tyreDetail.priceRange.isNullOrBlank()){
-            Log.d("tyre_filter","8")
+            Log.d("tyre_filter", "6:" + tyreDetail.seasonId)
+        } else if (!tyreDetail.speedIndexId.trim().equals("") || !tyreDetail.speedIndexId.trim().equals("0")) {
+            Log.d("tyre_filter", "7:" + tyreDetail.speedIndexId)
+        } else if (!tyreDetail.priceRange.isNullOrBlank()) {
+            Log.d("tyre_filter", "8")
         }
 
         var seasonId = ""
@@ -280,7 +273,7 @@ class TyreListActivity : BaseActivity() {
             rating = if (ratingArray.size == 1) {
                 "0," + ratingArray[0]
             } else {
-                (ratingArray[0] + "," + ratingArray[ratingArray.size-1])
+                (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
             }
 
         }
@@ -429,10 +422,10 @@ class TyreListActivity : BaseActivity() {
                 })
 
 
-                if (isRunFlat || tyreDetail.runFlat) {
+                if (tyreDetail.runFlat) {
                     switch_RunFlat.isChecked = true
                 }
-                if (isReinforced || tyreDetail.reinforced) {
+                if (tyreDetail.reinforced) {
                     switch_Reinforced.isChecked = true
                 }
 
@@ -471,47 +464,38 @@ class TyreListActivity : BaseActivity() {
 
             clearselection.setOnClickListener {
                 try {
-                    // priceRangeSeekerBar.setRange(minPrice, maxPrice)
                     priceRangeSeekerBar.setValue(minPrice, maxPrice)
-                    Log.d("tyre_list", "clearselection$minPrice")
-                    Log.d("tyre_list", "clearselection$maxPrice")
-                    val drawableLeft = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.ic_sort_black_24dp)
-
-                    this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
                     filterBrandList.clear()
                     filterTyreSeasonList.clear()
                     filterTyreSpeedIndexList.clear()
                     filterTyreSpeedLoadIndexList.clear()
                     tv_Brand_name.text = ""
                     tv_Rating_name.text = ""
-                    tv_season_name.text = ""
-                    tv_Speed_Index_name.text = ""
-                    tv_Speed_load_Index_name.text = ""
+                    tv_season_name.text = tyreDetail.cust_seasonName
+                    tv_Speed_Index_name.text = tyreDetail.cust_speed_indexName
+                    tv_Speed_load_Index_name.text = tyreDetail.cust_speedLoad_indexId
                     tyreDetail.brands = ""
                     tyreDetail.Rating = ""
 
-                    tyreDetail.seasonName = ""
-                    tyreDetail.seasonId = ""
-                    tyreDetail.speedIndexName = ""
-                    tyreDetail.speedIndexName = ""
+                    tyreDetail.seasonName = tyreDetail.cust_seasonName
+                    tyreDetail.seasonId = tyreDetail.cust_seasonId
+                    tyreDetail.speedIndexName = tyreDetail.cust_speed_indexName
+                    tyreDetail.speedIndexId = tyreDetail.cust_speedIndexId
 
-                    isRunFlat = false
-                    tyreDetail.runFlat = false
-                    isReinforced = false
-                    tyreDetail.reinforced = false
+                    tyreDetail.runFlat = tyreDetail.cust_runflat
+                    tyreDetail.reinforced = tyreDetail.cust_reinforced
                     isOfferChecked = false
                     tyreDetail.offerOrCoupon = false
                     isFavouriteChecked = false
                     tyreDetail.onlyFav = false
                     tyreDetail.priceRange = ""
 
-                    switch_RunFlat.isChecked = false
-                    switch_Reinforced.isChecked = false
+                    switch_RunFlat.isChecked = tyreDetail.cust_runflat
+                    switch_Reinforced.isChecked = tyreDetail.cust_reinforced
                     switch_OfferCoupon.isChecked = false
                     switch_OnlyFav.isChecked = false
-                    tyreDetail.speed_load_index = ""
-                    priceRange=""
+                    tyreDetail.speed_load_index = tyreDetail.cust_speedLoad_indexId
+                    priceRange = ""
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -1306,11 +1290,11 @@ class TyreListActivity : BaseActivity() {
     }
 
     private fun setTyreTitle() {
-        Log.d("tyreDetail", tyreDetail.toString())
+
         tyreDetail?.let {
             title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " +
 
-                    if (it.speed_load_index == "0" || it.speed_load_index == getString(R.string.All) || it.speed_load_index == getString(R.string.all_in_italin)) "" else it.speed_load_index + " " +
+                    if (it.speed_load_index.equals(getString(R.string.All)) || it.speed_load_index.equals(getString(R.string.all_in_italin))) "" else it.speed_load_index + " " +
 
                             if (it.speedIndexId == "0" || it.speedIndexName == getString(R.string.All) || it.speedIndexName == getString(R.string.all_in_italin)) "" else it.speedIndexName
 

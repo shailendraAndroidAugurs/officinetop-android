@@ -63,12 +63,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
-                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}"
+                    />
 
 
             </LinearLayout>

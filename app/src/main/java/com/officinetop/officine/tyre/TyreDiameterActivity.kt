@@ -142,9 +142,12 @@ class TyreDiameterActivity : BaseActivity() {
                                         speedIndexName = if (it.speedindexStatus == null) "" else it.speedindexStatus,
                                         runFlat = runFlat,
                                         reinforced = reinforced,
-
-                                        speed_load_index = speed_load_index
-
+                                        speed_load_index = speed_load_index,
+                                        cust_speedIndexId = speed_index,
+                                        cust_seasonId = season,
+                                        cust_speedLoad_indexId = speed_load_index,
+                                        cust_runflat = runFlat,
+                                        cust_reinforced = reinforced
 
                                 )
 
