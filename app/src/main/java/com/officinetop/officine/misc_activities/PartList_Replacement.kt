@@ -119,50 +119,10 @@ class PartList_Replacement : BaseActivity() {
             }
         })
         recycler_view.adapter = genericAdapter
-        //  recycler_view.addItemDecoration(DividerItemDecoration(recycler_view.getContext(), DividerItemDecoration.VERTICAL))
         genericAdapter.addItems(carMaintenanceServiceList)
     }
 
     private fun displayCoupons(couponsList: List<Models.Coupon>) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -175,8 +135,6 @@ class PartList_Replacement : BaseActivity() {
 
         title.text = getString(R.string.coupon_list)
         with(dialog) {
-            var selectedPosition: Int = -1
-
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val couponsName = view.coupons_name
                 val couponsQuantity = view.coupons_quantity

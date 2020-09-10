@@ -72,6 +72,7 @@ class AddVehicleActivity : BaseActivity() {
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
     private var carcriteriaId = ""
+    var iscompletedlater = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_vehicle)
@@ -100,8 +101,11 @@ class AddVehicleActivity : BaseActivity() {
             setEditMode()
         }
 
-        if (!isForEdit)
+        if (!isForEdit) {
             container_editable.visibility = View.GONE
+        }
+
+
 
         progressDialog = getProgressDialog()
         //bind car carManufacturer
@@ -191,6 +195,11 @@ class AddVehicleActivity : BaseActivity() {
 
             initCarImagesList()
         }
+
+        if(iscompletedlater){
+            val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
+            loadCarCriteria(idVehicle)
+        }
     }
 
     private fun clearSpinners() {
@@ -266,7 +275,6 @@ class AddVehicleActivity : BaseActivity() {
                 return CarImageHolderView(view)
             }
         }
-
         override fun getItemViewType(position: Int): Int {
 
             if (carImageList.size < 5 && position == carImageList.size)
@@ -404,6 +412,27 @@ class AddVehicleActivity : BaseActivity() {
                         setEditMode()
                     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     negativeButton(getString(R.string.Completelater)) {
                         setResult(Activity.RESULT_OK, carIntent)
                         finish()
@@ -430,7 +459,6 @@ class AddVehicleActivity : BaseActivity() {
                             progressDialog.dismiss()
                             snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
                         }
-
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             progressDialog.dismiss()
                             val body = response.body()?.string() ?: ""
@@ -475,10 +503,6 @@ class AddVehicleActivity : BaseActivity() {
             vehicleID = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
         }
 
-
-
-
-
         if (vehicleID.isNullOrBlank()) {
             showInfoDialog(getString(R.string.PleaseselectCarVersion))
         } else {
@@ -495,7 +519,7 @@ class AddVehicleActivity : BaseActivity() {
                     if (alloy.isChecked) "1" else "0",
                     if (spinner_fuel.selectedItem != null) spinner_fuel.selectedItem else "",
                     if (spinner_version.selectedItemPosition != null && spinner_version.selectedItemPosition != -1) finalCarVersion[spinner_version.selectedItemPosition].body else "",
-                    "Bearer ${getStoredToken()}",versionCriteria = carcriteriaId).enqueue(object : Callback<ResponseBody> {
+                    "Bearer ${getStoredToken()}", versionCriteria = carcriteriaId).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     progressDialog.dismiss()
                     snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
@@ -691,9 +715,9 @@ class AddVehicleActivity : BaseActivity() {
                         tv_criteria.visibility = View.VISIBLE
                         spinner_criteria.visibility = View.VISIBLE
                         carCriteriaList.forEachWithIndex { i, it ->
-                            val title = if(it.repair_times_id!=null && it.repair_times_description!=null ){
-                                it.repair_times_id+" "+it.repair_times_description
-                            }else {
+                            val title = if (it.repair_times_id != null && it.repair_times_description != null) {
+                                it.repair_times_id + " " + it.repair_times_description
+                            } else {
                                 it.repair_times_id
                             }
 
@@ -709,8 +733,8 @@ class AddVehicleActivity : BaseActivity() {
                             } else carCriteriaList.removeAt(i)
                         }
 
-                        if(isForPlateno && myCar?.carCriteria==null){
-                            selectedIndex=0
+                        if (isForPlateno && myCar?.carCriteria == null) {
+                            selectedIndex = 0
                         }
                         carcriteriaId = carCriteriaList[0].repair_times_id
                         bindSpinner(spinner_criteria, titlesfor)
@@ -723,7 +747,7 @@ class AddVehicleActivity : BaseActivity() {
                         tv_criteria.visibility = View.GONE
                         spinner_criteria.visibility = View.GONE
                         carcriteriaId = carCriteriaList[0].repair_times_id
-                        Log.d("AddVehicalActivity","carcriteriaId"+carcriteriaId)
+                        Log.d("AddVehicalActivity", "carcriteriaId" + carcriteriaId)
                     } else {
                         tv_criteria.visibility = View.GONE
                         spinner_criteria.visibility = View.GONE
@@ -901,8 +925,10 @@ class AddVehicleActivity : BaseActivity() {
                         }
 
                     })
+            if (iscompletedlater) {
+                loadCarCriteria(finalCarVersion[position].idVehicle)
+            }
 
-            loadCarCriteria(finalCarVersion[position].idVehicle)
 
         }
 
@@ -1013,6 +1039,8 @@ class AddVehicleActivity : BaseActivity() {
                                     myCar = car as Models.MyCarDataSet
                                     isForEdit = true
                                     setEditMode()
+
+                                    iscompletedlater=true
                                 }
 
                                 negativeButton(getString(R.string.Completelater)) {

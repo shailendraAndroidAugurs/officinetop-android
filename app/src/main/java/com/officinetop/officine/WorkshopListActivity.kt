@@ -416,21 +416,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         hasRecyclerLoadedOnce = false
                         selectedItemPosition = position
                         selectedFormattedDate = dateString
-
-                        /* pricesFilter = false
-
-
-                         tempDistanceInitial = 0
-                         tempDistanceFinal = 100
-                         ratingString = ""
-                         isFavouriteChecked = false
-                         isOfferChecked = false
-                         misclearselection = false
-                         if(misdistancefilter){
-                             getCalendarMinPriceRange(SelectedCalendarDateIntial)
-                         }
-                         misdistancefilter = false
-                         createFilterDialog()*/
                         reloadPage()
                         notifyDataSetChanged()
 
@@ -546,26 +531,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (!hasRecyclerLoadedOnce) {
             priceRangeString = ""
         }
-        var ratingformate = ""
-        if (!ratingString.isNullOrBlank()) {
-
-            var ratingArray = ratingString.split(",")
-            ratingArray.sorted()
-            ratingformate = if (ratingArray.size == 1) {
-                "0," + ratingArray[0]
-            } else {
-                (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
-            }
-
-        }
-
 
         if (isAssemblyService) {
 
-            Log.d("ProductOrWorkshopList", "loadWorkshops: productID $productID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingformate " +
+            Log.d("ProductOrWorkshopList", "loadWorkshops: productID $productID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingString " +
                     "-- priceRangeString = $priceRangeString -- priceSortLevel = $priceSortLevel  -- workshopType $workshopType -- isAssemblyService --  $isAssemblyService")
 
-            RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingformate,
+            RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
                     ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
                     .enqueue(object : Callback<ResponseBody> {
@@ -582,12 +554,12 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     })
         } else if (isRevisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
-            CallRevisionApi(priceRangeString, priceSortLevel, ratingformate)
+            CallRevisionApi(priceRangeString, priceSortLevel, ratingString)
         } else if (isTyreService) {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
 
-            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString(), favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
+            RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString(), favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -595,7 +567,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         }
                     }
         } else if (isMotService) {
-            RetrofitClient.client.getMotWorkshops(motServiceID, mot_type, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, motservices_time, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
+            RetrofitClient.client.getMotWorkshops(motServiceID, mot_type, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, motservices_time, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
@@ -607,7 +579,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getQuotesWorkshops(
                     authToken = getBearerToken()
                             ?: "", categoryType = serviceID, workshopFilterSelectedDate = selectedFormattedDate,
-                    rating = ratingformate, priceRange = if (priceRangeFinal == -1) "" else priceRangeString,
+                    rating = ratingString, priceRange = if (priceRangeFinal == -1) "" else priceRangeString,
                     priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!
             ).onCall { _, response ->
 
@@ -626,7 +598,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
         } else if (isCarMaintenanceService) {
             RetrofitClient.client.getCarMaintenanceWorkshop(getSelectedCar()?.carVersionModel?.idVehicle!!,
-                    "en", selectedFormattedDate, multipleServiceIdOfCarMaintenance, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString,
+                    "en", selectedFormattedDate, multipleServiceIdOfCarMaintenance, ratingString, if (priceRangeFinal == -1) "" else priceRangeString,
                     priceSortLevel, getSavedSelectedVehicleID(), getUserId()).onCall { _, response ->
 
                 response?.let {
@@ -685,7 +657,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             Log.d("ProductOrWorkshopList", "loadWorkshops: serviceID $serviceID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingString " +
                     "-- priceRangeString = $priceRangeString -- priceSortLevel = $priceSortLevel  -- workshopType $workshopType -- isAssemblyService --  $isAssemblyService")
 
-            RetrofitClient.client.getWorkshops(serviceID, selectedFormattedDate, ratingformate,
+            RetrofitClient.client.getWorkshops(serviceID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
                     ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
                     .enqueue(object : Callback<ResponseBody> {

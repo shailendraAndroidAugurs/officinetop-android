@@ -32,26 +32,10 @@ class GenericAdapter<T : ListItemViewModel>(val context: Context, @LayoutRes val
         return items.get(position)
     }
 
-    fun removeLoading() {
-        isLoadingVisible = false
-        val position = items.size - 1
-        if (position >= 0) {
-            val item = getItem(position)
-            if (item != null) {
-                items.removeAt(position)
-                notifyItemRemoved(position)
-            }
-        }
-    }
 
     fun setOnListItemViewClickListener(onListItemViewClickListener: OnListItemViewClickListener?) {
         this.onListItemViewClickListener = onListItemViewClickListener
     }
-
-    fun setDataChange(){
-        notifyDataSetChanged()
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
         val layoutInflater = inflater ?: LayoutInflater.from(parent.context)

@@ -62,6 +62,7 @@ class FragmentHome : Fragment() {
 
     var bestSellingProductList: ArrayList<Models.BestSellingProduct_home> = ArrayList()
     val buttonIcons = arrayListOf<Int>(R.drawable.tire, R.drawable.ic_maintenance,
+
             R.drawable.ic_revisione, R.drawable.ic_washing, R.drawable.settings,
             R.drawable.ic_scheduled_car_inspection, R.drawable.ic_sos, R.drawable.ic_estimate)
 

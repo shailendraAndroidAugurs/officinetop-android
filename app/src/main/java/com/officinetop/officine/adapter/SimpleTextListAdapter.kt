@@ -32,7 +32,6 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
 
 
         val viewHolder = p0
-        //"Front: ${it.width}/${it.aspectRatio} R${it.rimDiameter} ${it.speedindex} . Rear: ${it.width}/${it.aspectRatio} R${it.rimDiameter} ${it.speedindex}"
         val data: MeasurementDataSetItem = titleList.get(p1)
 
 

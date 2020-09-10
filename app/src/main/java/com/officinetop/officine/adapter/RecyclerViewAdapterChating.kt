@@ -72,10 +72,7 @@ class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, private
             }
 
             message_time.text = parseServerDateTime(chat.created_at)
-            /* if(chat.tickettype=="1"){
-                 VIEW_TYPE_SEND=1
 
-             }*/
         }
 
 
