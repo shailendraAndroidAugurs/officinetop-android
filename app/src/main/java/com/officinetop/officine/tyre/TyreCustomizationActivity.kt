@@ -435,10 +435,6 @@ class TyreCustomizationActivity : BaseActivity() {
 
                                     }
                                 }
-
-
-
-
                                 spinner_speed_load_index.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                                         val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification

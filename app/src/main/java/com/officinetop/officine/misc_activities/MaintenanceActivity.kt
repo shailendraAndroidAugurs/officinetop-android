@@ -440,8 +440,7 @@ class MaintenanceActivity : BaseActivity() {
 
 
                         if (carMaintenanceServiceList[selectservice_position].parts[position].brandImageURL != null) {
-                            carMaintenanceServiceList[selectservice_position].brandImageURL = carMaintenanceServiceList[selectservice_position].parts[position].brandImageURL
-                      77  } else {
+                            carMaintenanceServiceList[selectservice_position].brandImageURL = carMaintenanceServiceList[selectservice_position].parts[position].brandImageURL } else {
                             carMaintenanceServiceList[selectservice_position].brandImageURL = ""
                         }
                         if (carMaintenanceServiceList[selectservice_position].parts[position].couponList != null) {

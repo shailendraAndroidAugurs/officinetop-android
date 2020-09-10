@@ -220,7 +220,7 @@ class TyreListActivity : BaseActivity() {
         setTyreTitle()
         val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
         drawableRight?.setBounds(100, 100, 100, 100)
-        if (tyreDetail.onlyFav || tyreDetail.offerOrCoupon || tyreDetail.runFlat || tyreDetail.reinforced || tyreDetail.brands != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0")) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0")) || !tyreDetail.priceRange.isNullOrBlank()) {
+        if (tyreDetail.onlyFav || (tyreDetail.offerOrCoupon) || (tyreDetail.runFlat!=tyreDetail.cust_runflat) || (tyreDetail.reinforced!=tyreDetail.cust_reinforced) || tyreDetail.brands != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId!=tyreDetail.seasonId) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0")&& tyreDetail.speedIndexId!=tyreDetail.cust_speedIndexId) ||(!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) || !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin))) || !tyreDetail.priceRange.isNullOrBlank()) {
 
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
         } else {
@@ -250,7 +250,7 @@ class TyreListActivity : BaseActivity() {
         var seasonId = ""
         var speedindexId = ""
         var speedloadindex = ""
-        var rating = ""
+
         if (tyreDetail.seasonId == "0") {
             seasonId = ""
         } else {
@@ -267,7 +267,7 @@ class TyreListActivity : BaseActivity() {
             speedloadindex = tyreDetail.speed_load_index
         }
 
-        if (!tyreDetail.Rating.isNullOrBlank()) {
+      /*  if (!tyreDetail.Rating.isNullOrBlank()) {
 
             var ratingArray = tyreDetail.Rating.split(",")
             rating = if (ratingArray.size == 1) {
@@ -276,7 +276,7 @@ class TyreListActivity : BaseActivity() {
                 (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
             }
 
-        }
+        }*/
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -290,7 +290,7 @@ class TyreListActivity : BaseActivity() {
                     if (tyreDetail.reinforced) "1" else "0",
                     if (tyreDetail.runFlat) "1" else "0",
                     priceSortLevel.toString(),
-                    tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/rating,
+                    tyreDetail.priceRange,/* tyreDetail.AlphabeticalOrder,*/tyreDetail.Rating,
                     "2", getUserId(), speedloadindex
             )
                     .enqueue(object : Callback<ResponseBody> {

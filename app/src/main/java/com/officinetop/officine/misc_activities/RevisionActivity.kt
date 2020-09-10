@@ -40,12 +40,7 @@ class RevisionActivity : BaseActivity() {
             response?.let {
                 val revisionServices = it.body()
 
-                revisionServiceList?.let {
-                    //                    it.clear()
-//                    it.addAll<MutableList<RevDataSetItem?>?>(revisionServices?.revDataSet)
-//                revisionServiceAdapter.notifyDataSetChanged()
-
-                    revisionServiceAdapter = RevisionServiceAdapter(this, revisionServices?.revDataSet) //revisionServiceList)
+                revisionServiceList?.let { revisionServiceAdapter = RevisionServiceAdapter(this, revisionServices?.revDataSet) //revisionServiceList)
                     revision_service_list.adapter = revisionServiceAdapter
                 }
             }

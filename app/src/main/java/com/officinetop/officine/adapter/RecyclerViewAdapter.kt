@@ -74,7 +74,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 "", "", "", "", "", "", "", "", "", "",
                 "", "", "", "", "", "", 0, "", "", "", 0
                 , "", "", "", "", "", "", 0, "", "", "", "", "", "", "", "", "", null, "", "", null, "", "Y","","",null))
-        //  notifyItemInserted(listItems.size-1)
+
     }
 
     fun removeLoading() {
@@ -225,15 +225,6 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 AppliedCouponName.visibility = View.GONE
                 offerBadge.visibility = View.GONE
             }
-
-
-
-
-
-
-
-
-
 
             try {
                 val startIndex = getSubString(items.description!!, 2)

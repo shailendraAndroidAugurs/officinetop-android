@@ -43,8 +43,6 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
 
         if(position == 0)
             mView?.onCategoryClicked(categoryDetails.getInt("id"))
-//            holder.partContainer.performClick()
-
         holder.partContainer.setOnClickListener {
             mView?.onCategoryClicked(categoryDetails.getInt("id"))
         }

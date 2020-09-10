@@ -64,31 +64,7 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
         val childView = LayoutInflater.from(parent?.context).inflate(R.layout.item_subgroup_child, parent, false)
 
         val childGridView = childView.findViewById(R.id.n3_subgroup_category) as RecyclerView
-        childGridView.adapter = ChildViewAdapter(mSubN3GroupArrayList, mContext, mView) //GridView(parent.getContext(), groupPosition + 1)
-//        notifyDataSetChanged()
-//
-//        // initialize the following variables (i've done it based on your layout
-//        // note: rowHeightDp is based on my grid_cell.xml, that is the height i've
-//        //    assigned to the items in the grid.
-//        val spacingDp = 10
-//        val colWidthDp = 50
-//        val rowHeightDp = 20
-//
-//        // convert the dp values to pixels
-//        val COL_WIDTH = getBaseContext().getResources().getDisplayMetrics().density * colWidthDp
-//        val ROW_HEIGHT = getBaseContext().getResources().getDisplayMetrics().density * rowHeightDp
-//        val SPACING = getBaseContext().getResources().getDisplayMetrics().density * spacingDp
-//
-//        // calculate the column and row counts based on your display
-//        val colCount = Math.floor((parentView.getWidth() - 2 * SPACING) / (COL_WIDTH + SPACING)).toInt()
-//        val rowCount = Math.ceil((intValues.size() + 0.0) / colCount).toInt()
-//
-//        // calculate the height for the current grid
-//        val GRID_HEIGHT = Math.round(rowCount * (ROW_HEIGHT + SPACING))
-//
-//        // set the height of the current grid
-//        label.layoutParams.height = GRID_HEIGHT
-        //////
+        childGridView.adapter = ChildViewAdapter(mSubN3GroupArrayList, mContext, mView)
         return childView
     }
 

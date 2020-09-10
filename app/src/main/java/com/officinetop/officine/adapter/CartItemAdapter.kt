@@ -32,9 +32,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
     private var onItemChanged: OnItemChanged? = null
     private var onCartListCallback: OnCartListCallback? = null
     private var totalPrice: Double = 0.0
-    private var flag = false
     private var ProceedToPay: Button? = null
-
     var dialog: Dialog? = null
     private var genericAdapterParts: GenericAdapter<Models.Part>? = null
 
@@ -59,7 +57,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 cartItems.add(cartItem)
             } else {
                 val index = cartItems.indexOf(cartItem)
-                //  cartItem.quantity += 1
                 cartItems[index] = cartItem
             }
 
@@ -91,10 +88,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             }
         } else if (cartItem.CartType == "T" || cartItem.CartType == "S") {
             carttype = "1"
-            // if(cartItem.price!=null || !cartItem.price.equals("null"))
             CartTotalPrice = cartItem.totalPrice.takeIf { !it.isNullOrEmpty() }?.toDouble().toString()
         }
-        val index = cartItems.indexOf(cartItem)
         context.showConfirmDialog(context.getString(R.string.DeleteFromCart)) {
             DeleteCartItem(cartItem, carttype, CartTotalPrice)
         }
@@ -115,8 +110,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         var isProductSellOnpair = false
         with(holder) {
 
-            var productID: String = ""
-            var quantity: Int = 1
+            var productID = ""
+            var quantity = 1
 
             if (item.CartType == "T" || item.CartType == "S") {
                 if (item.CartType == "T") {
@@ -185,8 +180,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         pfutextLabel.visibility = View.GONE
                         ProductPFU.visibility = View.GONE
                         product_Vat.visibility = View.GONE
-
-                        // ProductPFU.text=  context.getString(R.string.prepend_euro_symbol_string, "0.0")
                     } else {
 
                         pfutextLabel.visibility = View.VISIBLE
@@ -207,12 +200,12 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "1") {
 
-                    tv_couponDetailProduct.text = item.couponTitle + " :"+ context.getString(R.string.euro_symbol) + item.CouponPrices /*+ " %"*/
+                    tv_couponDetailProduct.text = item.couponTitle + " :" + context.getString(R.string.euro_symbol) + item.CouponPrices /*+ " %"*/
                 } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "2") {
                     tv_couponDetailProduct.text = item.couponTitle + " :" + context.getString(R.string.euro_symbol) + item.CouponPrices
                 } else {
-                    tv_couponDetailProduct.visibility=View.GONE
-                    Log.d("coupondetail",item.couponTitle+item.CouponPrices+item.couponType)
+                    tv_couponDetailProduct.visibility = View.GONE
+                    Log.d("coupondetail", item.couponTitle + item.CouponPrices + item.couponType)
                 }
 
 
@@ -264,13 +257,13 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     } else {
                         ProductTotal.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.finalOrderPrice)
                     }
-                    if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "1") {
+                    if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() && !item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "1") {
 
-                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol)+ item.serviceAssemblyProductDescription.CouponPrices /*+ " %"*/
-                    } else if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() &&!item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "2") {
+                        tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.serviceAssemblyProductDescription.CouponPrices /*+ " %"*/
+                    } else if (item.serviceAssemblyProductDescription.couponTitle != null && !item.serviceAssemblyProductDescription.CouponPrices.isNullOrBlank() && !item.serviceAssemblyProductDescription.couponType.isNullOrBlank() && item.serviceAssemblyProductDescription.couponType == "2") {
                         tv_couponDetailProduct.text = item.serviceAssemblyProductDescription.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.serviceAssemblyProductDescription.CouponPrices
-                    }else{
-                        tv_couponDetailProduct.visibility=View.GONE
+                    } else {
+                        tv_couponDetailProduct.visibility = View.GONE
                     }
 
                 } else {
@@ -279,14 +272,12 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
                 if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "1") {
 
-                    tv_coupon_cart_services.text = item.couponTitle + " : "+context.getString(R.string.euro_symbol)+ item.CouponPrices /*+ " %"*/
+                    tv_coupon_cart_services.text = item.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.CouponPrices /*+ " %"*/
                 } else if (item.couponTitle != null && !item.CouponPrices.isNullOrBlank() && !item.couponType.isNullOrBlank() && item.couponType == "2") {
                     tv_coupon_cart_services.text = item.couponTitle + " : " + context.getString(R.string.euro_symbol) + item.CouponPrices
-                }else
-                {
-                    tv_coupon_cart_services.visibility=View.GONE
+                } else {
+                    tv_coupon_cart_services.visibility = View.GONE
                 }
-                //  Log.d("discount", item.discount.toString())
                 if (!item.discount.isNullOrBlank() && item.discount != "0") {
                     servicesVat.visibility = View.VISIBLE
                     tv_discount.visibility = View.VISIBLE
@@ -314,11 +305,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         ServicesTotalPrices.text = context.getString(R.string.prepend_euro_symbol_string, item.afterDiscountPrice.takeIf { !it.isNullOrEmpty() })
                     }
                 }
-
-
-
-
-
 
                 if (item.partDetails != null) {
                     partInfo.visibility = View.VISIBLE
@@ -490,7 +476,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val tv_coupon_cart_services = itemView.tv_coupon_cart_services
 
 
-
     }
 
 
@@ -585,28 +570,25 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         title.text = context.getString(R.string.parts)
         title.setTextColor(Color.parseColor("#FFFFFF"))
 
-        with(dialog) {
-            genericAdapterParts = com.officinetop.officine.adapter.GenericAdapter<Models.Part>(context, com.officinetop.officine.R.layout.maintenance_part_dialog)
-            genericAdapterParts!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
-                override fun onClick(view: View, position: Int) {
+        genericAdapterParts = com.officinetop.officine.adapter.GenericAdapter<Models.Part>(context, com.officinetop.officine.R.layout.maintenance_part_dialog)
+        genericAdapterParts!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+            override fun onClick(view: View, position: Int) {
 
-                }
-
-                override fun onItemClick(view: View, position: Int) {
-
-
-                }
-            })
-
-            view.imageCross.setOnClickListener {
-                dialog!!.dismiss()
             }
 
+            override fun onItemClick(view: View, position: Int) {
 
-            view.dialog_recycler_view.adapter = genericAdapterParts
-            genericAdapterParts!!.addItems(parts)
+
+            }
+        })
+
+        view.imageCross.setOnClickListener {
+            dialog!!.dismiss()
         }
-        // dialog!!.setCancelable(true)
+
+
+        view.dialog_recycler_view.adapter = genericAdapterParts
+        genericAdapterParts!!.addItems(parts)
         dialog!!.show()
     }
 }
