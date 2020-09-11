@@ -43,11 +43,6 @@
                     app:iconifiedByDefault="false"
                     app:queryHint="@string/SearchProducts" />
 
-                <!--                 <View-->
-                <!--                     android:id="@+id/expanded_search"-->
-                <!--                     android:layout_width="match_parent"-->
-                <!--                     android:layout_height="match_parent"-->
-                <!--                     android:text="Search"/>-->
 
             </FrameLayout>
 
@@ -75,7 +70,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <!--Layout-->
 
 
     <LinearLayout

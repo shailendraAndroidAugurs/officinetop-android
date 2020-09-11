@@ -196,12 +196,12 @@ class AddVehicleActivity : BaseActivity() {
             initCarImagesList()
         }
 
-        if(iscompletedlater && finalCarVersion!=null && finalCarVersion.size!=0){
+        if (iscompletedlater && finalCarVersion != null && finalCarVersion.size != 0) {
 
 
             val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
             loadCarCriteria(idVehicle)
-            Log.d("carCriteriaList_size","idVehicle"+idVehicle)
+            Log.d("carCriteriaList_size", "idVehicle" + idVehicle)
         }
     }
 
@@ -278,6 +278,7 @@ class AddVehicleActivity : BaseActivity() {
                 return CarImageHolderView(view)
             }
         }
+
         override fun getItemViewType(position: Int): Int {
 
             if (carImageList.size < 5 && position == carImageList.size)
@@ -440,6 +441,7 @@ class AddVehicleActivity : BaseActivity() {
                             progressDialog.dismiss()
                             snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
                         }
+
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             progressDialog.dismiss()
                             val body = response.body()?.string() ?: ""
@@ -1016,10 +1018,14 @@ class AddVehicleActivity : BaseActivity() {
                                 positiveButton(getString(R.string.yes)) {
                                     val lastCarIntent = getLastCarIntent(body!!)
                                     val car = lastCarIntent.getSerializableExtra(Constant.Key.myCar)
+                                    if (car != null) {
+                                        myCar = car as Models.MyCarDataSet
+                                        isForEdit = true
+                                        setEditMode()
+                                    } else {
+                                        snackbar(add_from_plate, getString(R.string.ConnectionErrorPleaseretry))
+                                    }
 
-                                    myCar = car as Models.MyCarDataSet
-                                    isForEdit = true
-                                    setEditMode()
 
                                 }
 
@@ -1067,7 +1073,7 @@ class AddVehicleActivity : BaseActivity() {
 
                 myCar = car as Models.MyCarDataSet
                 isForEdit = true
-                iscompletedlater=true
+                iscompletedlater = true
                 if (isForPlateno) {
                     loadCarManufacturer()
                     bindEditables()
