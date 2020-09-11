@@ -196,9 +196,12 @@ class AddVehicleActivity : BaseActivity() {
             initCarImagesList()
         }
 
-        if(iscompletedlater){
+        if(iscompletedlater && finalCarVersion!=null && finalCarVersion.size!=0){
+
+
             val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
             loadCarCriteria(idVehicle)
+            Log.d("carCriteriaList_size","idVehicle"+idVehicle)
         }
     }
 
@@ -411,28 +414,6 @@ class AddVehicleActivity : BaseActivity() {
                         isForEdit = true
                         setEditMode()
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     negativeButton(getString(R.string.Completelater)) {
                         setResult(Activity.RESULT_OK, carIntent)
                         finish()
@@ -1040,7 +1021,6 @@ class AddVehicleActivity : BaseActivity() {
                                     isForEdit = true
                                     setEditMode()
 
-                                    iscompletedlater=true
                                 }
 
                                 negativeButton(getString(R.string.Completelater)) {
@@ -1087,6 +1067,7 @@ class AddVehicleActivity : BaseActivity() {
 
                 myCar = car as Models.MyCarDataSet
                 isForEdit = true
+                iscompletedlater=true
                 if (isForPlateno) {
                     loadCarManufacturer()
                     bindEditables()
