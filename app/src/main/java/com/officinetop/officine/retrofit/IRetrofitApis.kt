@@ -969,7 +969,10 @@ interface IRetrofitApis {
             @Query(Constant.Path.filterRating) rating: String,
             @Query(Constant.Path.filterPriceRange) priceRange: String,
             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
-            @Query(Constant.Path.type) type: Int
+            @Query(Constant.Path.type) type: Int,
+            @Query("user_lat") user_lat: String,
+            @Query("user_long") user_long: String,
+            @Query("distance_range") distance_range: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getSOSAppointmentCalendarPrice)
@@ -1005,7 +1008,13 @@ interface IRetrofitApis {
                                   @Query(Constant.Path.filterPriceRange) priceRange: String,
                                   @Query(Constant.Path.sortPrice) priceLevel: Int,
                                   @Query(Constant.Path.selectedCarId) selectedCarId: String,
-                                  @Query("user_id") user_id: String
+                                  @Query("user_id") user_id: String,
+                                  @Query("user_lat") user_lat: String,
+                                  @Query("user_long") user_long: String,
+                                  @Query("distance_range") distance_range: String,
+                                  @Query(Constant.Path.favorite) favorite: String,
+                                  @Query(Constant.Path.couponFilter) couponfilter: String
+
     ): Call<ResponseBody>
 
 
