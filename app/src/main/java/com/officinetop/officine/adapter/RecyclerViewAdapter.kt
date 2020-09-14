@@ -128,7 +128,13 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
             val items: Models.TyreDetailItem = listItems.get(position)
             context.loadImage(items.imageUrl, icon)
-            context.loadImage(items.brand_image, brand_image)
+
+            if(items.brand_image.isNullOrBlank()){
+                brand_image.visibility=View.GONE
+            }else{
+                context.loadImage(items.brand_image, brand_image)
+            }
+
             matchCode.text = "ean ${items.ean_number}"
 
             if (!items.seller_price.isNullOrEmpty()) {

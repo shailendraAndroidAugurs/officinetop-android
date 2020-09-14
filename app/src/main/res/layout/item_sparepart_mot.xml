@@ -21,7 +21,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="101dp"
+                android:layout_height="111dp"
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:orientation="vertical">
@@ -38,12 +38,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
-                    app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
+                    android:scaleType="centerInside"
+                    app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}"
+
+                    />
 
 
             </LinearLayout>
@@ -171,129 +173,7 @@
 
         </LinearLayout>
 
-       <!-- <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/item_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/no_image_placeholder"
-                app:imageResource="@{listItemViewModel.product_image_url!=null?listItemViewModel.product_image_url:@string/url_not_found}" />
-
-            <ImageView
-                android:id="@+id/item__brand_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_image"
-                android:layout_alignParentBottom="true"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/no_image_placeholder"
-                app:imageResource="@{listItemViewModel.brandImageURL!=null?listItemViewModel.brandImageURL:@string/url_not_found}" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
-                app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-
-
-
-                <TextView
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/item_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_2sdp"
-                   android:paddingRight="@dimen/_10sdp"
-                    android:text="@{listItemViewModel.productName!=null ? listItemViewModel.productName:@string/Concat}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-                 <ImageView
-                     android:layout_alignParentEnd="true"
-                     app:wishlist="@{listItemViewModel.wishlist}"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:src="@drawable/ic_favorite_border_black_empty_24dp" />
-
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/AppliedCouponName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?listItemViewModel.couponList[0].couponTitle:@string/sample}"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_8sdp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center">
-                <com.officinetop.officine.utils.CustomRatingBar
-                    android:id="@+id/item_rating"
-                    style="@style/customratingBar"
-                    android:layout_alignParentStart="true"
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    app:bindrating="@{listItemViewModel.rating_star!=null ? listItemViewModel.rating_star : @string/blank}" />
-                android:textColor="@color/theme_orange" />
-                <TextView
-                    android:id="@+id/item_rating_count"
-                    style="@style/TextViewWhite.VerySmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginLeft="5dp"
-                    android:padding="0dp"
-                    android:layout_centerInParent="true"
-                    android:text="@{listItemViewModel.rating_count!=null ? listItemViewModel.rating_count : @string/blank}"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/item_price"
-                    style="@style/TextViewSubHeadingAccent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:padding="0dp"
-                    app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>-->
 
     </LinearLayout>
 

@@ -46,8 +46,8 @@
     <!--facebook-->
     <!--<string name="facebook_app_id">1183769028463257</string>
     <string name="fb_login_protocol_scheme">fb1183769028463257</string>-->
-    <string name="facebook_app_id">566332697636167</string>
-    <string name="fb_login_protocol_scheme">fb566332697636167</string>
+    <string name="facebook_app_id">947980622315284</string>
+    <string name="fb_login_protocol_scheme">fb947980622315284</string>
 
     <!--virtual garage-->
     <string name="virtual_garage_title">Fill in the car data</string>

@@ -106,7 +106,13 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         var tyreType = ""
         var tyreSeason = ""
         context.loadImage(wishList.tyreProductDetail?.imageUrl, view.item_Productimage)
-        context.loadImage(wishList.tyreProductDetail?.brandImage, view.item_Productbrand_image)
+
+        if(wishList.tyreProductDetail?.brandImage.isNullOrBlank()){
+            view.item_Productbrand_image.visibility=View.GONE
+        }else{
+            context.loadImage(wishList.tyreProductDetail?.brandImage, view.item_Productbrand_image)
+
+        }
 
 
         if (!wishList.tyreProductDetail?.sellerPrice.isNullOrEmpty()) {
@@ -275,8 +281,12 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
 
         // Display brand image if this is spare part
+        if(wishList.spareProductDetail?.brandImage.isNullOrBlank()){
+            view.item_Productbrand_image.visibility=View.GONE
+        }else{
+            context.loadImage(wishList.spareProductDetail?.brandImage, view.item_Productbrand_image)
 
-        context.loadImage(wishList.spareProductDetail?.brandImage, view.item_Productbrand_image)
+        }
     }
 
     private fun bindWorkshopDataToView(view: View, wishList: Models.WishList) {

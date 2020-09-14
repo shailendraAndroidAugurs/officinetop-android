@@ -254,3 +254,8 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
         getFeedbacks(this, workshopId, productId, type, productType)
     }
 }
+
+
+
+
+

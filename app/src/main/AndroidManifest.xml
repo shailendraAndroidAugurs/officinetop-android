@@ -63,9 +63,7 @@
         <activity
             android:name=".userprofile.Edit_Profile"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Online_Payment.OnlinePayment"
-            android:screenOrientation="portrait" />
+
         <activity android:name=".MOT.MotDetailActivity" />
         <activity
             android:name=".MOT.MotListActivity"

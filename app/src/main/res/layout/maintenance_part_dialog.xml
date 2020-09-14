@@ -42,7 +42,6 @@
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@drawable/no_image_placeholder"
                     app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}" />
 
 

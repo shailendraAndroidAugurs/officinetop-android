@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -92,9 +91,9 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             loadProductDetailApi(detail?.id ?: "")
             getSimilarProduct(detail?.id ?: "")
             val json = it
-            if(!detail?.productsName.isNullOrBlank()){
-                item_number.visibility=View.VISIBLE
-                item_number.text=getString(R.string.itemnumber,detail?.productsName)
+            if (!detail?.productsName.isNullOrBlank()) {
+                item_number.visibility = View.VISIBLE
+                item_number.text = getString(R.string.itemnumber, detail?.productsName)
             }
             val price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
             else json.optString("seller_price")
@@ -104,7 +103,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 item_qty.text = "2"
             }
             if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
-               wish_list = intent.getStringExtra(Constant.Key.wishList)
+                wish_list = intent.getStringExtra(Constant.Key.wishList)
                 if (wish_list == "1")
                     Iv_favorite.setImageResource(R.drawable.ic_heart)
                 else {
@@ -138,7 +137,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     displayCoupons(detail?.couponList as MutableList<Models.Coupon>, "workshop_coupon", AppliedCouponName_SP)
                 }
             }
-            loadImage(json.optString("brand_image_url"), item_brand_image)
+
+            if (json.optString("brand_image_url").isNullOrBlank() && json.optString("brand_image_url").equals("null")) {
+                item_brand_image.visibility = View.GONE
+            } else {
+                loadImage(json.optString("brand_image_url"), item_brand_image)
+            }
             val cartItem = Models.CartItem(name = detail?.productName.toString(),
                     description = detail?.Productdescription,
                     price = price?.replace(",", "")?.toDouble() ?: 0.0,
