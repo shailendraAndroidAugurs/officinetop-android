@@ -284,8 +284,10 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 brandImage.visibility = View.VISIBLE
                 if(!productOrWorkshopList[p1]?.brandImage.isNullOrBlank())
                 mcontext.loadImage(productOrWorkshopList[p1]?.brandImage, brandImage)
-                else{
+                else if(!productOrWorkshopList[p1]?.brandImageurl.isNullOrBlank()){
                     mcontext.loadImage(productOrWorkshopList[p1]?.brandImageurl, brandImage)
+                }else{
+                    brandImage.visibility=View.GONE
                 }
             }
 

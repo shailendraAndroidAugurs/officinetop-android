@@ -104,6 +104,8 @@ inline fun Context.loadImageprofile(url: String?, imageView: ImageView) {
 
 inline fun Context.loadImage(url: String?, imageView: ImageView) {
     try {
+
+
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_image_placeholder).error(R.drawable.no_image_placeholder))
                 .load(url)

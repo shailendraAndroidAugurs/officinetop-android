@@ -130,7 +130,13 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (price.isEmpty())
             return
 
-        loadImage(productDetails?.brand_image, item_brand_image)
+
+        if(productDetails?.brand_image.isNullOrBlank()){
+            item_brand_image.visibility=View.GONE
+        }else{
+            loadImage(productDetails?.brand_image, item_brand_image)
+        }
+
 
         if (productDetails?.wish_list != null && productDetails?.wish_list.equals("1")) {
 

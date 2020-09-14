@@ -106,7 +106,7 @@ class MaintenanceActivity : BaseActivity() {
                     for (i in 0 until carMaintenanceServiceList.size) {
                         if (selectedCarMaintenanceServices.get(j).id.toString() == carMaintenanceServiceList[i].id) {
 
-                            Log.e("PARTIDSSERVICES", carMaintenanceServiceList[i].productId)
+                            Log.e("PARTIDSSERVICES", if(carMaintenanceServiceList[i].productId.isNullOrBlank())"custom part" else carMaintenanceServiceList[i].productId)
                             if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
                                 hashMap.put(carMaintenanceServiceList[i].id,
 
@@ -114,7 +114,7 @@ class MaintenanceActivity : BaseActivity() {
 
                                                 carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId))
                             } else {
-                                hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData("", carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].parts[0].usersId))
+                                hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData("", if(carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId))
                             }
                         }
                     }
@@ -248,7 +248,7 @@ class MaintenanceActivity : BaseActivity() {
             override fun onItemClick(view: View, position: Int) {
                 if (view.tag == "100") {
                     checkBox = view.findViewById(R.id.maintenance_item_chk) as CheckBox
-                    if (carMaintenanceServiceList[position].productId != null) {
+                    if (carMaintenanceServiceList[position].productId != null || carMaintenanceServiceList[position].type=="2") {
                         if (checkBox.isChecked) {
 
                             carMaintenanceServiceList[position].isChecked = true//for checkbox during recycler view scroll not to change view state.
