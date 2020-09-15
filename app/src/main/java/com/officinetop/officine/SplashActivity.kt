@@ -28,7 +28,8 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
 import rx.schedulers.Schedulers
 import java.io.IOException
-import java.util.*
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 class SplashActivity : BaseActivity(){
 
@@ -40,6 +41,7 @@ class SplashActivity : BaseActivity(){
         setContentView(R.layout.activity_splash)
        // getUserAppSettings()
         initView()
+        logSentFriendRequestEvent()
 
         Handler().postDelayed({
 
@@ -221,6 +223,13 @@ class SplashActivity : BaseActivity(){
         }
     }
 
-
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logSentFriendRequestEvent () {
+    val logger=AppEventsLogger.newLogger(this)
+    logger.logEvent("sentFriendRequest");
+}
 }
 

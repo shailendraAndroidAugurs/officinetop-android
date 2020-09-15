@@ -289,6 +289,11 @@
                 tools:replace="android:resource" />
         </provider>
 
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider947980622315284"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
+
         <service
             android:name="com.novoda.merlin.MerlinService"
             android:exported="false" />
