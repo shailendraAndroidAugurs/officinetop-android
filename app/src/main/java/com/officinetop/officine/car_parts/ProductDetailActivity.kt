@@ -160,7 +160,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 cartItem.finalPrice = cartItem.price * cartItem.quantity
                 try {
-                    addToCartProducts(selectedProductID.toString(), cartItem?.quantity.toString(), "0.0",
+                    addToCartProducts(this,selectedProductID.toString(), cartItem?.quantity.toString(), "0.0",
                             if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem?.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem?.name != null) cartItem?.name!! else "",
 
                             cartItem?.description!!, detail!!.usersId)
@@ -216,6 +216,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 wish_list = "1"
+                                logAddToWishlistEvent(this,detail?.productName!!,detail?.id.toString(),"1","USD",detail?.sellerPrice?.toDouble()!!)
 
 
                                 showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))

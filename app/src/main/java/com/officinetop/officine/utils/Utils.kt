@@ -28,9 +28,9 @@ import android.widget.Spinner
 import androidx.annotation.IdRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import com.facebook.appevents.AppEventsConstants
+import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -62,15 +62,17 @@ inline fun Context.getProgressDialog(shouldShow: Boolean = false): ProgressDialo
         progressDialog.show()
     return progressDialog
 }
+
 inline fun Context.hideKeyboard() {
     val context = this
     val activity = context as Activity
     val windowToken = activity.window.decorView.rootView.windowToken
     val inputService = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputService.hideSoftInputFromWindow(windowToken, 0)
-    Log.d("hidekeyboardcall","yes")
+    Log.d("hidekeyboardcall", "yes")
 
 }
+
 inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
 
 
@@ -221,10 +223,10 @@ inline fun Intent.forwardResults(): Intent {
 inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = false): List<String> {
     val list: MutableList<String> = ArrayList()
     if (isProductSellOnpair) {
-        for (i in 1..offlimit){
-            list.add((i*2).toString())
-           // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
-            }
+        for (i in 1..offlimit) {
+            list.add((i * 2).toString())
+            // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
+        }
 
     } else {
         for (i in 1..offlimit) {
@@ -400,3 +402,119 @@ fun Context.movetologinPage() {
     startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
 }
 
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logAddToCartEvent(context: Context, contentData: String, contentId: String, contentType: String, currency: String, price: Double) {
+    var params = Bundle();
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, contentType);
+    params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, currency);
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_ADDED_TO_CART, price, params);
+}
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logAddPaymentInfoEvent(context: Context, success: Boolean) {
+    var params = Bundle();
+    params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, if (success) 1 else 0);
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_ADDED_PAYMENT_INFO, params);
+}
+
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logAddToWishlistEvent(context: Context, contentData: String, contentId: String, contentType: String, currency: String, price: Double) {
+    var params = Bundle();
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, contentType);
+    params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, currency);
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_ADDED_TO_WISHLIST, price, params);
+}
+
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logCompleteRegistrationEvent(context: Context, registrationMethod: String) {
+    val params = Bundle();
+    params.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, params);
+}
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logContactEvent(context: Context) {
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_CONTACT);
+}
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logFindLocationEvent(context: Context) {
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_FIND_LOCATION);
+}
+
+
+/**
+ * logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ * purchaseAmount is BigDecimal, e.g. BigDecimal.valueOf(4.32).
+ * currency is Currency, e.g. Currency.getInstance("USD"),
+ *     where the string is from http://en.wikipedia.org/wiki/ISO_4217.
+ * parameters is Bundle.
+ */
+
+public fun logFindLocationEvent(context: Context, purchaseAmount: BigDecimal, currency: Currency, parameters: Bundle) {
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logPurchase(purchaseAmount, currency, parameters)
+
+}
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logRateEvent(context: Context, contentType: String, contentData: String, contentId: String, maxRatingValue: Int, ratingGiven: Double) {
+    var params = Bundle();
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, contentType);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
+    params.putInt(AppEventsConstants.EVENT_PARAM_MAX_RATING_VALUE, maxRatingValue);
+    var logger = AppEventsLogger.newLogger(context)
+    logger.logEvent(AppEventsConstants.EVENT_NAME_RATED, ratingGiven, params);
+}
+
+/**
+ * This function assumes logger is an instance of AppEventsLogger and has been
+ * created using AppEventsLogger.newLogger() call.
+ */
+public fun logSearchEvent(context: Context, contentType: String, contentData: String, contentId: String, searchString: String, success: Boolean) {
+    var params = Bundle();
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, contentType);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData);
+    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
+    params.putString(AppEventsConstants.EVENT_PARAM_SEARCH_STRING, searchString);
+    params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, if(success) 1 else 0);
+    var logger = AppEventsLogger.newLogger(context)
+
+    logger.logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params);
+}

@@ -908,6 +908,36 @@ class AddVehicleActivity : BaseActivity() {
                         }
 
                     })
+
+
+            RetrofitClient.client.getCarSpareKromedaCall(idVehicle)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        }
+
+                    })
+            RetrofitClient.client.getCarMOTKromedaCall(idVehicle)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        }
+
+                    })
+
+
+
+
+
+
+
+
+
+
             if (iscompletedlater) {
                 loadCarCriteria(finalCarVersion[position].idVehicle)
             }

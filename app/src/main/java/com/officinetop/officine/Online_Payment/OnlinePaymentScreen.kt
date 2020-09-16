@@ -25,10 +25,7 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.userprofile.Addresslist_Activity
 import com.officinetop.officine.userprofile.ContactList_Activity
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.onCall
-import com.officinetop.officine.utils.roundTo2Places
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import com.paypal.android.sdk.payments.*
 import kotlinx.android.synthetic.main.activity_online_payment.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -605,7 +602,7 @@ class OnlinePaymentScreen : BaseActivity() {
                             startActivity(intentFor<Order_List>())
                             finish()
                             saveIsAvailableDataInCart(false)
-
+                            logAddPaymentInfoEvent(this,true)
                         }
 
                     }

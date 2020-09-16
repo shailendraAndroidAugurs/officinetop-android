@@ -20,7 +20,8 @@ class OfficineApplication : Application() {
         super.onCreate()
 
         FacebookSdk.fullyInitialize()
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         if (isLoggedIn()) {
             getUserAppSettings()

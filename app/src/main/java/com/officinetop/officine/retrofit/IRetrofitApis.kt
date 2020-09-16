@@ -1425,5 +1425,16 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.carSpareKromedaCall+ "/{versionId}")
+    fun getCarSpareKromedaCall(
+            @Path(Constant.Path.version_id) versionId: String
+    ): Call<ResponseBody>
+    @GET(Constant.UrlEndPoints.carMOTKromedaCall+ "/{versionId}")
+    fun getCarMOTKromedaCall(
+            @Path(Constant.Path.version_id) versionId: String
+    ): Call<ResponseBody>
+
+    //https://services.officinetop.com/api/save_spare_kromeda_call/68373
+  //  https://services.officinetop.com/api/save_spare_kromeda_call/68373
     // https://services.officinetop.com/api/car_maintenance_parts?service_id=4502&version_id=109615&user_id
 }

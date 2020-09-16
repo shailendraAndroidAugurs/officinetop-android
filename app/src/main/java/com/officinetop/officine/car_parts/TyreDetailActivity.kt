@@ -80,7 +80,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
     private fun initViews() {
-
         speedIndexMapFun()
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(Constant.Path.productId to selectedProductID.toString(),
@@ -210,7 +209,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
 
                 try {
-                    addToCartProducts(selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
+                    addToCartProducts(this,selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
                             if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else ""
 
 
@@ -301,7 +300,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-
+                                logAddToWishlistEvent(this,product_name.text.toString(),productDetails?.id.toString(),"2","USD",productDetails?.seller_price?.toDouble()!!)
                             }
 
                         }
