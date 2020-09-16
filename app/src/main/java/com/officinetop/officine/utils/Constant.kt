@@ -194,6 +194,12 @@ object Constant {
         const val motServiceSchedule = "mot_service_schedule"
         const val carMaintenanceCriteria = "car_maintenance_criteria"
         const val carMaintenanceParts = "car_maintenance_parts"
+
+
+        const val carSpareKromedaCall = "save_spare_kromeda_call"
+        const val carMOTKromedaCall = "save_mot_kromeda_call"
+        //https://services.officinetop.com/api/save_spare_kromeda_call/68373
+       // https://services.officinetop.com/api/save_mot_kromeda_call/68373
     }
 
     /*

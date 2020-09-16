@@ -501,6 +501,8 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 if (frompart) {
+                                    logAddToWishlistEvent(this,carMaintenanceServiceList[selectservice_position]?.productName!!,ProductId.toString(),"1","USD",carMaintenanceServiceList[selectservice_position]?.seller_price.toDouble()!!)
+
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
 
                                 } else {

@@ -1138,7 +1138,7 @@ fun insertInCartList(modelData: Any, cartType: String, modelCart: Models.CartDat
 }
 
 
-fun Activity.addToCartProducts(productId: String, productQuantity: String, pfuAmount: String, couponId: String?, price: String, totalPrice: String,
+fun Activity.addToCartProducts(context: Context?,productId: String, productQuantity: String, pfuAmount: String, couponId: String?, price: String, totalPrice: String,
                                discount: String, productType: String, usersID: String, productName: String, productDescription: String, sellerId: String) {
 
     RetrofitClient.client.addToCartProduct(getBearerToken() ?: "", productId, productQuantity
@@ -1161,6 +1161,7 @@ fun Activity.addToCartProducts(productId: String, productQuantity: String, pfuAm
                             if (data.has("products_orders_id") && !data.isNull("products_orders_id")) {
                                 saveOrderId(data.get("products_orders_id").toString())
                             }
+                            logAddToCartEvent(context!!,productDescription,productId,productType,"USD",totalPrice.toDouble())
                         }
                     }
 
@@ -1199,8 +1200,12 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 
                     if (item != null) {
                         item?.wish_list = "1"
+                        logAddToWishlistEvent(this,item.pr_description!!,productId,ProductType,"USD",item?.seller_price?.toDouble()!!)
+
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject?.wish_list = "1"
+                        logAddToWishlistEvent(this,productorworkshopObject.productName!!,productId,ProductType,"USD",productorworkshopObject?.sellerPrice?.toDouble()!!)
+
                     }
 
                     if (productId != null && productId != "")

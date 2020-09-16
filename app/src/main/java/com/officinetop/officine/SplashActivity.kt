@@ -29,6 +29,7 @@ import rx.functions.Action1
 import rx.schedulers.Schedulers
 import java.io.IOException
 import com.facebook.FacebookSdk;
+import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.facebook.appevents.AppEventsLogger;
 
 class SplashActivity : BaseActivity(){
@@ -42,6 +43,9 @@ class SplashActivity : BaseActivity(){
        // getUserAppSettings()
         initView()
         logSentFriendRequestEvent()
+        setAutoLogAppEventsEnabled(true);
+        FacebookSdk.setAutoInitEnabled(true)
+        FacebookSdk.fullyInitialize()
 
         Handler().postDelayed({
 

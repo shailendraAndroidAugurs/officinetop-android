@@ -114,19 +114,9 @@ class LoginActivity : BaseActivity() {
         if ((intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddFirstVehicle")
                 || (loginType == "loginSuccess" && intent != null && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle")) {
 
-//            val intent = Intent(this, AddVehicleActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-//            startActivity(intent)
             startActivity(intentFor<AddVehicleActivity>().clearTask().clearTop())
-            //
-//            intentActivityC.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
 
-
-//            startActivityForResult(intent, Constant.RC.onCarAdded)
         } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle")
-        // Just finish the current screen
         else
             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop())
         finish()
@@ -198,8 +188,7 @@ class LoginActivity : BaseActivity() {
                                 storeToken(getTokenFromJSON(responseString!!), email)
 
                                 handleLoginType("loginSuccess")
-//                                startActivity(intentFor<HomeActivity>().clearTask().clearTop())
-//                                finish()
+                                logCompleteRegistrationEvent(this@LoginActivity,provider_name)
 
                             }
                         }
