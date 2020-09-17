@@ -87,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColor="@color/theme_orange"
-                    app:amount="@{listItemViewModel.seller_price!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.seller_price) : @string/blank}"
+                    app:amount="@{listItemViewModel.seller_price!=null ?  listItemViewModel.seller_price : @string/blank}"
+                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon" />
@@ -230,7 +231,10 @@
             style="@style/TextViewNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:amount="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.price) : @string/blank}"
+            app:amount="@{listItemViewModel.price!=null  ?  listItemViewModel.price: @string/blank}"
+            app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/maintenance_item"
             app:layout_constraintTop_toTopOf="parent" />

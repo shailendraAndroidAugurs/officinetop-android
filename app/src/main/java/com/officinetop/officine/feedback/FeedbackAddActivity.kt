@@ -1,7 +1,6 @@
 package com.officinetop.officine.feedback
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -9,12 +8,9 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.officinetop.officine.BaseActivity
-import com.officinetop.officine.Orders.Order_List
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GridItemDecoration
 import com.officinetop.officine.adapter.QuotesGridAdapter
@@ -25,9 +21,6 @@ import kotlinx.android.synthetic.main.add_fedback_layout.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.io.OutputStream
 import okhttp3.MultipartBody
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -71,7 +64,7 @@ class FeedbackAddActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.add_feedback)
 
         ratings.setOnClickListener {
-            Log.d("rating",ratings.rating.toString())
+            Log.d("rating", ratings.rating.toString())
         }
 
         if (intent.hasExtra(Constant.Path.workshopId))
@@ -211,7 +204,7 @@ class FeedbackAddActivity : BaseActivity() {
     }
 
     private fun sendFeedback() = try {
-       val ProgressDialog =getProgressDialog(true)
+        val ProgressDialog = getProgressDialog(true)
 
 
         val imageList: ArrayList<MultipartBody.Part?> = ArrayList()
@@ -224,14 +217,14 @@ class FeedbackAddActivity : BaseActivity() {
 
             motservicetype = ""
         }
-        val res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID+", withoutPurchase"+withoutPurchase
+        val res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID + ", withoutPurchase" + withoutPurchase
         Log.v("FEEDBACK", res)
 
         RetrofitClient.client.addFeedback(authToken = getBearerToken()
                 ?: "", workshopId = workshopId.toRequestBody(),
                 productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
                 comments = comments.text.toString().toRequestBody(), sellerId = sellerId.toRequestBody(), productType = productType.toRequestBody(), mainCategoryId = mainCategoryId.toRequestBody(),
-                serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody(),withoutPurchase=withoutPurchase.toRequestBody()
+                serviceID = serviceID.toRequestBody(), type = type.toRequestBody(), orderid = orderid.toRequestBody(), motservicetype = motservicetype.toRequestBody(), withoutPurchase = withoutPurchase.toRequestBody()
         )
                 .onCall { networkException, response ->
                     ProgressDialog.dismiss()
@@ -247,10 +240,10 @@ class FeedbackAddActivity : BaseActivity() {
                             val data = JSONObject(body)
                             if (data.has("message") && !data.isNull("message")) {
                                 showInfoDialog(data.get("message").toString())
-                               // startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                // startActivity(intentFor<Order_List>().clearTask().clearTop())
                                 finish()
-
-                                Log.d("Feedback","yes")
+                                logRateEvent(this, if (type.equals("1")) "product" else if (type.equals("2")) "workshop" else "workshop with product", productorWorkshopName, if (workshopId.equals("")) productId else workshopId, 5,ratings.rating.toDouble())
+                                Log.d("Feedback", "yes")
                             }
 
                             imagesList.clear()

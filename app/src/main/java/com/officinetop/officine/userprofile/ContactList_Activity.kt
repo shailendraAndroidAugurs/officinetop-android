@@ -140,7 +140,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactAddSuccessFully), false, { getUserDetail(this, this) })
-
+                    logContactEvent(this)
                 }
 
             }
@@ -155,8 +155,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactUpdateSuccessFully), false, { getUserDetail(this, this) })
-
-                    //
+                    logContactEvent(this)
                 }
 
             }

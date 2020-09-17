@@ -146,9 +146,10 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:padding="0dp"
-                        app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}" />
+                        app:amount="@{listItemViewModel.sellerPrice!=null ?  listItemViewModel.sellerPrice: @string/blank}"
+                      app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
 
-
+                        />
                 </LinearLayout>
             </LinearLayout>
 

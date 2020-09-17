@@ -184,6 +184,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.AddressAddSuccessFully), true, { getUserDetail(this, this) })
+                    logFindLocationEvent(this)
                 }
 
             }

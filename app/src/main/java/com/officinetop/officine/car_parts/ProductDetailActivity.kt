@@ -138,7 +138,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 }
             }
 
-            if (json.optString("brand_image_url").isNullOrBlank() && json.optString("brand_image_url").equals("null")) {
+            if (json.optString("brand_image_url").isNullOrBlank() || json.optString("brand_image_url").equals("null")) {
                 item_brand_image.visibility = View.GONE
             } else {
                 loadImage(json.optString("brand_image_url"), item_brand_image)

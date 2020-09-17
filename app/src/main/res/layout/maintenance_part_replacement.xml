@@ -103,7 +103,9 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
                     android:textColor="@color/theme_orange"
-                    app:amount="@{listItemViewModel.sellerPrice!=null ? String.format(@string/prepend_euro_symbol_with_from_string, listItemViewModel.sellerPrice) : @string/blank}"
+                    app:amount="@{listItemViewModel.sellerPrice!=null ? listItemViewModel.sellerPrice : @string/blank}"
+                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
 

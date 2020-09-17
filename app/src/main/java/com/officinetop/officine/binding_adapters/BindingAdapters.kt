@@ -3,7 +3,6 @@ package com.officinetop.officine.binding_adapters
 import android.graphics.Color
 import android.os.Build
 import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -23,11 +22,11 @@ fun bindImages(imageView: ImageView, imageUrl: String) {
         imageView.context.loadImage(imageUrl, imageView)
 }
 
-@BindingAdapter("amount")
-fun bindPrice(textView: TextView, price: String) {
+@BindingAdapter("amount", "value")
+fun bindPrice(textView: TextView, price: String, value: String) {
     if (!price.isNullOrBlank()) {
-     //   var amount = price.toDouble().roundTo2Places()
-        textView.text = price.toString()
+        var amount = price.toDouble().roundTo2Places()
+        textView.text = value + " " + amount.toString()
 
     }
     textView.visibility = if (!price.toString().isNullOrEmpty()) View.VISIBLE else View.GONE
@@ -282,8 +281,6 @@ fun orderReturnbutton(textview: TextView, status: String) {
 }
 
 
-
-
 @BindingAdapter("orderProgress")
 fun orderProgress(linearLayout: LinearLayout, status: String) {
     if (!status.isNullOrBlank() && status != "null" && status != "-" && status != "F")
@@ -339,7 +336,9 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
                 text.text = ""
             } else {
                 if (!ispair.isNullOrBlank() && ispair != "0")
-                    text.text = (quantity.toInt() /** 2*/).toString()
+                    text.text = (quantity.toInt()
+                            /** 2*/
+                            ).toString()
                 else
                     text.text = quantity
             }
@@ -350,13 +349,13 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
     }
 }
 
-@BindingAdapter("coupontitle", "coupontype","couponPrices")
-fun setcouponDetail(text: TextView, coupontitle: String, coupontype: String,couponPrices:String) {
-    text.text= "$coupontitle : €$couponPrices"
+@BindingAdapter("coupontitle", "coupontype", "couponPrices")
+fun setcouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
+    text.text = "$coupontitle : €$couponPrices"
 }
 
 @BindingAdapter("wishlist")
- fun setWishlist(Iv_favorite:ImageView,wish_list:String){
+fun setWishlist(Iv_favorite: ImageView, wish_list: String) {
 
     if (wish_list == "1")
         Iv_favorite.setImageResource(R.drawable.ic_heart)

@@ -483,7 +483,7 @@ public fun logFindLocationEvent(context: Context) {
  * parameters is Bundle.
  */
 
-public fun logFindLocationEvent(context: Context, purchaseAmount: BigDecimal, currency: Currency, parameters: Bundle) {
+public fun logPurchageEvent(context: Context, purchaseAmount: BigDecimal, currency: Currency, parameters: Bundle) {
     var logger = AppEventsLogger.newLogger(context)
     logger.logPurchase(purchaseAmount, currency, parameters)
 

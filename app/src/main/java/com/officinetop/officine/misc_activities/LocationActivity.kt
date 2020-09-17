@@ -111,6 +111,7 @@ class LocationActivity : BaseActivity() {
                                     longitude = dataModels.longitude ?: ""
                                     zipCode = dataModels.zipCode ?: ""
                                     disableTextField()
+                                    logFindLocationEvent(this)
                                     if(!dataModels.latitude.isNullOrBlank() && !dataModels.longitude.isNullOrBlank() ){
                                         UserAddressLatLong(dataModels.latitude.toDouble(),dataModels.longitude.toDouble())
 
