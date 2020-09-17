@@ -518,6 +518,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 startActivity(intentFor<Order_List>())
                 finish()
                 saveIsAvailableDataInCart(true)
+                logAddPaymentInfoEvent(this,true)
             }
         } else {
             /////////////////////Upi pay//////////////////////////////////////
@@ -692,6 +693,7 @@ class OnlinePaymentScreen : BaseActivity() {
                             startActivity(intentFor<Order_List>())
                             finish()
                             saveIsAvailableDataInCart(false)
+                            logAddPaymentInfoEvent(this,true)
                         }
                     }
                 }
@@ -716,6 +718,7 @@ class OnlinePaymentScreen : BaseActivity() {
                             startActivity(intentFor<Order_List>())
                             finish()
                             saveIsAvailableDataInCart(false)
+                            logAddPaymentInfoEvent(this,true)
                             //saveOrderId("")
                         }
 

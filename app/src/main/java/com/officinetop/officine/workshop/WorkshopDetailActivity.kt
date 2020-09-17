@@ -302,6 +302,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
+                                    logAddToWishlistEvent(this,workshop_name.text.toString()!!,workshopUsersId.toString(),"workshop","USD",0.0)
 
 
                                 }
