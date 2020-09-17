@@ -513,6 +513,7 @@ class MaintenanceActivity : BaseActivity() {
                                 carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
+                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",carMaintenanceServiceList[position]?.seller_price?.toDouble()!!)
 
                             }
 

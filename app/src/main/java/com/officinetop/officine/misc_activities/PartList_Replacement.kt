@@ -20,10 +20,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.getProgressDialog
-import com.officinetop.officine.utils.movetologinPage
-import com.officinetop.officine.utils.onCall
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -184,6 +181,7 @@ class PartList_Replacement : BaseActivity() {
                                 carMaintenanceServiceList[position].wishlist="1"
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
+                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",carMaintenanceServiceList[position]?.sellerPrice?.toDouble()!!)
 
 
                             }

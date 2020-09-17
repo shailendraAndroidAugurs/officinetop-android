@@ -171,7 +171,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val fragmentHome = FragmentHome()
-
         //adding it initially
 
 

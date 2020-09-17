@@ -23,10 +23,7 @@ import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.misc_activities.PartList_Replacement
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.movetologinPage
-import com.officinetop.officine.utils.onCall
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_mot_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -330,6 +327,7 @@ class MotDetailActivity : BaseActivity() {
 
                                 mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
+                                logAddToWishlistEvent(this,mKPartServicesList[position].productName!!,ProductId,"1","USD",mKPartServicesList[position]?.sellerPrice?.toDouble()!!)
 
 
                             }
