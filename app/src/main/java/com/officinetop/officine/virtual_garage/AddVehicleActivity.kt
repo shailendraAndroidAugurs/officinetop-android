@@ -931,13 +931,6 @@ class AddVehicleActivity : BaseActivity() {
 
 
 
-
-
-
-
-
-
-
             if (iscompletedlater) {
                 loadCarCriteria(finalCarVersion[position].idVehicle)
             }
