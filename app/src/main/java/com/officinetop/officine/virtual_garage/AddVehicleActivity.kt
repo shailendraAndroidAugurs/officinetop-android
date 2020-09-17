@@ -721,7 +721,7 @@ class AddVehicleActivity : BaseActivity() {
                         }
                         carcriteriaId = carCriteriaList[0].repair_times_id
                         bindSpinner(spinner_criteria, titlesfor)
-
+                        spinner_criteria.setSelection(0)
                         if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
                             spinner_criteria.setSelection(selectedIndex)
                         }
