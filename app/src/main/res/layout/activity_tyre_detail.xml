@@ -106,7 +106,7 @@
                         android:id="@+id/product_rating"
                         style="@style/custom_ratingBar"
                         android:layout_width="@dimen/_80sdp"
-
+                        app:srb_stepSize="0.5"
                         android:layout_height="wrap_content" />
 
                     <TextView

@@ -46,7 +46,7 @@ import kotlin.collections.HashMap
 import kotlin.math.ceil
 import kotlin.math.floor
 
-class ProductListActivity : BaseActivity(), FilterListInterface {
+class  ProductListActivity: BaseActivity(), FilterListInterface {
 
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
@@ -198,8 +198,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         try {
-
-
                             progress_bar.visibility = View.GONE
                             recycler_view.visibility = View.VISIBLE
 
@@ -213,11 +211,14 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                                     bindRecyclerView(JSONArray())
                                     showInfoDialog(getMessageFromJSON(it)) {
                                         finish()
+                                      //  context: Context, contentType: String, contentData: String, contentId: String, searchString: String, success: Boolean
+                                        logSearchEvent(this@ProductListActivity,"Spare part","Product search","1",searchedKeyWord,true)
                                     }
                                 }
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
+
                         }
                     }
                 })
