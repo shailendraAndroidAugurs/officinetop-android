@@ -14,6 +14,8 @@ import android.widget.Filterable
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.HttpResponse
+import com.google.android.gms.common.util.IOUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
@@ -25,9 +27,19 @@ import com.officinetop.officine.workshop.WorkshopDetailActivity
 import kotlinx.android.synthetic.main.item_product_or_workshop_detail.view.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
+import org.w3c.dom.NodeList
+import java.io.BufferedInputStream
+import java.io.IOException
+import java.io.InputStream
 import java.io.Serializable
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.ProtocolException
+import java.net.URL
 import java.text.DecimalFormat
+import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.math.roundToInt
 
 class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
@@ -561,7 +573,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
         }
     }*/
-    /*  fun getDistancebetweenTwoLatLong(currentLatLong: LatLng, latitude: String, longitude: String, tv_workshopKm: TextView) {
+/*
+    fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
          var parsedDistance = "";
          var response = "";
 
@@ -569,10 +582,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
              try {
 
-                 var lat1 = currentLatLong.latitude;
-
-                 val lon1 = currentLatLong.longitude;
-                 var url = URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + latitude.toDouble() + "," + longitude.toDouble() + "&sensor=false&units=metric&mode=driving");
+                 var lat1 = currentLat
+                 val lon1 = currentLong
+                 var url = URL("https://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + latitude.toDouble() + "," + longitude.toDouble() + "&sensor=false&units=metric&mode=driving&key="+mcontext.getString(R.string.google_api_key));
                  var conn: HttpURLConnection = url.openConnection() as HttpURLConnection
                  conn.setRequestMethod("POST");
                  var inputStream: InputStream = BufferedInputStream(conn.getInputStream());
@@ -601,25 +613,28 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
          thread.start();
 
-         try {
+        */
+/* try {
              thread.join();
          } catch (e: InterruptedException) {
              e.printStackTrace();
-         }
+         }*//*
+
          Log.d(" test Distance", parsedDistance.toString())
          tv_workshopKm.text = (parsedDistance);
      }
+*/
 
-     private fun getDistanceOnRoad(latitude:Double, longitude:Double,
+    /* private fun getDistanceOnRoad(latitude:Double, longitude:Double,
                                    prelatitute:Double, prelongitude:Double):String {
          val result_in_kms = ""
-         *//*val url = ("http://maps.google.com/maps/api/directions/xml?origin="
+    *//*     val url = ("http://maps.google.com/maps/api/directions/xml?origin="
                 + latitude + "," + longitude + "&destination=" + prelatitute
                 + "," + prelongitude + "&sensor=false&units=metric")*//*
         var url = URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + latitude + "," + longitude + "&destination=" + prelatitute.toDouble() + "," + prelongitude.toDouble() + "&sensor=false&units=metric&mode=driving");
 
         val tag = arrayOf<String>("text")
-        val response: HttpResponse  ? = null
+        val response: HttpResponse? = null
         try
         {
             var conn: HttpURLConnection = url.openConnection() as HttpURLConnection

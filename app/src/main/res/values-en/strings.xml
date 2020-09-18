@@ -314,7 +314,8 @@
     <string name="new_address">Address</string>
     <string name="UpdateContact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
    <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
-    <string name="google_map_key">AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8<!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
+
+    <string name="google_map_key">AIzaSyDAypvXOPP763qTp1kHymRujcgXNgEzGyE<!--AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8--><!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
     <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
     <string name="Please_Select_Address">Please Select Address</string>
     <string name="enterZipCode">Enter Zip Code</string>
