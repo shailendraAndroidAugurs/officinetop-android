@@ -307,7 +307,7 @@
     <string name="Invoice">Scarica fattura</string>
     <string name="tracking">Traccia</string>
     <string name="onTime">Puntuale</string>
-    <string name="SENDER_ID">850442644528</string>
+    <string name="SENDER_ID"><!--850442644528-->976463692726</string>
     <string name="notifications_admin_channel_name">officinetop</string>
     <string name="notifications_admin_channel_description">officinetop Firebase PushNotification</string>
     <string name="notificationslist">Notifica</string>
