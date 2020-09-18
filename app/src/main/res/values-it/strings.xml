@@ -314,7 +314,7 @@
     <string name="update_address">Indirizzo di aggiornamento</string>
     <string name="new_address">Indirizzo</string>
     <string name="UpdateContact">Il numero di cellulare e il numero di cellulare aggiornato sono uguali. Inserisci un altro numero</string>
-    <string name="google_map_key">AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8<!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
+    <string name="google_map_key">AIzaSyDAypvXOPP763qTp1kHymRujcgXNgEzGyE<!--AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8--><!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
     <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
     <string name="Please_Select_Address">Si prega di selezionare l\'indirizzo</string>
     <string name="enterZipCode">Inserisci il codice postale</string>
