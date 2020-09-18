@@ -186,7 +186,7 @@ class MaintenanceActivity : BaseActivity() {
         try {
             for (i in 0 until carMaintenanceServiceList.size) {
                 if (carMaintenanceServiceList[i].parts != null) {
-                    Log.d("Maintenance", "part info" + carMaintenanceServiceList[i].parts[0].listino)
+                   // Log.d("Maintenance", "part info" + carMaintenanceServiceList[i].parts[0].listino)
                     carMaintenanceServiceList[i].listino = carMaintenanceServiceList[i].parts[0].listino
                     carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].descrizione != null) carMaintenanceServiceList[i].parts[0].descrizione else ""
                     carMaintenanceServiceList[i].productId = carMaintenanceServiceList[i].parts[0].id
