@@ -163,17 +163,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        /* val mFrame = findViewById<View>(R.id.content) as FrameLayout
-         LayoutInflater.from(this).inflate(R.layout.activity_home, mFrame, true)*/
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         progressDialog = getProgressDialog()
         registerReceiver(internetBroadcast, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val fragmentHome = FragmentHome()
-        //adding it initially
-
-
         home_bottom_navigation_view.setOnNavigationItemSelectedListener {
             loadNavigationItems(it.itemId)
             return@setOnNavigationItemSelectedListener true
@@ -227,7 +222,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         // load screens if navigated from options menu
         if (intent != null && intent.hasExtra("fragmentID")) {
             Log.v("INTENT", "*************** " + intent.getIntExtra("fragmentID", R.id.action_menu_home))
-            // loadNavigationItems(intent.getIntExtra("fragmentID", R.id.action_menu_home))
             bindFragment(intent.getIntExtra("fragmentID", R.id.action_menu_home))
         } else {
 
@@ -254,17 +248,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
-
-    private fun initView() {
-        Thread(Runnable {
-            try {
-                Log.i(TAG, FirebaseInstanceId.getInstance().getToken(getString(R.string.SENDER_ID), "FCM"))
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }).start()
-    }
-
     override fun onResume() {
         try {
 
@@ -286,8 +269,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         carListAdapter.notifyDataSetChanged()
 
         if (!isLoggedIn()) {
-
-            //check if has local saved car
             setCarListFromLocal()
 
             return
@@ -733,10 +714,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     getCarListAPI()
             }
         }
-
-
-        //loadMyCars()
-
         super.onActivityResult(requestCode, resultCode, data)
 
     }

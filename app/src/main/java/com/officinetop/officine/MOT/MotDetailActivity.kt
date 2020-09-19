@@ -327,7 +327,7 @@ class MotDetailActivity : BaseActivity() {
 
                                 mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this,mKPartServicesList[position].productName!!,ProductId,"1","USD",mKPartServicesList[position]?.sellerPrice?.toDouble()!!)
+                                logAddToWishlistEvent(this,mKPartServicesList[position].productName!!,ProductId,"1","USD",if(!mKPartServicesList[position]?.sellerPrice.isNullOrBlank())mKPartServicesList[position]?.sellerPrice?.toDouble()!! else 0.0)
 
 
                             }

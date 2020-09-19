@@ -220,6 +220,22 @@ class FeedbackAddActivity : BaseActivity() {
         val res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID + ", withoutPurchase" + withoutPurchase
         Log.v("FEEDBACK", res)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         RetrofitClient.client.addFeedback(authToken = getBearerToken()
                 ?: "", workshopId = workshopId.toRequestBody(),
                 productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
@@ -234,7 +250,7 @@ class FeedbackAddActivity : BaseActivity() {
 
                         val body = response.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithsforating), true) { movetologinPage() }
                         if (response.isSuccessful) {
 
                             val data = JSONObject(body)
@@ -320,6 +336,31 @@ class FeedbackAddActivity : BaseActivity() {
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             stream.close()
 
             attachedImage = file

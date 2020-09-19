@@ -284,7 +284,7 @@ class FragmentHome : Fragment() {
                             try {
                                 val body = JSONObject(response.body()?.string())
                                 Log.d("highRatingApicall", "yes")
-                                if (body.has("data_set") && body.get("data_set") != null) {
+                                if (body.has("data_set") && body.get("data_set") != null && !body.get("data_set").equals("[]")) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
                                     val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())

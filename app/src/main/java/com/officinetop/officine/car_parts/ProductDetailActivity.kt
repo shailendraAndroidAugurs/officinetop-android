@@ -216,7 +216,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 wish_list = "1"
-                                logAddToWishlistEvent(this,detail?.productName!!,detail?.id.toString(),"1","USD",detail?.sellerPrice?.toDouble()!!)
+                                logAddToWishlistEvent(this,detail?.productName!!,detail?.id.toString(),"1","USD",if(!detail?.sellerPrice.isNullOrBlank())detail?.sellerPrice?.toDouble()!! else 0.0)
 
 
                                 showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))

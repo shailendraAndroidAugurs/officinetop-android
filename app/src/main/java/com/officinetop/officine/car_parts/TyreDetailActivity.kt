@@ -300,7 +300,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this,product_name.text.toString(),productDetails?.id.toString(),"2","USD",productDetails?.seller_price?.toDouble()!!)
+                                logAddToWishlistEvent(this,product_name.text.toString(),productDetails?.id.toString(),"2","USD",if(!productDetails?.seller_price.isNullOrBlank())productDetails?.seller_price?.toDouble()!! else 0.0)
                             }
 
                         }

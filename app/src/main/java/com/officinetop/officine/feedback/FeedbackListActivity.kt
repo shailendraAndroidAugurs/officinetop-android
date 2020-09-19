@@ -12,6 +12,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_feedback_list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -106,10 +107,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
             overall_rating.rating = list[0].avgRatings.toFloat()
             tv_rating_count.text = list[0].avgRatings.toFloat().toDouble().roundTo2Places().toString() + " " + "out of 5"
             tv_overAll_rating_count.text = list[0].noOfPeople
-
             fedback_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-
             //workshop feedback
             fedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -118,7 +116,6 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                 }
 
                 override fun getItemCount(): Int = list.size
-
                 override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
                     if (!list[p1].ProductOrWorkshopName.isNullOrBlank()) {
@@ -154,7 +151,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                         p0.itemView.tv_product_type.text = getString(R.string.tyres)
                     }
 
-                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase == "1") {
+                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase == "1" && list[p1].usersId==getUserId()) {
                         btn_addfedback.visibility = View.GONE
 
                     }
