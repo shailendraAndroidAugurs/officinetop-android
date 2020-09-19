@@ -698,6 +698,7 @@
     <string name="criteria">Criteria</string>
     <string name="select_car_criteria">Select Car Criteria</string>
     <string name="prepend_euro_symbol_without_string"> A partire da: €: </string>
+    <string name="Pleaselogintocontinuewithsforating">Accedi per continuare con Aggiungi valutazione</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

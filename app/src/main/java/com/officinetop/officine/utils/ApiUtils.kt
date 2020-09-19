@@ -1200,11 +1200,11 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 
                     if (item != null) {
                         item?.wish_list = "1"
-                        logAddToWishlistEvent(this,item.pr_description!!,productId,ProductType,"USD",item?.seller_price?.toDouble()!!)
+                        logAddToWishlistEvent(this,item.pr_description!!,productId,ProductType,"USD",if(!item?.seller_price.isNullOrBlank())item?.seller_price?.toDouble()!! else 0.0)
 
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject?.wish_list = "1"
-                        logAddToWishlistEvent(this,productorworkshopObject.productName!!,productId,ProductType,"USD",productorworkshopObject?.sellerPrice?.toDouble()!!)
+                        logAddToWishlistEvent(this,productorworkshopObject.productName!!,productId,ProductType,"USD",if(!productorworkshopObject?.sellerPrice.isNullOrBlank())productorworkshopObject?.sellerPrice?.toDouble()!! else 0.0)
 
                     }
 

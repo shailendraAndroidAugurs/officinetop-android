@@ -701,6 +701,7 @@
     <string name="criteria">Criteria</string>
     <string name="select_car_criteria">Select Car Criteria</string>
     <string name="prepend_euro_symbol_without_string"> from: € </string>
+    <string name="Pleaselogintocontinuewithsforating">Please login to continue with Add Rating</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

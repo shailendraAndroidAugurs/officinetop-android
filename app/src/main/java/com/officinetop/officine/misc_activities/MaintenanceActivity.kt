@@ -501,7 +501,7 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 if (frompart) {
-                                    logAddToWishlistEvent(this,carMaintenanceServiceList[selectservice_position]?.productName!!,ProductId.toString(),"1","USD",carMaintenanceServiceList[selectservice_position]?.seller_price.toDouble()!!)
+                                    logAddToWishlistEvent(this,carMaintenanceServiceList[selectservice_position]?.productName!!,ProductId.toString(),"1","USD",if(!carMaintenanceServiceList[selectservice_position]?.seller_price.isNullOrBlank())carMaintenanceServiceList[selectservice_position]?.seller_price.toDouble()!! else 0.0)
 
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
 
@@ -513,7 +513,7 @@ class MaintenanceActivity : BaseActivity() {
                                 carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",carMaintenanceServiceList[position]?.seller_price?.toDouble()!!)
+                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",if(!carMaintenanceServiceList[position]?.seller_price.isNullOrBlank())carMaintenanceServiceList[position]?.seller_price?.toDouble()!! else 0.0)
 
                             }
 
@@ -818,6 +818,80 @@ class MaintenanceActivity : BaseActivity() {
             dialog_recycler_view2.adapter = genericAdapterParts
             genericAdapterParts!!.addItems(carMaintenanceServiceList[selectservice_position].parts)
             dialog_recycler_view2.layoutManager!!.scrollToPosition(selectitem_position)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
     }
