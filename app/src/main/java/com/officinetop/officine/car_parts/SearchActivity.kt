@@ -1,3 +1,4 @@
+/*
 package com.officinetop.officine.car_parts
 
 import android.app.Activity
@@ -94,4 +95,4 @@ class SearchActivity: AppCompatActivity() {
     }
 
     }
-}
+}*/

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -87,13 +88,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         search_product.setOnClickListener {
-
-            /*val inputMethodManager =  getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-            inputMethodManager.toggleSoftInputFromWindow(
-                    search_product.getApplicationWindowToken(),
-                    InputMethodManager.SHOW_FORCED, 0);*/
             openSearchDialog()
         }
+
     }
 
     private fun collapseHeaderGroup() {
@@ -213,7 +210,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 popupView,
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT)
-
+        // popupWindow.showAtLocation(this.findViewById(R.id.search_view_options), Gravity.CENTER, 0, 0);
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindow.isOutsideTouchable = true
         popupWindow.isFocusable = true
@@ -247,7 +244,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             }
         }
 
-        popupView.findViewById<TextView>(R.id.search_btn).setOnClickListener {
+        search_btn.setOnClickListener {
             if (searchField.text.toString().isNotEmpty() && searchField.text.toString().length > 3)
                 searchStoreQuery(searchField.text.toString(), popupWindow)
             else

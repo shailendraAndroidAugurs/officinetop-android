@@ -181,7 +181,7 @@ class PartList_Replacement : BaseActivity() {
                                 carMaintenanceServiceList[position].wishlist="1"
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",if(carMaintenanceServiceList[position]?.sellerPrice.isNullOrBlank())carMaintenanceServiceList[position]?.sellerPrice?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",if(!carMaintenanceServiceList[position]?.sellerPrice.isNullOrBlank())carMaintenanceServiceList[position]?.sellerPrice?.toDouble()!! else 0.0)
 
 
                             }
