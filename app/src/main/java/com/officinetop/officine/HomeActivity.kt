@@ -697,9 +697,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             requestCode == Constant.RC.onCarAdded -> {
 
                 try {
-                    val lastCar = data?.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
-                    Log.d("HomeActivity", "onActivityResult: $lastCar")
-                    setToolbarValues(lastCar)
+                    if(data!=null&& data?.extras!=null){
+                        val lastCar = data?.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
+                        Log.d("HomeActivity", "onActivityResult: $lastCar")
+                        setToolbarValues(lastCar)
+                    }
+
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }

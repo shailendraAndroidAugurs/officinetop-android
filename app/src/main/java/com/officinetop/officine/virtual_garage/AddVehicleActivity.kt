@@ -893,44 +893,10 @@ class AddVehicleActivity : BaseActivity() {
 
         if (selIndex > -1 && titles.size > selIndex) {
             spinner_version.setSelection(selIndex)
+            loadCarCriteria(finalCarVersion[selIndex].idVehicle)
         }
         spinner_version.setOnSpinnerItemClickListener { position, _ ->
             Log.d("car_criteria_vehical_id", finalCarVersion[position].idVehicle)
-
-
-            val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
-            RetrofitClient.client.kromedaCall(idVehicle)
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        }
-
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        }
-
-                    })
-
-
-            RetrofitClient.client.getCarSpareKromedaCall(idVehicle)
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        }
-
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        }
-
-                    })
-            RetrofitClient.client.getCarMOTKromedaCall(idVehicle)
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        }
-
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        }
-
-                    })
-
-
-
             if (iscompletedlater) {
                 loadCarCriteria(finalCarVersion[position].idVehicle)
             }
@@ -1108,6 +1074,8 @@ class AddVehicleActivity : BaseActivity() {
                 setResult(Activity.RESULT_OK, getLastCarIntent(body))
                 finish()
             }
+
+
             isCancelable = false
         }.show()
 
@@ -1124,6 +1092,7 @@ class AddVehicleActivity : BaseActivity() {
 
 
             carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
+            CallKromedaApi(lastCar?.carVersionModel?.idVehicle!!)
         }
 
         return carIntent
@@ -1293,6 +1262,8 @@ class AddVehicleActivity : BaseActivity() {
     private fun getEmptyAdapter() = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOf())
 
     private fun setNotEditable_SearchFromPlatno() {
+
+        Log.d("NonEditableCall","NonEditableCall")
         spinner_manufacturer.isSpinnerEnable = false
         spinner_model.isSpinnerEnable = false
         spinner_fuel.isSpinnerEnable = false
@@ -1300,4 +1271,39 @@ class AddVehicleActivity : BaseActivity() {
 
 
     }
+
+    private fun CallKromedaApi(versionId:String){
+        RetrofitClient.client.kromedaCall(versionId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    }
+
+                })
+
+
+        RetrofitClient.client.getCarSpareKromedaCall(versionId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    }
+
+                })
+        RetrofitClient.client.getCarMOTKromedaCall(versionId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    }
+
+                })
+    }
 }
+
+
+
