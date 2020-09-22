@@ -5,93 +5,93 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/include_toolbar"/>
+    <include layout="@layout/include_toolbar" />
 
     <LinearLayout
         android:id="@+id/search_view_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/category_margin"
-        android:background="@color/gray_light">
+        android:background="@color/gray_light"
+        android:padding="@dimen/category_margin">
 
         <EditText
-        android:layout_width="0dp"
-        android:padding="@dimen/_5sdp"
-        android:background="@drawable/rounded_white_background"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:id="@+id/search_product"
-        android:hint="@string/SearchProducts"
-        android:layout_weight="1"
-            android:importantForAutofill="no"
-            android:inputType="text" />
-
-        <EditText
+            android:id="@+id/search_product"
             android:layout_width="0dp"
-            android:padding="@dimen/_5sdp"
-            android:background="@drawable/rounded_white_background"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:id="@+id/search_field_edit"
-            android:hint="@string/SearchProducts"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:background="@drawable/rounded_white_background"
+            android:hint="@string/SearchProducts"
             android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="@dimen/_5sdp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/search_field_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_white_background"
+            android:hint="@string/SearchProducts"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="@dimen/_5sdp"
+            android:singleLine="true"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_height="match_parent"
             style="@style/TextViewWhite"
-            android:textColor="@color/gray_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/Search"
-            android:visibility="gone"/>
+            android:textColor="@color/gray_dark"
+            android:visibility="visible" />
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="@dimen/category_list_width"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_list"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:paddingBottom="@dimen/category_margin"
-        android:clipToPadding="false"/>
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="@dimen/category_list_width"
+                android:layout_height="match_parent">
 
-    <ExpandableListView
-        android:id="@+id/sub_category_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:groupIndicator="@null"
-        android:divider="@color/gray_transparent"
-        android:dividerHeight="1dp"
-        android:paddingEnd="@dimen/category_margin"
-        android:paddingBottom="@dimen/category_margin"
-        android:clipToPadding="false"/>
-    </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/category_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/category_margin"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+            <ExpandableListView
+                android:id="@+id/sub_category_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:divider="@color/gray_transparent"
+                android:dividerHeight="1dp"
+                android:groupIndicator="@null"
+                android:paddingEnd="@dimen/category_margin"
+                android:paddingBottom="@dimen/category_margin" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>
