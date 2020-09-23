@@ -44,7 +44,7 @@ class SparePartSearch : Fragment() {
         view.findViewById<TextView>(R.id.search_all_categories).setOnClickListener {
             val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
             ft.detach(this).commit()
-            activity?.findViewById<EditText>(R.id.search_product)?.setText("")
+           // activity?.findViewById<EditText>(R.id.search_product)?.setText("")
             activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
             parentFragmentManager.popBackStackImmediate()
         }
@@ -79,7 +79,7 @@ class SparePartSearch : Fragment() {
                 RetrofitClient.client.clearSearchKeyWords(token).genericAPICall { _, response ->
                     if (isStatusCodeValid(response?.body()?.string())) {
                         context?.showInfoDialog(getString(R.string.Keywordcleared))
-                        activity?.findViewById<EditText>(R.id.search_product)?.setText("")
+                        //activity?.findViewById<EditText>(R.id.search_product)?.setText("")
                         activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
                         parentFragmentManager.popBackStackImmediate()
                     } else
@@ -104,7 +104,7 @@ class SparePartSearch : Fragment() {
         }
         startActivity(context?.intentFor<ProductListActivity>(Constant.Key.searchedKeyword to query,
                 Constant.Key.searchedCategoryType to null))
-        activity?.findViewById<EditText>(R.id.search_product)?.setText("")
+       // activity?.findViewById<EditText>(R.id.search_product)?.setText("")
         activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
         parentFragmentManager.popBackStackImmediate()
     }

@@ -46,7 +46,7 @@ import kotlin.collections.HashMap
 import kotlin.math.ceil
 import kotlin.math.floor
 
-class  ProductListActivity: BaseActivity(), FilterListInterface {
+class ProductListActivity : BaseActivity(), FilterListInterface {
 
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
@@ -207,12 +207,13 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
                                 if (isStatusCodeValid(body)) {
                                     val dataSet = getDataSetArrayFromResponse(it)
                                     bindRecyclerView(dataSet)
+
+                                    bindBrandData(body?.let {  JSONObject(body).getJSONArray("brands") })
                                 } else {
                                     bindRecyclerView(JSONArray())
                                     showInfoDialog(getMessageFromJSON(it)) {
                                         finish()
-                                      //  context: Context, contentType: String, contentData: String, contentId: String, searchString: String, success: Boolean
-                                        logSearchEvent(this@ProductListActivity,"Spare part","Product search","1",searchedKeyWord,true)
+                                        logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
                                     }
                                 }
                             }
@@ -241,7 +242,6 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
                         if (isStatusCodeValid(body)) {
 
                             val dataSet = getDataSetArrayFromResponse(body)
-
                             bindRecyclerView(dataSet)
                         } else {
                             bindRecyclerView(JSONArray())
@@ -296,6 +296,8 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
         }
 
         Log.d("ProductOrWorkshop", "bindRecyclerView: price range = $seekbarPriceInitialLimit - $seekbarPriceFinalLimit")
+
+
     }
 
     private fun createFilterDialog(progress_bar: ProgressBar) {
@@ -419,7 +421,7 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
 
             dialog_distance_layout.visibility = View.GONE
             //set Brand Checkbox
-            RetrofitClient.client.getProductBrandList("1").onCall { _, response ->
+        /*    RetrofitClient.client.getProductBrandList("1").onCall { _, response ->
                 progress_bar.visibility = View.VISIBLE
                 response?.body()?.string()?.let {
 
@@ -427,68 +429,12 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
                         val dataSet = getDataSetArrayFromResponse(it)
                         val gson = GsonBuilder().create()
                         val brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
-                        brandlist.sortBy { it.brandName }
-                        class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-                        }
-
-                        val myadpter = object : RecyclerView.Adapter<Holder>() {
-                            var viewBinderHelper = ViewBinderHelper()
-                            override fun getItemCount(): Int {
-                                return brandlist.size
-                            }
-
-                            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-                                val layoutInflater = LayoutInflater.from(parent.context)
-
-                                return Holder(layoutInflater.inflate(R.layout.item_checkbox, parent, false))
-                            }
-
-                            override fun onBindViewHolder(holder: Holder, position: Int) {
-                                if (position == 0) {
-                                    progress_bar.visibility = View.VISIBLE
-                                } else if (brandlist.size - 1 == position) {
-                                    progress_bar.visibility = View.GONE
-                                }
-                                val brandName = brandlist[position].brandName
-                                holder.itemView.item_checkbox_text.text = brandName
-                                holder.itemView.item_checkbox.isChecked = false
-                                Log.d("brand loaded", brandName)
-
-                                setCheckedListener(holder.itemView.item_checkbox_container, holder.itemView.item_checkbox) { isChecked ->
-
-                                }
-
-
-
-                                holder.itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
-
-                                    if (isChecked) {
-                                        if (!filterBrandList.contains(brandName)) brandName?.let { it1 -> filterBrandList.add(it1) }
-                                    } else filterBrandList.remove(brandName)
-
-                                    Log.d("ProductOrWorkshopList", "createFilterDialog: brands = $filterBrandList")
-
-                                }
-
-
-
-                                if (holder.itemView.item_checkbox.isChecked) {
-                                    if (!filterBrandList.contains(brandName)) {
-                                        brandName?.let { it1 -> filterBrandList.add(it1) }
-                                    }
-                                } else filterBrandList.remove(brandName)
-                            }
-                        }
-
-
-                        dialog_product_checkbox_recycler.adapter = myadpter
 
 
                     }
                 }
             }
-
+*/
 
             clear_selection.setOnClickListener {
                 dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
@@ -583,5 +529,68 @@ class  ProductListActivity: BaseActivity(), FilterListInterface {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun bindBrandData(brandlistJson: JSONArray) {
+        val gson = GsonBuilder().create()
+        val brandlist: ArrayList<Models.brand> = gson.fromJson(brandlistJson.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+
+
+        brandlist.sortBy { it.brandName }
+        class Holder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+
+        val myadpter = object : RecyclerView.Adapter<Holder>() {
+            var viewBinderHelper = ViewBinderHelper()
+            override fun getItemCount(): Int {
+                return brandlist.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+
+                return Holder(layoutInflater.inflate(R.layout.item_checkbox, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+                if (position == 0) {
+                    progress_bar.visibility = View.VISIBLE
+                } else if (brandlist.size - 1 == position) {
+                    progress_bar.visibility = View.GONE
+                }
+                val brandName = brandlist[position].brandName
+                holder.itemView.item_checkbox_text.text = brandName
+                holder.itemView.item_checkbox.isChecked = false
+                Log.d("brand loaded", brandName)
+
+                setCheckedListener(holder.itemView.item_checkbox_container, holder.itemView.item_checkbox) { isChecked ->
+
+                }
+
+
+
+                holder.itemView.item_checkbox.setOnCheckedChangeListener { _, isChecked ->
+
+                    if (isChecked) {
+                        if (!filterBrandList.contains(brandName)) brandName?.let { it1 -> filterBrandList.add(it1) }
+                    } else filterBrandList.remove(brandName)
+
+                    Log.d("ProductOrWorkshopList", "createFilterDialog: brands = $filterBrandList")
+
+                }
+
+
+
+                if (holder.itemView.item_checkbox.isChecked) {
+                    if (!filterBrandList.contains(brandName)) {
+                        brandName?.let { it1 -> filterBrandList.add(it1) }
+                    }
+                } else filterBrandList.remove(brandName)
+            }
+        }
+
+
+        filterDialog. dialog_product_checkbox_recycler.adapter = myadpter
     }
 }
