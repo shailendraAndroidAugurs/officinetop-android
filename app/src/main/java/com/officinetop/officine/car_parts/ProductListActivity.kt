@@ -87,7 +87,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private var searchedCategoryType: String? = null
 
     lateinit var listAdapter: ProductOrWorkshopListAdapter
-
+    var brandlist = ArrayList<Models.brand>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -135,7 +135,22 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         else
             loadProductItems()
 
-        // Search View
+
+        val drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)
+        val drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)
+
+        drawableRight?.setBounds(100, 100, 100, 100)
+
+
+        //  this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+
+        if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1 || priceRangeInitial != 0)||filterBrandList.size!=0) {
+
+            this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
+        } else {
+            this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+
+        }
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(searchQuery: String?): Boolean {
                 //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
@@ -207,9 +222,14 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                                 if (isStatusCodeValid(body)) {
                                     val dataSet = getDataSetArrayFromResponse(it)
                                     bindRecyclerView(dataSet)
+                                    if (brandlist.size == 0) {
+                                        bindBrandData(body?.let { JSONObject(body).getJSONArray("brands") })
 
-                                    bindBrandData(body?.let {  JSONObject(body).getJSONArray("brands") })
+                                    } else {
+                                    }
                                 } else {
+
+
                                     bindRecyclerView(JSONArray())
                                     showInfoDialog(getMessageFromJSON(it)) {
                                         finish()
@@ -303,10 +323,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun createFilterDialog(progress_bar: ProgressBar) {
         filterDialog = Dialog(this, R.style.DialogSlideAnimStyle)
         val brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-        val drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)
-        val drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)
 
-        drawableRight?.setBounds(100, 100, 100, 100)
 
         with(filterDialog) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -372,12 +389,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 isOfferChecked = dialog_offers_check_box.isChecked
 
 
-                this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
+                //    this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 if (ratingString.isNotEmpty()) {
                     if (ratingString.toCharArray()[ratingString.lastIndex] == ',')
                         ratingString = ratingString.substring(0, ratingString.lastIndex).trim()
-                    this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
+                    //  this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
                 }
 
 
@@ -388,14 +405,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 distanceRangeFinal = tempDistanceFinal
 
 
-                if (isFavouriteChecked || isOfferChecked || priceRangeFinal - priceRangeInitial != 1000
-                        || distanceRangeFinal - distanceRangeInitial != 100) {
-
-                    this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
-                } else {
-                    this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
-                }
 
                 reloadPage()
 
@@ -421,27 +430,27 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
             dialog_distance_layout.visibility = View.GONE
             //set Brand Checkbox
-        /*    RetrofitClient.client.getProductBrandList("1").onCall { _, response ->
-                progress_bar.visibility = View.VISIBLE
-                response?.body()?.string()?.let {
+            /*    RetrofitClient.client.getProductBrandList("1").onCall { _, response ->
+                    progress_bar.visibility = View.VISIBLE
+                    response?.body()?.string()?.let {
 
-                    if (isStatusCodeValid(it)) {
-                        val dataSet = getDataSetArrayFromResponse(it)
-                        val gson = GsonBuilder().create()
-                        val brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+                        if (isStatusCodeValid(it)) {
+                            val dataSet = getDataSetArrayFromResponse(it)
+                            val gson = GsonBuilder().create()
+                            val brandlist: ArrayList<Models.brand> = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
 
 
+                        }
                     }
                 }
-            }
-*/
+    */
 
             clear_selection.setOnClickListener {
                 dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
                 dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
-                this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 priceRangeFinal = -1
+                priceRangeInitial=0
 
                 //reset rating filter
                 dialog_rating_five.isChecked = false
@@ -533,7 +542,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     private fun bindBrandData(brandlistJson: JSONArray) {
         val gson = GsonBuilder().create()
-        val brandlist: ArrayList<Models.brand> = gson.fromJson(brandlistJson.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+        brandlist = gson.fromJson(brandlistJson.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
 
 
         brandlist.sortBy { it.brandName }
@@ -591,6 +600,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }
 
 
-        filterDialog. dialog_product_checkbox_recycler.adapter = myadpter
+        filterDialog.dialog_product_checkbox_recycler.adapter = myadpter
     }
 }
