@@ -89,7 +89,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             return@setOnGroupClickListener true
         }
-
+        search_product.requestFocus()
         search_product.setOnClickListener {
 
             if (supportFragmentManager.backStackEntryCount == 0) {
@@ -105,6 +105,10 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             else
                 showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
         }
+
+
+
+
     }
 
     private fun collapseHeaderGroup() {

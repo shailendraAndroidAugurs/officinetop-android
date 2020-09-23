@@ -22,6 +22,8 @@
             android:background="@drawable/rounded_white_background"
             android:hint="@string/SearchProducts"
             android:importantForAutofill="no"
+            android:focusable="true"
+            android:cursorVisible="true"
             android:inputType="text"
             android:padding="@dimen/_5sdp"
             android:singleLine="true" />
@@ -50,6 +52,7 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/containerFor_search"
