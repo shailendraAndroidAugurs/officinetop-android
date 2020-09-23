@@ -160,7 +160,7 @@ dependencies {
                 exclude group: 'io.card'
 
             }
-    
+
 
     implementation "com.github.skydoves:progressview:1.0.5"
     implementation 'com.github.kibotu:UrlShortener:-SNAPSHOT'

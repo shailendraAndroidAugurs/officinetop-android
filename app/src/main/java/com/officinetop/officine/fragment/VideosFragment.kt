@@ -47,41 +47,5 @@ class VideosFragment : Fragment() {
     }
 
 
-    /* lateinit var rootView: View
-
-     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-         return inflater.inflate(R.layout.fragment_videos, container, false)
-     }
-
-     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-         super.onViewCreated(view, savedInstanceState)
-         rootView = view
-
-
-         context?.let {
-
-             val buttonTitles = rootView.resources.getStringArray(R.array.home_icon_titles)
-
-             videos_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
-                 override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                 }
-
-                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                     val view = layoutInflater.inflate(R.layout.item_my_cars, parent, false)
-                     return object : RecyclerView.ViewHolder(view){}
-                 }
-
-                 override fun getItemCount(): Int {
-                     return buttonTitles.size
-                 }
-
-             }
-
-
-
-         }
-
-     }*/
 
 }

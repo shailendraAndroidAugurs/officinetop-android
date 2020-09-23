@@ -101,7 +101,7 @@ class MotDetailActivity : BaseActivity() {
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
         progress_bar.visibility = View.VISIBLE
         RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID, getUserId())
-                .onCall { networkException, response ->
+                .onCall { _, response ->
                     response?.let {
                         progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
