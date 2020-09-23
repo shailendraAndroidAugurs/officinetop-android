@@ -14,6 +14,8 @@ import android.widget.EditText
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentTransaction
 import com.cunoraz.tagview.Tag
 import com.cunoraz.tagview.TagView
 import com.officinetop.officine.BaseActivity
@@ -88,9 +90,18 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         search_product.setOnClickListener {
-            openSearchDialog()
-        }
+            containerFor_search.visibility = View.VISIBLE
 
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerFor_search, SparePartSearch()).addToBackStack("Search")
+                    .commit()
+        }
+        search_btn.setOnClickListener {
+            if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
+                searchStoreQuery(search_product.text.toString())
+            else
+                showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
+        }
     }
 
     private fun collapseHeaderGroup() {
@@ -202,73 +213,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 Constant.Key.searchedCategoryType to "3"))
     }
 
-    private fun openSearchDialog() {
-        val layoutInflater = baseContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView = layoutInflater.inflate(R.layout.activity_search_view, null)
-        val popupWindow = PopupWindow(
-                popupView,
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT)
-        // popupWindow.showAtLocation(this.findViewById(R.id.search_view_options), Gravity.CENTER, 0, 0);
-        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popupWindow.isOutsideTouchable = true
-        popupWindow.isFocusable = true
 
-        val allSearchSection = popupView.findViewById<TagView>(R.id.all_search_section)
-        val recentSearchSection = popupView.findViewById<TagView>(R.id.recent_search_section)
-        val searchField = popupView.findViewById<EditText>(R.id.search_field)
-
-        popupView.findViewById<TextView>(R.id.search_all_categories).setOnClickListener {
-            popupWindow.dismiss()
-        }
-
-        allSearchSection.removeAll()
-        recentSearchSection.removeAll()
-
-        getBearerToken()?.let { token ->
-
-            RetrofitClient.client.getSearchKeyWords(token).genericAPICall { _, response ->
-                val modifiedResult = response?.body() as SearchKeywordResponse
-
-                modifiedResult.data?.all?.forEach {
-                    it?.keyword?.let { allSearchSection.addTag(Tag(it)) }
-                }
-
-                modifiedResult.data?.self?.forEach {
-                    it?.keyword?.let { recentSearchSection.addTag(Tag(it)) }
-                }
-
-                allSearchSection.setOnTagClickListener { tag, _ -> searchStoreQuery(tag.text, popupWindow) }
-                recentSearchSection.setOnTagClickListener { tag, _ -> searchStoreQuery(tag.text, popupWindow) }
-            }
-        }
-
-        search_btn.setOnClickListener {
-            if (searchField.text.toString().isNotEmpty() && searchField.text.toString().length > 3)
-                searchStoreQuery(searchField.text.toString(), popupWindow)
-            else
-                showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
-        }
-
-        popupView.findViewById<TextView>(R.id.clear_searches).setOnClickListener {
-            getBearerToken()?.let { token ->
-
-                RetrofitClient.client.clearSearchKeyWords(token).genericAPICall { _, response ->
-                    if (isStatusCodeValid(response?.body()?.string())) {
-                        showInfoDialog(getString(R.string.Keywordcleared))
-                        popupWindow.dismiss()
-//                        initTagView()
-                    } else
-                        showInfoDialog(getString(R.string.Cannotclearsearchkeywords))
-                }
-            }
-        }
-
-        popupWindow.showAsDropDown(toolbar, 0, 0)
-    }
-
-    private fun searchStoreQuery(query: String, popupWindow: PopupWindow?) {
+    private fun searchStoreQuery(query: String) {
 
         Executors.newSingleThreadExecutor().submit {
 
@@ -279,8 +225,26 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             }
 
         }
+
         startActivity(intentFor<ProductListActivity>(Constant.Key.searchedKeyword to query,
                 Constant.Key.searchedCategoryType to null))
-        popupWindow?.dismiss()
+        if (containerFor_search.isVisible) {
+            val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
+            ft.detach(SparePartSearch()).commit()
+            search_product.setText("")
+            containerFor_search.visibility = View.GONE
+        }
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
+            ft.detach(SparePartSearch()).commit()
+            search_product.setText("")
+            containerFor_search.visibility = View.GONE
+        } else {
+            finish()
+        }
+        super.onBackPressed()
     }
 }
