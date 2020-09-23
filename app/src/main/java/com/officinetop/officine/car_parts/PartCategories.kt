@@ -15,6 +15,7 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cunoraz.tagview.Tag
 import com.cunoraz.tagview.TagView
@@ -90,11 +91,13 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         search_product.setOnClickListener {
-            containerFor_search.visibility = View.VISIBLE
 
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerFor_search, SparePartSearch()).addToBackStack("Search")
-                    .commit()
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                containerFor_search.visibility = View.VISIBLE
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.containerFor_search, SparePartSearch()).addToBackStack("Search")
+                        .commit()
+            }
         }
         search_btn.setOnClickListener {
             if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
@@ -232,19 +235,20 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
             ft.detach(SparePartSearch()).commit()
             search_product.setText("")
+            getSupportFragmentManager().popBackStackImmediate();
             containerFor_search.visibility = View.GONE
         }
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
-            ft.detach(SparePartSearch()).commit()
+        if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
+            getSupportFragmentManager().popBackStackImmediate()
+
         } else {
             finish()
         }
-        super.onBackPressed()
+
     }
 }

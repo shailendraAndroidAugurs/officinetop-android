@@ -28,13 +28,6 @@ import java.util.concurrent.Executors
 class SparePartSearch : Fragment() {
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val content = inflater.inflate(R.layout.activity_search_view, container, false)
@@ -53,6 +46,7 @@ class SparePartSearch : Fragment() {
             ft.detach(this).commit()
             activity?.findViewById<EditText>(R.id.search_product)?.setText("")
             activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
+            parentFragmentManager.popBackStackImmediate()
         }
 
         allSearchSection.removeAll()
@@ -85,10 +79,9 @@ class SparePartSearch : Fragment() {
                 RetrofitClient.client.clearSearchKeyWords(token).genericAPICall { _, response ->
                     if (isStatusCodeValid(response?.body()?.string())) {
                         context?.showInfoDialog(getString(R.string.Keywordcleared))
-                        val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
-                        ft.detach(this).commit()
                         activity?.findViewById<EditText>(R.id.search_product)?.setText("")
                         activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
+                        parentFragmentManager.popBackStackImmediate()
                     } else
                         context?.showInfoDialog(getString(R.string.Cannotclearsearchkeywords))
                 }
@@ -111,10 +104,8 @@ class SparePartSearch : Fragment() {
         }
         startActivity(context?.intentFor<ProductListActivity>(Constant.Key.searchedKeyword to query,
                 Constant.Key.searchedCategoryType to null))
-        val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
-        ft.detach(this).commit()
-
         activity?.findViewById<EditText>(R.id.search_product)?.setText("")
         activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
+        parentFragmentManager.popBackStackImmediate()
     }
 }

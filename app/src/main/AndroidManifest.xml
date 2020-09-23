@@ -225,9 +225,7 @@
         <activity
             android:name=".workshop.MapFilterActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".coupons.CouponsActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
