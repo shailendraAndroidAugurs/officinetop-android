@@ -1,19 +1,15 @@
 package com.officinetop.officine.WishList
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.adapter.WishListAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
-import kotlinx.android.synthetic.main.activity_mot_detail.*
 import kotlinx.android.synthetic.main.activity_wish_list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.json.JSONArray

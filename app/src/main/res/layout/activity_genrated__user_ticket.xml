@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".feedback.Genrated_UserTicket">
+    tools:context=".Support.Genrated_UserTicket">
 
     <LinearLayout
         android:gravity="center"

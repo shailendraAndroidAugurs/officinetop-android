@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".misc_activities.PartList_Replacement">
+    tools:context=".MOT.PartList_Replacement">
 
 
 

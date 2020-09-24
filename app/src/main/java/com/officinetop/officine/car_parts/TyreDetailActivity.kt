@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient

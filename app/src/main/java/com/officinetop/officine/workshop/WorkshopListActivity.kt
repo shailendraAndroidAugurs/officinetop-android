@@ -1,4 +1,4 @@
-package com.officinetop.officine
+package com.officinetop.officine.workshop
 
 import android.app.Activity
 import android.app.Dialog
@@ -16,12 +16,13 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
+import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.R
 import com.officinetop.officine.adapter.ProductOrWorkshopListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.FilterListInterface
-import com.officinetop.officine.workshop.MapFilterActivity
 import kotlinx.android.synthetic.main.activity_part_categories.progress_bar
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.dialog_layout_filter.*

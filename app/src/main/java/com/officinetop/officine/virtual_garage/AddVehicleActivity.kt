@@ -250,9 +250,9 @@ class AddVehicleActivity : BaseActivity() {
                         val carImageModel = myCar!!.carImages[position]
                         val carImageURL = Constant.imageBaseURL + carImageModel.imageName
                         Glide.with(this@AddVehicleActivity)
-                                .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.ic_car).error(R.drawable.ic_car))
+                                .setDefaultRequestOptions(RequestOptions().error(R.drawable.no_image_placeholder))
                                 .load(carImageURL)
-                                .thumbnail(0.7f)
+                             //   .thumbnail(0.7f)
                                 .into(carImage)
 
                         deleteCarImage.setOnClickListener {

@@ -36,7 +36,7 @@ import com.officinetop.officine.sos.SOSActivity
 import com.officinetop.officine.tyre.TyreDiameterActivity
 import com.officinetop.officine.tyre.TyreListActivity
 import com.officinetop.officine.utils.*
-import com.officinetop.officine.workshop.CarServiceListActivity
+import com.officinetop.officine.Washing.CarServiceListActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.item_title

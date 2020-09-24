@@ -20,7 +20,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.getSelectedCar

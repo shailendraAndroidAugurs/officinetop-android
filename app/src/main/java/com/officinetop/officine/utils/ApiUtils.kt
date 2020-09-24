@@ -75,10 +75,6 @@ inline fun Context.loadCarImage(defaultCarImage: String, brandID: String?, image
         carImageURL = "$brandID.png"
     }
 
-    //Log.d("inline", "loadCarImage: url = $carImageURL")
-
-//    try { if((this as Activity).isFinishing) return } catch(e: Exception) { }
-
     loadImage("${Constant.imageBaseURL}$carImageURL", imageView, R.drawable.no_image_placeholder)
 
 
@@ -162,53 +158,13 @@ inline fun Context.loadImageFromDrawable(drawable: Int?, imageView: ImageView, p
                 .load(drawable)
                 .thumbnail(0.7f)
                 .into(imageView)
-        /*Glide.with(context)
-                    .load(imageRes)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .fitCenter()
-                    .placeholder(mPlaceholderImage).
-                    .into(imageView)*/
+
     } catch (e: GlideException) {
-        //Log.e("ApiUtils", "loadImage: loadImage: " + e.rootCauses.toString())
+
     }
 }
 
 
-inline fun Context.deleteCar(carID: String, crossinline reloadList: () -> String) {
-
-    alert {
-        message = getString(R.string.Delete_car_from_virtual_garage)
-        positiveButton(getString(R.string.yes)) {
-            getBearerToken()?.let {
-                val progressDialog = getProgressDialog()
-                progressDialog.show()
-                RetrofitClient.client.deleteCar(carID, it).enqueue(object : Callback<Models.MyCar> {
-                    override fun onFailure(call: Call<Models.MyCar>, t: Throwable) {
-                        progressDialog.dismiss()
-                        toast(t.message!!)
-                    }
-
-                    override fun onResponse(call: Call<Models.MyCar>, response: Response<Models.MyCar>) {
-                        val responseString = response.body()?.toString()
-                        progressDialog.dismiss()
-                        Log.d("deleteCar", "onResponse: $responseString")
-
-                        if (isStatusCodeValid(responseString)) {
-                            toast(getString(R.string.Cardeletedfromvirtualgarage))
-                            getDataSetArrayFromResponse(responseString)
-                            reloadList()
-                        }
-                    }
-
-                })
-            }
-        }
-        noButton { }
-    }
-            .show()
-
-
-}
 
 
 inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView, SimilarproductList: ArrayList<Models.ProductOrWorkshopList>) {
@@ -357,47 +313,6 @@ inline fun convertToJson(model: Any): String {
 
 
 
-
-inline fun addeditemcart(context: Context?, shouldHideToolbar: Boolean = false): Int? {
-    val cartProducts = context?.getCartItems()
-    if (cartProducts?.size == 0) {
-
-
-    }
-    return cartProducts?.size
-}
-
-fun calculateCartViews(view: View, context: Context?) {
-    var servicePrice = 0.0
-    var productPrice = 0.0
-
-    context?.getCartItems()?.forEachWithIndex { _, map ->
-        // Log.d("bindCarts", "bindCartViews: item = $map")
-
-        map.entries.forEach {
-
-            val item = it.value
-            /*val serviceModel = item.serviceModel*/
-
-            when (item.type) {
-                Constant.type_product -> productPrice += item.finalPrice
-                Constant.type_workshop -> servicePrice += item.serviceModel?.finalPrice
-                        ?: 0.0
-                else -> {
-                    productPrice += item.finalPrice
-                    servicePrice += item.serviceModel?.finalPrice ?: 0.0
-                }
-            }
-        }
-    }
-
-    context?.let {
-        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice + servicePrice).roundTo2Places().toString())
-        view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, productPrice.roundTo2Places().toString())
-        view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
-    }
-}
-
 fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayList<Models.CartDataList>) {
     var servicePrice = 0.0
     var productPrice = 0.0
@@ -496,72 +411,6 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     }
 }
 
-
-inline fun RecyclerView.loadImagesRecycler(context: Context?, image_urls: List<String>?, isHorizontal: Boolean = true) {
-
-    if (isHorizontal)
-        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-    adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-            return object : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_image, p0, false)) {}
-        }
-
-        override fun getItemCount(): Int = image_urls?.size ?: 5
-
-        override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-            val imageView = p0.itemView.item_image_view
-
-            image_urls?.let {
-                context?.loadImage(it[p1], imageView, R.drawable.no_image_placeholder)
-            }
-
-            if (context == null)
-                return
-
-            imageView.setOnClickListener {
-                val imageDialog = Dialog(context, R.style.DialogSlideAnimStyle)
-
-                val slider = SliderLayout(context)
-
-                slider.stopAutoCycle()
-                slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
-                slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-
-                with(imageDialog) {
-                    requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
-                    setContentView(slider)
-
-                    window?.setGravity(android.view.Gravity.TOP)
-                    window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
-                    window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
-                    create()
-                    show()
-                }
-
-                image_urls?.forEach { url ->
-
-                    val scaledSlide = DialogTouchImageSlider(context, R.drawable.ic_battery)
-                            .description("Description")
-                            .image(url)
-                            .empty(R.drawable.no_image_placeholder)
-                    slider.addSlider(scaledSlide)
-                }
-
-                slider.setCurrentPosition(p1, true)
-
-                if (image_urls?.isNullOrEmpty() != false)
-                    slider.addSlider(DialogTouchImageSlider(context, R.drawable.no_image_placeholder)
-                            .description("Description")
-                            .image("")
-                            .empty(R.drawable.no_image_placeholder))
-            }
-
-        }
-
-    }
-}
-
 inline fun Call<ResponseBody>.onCall(context: Context? = null, crossinline onResponse: (networkException: Throwable?, response: Response<ResponseBody>?) -> Unit) {
     this.enqueue(object : Callback<ResponseBody> {
 
@@ -598,11 +447,6 @@ inline fun RecyclerView.setJSONArrayAdapter(context: Context, jsonArray: JSONArr
             onBindViewHolder.invoke(holder.itemView, position, jsonArray.getJSONObject(position))
 
         }
-
-        /*override fun getItemId(position: Int): Long {
-            return jsonArray.get(position).
-
-        }*/
     }
 
     this.adapter = adapter
@@ -1254,26 +1098,6 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
     }
 }
 
-fun Context.RemoveFromFavoritesendRquestForWorkShop(context: Context, productId: String, Iv_favorite: ImageView, item: Models.ProductOrWorkshopList, workshopId: String = "") {
-    RetrofitClient.client.removeFromFavorite(context.getBearerToken()
-            ?: "", productId, workshopId, "").onCall { networkException, response ->
-
-        response.let {
-            if (response?.isSuccessful!!) {
-                val body = JSONObject(response?.body()?.string())
-                if (body.has("message")) {
-
-                    Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                    item.wish_list = "0"
-
-
-                }
-
-            }
-
-        }
-    }
-}
 
 inline fun getLastLocation(mFusedLocationClient: FusedLocationProviderClient, activity: Activity) {
 

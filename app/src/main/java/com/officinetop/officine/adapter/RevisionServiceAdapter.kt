@@ -1,13 +1,12 @@
 package com.officinetop.officine.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.RevDataSetItem
 import kotlinx.android.synthetic.main.item_revision_service_cell.view.*
 import org.jetbrains.anko.intentFor

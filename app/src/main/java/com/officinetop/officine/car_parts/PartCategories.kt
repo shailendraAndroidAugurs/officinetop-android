@@ -1,24 +1,11 @@
 package com.officinetop.officine.car_parts
 
 import adapter.SubPartCategoryAdapter
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.PopupWindow
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.cunoraz.tagview.Tag
-import com.cunoraz.tagview.TagView
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.PartCategoryAdapter
@@ -95,8 +82,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 containerFor_search.visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.containerFor_search, SparePartSearch()).addToBackStack("Search")
+                        .replace(R.id.containerFor_search, SparePartSearchFragment()).addToBackStack("Search")
                         .commit()
+            } else {
+                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
+                    searchStoreQuery(search_product.text.toString())
+                else
+                    showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
+
             }
         }
         search_btn.setOnClickListener {
@@ -105,8 +98,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             else
                 showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
         }
-
-
 
 
     }
@@ -237,7 +228,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 Constant.Key.searchedCategoryType to null))
         if (containerFor_search.isVisible) {
             val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
-            ft.detach(SparePartSearch()).commit()
+            ft.detach(SparePartSearchFragment()).commit()
             search_product.setText("")
             getSupportFragmentManager().popBackStackImmediate();
             containerFor_search.visibility = View.GONE

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -15,12 +14,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.adapter.GridItemDecoration
 import com.officinetop.officine.adapter.QuotesGridAdapter
 import com.officinetop.officine.data.Models
@@ -29,7 +26,6 @@ import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
-import kotlinx.android.synthetic.main.activity_part_categories.*
 import kotlinx.android.synthetic.main.activity_quotes.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.progress_bar
@@ -37,12 +33,10 @@ import kotlinx.android.synthetic.main.spinner_item_layout.view.*
 import kotlinx.io.OutputStream
 import okhttp3.MultipartBody
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.okButton
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.Serializable
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,8 +49,6 @@ class QuotesActivity : BaseActivity() {
     private var imagesList : MutableList<String> = ArrayList()//to bind in adapter view
     private var imagesAdapter : QuotesGridAdapter? = null
     private var mianCategoryID : String? = ""
-    private var saveQuotestoJSONObject : JSONObject? = JSONObject()
-
     private var images : MutableList<String> = ArrayList()//to send with api
 
 

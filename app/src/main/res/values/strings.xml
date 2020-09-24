@@ -732,6 +732,7 @@
 
     <string name="phoneNo">3386450233</string>
     <string name="emailAddress"> info@officinetop.com</string>
+
     <string name="FAQtitle"> FAQ</string>
     <string name="Add">Add</string>
     <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registered Successfully, Verification link sent on your registered mail.Verify the same to activate your account.</string>
@@ -775,6 +776,9 @@
     <!-- Sceglie Officina-->
     <string name="prepend_euro_symbol_without_string"> from: € </string>
     <string name="Pleaselogintocontinuewithsforating">Please login to continue with Add Rating</string>
+    <string name="whatsapp">whatsapp</string>
+  <!--  <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
+
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

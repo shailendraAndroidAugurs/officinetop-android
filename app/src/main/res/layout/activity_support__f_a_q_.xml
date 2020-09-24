@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".feedback.Support_FAQ_Activity">
+    tools:context=".Support.Support_FAQ_Activity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/ll_collapsed"
         android:layout_width="match_parent"
@@ -32,8 +32,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
-            android:weightSum="3">
+            android:layout_height="@dimen/_85sdp"
+            android:weightSum="4">
 
             <LinearLayout
                 android:id="@+id/ll_call_phone"
@@ -42,22 +42,23 @@
                 android:layout_margin="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-
                 android:padding="@dimen/_5sdp"
                 android:weightSum="3">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1.8"
 
                     android:src="@drawable/ic_call_phone" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
+                    android:textSize="@dimen/_10sdp"
                     android:gravity="center"
+                    android:maxLines="2"
                     android:text="@string/call_phone"
                     android:textColor="@color/black">
 
@@ -80,16 +81,18 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1.8"
 
                     android:src="@drawable/ic_circle_chat" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
                     android:gravity="center"
                     android:text="@string/chat_online"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_10sdp"
                     android:textColor="@color/black">
 
                 </TextView>
@@ -111,23 +114,56 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1.8"
 
                     android:src="@drawable/ic_circle_email" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
                     android:gravity="center"
                     android:text="@string/Email"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_10sdp"
                     android:textColor="@color/black">
 
                 </TextView>
 
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_whatsapp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:orientation="vertical"
 
+                android:padding="@dimen/_5sdp"
+                android:weightSum="3">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.8"
+
+                    android:src="@drawable/ic_whatsapp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_10sdp"
+                    android:text="@string/whatsapp"
+                    android:textColor="@color/black">
+
+                </TextView>
+
+
+            </LinearLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"

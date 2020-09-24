@@ -15,11 +15,11 @@
         tools:replace="android:allowBackup">
 
         <activity android:name=".Online_Payment.OnlinePaymentScreen" />
-        <activity android:name=".feedback.Support_FAQ_Activity" />
+        <activity android:name=".Support.Support_FAQ_Activity" />
         <activity android:name=".invite_frnds.HowItWorksActivity" />
         <activity android:name=".invite_frnds.InviteFriendsActivity" />
         <activity android:name=".News.WebViewLoad" />
-        <activity android:name=".misc_activities.PartList_Replacement" />
+        <activity android:name=".MOT.PartList_Replacement" />
         <activity
             android:name=".userprofile.SyncMyContact"
             android:screenOrientation="portrait" />
@@ -34,13 +34,13 @@
             android:name=".cart.CartDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".feedback.Support_Activity"
+            android:name=".Support.Support_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".feedback.ComplaintTypeFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".feedback.Genrated_UserTicket"
+            android:name=".Support.Genrated_UserTicket"
             android:screenOrientation="portrait" />
         <activity
             android:name=".push_notification.NotificationList"
@@ -107,7 +107,7 @@
             android:name=".car_parts.TyreDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".workshop.ServiceDetailActivity"
+            android:name=".Washing.ServiceDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".workshop.WorkshopDetailActivity"
@@ -122,7 +122,7 @@
             android:name=".car_parts.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WorkshopListActivity"
+            android:name=".workshop.WorkshopListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".car_parts.PartsCategoryActivity"
@@ -220,7 +220,7 @@
             android:name=".authentication.linkedin.LinkedInWebView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".workshop.CarServiceListActivity"
+            android:name=".Washing.CarServiceListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".workshop.MapFilterActivity"

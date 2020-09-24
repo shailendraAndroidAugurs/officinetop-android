@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
-import com.officinetop.officine.feedback.Support_Activity
+import com.officinetop.officine.Support.Support_Activity
 import com.officinetop.officine.utils.parseServerDateTime
 
 class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, private val supportActivity: Support_Activity) : RecyclerView.Adapter<RecyclerViewAdapterChating.ChatViewHolder>() {

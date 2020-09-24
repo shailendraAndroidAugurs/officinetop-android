@@ -18,10 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.*
-import com.officinetop.officine.misc_activities.PartList_Replacement
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_mot_detail.*

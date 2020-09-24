@@ -1,4 +1,4 @@
-package com.officinetop.officine.feedback
+package com.officinetop.officine.Support
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity

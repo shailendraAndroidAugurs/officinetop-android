@@ -17,7 +17,7 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken

@@ -25,7 +25,7 @@ import org.jetbrains.anko.intentFor
 import java.util.concurrent.Executors
 
 
-class SparePartSearch : Fragment() {
+class SparePartSearchFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
