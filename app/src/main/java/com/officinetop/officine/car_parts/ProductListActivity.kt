@@ -135,7 +135,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         else
             loadProductItems()
 
-
         val drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)
         val drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)
 

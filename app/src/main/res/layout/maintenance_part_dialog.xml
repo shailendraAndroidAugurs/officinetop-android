@@ -85,7 +85,7 @@
                         android:paddingTop="@dimen/_2sdp"
                         android:paddingEnd="@dimen/_20sdp"
                         android:paddingBottom="@dimen/_2sdp"
-                        android:text="@{listItemViewModel.productName}"
+                        android:text="@{listItemViewModel.productName!=null ? listItemViewModel.productName : @string/sample}"
                         android:textColor="@color/black" />
 
 

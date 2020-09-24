@@ -1,4 +1,4 @@
-package com.officinetop.officine.adapter
+package com.officinetop.officine.WishList
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.R
-import com.officinetop.officine.adapter.WishListAdapter.wishListViewholder
+import com.officinetop.officine.WishList.WishListAdapter.wishListViewholder
 import com.officinetop.officine.car_parts.ProductDetailActivity
 import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.item_wishlist.view.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject

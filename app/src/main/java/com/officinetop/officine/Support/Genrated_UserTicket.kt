@@ -1,26 +1,22 @@
-package com.officinetop.officine.feedback
+package com.officinetop.officine.Support
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
-import com.officinetop.officine.Orders.Order_Tracking
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.feedback.ComplaintTypeFragment
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.onCall
 import kotlinx.android.synthetic.main.activity_genrated__user_ticket.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
 import org.json.JSONArray
 import org.json.JSONObject
 

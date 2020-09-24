@@ -1,11 +1,10 @@
-package com.officinetop.officine.workshop
+package com.officinetop.officine.Washing
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.location.LocationCallback
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
@@ -103,7 +102,6 @@ class CarServiceListActivity : BaseActivity() {
                         item_sub_title.text = getString(R.string.prepend_euro_symbol_with_from_string, "0")
 
 
-//                    loadImage(serviceList[p1].cat_image_url, item_image)
                     if (!serviceList[p1].cat_image_url.isNullOrEmpty())
                         loadImage(serviceList[p1].cat_image_url, item_image, R.drawable.no_image_placeholder)
 

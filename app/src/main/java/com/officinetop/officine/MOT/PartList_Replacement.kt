@@ -1,4 +1,4 @@
-package com.officinetop.officine.misc_activities
+package com.officinetop.officine.MOT
 
 import android.app.Activity
 import android.app.Dialog
@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,7 +23,6 @@ import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
-import kotlinx.android.synthetic.main.maintenance_part_replacement.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import org.json.JSONArray
 import org.json.JSONObject

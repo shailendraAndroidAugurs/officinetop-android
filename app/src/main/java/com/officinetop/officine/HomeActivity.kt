@@ -19,11 +19,10 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
 import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
-import com.officinetop.officine.feedback.Support_FAQ_Activity
+import com.officinetop.officine.Support.Support_FAQ_Activity
 import com.officinetop.officine.fragment.*
 import com.officinetop.officine.misc_activities.LocationActivity
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -39,7 +38,6 @@ import org.jetbrains.anko.design.snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 import java.io.Serializable
 class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,FragmentChangeListener {

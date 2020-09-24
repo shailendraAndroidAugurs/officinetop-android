@@ -32,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.databinding.MapLayoutBinding
 import com.officinetop.officine.databinding.SosEmergencyPopupWindowBinding
@@ -121,15 +121,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     }
 
-    private fun getPixelsFromDp(context: Context, dp: Float): Int {
-        val scale: Float = context.resources.displayMetrics.density
-        return ((dp * scale + 0.5f).toInt())
-    }
-
-
-    /**
-     * enable location
-     */
 
     private fun enableLocation() {
 

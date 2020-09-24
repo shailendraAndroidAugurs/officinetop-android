@@ -661,6 +661,7 @@
     <string name="permission_Denied">Permesso negato</string>
     <string name="phoneNo">3386450233</string>
     <string name="emailAddress"> info@officinetop.com</string>
+
     <string name="FAQtitle"> FAQ</string>
     <string name="please_select_maintenance">Seleziona Manutenzione!</string>
     <string name="cart_items">Carrello Articoli</string>
@@ -699,6 +700,8 @@
     <string name="select_car_criteria">Select Car Criteria</string>
     <string name="prepend_euro_symbol_without_string"> A partire da: €: </string>
     <string name="Pleaselogintocontinuewithsforating">Accedi per continuare con Aggiungi valutazione</string>
+    <string name="whatsapp">whatsapp</string>
+    <!--<string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

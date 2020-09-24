@@ -1,28 +1,20 @@
 package com.officinetop.officine.feedback
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
+import com.officinetop.officine.Support.Support_Activity
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.onCall
-import kotlinx.android.synthetic.main.activity_quotes.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
-import kotlinx.android.synthetic.main.spinner_item_layout.view.*
-import org.jetbrains.anko.intentFor
-import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 

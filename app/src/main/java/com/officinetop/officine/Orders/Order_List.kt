@@ -97,10 +97,7 @@ class Order_List : BaseActivity() {
                     /* val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                      intent.putExtra("productList", couponsListItem[position].serviceProductDescription as Serializable)
                      startActivity(intent)*/
-                } else if (view.tag == "104") {
-                    val intent = Intent(this@Order_List, Order_Tracking::class.java)
-                    startActivity(intent)
-                } else if (view.tag == "105") {
+                }  else if (view.tag == "105") {
                     try {
 
                         if (!couponsListItem[position].orderTracking.trackingUrl.startsWith("http://") && !couponsListItem[position].orderTracking.trackingUrl.startsWith("https://")) {

@@ -1,4 +1,4 @@
-package com.officinetop.officine.workshop
+package com.officinetop.officine.Washing
 
 import android.app.Activity
 import android.app.Dialog
@@ -13,11 +13,11 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.daimajia.slider.library.Tricks.ViewPagerEx
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.WorkshopListActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.views.DialogTouchImageSlider
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_service_detail.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_grid_home_square.view.*
@@ -199,10 +199,6 @@ class ServiceDetailActivity : BaseActivity() {
         slider.stopAutoCycle()
         slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//        slider.setCustomIndicator(PagerIndicator(this).apply {
-//            setDefaultIndicatorColor(Color.BLACK, Color.GRAY)
-//            indicatorVisibility =  PagerIndicator.IndicatorVisibility.Visible
-//        })
 
         dialogSlider = slider
 
@@ -262,8 +258,6 @@ class ServiceDetailActivity : BaseActivity() {
                     }
                 }
 
-//                p0.itemView.item_title.text = buttonTitles[p1]
-//                p0.itemView.item_icon.setImageResource(buttonIcons[p1])
 
             }
 
