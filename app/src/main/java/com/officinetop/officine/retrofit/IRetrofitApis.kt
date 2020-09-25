@@ -958,7 +958,10 @@ interface IRetrofitApis {
             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Query(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: String,
-            @Query(Constant.Path.version_id) versionId: String
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query("user_lat") user_lat: String,
+            @Query("user_long") user_long: String,
+            @Query("distance_range") distance_range: String
 
     ): Call<ResponseBody>
 
@@ -996,7 +999,12 @@ interface IRetrofitApis {
             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Query(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: String,
-            @Query(Constant.Path.version_id) versionId: String
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query("user_lat") user_lat: String,
+            @Query("user_long") user_long: String,
+            @Query("distance_range") distance_range: String,
+            @Query(Constant.Path.favorite) favorite: String,
+            @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getCarMaintenanceWorkshop)
@@ -1425,15 +1433,14 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-   /* @GET(Constant.UrlEndPoints.carSpareKromedaCall+ "/{versionId}")
-    fun getCarSpareKromedaCall(
-            @Path(Constant.Path.version_id) versionId: String
-    ): Call<ResponseBody>
-    @GET(Constant.UrlEndPoints.carMOTKromedaCall+ "/{versionId}")
-    fun getCarMOTKromedaCall(
-            @Path(Constant.Path.version_id) versionId: String
-    ): Call<ResponseBody>*/
-
+    /* @GET(Constant.UrlEndPoints.carSpareKromedaCall+ "/{versionId}")
+     fun getCarSpareKromedaCall(
+             @Path(Constant.Path.version_id) versionId: String
+     ): Call<ResponseBody>
+     @GET(Constant.UrlEndPoints.carMOTKromedaCall+ "/{versionId}")
+     fun getCarMOTKromedaCall(
+             @Path(Constant.Path.version_id) versionId: String
+     ): Call<ResponseBody>*/
 
 
     @GET(Constant.UrlEndPoints.carMOTKromedaCall + "/{versionId}")
@@ -1449,8 +1456,7 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
-
     //https://services.officinetop.com/api/save_spare_kromeda_call/68373
-  //  https://services.officinetop.com/api/save_spare_kromeda_call/68373
+    //  https://services.officinetop.com/api/save_spare_kromeda_call/68373
     // https://services.officinetop.com/api/car_maintenance_parts?service_id=4502&version_id=109615&user_id
 }

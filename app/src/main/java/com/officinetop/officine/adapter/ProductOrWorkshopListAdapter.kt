@@ -44,7 +44,7 @@ import kotlin.math.roundToInt
 
 class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
 
-                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>, private val currentLat:String="0", private val currentLong:String="0", motservicesTime: String, mot_type: String = "")
+                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>, private val currentLat: String = "0", private val currentLong: String = "0", motservicesTime: String, mot_type: String = "")
 
     : RecyclerView.Adapter<ProductOrWorkshopListAdapter.ViewHolder>(), Filterable {
     private var productOrWorkshopListParent = productOrWorkshopList
@@ -164,7 +164,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
             if (isCarWash || isWorkshop || isTyre || isRevision || isCarMaintenanceServices || isQuotesServices ||
                     isMotService || isSOSAppointment || isSosEmergency) {
                 brandImage.visibility = View.INVISIBLE
-                getDistancebetweenTwoLatLong( currentLat, currentLong, product_workshopList.latitude, product_workshopList.longitude, tv_workshopKm)
+                getDistancebetweenTwoLatLong(currentLat, currentLong, product_workshopList.latitude, product_workshopList.longitude, tv_workshopKm)
                 if (isSosEmergency) {
                     llAverageTimeEmergency.visibility = View.VISIBLE
                     if (!product_workshopList.average_time_in_min.isNullOrBlank()) {
@@ -196,11 +196,11 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
                 if (!product_workshopList.servicesPrice.isNullOrEmpty() && product_workshopList.servicesPrice != "null") {
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, product_workshopList.servicesPrice)
-                }else{
+                } else {
                     price.text = mcontext.getString(R.string.prepend_euro_symbol_string, "0")
                 }
 
-                if (product_workshopList.rating!=null &&!product_workshopList.rating.rating.isNullOrEmpty()) {
+                if (product_workshopList.rating != null && !product_workshopList.rating.rating.isNullOrEmpty()) {
                     rating.rating = product_workshopList.rating.rating.toFloat()
                 } else
                     rating.rating = 0f
@@ -291,15 +291,15 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 title.text = titleString
                 subtitle.text = "${if (productOrWorkshopList[p1].Productdescription != null) productOrWorkshopList[p1].Productdescription else ""} "
 
-                ll_workshopKm.visibility=View.GONE
+                ll_workshopKm.visibility = View.GONE
                 // Display brand image if this is spare part
                 brandImage.visibility = View.VISIBLE
-                if(!productOrWorkshopList[p1]?.brandImage.isNullOrBlank())
-                mcontext.loadImage(productOrWorkshopList[p1]?.brandImage, brandImage)
-                else if(!productOrWorkshopList[p1]?.brandImageurl.isNullOrBlank()){
+                if (!productOrWorkshopList[p1]?.brandImage.isNullOrBlank())
+                    mcontext.loadImage(productOrWorkshopList[p1]?.brandImage, brandImage)
+                else if (!productOrWorkshopList[p1]?.brandImageurl.isNullOrBlank()) {
                     mcontext.loadImage(productOrWorkshopList[p1]?.brandImageurl, brandImage)
-                }else{
-                    brandImage.visibility=View.GONE
+                } else {
+                    brandImage.visibility = View.GONE
                 }
             }
 
@@ -448,23 +448,23 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     for (i in 0 until jsonArray.length()) {
                         val json = JSONObject(jsonArray[i].toString())
 
-                        val titleString = json.getString("listino")
-                        val productNo = json.getString("products_name")
-                        if (titleString.toLowerCase().contains(constraint.toString().toLowerCase()) || productNo.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        val titleString = json.getString("p_name")
+
+                        if (titleString.matches(Regex(constraint.toString())) || titleString.toLowerCase().contains(constraint.toString().toLowerCase())) {
 
                             filteredList.put(json)
                         }
                     }
 
 
-                    if (filteredList.length() == 0){
+                    if (filteredList.length() == 0) {
                         filteredJSONArray = JSONArray()
                         filteredJSONArray = jsonArray
 
 
 
-                        Toast.makeText(mcontext, mcontext.getString(R.string.SearchProductNotFound), Toast.LENGTH_SHORT).show()}
-                    else{
+                        Toast.makeText(mcontext, mcontext.getString(R.string.SearchProductNotFound), Toast.LENGTH_SHORT).show()
+                    } else {
                         filteredJSONArray = JSONArray()
                         filteredJSONArray = filteredList
 
@@ -538,8 +538,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         }
     }
 
-    private fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
-        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank()  && currentLat != "0.0" && currentLong != "0.0" && latitude != "0" && latitude != "0" && latitude != "0" && latitude != "0") {
+    private fun getDistancebetweenTwoLatLong(currentLat: String, currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
+        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLat != "0.0" && currentLong != "0.0" && latitude != "0" && latitude != "0" && latitude != "0" && latitude != "0") {
             val Radius = 6371
             val lat1 = currentLat.toDouble();
             val lat2 = latitude.toDouble();
@@ -561,18 +561,18 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         }
     }
 
-   /*private fun getDistancebetweenTwoLatLong(currentLatLong: LatLng, latitude: String, longitude: String, tv_workshopKm: TextView) {
-        if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLatLong.latitude.equals("0.0") && !currentLatLong.latitude.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
+    /*private fun getDistancebetweenTwoLatLong(currentLatLong: LatLng, latitude: String, longitude: String, tv_workshopKm: TextView) {
+         if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLatLong.latitude.equals("0.0") && !currentLatLong.latitude.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
 
-            var lat1 = currentLatLong.latitude;
-            val lat2 = latitude.toDouble();
-            val lon1 = currentLatLong.longitude;
-            val lon2 = longitude.toDouble();
-            Log.d("CalculateDistanceClass", "Yes")
-            CalculateDistance(mcontext,lat1.toString(),lon1.toString(),lat2.toString(),lon2.toString(),tv_workshopKm).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+             var lat1 = currentLatLong.latitude;
+             val lat2 = latitude.toDouble();
+             val lon1 = currentLatLong.longitude;
+             val lon2 = longitude.toDouble();
+             Log.d("CalculateDistanceClass", "Yes")
+             CalculateDistance(mcontext,lat1.toString(),lon1.toString(),lat2.toString(),lon2.toString(),tv_workshopKm).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
-        }
-    }*/
+         }
+     }*/
 /*
     fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
          var parsedDistance = "";
