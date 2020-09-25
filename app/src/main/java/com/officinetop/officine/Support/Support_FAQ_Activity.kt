@@ -71,7 +71,7 @@ class Support_FAQ_Activity : BaseActivity() {
                 if (i.resolveActivity(packageManager) != null) {
                     startActivity(i);
                 } else{
-                    showInfoDialog("WhatsApp app is not install in your Phone")
+                    showInfoDialog("WhatsApp app is not installed in your Phone")
                 }
             } catch ( e:Exception) {
                 e.printStackTrace();

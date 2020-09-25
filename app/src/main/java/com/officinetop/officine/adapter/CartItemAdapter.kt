@@ -407,6 +407,14 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 quantitySpinner.isClickable = true;
             }
 
+            if(list.indexOf(quantity.toString())==-1 ){
+                if(isProductSellOnpair){
+                    quantity=2
+                }else {
+                    quantity=1
+                }
+            }
+
             quantitySpinner.setSelection(list.indexOf(quantity.toString()))
 
 
@@ -415,11 +423,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (isProductSellOnpair) {
-                        if ((quantity).toString() != quantitySpinner.selectedItem) {
+
+                    if ((quantity).toString() != quantitySpinner.selectedItem) {
                             updateCartQuantity(position + 1, item, productID)
                         }
-                    }
+
 
 
                 }
@@ -484,7 +492,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         var price: String = ""
         var selectedQuantity = selectedQuantityofProduct
         if (isProductSellOnpair)
-            selectedQuantity = selectedQuantityofProduct / 2
+            selectedQuantity = selectedQuantityofProduct * 2
         if (item.CartType == "T" || item.CartType == "S") {
             if (!item.price.isNullOrEmpty() && !item.pfuTax.isNullOrEmpty()) {
                 totalPrice = item.price.toDouble() - item.pfuTax.toDouble()

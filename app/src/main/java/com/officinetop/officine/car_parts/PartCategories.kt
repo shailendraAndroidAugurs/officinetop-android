@@ -2,8 +2,11 @@ package com.officinetop.officine.car_parts
 
 import adapter.SubPartCategoryAdapter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import com.officinetop.officine.BaseActivity
@@ -26,7 +29,7 @@ import java.util.concurrent.Executors
 
 
 class PartCategories : BaseActivity(), PartCategoryInterface {
-
+    private lateinit var searchLitener: SearchFilterInterface
     private var selectedVehicleVersionID: String = ""
     private var categoryArrayList: JSONArray = JSONArray()
 
@@ -92,6 +95,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             }
         }
+
+
+        search_product.addTextChangedListener(textWatcher)
         search_btn.setOnClickListener {
             if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
                 searchStoreQuery(search_product.text.toString())
@@ -161,7 +167,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 } else if (response.body() != null && response.body()?.message != null) {
                     val message = response.body()?.message
 
-                    // showInfoDialog(message?:"Cannot load groups")
+                    showInfoDialog(message ?: "Cannot load groups")
                 }
 
                 subCategoryAdapter.notifyDataSetChanged()
@@ -235,6 +241,18 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            searchLitener.SearchProduct(s.toString())
+        }
+    }
+
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
@@ -246,4 +264,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
     }
+
+    public fun setActivityListener(activityListener: SearchFilterInterface) {
+        this.searchLitener = activityListener; }
 }
