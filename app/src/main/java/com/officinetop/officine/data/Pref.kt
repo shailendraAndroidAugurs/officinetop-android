@@ -398,11 +398,11 @@ inline fun Context.getTyreDetail(): Models.TyreDetail? {
         null
     }
 }
+
 inline fun Context.clearTyreDetail() {
-   getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).edit().remove("tyre_detail").apply()
+    getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).edit().remove("tyre_detail").apply()
 
 }
-
 
 
 inline fun Context.setSelectedTyreDetails(tyreDetail: MeasurementDataSetItem) {
@@ -520,6 +520,7 @@ inline fun Context.getLong(): String {
     val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
     return langCode.getString(Constant.Path.longitude, "0.0") ?: "0.0"
 }
+
 inline fun Context.clearStoreLatLong() {
     val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
     langCode.edit().clear().apply()

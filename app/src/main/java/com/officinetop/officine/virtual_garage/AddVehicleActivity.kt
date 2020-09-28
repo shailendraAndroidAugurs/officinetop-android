@@ -152,13 +152,13 @@ class AddVehicleActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            if (isLoggedIn())
-                addFromPlate()
-            else
-                searchFromPlate()
-//            showConfirmDialog("Do you want to add this car to your Virtual Garage?"){}
-
-
+            /*  if (isLoggedIn())
+                  addFromPlate()
+              else
+                  searchFromPlate()
+  //            showConfirmDialog("Do you want to add this car to your Virtual Garage?"){}
+  */
+            addFromPlate()
         }
 
 
@@ -252,7 +252,7 @@ class AddVehicleActivity : BaseActivity() {
                         Glide.with(this@AddVehicleActivity)
                                 .setDefaultRequestOptions(RequestOptions().error(R.drawable.no_image_placeholder))
                                 .load(carImageURL)
-                             //   .thumbnail(0.7f)
+                                //   .thumbnail(0.7f)
                                 .into(carImage)
 
                         deleteCarImage.setOnClickListener {
@@ -575,7 +575,7 @@ class AddVehicleActivity : BaseActivity() {
 
                         if (isForEdit || isForPlateno) {
 
-                            if (data.brandID == myCar?.carMakeName)
+                            if (data.brandID == myCar?.carMakeModel?.brandID)
                                 selectedIndex = i
                         }
 
@@ -943,36 +943,61 @@ class AddVehicleActivity : BaseActivity() {
 
         showOnlineSnack(progressDialog)
         val token = getBearerToken()
-
+/*
         if (getStoredToken()?.isEmpty()!!) {
             showInfoDialog("You have been logged out. Please login again!!!", false) {
                 startActivity(intentFor<LoginActivity>().clearTop().clearTask())
                 finish()
             }
             return
+        }*/
+
+        if (getUserId().isNullOrBlank()) {
+            RetrofitClient.client.GetAddCarByPlateNumber(plate_editText.text.toString())
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progressDialog.dismiss()
+                            Log.e("AddVehicleActivity", "onFailure: onFailure", t)
+                            toast("Connection timed out")
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            progressDialog.dismiss()
+                            val body = response.body()?.string()!!
+                            Log.d("AddVehicleActivity", "onResponse: add car from plate = $body")
+
+                            if (response.code() == 200) {
+                                isForPlateno = true
+                                handleAddCarResponse(body)
+                            }
+                        }
+
+                    })
+        } else {
+
+            RetrofitClient.client.addCarFromPlate(plate_editText.text.toString(), authToken = token!!)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progressDialog.dismiss()
+                            Log.e("AddVehicleActivity", "onFailure: onFailure", t)
+                            toast("Connection timed out")
+                        }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            progressDialog.dismiss()
+                            val body = response.body()?.string()!!
+                            Log.d("AddVehicleActivity", "onResponse: add car from plate = $body")
+
+                            if (response.code() == 200) {
+                                isForPlateno = true
+                                handleAddCarResponse(body)
+                            }
+                        }
+
+                    })
         }
 
 
-        RetrofitClient.client.addCarFromPlate(plate_editText.text.toString(), authToken = token!!)
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        progressDialog.dismiss()
-                        Log.e("AddVehicleActivity", "onFailure: onFailure", t)
-                        toast("Connection timed out")
-                    }
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        progressDialog.dismiss()
-                        val body = response.body()?.string()!!
-                        Log.d("AddVehicleActivity", "onResponse: add car from plate = $body")
-
-                        if (response.code() == 200) {
-                            isForPlateno = true
-                            handleAddCarResponse(body)
-                        }
-                    }
-
-                })
     }
 
     private fun searchFromPlate() {
@@ -1263,7 +1288,7 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun setNotEditable_SearchFromPlatno() {
 
-        Log.d("NonEditableCall","NonEditableCall")
+        Log.d("NonEditableCall", "NonEditableCall")
         spinner_manufacturer.isSpinnerEnable = false
         spinner_model.isSpinnerEnable = false
         spinner_fuel.isSpinnerEnable = false
@@ -1272,7 +1297,7 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-    private fun CallKromedaApi(versionId:String){
+    private fun CallKromedaApi(versionId: String) {
         RetrofitClient.client.kromedaCall(versionId)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

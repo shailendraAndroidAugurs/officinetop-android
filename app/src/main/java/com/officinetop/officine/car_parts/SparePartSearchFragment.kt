@@ -27,8 +27,8 @@ import java.util.concurrent.Executors
 class SparePartSearchFragment : Fragment(), SearchFilterInterface {
     var searchKeywordHistory = ArrayList<String>()
     var searchKeywordData = ArrayList<String>()
-    lateinit var allSearchSection:TagView
-    lateinit var recentSearchSection:TagView
+    lateinit var allSearchSection: TagView
+    lateinit var recentSearchSection: TagView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val content = inflater.inflate(R.layout.activity_search_view, container, false)
@@ -40,8 +40,8 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
 
     private fun openSearchDialog(view: View) {
 
-         allSearchSection = view.findViewById<TagView>(R.id.all_search_section)
-         recentSearchSection = view.findViewById<TagView>(R.id.recent_search_section)
+        allSearchSection = view.findViewById<TagView>(R.id.all_search_section)
+        recentSearchSection = view.findViewById<TagView>(R.id.recent_search_section)
 
         view.findViewById<TextView>(R.id.search_all_categories).setOnClickListener {
             val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
@@ -133,7 +133,7 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
             searchKeywordData.forEach {
 
                 if (it.matches(Regex(SearchString)) || it.contains(SearchString)) {
-                    recentSearchSection  .addTag(Tag(it))
+                    recentSearchSection.addTag(Tag(it))
                 }
             }
 
@@ -145,7 +145,7 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
 
             searchKeywordHistory.forEach {
 
-                if (it.matches(Regex(SearchString))|| it.contains(SearchString)) {
+                if (it.matches(Regex(SearchString)) || it.contains(SearchString)) {
                     allSearchSection.addTag(Tag(it))
                 }
             }

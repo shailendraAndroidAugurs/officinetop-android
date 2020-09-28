@@ -407,11 +407,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 quantitySpinner.isClickable = true;
             }
 
-            if(list.indexOf(quantity.toString())==-1 ){
-                if(isProductSellOnpair){
-                    quantity=2
-                }else {
-                    quantity=1
+            if (list.indexOf(quantity.toString()) == -1) {
+                if (isProductSellOnpair) {
+                    quantity = 2
+                } else {
+                    quantity = 1
                 }
             }
 
@@ -425,9 +425,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                     if ((quantity).toString() != quantitySpinner.selectedItem) {
-                            updateCartQuantity(position + 1, item, productID)
-                        }
-
+                        updateCartQuantity(position + 1, item, productID, isProductSellOnpair)
+                    }
 
 
                 }

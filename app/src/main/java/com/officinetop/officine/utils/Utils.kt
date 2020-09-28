@@ -223,7 +223,7 @@ inline fun Intent.forwardResults(): Intent {
 inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = false): List<String> {
     val list: MutableList<String> = ArrayList()
     if (isProductSellOnpair) {
-        for (i in 1..offlimit) {
+        for (i in 1..offlimit/2) {
             list.add((i * 2).toString())
             // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
         }
