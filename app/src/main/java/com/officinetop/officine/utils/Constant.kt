@@ -35,14 +35,13 @@ object Constant {
 
     const val type_product = "product"
     const val type_workshop = "workshop"
-    const val type_assembled = "assembled"
+
 
     object UrlEndPoints {
         const val register = "register"
         const val login = "login"
         const val detail = "details"
         const val logout = "logout"
-        //tyre24/get_tyre_list?tyre_type=w&search_string=2056517&speed_index=H
         const val tyre = "tyre24/get_tyre_list"
         const val resetPassword = "resetPassword"
         const val changePassword = "changePassword"
@@ -54,7 +53,6 @@ object Constant {
         const val searchPlate = "getSearchPlate"
         const val addCarFromPlate = "addSearchCar"
         const val myCarList = "carList"
-        //        const val carParts = "getParts"
         const val sparePartGroup = "get_spare_group"
         const val sparePartSubGroup = "get_spare_sub_group"
         const val spareN3Groups = "get_spare_n3_groups"
@@ -62,10 +60,7 @@ object Constant {
         const val deleteCar = "deleteCar"
         const val uploadCarImage = "upload_car_pic"
         const val deleteCarImage = "garage/remove_car_image"
-
-        const val carImage = "public/carlogo/{${Path.carBrandID}}.png"
         const val getCategory = "get_car_wash_category/{${Path.categoryNumber}}/{${Path.carSize}}/{${Path.userLat}}/{${Path.userLong}}/{${Path.distanceRange}}"
-//        const val getWorkshop = "get_workshop/{${Path.}}"
 
         const val getQuotesWorkshop = "request_quotes_workshop"
         const val getWorkshop = "get_workshop"
@@ -74,7 +69,7 @@ object Constant {
         const val getWorkshopRevision = "get_workshop_revision_facility"
         const val getCalendarPrice = "get_calendar_with_price"
         const val getRevisionCalendar = "get_next_thirty_days_min_price"
-        const val getTyreCalendar = "get_next_seven_days_min_price_for_tyre"//?products_id=25&selected_date=2019-10-25
+        const val getTyreCalendar = "get_next_seven_days_min_price_for_tyre"
         const val getAssemblyCalendarPrice = "assemble_workshop_calendar_with_price"
         const val getQuotesCalendarPrice = "next_seven_days_request_quotes"
         const val getCarMaintenanceCalendarPrice = "get_next_seven_days_min_price_for_car_maintenance"
@@ -82,18 +77,15 @@ object Constant {
 
         const val getWorkshopPackageDetail = "get_workshop_service_package/{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.workshopFilterSelectedDate}}/{${Path.carSize}}/{${Path.selectedCarId}}/{${Path.userid}}"
         const val getWorkshopPackageDetailNew = "get_workshop_service_package_new"
-        const val getCarRevisionPackageDetail = "car_revision_workshop_package" ///{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.workshopFilterSelectedDate}}/{${Path.selectedCarId}}/{${Path.userid}}
-        const val getAssemblyWorkshopPackageDetail = "get_assemble_workshop_package"
+        const val getCarRevisionPackageDetail = "car_revision_workshop_package"
         const val getAssembleWorkshopPackageNew = "get_assemble_workshop_package_new"
         const val getTyreWorkshopPackageDetail = "get_tyre_workshop_package"
-        const val getSOSWorkshopPackageDetail = "sos_workshop_packages"///{${Constant.user_id}}/{${Constant.Path.serviceID}}/{${Path.workshopFilterSelectedDate}}/{${Path.latitude}}/{${Path.longitude}}
-        const val getSOSWorkshopPackageDetailEmergency = "sos_workshop_packages_for_emergency"///{${Constant.user_id}}/{${Constant.Path.serviceID}}/{${Path.workshopFilterSelectedDate}}/{${Path.latitude}}/{${Path.longitude}}
-        const val getCarMaintenancePackageDetail = "car_maintenance_services_package"///{${Constant.user_id}}/{${Constant.Path.serviceID}}/{${Path.workshopFilterSelectedDate}}/{${Path.latitude}}/{${Path.longitude}}
-        const val getQuotesPackageDetail = "workshop_package_for_service_quotes"///{${Constant.user_id}}/{${Constant.Path.serviceID}}/{${Path.workshopFilterSelectedDate}}/{${Path.latitude}}/{${Path.longitude}}
-        const val getCarMaintenanceWorkshop = "car_maintenance_workshop"///{${Constant.user_id}}/{${Constant.Path.serviceID}}/{${Path.workshopFilterSelectedDate}}/{${Path.latitude}}/{${Path.longitude}}
+        const val getSOSWorkshopPackageDetail = "sos_workshop_packages"
+        const val getSOSWorkshopPackageDetailEmergency = "sos_workshop_packages_for_emergency"
+        const val getCarMaintenancePackageDetail = "car_maintenance_services_package"
+        const val getQuotesPackageDetail = "workshop_package_for_service_quotes"
+        const val getCarMaintenanceWorkshop = "car_maintenance_workshop"
         const val getWorkshopPackageDetailWithProductID = "get_workshop_service_package/{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.workshopFilterSelectedDate}}"
-        //get_workshop_service_package/{workshop_users_id}/{category_id}/selected_date
-        //http://officine.augurstech.com/officineTop/api/get_workshop_service_package/{workshop_users_id}/{category_id}
         const val get_products = "get_productsnew"
         const val get_product_detail = "get_products_details"
         const val serviceBooking = "service_booking"
@@ -144,7 +136,6 @@ object Constant {
         const val getMotServiceDetail = "get_mot_service_operation"
         const val getMotCalendar = "get_next_seven_days_min_price_for_mot_service"
         const val getMotWorkshop = "get_workshop_for_mot_service"
-        // const val getMotServicePackageDetail = "mot_services_package/{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.type}}/{${Path.workshopFilterSelectedDate}}/{${Path.selectedCarId}}/{${Path.userid}}"
         const val service_booking_request_mot = "mot_service_booking"
         const val getMotServicePackageDetail = "mot_services_package"
         const val addFeedback = "add_feedback"
@@ -198,15 +189,10 @@ object Constant {
 
         const val carSpareKromedaCall = "save_spare_kromeda_call"
         const val carMOTKromedaCall = "save_mot_kromeda_call"
-        //https://services.officinetop.com/api/save_spare_kromeda_call/68373
-       // https://services.officinetop.com/api/save_mot_kromeda_call/68373
-    }
 
-    /*
-    https://services.officinetop.com/api/load_mot_spare_parts_for_replace?n3_service_id=92&version_id=95794&mot_service_type=1
-Pawan sir ,this is mot all spare parts api for same N3 related with version
-ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha web se?
-     */
+        const val addCarByPlateNumber = "addCarByPlateNumber"
+
+    }
 
     object Key {
         const val id = "id"
@@ -216,7 +202,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val userID = "userID"
         const val Token = "Token"
         const val deeplink = "deeplink"
-        const val brandID = "carMakeName"
         const val brand = "carModelName"
         const val version = "carVersion"
         const val carVersionID = "carVersionID"
@@ -250,7 +235,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val PartIdMap = "partIdmap"
         const val MotPartIdMap = "motpartIdmap"
 
-        const val workshopDetail = "workshopDetail"
         const val cartItem = "carItem"
         const val mot_type = "mot_type"
 
@@ -280,7 +264,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val data = "data"
         const val dataset = "data_set"
         const val authorization = "Authorization"
-        const val carVehicleID = "idVeicolo"
+
 
         //car model
         const val carModelID = "idModello"
@@ -291,13 +275,12 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
 
     object Path {
         const val serviceID = "service_id"
-        const val Orderstatus = "Orderstatus"
+
         const val PartID = "part_id"
         const val Motpartdata = "Motpart_data"
-        const val carBrandID = "carBrandID"
+
         const val categoryNumber = "categoryNumber"
         const val washServiceDetails = "washServiceDetails"
-        const val quotesDetails = "quotesDetails"
         const val revisionServiceDetails = "revisionServiceDetails"
         const val workshopUsersId = "workshop_id"
         const val workshopUserId = "workshop_user_id"
@@ -305,12 +288,10 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val categoryId = "category_id"
         const val categoryType = "category_type"
         const val workshopUserDaysId = "workshop_user_days_id"
-        const val carServicesId = "car_services_id"
         const val carSize = "car_size"
         const val userLat = "user_lat"
         const val userLong = "user_long"
         const val distanceRange = "distance_range"
-
         const val productId = "products_id"
         const val productid = "product_id"
         const val productqty = "product_quantity"
@@ -358,16 +339,15 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val packageId = "package_id"
 
         const val productDetails = "product_details"
-        const val tyreDetails = "tyre_details"
+
         const val productType = "product_type"
         const val orderid = "order_id"
         const val type = "type"
         const val model = "model"
-        const val feedbackType = "feedbackType"
+
         const val ProductOrWorkshopName = "ProductOrWorkshopName"
 
-        const val carVersionID = "carVersionID"
-        const val carPartsID = "carPartsID"
+
         const val language = "language"
         const val car_version_id = "car_version_id"
         const val version_id = "version_id"
@@ -375,7 +355,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val total_price = "total_price"
         const val discount = "discount"
         const val forOrderType = "for_order_type"
-        const val group_id = "group_id"
         const val start_time = "start_time"
         const val end_time = "end_time"
         const val mot_id = "mot_id"
@@ -412,7 +391,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val totalPfu = "total_pfu"
         const val totalVat = "total_vat"
         const val finalprice = "final_order_price"
-        const val totalItemPrices = "total price"
         const val user_WalletAmount = "user_WalletAmount"
         const val payableAmount = "payable_amount"
         const val walletAmount = "used_wallet_amount"
@@ -420,6 +398,7 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val favorite = "favorite"
         const val couponFilter = "coupon_filter"
         const val versionCriteria = "version_criteria"
+        const val plateNumber = "plateNumber"
 
     }
 
@@ -429,12 +408,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
     }
 
     object localStorageKeys {
-        /*
-
-                                    elds.carModelID) val modelID:String="",
-                                 @SerializedName(Constant.Fields.carModel) val model:String="",
-                                 @SerializedName(Constant.Fields.carModelYear)
-                                 */
         const val brandID = "localCarbrandID"
         const val brand = "localCarbrand"
         const val codeList = "localCarcodeList"
@@ -448,9 +421,6 @@ ye api, jab call hogi, jab part nai a rha hoga... hum logo ne jo check kiya tha 
         const val carCV = "localCarCV"
         const val carKW = "localCarKW"
         const val caridVeicolo = "localCaridVeicolo"
-
-        //Versione, Dal, Cv, Kw, idVeicolo
-
 
     }
 }

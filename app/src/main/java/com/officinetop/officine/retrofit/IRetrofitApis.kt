@@ -1455,8 +1455,9 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.addCarByPlateNumber)
+    fun GetAddCarByPlateNumber(@Field(Constant.Path.plateNumber) plateNumber: String): Call<ResponseBody>
 
-    //https://services.officinetop.com/api/save_spare_kromeda_call/68373
-    //  https://services.officinetop.com/api/save_spare_kromeda_call/68373
-    // https://services.officinetop.com/api/car_maintenance_parts?service_id=4502&version_id=109615&user_id
+
 }
