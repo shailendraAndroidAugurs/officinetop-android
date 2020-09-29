@@ -342,9 +342,10 @@ class AddVehicleActivity : BaseActivity() {
             val manufacturerIndex = spinner_manufacturer.selectedItemPosition
             val versionIndex = spinner_version.selectedItemPosition
             val modelIndex = spinner_model.selectedItemPosition
-
+            val criteriaIndex = spinner_criteria.selectedItemPosition
             carDetails.addProperty("id", "")
             carDetails.addProperty("user_id", "")
+            carDetails.addProperty("number_plate", tv_plate_number.text.toString())
 
             carDetails.addProperty("carMakeName", manufacturers[manufacturerIndex].brandID)
             carDetails.addProperty("carModelName", model[modelIndex].modelID + "/" + model[modelIndex].modelYear)
@@ -385,7 +386,7 @@ class AddVehicleActivity : BaseActivity() {
             carVersionDetails.addProperty("Cv", finalCarVersion[versionIndex].cv)
             carVersionDetails.addProperty("Kw", finalCarVersion[versionIndex].kw)
             carVersionDetails.addProperty("idVeicolo", finalCarVersion[versionIndex].idVehicle)
-            carVersionDetails.addProperty("fueltype", spinner_fuel.selectedItem.toString())
+            carVersionDetails.addProperty("fuel_type", spinner_fuel.selectedItem.toString())
 
 
             //modified to add car size as per
@@ -394,8 +395,16 @@ class AddVehicleActivity : BaseActivity() {
 
             carDetails.add("carVers", carVersionDetails)
 
-            val json = carDetails.toString()
+            // Add car Criteria details
+            if (criteriaIndex != -1) {
+                val carCriteriaDetails: JsonObject = JsonObject()
+                carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
+                carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
+                carDetails.add("criteriaResponse", carCriteriaDetails )
+            }
 
+            val json = carDetails.toString()
+            removeLocalSavedCar()
             saveLocalCarInJSON(json)
             val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
             val carIntent = Intent()
@@ -803,7 +812,7 @@ class AddVehicleActivity : BaseActivity() {
 
                     if (isForEdit) {
 
-                        var currentFuelType = myCar?.carVersionModel?.fuelType
+                        var currentFuelType = myCar?.carVersionModel?.fueltype
                         Log.d("AddVehicleActivity", "onResponse: current fuel type = $currentFuelType")
 
                         if (currentFuelType == null || currentFuelType?.isEmpty()!!)
@@ -968,6 +977,13 @@ class AddVehicleActivity : BaseActivity() {
 
                             if (response.code() == 200) {
                                 isForPlateno = true
+
+                                val dataSet = getDataSetArrayFromResponse(body)
+                                if (!dataSet.isEmpty()) {
+                                    val last = (dataSet[dataSet.length() - 1].toString())
+                                    saveLocalCarInJSON(last)
+                                }
+
                                 handleAddCarResponse(body)
                             }
                         }
