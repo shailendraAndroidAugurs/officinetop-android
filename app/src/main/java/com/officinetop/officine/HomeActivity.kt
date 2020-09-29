@@ -500,10 +500,16 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     view.item_edit_car.setOnClickListener {
 
+                        if (!isLoggedIn()) {
+                            startActivityForResult(intentFor<AddVehicleActivity>(
+                                    Constant.Key.myCar to car as Serializable
+                            ), Constant.RC.onCarAdded)
+                        } else {
+                            startActivityForResult(intentFor<AddVehicleActivity>(
+                                    Constant.Key.myCar to car as Serializable
+                            ), Constant.RC.onCarEdited)
+                        }
 
-                        startActivityForResult(intentFor<AddVehicleActivity>(
-                                Constant.Key.myCar to car as Serializable
-                        ), Constant.RC.onCarEdited)
                         dismiss()
                     }
 
@@ -566,7 +572,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 return
 
 
-            if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car") {
+            //if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car" || !isLoggedIn()) {
 
 
                 toolbar_car_title.text = car?.carMakeModel?.brand
@@ -579,19 +585,22 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
 
-                val json = car?.let { it1 -> convertToJson(it1) }
+                val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
                 Log.d("HomeActivity", "setToolbarValues: $json")
 
                 //call select car API
                 if (car != null) {
-                    selectCar(car.id!!)
+                    if (!car.id.isNullOrBlank()) {
+                        selectCar(car.id!!)
+                    }
+
                     saveMotCarKM(car.km_of_cars)
 
                 }
 
                 if (json != null) {
-
-
+                    saveSelectedCar(json)
+                    //getSelectedCar()
                     if (car.id != getSavedSelectedVehicleID()) {
 
                         if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
@@ -600,20 +609,20 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     .replace(R.id.container, FragmentHome(), "Home")
                                     .commit()
 
-
                             home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
                         }
 
 
                     }
-                    saveSelectedCar(json)
+
                     Log.d("Version id", json.toString())
 
                 }
 
 
-            }
-            if (car.id != getSavedSelectedVehicleID()) {
+           // }
+
+            if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
                 if (getIsAvailableDataInCart()) {
                     Log.d("HomeActivity", "Delete Call")
                     showConfirmDialog(getString(R.string.CartDataRemoved)) { DeleteCartData(car) }
@@ -689,14 +698,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
 
 
-            requestCode == Constant.RC.onCarEdited -> {
+            if (requestCode == Constant.RC.onCarEdited) {
                 getCarListAPI()
-            }
-            requestCode == Constant.RC.onCarAdded -> {
-
+            } else if (requestCode == Constant.RC.onCarAdded) {
                 try {
                     if (data != null && data?.extras != null) {
                         val lastCar = data?.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
@@ -707,11 +714,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
-            }
-            requestCode == 108 -> {
+            } else if (requestCode == 108) {
                 if (getMotKm() != getSelectedCar()?.km_of_cars)
                     getCarListAPI()
             }
+
+
         }
         super.onActivityResult(requestCode, resultCode, data)
 

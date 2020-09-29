@@ -84,8 +84,6 @@ object Models {
             @SerializedName("Status")
             val status: String = "",
             @SerializedName("fuel_type")
-            val fuelType: String = "",
-            @SerializedName("fueltype")
             val fueltype: String = "",
 
 
@@ -129,7 +127,7 @@ object Models {
             val carModel: CarModels = CarModels(),
 
             @SerializedName("criteriaResponse")
-            val carCriteria: CarCriteria=CarCriteria(),
+            val carCriteria: CarCriteria = CarCriteria(),
 
 
             @SerializedName("km_of_cars") val km_of_cars: String = "",
@@ -3121,19 +3119,20 @@ object Models {
             val service_schedule_id: String,
             val sort_order: String,
             val version_id: String
-    ): Serializable
-     data class CarCriteria(
-            val created_at: String="",
-            val cron_executed_status: String="",
-            val id: String="",
-            val language: String="",
-            val repair_times_description: String="",
-            val repair_times_id: String="",
-            val unique_id: String="",
-            val updated_at: String="",
-            val users_id: String="",
-            val version_id: String=""
-    ): Serializable
+    ) : Serializable
+
+    data class CarCriteria(
+            val created_at: String = "",
+            val cron_executed_status: String = "",
+            val id: String = "",
+            val language: String = "",
+            val repair_times_description: String = "",
+            val repair_times_id: String = "",
+            val unique_id: String = "",
+            val updated_at: String = "",
+            val users_id: String = "",
+            val version_id: String = ""
+    ) : Serializable
 
 }
 

@@ -32,7 +32,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.facebook.appevents.AppEventsLogger;
 
-class SplashActivity : BaseActivity(){
+class SplashActivity : BaseActivity() {
 
 
     private val TAG = "MyFirebaseToken"
@@ -40,7 +40,7 @@ class SplashActivity : BaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-       // getUserAppSettings()
+        // getUserAppSettings()
         initView()
         logSentFriendRequestEvent()
         setAutoLogAppEventsEnabled(true);
@@ -50,7 +50,8 @@ class SplashActivity : BaseActivity(){
         Handler().postDelayed({
 
             if (!isLoggedIn() && isFirstRun()) {
-                startActivity(intentFor<LoginActivity>())
+                startActivity(intentFor<HomeActivity>())
+                //startActivity(intentFor<LoginActivity>())
                 setFirstRun(false)
             } else {
                 startActivity(intentFor<HomeActivity>())
@@ -58,77 +59,76 @@ class SplashActivity : BaseActivity(){
 
 
             finish()
-        },1000)
+        }, 1000)
 
         validateAppCode()
 
-      /*  // Create a deep link and display it in the UI
-        val newDeepLink = buildDeepLink(Uri.parse(DEEP_LINK_URL), 0)
-        //linkViewSend.text = newDeepLink.toString()
-        storeDeeplink(newDeepLink.toString())
+        /*  // Create a deep link and display it in the UI
+          val newDeepLink = buildDeepLink(Uri.parse(DEEP_LINK_URL), 0)
+          //linkViewSend.text = newDeepLink.toString()
+          storeDeeplink(newDeepLink.toString())
 
-        //shareDeepLink(newDeepLink.toString())
+          //shareDeepLink(newDeepLink.toString())
 
-        FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(intent)
-                .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                    // Get deep link from result (may be null if no link is found)
-                    var deepLink: Uri? = null
-                    if (pendingDynamicLinkData != null) {
-                        deepLink = pendingDynamicLinkData.link
-                    }
-                    //Log.d("pendingDynamicLinkData", pendingDynamicLinkData.toString())
-                    // Handle the deep link. For example, open the linked
-                    // content, or apply promotional credit to the user's
-                    // account.
-                    // ...
+          FirebaseDynamicLinks.getInstance()
+                  .getDynamicLink(intent)
+                  .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                      // Get deep link from result (may be null if no link is found)
+                      var deepLink: Uri? = null
+                      if (pendingDynamicLinkData != null) {
+                          deepLink = pendingDynamicLinkData.link
+                      }
+                      //Log.d("pendingDynamicLinkData", pendingDynamicLinkData.toString())
+                      // Handle the deep link. For example, open the linked
+                      // content, or apply promotional credit to the user's
+                      // account.
+                      // ...
 
-                    // [START_EXCLUDE]
-                    // Display deep link in the UI
-                    if (deepLink != null) {
-                        Snackbar.make(findViewById(android.R.id.content),
-                                "Found deep link!", Snackbar.LENGTH_LONG).show()
+                      // [START_EXCLUDE]
+                      // Display deep link in the UI
+                      if (deepLink != null) {
+                          Snackbar.make(findViewById(android.R.id.content),
+                                  "Found deep link!", Snackbar.LENGTH_LONG).show()
 
-                       // linkViewReceive.text = deepLink.toString()
-                    } else {
-                        Log.d(TAG, "getDynamicLink: no link found")
-                    }
-                    // [END_EXCLUDE]
-                }
-                .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
-      */
+                         // linkViewReceive.text = deepLink.toString()
+                      } else {
+                          Log.d(TAG, "getDynamicLink: no link found")
+                      }
+                      // [END_EXCLUDE]
+                  }
+                  .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+        */
 
     }
-
 
 
     fun shortenLongLink() {
         UrlShortener.enableLogging
         UrlShortener.shortenUrlByTinyUrl("https://services.officinetop.com/public/manage_referal_code?user=8089786756&inviteto=09098987676&Referalcode=ami009")
                 .subscribeOn(Schedulers.newThread())
-               // .observeOn(AndroidSchedulers.mainThread())
+                // .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action1 { t ->
                     Log.v(TAG, "shortenUrlByGoogle $t")
 
 
                 })
 
-       /* // [START shorten_long_link]
-        val shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLongLink(Uri.parse("https://services.officinetop.com?user=8089786756&inviteto=09098987676&Referalcode=ami009"))
-                .buildShortDynamicLink()
-                .addOnSuccessListener { result ->
-                    // Short link created
-                    val shortLink = result.shortLink
-                    val flowchartLink = result.previewLink
+        /* // [START shorten_long_link]
+         val shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                 .setLongLink(Uri.parse("https://services.officinetop.com?user=8089786756&inviteto=09098987676&Referalcode=ami009"))
+                 .buildShortDynamicLink()
+                 .addOnSuccessListener { result ->
+                     // Short link created
+                     val shortLink = result.shortLink
+                     val flowchartLink = result.previewLink
 
-                }
-                .addOnFailureListener {
-                    Log.e("shortLink", it.toString())
-                    // Error
-                    // ...
-                }
-        Log.e("shortLink", shortLinkTask.toString())*/
+                 }
+                 .addOnFailureListener {
+                     Log.e("shortLink", it.toString())
+                     // Error
+                     // ...
+                 }
+         Log.e("shortLink", shortLinkTask.toString())*/
         // [END shorten_long_link]
     }
 
@@ -137,14 +137,12 @@ class SplashActivity : BaseActivity(){
         Thread(Runnable {
             try {
                 Log.i(TAG, FirebaseInstanceId.getInstance().getToken(getString(R.string.SENDER_ID), "FCM"))
-                FirebaseInstanceId.getInstance().getToken(getString(R.string.SENDER_ID),"FCM")?.let { storeUserFCMToken(it) }
+                FirebaseInstanceId.getInstance().getToken(getString(R.string.SENDER_ID), "FCM")?.let { storeUserFCMToken(it) }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }).start()
     }
-
-
 
 
     //////////////////////////////////////////////linking////////////////////////////////
@@ -191,6 +189,7 @@ class SplashActivity : BaseActivity(){
         // Return the dynamic link as a URI
         return link.uri
     }
+
     private fun shareDeepLink(deepLink: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
@@ -199,7 +198,6 @@ class SplashActivity : BaseActivity(){
 
         startActivity(intent)
     }
-
 
 
     private fun getUserAppSettings() {
@@ -214,8 +212,8 @@ class SplashActivity : BaseActivity(){
                             if (response.isSuccessful) {
                                 val data = JSONObject(response.body()?.string())
                                 if (data.has("data") && !data.isNull("data")) {
-                                    val fulldata= data.getJSONObject("data")
-                                    Log.d("DefaultLanguage","From Login:"+ fulldata.getString("lang"))
+                                    val fulldata = data.getJSONObject("data")
+                                    Log.d("DefaultLanguage", "From Login:" + fulldata.getString("lang"))
                                     storeLangLocale(fulldata.getString("lang"))
                                     setAppLanguage()
                                 }
@@ -227,13 +225,13 @@ class SplashActivity : BaseActivity(){
         }
     }
 
-/**
- * This function assumes logger is an instance of AppEventsLogger and has been
- * created using AppEventsLogger.newLogger() call.
- */
-public fun logSentFriendRequestEvent () {
-    val logger=AppEventsLogger.newLogger(this)
-    logger.logEvent("sentFriendRequest");
-}
+    /**
+     * This function assumes logger is an instance of AppEventsLogger and has been
+     * created using AppEventsLogger.newLogger() call.
+     */
+    public fun logSentFriendRequestEvent() {
+        val logger = AppEventsLogger.newLogger(this)
+        logger.logEvent("sentFriendRequest");
+    }
 }
 
