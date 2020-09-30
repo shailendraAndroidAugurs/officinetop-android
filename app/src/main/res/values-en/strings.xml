@@ -432,7 +432,7 @@
     <string name="updateItmanually">Update it manually/50</string>
     <string name="title">Title</string>
     <string name="Description">Description</string>
-    <string name="Interval_Operation">Interval Operation</string>
+    <string name="Interval_Operation">Operation</string>
     <string name="upi_Mobileno">mobilenumber@upi</string>
     <string name="DD">DD</string>
     <string name="YYYY">YYYY</string>
@@ -706,6 +706,8 @@
     <string name="inviteShareMessage">Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n
                 overhall,service, maintenance, tow truck, car wash, spare parts, tires and car accessories \n
                 I\'ll give you a €6 coupon. Just register by entering this friend code ,%s "download from here":</string>
+    <string name="LoggedinAs">Log out of the account  %S</string>
+    <string name="replacement_parts">Replacement parts</string>
    <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Tyre</item>

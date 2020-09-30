@@ -119,7 +119,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                     positiveButton(getString(R.string.logout)) {
                         logout(context?.getBearerToken()!!)
                     }
-                    negativeButton(getString(R.string.ok)) {}
+                    negativeButton(getString(R.string.cancel)) {}
                 }.show()
             }
         })
@@ -322,12 +322,12 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                             startActivity(intentFor<LoginActivity>().clearTop())
                             activity?.finish()
                         }
-                        Log.d("logout",responseString.toString())
+                        Log.d("logout", responseString.toString())
                         responseString?.let {
                             toast(getMessageFromJSON(it))
                             startActivity(intentFor<LoginActivity>().clearTop())
                             activity?.finish()
-                            Log.d("LogoutSuccessfully","yes")
+                            Log.d("LogoutSuccessfully", "yes")
                         }
                     }
                 })
