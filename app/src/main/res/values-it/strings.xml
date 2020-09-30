@@ -91,7 +91,7 @@
     <string name="no">No</string>
     <string name="yes">sì</string>
     <string name="ok">OK</string>
-    <string name="logout">Disconnettersi</string>
+    <string name="logout">Disconnettiti</string>
     <string name="opengmail">Vai a Mail</string>
     <string name="technical_characterictic">Caratteristiche tecniche</string>
     <string name="address">Indirizzo</string>
@@ -233,7 +233,7 @@
     <string name="update">Salva</string>
     <string name="Address">Indirizzo</string>
     <string name="Return">Richiesta reso</string>
-    <string name="contact_number">Numero di contatto</string>
+    <string name="contact_number">Numero cellulare</string>
     <string name="entercontact_number">Inserisci il numero di contatto</string>
     <string name="Landmark">Punto di riferimento -</string>
     <string name="zipcode">Cap -</string>
@@ -256,7 +256,7 @@
     <string name="referralcode">Codice di riferimento</string>
     <string name="invite">Invita &amp; Guadagna</string>
     <string name="invitefirend">condividi con i tuoi amici</string>
-    <string name="invitefirendoffers">Ottieni un regalo (punti premio) dopo il primo ordine di ogni amico</string>
+    <string name="invitefirendoffers">Ottieni un premio in euro dopo il primo ordine di ogni amico.</string>
     <string name="orders">Ordini</string>
     <string name="wishlist">Lista dei desideri</string>
     <string name="profilesettings">impostazioni</string>
@@ -348,7 +348,7 @@
     <string name="ReMainingItem">Solo %S quantità disponibile in magazzino</string>
     <string name="WorkshopNotProvideServices">il servizio è scaduto</string>
     <string name="CartDataRemoved">I dati del tuo carrello verranno eliminati?</string>
-    <string name="AddFeedback">Aggiungi feedback</string>
+    <string name="AddFeedback">Aggiungi recensione</string>
     <string name="SeeFeedback">Visualizza feedback</string>
     <string name="AppliedCoupon"><!--Bonus:-->""</string>
     <string name="updateCoupon">Cambia coupon</string>
@@ -416,7 +416,7 @@
     <string name="onServices"> in servizio</string>
 
     <string name="FindYourLocation"> Trova automaticamente la tua posizione</string>
-    <string name="findClosestWorkshop">In questo modo saremo in grado di trovare i seminari più vicini a te</string>
+    <string name="findClosestWorkshop">In questo modo saremo in grado di trovare le officine più vicine a te.</string>
     <string name="findmypostion"> Trova la mia posizione automaticamente</string>
     <string name="EnteritManually"> Inseriscilo manualmente</string>
     <string name="ConfirmationOnLocation">La tua posizione verrà mostrata di seguito. Se non si desidera o si desidera eseguire il posizionamento automatico, è possibile modificare manualmente i dati</string>
@@ -427,10 +427,10 @@
     <string name="Zero_fifty">0/50</string>
 
 
-    <string name="updateItmanually">Aggiornalo manualmente / 50</string>
+    <string name="updateItmanually">Aggiorna manualmente</string>
     <string name="title">Titolo</string>
     <string name="Description">Descrizione</string>
-    <string name="Interval_Operation">Funzionamento a intervalli</string>
+    <string name="Interval_Operation">Operazioni</string>
     <string name="upi_Mobileno">di cellulare @ upi</string>
     <string name="DD">DD</string>
     <string name="YYYY">AAAA</string>
@@ -474,7 +474,7 @@
     <string name="Season_Type">Stagione</string>
 
     <string name="tyre_Grip">Grip su bagnato</string>
-    <string name="Three_peak_mountain">Tre vette</string>
+    <string name="Three_peak_mountain">3PMSF</string>
     <string name="Ean">Ean</string>
     <string name="Special_Condition">Condizioni speciali</string>
     <string name="Delivery_date">Data spedizione</string>
@@ -525,8 +525,8 @@
     <string name="fuel_Efficiency">EFFICIENZA DEL CARBURANTE (DAA AA G)</string>
     <string name="adhesion_bath">ADESIONE SUL BAGNO (DA AA F)</string>
     <string name="noise_Emission">EMISSIONE DI RUMORE (IN DECIBEL)</string>
-    <string name="feedback_Workshop">Feedback sulle officine</string>
-    <string name="feedback_Product">Feedback sui prodotti</string>
+    <string name="feedback_Workshop">Recensioni officine</string>
+    <string name="feedback_Product">Recensioni prodotti</string>
     <string name="request_invoice"> Richiedi fattura</string>
     <string name="invoice_Request_inProcess">Richiesta fattura in corso</string>
     <string name="return_request_inProcess"> Richiesta di reso in corso</string>
@@ -549,7 +549,7 @@
     <string name="Search_Location"> Cerca posizione</string>
     <string name="Failed_load_product_detail"> Impossibile caricare i dettagli del prodotto</string>
     <string name="MOT">Tagliandi</string>
-    <string name="MOTDetail">Dettagli Tagliandi</string>
+    <string name="MOTDetail">Dettaglio tagliandi</string>
     <string name="Product_detail">Dettagli prodotto</string>
     <string name="PayOnDelivery">Il pagamento alla consegna continuerà</string>
     <string name="partNotAvailable">Parte non disponibile per il servizio</string>
@@ -588,7 +588,7 @@
 
     <string name="productRemoved_formWishList"> Questo prodotto è stato rimosso dalla lista dei desideri</string>
     <string name="WorkshopRemovedfromfavorite">Til suo Officine Rimosso dai preferiti</string>
-    <string name="ContactAddSuccessFully">Contatta Aggiungi Successo Completamente</string>
+    <string name="ContactAddSuccessFully">Aggiunto numero di cellulare con successo.</string>
     <string name="ContactUpdateSuccessFully">Contatta Update SuccessFully</string>
     <string name="ContactDeletedSuccessFully">Contatta Eliminato SuccessFully</string>
     <string name="Searchingproductnotfound">Ricerca prodotto non trovato</string>
@@ -654,7 +654,7 @@
     <string name="id_is_required">ID è richiesto !!</string>
     <string name="Filter_Workshops">Officine sui filtro</string>
     <string name="are_you_sure_to_book_this_slot">Sei sicuro di prenotare per questo orario?</string>
-    <string name="call_phone">Telefonata</string>
+    <string name="call_phone">Telefono</string>
     <string name="chat_online">Chatta online</string>
     <string name="Email">E-mail</string>
     <string name="FAQs">Domande frequenti</string>
@@ -703,6 +703,8 @@
     <string name="whatsapp">whatsapp</string>
     <string name="inviteShareMessage">Ciao, sei stato invitato ad utilizzare l\'app OfficineTop! L\'unica app che offre la miglior qualità/prezzo dei servizi in tutta Italia. Offriamo servizi di riparazione, manutenzione, revisioni, tagliandi, lavaggi auto, emergenza, vendita prodotti di: parti di ricambio, gomme e accessori auto. Registrati utilizzando il codice di riferimento %S e riceverai un coupon di 6€ pronto da utilizzare.</string>
     <!--<string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
+    <string name="LoggedinAs">Disconnettersi dall\'account %S</string>
+    <string name="replacement_parts">Parti di ricambio</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

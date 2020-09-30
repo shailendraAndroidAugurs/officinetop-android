@@ -83,7 +83,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/white"
-                    android:text="@string/SpareParts"
+                    android:text="@string/replacement_parts"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -157,7 +157,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:text="@string/proceed"
+            android:text="@string/Choose_Officina"
             android:visibility="gone" />
     </RelativeLayout>
 
