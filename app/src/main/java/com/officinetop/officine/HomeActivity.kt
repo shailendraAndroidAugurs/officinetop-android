@@ -858,9 +858,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
-        if (requestCode == Constant.REQUEST_PERMISSIONS_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            if (isLocationOn)
+        if (/*requestCode == Constant.REQUEST_PERMISSIONS_LOCATION &&*/ grantResults[0] == PackageManager.PERMISSION_GRANTED /*&&
+                grantResults[1] == PackageManager.PERMISSION_GRANTED*/) {
+            if (!isLocationOn)
 
                 getLastLocation(mFusedLocationClient!!, this) else
                 enableLocation()

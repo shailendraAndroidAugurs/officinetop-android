@@ -90,8 +90,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             } else {
                 if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
                     searchStoreQuery(search_product.text.toString())
-                else
-                    showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
+                /*else
+                    showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))*/
 
             }
         }

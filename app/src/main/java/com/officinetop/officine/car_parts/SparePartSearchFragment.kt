@@ -124,7 +124,6 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
     }
 
     override fun SearchProduct(SearchString: String) {
-        Toast.makeText(activity, SearchString, Toast.LENGTH_SHORT).show()
         allSearchSection.removeAll()
         recentSearchSection.removeAll()
 

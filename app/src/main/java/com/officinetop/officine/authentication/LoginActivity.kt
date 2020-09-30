@@ -41,6 +41,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.security.MessageDigest
+
 class LoginActivity : BaseActivity() {
 
     private lateinit var googleSignInOptions: GoogleSignInOptions
@@ -188,7 +189,7 @@ class LoginActivity : BaseActivity() {
                                 storeToken(getTokenFromJSON(responseString!!), email)
 
                                 handleLoginType("loginSuccess")
-                                logCompleteRegistrationEvent(this@LoginActivity,provider_name)
+                                logCompleteRegistrationEvent(this@LoginActivity, provider_name)
 
                             }
                         }
@@ -315,6 +316,7 @@ class LoginActivity : BaseActivity() {
                             storeUserId(getUserIdFromJSON(bodyString!!))
                             val token = getTokenFromJSON(bodyString!!)
                             storeToken(token, emailEditText.text.toString())
+                            clearTyreDetail()
                             startActivity(intentFor<HomeActivity>().putExtra("login_success", true)//.clearTask().clearTop()
 
                             )
@@ -351,50 +353,6 @@ class LoginActivity : BaseActivity() {
 
         }
 
-    }
-
-    private fun getUserAppSettings() {
-        getBearerToken()?.let {
-            RetrofitClient.client.GetUpdatesettings(it).onCall { networkException, response ->
-                networkException.let {
-                    //ProgressDialog.dismiss()
-                }
-                response.let {
-                    if (!response?.body().toString().isNullOrEmpty()) {
-                        if (response != null) {
-                            if (response.isSuccessful) {
-                                val data = JSONObject(response.body()?.string())
-                                if (data.has("data") && !data.isNull("data")) {
-                                    val fulldata = data.getJSONObject("data")
-                                    Log.d("DefaultLanguage", "From Login:" + fulldata.getString("lang"))
-                                    storeLangLocale(fulldata.getString("lang"))
-                                    setAppLanguage()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getDetails(authToken: String) {
-
-        RetrofitClient.client.details("Bearer $authToken")
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    }
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
-                        val responseString = response.body()?.string()
-                        Log.d("LoginActivity", "onResponse: details -> $responseString")
-                        responseString?.let { toast(it) }
-
-
-                    }
-
-                })
     }
 
 
@@ -537,21 +495,6 @@ class LoginActivity : BaseActivity() {
 
                 })
     }
-
-
-    /*private fun getTyreList() {
-        RetrofitClient.client.tyreList()
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    }
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        val responseString = response.body()?.string()
-                        Log.d("LoginActivity", "onResponse: tyre list = $responseString")
-                    }
-
-                })
-    }*/
 
 
 }

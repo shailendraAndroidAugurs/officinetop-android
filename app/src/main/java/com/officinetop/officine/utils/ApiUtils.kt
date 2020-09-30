@@ -165,8 +165,6 @@ inline fun Context.loadImageFromDrawable(drawable: Int?, imageView: ImageView, p
 }
 
 
-
-
 inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView, SimilarproductList: ArrayList<Models.ProductOrWorkshopList>) {
 
     //product recycler
@@ -312,7 +310,6 @@ inline fun convertToJson(model: Any): String {
 }
 
 
-
 fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayList<Models.CartDataList>) {
     var servicePrice = 0.0
     var productPrice = 0.0
@@ -326,7 +323,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
         if (cartData.CartType == "SP") {
-            IsServicesAvailable=true
+            IsServicesAvailable = true
             if (cartData.afterDiscountPrice != null && cartData.afterDiscountPrice != "null" && cartData.afterDiscountPrice != "")
                 servicePrice += cartData.afterDiscountPrice.toDouble()
 
@@ -607,7 +604,7 @@ data class ResponseError(val message: String, val errorCode: Int)
 fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, productId: String, type: String, productType: String) {
 
     RetrofitClient.client.getfeedbackList(getBearerToken()
-            ?: "", workshopId, productId, type, productType,getUserId())
+            ?: "", workshopId, productId, type, productType, getUserId())
             .onCall { networkException, response ->
 
                 val feedbackList: MutableList<Models.FeedbacksList> = ArrayList()
@@ -982,7 +979,7 @@ fun insertInCartList(modelData: Any, cartType: String, modelCart: Models.CartDat
 }
 
 
-fun Activity.addToCartProducts(context: Context?,productId: String, productQuantity: String, pfuAmount: String, couponId: String?, price: String, totalPrice: String,
+fun Activity.addToCartProducts(context: Context?, productId: String, productQuantity: String, pfuAmount: String, couponId: String?, price: String, totalPrice: String,
                                discount: String, productType: String, usersID: String, productName: String, productDescription: String, sellerId: String) {
 
     RetrofitClient.client.addToCartProduct(getBearerToken() ?: "", productId, productQuantity
@@ -1005,7 +1002,7 @@ fun Activity.addToCartProducts(context: Context?,productId: String, productQuant
                             if (data.has("products_orders_id") && !data.isNull("products_orders_id")) {
                                 saveOrderId(data.get("products_orders_id").toString())
                             }
-                            logAddToCartEvent(context!!,productDescription,productId,productType,"USD",totalPrice.toDouble())
+                            logAddToCartEvent(context!!, productDescription, productId, productType, "USD", totalPrice.toDouble())
                         }
                     }
 
@@ -1044,11 +1041,11 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 
                     if (item != null) {
                         item?.wish_list = "1"
-                        logAddToWishlistEvent(this,item.pr_description!!,productId,ProductType,"USD",if(!item?.seller_price.isNullOrBlank())item?.seller_price?.toDouble()!! else 0.0)
+                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item?.seller_price.isNullOrBlank()) item?.seller_price?.toDouble()!! else 0.0)
 
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject?.wish_list = "1"
-                        logAddToWishlistEvent(this,productorworkshopObject.productName!!,productId,ProductType,"USD",if(!productorworkshopObject?.sellerPrice.isNullOrBlank())productorworkshopObject?.sellerPrice?.toDouble()!! else 0.0)
+                        logAddToWishlistEvent(this, if (productorworkshopObject.productName!!.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName!!, productId, ProductType, "USD", if (!productorworkshopObject?.sellerPrice.isNullOrBlank()) productorworkshopObject?.sellerPrice?.toDouble()!! else 0.0)
 
                     }
 

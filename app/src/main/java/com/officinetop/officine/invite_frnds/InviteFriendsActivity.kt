@@ -91,9 +91,10 @@ class InviteFriendsActivity : BaseActivity() {
 
         val drawable = banner_image!!.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
-        val textMsg = "Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n" +
+        val textMsg = getString(R.string.inviteShareMessage,inviteCode)
+        /*"Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n" +
                 "overhall,service, maintenance, tow truck, car wash, spare parts, tires and car accessories\n" +
-                "I'll give you a €6 coupon. Just register by entering this friend code \"${inviteCode}\", \"download from here\":"
+                "I'll give you a €6 coupon. Just register by entering this friend code \"${inviteCode}\", \"download from here\":"*/
         try {
             val file = File(externalCacheDir, "offers.png")
             val fOut = FileOutputStream(file)

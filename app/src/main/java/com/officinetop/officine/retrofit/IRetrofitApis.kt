@@ -1011,7 +1011,7 @@ interface IRetrofitApis {
     fun getCarMaintenanceWorkshop(@Query(Constant.Path.version_id) versionId: String?,
                                   @Query(Constant.Path.language) language: String,
                                   @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                                  @Query(Constant.Path.serviceID) addressId: String,
+                                  @Query(Constant.Path.serviceID) serviceID: String,
                                   @Query(Constant.Path.filterRating) rating: String,
                                   @Query(Constant.Path.filterPriceRange) priceRange: String,
                                   @Query(Constant.Path.sortPrice) priceLevel: Int,
@@ -1024,6 +1024,16 @@ interface IRetrofitApis {
                                   @Query(Constant.Path.couponFilter) couponfilter: String
 
     ): Call<ResponseBody>
+
+    /*service_id:[{"part_id":"1","quantity":"1","seller_id":"3","serviceId":1},{"part_id":"2" , "quantity":"1","seller_id":"3","serviceId":2}]
+    version_id:95794
+    language:en
+    selected_date:2020-09-10
+    rating:
+    price_level:1
+    price_range:
+    selected_car_id:15
+    user_id:101*/
 
 
     @GET(Constant.UrlEndPoints.getAllCoupons)
