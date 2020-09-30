@@ -107,7 +107,7 @@
                     style="@style/RoundButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/proceed" />
+                    android:text="@string/choose_workshop" />
 
                 <View
                     android:layout_width="match_parent"

@@ -152,7 +152,7 @@
     <string name="low_to_high">Low to High</string>
     <string name="high_to_low">High to Low</string>
     <string name="coupon_details">Coupon Details</string>
-    <string name="proceed_to_payment">Proceed To Payment</string>
+    <string name="proceed_to_payment">Proceed to order</string>
     <string name="no_phone_number">No associated phone number for the workshop</string>
     <string name="recommendation_msg">Customers who have seen this article have also seen</string>
     <string name="brand">Brand</string>
@@ -703,6 +703,9 @@
     <string name="prepend_euro_symbol_without_string"> from: € </string>
     <string name="Pleaselogintocontinuewithsforating">Please login to continue with Add Rating</string>
     <string name="whatsapp">whatsapp</string>
+    <string name="inviteShareMessage">Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n
+                overhall,service, maintenance, tow truck, car wash, spare parts, tires and car accessories \n
+                I\'ll give you a €6 coupon. Just register by entering this friend code ,%s "download from here":</string>
    <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Tyre</item>
