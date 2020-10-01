@@ -90,7 +90,7 @@ interface IRetrofitApis {
                @Header(Constant.Fields.authorization) authToken: String,
                @Field("lang") language: String = "ENG",
                @Field(Constant.Path.versionCriteria) versionCriteria: String,
-
+               @Field(Constant.Path.scheduleId) scheduleId: String,
                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -110,6 +110,8 @@ interface IRetrofitApis {
                 @Field("carBody") carBody: String,
                 @Header(Constant.Fields.authorization) authToken: String,
                 @Field(Constant.Path.versionCriteria) versionCriteria: String,
+                @Field(Constant.Path.scheduleId) scheduleId: String,
+
                 @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 

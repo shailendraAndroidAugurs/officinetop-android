@@ -20,31 +20,27 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 
 class TyreDiameterActivity : BaseActivity() {
-     private var selectedTyreDetail: String=""
+    private var selectedTyreDetail: String = ""
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.officinetop.officine.R.layout.activity_tyre_diameter)
+        setContentView(R.layout.activity_tyre_diameter)
 
-        setSupportActionBar(toolbar)
 
-        toolbar_title.text = resources.getString(R.string.select_diameter)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getSelectedCar()?.let {
             title_tyre.text = "${resources.getString(R.string.select_car_measures)} \n${it.carMakeName} - ${it.carModelName} (${it.carModel.modelYear})"
         }
-        if(intent.extras!=null && intent.hasExtra("currentlySelectedMeasurement") ){
-             selectedTyreDetail    =intent.getStringExtra("currentlySelectedMeasurement")
+        if (intent.extras != null && intent.hasExtra("currentlySelectedMeasurement")) {
+            selectedTyreDetail = intent.getStringExtra("currentlySelectedMeasurement")
 
         }
 
 
         customize_measure_btn.setOnClickListener {
-            if(!selectedTyreDetail.isNullOrBlank()){
-                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement",selectedTyreDetail), 200)
-            }else{
+            if (!selectedTyreDetail.isNullOrBlank()) {
+                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail), 200)
+            } else {
                 startActivityForResult(intentFor<TyreCustomizationActivity>(), 200)
             }
 
@@ -55,29 +51,47 @@ class TyreDiameterActivity : BaseActivity() {
     }
 
     private fun getUserTyreDetailsApi() {
+        progressbar.visibility = View.VISIBLE
         try {
             RetrofitClient.client.getUserTyreDetails(
                     getUserId(),
                     getSelectedCar()?.carVersionModel?.idVehicle ?: "")
                     .genericAPICall { _, response ->
                         response?.let {
+                            progressbar.visibility = View.GONE
                             val body = response.body() as UserTyreMeasurementResponse
 
                             if (response.isSuccessful) {
                                 if (!isStatusCodeValid(body.toString())) {
                                     //bind tyre list recycler
+
                                     bindTyreRecycler(body)
                                 }
                                 if (body.statusCode == 0) {
-                                    alert {
-                                        message = getString(R.string.costimizemessage)
-                                        positiveButton(getString(R.string.yes)) {
+
+                                    /*   alert {
+                                           message = getString(R.string.costimizemessage)
+                                           positiveButton(getString(R.string.yes)) {
+                                               startActivity(intentFor<TyreCustomizationActivity>())
+                                               finish()
+                                           }
+                                           negativeButton(getString(R.string.no)) {
+                                           }
+                                       }.show()*/
+                                    if (isLoggedIn()) {
+                                        clearTyreDetail()
+                                        startActivity(intentFor<TyreCustomizationActivity>())
+                                        finish()
+                                    } else {
+                                        if (!selectedTyreDetail.isNullOrBlank()) {
+
+                                            startActivity(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail))
+                                            finish()
+                                        } else {
                                             startActivity(intentFor<TyreCustomizationActivity>())
                                             finish()
                                         }
-                                        negativeButton(getString(R.string.no)) {
-                                        }
-                                    }.show()
+                                    }
 
 
                                 }
@@ -100,6 +114,17 @@ class TyreDiameterActivity : BaseActivity() {
 
 
                 }
+            }
+
+            if (tyreStringList.size > 0) {
+                setSupportActionBar(toolbar)
+
+                toolbar_title.text = resources.getString(R.string.select_diameter)
+
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                parentViewOfSelectedDiameter.visibility = View.VISIBLE
+                title_tyre.visibility = View.VISIBLE
+
             }
 
             recycler_view.adapter = SimpleTextListAdapter(this, tyreStringList, object : SimpleTextListAdapter.OnRecyclerItemClickListener {
@@ -125,7 +150,7 @@ class TyreDiameterActivity : BaseActivity() {
                         diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString() == "null") "0" else it.rimDiameter.toString()
                         runFlat = if (it.runFlat == null) false else if (it.runFlat.toString().isNullOrBlank() || it.runFlat.toString() == "null" || it.runFlat.toString() == "0") false else true
                         reinforced = if (it.reinforced == null) false else if (it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0") false else true
-                    val    speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
+                        val speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
 
 
                         val tyre =

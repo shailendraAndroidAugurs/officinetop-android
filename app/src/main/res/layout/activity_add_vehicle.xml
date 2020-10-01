@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -23,8 +23,8 @@
 
 
             <TextView
-                style="@style/TextViewHeading"
                 android:id="@+id/title_text"
+                style="@style/TextViewHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|center"
@@ -44,16 +44,16 @@
                     android:id="@+id/car_images_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginBottom="16dp"/>
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone" />
 
                 <TextView
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
-                    android:paddingBottom="0dp"
                     android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
                     android:text="@string/maker" />
 
                 <FrameLayout
@@ -66,10 +66,9 @@
                         android:id="@+id/spinner_manufacturer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:spinnerHint="@string/sel_manufacturer"
-
                         android:padding="0dp"
-                        />
+
+                        app:spinnerHint="@string/sel_manufacturer" />
 
                 </FrameLayout>
 
@@ -140,6 +139,7 @@
                         app:spinnerHint="@string/sel_version" />
 
                 </FrameLayout>
+
                 <TextView
                     android:id="@+id/tv_criteria"
                     style="@style/TextViewSubHeadingBlack"
@@ -147,9 +147,9 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="0dp"
                     android:paddingTop="0dp"
-                    android:visibility="gone"
                     android:paddingBottom="0dp"
-                    android:text="@string/criteria" />
+                    android:text="@string/criteria"
+                    android:visibility="gone" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -158,185 +158,204 @@
 
                     <com.isapanah.awesomespinner.AwesomeSpinner
                         android:id="@+id/spinner_criteria"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:visibility="gone"
                         app:spinnerHint="@string/select_car_criteria" />
 
                 </FrameLayout>
 
-
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:orientation="vertical"
-                  android:id="@+id/container_editable"
-                  android:layout_height="wrap_content">
-
-
-                  <TextView
-                      style="@style/TextViewSubHeadingBlack"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:paddingLeft="0dp"
-                      android:paddingTop="0dp"
-                      android:paddingBottom="0dp"
-                      android:text="@string/car_km" />
-
-                  <FrameLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="10dp">
-
-                      <EditText
-                          android:id="@+id/edit_text_km_car"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:hint="@string/car_km_hint"
-                          android:inputType="number"
-                          android:padding="10dp"
-                          android:importantForAutofill="no" />
-
-                  </FrameLayout>
-
-
-                  <TextView
-                      style="@style/TextViewSubHeadingBlack"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:paddingLeft="0dp"
-                      android:paddingTop="0dp"
-                      android:paddingBottom="0dp"
-                      android:text="@string/car_km_annual" />
-
-                  <FrameLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="10dp">
-
-                      <EditText
-                          android:id="@+id/edit_text_km_annual"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:hint="@string/car_km_annual_hint"
-                          android:inputType="number"
-                          android:padding="10dp"
-                          android:importantForAutofill="no" />
-
-                  </FrameLayout>
-
-
-                  <TextView
-                      style="@style/TextViewSubHeadingBlack"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:paddingLeft="0dp"
-                      android:paddingTop="0dp"
-                      android:paddingBottom="0dp"
-                      android:text="@string/car_revision" />
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_car_condition"
+                    style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical"
-                    >
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    android:text="@string/car_conditions"
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/text_revision_date"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.isapanah.awesomespinner.AwesomeSpinner
+                        android:id="@+id/spinner_car_condition"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        style="@style/Widget.AppCompat.EditText"
-                        android:hint="@string/car_revision_hint"
-                        android:inputType="none"
-                        android:padding="10dp" />
+                        android:visibility="gone"
+                        app:spinnerHint="@string/car_conditions" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_editable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/car_km" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp">
+
+                        <EditText
+                            android:id="@+id/edit_text_km_car"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/car_km_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="10dp" />
+
+                    </FrameLayout>
+
+
+                    <TextView
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/car_km_annual" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp">
+
+                        <EditText
+                            android:id="@+id/edit_text_km_annual"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/car_km_annual_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="10dp" />
+
+                    </FrameLayout>
+
+
+                    <TextView
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/car_revision" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_revision_date"
+                            style="@style/Widget.AppCompat.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/car_revision_hint"
+                            android:inputType="none"
+                            android:padding="10dp" />
+
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/car_km_revision" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp">
+
+                        <EditText
+                            android:id="@+id/edit_text_km_on_revision_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:hint="@string/car_km_revision_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="10dp" />
+
+                    </FrameLayout>
+
+
+                    <Switch
+                        android:id="@+id/alloy"
+                        style="@style/TextViewSubHeadingBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:padding="0dp"
+                        android:text="@string/alloy" />
 
 
                 </LinearLayout>
-
-
-                  <TextView
-                      style="@style/TextViewSubHeadingBlack"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:paddingLeft="0dp"
-                      android:paddingTop="0dp"
-                      android:paddingBottom="0dp"
-                      android:text="@string/car_km_revision" />
-
-                  <FrameLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginBottom="10dp">
-
-                      <EditText
-                          android:id="@+id/edit_text_km_on_revision_date"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-
-                          android:hint="@string/car_km_revision_hint"
-                          android:inputType="number"
-                          android:padding="10dp"
-                          android:importantForAutofill="no" />
-
-                  </FrameLayout>
-
-
-
-                <Switch
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/TextViewSubHeadingBlack"
-                    android:text="@string/alloy"
-                    android:padding="0dp"
-                    android:id="@+id/alloy"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    />
-
-
-
-              </LinearLayout>
 
 
                 <LinearLayout
                     android:id="@+id/ll_plate_number_layout"
                     android:layout_width="match_parent"
-                    android:weightSum="2"
+                    android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:text="@string/license_plate"
-                        android:layout_weight="1"
-                      android:textColor="@color/black"
-                       android:paddingLeft="@dimen/_5sdp"
-                        android:textSize="@dimen/_12sdp"
-                        android:layout_height="wrap_content"/>
+                    android:weightSum="2">
 
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="@string/license_plate"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
                         android:id="@+id/tv_plate_number"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@color/black"
 
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/_10sdp" />
 
 
                 </LinearLayout>
 
 
-
             </LinearLayout>
-
 
 
             <Button
                 android:id="@+id/add_from_fields"
                 style="@style/RoundButton"
-                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/add_car" />
 
             <LinearLayout
@@ -377,16 +396,16 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
                             android:layout_weight="1"
-                            android:ems="1"
                             android:background="@drawable/rounded_white_background"
+                            android:ems="1"
                             android:hint="@string/plate"
+                            android:importantForAutofill="no"
                             android:inputType="textCapCharacters"
                             android:maxLength="7"
                             android:maxLines="1"
-                            android:padding="10dp"
 
-                            android:textAllCaps="true"
-                            android:importantForAutofill="no" />
+                            android:padding="10dp"
+                            android:textAllCaps="true" />
 
                         <ImageView
                             android:id="@+id/search_plate"

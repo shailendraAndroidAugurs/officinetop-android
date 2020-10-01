@@ -428,9 +428,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
 
 
-        if (!hasSelectedCar)
-            resetToolbar()
-
     }
 
     private fun resetToolbar() {
@@ -575,52 +572,53 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             //if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car" || !isLoggedIn()) {
 
 
-                toolbar_car_title.text = car?.carMakeModel?.brand
-                toolbar_car_subtitle.text = "${car?.carModel?.model} (${car?.carModel?.modelYear})"
-                toolbar_car_subtitle.visibility = View.VISIBLE
+            toolbar_car_title.text = car?.carMakeModel?.brand
+            toolbar_car_subtitle.text = "${car?.carModel?.model} (${car?.carModel?.modelYear})"
+            toolbar_car_subtitle.visibility = View.VISIBLE
 
-                val carDefaultImage = car.carDefaultImage ?: ""
-                loadCarImage(carDefaultImage, car.carMakeModel?.brandID, toolbar_image_view)
+            val carDefaultImage = car.carDefaultImage ?: ""
+            loadCarImage(carDefaultImage, car.carMakeModel?.brandID, toolbar_image_view)
 
-                Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
+            Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
 
-                val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
-                Log.d("HomeActivity", "setToolbarValues: $json")
+            val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
+            Log.d("HomeActivity", "setToolbarValues: $json")
 
-                //call select car API
-                if (car != null) {
-                    if (!car.id.isNullOrBlank()) {
-                        selectCar(car.id!!)
+            //call select car API
+            if (car != null) {
+                if (!car.id.isNullOrBlank()) {
+                    selectCar(car.id!!)
+                }
+
+                saveMotCarKM(car.km_of_cars)
+
+            }
+
+            if (json != null) {
+                saveSelectedCar(json)
+                hasSelectedCar = true
+                hasAddedCar
+                if (car.id != getSavedSelectedVehicleID()) {
+
+                    if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
+
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.container, FragmentHome(), "Home")
+                                .commit()
+
+                        home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
                     }
 
-                    saveMotCarKM(car.km_of_cars)
 
                 }
 
-                if (json != null) {
-                    saveSelectedCar(json)
-                    //getSelectedCar()
-                    if (car.id != getSavedSelectedVehicleID()) {
+                Log.d("Version id", json.toString())
 
-                        if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
-
-                            supportFragmentManager.beginTransaction()
-                                    .replace(R.id.container, FragmentHome(), "Home")
-                                    .commit()
-
-                            home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
-                        }
+            }
 
 
-                    }
-
-                    Log.d("Version id", json.toString())
-
-                }
-
-
-           // }
+            // }
 
             if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
                 if (getIsAvailableDataInCart()) {
@@ -792,7 +790,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 dataSet.carModel.modelID + "/" + dataSet.carModel.modelYear,
                 dataSet.carVersionModel.idVehicle,
                 dataSet.carSize,
-                getBearerToken() ?: "", "ENG", "0")
+                getBearerToken() ?: "", "ENG", "0", "0")
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         progressDialog.dismiss()
@@ -983,6 +981,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     }
 
                                     if (json != null) {
+
                                         saveSelectedCar(json)
                                         Log.d("Version id", json.toString())
 
@@ -1011,7 +1010,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     override fun onBackPressed() {
         //  super.onBackPressed()
 
-        if (supportFragmentManager.findFragmentByTag("Home") is FragmentHome) {
+        if (supportFragmentManager.findFragmentByTag("Home") is FragmentHome || iscurrentFragmentHome()) {
             finish()
 
         } else {
@@ -1032,6 +1031,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
+    private fun iscurrentFragmentHome(): Boolean {
+
+        val fragments = supportFragmentManager.getFragments();
+        for (fragment in fragments) {
+            if (fragment != null && fragment is FragmentHome)
+                return true
+        }
+        return false;
+    }
 
 }
 

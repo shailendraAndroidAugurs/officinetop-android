@@ -223,7 +223,7 @@ inline fun Intent.forwardResults(): Intent {
 inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = false): List<String> {
     val list: MutableList<String> = ArrayList()
     if (isProductSellOnpair) {
-        for (i in 1..offlimit/2) {
+        for (i in 1..offlimit / 2) {
             list.add((i * 2).toString())
             // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
         }
@@ -398,8 +398,10 @@ fun Context?.createImageSliderDialog(imageUrl: String) {
 }
 
 
-fun Context.movetologinPage() {
-    startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>())
+fun Context.movetologinPage(context: Context?) {
+    startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+   var activity= context as Activity
+    activity.finishAffinity()
 }
 
 
@@ -513,7 +515,7 @@ public fun logSearchEvent(context: Context, contentType: String, contentData: St
     params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData);
     params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId);
     params.putString(AppEventsConstants.EVENT_PARAM_SEARCH_STRING, searchString);
-    params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, if(success) 1 else 0);
+    params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, if (success) 1 else 0);
     var logger = AppEventsLogger.newLogger(context)
 
     logger.logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params);

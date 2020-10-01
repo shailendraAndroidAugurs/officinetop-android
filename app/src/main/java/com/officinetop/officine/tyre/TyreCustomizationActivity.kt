@@ -118,8 +118,11 @@ class TyreCustomizationActivity : BaseActivity() {
                 setTyreDetail(tyre)//save tyre details to local(shared preferences)
                 progressDialog.dismiss()
                 val intent = Intent(applicationContext, TyreListActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
                 startActivity(intent)
-                finish()
+
 
             } else {
                 RetrofitClient.client.saveUserTyreDetails(
@@ -150,6 +153,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                         setTyreDetail(tyre)//save tyre details to local(shared preferences)
                                         Handler().postDelayed({
                                             val intent = Intent(applicationContext, TyreListActivity::class.java)
+
                                             startActivity(intent)
                                             finish()
                                         }, 500)
@@ -273,46 +277,46 @@ class TyreCustomizationActivity : BaseActivity() {
                                             spinner_vehicle_type.setSelection(selectedVehicalTypePotion)
                                         }
 
-                                       /* if (!selectedTyreDetail.seasonName.isNullOrBlank() && selectedTyreDetail.seasonName != getString(R.string.All) && selectedTyreDetail.seasonName != getString(R.string.all_in_italin)) {
+                                        /* if (!selectedTyreDetail.seasonName.isNullOrBlank() && selectedTyreDetail.seasonName != getString(R.string.All) && selectedTyreDetail.seasonName != getString(R.string.all_in_italin)) {
 
-                                            val tyre_Season = tyreSeasonList.find { it.id == selectedTyreDetail.seasonId }
-                                            if (tyre_Season != null) {
-                                                val selected_Season = tyreSeasonList.indexOf(tyre_Season)
-                                                spinner_season_type.setSelection(selected_Season)
-                                            } else {
-                                                val tyre_seasonname = tyreSeasonList.find { it.name == selectedTyreDetail.seasonName.toString() }
-                                                if (tyre_seasonname != null) {
-                                                    val selected_Season = tyreSeasonList.indexOf(tyre_seasonname)
-                                                    spinner_season_type.setSelection(selected_Season)
-                                                }
-                                            }
+                                             val tyre_Season = tyreSeasonList.find { it.id == selectedTyreDetail.seasonId }
+                                             if (tyre_Season != null) {
+                                                 val selected_Season = tyreSeasonList.indexOf(tyre_Season)
+                                                 spinner_season_type.setSelection(selected_Season)
+                                             } else {
+                                                 val tyre_seasonname = tyreSeasonList.find { it.name == selectedTyreDetail.seasonName.toString() }
+                                                 if (tyre_seasonname != null) {
+                                                     val selected_Season = tyreSeasonList.indexOf(tyre_seasonname)
+                                                     spinner_season_type.setSelection(selected_Season)
+                                                 }
+                                             }
 
-                                        }
-                                        if (!selectedTyreDetail.speedIndexName.isNullOrBlank() && selectedTyreDetail.speedIndexName != getString(R.string.All) && selectedTyreDetail.speedIndexName != getString(R.string.all_in_italin)) {
-                                            val tyreSpeedIndex = speedIndexList.find { it.name == selectedTyreDetail.speedIndexName.toString() }
+                                         }
+                                         if (!selectedTyreDetail.speedIndexName.isNullOrBlank() && selectedTyreDetail.speedIndexName != getString(R.string.All) && selectedTyreDetail.speedIndexName != getString(R.string.all_in_italin)) {
+                                             val tyreSpeedIndex = speedIndexList.find { it.name == selectedTyreDetail.speedIndexName.toString() }
 
-                                            if (tyreSpeedIndex != null) {
-                                                val selectedSpeedIndex = speedIndexList.indexOf(tyreSpeedIndex)
-                                                spinner_speed_limit.setSelection(selectedSpeedIndex)
-                                            } else {
-                                                val tyreSpeedIndexName = speedIndexList.find { it.code == selectedTyreDetail.speedIndexId.toString() }
+                                             if (tyreSpeedIndex != null) {
+                                                 val selectedSpeedIndex = speedIndexList.indexOf(tyreSpeedIndex)
+                                                 spinner_speed_limit.setSelection(selectedSpeedIndex)
+                                             } else {
+                                                 val tyreSpeedIndexName = speedIndexList.find { it.code == selectedTyreDetail.speedIndexId.toString() }
 
-                                                if (tyreSpeedIndexName != null) {
-                                                    val selectedSpeedIndex = speedIndexList.indexOf(tyreSpeedIndexName)
-                                                    spinner_speed_limit.setSelection(selectedSpeedIndex)
-                                                }
-                                            }
+                                                 if (tyreSpeedIndexName != null) {
+                                                     val selectedSpeedIndex = speedIndexList.indexOf(tyreSpeedIndexName)
+                                                     spinner_speed_limit.setSelection(selectedSpeedIndex)
+                                                 }
+                                             }
 
-                                        }
-                                        if (!selectedTyreDetail.speed_load_index.isNullOrBlank() && selectedTyreDetail.speed_load_index != getString(R.string.All) && selectedTyreDetail.speed_load_index != getString(R.string.all_in_italin)) {
-                                            val tyreSpeedloadIndex = speedLoadIndexList.find { it.name == selectedTyreDetail.speed_load_index.toString() }
-                                            if (tyreSpeedloadIndex != null) {
-                                                val selectedSpeedloadIndex = speedLoadIndexList.indexOf(tyreSpeedloadIndex)
-                                                spinner_speed_load_index.setSelection(selectedSpeedloadIndex)
-                                            }
+                                         }
+                                         if (!selectedTyreDetail.speed_load_index.isNullOrBlank() && selectedTyreDetail.speed_load_index != getString(R.string.All) && selectedTyreDetail.speed_load_index != getString(R.string.all_in_italin)) {
+                                             val tyreSpeedloadIndex = speedLoadIndexList.find { it.name == selectedTyreDetail.speed_load_index.toString() }
+                                             if (tyreSpeedloadIndex != null) {
+                                                 val selectedSpeedloadIndex = speedLoadIndexList.indexOf(tyreSpeedloadIndex)
+                                                 spinner_speed_load_index.setSelection(selectedSpeedloadIndex)
+                                             }
 
-                                        }
-*/
+                                         }
+ */
 
 
                                         if (!selectedTyreDetail.cust_seasonId.isNullOrBlank()) {
