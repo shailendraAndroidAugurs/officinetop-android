@@ -291,7 +291,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         response.let {
                             val body = response?.body()?.string()
                             if (body.isNullOrEmpty() || response.code() == 401)
-                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
 
                             if (response?.isSuccessful!!) {
                                 val body = JSONObject(body)
@@ -320,7 +320,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         response.let {
                             val body = response?.body()?.string()
                             if (body.isNullOrEmpty() || response.code() == 401)
-                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
 
                             if (response?.isSuccessful!!) {
                                 val body = JSONObject(body)
@@ -1408,7 +1408,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 val body = response.body()?.string()
                 if (body.isNullOrEmpty() || response.code() == 401)
-                    showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage() })
+                    showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
 
                 body?.let {
@@ -1419,7 +1419,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                         } else {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
-                            finish()
+                           finishAffinity()
                         }
 
 

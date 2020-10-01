@@ -129,7 +129,8 @@ object Models {
             @SerializedName("criteriaResponse")
             val carCriteria: CarCriteria = CarCriteria(),
 
-
+            @SerializedName("scheduleResponse")
+            val carConditionMotSchedule: MotSchedule = MotSchedule(),
             @SerializedName("km_of_cars") val km_of_cars: String = "",
             @SerializedName("km_traveled_annually") val km_traveled_annually: String = "",
             @SerializedName("revision_date_km") val carRevisionDate: String = "",
@@ -3113,12 +3114,12 @@ object Models {
             val tyreProductDetail: TyreDetailItem)
 
     data class MotSchedule(
-            val id: Int,
-            val schedule_id: String,
-            val service_schedule_description: String,
-            val service_schedule_id: String,
-            val sort_order: String,
-            val version_id: String
+            val id: Int=0,
+            val schedule_id: String="",
+            val service_schedule_description: String="",
+            val service_schedule_id: String="",
+            val sort_order: String="",
+            val version_id: String=""
     ) : Serializable
 
     data class CarCriteria(

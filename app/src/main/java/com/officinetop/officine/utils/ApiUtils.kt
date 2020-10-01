@@ -990,7 +990,7 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
 
             if (response.isSuccessful) {
                 try {
@@ -1031,7 +1031,7 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
 
 
             if (response?.isSuccessful!!) {
@@ -1071,7 +1071,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
 
             if (response?.isSuccessful!!) {
                 val body = JSONObject(body)

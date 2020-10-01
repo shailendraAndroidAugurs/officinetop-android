@@ -29,7 +29,7 @@ class MotListActivity : BaseActivity() {
 
     private var mServicesList: MutableList<Models.MotServicesList> = ArrayList()
     private var mMotSchedule: MutableList<Models.MotSchedule> = ArrayList()
-    private  var scheduleId=""
+    private var scheduleId = ""
     private val mMotScheduleData: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,16 @@ class MotListActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.MOT)
         ed_search_km.isEnabled = false
         ed_search_km.setText(getMotKm())
-        // motServive(getMotKm()!!, "0")
-        CallMotSchedule()
+
+        if (getSelectedCar()?.carConditionMotSchedule?.schedule_id.isNullOrBlank()) {
+            CallMotSchedule()
+        } else {
+            scheduleId=getSelectedCar()?.carConditionMotSchedule?.schedule_id!!
+            motServive(getMotKm()!!, "0")
+        }
+
+        //CallMotSchedule()
+
         btn_edit.setOnClickListener {
             ed_search_km.isEnabled = true
             if (btn_edit.text == getString(R.string.add_car)) {
@@ -143,17 +151,17 @@ class MotListActivity : BaseActivity() {
                                             val itemData = dataSet.get(i) as JSONObject
                                             val itemsData = Gson().fromJson<Models.MotSchedule>(itemData.toString(), Models.MotSchedule::class.java)
                                             mMotSchedule.add(itemsData)
-                                            mMotScheduleData.add(Models.TypeSpecification(if(itemsData.service_schedule_description.isNullOrEmpty())itemsData.service_schedule_id else itemsData.service_schedule_description , itemsData.schedule_id))
+                                            mMotScheduleData.add(Models.TypeSpecification(if (itemsData.service_schedule_description.isNullOrEmpty()) itemsData.service_schedule_id else itemsData.service_schedule_description, itemsData.schedule_id))
 
                                         }
                                         if (mMotScheduleData.size > 1) {
                                             Log.d("MotList", "mMotScheduleData  $mMotScheduleData")
 
-                                            ll_carcondition.visibility = View.VISIBLE
+                                            ll_carcondition.visibility = View.GONE
                                             bindSpinner()
                                         }
 
-                                        scheduleId=mMotSchedule[0].schedule_id
+                                        scheduleId = mMotSchedule[0].schedule_id
                                         motServive(getMotKm()!!, "0")
                                     } else {
                                         showInfoDialog(getString(R.string.DatanotFound))
@@ -178,14 +186,14 @@ class MotListActivity : BaseActivity() {
     }
 
 
-    private fun bindSpinner(){
+    private fun bindSpinner() {
         spinner_schedule.adapter = SpinnerAdapter(applicationContext, mMotScheduleData)
-        Log.d("MotList","bindingSpinner")
+        Log.d("MotList", "bindingSpinner")
         spinner_schedule.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification
                 Log.d("selected vehi type: ", items.code)
-                scheduleId=items.code
+                scheduleId = items.code
                 motServive(getMotKm()!!, "0")
 
             }

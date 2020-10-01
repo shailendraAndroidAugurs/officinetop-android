@@ -191,7 +191,7 @@ class TyreListActivity : BaseActivity() {
                 })
 
         edit_tyre.setOnClickListener {
-            finish()
+
             startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement", tyreDetail.convertToJsonString()), 100)
         }
 
@@ -220,7 +220,7 @@ class TyreListActivity : BaseActivity() {
         setTyreTitle()
         val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
         drawableRight?.setBounds(100, 100, 100, 100)
-        if (tyreDetail.onlyFav || (tyreDetail.offerOrCoupon) || (tyreDetail.runFlat!=tyreDetail.cust_runflat) || (tyreDetail.reinforced!=tyreDetail.cust_reinforced) || tyreDetail.brands != ""|| tyreDetail.Rating != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId!=tyreDetail.seasonId) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0")&& tyreDetail.speedIndexId!=tyreDetail.cust_speedIndexId) ||((!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) && !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin)) )&& tyreDetail.speed_load_index!=tyreDetail.cust_speedLoad_indexId) || !tyreDetail.priceRange.isNullOrBlank()) {
+        if (tyreDetail.onlyFav || (tyreDetail.offerOrCoupon) || (tyreDetail.runFlat != tyreDetail.cust_runflat) || (tyreDetail.reinforced != tyreDetail.cust_reinforced) || tyreDetail.brands != "" || tyreDetail.Rating != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId != tyreDetail.seasonId) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0") && tyreDetail.speedIndexId != tyreDetail.cust_speedIndexId) || ((!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) && !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin))) && tyreDetail.speed_load_index != tyreDetail.cust_speedLoad_indexId) || !tyreDetail.priceRange.isNullOrBlank()) {
 
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
         } else {
@@ -232,22 +232,20 @@ class TyreListActivity : BaseActivity() {
             Log.d("tyre_filter", "1")
         } else if (tyreDetail.offerOrCoupon) {
             Log.d("tyre_filter", "2")
-        } else if ((tyreDetail.runFlat!=tyreDetail.cust_runflat)) {
-            Log.d("tyre_filter", "3"+ tyreDetail.runFlat+"="+tyreDetail.cust_runflat)
-        } else if (tyreDetail.reinforced!=tyreDetail.cust_reinforced) {
-            Log.d("tyre_filter", "4"+ tyreDetail.reinforced+"="+tyreDetail.cust_reinforced)
+        } else if ((tyreDetail.runFlat != tyreDetail.cust_runflat)) {
+            Log.d("tyre_filter", "3" + tyreDetail.runFlat + "=" + tyreDetail.cust_runflat)
+        } else if (tyreDetail.reinforced != tyreDetail.cust_reinforced) {
+            Log.d("tyre_filter", "4" + tyreDetail.reinforced + "=" + tyreDetail.cust_reinforced)
         } else if (tyreDetail.brands != "") {
             Log.d("tyre_filter", "5")
-        } else if ((!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId!=tyreDetail.seasonId)) {
+        } else if ((!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId != tyreDetail.seasonId)) {
 
-            Log.d("tyre_filter", "6:" + tyreDetail.seasonId+"="+tyreDetail.cust_seasonId)
-        } else if (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0") && tyreDetail.speedIndexId!=tyreDetail.cust_speedIndexId) {
-            Log.d("tyre_filter", "7:" + tyreDetail.speedIndexId+ "="+tyreDetail.cust_speedIndexId)
-        }
-        else if (((!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) && !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin)) )&& (tyreDetail.speed_load_index!=tyreDetail.cust_speedLoad_indexId))) {
-            Log.d("tyre_filter", "7:" + tyreDetail.speed_load_index+ "="+tyreDetail.cust_speedLoad_indexId)
-        }
-        else if (!tyreDetail.priceRange.isNullOrBlank()) {
+            Log.d("tyre_filter", "6:" + tyreDetail.seasonId + "=" + tyreDetail.cust_seasonId)
+        } else if (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0") && tyreDetail.speedIndexId != tyreDetail.cust_speedIndexId) {
+            Log.d("tyre_filter", "7:" + tyreDetail.speedIndexId + "=" + tyreDetail.cust_speedIndexId)
+        } else if (((!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) && !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin))) && (tyreDetail.speed_load_index != tyreDetail.cust_speedLoad_indexId))) {
+            Log.d("tyre_filter", "7:" + tyreDetail.speed_load_index + "=" + tyreDetail.cust_speedLoad_indexId)
+        } else if (!tyreDetail.priceRange.isNullOrBlank()) {
             Log.d("tyre_filter", "8")
         }
 
@@ -271,16 +269,16 @@ class TyreListActivity : BaseActivity() {
             speedloadindex = tyreDetail.speed_load_index
         }
 
-      /*  if (!tyreDetail.Rating.isNullOrBlank()) {
+        /*  if (!tyreDetail.Rating.isNullOrBlank()) {
 
-            var ratingArray = tyreDetail.Rating.split(",")
-            rating = if (ratingArray.size == 1) {
-                "0," + ratingArray[0]
-            } else {
-                (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
-            }
+              var ratingArray = tyreDetail.Rating.split(",")
+              rating = if (ratingArray.size == 1) {
+                  "0," + ratingArray[0]
+              } else {
+                  (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
+              }
 
-        }*/
+          }*/
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,

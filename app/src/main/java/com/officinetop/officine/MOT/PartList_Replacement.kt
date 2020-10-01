@@ -168,7 +168,7 @@ class PartList_Replacement : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -197,7 +197,7 @@ class PartList_Replacement : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage() }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

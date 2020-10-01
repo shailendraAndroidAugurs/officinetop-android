@@ -1,6 +1,7 @@
 package com.officinetop.officine.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -125,9 +126,9 @@ class FragmentHome : Fragment() {
                         when (p1) {
                             0 -> {
                                 if (!TextUtils.isEmpty(it.getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).getString("tyre_detail", ""))) {
-                                    startActivity(it.intentFor<TyreListActivity>())
+                                    startActivity(it.intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                 } else {
-                                    startActivity(it.intentFor<TyreDiameterActivity>())
+                                    startActivity(it.intentFor<TyreDiameterActivity>().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                 }
                             }
                             1 -> startActivity(it.intentFor<MaintenanceActivity>())
@@ -565,7 +566,7 @@ class FragmentHome : Fragment() {
                         startActivity(intentFor<FeedbackDetailActivity>(
                                 Constant.Path.type to "",
                                 Constant.Path.model to Gson().toJson(WorshopFeedbackList[p1]),
-                                Constant.Path.ProductOrWorkshopName to if(WorshopFeedbackList[p1].workshop_details!=null) WorshopFeedbackList[p1].workshop_details.company_name else "-",
+                                Constant.Path.ProductOrWorkshopName to if (WorshopFeedbackList[p1].workshop_details != null) WorshopFeedbackList[p1].workshop_details.company_name else "-",
                                 "forHighRating" to "1"
                         ))
                     }

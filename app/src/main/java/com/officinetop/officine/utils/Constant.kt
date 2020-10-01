@@ -399,6 +399,8 @@ object Constant {
         const val couponFilter = "coupon_filter"
         const val versionCriteria = "version_criteria"
         const val plateNumber = "plateNumber"
+        const val scheduleId = "schedule_id"
+
 
     }
 

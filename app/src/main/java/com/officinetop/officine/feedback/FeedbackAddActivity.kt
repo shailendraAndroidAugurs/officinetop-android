@@ -250,7 +250,7 @@ class FeedbackAddActivity : BaseActivity() {
 
                         val body = response.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithsforating), true) { movetologinPage() }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithsforating), true) { movetologinPage(this@FeedbackAddActivity) }
                         if (response.isSuccessful) {
 
                             val data = JSONObject(body)
@@ -258,7 +258,7 @@ class FeedbackAddActivity : BaseActivity() {
                                 showInfoDialog(data.get("message").toString())
                                 // startActivity(intentFor<Order_List>().clearTask().clearTop())
                                 finish()
-                                logRateEvent(this, if (type.equals("1")) "product" else if (type.equals("2")) "workshop" else "workshop with product", productorWorkshopName, if (workshopId.equals("")) productId else workshopId, 5,ratings.rating.toDouble())
+                                logRateEvent(this, if (type.equals("1")) "product" else if (type.equals("2")) "workshop" else "workshop with product", productorWorkshopName, if (workshopId.equals("")) productId else workshopId, 5, ratings.rating.toDouble())
                                 Log.d("Feedback", "yes")
                             }
 

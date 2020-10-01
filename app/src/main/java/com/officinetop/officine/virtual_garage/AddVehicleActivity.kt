@@ -62,6 +62,7 @@ class AddVehicleActivity : BaseActivity() {
     val model: MutableList<Models.CarModels> = ArrayList()
     var carVersions: MutableList<Models.CarVersion> = ArrayList()
     var carCriteriaList: MutableList<Models.CarCriteria> = ArrayList()
+    var carConditionMotScheduleList: MutableList<Models.MotSchedule> = ArrayList()
 
     private var finalCarVersion: MutableList<Models.CarVersion> = ArrayList()
 
@@ -72,6 +73,8 @@ class AddVehicleActivity : BaseActivity() {
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
     private var carcriteriaId = ""
+    private var CarConditionScheduleId = ""
+
     var iscompletedlater = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,8 +204,13 @@ class AddVehicleActivity : BaseActivity() {
 
             val idVehicle = finalCarVersion[spinner_version.selectedItemPosition].idVehicle
             loadCarCriteria(idVehicle)
+            loadCarConditionMotSchedule(idVehicle)
             Log.d("carCriteriaList_size", "idVehicle" + idVehicle)
         }
+
+
+
+
     }
 
     private fun clearSpinners() {
@@ -329,7 +337,7 @@ class AddVehicleActivity : BaseActivity() {
 
 
         if (spinner_version.selectedItemPosition < 0 || spinner_manufacturer.selectedItemPosition < 0
-                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0 && !carcriteriaId.equals("")) {
+                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0 && !carcriteriaId.equals("") && !!CarConditionScheduleId.equals("")) {
             snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
             return
         }
@@ -343,6 +351,7 @@ class AddVehicleActivity : BaseActivity() {
             val versionIndex = spinner_version.selectedItemPosition
             val modelIndex = spinner_model.selectedItemPosition
             val criteriaIndex = spinner_criteria.selectedItemPosition
+            val CarConditionMotSchedule = spinner_car_condition.selectedItemPosition
             carDetails.addProperty("id", "")
             carDetails.addProperty("user_id", "")
             carDetails.addProperty("number_plate", tv_plate_number.text.toString())
@@ -400,7 +409,15 @@ class AddVehicleActivity : BaseActivity() {
                 val carCriteriaDetails: JsonObject = JsonObject()
                 carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
                 carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
-                carDetails.add("criteriaResponse", carCriteriaDetails )
+                carDetails.add("criteriaResponse", carCriteriaDetails)
+            }
+
+            // Add Car Condition Mot schedule data
+            if (CarConditionMotSchedule != -1) {
+                val CarConditionMotScheduleJson: JsonObject = JsonObject()
+                CarConditionMotScheduleJson.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
+                CarConditionMotScheduleJson.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
+                carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
             }
 
             val json = carDetails.toString()
@@ -444,7 +461,7 @@ class AddVehicleActivity : BaseActivity() {
                     model[spinner_model.selectedItemPosition].modelID + "/" + model[spinner_model.selectedItemPosition].modelYear,
                     idVehicle,
                     finalCarVersion[spinner_version.selectedItemPosition].body,
-                    getBearerToken() ?: "", versionCriteria = carcriteriaId)
+                    getBearerToken() ?: "", versionCriteria = carcriteriaId,scheduleId = CarConditionScheduleId)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()
@@ -511,7 +528,7 @@ class AddVehicleActivity : BaseActivity() {
                     if (alloy.isChecked) "1" else "0",
                     if (spinner_fuel.selectedItem != null) spinner_fuel.selectedItem else "",
                     if (spinner_version.selectedItemPosition != null && spinner_version.selectedItemPosition != -1) finalCarVersion[spinner_version.selectedItemPosition].body else "",
-                    "Bearer ${getStoredToken()}", versionCriteria = carcriteriaId).enqueue(object : Callback<ResponseBody> {
+                    "Bearer ${getStoredToken()}", versionCriteria = carcriteriaId, scheduleId = CarConditionScheduleId).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     progressDialog.dismiss()
                     snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
@@ -764,6 +781,103 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
+
+    private fun loadCarConditionMotSchedule(SelectedVersioId: String) {
+
+        progressDialog.show()
+
+        RetrofitClient.client.getMotServiceSchedule(SelectedVersioId).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                progressDialog.dismiss()
+                snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("AddVehicleActivity", "onResponse: car criteria")
+                val body = response.body()?.string()
+                progressDialog.dismiss()
+
+                if (isStatusCodeValid(body)) {
+                    carConditionMotScheduleList.clear()
+
+                    val dataset = getDataSetArrayFromResponse(body)
+
+                    for (i in 0 until dataset.length()) {
+                        Log.d("AddVehicleActivity", "onResponse: forloop criteria")
+                        val carConditionMotJson = dataset.getJSONObject(i)
+                        val carConditionMotList = Gson().fromJson<Models.MotSchedule>(carConditionMotJson.toString(), Models.MotSchedule::class.java)
+                        Log.d("AddVehicleActivity", "onResponse: forloop ${carConditionMotList}")
+
+                        carConditionMotScheduleList.add(carConditionMotList)
+
+
+                    }
+
+                    val titlesfor: MutableList<String> = ArrayList()
+                    titlesfor.clear()
+                    if (carConditionMotScheduleList.size > 1) {
+                        var selectedIndex = -1
+                        tv_car_condition.visibility = View.VISIBLE
+                        spinner_car_condition.visibility = View.VISIBLE
+                        carConditionMotScheduleList.forEachWithIndex { i, it ->
+                            val title = if (it.schedule_id != null && it.service_schedule_description != null) {
+                                it.schedule_id + " " + it.service_schedule_description
+                            } else {
+                                it.schedule_id
+                            }
+
+                            if (true) {
+                                titlesfor.add(title)
+
+                                if (isForEdit) {
+                                    if (it.schedule_id == myCar?.carConditionMotSchedule?.schedule_id)
+
+                                        selectedIndex = i
+                                }
+
+                            } else carConditionMotScheduleList.removeAt(i)
+                        }
+
+                        if (isForPlateno && myCar?.carConditionMotSchedule == null) {
+                            selectedIndex = 0
+                        }
+                        CarConditionScheduleId = carConditionMotScheduleList[0].schedule_id
+                        bindSpinner(spinner_car_condition, titlesfor)
+                        spinner_car_condition.setSelection(0)
+                        if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
+                            spinner_car_condition.setSelection(selectedIndex)
+                        }
+
+                    } else if (carConditionMotScheduleList.size == 1) {
+                        tv_car_condition.visibility = View.GONE
+                        spinner_car_condition.visibility = View.GONE
+                        CarConditionScheduleId = carConditionMotScheduleList[0].schedule_id
+
+                    } else {
+                        tv_car_condition.visibility = View.GONE
+                        spinner_car_condition.visibility = View.GONE
+                    }
+
+                    spinner_car_condition.setOnSpinnerItemClickListener { position, _ ->
+                        CarConditionScheduleId = carConditionMotScheduleList[position].schedule_id
+
+                    }
+
+
+
+                    isLoaded = true
+
+                }
+
+            }
+
+
+        })
+
+
+    }
+
+
     private fun loadCarVersion(modelID: String, year: String) {
 
         progressDialog.show()
@@ -903,11 +1017,13 @@ class AddVehicleActivity : BaseActivity() {
         if (selIndex > -1 && titles.size > selIndex) {
             spinner_version.setSelection(selIndex)
             loadCarCriteria(finalCarVersion[selIndex].idVehicle)
+            loadCarConditionMotSchedule(finalCarVersion[selIndex].idVehicle)
         }
         spinner_version.setOnSpinnerItemClickListener { position, _ ->
             Log.d("car_criteria_vehical_id", finalCarVersion[position].idVehicle)
             if (iscompletedlater) {
                 loadCarCriteria(finalCarVersion[position].idVehicle)
+                loadCarConditionMotSchedule(finalCarVersion[selIndex].idVehicle)
             }
 
 
