@@ -119,9 +119,9 @@ class TyreCustomizationActivity : BaseActivity() {
                 progressDialog.dismiss()
                 val intent = Intent(applicationContext, TyreListActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                startActivity(intent)
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                onNewIntent(intent)
+                finish()
 
 
             } else {

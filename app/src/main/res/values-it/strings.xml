@@ -387,7 +387,7 @@
     <string name="release_method">Metodo di rilascio:</string>
     <string name="text_release_method">Il premio di credito viene caricato nel tuo account e prelevabile quando supera i 50 €. \n \nLo stesso numero di telefono cellulare, numero di targa e numero di terminale viene considerato come lo stesso utente. \n\nSolo il numero di cellulare, il numero di targa e il numero del dispositivo terminale è tutto nuovo e registrato con un codice di riferimento, è considerato un rapporto di invito valido. \n\nDopo aver completato il primo ordine del servizio OfficineTop, è possibile ricevere credito successivo. \n\nOfficineTop ha il diritto di ritirare i premi e gli ordini correlati nel caso in cui i premi vengano ottenuti con mezzi impropri e si riserva il diritto di perseguire con responsabilità legale.</string>
     <string name="total_products">Prodotti</string>
-    <string name="total_services">Totale servizi</string>
+
     <string name="are_u_sure_want_to_delete_this_item">Vuoi davvero eliminare questo elemento?</string>
 
 
@@ -461,7 +461,7 @@
 
     <string name="Workshop_Description">Descrizione dell officina</string>
     <string name="all_Categories">tutte le categorie</string>
-    <string name="Total_services">Servizio totale</string>
+    <string name="Total_services">Totale servizi</string>
 
 
     <string name="Total_order">Ordine totale</string>
@@ -624,7 +624,7 @@
     <string name="MaxImagesnotmorethanthat">Max Images è 5! non di più</string>
     <string name="PleaseEnterValidLicensePlateNumber">Inserisci il numero di targa valido</string>
     <string name="Deletedefaultimageforthiscar">Elimina l immagine predefinita per questa macchina</string>
-    <string name="CarDetailSavedSuccessfully">Dettaglio auto salvato con successo</string>
+    <string name="CarDetailSavedSuccessfully">Auto salvata correttamente</string>
     <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Vuoi completare i dettagli dell auto per ottenere suggerimenti personalizzati?</string>
 
     <string name="Completelater">Completa più tardi</string>
@@ -655,7 +655,7 @@
     <string name="Filter_Workshops">Officine sui filtro</string>
     <string name="are_you_sure_to_book_this_slot">Sei sicuro di prenotare per questo orario?</string>
     <string name="call_phone">Telefono</string>
-    <string name="chat_online">Chatta online</string>
+    <string name="chat_online">Ticket</string>
     <string name="Email">E-mail</string>
     <string name="FAQs">Domande frequenti</string>
     <string name="permission_Denied">Permesso negato</string>
@@ -703,8 +703,10 @@
     <string name="whatsapp">whatsapp</string>
     <string name="inviteShareMessage">Ciao, sei stato invitato ad utilizzare l\'app OfficineTop! L\'unica app che offre la miglior qualità/prezzo dei servizi in tutta Italia. Offriamo servizi di riparazione, manutenzione, revisioni, tagliandi, lavaggi auto, emergenza, vendita prodotti di: parti di ricambio, gomme e accessori auto. Registrati utilizzando il codice di riferimento %S e riceverai un coupon di 6€ pronto da utilizzare.</string>
     <!--<string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
-    <string name="LoggedinAs">Disconnettersi dall\'account %S</string>
+    <string name="LoggedinAs">Disconnettersi dall\'account %s</string>
     <string name="replacement_parts">Parti di ricambio</string>
+    <string name="feedback_Workshop_home">Recensioni su officine</string>
+    <string name="feedback_Product_home"> Recensioni sui prodotti</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -173,8 +173,9 @@
 
 <TextView
     android:layout_width="match_parent"
-    android:text="@string/product_feedback"
+    android:text="@string/feedback_Product_home"
     android:padding="@dimen/_5sdp"
+    android:textColor="@color/black"
     android:layout_height="wrap_content">
 
 
@@ -194,8 +195,9 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/workshop_feedback"
+            android:text="@string/feedback_Workshop_home"
             android:padding="@dimen/_5sdp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content">
 
 

@@ -126,18 +126,18 @@ class FragmentHome : Fragment() {
                         when (p1) {
                             0 -> {
                                 if (!TextUtils.isEmpty(it.getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE).getString("tyre_detail", ""))) {
-                                    startActivity(it.intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                    startActivityForResult(it.intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
                                 } else {
-                                    startActivity(it.intentFor<TyreDiameterActivity>().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                    startActivityForResult(it.intentFor<TyreDiameterActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
                                 }
                             }
-                            1 -> startActivity(it.intentFor<MaintenanceActivity>())
-                            4 -> startActivity(it.intentFor<PartCategories>())//PartsCategoryActivity>())
+                            1 -> startActivityForResult(it.intentFor<MaintenanceActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
+                            4 -> startActivityForResult(it.intentFor<PartCategories>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)//PartsCategoryActivity>())
                             5 -> startActivityForResult(it.intentFor<MotListActivity>(), 108)
-                            2 -> startActivity(it.intentFor<RevisionActivity>())
-                            3 -> startActivity(it.intentFor<CarServiceListActivity>())
-                            6 -> startActivity(it.intentFor<SOSActivity>())
-                            7 -> startActivity(it.intentFor<QuotesActivity>())
+                            2 -> startActivityForResult(it.intentFor<RevisionActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
+                            3 -> startActivityForResult(it.intentFor<CarServiceListActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
+                            6 -> startActivityForResult(it.intentFor<SOSActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
+                            7 -> startActivityForResult(it.intentFor<QuotesActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION), 500)
 
                             else -> Log.d("no item", "no item")
                         }

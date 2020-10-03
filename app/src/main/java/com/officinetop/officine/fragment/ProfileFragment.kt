@@ -98,24 +98,20 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         Log.d("HomeActivity", "Click")
 
         button_logout.setOnClickListener(View.OnClickListener {
-            /*
-            Log.d("HomeActivity", "Click")
-            Toast.makeText(context,"Type of str is", Toast.LENGTH_LONG).show()
-           */
             if (!context?.isLoggedIn()!!) {
                 alert {
                     message = getString(R.string.not_logged_in)
                     positiveButton(getString(R.string.login)) {
                         startActivity(intentFor<LoginActivity>().clearTop())
-//                                finish()
+                        activity?.finishAffinity()
                         context!!.storeLangLocale("")
                     }
                     negativeButton(getString(R.string.ok)) {}
                 }.show()
-                //return@setOnNavigationItemSelectedListener true}
+
             } else {
                 alert {
-                    message = "Logged in as " + context?.getStoredEmail()
+                    message = getString(R.string.LoggedinAs, context?.getStoredEmail())
                     positiveButton(getString(R.string.logout)) {
                         logout(context?.getBearerToken()!!)
                     }

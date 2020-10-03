@@ -449,7 +449,6 @@
 
 
     <string name="total_products">Total Products</string>
-    <string name="total_services">Total Service</string>
     <string name="are_u_sure_want_to_delete_this_item">Are you sure want to delete this item ?</string>
 
     <string name="washing_type">Washing Type</string>
@@ -695,7 +694,7 @@
     <string name="PleaseEnterValidLicensePlateNumber">Please Enter Valid License Plate Number</string>
 
     <string name="Deletedefaultimageforthiscar">Delete default image for this car</string>
-    <string name="CarDetailSavedSuccessfully">Car Detail Saved Successfully</string>
+    <string name="CarDetailSavedSuccessfully">Car successfully saved.</string>
     <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Do you want to complete the car details to get personalized suggestions ?</string>
     <string name="Completelater">Complete later</string>
     <string name="Failed_addcar">Failed to add car</string>
@@ -725,7 +724,7 @@
 
 
     <string name="call_phone">Call Phone</string>
-    <string name="chat_online">Chat Online</string>
+    <string name="chat_online">Ticket</string>
     <string name="Email">Email</string>
     <string name="FAQs">Frequently Asked Questions</string>
     <string name="permission_Denied">Permission Denied</string>
@@ -784,7 +783,13 @@
 
 
     <string name="replacement_parts">Replacement parts</string>
-    <string name="LoggedinAs">Log out of the account  %S</string>
+    <string name="LoggedinAs">Log out of the account  %s</string>
+
+    <string name="feedback_Workshop_home">Reviews on workshops</string>
+    <string name="feedback_Product_home">Product Reviews</string>
+
+
+
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

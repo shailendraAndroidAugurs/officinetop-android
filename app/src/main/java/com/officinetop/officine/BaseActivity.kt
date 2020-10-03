@@ -91,7 +91,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
                 menuBuilder.setCallback(object : MenuBuilder.Callback {
                     override fun onMenuItemSelected(menu: MenuBuilder, item: MenuItem): Boolean {
-                        startActivity(intentFor<HomeActivity>("fragmentID" to item.itemId))
+                        startActivity(intentFor<HomeActivity>("fragmentID" to item.itemId).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                         finishAffinity()
 
                         return true
