@@ -92,7 +92,7 @@ class AddVehicleActivity : BaseActivity() {
         spinner_version.setDownArrowTintColor(Color.LTGRAY)
         spinner_fuel.setDownArrowTintColor(Color.LTGRAY)
         spinner_criteria.setDownArrowTintColor(Color.LTGRAY)
-        spinner_fuel.setSpinnerHint("Select Fuel Type")
+
 
         myCar = intent.getSerializableExtra(Constant.Key.myCar) as Models.MyCarDataSet?
 

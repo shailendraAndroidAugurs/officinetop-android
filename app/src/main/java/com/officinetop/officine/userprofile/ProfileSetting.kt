@@ -315,7 +315,7 @@ class ProfileSetting : BaseActivity() {
     private fun ifLangChanged() {
         try {
             val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
             intent.putExtra("loadProfileFragment", true)
             startActivity(intent)
         } catch (e: Exception) {

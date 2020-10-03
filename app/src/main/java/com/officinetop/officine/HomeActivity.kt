@@ -413,6 +413,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!hasSelectedCar) {
                 Log.d("HomeActivity", "setCarList: $carList")
                 setToolbarValues(carList.find { it.selected == "1" })
+                if (carList.find { it.selected == "1" } == null) {
+                    setToolbarValues(carList.last())
+                }
             }
 
 

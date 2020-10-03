@@ -390,7 +390,7 @@
     <string name="release_method">Release Method:</string>
     <string name="text_release_method">The credit premium is loaded into your account and withdrawable when it exceeds €50.\n\nThe same mobile phone number, license plate number and terminal device number are considered to be the same user.\n\nOnly the mobile number, the license plate number and the terminal device number are all new and registered with a reference code, it is considered as a valid invitation report. \n\nAfter completing the first order of the OfficineTop service, you can receive subsequent credit.\n\nOfficineTop has the right to withdraw prizes and related orders in the event that prizes are obtained by improper means and reserves the right to pursue with legal responsibility.</string>
     <string name="total_products">Total Products</string>
-    <string name="total_services">Total Service</string>
+
     <string name="are_u_sure_want_to_delete_this_item">Are you sure want to delete this item ?</string>
 
     <string name="done">DONE</string>
@@ -627,7 +627,7 @@
     <string name="PleaseEnterValidLicensePlateNumber">Please Enter Valid License Plate Number</string>
     <string name="Deletedefaultimageforthiscar">Delete default image for this car</string>
 
-    <string name="CarDetailSavedSuccessfully">Car Detail Saved Successfully</string>
+    <string name="CarDetailSavedSuccessfully">Car successfully saved.</string>
     <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Do you want to complete the car details to get personalized suggestions ?</string>
     <string name="Completelater">Complete later</string>
     <string name="Failed_addcar">Failed to add car</string>
@@ -657,7 +657,7 @@
     <string name="Filter_Workshops">Filter Workshops</string>
     <string name="are_you_sure_to_book_this_slot">Are you sure to book this slot ?</string>
     <string name="call_phone">Call Phone</string>
-    <string name="chat_online">Chat Online</string>
+    <string name="chat_online">Ticket</string>
     <string name="Email">Email</string>
     <string name="FAQs">Frequently Asked Questions</string>
     <string name="permission_Denied">Permission Denied</string>
@@ -706,8 +706,10 @@
     <string name="inviteShareMessage">Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n
                 overhall,service, maintenance, tow truck, car wash, spare parts, tires and car accessories \n
                 I\'ll give you a €6 coupon. Just register by entering this friend code ,%s "download from here":</string>
-    <string name="LoggedinAs">Log out of the account  %S</string>
+    <string name="LoggedinAs">Log out of the account  %s</string>
     <string name="replacement_parts">Replacement parts</string>
+    <string name="feedback_Workshop_home">Reviews on workshops</string>
+    <string name="feedback_Product_home">Product Reviews</string>
    <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Tyre</item>

@@ -50,11 +50,11 @@ class SplashActivity : BaseActivity() {
         Handler().postDelayed({
 
             if (!isLoggedIn() && isFirstRun()) {
-                startActivity(intentFor<HomeActivity>())
+                startActivity(intentFor<HomeActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                 //startActivity(intentFor<LoginActivity>())
                 setFirstRun(false)
             } else {
-                startActivity(intentFor<HomeActivity>())
+                startActivity(intentFor<HomeActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
             }
 
 

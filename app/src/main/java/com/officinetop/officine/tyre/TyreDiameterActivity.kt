@@ -39,9 +39,11 @@ class TyreDiameterActivity : BaseActivity() {
 
         customize_measure_btn.setOnClickListener {
             if (!selectedTyreDetail.isNullOrBlank()) {
-                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail), 200)
+                startActivity(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail))
+                finish()
             } else {
-                startActivityForResult(intentFor<TyreCustomizationActivity>(), 200)
+                startActivity(intentFor<TyreCustomizationActivity>())
+                finish()
             }
 
 
@@ -68,16 +70,6 @@ class TyreDiameterActivity : BaseActivity() {
                                     bindTyreRecycler(body)
                                 }
                                 if (body.statusCode == 0) {
-
-                                    /*   alert {
-                                           message = getString(R.string.costimizemessage)
-                                           positiveButton(getString(R.string.yes)) {
-                                               startActivity(intentFor<TyreCustomizationActivity>())
-                                               finish()
-                                           }
-                                           negativeButton(getString(R.string.no)) {
-                                           }
-                                       }.show()*/
                                     if (isLoggedIn()) {
                                         clearTyreDetail()
                                         startActivity(intentFor<TyreCustomizationActivity>())
