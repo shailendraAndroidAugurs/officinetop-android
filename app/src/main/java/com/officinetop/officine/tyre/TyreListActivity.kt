@@ -2,6 +2,8 @@ package com.officinetop.officine.tyre
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -26,6 +28,7 @@ import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tyre_list.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
 import kotlinx.android.synthetic.main.dialog_tyre_filter.*
@@ -37,6 +40,7 @@ import kotlinx.android.synthetic.main.item_tyre.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -96,123 +100,125 @@ class TyreListActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.tyres)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if (getTyreDetail() == null) {
+            finish()
+        } else {
+            try {
+                tyreDetail = getTyreDetail()!!
+                tyreDetailFilter = getTyreDetail()!!
+                tyreDetail?.let {
+                    setTyreTitle()
+                    searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
+                    progress_bar.visibility = View.VISIBLE
 
-        recycler_view.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(this)
-        recycler_view.layoutManager = linearLayoutManager
+                    loadTyreData()
 
-        recyclerViewAdapter = RecyclerViewAdapter(this@TyreListActivity, ArrayList())
-        recycler_view.adapter = recyclerViewAdapter
 
-        recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
-
-            override fun loadMoreItems() {
-                isLoading = true
-                current_page += 10
-                loadTyreData()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
+            recycler_view.setHasFixedSize(true)
+            val linearLayoutManager = LinearLayoutManager(this)
+            recycler_view.layoutManager = linearLayoutManager
 
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
+            recyclerViewAdapter = RecyclerViewAdapter(this@TyreListActivity, ArrayList())
+            recycler_view.adapter = recyclerViewAdapter
 
-        try {
-            tyreDetail = getTyreDetail()!!
-            tyreDetailFilter = getTyreDetail()!!
-            tyreDetail?.let {
-                setTyreTitle()
-                searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
-                progress_bar.visibility = View.VISIBLE
+            recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
 
-                loadTyreData()
+                override fun loadMoreItems() {
+                    isLoading = true
+                    current_page += 10
+                    loadTyreData()
+                }
 
+                override fun isLastPage(): Boolean {
+                    return isLastPage
+                }
 
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString)
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        val body = response.body()?.string()
-                        if (response.isSuccessful) {
-                            if (isStatusCodeValid(body)) {
-                                try {
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
 
 
-                                    val jsonObject = JSONObject(body)
-                                    val data = jsonObject.getJSONObject("data") as JSONObject
-                                    speed_index = data.getJSONArray("speed_index") as JSONArray
-                                    season_type = data.getJSONArray("season_tyre_type") as JSONArray
-                                    speed_load_index = data.getJSONArray("load_index") as JSONArray
-                                    var PriceObject = data.getJSONObject("price")
+            RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
-                                    filterTyreSeasonList.clear()
-                                    filterTyreSpeedIndexList.clear()
-                                    filterTyreSpeedLoadIndexList.clear()
-                                    filterTyreSeasonList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
-                                    for (tyreType in 0 until season_type.length()) {
-                                        val tyreTypeObject: JSONObject = season_type.get(tyreType) as JSONObject
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            val body = response.body()?.string()
+                            if (response.isSuccessful) {
+                                if (isStatusCodeValid(body)) {
+                                    try {
 
 
-                                        filterTyreSeasonList.add(tyreType + 1, Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
+                                        val jsonObject = JSONObject(body)
+                                        val data = jsonObject.getJSONObject("data") as JSONObject
+                                        speed_index = data.getJSONArray("speed_index") as JSONArray
+                                        season_type = data.getJSONArray("season_tyre_type") as JSONArray
+                                        speed_load_index = data.getJSONArray("load_index") as JSONArray
+                                        var PriceObject = data.getJSONObject("price")
+
+                                        filterTyreSeasonList.clear()
+                                        filterTyreSpeedIndexList.clear()
+                                        filterTyreSpeedLoadIndexList.clear()
+                                        filterTyreSeasonList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
+                                        for (tyreType in 0 until season_type.length()) {
+                                            val tyreTypeObject: JSONObject = season_type.get(tyreType) as JSONObject
+
+
+                                            filterTyreSeasonList.add(tyreType + 1, Models.TypeSpecification(tyreTypeObject.optString("name"), tyreTypeObject.optString("id")))
+                                        }
+                                        filterTyreSpeedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
+                                        for (speedIndex in 0 until speed_index.length()) {
+                                            val speedIndexObject: JSONObject = speed_index.get(speedIndex) as JSONObject
+
+                                            filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("name"), speedIndexObject.optString("id")))
+                                        }
+                                        filterTyreSpeedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
+                                        for (speedLoadIndexObj in 0 until speed_load_index.length()) {
+                                            val speedLoadIndexObject: JSONObject = speed_load_index.get(speedLoadIndexObj) as JSONObject
+                                            filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(speedLoadIndexObject.optString("load_speed_index"), ""))
+                                        }
+
+
+                                    } catch (e: Exception) {
+                                        e.message
+                                        e.printStackTrace()
                                     }
-                                    filterTyreSpeedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
-                                    for (speedIndex in 0 until speed_index.length()) {
-                                        val speedIndexObject: JSONObject = speed_index.get(speedIndex) as JSONObject
-
-                                        filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("name"), speedIndexObject.optString("id")))
-                                    }
-                                    filterTyreSpeedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
-                                    for (speedLoadIndexObj in 0 until speed_load_index.length()) {
-                                        val speedLoadIndexObject: JSONObject = speed_load_index.get(speedLoadIndexObj) as JSONObject
-                                        filterTyreSpeedLoadIndexList.add(Models.TypeSpecification(speedLoadIndexObject.optString("load_speed_index"), ""))
-                                    }
 
 
-                                } catch (e: Exception) {
-                                    e.message
-                                    e.printStackTrace()
                                 }
-
-
                             }
+
+
                         }
+                    })
 
+            edit_tyre.setOnClickListener {
 
-                    }
-                })
+                startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement", tyreDetail.convertToJsonString()).putExtra("TyreSelectedId", tyreDetail.id), 100)
+            }
 
-        edit_tyre.setOnClickListener {
+            filter_btn.setOnClickListener {
+                createFilterDialog()
+                filterDialog.show()
+            }
 
-            startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement", tyreDetail.convertToJsonString()), 100)
+            sort_btn.setOnClickListener {
+                sortDialog.show()
+
+            }
+
+            // createFilterDialog()
+            createSortDialog()
+
         }
 
-        filter_btn.setOnClickListener {
-            createFilterDialog()
-            filterDialog.show()
-        }
 
-        sort_btn.setOnClickListener {
-            sortDialog.show()
-
-        }
-
-        // createFilterDialog()
-        createSortDialog()
-
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onResume() {
-        super.onResume()
     }
 
 
@@ -1302,5 +1308,12 @@ class TyreListActivity : BaseActivity() {
                             if (it.speedIndexId == "0" || it.speedIndexName == getString(R.string.All) || it.speedIndexName == getString(R.string.all_in_italin)) "" else it.speedIndexName
 
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        recreate()
+
+        Log.d("TyreListActivity", "OnActivityResult")
     }
 }

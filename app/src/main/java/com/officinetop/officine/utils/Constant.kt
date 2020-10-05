@@ -191,6 +191,7 @@ object Constant {
         const val carMOTKromedaCall = "save_mot_kromeda_call"
 
         const val addCarByPlateNumber = "addCarByPlateNumber"
+        const val editTyreMeasurementdetails = "edit_user_tyre_details"
 
     }
 
