@@ -1,19 +1,23 @@
 package com.officinetop.officine.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
 import com.officinetop.officine.data.MeasurementDataSetItem
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.tyre.TyreCustomizationActivity
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showConfirmDialog
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.item_text_only.view.*
+import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 
 class SimpleTextListAdapter(private var context: Context, private var titleList: MutableList<MeasurementDataSetItem>, private var listenerRecycler: OnRecyclerItemClickListener) :
@@ -35,7 +39,6 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
         val data: MeasurementDataSetItem = titleList.get(p1)
 
 
-
         val item = "${data.width}/${data.aspectRatio}  R${data.rimDiameter}  ${if (!data.speed_load_index.isNullOrBlank() && data.speed_load_index.trim() != "0" && data.speed_load_index.trim() != context.getString(R.string.all) && data.speed_load_index.trim() != context.getString(R.string.all_in_italin)) data.speed_load_index.trim() else " "}   ${if (!data.speedindexStatus.isNullOrBlank() && data.speedindexStatus != "0" && data.speedindexStatus.trim() != context.getString(R.string.All) && data.speedindexStatus.trim() != context.getString(R.string.all_in_italin)) data.speedindexStatus else " "} "
 
         viewHolder.bindView(item, data.id.toString())
@@ -47,10 +50,9 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
 
         private val itemTitle = itemView.item_title
         private val deleteItem = itemView.delete_item
-
+        private val editItem = itemView.edit_item
         fun bindView(item: String, id: String) {
             itemTitle.text = item
-            deleteItem.visibility = View.VISIBLE
             deleteItem.setOnClickListener {
 
                 context.showConfirmDialog(context.resources.getString(R.string.are_u_sure_want_to_delete_this_item)) {
@@ -72,6 +74,10 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
                             }
                 }
             }
+            editItem.setOnClickListener {
+                listenerRecycler.onItemClick(it, titleList[adapterPosition], adapterPosition, true)
+            }
+
             itemTitle.setOnClickListener {
                 listenerRecycler.onItemClick(it, titleList[adapterPosition], adapterPosition)
             }
@@ -79,7 +85,8 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
     }
 
     interface OnRecyclerItemClickListener {
-        fun onItemClick(view: View, title: MeasurementDataSetItem, position: Int)
+        fun onItemClick(view: View, title: MeasurementDataSetItem, position: Int, Isedit: Boolean = false)
         fun onItemRemove()
+
     }
 }

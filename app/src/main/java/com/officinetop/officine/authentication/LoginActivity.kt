@@ -117,9 +117,12 @@ class LoginActivity : BaseActivity() {
 
             startActivity(intentFor<AddVehicleActivity>().clearTask().clearTop())
 
-        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle")
+        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle"){
+            startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            finish()
+        }
         else {
-            clearTyreDetail()
+
             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
             finish()
         }

@@ -1,7 +1,9 @@
 package com.officinetop.officine.tyre
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -22,9 +24,12 @@ import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.utils.makeRound
 import com.officinetop.officine.utils.showInfoDialog
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -53,6 +58,9 @@ class TyreCustomizationActivity : BaseActivity() {
     private val aspectRatioList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
     lateinit var selectedTyreDetail: Models.TyreDetail
     private var isPreviousSelectedMeasurement = false
+    private var IsMeaurementEditId = ""
+    private var IsSavedInlocal = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tyre_customization)
@@ -70,6 +78,17 @@ class TyreCustomizationActivity : BaseActivity() {
             selectedTyreDetail = Gson().fromJson(intent.getStringExtra("currentlySelectedMeasurement"), Models.TyreDetail::class.java)
             isPreviousSelectedMeasurement = true
         }
+        if (intent.extras != null && intent.hasExtra("editId")) {
+            IsMeaurementEditId = intent.extras.getString("editId")
+            submit.setText("Update tyre")
+        }
+        if (intent.extras != null && intent.hasExtra("IsSavedInlocal")) {
+            IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
+
+        }
+
+
+
         getTyreSpecificationApi()
 
         submit.setOnClickListener {
@@ -78,6 +97,7 @@ class TyreCustomizationActivity : BaseActivity() {
             Log.d("tryeSpecification: ", "${specification}")
 
             val tyre = Models.TyreDetail(
+                    id = IsSavedInlocal,
                     vehicleType = vehicleType,
                     seasonName = seasonTypeName,
                     aspectRatio = aspectRatioName,
@@ -119,9 +139,56 @@ class TyreCustomizationActivity : BaseActivity() {
                 progressDialog.dismiss()
                 val intent = Intent(applicationContext, TyreListActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 onNewIntent(intent)
                 finish()
+
+
+            } else if (!IsMeaurementEditId.isNullOrBlank()) {
+                RetrofitClient.client.EditUserTyreDetails(
+                        getUserId(),
+                        vehicleType,
+                        seasonType,
+                        widthName.toInt(),
+                        speedIndex,
+                        run_flat,
+                        reinforced,
+                        1,
+                        aspectRatioName,
+                        diameterName,
+                        getSelectedCar()?.carVersionModel?.idVehicle
+                                ?: "", speedLoadIndex, IsMeaurementEditId)
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                progressDialog.dismiss()
+                            }
+
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                val body = response.body()?.string()
+                                progressDialog.dismiss()
+                                Log.d("SAVE TYRE DETAILS", "API CALL SAVE TYRE DETAILS${getUserId()}${body}")
+                                if (response.isSuccessful) {
+                                    try {
+                                        val jsonObject = JSONObject(body)
+                                        Toast.makeText(this@TyreCustomizationActivity, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
+                                        if (!IsSavedInlocal.isNullOrBlank()) {
+                                            setTyreDetail(tyre)
+                                        }
+                                        Handler().postDelayed({
+                                            val returnIntent = Intent();
+                                            returnIntent.putExtra("result", "update");
+                                            setResult(Activity.RESULT_OK, returnIntent);
+                                            finish();
+
+                                        }, 500)
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
+                                }
+                            }
+                        })
 
 
             } else {
@@ -150,11 +217,31 @@ class TyreCustomizationActivity : BaseActivity() {
                                     try {
                                         val jsonObject = JSONObject(body)
                                         Toast.makeText(applicationContext, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
+
+                                        if (jsonObject.has("data") && jsonObject.get("data") != null) {
+                                            val data = jsonObject.getJSONObject("data") as JSONObject
+
+                                            val TyreMeasurementResponse = Gson().fromJson<MeasurementDataSetItem>(data.toString(), MeasurementDataSetItem::class.java)
+                                            tyre.id = TyreMeasurementResponse.id.toString()
+                                        }
+
                                         setTyreDetail(tyre)//save tyre details to local(shared preferences)
                                         Handler().postDelayed({
-                                            val intent = Intent(applicationContext, TyreListActivity::class.java)
 
-                                            startActivity(intent)
+                                            val intent = Intent(this@TyreCustomizationActivity, TyreListActivity::class.java)
+                                            if (isPreviousSelectedMeasurement) {
+                                                /*  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                                                intent.putExtra("TyreCustomization", true);
+
+                                                setResult(RESULT_OK, intent);
+                                                //  onNewIntent(intent)
+
+                                            } else {
+
+                                                startActivity(intent)
+                                            }
                                             finish()
                                         }, 500)
                                     } catch (e: Exception) {
@@ -484,4 +571,5 @@ class TyreCustomizationActivity : BaseActivity() {
         alertClosePopup.setOnClickListener { dialog.dismiss() }
 
     }
+
 }

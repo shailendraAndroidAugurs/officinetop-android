@@ -189,14 +189,17 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             if (!isLoggedIn() && !hasAddedCar) {
-                val intent = Intent(this, LoginActivity::class.java)
+                /*val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra(Constant.pref_login_from, "AddFirstVehicle")
                 if (shouldShowAddCarInfoDialog()) {
                     showInfoDialog(getString(R.string.dialog_message_add_car), true) {
                         startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
                     }
                 } else
-                    startActivityForResult(intent, Constant.RC.onCarAdded)
+                    startActivityForResult(intent, Constant.RC.onCarAdded)*/
+                showInfoDialog(getString(R.string.dialog_message_add_car), true) {
+                    startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
+                }
                 return@setOnClickListener
             }
 
@@ -601,7 +604,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (json != null) {
                 saveSelectedCar(json)
                 hasSelectedCar = true
-                hasAddedCar
+                hasAddedCar=true
+
                 if (car.id != getSavedSelectedVehicleID()) {
 
                     if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {

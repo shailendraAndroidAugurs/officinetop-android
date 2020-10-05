@@ -11,6 +11,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.adapter.SimpleTextListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.convertToJsonString
 import com.officinetop.officine.utils.genericAPICall
 import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.activity_tyre_diameter.*
@@ -21,6 +22,8 @@ import org.jetbrains.anko.intentFor
 
 class TyreDiameterActivity : BaseActivity() {
     private var selectedTyreDetail: String = ""
+    private var TyreSelectedId: String = ""
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,10 @@ class TyreDiameterActivity : BaseActivity() {
         }
         if (intent.extras != null && intent.hasExtra("currentlySelectedMeasurement")) {
             selectedTyreDetail = intent.getStringExtra("currentlySelectedMeasurement")
+
+        }
+        if (intent.extras != null && intent.hasExtra("TyreSelectedId")) {
+            TyreSelectedId = intent.getStringExtra("TyreSelectedId")
 
         }
 
@@ -121,7 +128,7 @@ class TyreDiameterActivity : BaseActivity() {
 
             recycler_view.adapter = SimpleTextListAdapter(this, tyreStringList, object : SimpleTextListAdapter.OnRecyclerItemClickListener {
 
-                override fun onItemClick(view: View, title: MeasurementDataSetItem, position: Int) {
+                override fun onItemClick(view: View, title: MeasurementDataSetItem, position: Int, IsEdit: Boolean) {
 
                     Log.e("TYRE DETAILS==", "****************** 2 " + tyreMeasurementDetailList[position])
                     tyreMeasurementDetailList[position]?.let {
@@ -147,6 +154,7 @@ class TyreDiameterActivity : BaseActivity() {
 
                         val tyre =
                                 Models.TyreDetail(
+                                        id = it.id.toString(),
                                         vehicleType = tyre_type,
                                         aspectRatio = aspect_ratio,
                                         width = width.toFloat(),
@@ -167,11 +175,27 @@ class TyreDiameterActivity : BaseActivity() {
                                         cust_reinforced = reinforced
 
                                 )
+                        if (!IsEdit) {
+                            setTyreDetail(tyre)
+                        } else {
+                            if (TyreSelectedId.equals(tyre.id)) {
+                                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", tyre.convertToJsonString()).putExtra("editId", it.id.toString()).putExtra("IsSavedInlocal", tyre.id), 130)
 
-                        setTyreDetail(tyre)
+                            } else {
+                                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", tyre.convertToJsonString()).putExtra("editId", it.id.toString()), 130)
+
+                            }
+
+                        }
+
                     }
-                    startActivity(intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                    finish()
+
+
+                    if (!IsEdit) {
+
+                        startActivity(intentFor<TyreListActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        finish()
+                    }
                 }
 
 
@@ -199,5 +223,15 @@ class TyreDiameterActivity : BaseActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 130) {
+            getUserTyreDetailsApi()
+        }
+
+
+        Log.d("TyreListActivity", "OnActivityResult")
     }
 }

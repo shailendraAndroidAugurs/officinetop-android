@@ -3114,12 +3114,12 @@ object Models {
             val tyreProductDetail: TyreDetailItem)
 
     data class MotSchedule(
-            val id: Int=0,
-            val schedule_id: String="",
-            val service_schedule_description: String="",
-            val service_schedule_id: String="",
-            val sort_order: String="",
-            val version_id: String=""
+            val id: Int = 0,
+            val schedule_id: String = "",
+            val service_schedule_description: String = "",
+            val service_schedule_id: String = "",
+            val sort_order: String = "",
+            val version_id: String = ""
     ) : Serializable
 
     data class CarCriteria(

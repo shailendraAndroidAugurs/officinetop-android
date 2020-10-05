@@ -1471,5 +1471,22 @@ interface IRetrofitApis {
     @POST(Constant.UrlEndPoints.addCarByPlateNumber)
     fun GetAddCarByPlateNumber(@Field(Constant.Path.plateNumber) plateNumber: String): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.editTyreMeasurementdetails)
+    fun EditUserTyreDetails(@Field("user_id") user_id: String,
+                            @Field("vehicle_type") vehicle_type: String,
+                            @Field("season") season: String,
+                            @Field("width") width: Int,
+                            @Field("speedindex") speed_index: String,
+                            @Field("run_flat") run_flat: Int,
+                            @Field("reinforced") reinforced: Int,
+                            @Field("execute") execute: Int,
+                            @Field("aspect_ratio") aspectRatio: String,
+                            @Field("rim_diameter") rimDiameter: String,
+                            @Field("car_version_id") carVersionId: String,
+                            @Field("load_index") load_index: String,
+                            @Field("editid") editMeasurementId: String
 
+
+    ): Call<ResponseBody>
 }

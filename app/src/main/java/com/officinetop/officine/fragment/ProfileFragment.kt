@@ -33,6 +33,7 @@ import com.officinetop.officine.utils.*
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.changepswrd_dialog.view.*
 import okhttp3.ResponseBody
+import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.intentFor
@@ -102,7 +103,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 alert {
                     message = getString(R.string.not_logged_in)
                     positiveButton(getString(R.string.login)) {
-                        startActivity(intentFor<LoginActivity>().clearTop())
+                        startActivity(intentFor<LoginActivity>().clearTop().clearTask())
                         activity?.finishAffinity()
                         context!!.storeLangLocale("")
                     }
