@@ -783,11 +783,10 @@
 
 
     <string name="replacement_parts">Replacement parts</string>
-    <string name="LoggedinAs">Log out of the account  %s</string>
+    <string name="LoggedinAs">Log out of the account  %s ?</string>
 
     <string name="feedback_Workshop_home">Reviews on workshops</string>
     <string name="feedback_Product_home">Product Reviews</string>
-
 
 
     <string-array name="home_icon_titles">

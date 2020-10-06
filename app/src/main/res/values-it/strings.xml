@@ -679,7 +679,7 @@
     <string name="Apply_Coupon_Note">"Riceverai questo coupon una volta completato il servizio o il prodotto è stato consegnato se è stato acquistato solo prodotto senza servizio. Il bonus sarà caricato automaticamente nel tuo account e potrai usarlo per prossimi ordini"</string>
     <string name="Note">"Note : "</string>
     <string name="there_is_noBrowser">Non esiste un browser</string>
-    <string name="Delivery_date_predicted">Data spedizione prevista</string>
+    <string name="Delivery_date_predicted">Data consegna prevista</string>
     <string name="Services_Name">Service Name</string>
     <string name="prepend_percentage_symbol"> %</string>
     <string name="coupon_list">Elenco coupon</string>
@@ -703,7 +703,7 @@
     <string name="whatsapp">whatsapp</string>
     <string name="inviteShareMessage">Ciao, sei stato invitato ad utilizzare l\'app OfficineTop! L\'unica app che offre la miglior qualità/prezzo dei servizi in tutta Italia. Offriamo servizi di riparazione, manutenzione, revisioni, tagliandi, lavaggi auto, emergenza, vendita prodotti di: parti di ricambio, gomme e accessori auto. Registrati utilizzando il codice di riferimento %S e riceverai un coupon di 6€ pronto da utilizzare.</string>
     <!--<string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
-    <string name="LoggedinAs">Disconnettersi dall\'account %s</string>
+    <string name="LoggedinAs">Disconnettersi dall\'account %s ?</string>
     <string name="replacement_parts">Parti di ricambio</string>
     <string name="feedback_Workshop_home">Recensioni su officine</string>
     <string name="feedback_Product_home"> Recensioni sui prodotti</string>
