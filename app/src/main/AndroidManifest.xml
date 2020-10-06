@@ -207,8 +207,6 @@ android:launchMode="singleTop"
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"
-
             android:theme="@style/AppTheme.NoActionBar">
 
             <!-- <intent-filter> -->

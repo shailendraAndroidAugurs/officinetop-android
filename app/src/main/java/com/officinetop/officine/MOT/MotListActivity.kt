@@ -46,10 +46,10 @@ class MotListActivity : BaseActivity() {
         ed_search_km.isEnabled = false
         ed_search_km.setText(getMotKm())
 
-        if (getSelectedCar()?.carConditionMotSchedule?.schedule_id.isNullOrBlank()) {
+        if (getSelectedCar()?.carConditionMotSchedule?.id.isNullOrBlank()) {
             CallMotSchedule()
         } else {
-            scheduleId = getSelectedCar()?.carConditionMotSchedule?.schedule_id!!
+            scheduleId = getSelectedCar()?.carConditionMotSchedule?.id!!
             motServive(getMotKm()!!, "0")
         }
 
@@ -151,7 +151,7 @@ class MotListActivity : BaseActivity() {
                                             val itemData = dataSet.get(i) as JSONObject
                                             val itemsData = Gson().fromJson<Models.MotSchedule>(itemData.toString(), Models.MotSchedule::class.java)
                                             mMotSchedule.add(itemsData)
-                                            mMotScheduleData.add(Models.TypeSpecification(if (itemsData.service_schedule_description.isNullOrEmpty()) itemsData.service_schedule_id else itemsData.service_schedule_description, itemsData.schedule_id))
+                                            mMotScheduleData.add(Models.TypeSpecification(if (itemsData.service_schedule_description.isNullOrEmpty()) itemsData.id else itemsData.service_schedule_description, itemsData.id))
 
                                         }
                                         if (mMotScheduleData.size > 1) {
@@ -161,7 +161,7 @@ class MotListActivity : BaseActivity() {
                                             bindSpinner()
                                         }
 
-                                        scheduleId = mMotSchedule[0].schedule_id
+                                        scheduleId = mMotSchedule[0].id
                                         motServive(getMotKm()!!, "0")
                                     } else {
                                         showInfoDialog(getString(R.string.DatanotFound))
