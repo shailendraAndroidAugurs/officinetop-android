@@ -49,7 +49,7 @@ class MotListActivity : BaseActivity() {
         if (getSelectedCar()?.carConditionMotSchedule?.schedule_id.isNullOrBlank()) {
             CallMotSchedule()
         } else {
-            scheduleId=getSelectedCar()?.carConditionMotSchedule?.schedule_id!!
+            scheduleId = getSelectedCar()?.carConditionMotSchedule?.schedule_id!!
             motServive(getMotKm()!!, "0")
         }
 

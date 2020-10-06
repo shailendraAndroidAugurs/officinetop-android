@@ -706,7 +706,7 @@
     <string name="inviteShareMessage">Hi, I am using the OfficineTop App, the only one that offers the highest quality and convenience services throughout Italy: \n
                 overhall,service, maintenance, tow truck, car wash, spare parts, tires and car accessories \n
                 I\'ll give you a €6 coupon. Just register by entering this friend code ,%s "download from here":</string>
-    <string name="LoggedinAs">Log out of the account  %s</string>
+    <string name="LoggedinAs">Log out of the account  %s ?</string>
     <string name="replacement_parts">Replacement parts</string>
     <string name="feedback_Workshop_home">Reviews on workshops</string>
     <string name="feedback_Product_home">Product Reviews</string>
