@@ -18,7 +18,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +26,6 @@ import com.google.gson.JsonObject
 import com.isapanah.awesomespinner.AwesomeSpinner
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
@@ -207,8 +205,6 @@ class AddVehicleActivity : BaseActivity() {
             loadCarConditionMotSchedule(idVehicle)
             Log.d("carCriteriaList_size", "idVehicle" + idVehicle)
         }
-
-
 
 
     }
@@ -396,6 +392,7 @@ class AddVehicleActivity : BaseActivity() {
             carVersionDetails.addProperty("Kw", finalCarVersion[versionIndex].kw)
             carVersionDetails.addProperty("idVeicolo", finalCarVersion[versionIndex].idVehicle)
             carVersionDetails.addProperty("fuel_type", spinner_fuel.selectedItem.toString())
+            carVersionDetails.addProperty("Alimentazione", finalCarVersion[versionIndex].alimentazione)
 
 
             //modified to add car size as per
@@ -410,13 +407,23 @@ class AddVehicleActivity : BaseActivity() {
                 carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
                 carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
                 carDetails.add("criteriaResponse", carCriteriaDetails)
+            } else if (carCriteriaList.size != 0) {
+                val carCriteriaDetails: JsonObject = JsonObject()
+                carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[0].repair_times_description)
+                carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[0].repair_times_id)
+                carDetails.add("criteriaResponse", carCriteriaDetails)
             }
 
             // Add Car Condition Mot schedule data
             if (CarConditionMotSchedule != -1) {
                 val CarConditionMotScheduleJson: JsonObject = JsonObject()
-                CarConditionMotScheduleJson.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
-                CarConditionMotScheduleJson.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
+                CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[CarConditionMotSchedule].id)
+                CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[CarConditionMotSchedule].service_schedule_description)
+                carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
+            } else if (carConditionMotScheduleList.size != 0) {
+                val CarConditionMotScheduleJson: JsonObject = JsonObject()
+                CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[0].id)
+                CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[0].service_schedule_description)
                 carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
             }
 
@@ -426,7 +433,7 @@ class AddVehicleActivity : BaseActivity() {
             val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
             val carIntent = Intent()
             carIntent.putExtra(Constant.Key.myCar, car as Serializable)
-
+            CallKromedaApi(finalCarVersion[versionIndex].idVehicle)
             if (isForEdit) {
                 showInfoDialog(getString(R.string.CarDetailSavedSuccessfully), false) {
                     setResult(Activity.RESULT_OK, carIntent)
@@ -439,6 +446,7 @@ class AddVehicleActivity : BaseActivity() {
 
                         myCar = car
                         isForEdit = true
+                        iscompletedlater = true
                         setEditMode()
                     }
                     negativeButton(getString(R.string.Completelater)) {
@@ -461,7 +469,8 @@ class AddVehicleActivity : BaseActivity() {
                     model[spinner_model.selectedItemPosition].modelID + "/" + model[spinner_model.selectedItemPosition].modelYear,
                     idVehicle,
                     finalCarVersion[spinner_version.selectedItemPosition].body,
-                    getBearerToken() ?: "", versionCriteria = carcriteriaId,scheduleId = CarConditionScheduleId)
+                    getBearerToken()
+                            ?: "", versionCriteria = carcriteriaId, scheduleId = CarConditionScheduleId)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()
@@ -721,8 +730,14 @@ class AddVehicleActivity : BaseActivity() {
                     if (carCriteriaList.size > 1) {
                         var selectedIndex = -1
                         Log.d("carCriteriaList_size", tv_criteria.visibility.toString())
-                        tv_criteria.visibility = View.VISIBLE
-                        spinner_criteria.visibility = View.VISIBLE
+                        if (iscompletedlater || isForEdit) {
+                            tv_criteria.visibility = View.VISIBLE
+                            spinner_criteria.visibility = View.VISIBLE
+                        } else {
+                            tv_criteria.visibility = View.GONE
+                            spinner_criteria.visibility = View.GONE
+                        }
+
                         carCriteriaList.forEachWithIndex { i, it ->
                             val title = if (it.repair_times_id != null && it.repair_times_description != null) {
                                 it.repair_times_id + " " + it.repair_times_description
@@ -817,20 +832,26 @@ class AddVehicleActivity : BaseActivity() {
                     titlesfor.clear()
                     if (carConditionMotScheduleList.size > 1) {
                         var selectedIndex = -1
-                        tv_car_condition.visibility = View.VISIBLE
-                        spinner_car_condition.visibility = View.VISIBLE
+                        if (iscompletedlater || isForEdit) {
+                            tv_car_condition.visibility = View.VISIBLE
+                            spinner_car_condition.visibility = View.VISIBLE
+                        } else {
+                            tv_car_condition.visibility = View.GONE
+                            spinner_car_condition.visibility = View.GONE
+                        }
+
                         carConditionMotScheduleList.forEachWithIndex { i, it ->
-                            val title = if (it.schedule_id != null && it.service_schedule_description != null) {
-                                it.schedule_id + " " + it.service_schedule_description
+                            val title = if (it.service_schedule_description != null) {
+                                it.service_schedule_description
                             } else {
-                                it.schedule_id
+                                it.service_schedule_id
                             }
 
                             if (true) {
                                 titlesfor.add(title)
 
                                 if (isForEdit) {
-                                    if (it.schedule_id == myCar?.carConditionMotSchedule?.schedule_id)
+                                    if (it.id == myCar?.carConditionMotSchedule?.id)
 
                                         selectedIndex = i
                                 }
@@ -841,7 +862,7 @@ class AddVehicleActivity : BaseActivity() {
                         if (isForPlateno && myCar?.carConditionMotSchedule == null) {
                             selectedIndex = 0
                         }
-                        CarConditionScheduleId = carConditionMotScheduleList[0].schedule_id
+                        CarConditionScheduleId = carConditionMotScheduleList[0].id
                         bindSpinner(spinner_car_condition, titlesfor)
                         spinner_car_condition.setSelection(0)
                         if (selectedIndex > -1 && titlesfor.size > selectedIndex) {
@@ -851,7 +872,7 @@ class AddVehicleActivity : BaseActivity() {
                     } else if (carConditionMotScheduleList.size == 1) {
                         tv_car_condition.visibility = View.GONE
                         spinner_car_condition.visibility = View.GONE
-                        CarConditionScheduleId = carConditionMotScheduleList[0].schedule_id
+                        CarConditionScheduleId = carConditionMotScheduleList[0].id
 
                     } else {
                         tv_car_condition.visibility = View.GONE
@@ -859,7 +880,7 @@ class AddVehicleActivity : BaseActivity() {
                     }
 
                     spinner_car_condition.setOnSpinnerItemClickListener { position, _ ->
-                        CarConditionScheduleId = carConditionMotScheduleList[position].schedule_id
+                        CarConditionScheduleId = carConditionMotScheduleList[position].id
 
                     }
 
@@ -891,17 +912,14 @@ class AddVehicleActivity : BaseActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("AddVehicleActivity", "onResponse: dataset")
                 val body = response.body()?.string()
-                val fuelType: MutableList<String> = ArrayList()
+                val fuelTypeList: MutableList<String> = ArrayList()
                 progressDialog.dismiss()
 
                 if (isStatusCodeValid(body)) {
                     carVersions.clear()
-                    fuelType.clear()
-
-
+                    fuelTypeList.clear()
                     val dataset = getDataSetArrayFromResponse(body)
 
-                    var selectedIndex = -1
                     for (i in 0 until dataset.length()) {
                         Log.d("AddVehicleActivity", "onResponse: forloop")
                         val carVersion = dataset.getJSONObject(i)
@@ -909,51 +927,37 @@ class AddVehicleActivity : BaseActivity() {
                         Log.d("AddVehicleActivity", "onResponse: forloop ${version}")
 
                         carVersions.add(version)
-                        if (!fuelType.contains(version.fueltype) && version.fueltype.isNotEmpty()) {
-                            fuelType.add(version.fueltype)
+                        if (!fuelTypeList.contains(getFuelType(version.alimentazione))) {
+                            fuelTypeList.add(version.fueltype)
                         }
 
                     }
 
 
-                    Log.d("AddVehicleActivity", "onResponse: fuel type array = $fuelType")
+                    Log.d("AddVehicleActivity", "onResponse: fuel type array = $fuelTypeList")
 
-                    if (fuelType.isEmpty()) {
-                        fuelType.add("Other")
+                    if (fuelTypeList.isEmpty()) {
+                        fuelTypeList.add("Other")
                     }
 
-                    bindSpinner(spinner_fuel, fuelType)
+                    bindSpinner(spinner_fuel, fuelTypeList)
 
                     if (isForEdit) {
 
-                        var currentFuelType = myCar?.carVersionModel?.fueltype
-                        Log.d("AddVehicleActivity", "onResponse: current fuel type = $currentFuelType")
-
-                        if (currentFuelType == null || currentFuelType?.isEmpty()!!)
-                            currentFuelType = "Other"
-                        var index = 0
-                        if (currentFuelType.equals("Others") || currentFuelType.equals("Other")) {
-                            if (fuelType.indexOf("Others") > -1) {
-                                index = fuelType.indexOf("Others")
-
-                            } else
-                                index = fuelType.indexOf(currentFuelType)
-                        } else {
-                            index = fuelType.indexOf(currentFuelType)
-                        }
+                        var currentFuelType = getFuelType(myCar?.carVersionModel?.alimentazione!!)
 
 
-                        if (index > -1) {
-                            spinner_fuel.setSelection(index)
+
+
+                        if (fuelTypeList.indexOf(currentFuelType) > -1) {
+                            spinner_fuel.setSelection(fuelTypeList.indexOf(currentFuelType))
                             if (spinner_fuel.selectedItem != null) {
 
                                 loadVersionAccordingToFuel(carVersions, spinner_fuel.selectedItem,
-                                        fuelType.size == 1 && (spinner_fuel.selectedItem == "Other" || spinner_fuel.selectedItem == "Others"))
+                                        fuelTypeList.size == 1)
                             }
 
                         }
-
-                        Log.d("AddVehicleActivity", "onResponse: fuel selected =  ${spinner_fuel.selectedItem}")
 
 
                     }
@@ -961,7 +965,7 @@ class AddVehicleActivity : BaseActivity() {
 
                     spinner_fuel.setOnSpinnerItemClickListener { _, _ ->
 
-                        loadVersionAccordingToFuel(carVersions, spinner_fuel.selectedItem, fuelType.size == 1 && spinner_fuel.selectedItem == "Other")
+                        loadVersionAccordingToFuel(carVersions, spinner_fuel.selectedItem, fuelTypeList.size == 1)
                     }
 
 
@@ -1021,10 +1025,9 @@ class AddVehicleActivity : BaseActivity() {
         }
         spinner_version.setOnSpinnerItemClickListener { position, _ ->
             Log.d("car_criteria_vehical_id", finalCarVersion[position].idVehicle)
-            if (iscompletedlater) {
-                loadCarCriteria(finalCarVersion[position].idVehicle)
-                loadCarConditionMotSchedule(finalCarVersion[selIndex].idVehicle)
-            }
+
+            loadCarCriteria(finalCarVersion[position].idVehicle)
+            loadCarConditionMotSchedule(finalCarVersion[position].idVehicle)
 
 
         }
@@ -1246,8 +1249,6 @@ class AddVehicleActivity : BaseActivity() {
         if (!dataSet.isEmpty()) {
             val last = (dataSet[dataSet.length() - 1].toString())
             val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
-
-
             carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
             CallKromedaApi(lastCar?.carVersionModel?.idVehicle!!)
         }
@@ -1459,6 +1460,17 @@ class AddVehicleActivity : BaseActivity() {
                     }
 
                 })
+    }
+
+    private fun getFuelType(fuelAbbrevation: String): String {
+
+        return when {
+            fuelAbbrevation.equals("D") -> "Diesel"
+            fuelAbbrevation.equals("B") -> "Petrol"
+            fuelAbbrevation.equals("G") -> "Gas"
+            else -> "Other"
+        }
+
     }
 }
 

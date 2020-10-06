@@ -35,7 +35,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
         toolbar_title.text = getString(R.string.User_Contact)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if(intent.extras!=null){
+        if (intent.extras != null) {
             fromPayment = intent.extras!!.getBoolean("FromPayment", false)
         }
         fab_add_contact.setOnClickListener { view ->

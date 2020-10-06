@@ -3114,7 +3114,7 @@ object Models {
             val tyreProductDetail: TyreDetailItem)
 
     data class MotSchedule(
-            val id: Int = 0,
+            val id: String = "",
             val schedule_id: String = "",
             val service_schedule_description: String = "",
             val service_schedule_id: String = "",
