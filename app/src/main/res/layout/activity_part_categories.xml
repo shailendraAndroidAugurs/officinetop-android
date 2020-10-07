@@ -14,16 +14,16 @@
         android:background="@color/gray_light"
         android:padding="@dimen/category_margin">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/search_product"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/rounded_white_background"
+            android:cursorVisible="true"
+            android:focusable="true"
             android:hint="@string/SearchProducts"
             android:importantForAutofill="no"
-            android:focusable="true"
-            android:cursorVisible="true"
             android:inputType="text"
             android:padding="@dimen/_5sdp"
             android:singleLine="true" />
@@ -49,7 +49,8 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/Search"
             android:textColor="@color/gray_dark"
-            android:visibility="visible" />
+
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -60,6 +61,16 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"></FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_searchProduct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="match_parent"

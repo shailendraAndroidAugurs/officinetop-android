@@ -49,7 +49,6 @@ class MaintenanceActivity : BaseActivity() {
 
     private var carMaintenanceServiceList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
-    private var carPartList: ArrayList<Models.Part> = ArrayList()
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     private var ratingString = ""
@@ -70,7 +69,6 @@ class MaintenanceActivity : BaseActivity() {
     var selectservice_position: Int = 0
     var dialog: Dialog? = null
     private var hashMap: HashMap<String, Models.servicesCouponData> = HashMap<String, Models.servicesCouponData>()
-    var partId: ArrayList<String> = ArrayList()
     lateinit var checkBox: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,33 +96,43 @@ class MaintenanceActivity : BaseActivity() {
         selectedCarMaintenanceServices.clear()
 
         btn_choose_workshop.setOnClickListener {
+
+
             if (selectedCarMaintenanceServices.size > 0) {
+
+                val selectedServices_partList = ArrayList<Models.servicesCouponData>()
+
                 val serviceId: MutableList<String> = ArrayList()
 
                 for (j in 0 until selectedCarMaintenanceServices.size) {
                     serviceId.add(selectedCarMaintenanceServices.get(j).id.toString())
                     for (i in 0 until carMaintenanceServiceList.size) {
-                        if (selectedCarMaintenanceServices.get(j).id.toString() == carMaintenanceServiceList[i].id) {
-
+                        if (selectedCarMaintenanceServices.get(j).id == carMaintenanceServiceList[i].id) {
                             Log.e("PARTIDSSERVICES", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "custom part" else carMaintenanceServiceList[i].productId)
                             if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
-                                hashMap.put(carMaintenanceServiceList[i].id,
 
-                                        Models.servicesCouponData(carMaintenanceServiceList[i].CouponId,
+                                        hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                                if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
+                                                else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id))
+                                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
 
-                                                carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId))
                             } else {
-                                hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId))
+                                hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                        if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
+                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id))
+                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
                             }
                         }
                     }
                 }
+
+
                 val bundle = Bundle()
                 bundle.putSerializable(Constant.Path.PartID, hashMap as Serializable)
                 val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
                 startActivity(intentFor<WorkshopListActivity>(
                         Constant.Key.is_car_maintenance_service to true,
-                        Constant.Path.serviceID to serviceId.joinToString(","),
+                        Constant.Path.serviceID to /*serviceId.joinToString(",")*/  Gson().toJson(selectedServices_partList),
                         Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
                 ).putExtras(bundle)
                 )
