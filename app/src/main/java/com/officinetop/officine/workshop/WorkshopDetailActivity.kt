@@ -302,7 +302,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
-                                    logAddToWishlistEvent(this,workshop_name.text.toString()!!,workshopUsersId.toString(),"workshop","USD",0.0)
+                                    logAddToWishlistEvent(this, workshop_name.text.toString()!!, workshopUsersId.toString(), "workshop", "USD", 0.0)
 
 
                                 }
@@ -775,7 +775,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             workshop_rating_count.text = json.getInt("rating_count").toString()
 
                         if (json.has("rating")) {
-                        val    jsonRating=JSONObject(json.getString("rating"))
+                            val jsonRating = JSONObject(json.getString("rating"))
                             if (jsonRating.has("rating") && !jsonRating.isNull("rating") && jsonRating.getString("rating") != "" && jsonRating.getString("rating") != "null")
                                 workshop_rating.rating = jsonRating.getString("rating").toFloat()
                             else
@@ -822,11 +822,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         }
 
 
-                        if(json.has("main_category_id") && !json.optInt("main_category_id").toString().isNullOrBlank()){
-                            feedbackMain_categoryId=json.optInt("main_category_id").toString();
+                        if (json.has("main_category_id") && !json.optInt("main_category_id").toString().isNullOrBlank()) {
+                            feedbackMain_categoryId = json.optInt("main_category_id").toString();
                         }
-                        if(json.has("service_id") && !json.optString("service_id").toString().isNullOrBlank()){
-                            feedbackServices_id=json.optInt("service_id").toString();
+                        if (json.has("service_id") && !json.optString("service_id").toString().isNullOrBlank()) {
+                            feedbackServices_id = json.optInt("service_id").toString();
                         }
 
 
@@ -873,10 +873,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         if (isAssembly)
             RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, averageServiceTime.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(callback)
-
         else if (isRevision) {
 
-            if (WorkshopJson != null ) {
+            if (WorkshopJson != null) {
                 serviceID = WorkshopJson.optString("service_id")
                 main_category_id = WorkshopJson.optString("main_category_id")
             }
@@ -1289,12 +1288,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 val jsonArray = JSONArray()
                 val partdata = partidMap.get(service_id)
 
-                jsonObj.put("service_id", service_id)
+                jsonObj.put("service_id", partdata?.servicesid)
                 jsonObj.put("price", price)
                 jsonObj.put("hourly_rate", hourly_rate)
                 jsonObj.put("average_time", aver_time)
                 jsonObjpart.put("part_id", partdata!!.service_partID)
-                jsonObjpart.put("quantity", "1")
+                jsonObjpart.put("quantity", partdata.partQty)
                 jsonObjpart.put("part_coupon_id", partdata.service_partcouponID)
                 jsonObjpart.put("seller_id", partdata.seller_ID)
                 jsonObj.put("parts", jsonArray.put(jsonObjpart))
@@ -1357,10 +1356,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
 
 
-        }else if(isCarWash)
-        {
+        } else if (isCarWash) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-           // val additionalDelay = (20 * 60 * 1000)
+            // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
@@ -1372,9 +1370,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
             finalPrice = (hourlyRate / 60) * bookingDuration
             finalPrice = finalPrice.roundTo2Places()
-        }
-
-        else {
+        } else {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) + additionalDelay // add 20 min
@@ -1419,7 +1415,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                         } else {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
-                           finishAffinity()
+                            finishAffinity()
                         }
 
 
@@ -1576,8 +1572,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             serviceBookingCall.enqueue(callback)
         }
     }
-
-
 
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {

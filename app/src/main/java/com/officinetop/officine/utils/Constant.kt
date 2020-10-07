@@ -192,7 +192,7 @@ object Constant {
 
         const val addCarByPlateNumber = "addCarByPlateNumber"
         const val editTyreMeasurementdetails = "edit_user_tyre_details"
-
+        const val searchPartAutocomplete = "searchPartsAutocomplete"
     }
 
     object Key {
@@ -401,6 +401,7 @@ object Constant {
         const val versionCriteria = "version_criteria"
         const val plateNumber = "plateNumber"
         const val scheduleId = "schedule_id"
+        const val keyword = "keyword"
 
 
     }

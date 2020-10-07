@@ -2927,9 +2927,16 @@ object Models {
 
 
     data class servicesCouponData(
+            @SerializedName("service_partcouponID")
             val service_partcouponID: String = "",
+            @SerializedName("part_id")
             val service_partID: String = "",
-            val seller_ID: String = ""
+            @SerializedName("seller_id")
+            val seller_ID: String = "",
+            @SerializedName("quantity")
+            val partQty: String = "",
+            @SerializedName("serviceId")
+            val servicesid: String = ""
     ) : Serializable
 
     data class MotservicesCouponData(
@@ -3134,6 +3141,8 @@ object Models {
             val users_id: String = "",
             val version_id: String = ""
     ) : Serializable
+
+
 
 }
 
