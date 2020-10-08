@@ -116,15 +116,15 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         search_product.setThreshold(2);
         search_product.addTextChangedListener(textWatcher)
         search_product.setOnItemClickListener(onItemClickListener)
-        search_product.setOnDismissListener(
+        /*search_product.setOnDismissListener(
                 object : AutoCompleteTextView.OnDismissListener {
                     override fun onDismiss() {
                         ll_view_searchProduct.visibility = View.GONE
                         containerFor_search.visibility = View.VISIBLE
                     }
 
-                })
-        myadpter = object : RecyclerView.Adapter<Holder>() {
+                })*/
+        /*myadpter = object : RecyclerView.Adapter<Holder>() {
 
             override fun getItemCount(): Int {
                 return filteredList.size
@@ -142,7 +142,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
 
-        ll_view_searchProduct.adapter = myadpter
+        ll_view_searchProduct.adapter = myadpter*/
 
 
         /* search_btn.setOnClickListener {
@@ -309,7 +309,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
-            ll_view_searchProduct.visibility = View.GONE
+           // ll_view_searchProduct.visibility = View.GONE
             getSupportFragmentManager().popBackStackImmediate()
 
         } else {
@@ -346,7 +346,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                     val gson = GsonBuilder().create()
                     // stringlist.clear()
                     stringlist = gson.fromJson(jsonbody.getString("data_set").toString(), kotlin.Array<String>::class.java).toCollection(java.util.ArrayList<String>())
-                  if(stringlist.size!=0){
+                /*  if(stringlist.size!=0){
                       ll_view_searchProduct.visibility = View.VISIBLE
                       containerFor_search.visibility = View.GONE
                   }else{
@@ -367,10 +367,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                         }
                     }
 
-                    myadpter.notifyDataSetChanged()
+                    myadpter.notifyDataSetChanged()*/
 
 
-/*
                     runOnUiThread(Runnable() {
                         run() {
 
@@ -378,7 +377,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                             search_product.setAdapter(adaptorAutoComplete);
                             adaptorAutoComplete.notifyDataSetChanged();
                         }
-                    });*/
+                    });
 
 
                 }
