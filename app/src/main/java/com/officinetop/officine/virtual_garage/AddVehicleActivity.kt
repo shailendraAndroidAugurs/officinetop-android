@@ -663,7 +663,7 @@ class AddVehicleActivity : BaseActivity() {
                         modelTitle.add(data.model + " [${data.modelYear}]")
 
                         if (isForEdit) {
-                            if (data.modelID == myCar?.carModel?.modelID) {
+                            if (data.modelID == myCar?.carModel?.modelID && data.modelYear==myCar?.carModel?.modelYear) {
                                 selectedIndex = i
                             }
                         }
@@ -928,7 +928,7 @@ class AddVehicleActivity : BaseActivity() {
 
                         carVersions.add(version)
                         if (!fuelTypeList.contains(getFuelType(version.alimentazione))) {
-                            fuelTypeList.add(version.fueltype)
+                            fuelTypeList.add(getFuelType(version.alimentazione))
                         }
 
                     }

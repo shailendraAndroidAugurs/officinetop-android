@@ -10,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +24,10 @@ import com.officinetop.officine.adapter.PartCategoryAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import kotlinx.android.synthetic.main.activity_contactlist.*
 import kotlinx.android.synthetic.main.activity_part_categories.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.item_checkbox.view.*
 import kotlinx.android.synthetic.main.item_list_contact.view.*
 import kotlinx.serialization.json.jsonArray
 import okhttp3.ResponseBody
@@ -53,7 +52,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     lateinit var partCategoryAdapter: PartCategoryAdapter
     lateinit var subCategoryAdapter: SubPartCategoryAdapter
     private var previousExpandedGroupPosition: Int = 0
+    lateinit var myadpter: RecyclerView.Adapter<Holder>
     var stringlist: ArrayList<String> = ArrayList<String>()
+    val filteredList = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
@@ -115,14 +116,35 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         search_product.setThreshold(2);
         search_product.addTextChangedListener(textWatcher)
         search_product.setOnItemClickListener(onItemClickListener)
-       /* search_product.setOnDismissListener(
+        /*search_product.setOnDismissListener(
                 object : AutoCompleteTextView.OnDismissListener {
                     override fun onDismiss() {
-                        val in =getSystemService (INPUT_METHOD_SERVICE) as InputMethodManager
-                        in .hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), 0)
+                        ll_view_searchProduct.visibility = View.GONE
+                        containerFor_search.visibility = View.VISIBLE
                     }
 
-                });*/
+                })*/
+        /*myadpter = object : RecyclerView.Adapter<Holder>() {
+
+            override fun getItemCount(): Int {
+                return filteredList.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.item_checkbox, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+                holder.itemView.item_checkbox_text.setText(filteredList[position])
+            }
+
+        }
+
+
+        ll_view_searchProduct.adapter = myadpter*/
+
+
         /* search_btn.setOnClickListener {
              if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
                  searchStoreQuery(search_product.text.toString())
@@ -274,14 +296,20 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
             searchPart(s.toString())
+
+
         }
+
+
     }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
+           // ll_view_searchProduct.visibility = View.GONE
             getSupportFragmentManager().popBackStackImmediate()
 
         } else {
@@ -318,6 +346,29 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                     val gson = GsonBuilder().create()
                     // stringlist.clear()
                     stringlist = gson.fromJson(jsonbody.getString("data_set").toString(), kotlin.Array<String>::class.java).toCollection(java.util.ArrayList<String>())
+                /*  if(stringlist.size!=0){
+                      ll_view_searchProduct.visibility = View.VISIBLE
+                      containerFor_search.visibility = View.GONE
+                  }else{
+                      ll_view_searchProduct.visibility = View.GONE
+                      containerFor_search.visibility = View.VISIBLE
+                  }
+
+                    if (searchProductString == null || searchProductString.length == 0) {
+                        filteredList.clear()
+                        filteredList.addAll(stringlist);
+                    } else {
+                        filteredList.clear()
+                        val filterPattern = searchProductString.toString().toLowerCase().trim();
+                        for (item in stringlist) {
+                            if (item.toLowerCase().contains(filterPattern)) {
+                                filteredList.add(item);
+                            }
+                        }
+                    }
+
+                    myadpter.notifyDataSetChanged()*/
+
 
                     runOnUiThread(Runnable() {
                         run() {
@@ -327,6 +378,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                             adaptorAutoComplete.notifyDataSetChanged();
                         }
                     });
+
+
                 }
             }
 
@@ -341,7 +394,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
     }
 
+    class Holder(view: View) : RecyclerView.ViewHolder(view) {
 
-
+    }
 
 }

@@ -85,7 +85,7 @@
                 <com.isapanah.awesomespinner.AwesomeSpinner
                     android:id="@+id/spinner_AddressType"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:padding="0dp"

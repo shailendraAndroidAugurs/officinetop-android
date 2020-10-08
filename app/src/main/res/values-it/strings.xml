@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Officine</string>
+    <string name="app_name">OfficineTop</string>
     <string name="tab_home">Casa</string>
     <string name="tab_feedback">Recensione</string>
     <string name="tab_news">notizia</string>
@@ -707,6 +707,7 @@
     <string name="replacement_parts">Parti di ricambio</string>
     <string name="feedback_Workshop_home">Recensioni su officine</string>
     <string name="feedback_Product_home"> Recensioni sui prodotti</string>
+    <string name="dot">DOT</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

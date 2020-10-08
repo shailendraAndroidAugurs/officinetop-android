@@ -3,10 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.officinetop.officine">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.Lo" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".OfficineApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_new"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -63,7 +87,6 @@
         <activity
             android:name=".userprofile.Edit_Profile"
             android:screenOrientation="portrait" />
-
         <activity android:name=".MOT.MotDetailActivity" />
         <activity
             android:name=".MOT.MotListActivity"
@@ -102,7 +125,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tyre.TyreListActivity"
-android:launchMode="singleTop"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".car_parts.TyreDetailActivity"
@@ -130,11 +153,13 @@ android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".car_parts.PartCategories"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait" />
-       <!-- <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!--
+ <activity
             android:name=".car_parts.SearchActivity"
-            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name=".misc_activities.LocationActivity"
             android:screenOrientation="portrait" />
@@ -226,7 +251,6 @@ android:launchMode="singleTop"
         <activity
             android:name=".workshop.MapFilterActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -287,10 +311,9 @@ android:launchMode="singleTop"
                 android:resource="@xml/provider_paths"
                 tools:replace="android:resource" />
         </provider>
-
-
-        <provider android:authorities="com.facebook.app.FacebookContentProvider947980622315284"
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider947980622315284"
             android:exported="true" />
 
         <service
@@ -305,29 +328,5 @@ android:launchMode="singleTop"
             </intent-filter>
         </service>
     </application>
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-
-    <uses-feature
-        android:name="android.hardware.camera.flash"
-        android:required="false" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.Lo" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

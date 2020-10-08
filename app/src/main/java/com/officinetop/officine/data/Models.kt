@@ -3048,7 +3048,9 @@ object Models {
             @SerializedName("number_of_delivery_days")
             val delivery_days: String,
             @SerializedName("main_category_id")
-            val tyre_mainCategory_id: String
+            val tyre_mainCategory_id: String,
+            @SerializedName("tyre_dot")
+            val tyreDot: String
 
     )
 
@@ -3141,7 +3143,6 @@ object Models {
             val users_id: String = "",
             val version_id: String = ""
     ) : Serializable
-
 
 
 }

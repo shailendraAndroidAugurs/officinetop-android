@@ -63,7 +63,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         val buttonTitles = resources.getStringArray(R.array.Address_Type)
         if (useraddress == null) {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_address, null, false)
-            mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)
+          //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)
             setPlacePicker("")
             bindSpinner(mDialogView.spinner_AddressType, buttonTitles, "")
 
