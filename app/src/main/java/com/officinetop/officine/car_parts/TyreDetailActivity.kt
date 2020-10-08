@@ -129,9 +129,9 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             return
 
 
-        if(productDetails?.brand_image.isNullOrBlank()){
-            item_brand_image.visibility=View.GONE
-        }else{
+        if (productDetails?.brand_image.isNullOrBlank()) {
+            item_brand_image.visibility = View.GONE
+        } else {
             loadImage(productDetails?.brand_image, item_brand_image)
         }
 
@@ -208,7 +208,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
 
                 try {
-                    addToCartProducts(this,selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
+                    addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
                             if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else ""
 
 
@@ -299,7 +299,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this,product_name.text.toString(),productDetails?.id.toString(),"2","USD",if(!productDetails?.seller_price.isNullOrBlank())productDetails?.seller_price?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this, product_name.text.toString(), productDetails?.id.toString(), "2", "USD", if (!productDetails?.seller_price.isNullOrBlank()) productDetails?.seller_price?.toDouble()!! else 0.0)
                             }
 
                         }
@@ -442,6 +442,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     }
+
+
+                                    if (!tyreDetailData.tyreDot.isNullOrBlank()) {
+                                        ll_DOT.visibility = View.VISIBLE
+                                        tv_dot.text = tyreDetailData.tyreDot
+                                    }
                                 }
                             }
                         }
@@ -482,7 +488,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         ll_wheel_size.visibility = if (!detail.max_width.isNullOrEmpty() && !detail.max_aspect_ratio.isNullOrEmpty() && !detail.max_diameter.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_seson_type.visibility = if (!detail.type.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_speed_index.visibility = if (!detail.speed_index.isNullOrEmpty()) View.VISIBLE else View.GONE
-        ll_tyre_grip.visibility = if ( !detail.wetGrip.isNullOrEmpty()) View.VISIBLE else View.GONE
+        ll_tyre_grip.visibility = if (!detail.wetGrip.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_ean_no.visibility = if (!detail.ean_number.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_three_peak_mountain_snowflake.visibility = if (detail.type.equals("w")) View.VISIBLE else View.GONE
 
@@ -789,8 +795,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (!tyreDetailData.rolling_resistance_arr.graphical_image.isNullOrBlank()) {
                 loadImage(tyreDetailData.rolling_resistance_arr.graphical_image, iv_FuelEfficiencyGraph)
 
-            }else{
-                iv_FuelEfficiencyGraph.visibility=View.GONE
+            } else {
+                iv_FuelEfficiencyGraph.visibility = View.GONE
             }
             if (tyreDetailData.rolling_resistance_arr.title != null) {
                 tv_fuleEfficincyTitle.text = tyreDetailData.rolling_resistance_arr.title
@@ -827,8 +833,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
             if (!tyreDetailData.wet_grip_arr.graphical_image.isNullOrBlank()) {
                 loadImage(tyreDetailData.wet_grip_arr.graphical_image, Iv_WetgripGraph)
-            }else{
-                Iv_WetgripGraph.visibility=View.GONE
+            } else {
+                Iv_WetgripGraph.visibility = View.GONE
             }
 
         } else {
@@ -854,13 +860,13 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 tv_noice_dbValue.text = tyreDetailData.noice_db_arr.name + " " + "db"
             }
             if (tyreDetailData.noice_db_arr.description != null) {
-                tv_NoiseDbDescription.text =Html.fromHtml(tyreDetailData.noice_db_arr.description)
+                tv_NoiseDbDescription.text = Html.fromHtml(tyreDetailData.noice_db_arr.description)
 
             }
             if (!tyreDetailData.noice_db_arr.graphical_image.isNullOrBlank()) {
                 loadImage(tyreDetailData.noice_db_arr.graphical_image, Iv_noiseGraph)
-            }else{
-                Iv_noiseGraph.visibility=View.GONE
+            } else {
+                Iv_noiseGraph.visibility = View.GONE
             }
             if (tyreDetailData.noice_db_arr.title != null) {
                 tv_NoiseDbDescriptionTitle.text = tyreDetailData.noice_db_arr.title

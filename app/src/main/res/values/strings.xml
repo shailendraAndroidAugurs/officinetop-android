@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Officine</string>
+    <string name="app_name">OfficineTop</string>
 
     <string name="tab_home">Home</string>
     <string name="tab_feedback">Feedback</string>
@@ -787,6 +787,7 @@
 
     <string name="feedback_Workshop_home">Reviews on workshops</string>
     <string name="feedback_Product_home">Product Reviews</string>
+    <string name="dot">DOT</string>
 
 
     <string-array name="home_icon_titles">
