@@ -62,15 +62,14 @@
         android:visibility="gone"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"></FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_searchProduct"
+    <LinearLayout
+        android:id="@+id/ll_view_searchProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+        android:visibility="gone">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

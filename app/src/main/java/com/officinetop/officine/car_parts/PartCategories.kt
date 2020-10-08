@@ -1,17 +1,23 @@
 package com.officinetop.officine.car_parts
 
 import adapter.SubPartCategoryAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.RecyclerView
+import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
@@ -23,6 +29,7 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_part_categories.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.item_list_contact.view.*
 import kotlinx.serialization.json.jsonArray
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
@@ -108,6 +115,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         search_product.setThreshold(2);
         search_product.addTextChangedListener(textWatcher)
         search_product.setOnItemClickListener(onItemClickListener)
+       /* search_product.setOnDismissListener(
+                object : AutoCompleteTextView.OnDismissListener {
+                    override fun onDismiss() {
+                        val in =getSystemService (INPUT_METHOD_SERVICE) as InputMethodManager
+                        in .hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), 0)
+                    }
+
+                });*/
         /* search_btn.setOnClickListener {
              if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
                  searchStoreQuery(search_product.text.toString())
@@ -301,13 +316,13 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 if (jsonbody.has("data_set") && !jsonbody.getString("data_set").isNullOrBlank() && !jsonbody.getString("data_set").equals("null")) {
 
                     val gson = GsonBuilder().create()
-                   // stringlist.clear()
+                    // stringlist.clear()
                     stringlist = gson.fromJson(jsonbody.getString("data_set").toString(), kotlin.Array<String>::class.java).toCollection(java.util.ArrayList<String>())
 
                     runOnUiThread(Runnable() {
                         run() {
-                            val adaptorAutoComplete = ArrayAdapter<String>(this@PartCategories, android.R.layout.simple_dropdown_item_1line, stringlist);
 
+                            val adaptorAutoComplete = ArrayAdapter<String>(this@PartCategories, android.R.layout.simple_dropdown_item_1line, stringlist);
                             search_product.setAdapter(adaptorAutoComplete);
                             adaptorAutoComplete.notifyDataSetChanged();
                         }
@@ -325,4 +340,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
     }
+
+
+
+
 }
