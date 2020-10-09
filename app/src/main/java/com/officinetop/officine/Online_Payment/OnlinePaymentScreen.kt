@@ -597,7 +597,7 @@ class OnlinePaymentScreen : BaseActivity() {
             response?.let {
                 if (response.isSuccessful) {
 
-                    val responseData = JSONObject(response?.body()?.string())
+                    val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
                             startActivity(intentFor<Order_List>())
@@ -687,7 +687,7 @@ class OnlinePaymentScreen : BaseActivity() {
             response?.let {
                 if (response.isSuccessful) {
 
-                    val responseData = JSONObject(response?.body()?.string())
+                    val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
                             startActivity(intentFor<Order_List>())
@@ -712,7 +712,7 @@ class OnlinePaymentScreen : BaseActivity() {
             response?.let {
                 if (response.isSuccessful) {
 
-                    val responseData = JSONObject(response?.body()?.string())
+                    val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
                             startActivity(intentFor<Order_List>())

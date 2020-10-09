@@ -28,9 +28,9 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
 import rx.schedulers.Schedulers
 import java.io.IOException
-import com.facebook.FacebookSdk;
+import com.facebook.FacebookSdk
 import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
-import com.facebook.appevents.AppEventsLogger;
+import com.facebook.appevents.AppEventsLogger
 
 class SplashActivity : BaseActivity() {
 
@@ -43,7 +43,7 @@ class SplashActivity : BaseActivity() {
         // getUserAppSettings()
         initView()
         logSentFriendRequestEvent()
-        setAutoLogAppEventsEnabled(true);
+        setAutoLogAppEventsEnabled(true)
         FacebookSdk.setAutoInitEnabled(true)
         FacebookSdk.fullyInitialize()
 
@@ -149,7 +149,7 @@ class SplashActivity : BaseActivity() {
     private fun validateAppCode() {
         val uriPrefix = getString(R.string.dynamic_links_uri_prefix)
         if (uriPrefix.contains("YOUR_APP")) {
-            context?.let {
+            context.let {
                 AlertDialog.Builder(this)
                         .setTitle("Invalid Configuration")
                         .setMessage("Please set your Dynamic Links domain in app/build.gradle")
@@ -229,9 +229,9 @@ class SplashActivity : BaseActivity() {
      * This function assumes logger is an instance of AppEventsLogger and has been
      * created using AppEventsLogger.newLogger() call.
      */
-    public fun logSentFriendRequestEvent() {
+    fun logSentFriendRequestEvent() {
         val logger = AppEventsLogger.newLogger(this)
-        logger.logEvent("sentFriendRequest");
+        logger.logEvent("sentFriendRequest")
     }
 }
 

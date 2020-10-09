@@ -20,9 +20,7 @@ import org.json.JSONObject
 
 class WishListAdapter(var context: Context, private var wishListIterator: ArrayList<Models.WishList>) : RecyclerView.Adapter<wishListViewholder>() {
 
-    class wishListViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+    class wishListViewholder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): wishListViewholder {
         return wishListViewholder(LayoutInflater.from(context).inflate(R.layout.item_wishlist, parent, false))
@@ -198,9 +196,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         }
 
 
-        if (wishList.tyreProductDetail?.couponList != null && wishList.tyreProductDetail?.couponList?.size != 0) {
+        if (wishList.tyreProductDetail?.couponList != null && wishList.tyreProductDetail.couponList.size != 0) {
 
-            view.tv_AppliedCoupon.text = (wishList.tyreProductDetail?.couponList?.get(0)?.couponTitle)
+            view.tv_AppliedCoupon.text = (wishList.tyreProductDetail.couponList.get(0).couponTitle)
             view.tv_AppliedCoupon.visibility = View.VISIBLE
             view.tv_couponLabel.visibility = View.VISIBLE
             view.product_offer_badge.visibility = /*if (p1 % 2 == 0)*/ View.VISIBLE /*else View.GONE*/
@@ -213,10 +211,10 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
         try {
             val startIndex = getSubString(wishList.tyreProductDetail?.description!!, 2)
-            val endIndex = getSubString(wishList.tyreProductDetail?.description!!, 6)
-            val description = wishList.tyreProductDetail?.description?.substring(startIndex!!, endIndex!!)
+            val endIndex = getSubString(wishList.tyreProductDetail.description, 6)
+            val description = wishList.tyreProductDetail.description.substring(startIndex, endIndex)
             //Log.e("index of values=", "=startindex="+startIndex+"=endindesx="+endIndex+"=descr="+description)
-            view.item_Product_title.text = "${wishList.tyreProductDetail?.manufacturerDescription} ${tyreType} ${wishList.tyreProductDetail?.prDescription}\n${wishList.tyreProductDetail?.maxWidth}/${wishList.tyreProductDetail?.maxAspectRatio} R${wishList.tyreProductDetail?.maxDiameter}"//
+            view.item_Product_title.text = "${wishList.tyreProductDetail.manufacturerDescription} ${tyreType} ${wishList.tyreProductDetail.prDescription}\n${wishList.tyreProductDetail.maxWidth}/${wishList.tyreProductDetail.maxAspectRatio} R${wishList.tyreProductDetail.maxDiameter}"//
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -249,9 +247,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
             view.wishList_item_rating_count.text = wishList.spareProductDetail?.rating_count
         else
             view.wishList_item_rating_count.text = "0"
-        if (wishList.spareProductDetail?.couponList != null && wishList.spareProductDetail?.couponList?.size != 0) {
+        if (wishList.spareProductDetail?.couponList != null && wishList.spareProductDetail.couponList.size != 0) {
 
-            view.tv_AppliedCoupon.text = (wishList.spareProductDetail?.couponList?.get(0)?.couponTitle)
+            view.tv_AppliedCoupon.text = (wishList.spareProductDetail.couponList.get(0).couponTitle)
             view.tv_AppliedCoupon.visibility = View.VISIBLE
             view.tv_couponLabel.visibility = View.VISIBLE
             view.product_offer_badge.visibility = /*if (p1 % 2 == 0)*/ View.VISIBLE /*else View.GONE*/
@@ -269,13 +267,13 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         if (wishList.spareProductDetail?.productName == null) {
             view.item_Product_title.text = ""
         } else {
-            view.item_Product_title.text = wishList.spareProductDetail?.productName.toString()
+            view.item_Product_title.text = wishList.spareProductDetail.productName.toString()
         }
         if (wishList.spareProductDetail?.Productdescription == null) {
             view.item_sub_Product_title.text = ""
 
         } else {
-            view.item_sub_Product_title.text = wishList.spareProductDetail?.Productdescription.toString()
+            view.item_sub_Product_title.text = wishList.spareProductDetail.Productdescription.toString()
         }
 
 
@@ -295,7 +293,7 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         view.wishList_workshopAddress.text = wishList.workshopDetails?.registeredOffice
 
         if (wishList.workshopDetails?.ratingStar != null) {
-            view.workshop_item_rating.rating = wishList.workshopDetails?.ratingStar.toFloat()
+            view.workshop_item_rating.rating = wishList.workshopDetails.ratingStar.toFloat()
 
         } else
             view.workshop_item_rating.rating = 0f
@@ -316,9 +314,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         } catch (e: Exception) {
         }
 
-        if (wishList.workshopDetails?.couponList != null && wishList.workshopDetails?.couponList?.size != 0) {
+        if (wishList.workshopDetails?.couponList != null && wishList.workshopDetails.couponList.size != 0) {
 
-            view.WS_AppliedCoupon.text = (wishList.workshopDetails?.couponList?.get(0)?.couponTitle)
+            view.WS_AppliedCoupon.text = (wishList.workshopDetails.couponList.get(0).couponTitle)
             view.WS_AppliedCoupon.visibility = View.VISIBLE
             view.WS_couponLabel.visibility = View.VISIBLE
             view.WSoffer_badge.visibility = /*if (p1 % 2 == 0)*/ View.VISIBLE /*else View.GONE*/
@@ -337,7 +335,7 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
             response.let {
                 if (response?.isSuccessful!!) {
-                    val body = JSONObject(response?.body()?.string())
+                    val body = JSONObject(response.body()?.string())
                     if (body.has("message")) {
 
                         wishListIterator.remove(wishList)

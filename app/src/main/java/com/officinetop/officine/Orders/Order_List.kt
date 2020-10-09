@@ -44,7 +44,7 @@ class Order_List : BaseActivity() {
                     progress_bar.visibility = View.GONE
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
@@ -123,7 +123,7 @@ class Order_List : BaseActivity() {
                     } catch (e: ActivityNotFoundException) {
                         Toast.makeText(this@Order_List, getString(R.string.Noapplicationcanhandlethisrequest)
                                 + getString(R.string.Pleaseinstallwebbrowser), Toast.LENGTH_LONG).show()
-                        e.printStackTrace();
+                        e.printStackTrace()
                     } catch (e: Exception) {
                         Toast.makeText(this@Order_List, getString(R.string.retry), Toast.LENGTH_LONG).show()
                     }
@@ -155,7 +155,7 @@ class Order_List : BaseActivity() {
         })
         couponsListItem.clear()
         for (i in 0 until dataSetArray!!.length()) {
-            val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray!!.get(i).toString(), Models.CartItemList::class.java)
+            val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray.get(i).toString(), Models.CartItemList::class.java)
             couponsListItem.add(modelCartList)
         }
 
@@ -181,7 +181,7 @@ class Order_List : BaseActivity() {
                     // progress_bar.visibility = View.GONE
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
 
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code").contains("1"))
                                 if (isDownload)
@@ -204,7 +204,7 @@ class Order_List : BaseActivity() {
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             Log.e("RETURN", body.toString())
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
@@ -224,7 +224,7 @@ class Order_List : BaseActivity() {
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             Log.e("RETURN", body.toString())
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())

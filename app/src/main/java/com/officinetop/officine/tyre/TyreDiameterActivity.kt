@@ -147,8 +147,8 @@ class TyreDiameterActivity : BaseActivity() {
                         season = if (it.season == null) " " else if (it.season.toString().isEmpty() || it.season.toString() == "null") "" else it.season.toString()
                         width = if (it.width == null) "0 " else if (it.width.toString().isEmpty() || it.width.toString() == "null") "0" else it.width.toString()
                         diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString() == "null") "0" else it.rimDiameter.toString()
-                        runFlat = if (it.runFlat == null) false else if (it.runFlat.toString().isNullOrBlank() || it.runFlat.toString() == "null" || it.runFlat.toString() == "0") false else true
-                        reinforced = if (it.reinforced == null) false else if (it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0") false else true
+                        runFlat = if (it.runFlat == null) false else !(it.runFlat.toString().isNullOrBlank() || it.runFlat.toString() == "null" || it.runFlat.toString() == "0")
+                        reinforced = if (it.reinforced == null) false else !(it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0")
                         val speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
 
 

@@ -104,19 +104,19 @@ class Edit_Profile : BaseActivity() {
 
     private fun updateuserprofile(emailid: String, mobileno: String, imagedata: MultipartBody.Part?) {
         try{
-            val progressDialog = this?.getProgressDialog()
-            progressDialog?.show()
+            val progressDialog = this.getProgressDialog()
+            progressDialog.show()
             if (!showOnlineSnack(progressDialog))
                 return
             RetrofitClient.client.updateprofile(authToken = getBearerToken() ?: "",email = emailid.toRequestBody(),mobile = mobileno.toRequestBody(),profile_pic = imagedata)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            progressDialog?.dismiss()
+                            progressDialog.dismiss()
                             toast(t.message!!)
                         }
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             val body = response.body()?.string()
-                            progressDialog?.dismiss()
+                            progressDialog.dismiss()
                             Log.d("updateprofile", "onResponse: profile = $body")
                             if (response.isSuccessful){
                                 try {
@@ -164,12 +164,12 @@ class Edit_Profile : BaseActivity() {
     }
     private fun showOnlineSnack(progressDialog: ProgressDialog?): Boolean {
         val view = home_bottom_navigation_view
-        if (!this?.isOnline()!!) {
+        if (!this.isOnline()) {
             Snackbar.make(view, getString(R.string.ConnectionErrorPleaseretry), Snackbar.LENGTH_LONG)
                     .show()
             progressDialog?.dismiss()
         }
-        return this?.isOnline()!!
+        return this.isOnline()
     }
 
 
@@ -209,13 +209,13 @@ class Edit_Profile : BaseActivity() {
         {
             if (data != null)
             {
-                val contentURI = data!!.data
+                val contentURI = data.data
                 try
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     //val path = saveImage(bitmap)
                    // Toast.makeText(this@Edit_Profile, "Image Saved!", Toast.LENGTH_SHORT).show()
-                    profile_imagefull!!.setImageBitmap(bitmap)
+                    profile_imagefull.setImageBitmap(bitmap)
                     convertTofile(bitmap)
                 }
                 catch (e: IOException) {
@@ -229,7 +229,7 @@ class Edit_Profile : BaseActivity() {
         else if (requestCode == CAMERA)
         {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
-            profile_imagefull!!.setImageBitmap(thumbnail)
+            profile_imagefull.setImageBitmap(thumbnail)
             convertTofile(thumbnail)
             //Toast.makeText(this@Edit_Profile, "Image Saved!", Toast.LENGTH_SHORT).show()
         }

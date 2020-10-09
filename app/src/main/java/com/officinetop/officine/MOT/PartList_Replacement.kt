@@ -62,7 +62,7 @@ class PartList_Replacement : BaseActivity() {
                     if (response!!.isSuccessful) {
 
 
-                        val body = JSONObject(response?.body()?.string())
+                        val body = JSONObject(response.body()?.string())
 
                         if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                             progressDialog.dismiss()
@@ -123,7 +123,7 @@ class PartList_Replacement : BaseActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(dialogView)
-        val window: Window = dialog!!.window!!
+        val window: Window = dialog.window!!
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView
@@ -179,7 +179,7 @@ class PartList_Replacement : BaseActivity() {
                                 carMaintenanceServiceList[position].wishlist="1"
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this,carMaintenanceServiceList[position].productName!!,ProductId,"1","USD",if(!carMaintenanceServiceList[position]?.sellerPrice.isNullOrBlank())carMaintenanceServiceList[position]?.sellerPrice?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName,ProductId,"1","USD",if(!carMaintenanceServiceList[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }
@@ -202,7 +202,7 @@ class PartList_Replacement : BaseActivity() {
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
                             if (body.has("message")) {
-                                Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+                                Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                                 carMaintenanceServiceList[position].wishlist="0"
                                 showInfoDialog(getString(R.string.productRemoved_formWishList))
 

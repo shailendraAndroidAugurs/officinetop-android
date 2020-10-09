@@ -63,7 +63,7 @@ class SimpleTextListAdapter(private var context: Context, private var titleList:
 
                                 response?.let {
                                     if (response.isSuccessful) {
-                                        val body = JSONObject(response?.body()?.string())
+                                        val body = JSONObject(response.body()?.string())
                                         context.showInfoDialog(body.optString("message")) {
                                             listenerRecycler.onItemRemove()
                                             titleList.clear()

@@ -28,17 +28,16 @@ class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<
 
     override fun onBindViewHolder(holder: RevisionServiceViewHolder, position: Int) {
 
-        mRevisionServiceList?.let {
-            it[position]?.let {
-            holder.revTitle.text = it.categoryName
-            holder.revDesc.text = it.description
-            holder.revMinPrice.text = mContext.getString(R.string.prepend_euro_symbol_with_from_string, it.minPrice)
+        mRevisionServiceList?.let { it[position]?.let { it1 ->
+            holder.revTitle.text = it1.categoryName
+            holder.revDesc.text = it1.description
+            holder.revMinPrice.text = mContext.getString(R.string.prepend_euro_symbol_with_from_string, it1.minPrice)
 
             holder.revChooseWorkshopBtn.setOnClickListener {view->
 
                 mContext.startActivity(mContext.intentFor<WorkshopListActivity>(
                         com.officinetop.officine.utils.Constant.Key.is_revision to true,
-                        com.officinetop.officine.utils.Constant.Path.revisionServiceDetails to it))
+                        com.officinetop.officine.utils.Constant.Path.revisionServiceDetails to it1))
             }
             }
         }

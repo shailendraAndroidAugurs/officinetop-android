@@ -87,7 +87,7 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
             title.text = subCategoryName
 
             if (subCategoryDetails?.images != null)
-                mContext?.loadImage(subCategoryDetails?.images[0].imageUrl, subCategoryImage)
+                mContext?.loadImage(subCategoryDetails.images[0].imageUrl, subCategoryImage)
 
             // set expanded/ collapsed arrow image
             val groupIndicator = groupView.findViewById<ImageView>(R.id.group_indicator)
@@ -119,7 +119,7 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildViewAdapter.SubGroupViewHolder {
-            val subGroupLayout = LayoutInflater.from(parent?.context).inflate(R.layout.item_grid_part_detail, parent, false)
+            val subGroupLayout = LayoutInflater.from(parent.context).inflate(R.layout.item_grid_part_detail, parent, false)
             return SubGroupViewHolder(subGroupLayout)
         }
 
@@ -129,10 +129,10 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
             if (productDetails != null) {
 
                 if (!productDetails.ourCategoryName.isNullOrBlank()) {
-                    holder.productTitle.text = productDetails?.ourCategoryName
+                    holder.productTitle.text = productDetails.ourCategoryName
                 } else {
-                    holder.productTitle.text = productDetails?.item + " ${productDetails?.frontRear
-                            ?: ""} ${productDetails?.leftRight ?: ""}"
+                    holder.productTitle.text = productDetails.item + " ${productDetails.frontRear
+                            ?: ""} ${productDetails.leftRight ?: ""}"
                 }
 
 

@@ -333,8 +333,8 @@ class AddVehicleActivity : BaseActivity() {
 
 
         if (spinner_version.selectedItemPosition < 0 || spinner_manufacturer.selectedItemPosition < 0
-                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0 && !carcriteriaId.equals("") && !!CarConditionScheduleId.equals("")) {
-            snackbar(add_from_fields, getString(R.string.AllFieldsRequired))
+                || spinner_fuel.selectedItemPosition < 0 || spinner_model.selectedItemPosition < 0 && carcriteriaId != "" && CarConditionScheduleId.equals("")) {
+            add_from_fields.snackbar(getString(R.string.AllFieldsRequired))
             return
         }
 
@@ -474,7 +474,7 @@ class AddVehicleActivity : BaseActivity() {
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()
-                            snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                            add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
                         }
 
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -491,7 +491,7 @@ class AddVehicleActivity : BaseActivity() {
                                     showInfoDialog(if (messageString.isEmpty()) getString(R.string.Caraddedsuccessfully) else messageString, !isStatusCodeValid(body)) {
                                         if (isStatusCodeValid(body)) {
                                             Log.d("AddVehicleActivity", "onResponse: Detail updated")
-                                            setResult(Activity.RESULT_OK, getLastCarIntent(body!!))
+                                            setResult(Activity.RESULT_OK, getLastCarIntent(body))
                                             finish()
                                         }
                                     }
@@ -540,7 +540,7 @@ class AddVehicleActivity : BaseActivity() {
                     "Bearer ${getStoredToken()}", versionCriteria = carcriteriaId, scheduleId = CarConditionScheduleId).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     progressDialog.dismiss()
-                    snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                    add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
                 }
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -700,7 +700,7 @@ class AddVehicleActivity : BaseActivity() {
         RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId, "ita").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
-                snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -804,7 +804,7 @@ class AddVehicleActivity : BaseActivity() {
         RetrofitClient.client.getMotServiceSchedule(SelectedVersioId).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
-                snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -906,7 +906,7 @@ class AddVehicleActivity : BaseActivity() {
         RetrofitClient.client.carVersion(modelID, year).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
-                snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -1172,7 +1172,7 @@ class AddVehicleActivity : BaseActivity() {
                                         isForEdit = true
                                         setEditMode()
                                     } else {
-                                        snackbar(add_from_plate, getString(R.string.ConnectionErrorPleaseretry))
+                                        add_from_plate.snackbar(getString(R.string.ConnectionErrorPleaseretry))
                                     }
 
 
@@ -1196,7 +1196,7 @@ class AddVehicleActivity : BaseActivity() {
 
                         } else {
                             try {
-                                snackbar(add_from_plate, getMessageFromJSON(body))
+                                add_from_plate.snackbar(getMessageFromJSON(body))
                             } catch (e: Exception) {
                             }
                         }
@@ -1250,7 +1250,7 @@ class AddVehicleActivity : BaseActivity() {
             val last = (dataSet[dataSet.length() - 1].toString())
             val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
             carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
-            CallKromedaApi(lastCar?.carVersionModel?.idVehicle!!)
+            CallKromedaApi(lastCar.carVersionModel.idVehicle)
         }
 
         return carIntent
@@ -1325,7 +1325,7 @@ class AddVehicleActivity : BaseActivity() {
             RetrofitClient.client.deleteCarImage(carImageList[position].id, it).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     progressDialog.dismiss()
-                    snackbar(add_from_fields, getString(R.string.ConnectionErrorPleaseretry))
+                    add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
                 }
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -1465,9 +1465,9 @@ class AddVehicleActivity : BaseActivity() {
     private fun getFuelType(fuelAbbrevation: String): String {
 
         return when {
-            fuelAbbrevation.equals("D") -> "Diesel"
-            fuelAbbrevation.equals("B") -> "Petrol"
-            fuelAbbrevation.equals("G") -> "Gas"
+            fuelAbbrevation=="D"-> "Diesel"
+            fuelAbbrevation == "B" -> "Petrol"
+            fuelAbbrevation == "G" -> "Gas"
             else -> "Other"
         }
 

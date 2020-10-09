@@ -19,7 +19,7 @@ class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private va
     override fun getItemCount(): Int = imagesList.size
 
     override fun onBindViewHolder(holder: QuotesImagesViewHolder, position: Int) {
-        val viewHolder = holder as QuotesImagesViewHolder
+        val viewHolder = holder
         viewHolder.bindView(imagesList.get(position))
     }
 
@@ -71,7 +71,7 @@ class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private va
             }
 
             itemView.setOnClickListener {
-                context?.createImageSliderDialog(item)
+                context.createImageSliderDialog(item)
 
             }
 

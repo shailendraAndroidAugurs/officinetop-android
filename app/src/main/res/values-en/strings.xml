@@ -711,6 +711,11 @@
     <string name="feedback_Workshop_home">Reviews on workshops</string>
     <string name="feedback_Product_home">Product Reviews</string>
     <string name="dot">DOT</string>
+    <string name="write_clear_and_concise_pages">Write clear and concise pages.</string>
+    <string name="in_terms_of_faq_pages_the_more_the_merrier_is_actually_a_fallacy_too_much_text_can_end_up_being_too_confusing_causing_readers_to_have_to_search_for_the_answer_they_need_rather_than_writing_long_and_eloquent_paragraphs_it_s_best_to_be_straightforward_and_brief_when_providing_answers">In terms of FAQ pages, the more the merrier is actually a fallacy. Too much text can end up being too confusing, causing readers to have to search for the answer they need. Rather than writing long and eloquent paragraphs, it\'s best to be straightforward and brief when providing answers.</string>
+    <string name="_25">25</string>
+    <string name="_0">0</string>
+    <string name="update_contact_number">Update Contact Number</string>
     <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Tyre</item>

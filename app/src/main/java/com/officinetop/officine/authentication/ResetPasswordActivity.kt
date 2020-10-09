@@ -85,8 +85,8 @@ class ResetPasswordActivity : BaseActivity() {
                                     }.show()
 
                                 }
-                                401 -> snackbar(reset_password,getString(R.string.Failedsendresetemail))
-                                500 -> snackbar(reset_password,getString(R.string.Requesttimedout))
+                                401 -> reset_password.snackbar(getString(R.string.Failedsendresetemail))
+                                500 -> reset_password.snackbar(getString(R.string.Requesttimedout))
                             }
 
                         }

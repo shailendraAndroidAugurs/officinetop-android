@@ -62,16 +62,16 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
                 val modifiedResult = response?.body() as SearchKeywordResponse
 
                 modifiedResult.data?.all?.forEach {
-                    it?.keyword?.let {
-                        searchKeywordHistory.add(it)
-                        allSearchSection.addTag(Tag(it))
+                    it?.keyword?.let { it1 ->
+                        searchKeywordHistory.add(it1)
+                        allSearchSection.addTag(Tag(it1))
                     }
                 }
 
                 modifiedResult.data?.self?.forEach {
-                    it?.keyword?.let {
-                        searchKeywordData.add(it)
-                        recentSearchSection.addTag(Tag(it))
+                    it?.keyword?.let { it1 ->
+                        searchKeywordData.add(it1)
+                        recentSearchSection.addTag(Tag(it1))
                     }
                 }
 

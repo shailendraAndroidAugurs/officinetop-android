@@ -77,7 +77,7 @@ class MotDetailActivity : BaseActivity() {
                 }
 
 
-                hashMap.put(motServiceObject.id.toString(), Models.MotservicesCouponData(couponId, partId, sellerId))
+                hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
 
 
                 val bundle = Bundle()
@@ -109,21 +109,21 @@ class MotDetailActivity : BaseActivity() {
 
                                 itemsData = Gson().fromJson<Models.MotDetail>(body.toString(), Models.MotDetail::class.java)
 
-                                if (itemsData?.data?.serviceaveragetime == null) {
-                                    itemsData.data?.serviceaveragetime = "0"
+                                if (itemsData.data.serviceaveragetime == null) {
+                                    itemsData.data.serviceaveragetime = "0"
                                 }
 
-                                if (itemsData?.data?.operations != null) {
-                                    for (i in 0 until itemsData?.data?.operations.size) {
-                                        mOPerationServicesList.add(itemsData?.data?.operations[i])
+                                if (itemsData.data.operations != null) {
+                                    for (i in 0 until itemsData.data.operations.size) {
+                                        mOPerationServicesList.add(itemsData.data.operations[i])
                                     }
                                 }
-                                for (i in 0 until itemsData?.data?.kPartList.size) {
-                                    if (!(itemsData.data.kPartList[i].couponList == null || itemsData?.data?.kPartList[i].couponList.size == 0)) {
+                                for (i in 0 until itemsData.data.kPartList.size) {
+                                    if (!(itemsData.data.kPartList[i].couponList == null || itemsData.data.kPartList[i].couponList.size == 0)) {
                                         itemsData.data.kPartList[i].couponTitle = itemsData.data.kPartList[i].couponList[0].couponTitle
                                         itemsData.data.kPartList[i].couponId = itemsData.data.kPartList[i].couponList[0].id
                                     }
-                                    mKPartServicesList.add(itemsData?.data?.kPartList[i])
+                                    mKPartServicesList.add(itemsData.data.kPartList[i])
                                 }
                                 binndDataInRecyclerview()
 
@@ -253,7 +253,7 @@ class MotDetailActivity : BaseActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(dialogView)
-        val window: Window = dialog!!.window!!
+        val window: Window = dialog.window!!
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height should be fixed
         val title = dialog.findViewById(R.id.title) as TextView
@@ -326,7 +326,7 @@ class MotDetailActivity : BaseActivity() {
 
                                 mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this,mKPartServicesList[position].productName!!,ProductId,"1","USD",if(!mKPartServicesList[position]?.sellerPrice.isNullOrBlank())mKPartServicesList[position]?.sellerPrice?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this, mKPartServicesList[position].productName,ProductId,"1","USD",if(!mKPartServicesList[position].sellerPrice.isNullOrBlank()) mKPartServicesList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }

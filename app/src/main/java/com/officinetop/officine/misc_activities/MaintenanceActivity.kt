@@ -111,15 +111,15 @@ class MaintenanceActivity : BaseActivity() {
                             Log.e("PARTIDSSERVICES", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "custom part" else carMaintenanceServiceList[i].productId)
                             if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
 
-                                        hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
-                                                if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
-                                                else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id))
+                                hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                        if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
+                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
                                                 selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
 
                             } else {
-                                hashMap.put(carMaintenanceServiceList[i].id, Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
                                         if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
-                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id))
+                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
                                 selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
                             }
                         }
@@ -369,8 +369,7 @@ class MaintenanceActivity : BaseActivity() {
     private fun getAllPartsMaintaince(serviceId: String, position: Int) {
         progress_bar.visibility = View.VISIBLE
         try {
-            RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!
-                    ?: "", serviceId, getUserId())
+            RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!, serviceId, getUserId())
                     .onCall { networkException, response ->
 
                         networkException?.let { progress_bar.visibility = View.GONE }
@@ -520,7 +519,7 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 if (frompart) {
-                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position]?.productName!!, ProductId.toString(), "1", "USD", if (!carMaintenanceServiceList[selectservice_position]?.seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position]?.seller_price.toDouble()!! else 0.0)
+                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId.toString(), "1", "USD", if (!carMaintenanceServiceList[selectservice_position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
 
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
 
@@ -532,7 +531,7 @@ class MaintenanceActivity : BaseActivity() {
                                 carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName!!, ProductId, "1", "USD", if (!carMaintenanceServiceList[position]?.seller_price.isNullOrBlank()) carMaintenanceServiceList[position]?.seller_price?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[position].seller_price.toDouble() else 0.0)
 
                             }
 

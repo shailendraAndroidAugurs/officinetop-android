@@ -77,20 +77,14 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun loadNavigationItems(itemId: Int) {
         when (itemId) {
-            R.id.action_menu_home, R.id.menu_home -> {
+            R.id.action_menu_home, R.id.menu_home -> if (!(supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
 
-                if (!(supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
-
-
-                    supportFragmentManager.beginTransaction()
-                            .replace(R.id.container, FragmentHome(), "Home")
-                            .commit()
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentHome(), "Home")
+                        .commit()
 
 
-                    home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
-                }
-
-
+                home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
             }
 
             R.id.action_news, R.id.menu_news -> {
@@ -578,14 +572,14 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             //if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car" || !isLoggedIn()) {
 
 
-            toolbar_car_title.text = car?.carMakeModel?.brand
-            toolbar_car_subtitle.text = "${car?.carModel?.model} (${car?.carModel?.modelYear})"
+            toolbar_car_title.text = car.carMakeModel.brand
+            toolbar_car_subtitle.text = "${car.carModel.model} (${car.carModel.modelYear})"
             toolbar_car_subtitle.visibility = View.VISIBLE
 
             val carDefaultImage = car.carDefaultImage ?: ""
-            loadCarImage(carDefaultImage, car.carMakeModel?.brandID, toolbar_image_view)
+            loadCarImage(carDefaultImage, car.carMakeModel.brandID, toolbar_image_view)
 
-            Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
+            Log.d("HomeActivity", "getView: setting toolbar values, value = ${car.carMakeName}, ${car.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
 
             val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
@@ -594,7 +588,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             //call select car API
             if (car != null) {
                 if (!car.id.isNullOrBlank()) {
-                    selectCar(car.id!!)
+                    selectCar(car.id)
                 }
 
                 saveMotCarKM(car.km_of_cars)
@@ -710,8 +704,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 getCarListAPI()
             } else if (requestCode == Constant.RC.onCarAdded) {
                 try {
-                    if (data != null && data?.extras != null) {
-                        val lastCar = data?.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
+                    if (data != null && data.extras != null) {
+                        val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
                         Log.d("HomeActivity", "onActivityResult: $lastCar")
                         setToolbarValues(lastCar)
                     }
@@ -801,7 +795,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         progressDialog.dismiss()
-                        snackbar(window.decorView.rootView, getString(R.string.SyncFailed))
+                        window.decorView.rootView.snackbar(getString(R.string.SyncFailed))
 
                     }
 
@@ -982,7 +976,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                                     //call select car API
                                     if (car != null) {
-                                        selectCar(car.id!!)
+                                        selectCar(car.id)
                                         saveMotCarKM(car.km_of_cars)
 
                                     }
@@ -1040,12 +1034,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun iscurrentFragmentHome(): Boolean {
 
-        val fragments = supportFragmentManager.getFragments();
+        val fragments = supportFragmentManager.fragments
         for (fragment in fragments) {
             if (fragment != null && fragment is FragmentHome)
                 return true
         }
-        return false;
+        return false
     }
 
 }

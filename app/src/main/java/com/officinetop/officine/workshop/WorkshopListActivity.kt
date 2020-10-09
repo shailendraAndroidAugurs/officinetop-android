@@ -187,8 +187,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
-                    val dateFormat = SimpleDateFormat("yyy-MM-dd");
-                    selectedFormattedDate = dateFormat.format(DeleviryDate);
+                    val dateFormat = SimpleDateFormat("yyy-MM-dd")
+                    selectedFormattedDate = dateFormat.format(DeleviryDate)
 
                 }
 
@@ -219,8 +219,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
-                    val dateFormat = SimpleDateFormat("yyy-MM-dd");
-                    selectedFormattedDate = dateFormat.format(DeleviryDate);
+                    val dateFormat = SimpleDateFormat("yyy-MM-dd")
+                    selectedFormattedDate = dateFormat.format(DeleviryDate)
 
 
                 }
@@ -360,7 +360,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         for (i in 0 until dataSet.length()) {
                             val serviceCategory = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
                             arrayList.add(serviceCategory)
-                            calendarPriceMap.put(arrayList[i].date, arrayList[i].minPrice.toString())
+                            calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
 
                         }
                         setUpCalendarPrices(arrayList)
@@ -777,7 +777,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         drawableLeft = ContextCompat.getDrawable(this@WorkshopListActivity, R.drawable.ic_sort_black_24dp)!!
         drawableRight = ContextCompat.getDrawable(this@WorkshopListActivity, R.drawable.shape_circle_orange_8dp)!!
 
-        drawableRight?.setBounds(100, 100, 100, 100)
+        drawableRight.setBounds(100, 100, 100, 100)
 
         with(filterDialog) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -936,7 +936,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             toolbar.setNavigationOnClickListener { dismiss() }
 
-            toolbar_title.text = "Sort"
+            toolbar_title.text = getString(R.string.sort)
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar.setOnMenuItemClickListener {
 

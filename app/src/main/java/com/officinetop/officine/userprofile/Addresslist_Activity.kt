@@ -67,19 +67,19 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         } else {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_update_address, null, false)
 
-            mDialogView.edt_entered_ZipCode.setText(useraddress?.zipCode)
+            mDialogView.edt_entered_ZipCode.setText(useraddress.zipCode)
 
 
 
-            latitude = useraddress?.latitude
-            longitude = useraddress?.longitude
-            Address = useraddress?.address1
-            setPlacePicker(useraddress?.address1)
-            bindSpinner(mDialogView.spinner_AddressType, buttonTitles, useraddress?.addressType)
+            latitude = useraddress.latitude
+            longitude = useraddress.longitude
+            Address = useraddress.address1
+            setPlacePicker(useraddress.address1)
+            bindSpinner(mDialogView.spinner_AddressType, buttonTitles, useraddress.addressType)
         }
 
         //AlertDialogBuilder
-        val mBuilder = this?.let {
+        val mBuilder = this.let {
             AlertDialog.Builder(it)
                     .setView(mDialogView)
                     .setCancelable(false)
@@ -105,12 +105,12 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 DismissFragment()
                 mAlertDialog?.dismiss()
                 var addresType = ""
-                if (mDialogView.spinner_AddressType.selectedItemPosition == 0) {
-                    addresType = "H"
+                addresType = if (mDialogView.spinner_AddressType.selectedItemPosition == 0) {
+                    "H"
                 } else if (mDialogView.spinner_AddressType.selectedItem == 1) {
-                    addresType = "O"
+                    "O"
                 } else
-                    addresType = "Ot"
+                    "Ot"
 
                 postalCode = mDialogView.edt_entered_ZipCode.text.toString()
 
@@ -118,7 +118,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                     AddAddressToServer(addresType)
                 else
 
-                    UpdateAddressFromServer(useraddress?.id.toString(), addresType)
+                    UpdateAddressFromServer(useraddress.id.toString(), addresType)
 
 
             }
@@ -144,11 +144,11 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             longitude = place?.latLng?.longitude.toString()
             Address = place?.address.toString()
             if (place != null) {
-                for (i in 0 until place?.addressComponents?.asList()?.size!!) {
+                for (i in 0 until place.addressComponents?.asList()?.size!!) {
 
-                    for (j in 0 until place?.addressComponents?.asList()!![i].types.size!!) {
-                        if (place?.addressComponents?.asList()!![i].types[j] == getString(R.string.postal_code)) {
-                            postalCode = place?.addressComponents?.asList()!![i].name
+                    for (j in 0 until place.addressComponents?.asList()!![i].types.size) {
+                        if (place.addressComponents?.asList()!![i].types[j] == getString(R.string.postal_code)) {
+                            postalCode = place.addressComponents?.asList()!![i].name
                             mDialogView.edt_entered_ZipCode.setText(postalCode)
                         }
                     }
@@ -223,7 +223,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles)
 
         spinner.isSelected = true
-        spinner.setAdapter(adapter)
+        spinner.adapter = adapter
         if (!selectedSpinnerValue.isNullOrEmpty()) {
             when (selectedSpinnerValue) {
                 "H" -> spinner.setSelection(0)
@@ -239,9 +239,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     override fun getUserDetailData(ApiRespoinse: Models.UserDetailData?, ApiRespoinsewallet: Models.UserWallet?) {
         val UserContactList: List<Models.UserAddres> = ApiRespoinse!!.userAddress
 
-        class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-        }
+        class Holder(view: View) : RecyclerView.ViewHolder(view)
 
         val myadpter = object : RecyclerView.Adapter<Holder>() {
             var viewBinderHelper = ViewBinderHelper()
@@ -251,14 +249,14 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                viewBinderHelper.setOpenOnlyOne(true);
+                viewBinderHelper.setOpenOnlyOne(true)
                 return Holder(layoutInflater.inflate(R.layout.item_list_address, parent, false))
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_Address.text = UserContactList[position].address1
                 holder.itemView.tv_ZipCode.text = UserContactList[position].zipCode
-                viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString());
+                viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString())
                 holder.itemView.item_edit.setOnClickListener {
 
                     add_Upadte_Address(UserContactList[position])

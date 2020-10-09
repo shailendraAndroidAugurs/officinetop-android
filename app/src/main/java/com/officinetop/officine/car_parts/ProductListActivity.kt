@@ -125,7 +125,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)!!
         drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)!!
 
-        drawableRight?.setBounds(100, 100, 100, 100)
+        drawableRight.setBounds(100, 100, 100, 100)
         // products list
         searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
         searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
@@ -508,7 +508,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     private fun setCheckedListener(layout: View, checkbox: CheckBox, onCheckedChanged: ((isChecked: Boolean) -> Unit)? = null) {
         layout.setOnClickListener {
-            checkbox.isChecked = !checkbox.isChecked; //onCheckedChanged?.invoke(checkbox.isChecked)
+            checkbox.isChecked = !checkbox.isChecked //onCheckedChanged?.invoke(checkbox.isChecked)
         }
         checkbox.setOnCheckedChangeListener { _, isChecked -> onCheckedChanged?.invoke(isChecked) }
     }
@@ -537,9 +537,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun bindBrandData(isFromClearSelection: Boolean = false) {
         val brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
 
-        class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-        }
+        class Holder(view: View) : RecyclerView.ViewHolder(view)
 
         val myadpter = object : RecyclerView.Adapter<Holder>() {
             var viewBinderHelper = ViewBinderHelper()

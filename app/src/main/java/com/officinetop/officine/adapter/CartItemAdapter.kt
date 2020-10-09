@@ -388,11 +388,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             }
             var ProductMaxQuantity = 1
             if (item.CartType == "SP") {
-                if (item.serviceAssemblyProductDescription?.maxProductQuantity != null) {
-                    ProductMaxQuantity = if (item.serviceAssemblyProductDescription.maxProductQuantity.isNullOrBlank()) 1 else item.serviceAssemblyProductDescription.maxProductQuantity?.toInt()
+                if (item.serviceAssemblyProductDescription.maxProductQuantity != null) {
+                    ProductMaxQuantity = if (item.serviceAssemblyProductDescription.maxProductQuantity.isNullOrBlank()) 1 else item.serviceAssemblyProductDescription.maxProductQuantity.toInt()
                 }
             } else {
-                ProductMaxQuantity = if (item.maxProductQuantity.isNullOrBlank()) 1 else item.maxProductQuantity?.toInt()
+                ProductMaxQuantity = if (item.maxProductQuantity.isNullOrBlank()) 1 else item.maxProductQuantity.toInt()
 
             }
 
@@ -400,11 +400,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             quantitySpinner.setSampleSpinnerAdapter(context, list)
             if (item.CartType == "SP") {
 
-                quantitySpinner.isEnabled = false;
-                quantitySpinner.isClickable = false;
+                quantitySpinner.isEnabled = false
+                quantitySpinner.isClickable = false
             } else {
-                quantitySpinner.isEnabled = true;
-                quantitySpinner.isClickable = true;
+                quantitySpinner.isEnabled = true
+                quantitySpinner.isClickable = true
             }
 
             if (list.indexOf(quantity.toString()) == -1) {
@@ -487,7 +487,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
     @JvmOverloads
-    public fun updateCartQuantity(selectedQuantityofProduct: Int, item: Models.CartDataList, productID: String, isProductSellOnpair: Boolean = false) {
+    fun updateCartQuantity(selectedQuantityofProduct: Int, item: Models.CartDataList, productID: String, isProductSellOnpair: Boolean = false) {
         var price: String = ""
         var selectedQuantity = selectedQuantityofProduct
         if (isProductSellOnpair)

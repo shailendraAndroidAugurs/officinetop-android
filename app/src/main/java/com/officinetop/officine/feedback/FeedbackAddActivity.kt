@@ -210,7 +210,7 @@ class FeedbackAddActivity : BaseActivity() {
         val imageList: ArrayList<MultipartBody.Part?> = ArrayList()
         for (i in 0 until images.size) {
             val file = File(images.get(i))
-            imageList.add(file?.toMultipartBody("images[]"))
+            imageList.add(file.toMultipartBody("images[]"))
         }
 
         if (motservicetype == null) {
@@ -298,7 +298,7 @@ class FeedbackAddActivity : BaseActivity() {
 
             if (requestCode == Constant.GALLERY) {
                 if (data != null) {
-                    val contentUri = data!!.data
+                    val contentUri = data.data
                     try {
                         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentUri)
                         convertTofile(bitmap)
@@ -364,7 +364,7 @@ class FeedbackAddActivity : BaseActivity() {
             stream.close()
 
             attachedImage = file
-            attachedImagePath = file?.absolutePath
+            attachedImagePath = file.absolutePath
             //Log.e("file select camera=", "${attachedImage} ${attachedImagePath}")
 
             imagesList.clear()

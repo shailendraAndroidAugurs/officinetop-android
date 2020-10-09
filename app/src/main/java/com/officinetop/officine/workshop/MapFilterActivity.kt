@@ -422,12 +422,12 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         view.isDrawingCacheEnabled = true
         view.invalidate()
         view.buildDrawingCache(false)
-        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888);
+        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
 
-        val canvas = Canvas(bitmap);
-        view.draw(canvas);
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
 
-        return bitmap;
+        return bitmap
     }
 
 

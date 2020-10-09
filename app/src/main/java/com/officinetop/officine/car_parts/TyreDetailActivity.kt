@@ -180,7 +180,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             } else {
                 cartItem = Models.CartItem(name = product_name.text.toString().trim().takeIf { !it.isNullOrEmpty() }!!,
                         description = productDetails!!.description,
-                        price = price.replace(",", "").toDouble() ?: 0.0,
+                        price = price.replace(",", "").toDouble(),
                         type = Constant.type_product,
                         tyreDetail = productDetails
 
@@ -261,19 +261,19 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun speedIndexMapFun() {
-        speedIndexMap.put("L", "120 km/h")
-        speedIndexMap.put("M", "130 km/h")
-        speedIndexMap.put("N", "140 km/h")
-        speedIndexMap.put("P", "150 km/h")
-        speedIndexMap.put("Q", "160 km/h")
-        speedIndexMap.put("R", "170 km/h")
-        speedIndexMap.put("S", "180 km/h")
-        speedIndexMap.put("T", "190 km/h")
-        speedIndexMap.put("U", "200 km/h")
-        speedIndexMap.put("H", "210 km/h")
-        speedIndexMap.put("V", "240 km/h")
-        speedIndexMap.put("Y", "300 km/h")
-        speedIndexMap.put("ZR", "240 km/h")
+        speedIndexMap["L"] = "120 km/h"
+        speedIndexMap["M"] = "130 km/h"
+        speedIndexMap["N"] = "140 km/h"
+        speedIndexMap["P"] = "150 km/h"
+        speedIndexMap["Q"] = "160 km/h"
+        speedIndexMap["R"] = "170 km/h"
+        speedIndexMap["S"] = "180 km/h"
+        speedIndexMap["T"] = "190 km/h"
+        speedIndexMap["U"] = "200 km/h"
+        speedIndexMap["H"] = "210 km/h"
+        speedIndexMap["V"] = "240 km/h"
+        speedIndexMap["Y"] = "300 km/h"
+        speedIndexMap["ZR"] = "240 km/h"
     }
 
     private fun addRemoveProductToWishlist() {
@@ -418,9 +418,9 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                         response?.body()?.string()?.let {
                             if (isStatusCodeValid(it)) {
                                 val data = getDataFromResponse(it)
-                                data?.let {
+                                data.let { it1 ->
 
-                                    val tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it.toString(), Models.TyreDetailData::class.java)
+                                    val tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it1.toString(), Models.TyreDetailData::class.java)
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
                                         delivery_date.text = getDate(tyreDetailData.delivery_days.toInt() + 1)
                                         Deliverydays = tyreDetailData.delivery_days
@@ -431,8 +431,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                     setDetailedInformation(tyreDetailData)
                                     seller_details.isEnabled = false
-                                    if (it.has("min_prices")) {
-                                        minimumServicePrices = it.getString("min_prices")
+                                    if (it1.has("min_prices")) {
+                                        minimumServicePrices = it1.getString("min_prices")
                                         if (!minimumServicePrices.isNullOrBlank()) {
                                             if (productIsPair)
                                                 buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (minimumServicePrices.toDouble().roundTo2Places() * 2).toString())})"
@@ -585,7 +585,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         for (i in 0 until imagesArray!!.size) {
             try {
-                if (imagesArray.get(i).image_url != null && !imagesArray.get(i).image_url.toString().isEmpty()) {
+                if (imagesArray.get(i).image_url != null && imagesArray.get(i).image_url.toString().isNotEmpty()) {
 
                     val imageRes = imagesArray.get(i).image_url
                     Log.d("Images", imageRes.toString())
@@ -665,7 +665,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(dialogView)
-        val window: Window = dialog!!.window!!
+        val window: Window = dialog.window!!
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView

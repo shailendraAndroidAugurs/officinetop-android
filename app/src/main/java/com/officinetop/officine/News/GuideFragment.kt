@@ -21,14 +21,14 @@ class GuideFragment : Fragment() {
         with(rootview) {
             val webSettings = webview!!.settings
             webview!!.loadUrl("https://www.officinetop.com/guide/"/*, headers*/)
-            webview.requestFocus();
+            webview.requestFocus()
             webSettings.javaScriptEnabled = true
-            webSettings.loadWithOverviewMode = true;
-            webSettings.useWideViewPort = true;
-            webSettings.allowFileAccess = true;
-            webSettings.allowContentAccess = true;
-            webview!!.setInitialScale(1);
-            webSettings.javaScriptCanOpenWindowsAutomatically = true;
+            webSettings.loadWithOverviewMode = true
+            webSettings.useWideViewPort = true
+            webSettings.allowFileAccess = true
+            webSettings.allowContentAccess = true
+            webview!!.setInitialScale(1)
+            webSettings.javaScriptCanOpenWindowsAutomatically = true
             val webViewClient = WebViewClientImpl(activity, progress_bar_webview)
             webview!!.webViewClient = webViewClient
         }

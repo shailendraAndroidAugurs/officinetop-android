@@ -43,7 +43,7 @@ class Genrated_UserTicket : BaseActivity() {
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 ticketListItem.clear()
@@ -100,7 +100,7 @@ class Genrated_UserTicket : BaseActivity() {
             }
         })
         for (i in 0 until dataSetArray!!.length()) {
-            val data = Gson().fromJson<Models.TicketList>(dataSetArray!!.get(i).toString(), Models.TicketList::class.java)
+            val data = Gson().fromJson<Models.TicketList>(dataSetArray.get(i).toString(), Models.TicketList::class.java)
             ticketListItem.add(data)
         }
         recycler_view.visibility=View.VISIBLE

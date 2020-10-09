@@ -87,20 +87,20 @@ class FragmentWorkshopFeedback : Fragment() {
 
 
 
-                if (!WorshopFeedbackList[p1]?.last_name.isNullOrBlank() && !WorshopFeedbackList[p1]?.first_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.first_name + " " + WorshopFeedbackList[p1]?.last_name
+                if (!WorshopFeedbackList[p1].last_name.isNullOrBlank() && !WorshopFeedbackList[p1].first_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name + " " + WorshopFeedbackList[p1].last_name
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.Concat)
                 }
 
 
 
-                if (!WorshopFeedbackList[p1]?.last_name.isNullOrBlank() && !WorshopFeedbackList[p1]?.first_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.first_name + " " + WorshopFeedbackList[p1]?.last_name
-                } else if (!WorshopFeedbackList[p1]?.first_name.isNullOrBlank() && WorshopFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.first_name.toString()
-                } else if (WorshopFeedbackList[p1]?.first_name.isNullOrBlank() && !WorshopFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.last_name.toString()
+                if (!WorshopFeedbackList[p1].last_name.isNullOrBlank() && !WorshopFeedbackList[p1].first_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name + " " + WorshopFeedbackList[p1].last_name
+                } else if (!WorshopFeedbackList[p1].first_name.isNullOrBlank() && WorshopFeedbackList[p1].last_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name.toString()
+                } else if (WorshopFeedbackList[p1].first_name.isNullOrBlank() && !WorshopFeedbackList[p1].last_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = WorshopFeedbackList[p1].last_name.toString()
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.Concat)
                 }
@@ -129,13 +129,13 @@ class FragmentWorkshopFeedback : Fragment() {
                         }
 
                         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                            val action: Int = e.action;
+                            val action: Int = e.action
                             when (action) {
                                 MotionEvent.ACTION_MOVE ->
-                                    rv.parent.requestDisallowInterceptTouchEvent(true);
+                                    rv.parent.requestDisallowInterceptTouchEvent(true)
 
                             }
-                            return false;
+                            return false
                         }
 
                         override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -143,7 +143,7 @@ class FragmentWorkshopFeedback : Fragment() {
                         }
                     }
 
-                    );
+                    )
                     p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                             val view = layoutInflater.inflate(R.layout.item_image, p0, false)

@@ -134,12 +134,12 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
 
 
-                    if (!list[p1]?.lName.isNullOrBlank() && !list[p1]?.fName.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = list[p1]?.fName + " " + list[p1]?.lName
-                    } else if (!list[p1]?.fName.isNullOrBlank() && list[p1]?.lName.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = list[p1]?.fName.toString()
-                    } else if (list[p1]?.fName.isNullOrBlank() && !list[p1]?.lName.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = list[p1]?.lName.toString()
+                    if (!list[p1].lName.isNullOrBlank() && !list[p1].fName.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = list[p1].fName + " " + list[p1].lName
+                    } else if (!list[p1].fName.isNullOrBlank() && list[p1].lName.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = list[p1].fName.toString()
+                    } else if (list[p1].fName.isNullOrBlank() && !list[p1].lName.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = list[p1].lName.toString()
                     } else {
                         p0.itemView.tv_userName.text = getString(R.string.Concat)
                     }
@@ -179,13 +179,13 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                val action: Int = e.action;
+                                val action: Int = e.action
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.parent.requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true)
 
                                 }
-                                return false;
+                                return false
                             }
 
                             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -193,7 +193,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                             }
                         }
 
-                        );
+                        )
                         p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                                 val view = layoutInflater.inflate(R.layout.item_image, p0, false)

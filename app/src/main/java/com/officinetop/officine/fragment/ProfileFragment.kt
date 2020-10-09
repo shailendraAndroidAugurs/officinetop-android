@@ -72,7 +72,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
 
 
-        myClipboard = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?;
+        myClipboard = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         val button_logout = view.findViewById(R.id.button_logout) as TextView
         textview_mobile = view.findViewById(R.id.textview_mobile) as TextView
         textview_walletamount = view.findViewById(R.id.textview_walletamount) as TextView
@@ -353,63 +353,63 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     private fun SetDataInView(userDetailData: Models.UserDetailData?, apiRespoinsewallet: Models.UserWallet?) {
         val userContact: Models.UserContact
         val userAddress: Models.UserAddres
-        if (userDetailData?.userContact != null && userDetailData?.userContact?.size!! > 0 && userDetailData?.userAddress?.size!! > 0) {
-            if (userDetailData?.userDetails != null && userDetailData?.userDetails.size != 0) {
-                val userDetail = userDetailData?.userDetails?.get(0)
+        if (userDetailData?.userContact != null && userDetailData.userContact.size > 0 && userDetailData.userAddress.size > 0) {
+            if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
+                val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
-                sb.append(Constant.profileBaseUrl).append(userDetail?.profileImage)
+                sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                userContact = userDetailData?.userContact?.get(0)!!
-                userAddress = userDetailData?.userAddress?.get(0)!!
-                uicontents(userDetail?.mobileNumber?.toString(), userDetail?.email, userDetail?.fName, imageurl, userAddress?.address1, userAddress?.zipCode.toString(), userAddress?.landmark, userContact?.mobile.toString(), userDetail?.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                userContact = userDetailData.userContact.get(0)
+                userAddress = userDetailData.userAddress.get(0)
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
-                userContact = userDetailData?.userContact?.get(0)!!
-                userAddress = userDetailData?.userAddress?.get(0)!!
-                uicontents("", "", "", "", userAddress?.address1, userAddress?.zipCode.toString(), userAddress?.landmark, userContact?.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
+                userContact = userDetailData.userContact.get(0)
+                userAddress = userDetailData.userAddress.get(0)
+                uicontents("", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
 
             }
 
 
         } else if (userDetailData?.userContact?.size!! > 0) {
-            if (userDetailData?.userDetails != null && userDetailData?.userDetails.size != 0) {
-                val userDetail = userDetailData?.userDetails?.get(0)
+            if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
+                val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
-                sb.append(Constant.profileBaseUrl).append(userDetail?.profileImage)
+                sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                userContact = userDetailData?.userContact?.get(0)!!
-                uicontents(userDetail?.mobileNumber?.toString(), userDetail?.email, userDetail?.fName, imageurl, getString(R.string.Add_address), "", "", userContact?.mobile.toString(), userDetail?.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                userContact = userDetailData.userContact.get(0)
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
-                userContact = userDetailData?.userContact?.get(0)!!
-                uicontents("", "", "", "", getString(R.string.Add_address), "", "", userContact?.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
+                userContact = userDetailData.userContact.get(0)
+                uicontents("", "", "", "", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
             }
 
-        } else if (userDetailData?.userAddress?.size!! > 0) {
+        } else if (userDetailData.userAddress.size > 0) {
 
 
-            if (userDetailData?.userDetails != null && userDetailData?.userDetails.size != 0) {
-                val userDetail = userDetailData?.userDetails?.get(0)
+            if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
+                val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
-                sb.append(Constant.profileBaseUrl).append(userDetail?.profileImage)
+                sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                userAddress = userDetailData?.userAddress?.get(0)!!
-                uicontents(userDetail?.mobileNumber?.toString(), userDetail?.email, userDetail?.fName, imageurl, userAddress?.address1, userAddress?.zipCode.toString(), userAddress?.landmark, "", userDetail?.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                userAddress = userDetailData.userAddress.get(0)
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
-                userAddress = userDetailData?.userAddress?.get(0)!!
-                uicontents("", "", "", "", userAddress?.address1, userAddress?.zipCode.toString(), userAddress?.landmark, "", "", apiRespoinsewallet?.amount.toString())
+                userAddress = userDetailData.userAddress.get(0)
+                uicontents("", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
 
             }
 
         } else {
 
-            if (userDetailData?.userDetails != null && userDetailData?.userDetails.size != 0) {
-                val userDetail = userDetailData?.userDetails?.get(0)
+            if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
+                val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
-                sb.append(Constant.profileBaseUrl).append(userDetail?.profileImage)
+                sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uicontents(userDetail?.mobileNumber?.toString(), userDetail?.email, userDetail?.fName, imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail?.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 uicontents("", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
@@ -493,7 +493,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
     private fun shareCode(referralcode: String) {
 
-        val drawable = post_image!!.drawable as BitmapDrawable
+        val drawable = post_image.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
         try {
             val file = File(context?.externalCacheDir, "offers.png")

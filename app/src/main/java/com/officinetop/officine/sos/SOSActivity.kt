@@ -173,8 +173,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
             val allWrackers = it.tag as? Models.AllWrackerWorkshops
 
-            allWrackers?.let {
-                getWrackersServices(it.id.toString(), it.usersId.toInt(), getSavedSelectedVehicleID())
+            allWrackers?.let { it1 ->
+                getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSavedSelectedVehicleID())
             }
         }
     }
@@ -200,8 +200,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     response?.let {
                         if (response.isSuccessful) {
                             try {
-                                val jsonObject = JSONObject(response.body()?.string()) as JSONObject
-                                val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null) jsonObject.getJSONArray("data_set") else JSONArray()
+                                val jsonObject = JSONObject(response.body()?.string())
+                                val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) jsonObject.getJSONArray("data_set") else JSONArray()
 
                                 if (data_set.length() > 0) {
                                     for (i in 0 until data_set.length()) {
@@ -210,7 +210,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         //val data = Gson().fromJson<Models.SOSWorkshop>(data_set.getJSONObject(i).toString(), Models.SOSWorkshop::class.java)
                                         //latlongList.add(data)
                                     }
-                                    val data = allWrackerServicesWorkshopList.get(0) as Models.AllWrackerWorkshops
+                                    val data = allWrackerServicesWorkshopList.get(0)
                                     getWrackersServices(data.id.toString(), data.usersId.toInt(), getSavedSelectedVehicleID())
                                 }
                             } catch (e: Exception) {
@@ -243,13 +243,13 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         })
         var position: LatLng?
         allWrackerServicesWorkshopList.forEach { listData ->
-            listData?.let {
+            listData.let {
                 position = LatLng(listData.latitude.toString().toDouble(), listData.longitude.toString().toDouble())
-/*
-                with(mMap) {
-                    animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    /*
+                    with(mMap) {
+                        animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
-                }*/
+                    }*/
                 locationMarker = mMap.addMarker(
                         MarkerOptions()
                                 .position(position!!)
@@ -271,7 +271,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                         if (response.isSuccessful) {
                             try {
                                 val jsonObject = JSONObject(response.body()?.string())
-                                if (jsonObject.has("data_set") && !jsonObject.isNull("data_set")) {
+                                if (jsonObject.has("data_set") && !jsonObject.isNull("data_set") && !jsonObject.getString("data_set").isNullOrBlank()&& !jsonObject.getString("data_set").equals("null")) {
                                     val data_set = jsonObject.getJSONArray("data_set")
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.WrackerServices>(data_set.getJSONObject(i).toString(), Models.WrackerServices::class.java)
@@ -320,7 +320,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     response?.let {
                         if (response.isSuccessful) {
                             try {
-                                val body = JSONObject(response?.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 if (body.has("message")) {
                                     showInfoDialog(body.optString("message")) {
                                         //check also by status code , if 1 then booking inserted .
@@ -427,7 +427,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(binding.root)
-        val window: Window = dialog!!.window!!
+        val window: Window = dialog.window!!
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
@@ -490,14 +490,13 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
-                {
-                    mLatitude=UserSavedLatitude
-                            mLongitude=UserSavedLogitude
-                   // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
-                }else{
-                    mLatitude=location!!.latitude.toString()
-                    mLongitude=location!!.longitude.toString()
+                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
+                    mLatitude = UserSavedLatitude
+                    mLongitude = UserSavedLogitude
+                    // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
+                } else {
+                    mLatitude = location.latitude.toString()
+                    mLongitude = location.longitude.toString()
                 }
                 loadmapview()
             }
@@ -521,9 +520,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val mLastLocation: Location = locationResult.lastLocation
-            Log.e("latitudemLastLocation", mLastLocation?.latitude.toString())
-            mLatitude = mLastLocation!!.latitude.toString()
-            mLongitude = mLastLocation!!.longitude.toString()
+            Log.e("latitudemLastLocation", mLastLocation.latitude.toString())
+            mLatitude = mLastLocation.latitude.toString()
+            mLongitude = mLastLocation.longitude.toString()
             loadmapview()
         }
     }
@@ -533,8 +532,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         if (mLatitude != null && mLongitude != null) {
             val myLocation = LatLng(mLatitude!!.toDouble(),
                     mLongitude!!.toDouble())
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10f))
-            mMap?.addMarker(MarkerOptions()
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10f))
+            mMap.addMarker(MarkerOptions()
                     .position(myLocation))
         }
         Log.e("latitudeloadmapview", mLatitude.toString() + "location")

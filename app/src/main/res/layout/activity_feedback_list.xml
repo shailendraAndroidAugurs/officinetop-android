@@ -42,7 +42,7 @@
                     android:id="@+id/tv_rating_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:textColor="@color/black"
@@ -90,7 +90,7 @@
                     android:textSize="@dimen/_12sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="0" />
+                    android:text="@string/_0" />
 
             </RelativeLayout>
 

@@ -44,6 +44,7 @@ class MotListActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.MOT)
         ed_search_km.isEnabled = false
+        ed_search_km.requestFocus()
         ed_search_km.setText(getMotKm())
 
         if (getSelectedCar()?.carConditionMotSchedule?.id.isNullOrBlank()) {
@@ -139,7 +140,7 @@ class MotListActivity : BaseActivity() {
 
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
-                        response?.let {
+                        response.let {
                             progress_bar.visibility = View.GONE
                             if (response.isSuccessful) {
                                 val body = JSONObject(response.body()?.string())

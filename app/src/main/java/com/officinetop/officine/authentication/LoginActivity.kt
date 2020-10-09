@@ -145,7 +145,7 @@ class LoginActivity : BaseActivity() {
 
 
     private fun initFacebookLogin() {
-        FacebookSdk.sdkInitialize(applicationContext);
+        FacebookSdk.sdkInitialize(applicationContext)
         facebookCallbackManager = CallbackManager.Factory.create()
 
     }
@@ -178,9 +178,9 @@ class LoginActivity : BaseActivity() {
 
                             if (!isStatusCodeValid(responseString)) {
                                 if (getMessageFromJSON(responseString).isEmpty())
-                                    longSnackbar(loginBtn, getString(R.string.Invalidusernamepassword))
+                                    loginBtn.longSnackbar(getString(R.string.Invalidusernamepassword))
                                 else
-                                    longSnackbar(loginBtn, getMessageFromJSON(responseString))
+                                    loginBtn.longSnackbar(getMessageFromJSON(responseString))
                                 return
                             }
                             if (isStatusCodeValid(responseString)) {
@@ -191,7 +191,7 @@ class LoginActivity : BaseActivity() {
                                 }
 
                                 storeUserId(getUserIdFromJSON(responseString!!))
-                                storeToken(getTokenFromJSON(responseString!!), email)
+                                storeToken(getTokenFromJSON(responseString), email)
 
                                 handleLoginType("loginSuccess")
                                 logCompleteRegistrationEvent(this@LoginActivity, provider_name)
@@ -292,7 +292,7 @@ class LoginActivity : BaseActivity() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("LoginActivity", "onFailure: ${t.message}")
                 t.printStackTrace()
-                snackbar(loginBtn, t.message.toString())
+                loginBtn.snackbar(t.message.toString())
                 progressDialog.dismiss()
             }
 
@@ -312,14 +312,14 @@ class LoginActivity : BaseActivity() {
 
                             if (!isStatusCodeValid(bodyString)) {
                                 if (getMessageFromJSON(bodyString).isEmpty())
-                                    longSnackbar(loginBtn, getString(R.string.Invalidusernamepassword))
+                                    loginBtn.longSnackbar(getString(R.string.Invalidusernamepassword))
                                 else
-                                    longSnackbar(loginBtn, getMessageFromJSON(bodyString))
+                                    loginBtn.longSnackbar(getMessageFromJSON(bodyString))
                                 return
                             }
 
                             storeUserId(getUserIdFromJSON(bodyString!!))
-                            val token = getTokenFromJSON(bodyString!!)
+                            val token = getTokenFromJSON(bodyString)
                             storeToken(token, emailEditText.text.toString())
                             clearTyreDetail()
                             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)//.clearTask().clearTop()
@@ -331,11 +331,11 @@ class LoginActivity : BaseActivity() {
                     }
 
                     401 -> {
-                        longSnackbar(loginBtn, getString(R.string.FailedtologinCheckyourcredential))
+                        loginBtn.longSnackbar(getString(R.string.FailedtologinCheckyourcredential))
                     }
 
                     500 -> {
-                        longSnackbar(loginBtn, getString(R.string.Requesttimedout))
+                        loginBtn.longSnackbar(getString(R.string.Requesttimedout))
                     }
                 }
 
@@ -423,11 +423,7 @@ class LoginActivity : BaseActivity() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return
         }
-        GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, object : GraphRequest.Callback {
-            override fun onCompleted(graphResponse: GraphResponse) {
-                LoginManager.getInstance().logOut()
-            }
-        }).executeAsync()
+        GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback { LoginManager.getInstance().logOut() }).executeAsync()
     }
 
     private fun Facebooklogin() {

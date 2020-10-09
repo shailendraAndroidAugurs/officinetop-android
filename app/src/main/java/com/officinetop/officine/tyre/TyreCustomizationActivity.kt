@@ -80,7 +80,7 @@ class TyreCustomizationActivity : BaseActivity() {
         }
         if (intent.extras != null && intent.hasExtra("editId")) {
             IsMeaurementEditId = intent.extras.getString("editId")
-            submit.setText(getString(R.string.update))
+            submit.text = getString(R.string.update)
         }
         if (intent.extras != null && intent.hasExtra("IsSavedInlocal")) {
             IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
@@ -176,10 +176,10 @@ class TyreCustomizationActivity : BaseActivity() {
                                             setTyreDetail(tyre)
                                         }
                                         Handler().postDelayed({
-                                            val returnIntent = Intent();
-                                            returnIntent.putExtra("result", "update");
-                                            setResult(Activity.RESULT_OK, returnIntent);
-                                            finish();
+                                            val returnIntent = Intent()
+                                            returnIntent.putExtra("result", "update")
+                                            setResult(Activity.RESULT_OK, returnIntent)
+                                            finish()
 
                                         }, 500)
                                     } catch (e: Exception) {
@@ -233,9 +233,9 @@ class TyreCustomizationActivity : BaseActivity() {
                                                 /*  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                                   intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                                                intent.putExtra("TyreCustomization", true);
+                                                intent.putExtra("TyreCustomization", true)
 
-                                                setResult(RESULT_OK, intent);
+                                                setResult(RESULT_OK, intent)
                                                 //  onNewIntent(intent)
 
                                             } else {
@@ -320,7 +320,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                     val vehicaltypeObject: JSONObject = tyre_type.get(tyretype) as JSONObject
                                     val tyretypeObj = Gson().fromJson(vehicaltypeObject.toString(), Models.TypeSpecificationForVehicalType::class.java)
                                     if (tyretypeObj != null) {
-                                        tyreTypeList.add(Models.TypeSpecificationForVehicalType(tyretypeObj.name!!, tyretypeObj.id!!, tyretypeObj.vhicle_type_arr!!))
+                                        tyreTypeList.add(Models.TypeSpecificationForVehicalType(tyretypeObj.name, tyretypeObj.id, tyretypeObj.vhicle_type_arr!!))
                                     }
 
 

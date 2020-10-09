@@ -153,7 +153,7 @@ class QuotesActivity : BaseActivity() {
             val imageList : MutableList<MultipartBody.Part?> = ArrayList()
             for(i in 0 until images.size){
                 val file = File(images.get(i))
-                    imageList.add(file?.toMultipartBody("images[]"))
+                    imageList.add(file.toMultipartBody("images[]"))
             }
 
             progress_bar.visibility = View.VISIBLE
@@ -183,7 +183,7 @@ class QuotesActivity : BaseActivity() {
                                 progress_bar.visibility = View.GONE
                                 if (response.isSuccessful) {
                                     try {
-                                        val body = JSONObject(response?.body()?.string())
+                                        val body = JSONObject(response.body()?.string())
 
                                         if (body.has("message"))
                                             showInfoDialog(body.optString("message")) //{
@@ -238,7 +238,7 @@ class QuotesActivity : BaseActivity() {
                         response?.let {
                             if (response.isSuccessful){
 
-                                val body = JSONObject(response?.body()?.string())
+                                val body = JSONObject(response.body()?.string())
                                 if (body.has("data_set") && !body.isNull("data_set")) {
                                     val data = body.getJSONArray("data_set")
                                     val mainCategoryList : MutableList<Models.MainCategory> = ArrayList()
@@ -296,7 +296,7 @@ class QuotesActivity : BaseActivity() {
 
             if (requestCode==Constant.GALLERY){
                 if (data!=null){
-                    val contentUri = data!!.data
+                    val contentUri = data.data
                     try
                     {
                         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentUri)
@@ -338,7 +338,7 @@ class QuotesActivity : BaseActivity() {
             stream.close()
 
             attachedImage = file
-            attachedImagePath = file?.absolutePath
+            attachedImagePath = file.absolutePath
             Log.e("file select camera=", "${attachedImage} ${attachedImagePath}")
 
             imagesList.clear()

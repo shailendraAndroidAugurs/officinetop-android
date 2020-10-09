@@ -25,7 +25,7 @@ import org.jetbrains.anko.intentFor
 
 class ServiceDetailActivity : BaseActivity() {
 
-    public var service_id = 0
+    var service_id = 0
 
     private lateinit var imageDialog: Dialog
     private lateinit var dialogSlider: SliderLayout
