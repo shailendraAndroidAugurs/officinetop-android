@@ -136,12 +136,13 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
+                    android:background="@drawable/shape_rectangle_gray"
                     android:layout_height="match_parent">
-                    <com.isapanah.awesomespinner.AwesomeSpinner
+                    <Spinner
                         android:id="@+id/spinner_AddressType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:spinnerHint="@string/enter_address_type"/>
+                        />
                 </FrameLayout>
 
 

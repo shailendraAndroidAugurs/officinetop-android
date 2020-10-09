@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -52,7 +49,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             add_Upadte_Address(null)
         }
         getUserDetail(this, this)
-        if( intent.extras!==null){
+        if (intent.extras !== null) {
             fromPayment = intent.extras!!.getBoolean("FromPayment", false)
         }
 
@@ -63,7 +60,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         val buttonTitles = resources.getStringArray(R.array.Address_Type)
         if (useraddress == null) {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_address, null, false)
-          //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)
+            //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)
             setPlacePicker("")
             bindSpinner(mDialogView.spinner_AddressType, buttonTitles, "")
 
@@ -108,9 +105,9 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 DismissFragment()
                 mAlertDialog?.dismiss()
                 var addresType = ""
-                if (mDialogView.spinner_AddressType.selectedItem == "Home") {
+                if (mDialogView.spinner_AddressType.selectedItemPosition == 0) {
                     addresType = "H"
-                } else if (mDialogView.spinner_AddressType.selectedItem == "Office") {
+                } else if (mDialogView.spinner_AddressType.selectedItem == 1) {
                     addresType = "O"
                 } else
                     addresType = "Ot"
@@ -220,16 +217,12 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     }
 
-    private fun bindSpinner(spinner: AwesomeSpinner, titles: Array<String>, selectedSpinnerValue: String?) {
-
-
-        spinner.clearSelection()
+    private fun bindSpinner(spinner: Spinner, titles: Array<String>, selectedSpinnerValue: String?) {
 
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles)
 
-        spinner.setOnSpinnerItemClickListener { _, _ -> }
-
+        spinner.isSelected = true
         spinner.setAdapter(adapter)
         if (!selectedSpinnerValue.isNullOrEmpty()) {
             when (selectedSpinnerValue) {

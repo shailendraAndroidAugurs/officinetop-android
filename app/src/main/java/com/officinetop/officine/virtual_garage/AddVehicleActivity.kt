@@ -1049,7 +1049,7 @@ class AddVehicleActivity : BaseActivity() {
             spinner.setSpinnerHint(if (titles.isEmpty()) "No Car for this type" else getString(R.string.sel_version))
         }
 
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, titles)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, titles)
 
         spinner.setOnSpinnerItemClickListener { _, _ -> }
 
