@@ -24,7 +24,7 @@
 
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:textColor="@color/black"
-                android:text="Write clear and concise pages."
+                android:text="@string/write_clear_and_concise_pages"
                 android:id="@+id/tv_faq_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -34,7 +34,7 @@
             <TextView
 
                 android:id="@+id/tv_faq_answer"
-                android:text="In terms of FAQ pages, the more the merrier is actually a fallacy. Too much text can end up being too confusing, causing readers to have to search for the answer they need. Rather than writing long and eloquent paragraphs, it's best to be straightforward and brief when providing answers."
+                android:text="@string/in_terms_of_faq_pages_the_more_the_merrier_is_actually_a_fallacy_too_much_text_can_end_up_being_too_confusing_causing_readers_to_have_to_search_for_the_answer_they_need_rather_than_writing_long_and_eloquent_paragraphs_it_s_best_to_be_straightforward_and_brief_when_providing_answers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

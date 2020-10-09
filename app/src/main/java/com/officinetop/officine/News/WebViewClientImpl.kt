@@ -28,16 +28,6 @@ class WebViewClientImpl(activity: Activity?, var view1: View) : WebViewClient() 
         return true
     }
 
-    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-       // view1.visibility = View.VISIBLE
-    }
-
-    override fun onPageFinished(view: WebView?, url: String?) {
-        super.onPageFinished(view, url)
-  //   Toast.makeText(activity,url.toString(),Toast.LENGTH_LONG).show()
-    }
-
     override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
         super.onReceivedError(view, errorCode, description, failingUrl)
         activity?.showInfoDialog(description!!)
@@ -53,9 +43,4 @@ class WebViewClientImpl(activity: Activity?, var view1: View) : WebViewClient() 
         handler?.proceed()
     }
 
-    override fun onReceivedHttpAuthRequest(view: WebView?, handler: HttpAuthHandler?, host: String?, realm: String?) {
-        super.onReceivedHttpAuthRequest(view, handler, host, realm)
-
-       // handler?.proceed("admin@gmail.com", "@Admin@123#");
-    }
 }

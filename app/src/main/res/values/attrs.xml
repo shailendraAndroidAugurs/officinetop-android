@@ -1,14 +1,34 @@
 <resources>
     <declare-styleable name="RangeSeekBar">
-        <attr name="absoluteMinValue" format="integer|float"/>
-        <attr name="absoluteMaxValue" format="integer|float"/>
-        <attr name="singleThumb" format="boolean"/>
+        <attr name="absoluteMinValue" format="integer|float" />
+        <attr name="absoluteMaxValue" format="integer|float" />
+        <attr name="singleThumb" format="boolean" />
     </declare-styleable>
 
     <color name="golden_stars">#FFC619</color>
-    <declare-styleable name="SimpleRatingBar"><attr format="color" name="srb_borderColor"/><attr format="color" name="srb_fillColor"/><attr format="color" name="srb_backgroundColor"/><attr format="color" name="srb_starBackgroundColor"/><attr format="color" name="srb_pressedBorderColor"/><attr format="color" name="srb_pressedFillColor"/><attr format="color" name="srb_pressedBackgroundColor"/><attr format="color" name="srb_pressedStarBackgroundColor"/><attr format="integer" name="srb_numberOfStars"/><attr format="dimension" name="srb_starSize"/><attr format="dimension" name="srb_maxStarSize"/><attr format="dimension" name="srb_starsSeparation"/><attr format="float" name="srb_starBorderWidth"/><attr format="float" name="srb_starCornerRadius"/><attr format="boolean" name="srb_isIndicator"/><attr format="float" name="srb_rating"/><attr format="float" name="srb_stepSize"/><attr format="boolean" name="srb_drawBorderEnabled"/><attr format="enum" name="srb_gravity">
-        <enum name="left" value="0"/>
-        <enum name="right" value="1"/>
-    </attr></declare-styleable>
+    <declare-styleable name="SimpleRatingBar">
+        <attr name="srb_borderColor" format="color" />
+        <attr name="srb_fillColor" format="color" />
+        <attr name="srb_backgroundColor" format="color" />
+        <attr name="srb_starBackgroundColor" format="color" />
+        <attr name="srb_pressedBorderColor" format="color" />
+        <attr name="srb_pressedFillColor" format="color" />
+        <attr name="srb_pressedBackgroundColor" format="color" />
+        <attr name="srb_pressedStarBackgroundColor" format="color" />
+        <attr name="srb_numberOfStars" format="integer" />
+        <attr name="srb_starSize" format="dimension" />
+        <attr name="srb_maxStarSize" format="dimension" />
+        <attr name="srb_starsSeparation" format="dimension" />
+        <attr name="srb_starBorderWidth" format="float" />
+        <attr name="srb_starCornerRadius" format="float" />
+        <attr name="srb_isIndicator" format="boolean" />
+        <attr name="srb_rating" format="float" />
+        <attr name="srb_stepSize" format="float" />
+        <attr name="srb_drawBorderEnabled" format="boolean" />
+        <attr name="srb_gravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
 
 </resources>

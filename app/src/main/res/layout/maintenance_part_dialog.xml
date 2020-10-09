@@ -39,8 +39,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom|center_horizontal"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:scaleType="centerInside"
                     app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}" />
 

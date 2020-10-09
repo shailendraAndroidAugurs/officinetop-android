@@ -160,10 +160,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 cartItem.finalPrice = cartItem.price * cartItem.quantity
                 try {
-                    addToCartProducts(this,selectedProductID.toString(), cartItem?.quantity.toString(), "0.0",
-                            if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem?.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem?.name != null) cartItem?.name!! else "",
+                    addToCartProducts(this,selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
+                            if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
 
-                            cartItem?.description!!, detail!!.usersId)
+                            cartItem.description!!, detail!!.usersId)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -176,7 +176,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     cartItem.quantity = item_qty.text.toString().toInt()
 
                     cartItem.finalPrice = cartItem.price * cartItem.quantity
-                    cartItem?.Deliverydays = Deliverydays
+                    cartItem.Deliverydays = Deliverydays
                     Log.e("assembly", cartItem.finalPrice.toString())
 
                     val myIntent = intentFor<WorkshopListActivity>(
@@ -589,7 +589,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(dialogView)
-        val window: Window = dialog!!.window!!
+        val window: Window = dialog.window!!
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView

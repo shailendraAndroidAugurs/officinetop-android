@@ -51,7 +51,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     private fun addContact() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_contact, null)
         //AlertDialogBuilder
-        val mBuilder = this?.let {
+        val mBuilder = this.let {
             AlertDialog.Builder(it)
                     .setView(mDialogView)
                     .setCancelable(false)
@@ -86,9 +86,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
         val UserContactList: List<Models.UserContact> = ApiRespoinse!!.userContact
 
-        class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-        }
+        class Holder(view: View) : RecyclerView.ViewHolder(view)
 
         val myadpter = object : RecyclerView.Adapter<Holder>() {
             var viewBinderHelper = ViewBinderHelper()
@@ -98,13 +96,13 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                viewBinderHelper.setOpenOnlyOne(true);
+                viewBinderHelper.setOpenOnlyOne(true)
                 return Holder(layoutInflater.inflate(R.layout.item_list_contact, parent, false))
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.text_contactno.text = UserContactList[position].mobile
-                viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString());
+                viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString())
                 holder.itemView.item_edit_contact.setOnClickListener {
 
                     UpdateContact(UserContactList[position].id.toString(), UserContactList[position].mobile.toString())
@@ -183,10 +181,10 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun UpdateContact(contactId: String, mobileNo: String) {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_contact, null)
-        mDialogView.tv_ContactNoTitle.text = "Update Contact Number"
+        mDialogView.tv_ContactNoTitle.text = getString(R.string.update_contact_number)
         mDialogView.Tv_enterMobileNoTitle.visibility = View.GONE
         //AlertDialogBuilder
-        val mBuilder = this?.let {
+        val mBuilder = this.let {
             AlertDialog.Builder(it)
                     .setView(mDialogView)
                     .setCancelable(false)

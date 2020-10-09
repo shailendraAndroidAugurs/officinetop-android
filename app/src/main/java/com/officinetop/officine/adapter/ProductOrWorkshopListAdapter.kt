@@ -40,7 +40,7 @@ import java.net.ProtocolException
 import java.net.URL
 import java.text.DecimalFormat
 import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.math.roundToInt
+import kotlin.math.*
 
 class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
 
@@ -294,10 +294,10 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 ll_workshopKm.visibility = View.GONE
                 // Display brand image if this is spare part
                 brandImage.visibility = View.VISIBLE
-                if (!productOrWorkshopList[p1]?.brandImage.isNullOrBlank())
-                    mcontext.loadImage(productOrWorkshopList[p1]?.brandImage, brandImage)
-                else if (!productOrWorkshopList[p1]?.brandImageurl.isNullOrBlank()) {
-                    mcontext.loadImage(productOrWorkshopList[p1]?.brandImageurl, brandImage)
+                if (!productOrWorkshopList[p1].brandImage.isNullOrBlank())
+                    mcontext.loadImage(productOrWorkshopList[p1].brandImage, brandImage)
+                else if (!productOrWorkshopList[p1].brandImageurl.isNullOrBlank()) {
+                    mcontext.loadImage(productOrWorkshopList[p1].brandImageurl, brandImage)
                 } else {
                     brandImage.visibility = View.GONE
                 }
@@ -485,7 +485,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     val gson = GsonBuilder().create()
                     productOrWorkshopList = gson.fromJson(filteredJSONArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
 
-                    notifyDataSetChanged();
+                    notifyDataSetChanged()
                 }
             }
         }
@@ -532,7 +532,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
             val workshopLocation = Location("")
             workshopLocation.latitude = latitude.toDouble()
             workshopLocation.longitude = longitude.toDouble()
-            val distance = (currentLocation.distanceTo(workshopLocation).roundToInt()) / 1000;
+            val distance = (currentLocation.distanceTo(workshopLocation).roundToInt()) / 1000
             tv_workshopKm.text = mcontext.getString(R.string.append_km, distance)
 
         }
@@ -541,21 +541,21 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private fun getDistancebetweenTwoLatLong(currentLat: String, currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
         if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLat != "0.0" && currentLong != "0.0" && latitude != "0" && latitude != "0" && latitude != "0" && latitude != "0") {
             val Radius = 6371
-            val lat1 = currentLat.toDouble();
-            val lat2 = latitude.toDouble();
-            val lon1 = currentLong.toDouble();
-            val lon2 = longitude.toDouble();
-            val dLat = Math.toRadians(lat2 - lat1);
-            val dLon = Math.toRadians(lon2 - lon1);
-            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            val c = 2 * Math.asin(Math.sqrt(a));
-            val valueResult = Radius * c;
-            val km = valueResult / 1;
-            val newFormat: DecimalFormat = DecimalFormat("####");
-            var kmInDec = Integer.valueOf(newFormat.format(km));
-            val meter = valueResult % 1000;
-            val meterInDec = Integer.valueOf(newFormat.format(meter));
-            val distance = (Radius * c).roundToInt();
+            val lat1 = currentLat.toDouble()
+            val lat2 = latitude.toDouble()
+            val lon1 = currentLong.toDouble()
+            val lon2 = longitude.toDouble()
+            val dLat = Math.toRadians(lat2 - lat1)
+            val dLon = Math.toRadians(lon2 - lon1)
+            val a = sin(dLat / 2) * sin(dLat / 2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2)
+            val c = 2 * asin(sqrt(a))
+            val valueResult = Radius * c
+            val km = valueResult / 1
+            val newFormat: DecimalFormat = DecimalFormat("####")
+            var kmInDec = Integer.valueOf(newFormat.format(km))
+            val meter = valueResult % 1000
+            val meterInDec = Integer.valueOf(newFormat.format(meter))
+            val distance = (Radius * c).roundToInt()
             Log.d(" test Distance", distance.toString())
             tv_workshopKm.text = mcontext.getString(R.string.append_km, distance)
         }

@@ -92,12 +92,12 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
 
 
 
-                if (!productFeedbackList[p1]?.last_name.isNullOrBlank() && !productFeedbackList[p1]?.first_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = productFeedbackList[p1]?.first_name + " " + productFeedbackList[p1]?.last_name
-                } else if (!productFeedbackList[p1]?.first_name.isNullOrBlank() && productFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = productFeedbackList[p1]?.first_name.toString()
-                } else if (productFeedbackList[p1]?.first_name.isNullOrBlank() && !productFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = productFeedbackList[p1]?.last_name.toString()
+                if (!productFeedbackList[p1].last_name.isNullOrBlank() && !productFeedbackList[p1].first_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = productFeedbackList[p1].first_name + " " + productFeedbackList[p1].last_name
+                } else if (!productFeedbackList[p1].first_name.isNullOrBlank() && productFeedbackList[p1].last_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = productFeedbackList[p1].first_name.toString()
+                } else if (productFeedbackList[p1].first_name.isNullOrBlank() && !productFeedbackList[p1].last_name.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = productFeedbackList[p1].last_name.toString()
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.Concat)
                 }
@@ -135,13 +135,13 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
                         }
 
                         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                            val action: Int = e.action;
+                            val action: Int = e.action
                             when (action) {
                                 MotionEvent.ACTION_MOVE ->
-                                    rv.parent.requestDisallowInterceptTouchEvent(true);
+                                    rv.parent.requestDisallowInterceptTouchEvent(true)
 
                             }
-                            return false;
+                            return false
                         }
 
                         override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -149,7 +149,7 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
                         }
                     }
 
-                    );
+                    )
 
 
 

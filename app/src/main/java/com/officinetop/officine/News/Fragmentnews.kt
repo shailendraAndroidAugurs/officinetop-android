@@ -46,16 +46,16 @@ class Fragmentnews : Fragment() {
            webview!!.loadUrl("https://www.officinetop.com/news/")
          //   webview!!.loadUrl("https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${activity?.getUserId()}&payble_amount=${1000}")
 
-            webview.requestFocus();
+            webview.requestFocus()
             webSettings.javaScriptEnabled = true
-            webSettings.loadWithOverviewMode = true;
-            webSettings.useWideViewPort = true;
-            webSettings.allowFileAccess = true;
-            webSettings.allowContentAccess = true;
-            webview!!.setInitialScale(1);
-            webSettings.javaScriptCanOpenWindowsAutomatically = true;
-          /*  webview.setWebViewClient(UriWebViewClient())
-            webview.setWebChromeClient(UriChromeClient())*/
+            webSettings.loadWithOverviewMode = true
+            webSettings.useWideViewPort = true
+            webSettings.allowFileAccess = true
+            webSettings.allowContentAccess = true
+            webview!!.setInitialScale(1)
+            webSettings.javaScriptCanOpenWindowsAutomatically = true
+            /*  webview.setWebViewClient(UriWebViewClient())
+              webview.setWebChromeClient(UriChromeClient())*/
             val webViewClient = WebViewClientImpl(activity, progress_bar_webview)
             webview!!.webViewClient = webViewClient
         }

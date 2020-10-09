@@ -106,7 +106,7 @@ class TyreListActivity : BaseActivity() {
             try {
                 tyreDetail = getTyreDetail()!!
                 tyreDetailFilter = getTyreDetail()!!
-                tyreDetail?.let {
+                tyreDetail.let {
                     setTyreTitle()
                     searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
                     progress_bar.visibility = View.VISIBLE
@@ -544,8 +544,8 @@ class TyreListActivity : BaseActivity() {
             tv_Sort_ClearSection.setOnClickListener {
                 /*   tyreDetail.priceLevel = "0"
                    tyreDetail.AlphabeticOrder = "0"*/
-                radio_grp_price.check(R.id.rb_price_low);
-                radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Ascending);
+                radio_grp_price.check(R.id.rb_price_low)
+                radio_grp_Alphabetical.check(R.id.rb_Alphabetical_Ascending)
 
             }
 
@@ -589,26 +589,31 @@ class TyreListActivity : BaseActivity() {
             val brandsDialog = CreateSubDialog(getString(R.string.brand))
             brandsDialog.progressbar.visibility = View.VISIBLE
             hideKeyboard()
-            RetrofitClient.client.getProductBrandList("2").onCall { _, response ->
-
-                response?.body()?.string()?.let {
-
-                    if (isStatusCodeValid(it)) {
-                        val dataSet = getDataSetArrayFromResponse(it)
-                        val gson = GsonBuilder().create()
-
-                        brandList = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
-                        setBrandAdapter(brandList, brandsDialog.rv_subcategory)
-                        brandsDialog.progressbar.visibility = View.GONE
-
-                    }
 
 
-                }
 
-            }
+            RetrofitClient.client.getProductBrandList("2")
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progress_bar.visibility = View.GONE
+                        }
 
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            response?.body()?.string()?.let {
 
+                                if (isStatusCodeValid(it)) {
+                                    val dataSet = getDataSetArrayFromResponse(it)
+                                    val gson = GsonBuilder().create()
+
+                                    brandList = gson.fromJson(dataSet.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+                                    setBrandAdapter(brandList, brandsDialog.rv_subcategory)
+                                    brandsDialog.progressbar.visibility = View.GONE
+
+                                }
+                            }
+
+                        }
+                    })
 
 
             brandsDialog.create()
@@ -933,13 +938,13 @@ class TyreListActivity : BaseActivity() {
 
                     if (!newText.isNullOrBlank()) {
 
-                        val newText1 = newText.toLowerCase();
+                        val newText1 = newText.toLowerCase()
 
-                        val brandList1: ArrayList<Models.brand> = ArrayList<Models.brand>();
+                        val brandList1: ArrayList<Models.brand> = ArrayList<Models.brand>()
                         for (brand in brandList) {
-                            val text = brand.brandName?.toLowerCase();
+                            val text = brand.brandName?.toLowerCase()
                             if (text?.contains(newText1)!!) {
-                                brandList1.add(brand);
+                                brandList1.add(brand)
                             }
                         }
                         setBrandAdapter(brandList1, brandsDialog.rv_subcategory)
@@ -1233,8 +1238,8 @@ class TyreListActivity : BaseActivity() {
 
     private fun setBrandAdapter(brandList: ArrayList<Models.brand>, recyclerView: RecyclerView) {
         val BrandArray: ArrayList<String> = ArrayList<String>()
-        if (!tyreDetail?.brands.isNullOrBlank()) {
-            val brand12 = tyreDetail?.brands?.split(",")
+        if (!tyreDetail.brands.isNullOrBlank()) {
+            val brand12 = tyreDetail.brands.split(",")
             for (brandobj in brand12) {
                 BrandArray.add(brandobj)
             }
@@ -1242,9 +1247,7 @@ class TyreListActivity : BaseActivity() {
 
 
 
-        class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-        }
+        class Holder(view: View) : RecyclerView.ViewHolder(view)
         brandFilterAdapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -1300,7 +1303,7 @@ class TyreListActivity : BaseActivity() {
 
     private fun setTyreTitle() {
 
-        tyreDetail?.let {
+        tyreDetail.let {
             title_tyre.text = resources.getString(R.string.select_measurements) + "\n" + (it.width.toInt()).toString() + "/" + it.aspectRatio + " R" + it.diameter.toInt().toString() + " " +
 
                     if (it.speed_load_index.equals(getString(R.string.All)) || it.speed_load_index.equals(getString(R.string.all_in_italin))) "" else it.speed_load_index + " " +

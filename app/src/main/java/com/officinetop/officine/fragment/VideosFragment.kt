@@ -31,14 +31,14 @@ class VideosFragment : Fragment() {
              val headers: MutableMap<String, String> = HashMap()
              headers["Authorization"] = authHeader*/
             webview!!.loadUrl("https://www.officinetop.com/video/"/*, headers*/)
-            webview.requestFocus();
+            webview.requestFocus()
             webSettings.javaScriptEnabled = true
-            webSettings.loadWithOverviewMode = true;
-            webSettings.useWideViewPort = true;
-            webSettings.allowFileAccess = true;
-            webSettings.allowContentAccess = true;
-            webview!!.setInitialScale(1);
-            webSettings.javaScriptCanOpenWindowsAutomatically = true;
+            webSettings.loadWithOverviewMode = true
+            webSettings.useWideViewPort = true
+            webSettings.allowFileAccess = true
+            webSettings.allowContentAccess = true
+            webview!!.setInitialScale(1)
+            webSettings.javaScriptCanOpenWindowsAutomatically = true
             val webViewClient = WebViewClientImpl(activity, progress_bar_webview)
             webview!!.webViewClient = webViewClient
         }

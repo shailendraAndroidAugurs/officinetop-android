@@ -35,7 +35,7 @@ class NotificationList : BaseActivity() {
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 bindView(dataSetArray)
@@ -56,7 +56,7 @@ class NotificationList : BaseActivity() {
             }
         })
         for (i in 0 until dataSetArray!!.length()) {
-            val data = Gson().fromJson<Models.NotificationList>(dataSetArray!!.get(i).toString(), Models.NotificationList::class.java)
+            val data = Gson().fromJson<Models.NotificationList>(dataSetArray.get(i).toString(), Models.NotificationList::class.java)
             couponsListItem.add(data)
         }
         recycler_view.adapter = genericAdapter

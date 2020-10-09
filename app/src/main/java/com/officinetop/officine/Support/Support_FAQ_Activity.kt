@@ -61,20 +61,20 @@ class Support_FAQ_Activity : BaseActivity() {
          startActivity(launchIntent);  }catch (e:java.lang.Exception){
                  showInfoDialog("Whatsapp App is not install in your phone")
              }}*/
-            val packageManager =  getPackageManager ();
-            val i =  Intent(Intent.ACTION_VIEW);
+            val packageManager = packageManager
+            val i =  Intent(Intent.ACTION_VIEW)
 
             try {
                 val url = "https://api.whatsapp.com/send?phone="+393386450233/*+"&text="+ URLEncoder.encode("hii", "UTF-8");*/
-                i.setPackage("com.whatsapp");
-                i.setData(Uri.parse(url));
+                i.setPackage("com.whatsapp")
+                i.data = Uri.parse(url)
                 if (i.resolveActivity(packageManager) != null) {
-                    startActivity(i);
+                    startActivity(i)
                 } else{
                     showInfoDialog("WhatsApp app is not installed in your Phone")
                 }
             } catch ( e:Exception) {
-                e.printStackTrace();
+                e.printStackTrace()
             }
 
         }

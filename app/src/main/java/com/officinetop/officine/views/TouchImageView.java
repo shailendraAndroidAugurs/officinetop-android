@@ -396,12 +396,6 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
         setImageMatrix(matrix);
     }
 
-    /**
-     * Set zoom parameters equal to another TouchImageView. Including scale, position,
-     * and ScaleType.
-     *
-     * @param TouchImageView
-     */
     private void setZoom(TouchImageView img) {
         PointF center = img.getScrollPosition();
         setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
@@ -662,9 +656,6 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
     private int setViewSize(int mode, int size, int drawableWidth) {
         int viewSize;
         switch (mode) {
-            case MeasureSpec.EXACTLY:
-                viewSize = size;
-                break;
 
             case MeasureSpec.AT_MOST:
                 viewSize = Math.min(drawableWidth, size);

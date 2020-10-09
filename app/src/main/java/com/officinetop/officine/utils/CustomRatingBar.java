@@ -41,6 +41,7 @@ public class CustomRatingBar extends View {
         Right(1);
 
         final int id;
+
         Gravity(int id) {
             this.id = id;
         }
@@ -58,13 +59,20 @@ public class CustomRatingBar extends View {
     // Configurable variables
     private @ColorInt
     int borderColor;
-    private @ColorInt int fillColor;
-    private @ColorInt int backgroundColor;
-    private @ColorInt int starBackgroundColor;
-    private @ColorInt int pressedBorderColor;
-    private @ColorInt int pressedFillColor;
-    private @ColorInt int pressedBackgroundColor;
-    private @ColorInt int pressedStarBackgroundColor;
+    private @ColorInt
+    int fillColor;
+    private @ColorInt
+    int backgroundColor;
+    private @ColorInt
+    int starBackgroundColor;
+    private @ColorInt
+    int pressedBorderColor;
+    private @ColorInt
+    int pressedFillColor;
+    private @ColorInt
+    int pressedBackgroundColor;
+    private @ColorInt
+    int pressedStarBackgroundColor;
     private int numberOfStars;
     private float starsSeparation;
     private float desiredStarSize;
@@ -171,7 +179,7 @@ public class CustomRatingBar extends View {
 
         numberOfStars = arr.getInteger(R.styleable.SimpleRatingBar_srb_numberOfStars, 5);
 
-        starsSeparation = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_starsSeparation, (int)valueToPixels(4, Dimension.DP));
+        starsSeparation = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_starsSeparation, (int) valueToPixels(4, Dimension.DP));
         maxStarSize = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_maxStarSize, Integer.MAX_VALUE);
         desiredStarSize = arr.getDimensionPixelSize(R.styleable.SimpleRatingBar_srb_starSize, Integer.MAX_VALUE);
         stepSize = arr.getFloat(R.styleable.SimpleRatingBar_srb_stepSize, 0.5f);
@@ -295,7 +303,8 @@ public class CustomRatingBar extends View {
         setMeasuredDimension(width, height);
     }
 
-    @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
         int width = getWidth();
@@ -311,9 +320,10 @@ public class CustomRatingBar extends View {
     /**
      * Calculates largest possible star size, based on chosen width and height.
      * If maxStarSize is present, it will be considered and star size will not be greater than this value.
+     *
      * @param width
      * @param height
-     * */
+     */
     private float calculateBestStarSize(int width, int height) {
         if (maxStarSize != Integer.MAX_VALUE) {
             float desiredTotalWidth = calculateTotalWidth(maxStarSize, numberOfStars, starsSeparation, true);
@@ -336,14 +346,15 @@ public class CustomRatingBar extends View {
 
     /**
      * Performs auxiliary calculations to later speed up drawing phase.
+     *
      * @param width
      * @param height
      */
     private void performStarSizeAssociatedCalculations(int width, int height) {
         float totalStarsWidth = calculateTotalWidth(currentStarSize, numberOfStars, starsSeparation, false);
         float totalStarsHeight = calculateTotalHeight(currentStarSize, false);
-        float startingX = (width - getPaddingLeft() - getPaddingRight())/2 - totalStarsWidth/2 + getPaddingLeft();
-        float startingY = (height - getPaddingTop() - getPaddingBottom())/2 - totalStarsHeight/2 + getPaddingTop();
+        float startingX = (width - getPaddingLeft() - getPaddingRight()) / 2 - totalStarsWidth / 2 + getPaddingLeft();
+        float startingY = (height - getPaddingTop() - getPaddingBottom()) / 2 - totalStarsHeight / 2 + getPaddingTop();
         starsDrawingSpace = new RectF(startingX, startingY, startingX + totalStarsWidth, startingY + totalStarsHeight);
         float aux = starsDrawingSpace.width() * 0.05f;
         starsTouchSpace = new RectF(starsDrawingSpace.left - aux, starsDrawingSpace.top, starsDrawingSpace.right + aux, starsDrawingSpace.bottom);
@@ -358,7 +369,7 @@ public class CustomRatingBar extends View {
         float innerBottomVerticalMargin = currentStarSize * 0.6f;
         float innerCenterVerticalMargin = currentStarSize * 0.27f;
 
-        starVertex = new float[] {
+        starVertex = new float[]{
                 tipHorizontalMargin, innerUpHorizontalMargin, // top left
                 tipHorizontalMargin + triangleSide, innerUpHorizontalMargin,
                 half, tipVerticalMargin, // top tip
@@ -374,6 +385,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Calculates total width to occupy based on several parameters
+     *
      * @param starSize
      * @param numberOfStars
      * @param starsSeparation
@@ -381,12 +393,13 @@ public class CustomRatingBar extends View {
      * @return
      */
     private int calculateTotalWidth(float starSize, int numberOfStars, float starsSeparation, boolean padding) {
-        return Math.round(starSize * numberOfStars + starsSeparation * (numberOfStars -1))
-                +  (padding ? getPaddingLeft() + getPaddingRight() : 0);
+        return Math.round(starSize * numberOfStars + starsSeparation * (numberOfStars - 1))
+                + (padding ? getPaddingLeft() + getPaddingRight() : 0);
     }
 
     /**
      * Calculates total height to occupy based on several parameters
+     *
      * @param starSize
      * @param padding
      * @return
@@ -404,6 +417,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Generates internal canvas on which the ratingbar will be drawn.
+     *
      * @param w
      * @param h
      */
@@ -421,7 +435,8 @@ public class CustomRatingBar extends View {
         }
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         int height = getHeight();
@@ -493,6 +508,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Draws the view when gravity is Left
+     *
      * @param internalCanvas
      */
     private void drawFromLeftToRight(Canvas internalCanvas) {
@@ -513,6 +529,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Draws the view when gravity is Right
+     *
      * @param internalCanvas
      */
     private void drawFromRightToLeft(Canvas internalCanvas) {
@@ -533,10 +550,11 @@ public class CustomRatingBar extends View {
 
     /**
      * Draws a star in the provided canvas.
+     *
      * @param canvas
-     * @param x left of the star
-     * @param y top of the star
-     * @param filled between 0 and 1
+     * @param x       left of the star
+     * @param y       top of the star
+     * @param filled  between 0 and 1
      * @param gravity Left or Right
      */
     private void drawStar(Canvas canvas, float x, float y, float filled, CustomRatingBar.Gravity gravity) {
@@ -546,8 +564,8 @@ public class CustomRatingBar extends View {
         // prepare path for star
         starPath.reset();
         starPath.moveTo(x + starVertex[0], y + starVertex[1]);
-        for(int i = 2; i < starVertex.length; i=i+2) {
-            starPath.lineTo(x + starVertex[i], y + starVertex[i+1]);
+        for (int i = 2; i < starVertex.length; i = i + 2) {
+            starPath.lineTo(x + starVertex[i], y + starVertex[i + 1]);
         }
         starPath.close();
 
@@ -557,12 +575,12 @@ public class CustomRatingBar extends View {
         // Note: below, currentStarSize*0.02f is a minor correction so the user won't see a vertical black line in between the fill and empty color
         if (gravity == CustomRatingBar.Gravity.Left) {
             // color star fill
-            canvas.drawRect(x, y, x + fill + currentStarSize *0.02f, y + currentStarSize, paintStarFill);
+            canvas.drawRect(x, y, x + fill + currentStarSize * 0.02f, y + currentStarSize, paintStarFill);
             // draw star background
             canvas.drawRect(x + fill, y, x + currentStarSize, y + currentStarSize, paintStarBackground);
         } else {
             // color star fill
-            canvas.drawRect(x + currentStarSize - (fill+ currentStarSize *0.02f), y, x + currentStarSize, y + currentStarSize, paintStarFill);
+            canvas.drawRect(x + currentStarSize - (fill + currentStarSize * 0.02f), y, x + currentStarSize, y + currentStarSize, paintStarFill);
             // draw star background
             canvas.drawRect(x, y, x + currentStarSize - fill, y + currentStarSize, paintStarBackground);
         }
@@ -575,12 +593,12 @@ public class CustomRatingBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isIndicator  || (ratingAnimator != null && ratingAnimator.isRunning())) {
+        if (isIndicator || (ratingAnimator != null && ratingAnimator.isRunning())) {
             return false;
         }
 
         int action = event.getAction() & MotionEvent.ACTION_MASK;
-        switch(action) {
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
                 // check if action is performed on stars
@@ -615,8 +633,8 @@ public class CustomRatingBar extends View {
 
     /**
      * Assigns a rating to the touch event.
-     * @param x
      *
+     * @param x
      */
     private void setNewRatingFromTouch(float x) {
         // normalize x to inside starsDrawinSpace
@@ -628,22 +646,22 @@ public class CustomRatingBar extends View {
         if (x < starsDrawingSpace.left) {
             rating = 0;
             return;
-        } else if (x >  starsDrawingSpace.right) {
+        } else if (x > starsDrawingSpace.right) {
             rating = numberOfStars;
             return;
         }
 
         x = x - starsDrawingSpace.left;
         // reduce the width to allow the user reach the top and bottom values of rating (0 and numberOfStars)
-        rating = (float)numberOfStars / starsDrawingSpace.width() * x;
+        rating = (float) numberOfStars / starsDrawingSpace.width() * x;
 
         // correct rating in case step size is present
         float mod = rating % stepSize;
-        if (mod < stepSize/4) {
+        if (mod < stepSize / 4) {
             rating = rating - mod;
             rating = Math.max(0, rating);
         } else {
-            rating =  rating - mod + stepSize;
+            rating = rating - mod + stepSize;
             rating = Math.min(numberOfStars, rating);
         }
     }
@@ -700,7 +718,7 @@ public class CustomRatingBar extends View {
 
     /* ----------- GETTERS AND SETTERS ----------- */
 
-    public float getRating(){
+    public float getRating() {
         return rating;
     }
 
@@ -708,6 +726,7 @@ public class CustomRatingBar extends View {
      * Sets rating.
      * If provided value is less than 0, rating will be set to 0.
      * * If provided value is greater than numberOfStars, rating will be set to numberOfStars.
+     *
      * @param rating
      */
     public void setRating(float rating) {
@@ -726,6 +745,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets step size of rating.
      * Throws IllegalArgumentException if provided value is less or equal than zero.
+     *
      * @param stepSize
      */
     public void setStepSize(float stepSize) {
@@ -744,6 +764,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets indicator property.
      * If provided value is true, touch events will be deactivated, and thus user interaction will be deactivated.
+     *
      * @param indicator
      */
     public void setIndicator(boolean indicator) {
@@ -754,6 +775,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets maximum star size in pixels.
      * If current star size is less than provided value, this has no effect on the view.
+     *
      * @param maxStarSize
      */
     private void setMaxStarSize(float maxStarSize) {
@@ -770,6 +792,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets maximum star size using the given dimension.
      * If current star size is less than provided value, this has no effect on the view.
+     *
      * @param maxStarSize
      */
     public void setMaxStarSize(float maxStarSize, @Dimension int dimen) {
@@ -778,6 +801,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Return star size in the requested dimension.
+     *
      * @param dimen
      * @return
      */
@@ -787,6 +811,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets exact star size in pixels.
+     *
      * @param starSize
      */
     private void setStarSize(float starSize) {
@@ -803,6 +828,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets exact star size using the given dimension.
+     *
      * @param starSize
      * @param dimen
      */
@@ -812,6 +838,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Returns stars separation in pixels.
+     *
      * @return
      */
     public float getStarsSeparation() {
@@ -820,6 +847,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Returns stars separation in the requested dimension.
+     *
      * @param dimen
      * @return
      */
@@ -829,6 +857,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets separation between stars in pixels.
+     *
      * @param starsSeparation
      */
     private void setStarsSeparation(float starsSeparation) {
@@ -842,6 +871,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets separation between stars using the given dimension.
+     *
      * @param starsSeparation
      */
     public void setStarsSeparation(float starsSeparation, @Dimension int dimen) {
@@ -856,6 +886,7 @@ public class CustomRatingBar extends View {
      * Sets number of stars.
      * It also sets the rating to zero.
      * Throws IllegalArgumentException if provided value is less or equal than zero.
+     *
      * @param numberOfStars
      */
     public void setNumberOfStars(int numberOfStars) {
@@ -874,6 +905,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets border width of stars in pixels.
      * Throws IllegalArgumentException if provided value is less or equal than zero.
+     *
      * @param starBorderWidth
      */
     private void setStarBorderWidth(float starBorderWidth) {
@@ -890,6 +922,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets border width of stars using the given dimension.
      * Throws IllegalArgumentException if provided value is less or equal than zero.
+     *
      * @param starBorderWidth
      * @param dimen
      */
@@ -900,6 +933,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets radius of star corner in pixels.
      * Throws IllegalArgumentException if provided value is less than zero.
+     *
      * @param starCornerRadius
      */
     private void setStarCornerRadius(float starCornerRadius) {
@@ -918,6 +952,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets radius of star corner using the given dimension.
      * Throws IllegalArgumentException if provided value is less than zero.
+     *
      * @param starCornerRadius
      * @param dimen
      */
@@ -927,6 +962,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets border color of stars in normal state.
+     *
      * @param borderColor
      */
     public void setBorderColor(@ColorInt int borderColor) {
@@ -935,12 +971,14 @@ public class CustomRatingBar extends View {
         invalidate();
     }
 
-    public @ColorInt int getFillColor() {
+    public @ColorInt
+    int getFillColor() {
         return fillColor;
     }
 
     /**
      * Sets fill color of stars in normal state.
+     *
      * @param fillColor
      */
     public void setFillColor(@ColorInt int fillColor) {
@@ -951,6 +989,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets background color of stars in normal state.
+     *
      * @param starBackgroundColor
      */
     public void setStarBackgroundColor(@ColorInt int starBackgroundColor) {
@@ -961,6 +1000,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets border color of stars in pressed state.
+     *
      * @param pressedBorderColor
      */
     public void setPressedBorderColor(@ColorInt int pressedBorderColor) {
@@ -971,6 +1011,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets fill color of stars in pressed state.
+     *
      * @param pressedFillColor
      */
     public void setPressedFillColor(@ColorInt int pressedFillColor) {
@@ -981,6 +1022,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets background color of stars in pressed state.
+     *
      * @param pressedStarBackgroundColor
      */
     public void setPressedStarBackgroundColor(@ColorInt int pressedStarBackgroundColor) {
@@ -995,6 +1037,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets gravity of fill.
+     *
      * @param gravity
      */
     public void setGravity(CustomRatingBar.Gravity gravity) {
@@ -1010,6 +1053,7 @@ public class CustomRatingBar extends View {
     /**
      * Sets drawBorder property.
      * If provided value is true, border will be drawn, otherwise it will be omithed.
+     *
      * @param drawBorderEnabled
      */
     public void setDrawBorderEnabled(boolean drawBorderEnabled) {
@@ -1020,6 +1064,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Convenience method to convert a value in the given dimension to pixels.
+     *
      * @param value
      * @param dimen
      * @return
@@ -1037,6 +1082,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Convenience method to convert a value from pixels to the given dimension.
+     *
      * @param value
      * @param dimen
      * @return
@@ -1054,6 +1100,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets rating with animation.
+     *
      * @param builder
      */
     private void animateRating(CustomRatingBar.AnimationBuilder builder) {
@@ -1067,7 +1114,7 @@ public class CustomRatingBar extends View {
         ratingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                float value = ((Float) (animation.getAnimatedValue())).floatValue();
+                float value = (Float) (animation.getAnimatedValue());
                 setRating(value);
             }
         });
@@ -1110,6 +1157,7 @@ public class CustomRatingBar extends View {
 
     /**
      * Normalizes rating passed by argument between 0 and numberOfStars.
+     *
      * @param rating
      * @return
      */
@@ -1127,14 +1175,17 @@ public class CustomRatingBar extends View {
 
     /**
      * Sets OnClickListener.
+     *
      * @param listener
      */
-    @Override public void setOnClickListener(OnClickListener listener) {
+    @Override
+    public void setOnClickListener(OnClickListener listener) {
         this.clickListener = listener;
     }
 
     /**
      * Sets OnRatingBarChangeListener.
+     *
      * @param listener
      */
     public void setOnRatingBarChangeListener(CustomRatingBar.OnRatingBarChangeListener listener) {
@@ -1151,10 +1202,10 @@ public class CustomRatingBar extends View {
          * lifting the touch.
          *
          * @param CustomRatingBar The RatingBar whose rating has changed.
-         * @param rating The current rating. This will be in the range
-         *            0..numStars.
-         * @param fromUser True if the rating change was initiated by a user's
-         *            touch gesture or arrow key/horizontal trackbell movement.
+         * @param rating          The current rating. This will be in the range
+         *                        0..numStars.
+         * @param fromUser        True if the rating change was initiated by a user's
+         *                        touch gesture or arrow key/horizontal trackbell movement.
          */
         void onRatingChanged(CustomRatingBar CustomRatingBar, float rating, boolean fromUser);
 
@@ -1187,6 +1238,7 @@ public class CustomRatingBar extends View {
 
         /**
          * Sets duration of animation.
+         *
          * @param duration
          * @return
          */
@@ -1197,6 +1249,7 @@ public class CustomRatingBar extends View {
 
         /**
          * Sets interpolator for animation.
+         *
          * @param interpolator
          * @return
          */
@@ -1207,6 +1260,7 @@ public class CustomRatingBar extends View {
 
         /**
          * Sets rating after animation has ended.
+         *
          * @param ratingTarget
          * @return
          */
@@ -1217,6 +1271,7 @@ public class CustomRatingBar extends View {
 
         /**
          * Sets repeat count for animation.
+         *
          * @param repeatCount must be a positive value or ValueAnimator.INFINITE
          * @return
          */
@@ -1227,6 +1282,7 @@ public class CustomRatingBar extends View {
 
         /**
          * Sets repeat mode for animation.
+         *
          * @param repeatMode must be ValueAnimator.RESTART or ValueAnimator.REVERSE
          * @return
          */

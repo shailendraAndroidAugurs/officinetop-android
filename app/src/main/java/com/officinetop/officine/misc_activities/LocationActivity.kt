@@ -84,7 +84,7 @@ class LocationActivity : BaseActivity() {
                 .onCall { networkException, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val bodystring = response?.body()?.string()
+                            val bodystring = response.body()?.string()
                             if (isStatusCodeValid(bodystring)) {
                                 val jsonObject = JSONObject(bodystring)
 
@@ -94,12 +94,10 @@ class LocationActivity : BaseActivity() {
                                     prov.setText(dataModels.stateName ?: "")
                                     cap.setText(dataModels.countryName ?: "")
                                     citta.setText(dataModels.cityName ?: "")
-                                    via.setText(dataModels.address1 ?: "")
+                                    via.setText(dataModels.address1)
 
-                                    location.text = "Lat: " + (dataModels.latitude
-                                            ?: "") + ", Long:" + (dataModels.longitude ?: "")
-                                    completeAddress = (dataModels.address1
-                                            ?: "") + " " + (dataModels.zipCode
+                                    location.text = "Lat: " + dataModels.latitude + ", Long:" + dataModels.longitude
+                                    completeAddress = dataModels.address1 + " " + (dataModels.zipCode
                                             ?: "") + " " + (dataModels.cityName
                                             ?: "") + " " + (dataModels.stateName
                                             ?: "") + " " + (dataModels.countryName ?: "")
@@ -107,8 +105,8 @@ class LocationActivity : BaseActivity() {
                                     complete_address.visibility = View.VISIBLE
                                     complete_address.text = completeAddress
 
-                                    latitude = (dataModels.latitude ?: "")
-                                    longitude = dataModels.longitude ?: ""
+                                    latitude = dataModels.latitude
+                                    longitude = dataModels.longitude
                                     zipCode = dataModels.zipCode ?: ""
                                     disableTextField()
                                     logFindLocationEvent(this)
@@ -181,7 +179,7 @@ class LocationActivity : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
         if (requestCode == Constant.REQUEST_PERMISSIONS_LOCATION) {
-            if (grantResults.size <= 0) {
+            if (grantResults.isEmpty()) {
                 // If user interaction was interrupted, the permission request is cancelled and you
                 // receive empty arrays.
                 Log.i(TAG, "User interaction was cancelled.")
@@ -215,7 +213,7 @@ class LocationActivity : BaseActivity() {
             Address = place?.address.toString()
             if (place != null) {
                 isAutomaticLocationSave=false
-                setLocationInView(place?.latLng?.latitude, place?.latLng?.longitude)
+                setLocationInView(place.latLng?.latitude, place.latLng?.longitude)
 
 
                 if (error != null)
@@ -246,7 +244,7 @@ class LocationActivity : BaseActivity() {
         if (addressList.get(0).postalCode !== null) {
             zipCode = addressList.get(0).postalCode.takeIf { !it.isNullOrEmpty() }
         } else {
-            zipCode = "";
+            zipCode = ""
         }
 
         streetName = addressList.get(0).featureName.takeIf { !it.isNullOrEmpty() }
@@ -306,7 +304,7 @@ class LocationActivity : BaseActivity() {
                 .onCall { networkException, response ->
                     response?.let {
                         if (response.isSuccessful) {
-                            val jsonObject = JSONObject(response?.body()?.string())
+                            val jsonObject = JSONObject(response.body()?.string())
                             if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
                                 UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)

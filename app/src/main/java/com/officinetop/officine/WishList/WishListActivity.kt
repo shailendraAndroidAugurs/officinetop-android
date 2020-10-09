@@ -40,12 +40,12 @@ class WishListActivity : BaseActivity() {
         RetrofitClient.client.getUserWishList(getBearerToken() ?: "")
                 .onCall { networkException, response ->
                     networkException.let {
-                        ProgressDialog?.dismiss()
+                        ProgressDialog.dismiss()
                     }
                     response?.let {
                         if (response.isSuccessful) {
 
-                            val data = JSONObject(response?.body()?.string())
+                            val data = JSONObject(response.body()?.string())
                             if (data.has("data_set") && !data.isNull("data_set")) {
                                 val dataSet = data.get("data_set") as JSONArray
                                 val gson = GsonBuilder().create()
@@ -58,7 +58,7 @@ class WishListActivity : BaseActivity() {
                                 }
                             }
                         }
-                        ProgressDialog?.dismiss()
+                        ProgressDialog.dismiss()
                     }
                 }
 

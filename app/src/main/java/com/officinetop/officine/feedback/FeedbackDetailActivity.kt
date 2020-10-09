@@ -138,7 +138,7 @@ class FeedbackDetailActivity : BaseActivity() {
                 }
             })
             fedback_images_recycler_view.adapter = imagesAdapter
-            imagesAdapter?.addItem(imagesArray)
+            imagesAdapter.addItem(imagesArray)
         }
 
     }

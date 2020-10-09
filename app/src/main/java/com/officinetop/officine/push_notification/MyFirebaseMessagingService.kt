@@ -26,21 +26,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val ADMIN_CHANNEL_ID = "officinetop"
 
     override fun onNewToken(p0: String) {
-        super.onNewToken(p0!!)
+        super.onNewToken(p0)
         Log.i(TAG, p0)
         Log.e("messageonNewtokens==", p0)
     }
     override fun onMessageReceived(p0: RemoteMessage) {
-        super.onMessageReceived(p0!!)
+        super.onMessageReceived(p0)
         Log.e("messages==", p0.toString())
         Log.e("messages1==", p0.notification?.body)
         Log.e("messages2==", ""+p0.data.size)
-        if (p0!!.notification != null) {
+        if (p0.notification != null) {
             Log.i(TAG, p0.notification?.title!!)
             Log.i(TAG, p0.notification?.body!!)
 
         }
-        p0?.let { message ->
+        p0.let { message ->
 
             // Create an Intent for the activity you want to start
             val resultIntent = Intent(this, NotificationList::class.java)

@@ -64,7 +64,7 @@ class FragmentFeedback : Fragment() {
                     setupViewPager(viewPager!!)
 
                     val fragmenttransaction = childFragmentManager.beginTransaction()
-                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit();
+                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
                     //   fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
                     Log.d("Tag", "value" + MyFeedBackReview?.tag)
                 } else {
@@ -75,7 +75,7 @@ class FragmentFeedback : Fragment() {
                     setupViewPager(viewPager!!)
                     Log.d("Tag", "value" + MyFeedBackReview?.tag)
                     val fragmenttransaction = childFragmentManager.beginTransaction()
-                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit();
+                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
                     //  fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
                 }
 
@@ -129,7 +129,7 @@ class FragmentFeedback : Fragment() {
             mFragmentList[position].arguments = bundle
 
 
-            return mFragmentList[position]!!
+            return mFragmentList[position]
         }
 
         override fun getCount(): Int {

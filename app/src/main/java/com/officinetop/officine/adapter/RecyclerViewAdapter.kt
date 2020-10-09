@@ -220,9 +220,9 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             }
 
 
-            if (items?.couponList != null && items?.couponList?.size!=0) {
+            if (items.couponList != null && items.couponList.size !=0) {
 
-                AppliedCouponName.text=(items?.couponList?.get(0)?.couponTitle)
+                AppliedCouponName.text=(items.couponList.get(0).couponTitle)
                 AppliedCouponName.visibility = View.VISIBLE
                 CouponLabel.visibility=View.VISIBLE
                 offerBadge.visibility = /*if (p1 % 2 == 0)*/ View.GONE /*else View.GONE*/
@@ -234,8 +234,8 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
             try {
                 val startIndex = getSubString(items.description!!, 2)
-                val endIndex = getSubString(items.description!!, 6)
-                val description = items.description?.substring(startIndex!!, endIndex!!)
+                val endIndex = getSubString(items.description, 6)
+                val description = items.description.substring(startIndex, endIndex)
                 //Log.e("index of values=", "=startindex="+startIndex+"=endindesx="+endIndex+"=descr="+description)
                 title.text = "${items.manufacturer_description} ${tyreType} ${items.pr_description}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
 

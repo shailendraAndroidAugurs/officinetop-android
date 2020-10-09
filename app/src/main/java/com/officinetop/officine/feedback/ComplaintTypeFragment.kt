@@ -36,7 +36,7 @@ class ComplaintTypeFragment : BaseActivity() {
 
                         response?.let {
                             if (response.isSuccessful){
-                                val body = JSONObject(response?.body()?.string(
+                                val body = JSONObject(response.body()?.string(
                                 ))
                                 if (body.has("data_set") && !body.isNull("data_set")) {
                                     val data = body.getJSONArray("data_set")

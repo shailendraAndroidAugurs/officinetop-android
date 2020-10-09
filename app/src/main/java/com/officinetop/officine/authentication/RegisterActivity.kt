@@ -116,7 +116,7 @@ class RegisterActivity : BaseActivity() {
                         200 -> {
 
                             if (!isStatusCodeValid(bodyString)) {
-                                snackbar(registerBtn, getMessageFromJSON(bodyString))
+                                registerBtn.snackbar(getMessageFromJSON(bodyString))
                                 return
                             }
                             val body = JSONObject(bodyString)

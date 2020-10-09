@@ -150,7 +150,7 @@ class FragmentHome : Fragment() {
 
         rootView.home_More_feedback.setOnClickListener {
             val fragmentChangeListener: FragmentChangeListener = (activity) as FragmentChangeListener
-            fragmentChangeListener?.replaceFragment(FragmentFeedback())
+            fragmentChangeListener.replaceFragment(FragmentFeedback())
 
         }
     }
@@ -169,7 +169,7 @@ class FragmentHome : Fragment() {
                                     val gson = GsonBuilder().create()
                                     val allAdvertismentList = gson.fromJson(jsonarray.toString(), Array<Models.AllAdvertisment>::class.java).toCollection(java.util.ArrayList<Models.AllAdvertisment>())
                                     for (n in 0 until allAdvertismentList.size) {
-                                        if (!allAdvertismentList[n].addLocation.isNullOrBlank() && allAdvertismentList[n].addLocation == "HOME" && allAdvertismentList[n].advertisingImages.size != 0) {
+                                        if (!allAdvertismentList[n].addLocation.isNullOrBlank() && allAdvertismentList[n].addLocation == "HOME" && allAdvertismentList[n].advertisingImages.isNotEmpty()) {
                                             AdvertisementImagearray.addAll(allAdvertismentList[n].advertisingImages)
 
                                         }
@@ -344,12 +344,12 @@ class FragmentHome : Fragment() {
 
 
 
-                    if (!productFeedbackList[p1]?.last_name.isNullOrBlank() && !productFeedbackList[p1]?.first_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = productFeedbackList[p1]?.first_name + " " + productFeedbackList[p1]?.last_name
-                    } else if (!productFeedbackList[p1]?.first_name.isNullOrBlank() && productFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = productFeedbackList[p1]?.first_name.toString()
-                    } else if (productFeedbackList[p1]?.first_name.isNullOrBlank() && !productFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = productFeedbackList[p1]?.last_name.toString()
+                    if (!productFeedbackList[p1].last_name.isNullOrBlank() && !productFeedbackList[p1].first_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = productFeedbackList[p1].first_name + " " + productFeedbackList[p1].last_name
+                    } else if (!productFeedbackList[p1].first_name.isNullOrBlank() && productFeedbackList[p1].last_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = productFeedbackList[p1].first_name.toString()
+                    } else if (productFeedbackList[p1].first_name.isNullOrBlank() && !productFeedbackList[p1].last_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = productFeedbackList[p1].last_name.toString()
                     } else {
                         p0.itemView.tv_userName.text = getString(R.string.Concat)
                     }
@@ -385,13 +385,13 @@ class FragmentHome : Fragment() {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                val action: Int = e.action;
+                                val action: Int = e.action
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.parent.requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true)
 
                                 }
-                                return false;
+                                return false
                             }
 
                             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -399,7 +399,7 @@ class FragmentHome : Fragment() {
                             }
                         }
 
-                        );
+                        )
 
 
 
@@ -488,12 +488,12 @@ class FragmentHome : Fragment() {
 
 
 
-                    if (!WorshopFeedbackList[p1]?.last_name.isNullOrBlank() && !WorshopFeedbackList[p1]?.first_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.first_name + " " + WorshopFeedbackList[p1]?.last_name
-                    } else if (!WorshopFeedbackList[p1]?.first_name.isNullOrBlank() && WorshopFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.first_name.toString()
-                    } else if (WorshopFeedbackList[p1]?.first_name.isNullOrBlank() && !WorshopFeedbackList[p1]?.last_name.isNullOrBlank()) {
-                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1]?.last_name.toString()
+                    if (!WorshopFeedbackList[p1].last_name.isNullOrBlank() && !WorshopFeedbackList[p1].first_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name + " " + WorshopFeedbackList[p1].last_name
+                    } else if (!WorshopFeedbackList[p1].first_name.isNullOrBlank() && WorshopFeedbackList[p1].last_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name.toString()
+                    } else if (WorshopFeedbackList[p1].first_name.isNullOrBlank() && !WorshopFeedbackList[p1].last_name.isNullOrBlank()) {
+                        p0.itemView.tv_userName.text = WorshopFeedbackList[p1].last_name.toString()
                     } else {
                         p0.itemView.tv_userName.text = getString(R.string.Concat)
                     }
@@ -523,13 +523,13 @@ class FragmentHome : Fragment() {
                             }
 
                             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                                val action: Int = e.action;
+                                val action: Int = e.action
                                 when (action) {
                                     MotionEvent.ACTION_MOVE ->
-                                        rv.parent.requestDisallowInterceptTouchEvent(true);
+                                        rv.parent.requestDisallowInterceptTouchEvent(true)
 
                                 }
-                                return false;
+                                return false
                             }
 
                             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -537,7 +537,7 @@ class FragmentHome : Fragment() {
                             }
                         }
 
-                        );
+                        )
                         p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                                 val view = layoutInflater.inflate(R.layout.item_image, p0, false)
@@ -674,8 +674,8 @@ class FragmentHome : Fragment() {
 
                             if (!sparePart.product_image_url.isNullOrBlank()) {
                                 activity?.loadImage(sparePart.product_image_url, p0.itemView.item_icon, R.drawable.no_image_placeholder)
-                            } else if (sparePart.images != null && sparePart.images?.size != 0)
-                                activity?.loadImage(sparePart.images?.get(0)?.imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
+                            } else if (sparePart.images != null && sparePart.images.size != 0)
+                                activity?.loadImage(sparePart.images.get(0).imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
                             else
                                 activity?.loadImageWithName("", p0.itemView.item_icon, R.drawable.no_image_placeholder)
                             p0.itemView.item_name.text = if (sparePart.productName != null) sparePart.productName else ""

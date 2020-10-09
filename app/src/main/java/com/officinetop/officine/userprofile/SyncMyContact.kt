@@ -69,7 +69,7 @@ class SyncMyContact : BaseActivity() {
                     for (i in 0 until contactsInfoList.size) {
                         //Log.e("Name ===>",searchQuery)
 
-                        if (searchQuery?.let { contactsInfoList[i].phoneNumber?.contains(it) }!!) {
+                        if (searchQuery.let { contactsInfoList[i].phoneNumber?.contains(it) }!!) {
                             Log.e("search", contactsInfoList[i].toString())
                         }
                     }
@@ -124,8 +124,8 @@ class SyncMyContact : BaseActivity() {
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", arrayOf(id), ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC")
                     if (cursorPhone!!.count > 0) {
-                        while (cursorPhone!!.moveToNext()) {
-                            val phoneNumValue = cursorPhone.getString(cursorPhone!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                        while (cursorPhone.moveToNext()) {
+                            val phoneNumValue = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             builder.append("Contact: ").append(name).append(", Phone Number: ").append(
                                     phoneNumValue).append("\n\n")
                             Log.e("Name ===>", "$phoneNumValue/$name")
@@ -133,7 +133,7 @@ class SyncMyContact : BaseActivity() {
                             contactsInfoList.add(ContactsInfo(id, name, phoneNumValue))
                         }
                     }
-                    cursorPhone!!.close()
+                    cursorPhone.close()
                 }
             }
         } else {
@@ -175,7 +175,7 @@ class SyncMyContact : BaseActivity() {
     @SuppressLint("SetWorldReadable")
     private fun shareimage() {
         val post_image = findViewById<View>(R.id.share_image) as ImageView
-        val drawable = post_image!!.drawable as BitmapDrawable
+        val drawable = post_image.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
         try {
             val file = File(externalCacheDir, "devofandroid.png")

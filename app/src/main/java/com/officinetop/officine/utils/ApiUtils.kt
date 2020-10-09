@@ -363,14 +363,14 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
 
             val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() + 1 else 0))
             if (deliveryDatePridicted.isNullOrBlank()) {
-                val dateFormat = SimpleDateFormat("yyy-MM-dd");
-                deliveryDatePridicted = dateFormat.format(bookingDate);
+                val dateFormat = SimpleDateFormat("yyy-MM-dd")
+                deliveryDatePridicted = dateFormat.format(bookingDate)
             } else {
 
                 val deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePridicted)
                 if (deliveryDate < bookingDate) {
-                    val dateFormat = SimpleDateFormat("yyy-MM-dd");
-                    deliveryDatePridicted = dateFormat.format(bookingDate);
+                    val dateFormat = SimpleDateFormat("yyy-MM-dd")
+                    deliveryDatePridicted = dateFormat.format(bookingDate)
 
                 }
             }
@@ -612,7 +612,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
                 response?.let {
                     if (response.isSuccessful) {
                         feedbackList.clear()
-                        val data = JSONObject(response?.body()?.string())
+                        val data = JSONObject(response.body()?.string())
                         if (data.has("data_set") && !data.isNull("data_set")) {
                             val dataSet = data.get("data_set") as JSONArray
 
@@ -626,7 +626,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
 
                             /*bindFeedbackList()*/
 
-                            getfedback?.getFeedbackList(feedbackList)
+                            getfedback.getFeedbackList(feedbackList)
 
                         } else {
                             if (data.has("message") && !data.isNull("message")) {
@@ -678,12 +678,12 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
 
-                if (!list[p1]?.lName.isNullOrBlank() && !list[p1]?.fName.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = list[p1]?.fName + " " + list[p1]?.lName
-                } else if (!list[p1]?.fName.isNullOrBlank() && list[p1]?.lName.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = list[p1]?.fName.toString()
-                } else if (list[p1]?.fName.isNullOrBlank() && !list[p1]?.lName.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = list[p1]?.lName.toString()
+                if (!list[p1].lName.isNullOrBlank() && !list[p1].fName.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = list[p1].fName + " " + list[p1].lName
+                } else if (!list[p1].fName.isNullOrBlank() && list[p1].lName.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = list[p1].fName.toString()
+                } else if (list[p1].fName.isNullOrBlank() && !list[p1].lName.isNullOrBlank()) {
+                    p0.itemView.tv_userName.text = list[p1].lName.toString()
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.Concat)
                 }
@@ -719,13 +719,13 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                         }
 
                         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                            val action: Int = e.action;
+                            val action: Int = e.action
                             when (action) {
                                 MotionEvent.ACTION_MOVE ->
-                                    rv.parent.requestDisallowInterceptTouchEvent(true);
+                                    rv.parent.requestDisallowInterceptTouchEvent(true)
 
                             }
-                            return false;
+                            return false
                         }
 
                         override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
@@ -733,7 +733,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                         }
                     }
 
-                    );
+                    )
                     p0.itemView.rv_feedbackImage.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                             val view = layoutInflater.inflate(R.layout.item_image, p0, false)
@@ -789,7 +789,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
 fun getUserDetail(loginUserDetail: OnGetLoginUserDetail, activity: Activity) {
-    val ProgressDialog = activity?.getProgressDialog(true)
+    val ProgressDialog = activity.getProgressDialog(true)
     RetrofitClient.client.getUserDetails(activity.getBearerToken() ?: "")
             .onCall { networkException, response ->
                 networkException.let {
@@ -798,7 +798,7 @@ fun getUserDetail(loginUserDetail: OnGetLoginUserDetail, activity: Activity) {
                 response?.let {
                     if (response.isSuccessful) {
                         ProgressDialog.dismiss()
-                        val data = JSONObject(response?.body()?.string())
+                        val data = JSONObject(response.body()?.string())
                         if (data.has("data") && !data.isNull("data")) {
                             val dataSet = data.get("data") as JSONObject
                             var walletModels: Models.UserWallet? = null
@@ -827,12 +827,12 @@ fun getUserDetail(loginUserDetail: OnGetLoginUserDetail, activity: Activity) {
 
 inline fun showOnlineSnack(progressDialog: ProgressDialog?, view: View, context: Context): Boolean {
 
-    if (!context?.isOnline()!!) {
-        Snackbar.make(view, context?.getString(R.string.ConnectionErrorPleaseretry), Snackbar.LENGTH_LONG)
+    if (!context.isOnline()) {
+        Snackbar.make(view, context.getString(R.string.ConnectionErrorPleaseretry), Snackbar.LENGTH_LONG)
                 .show()
         progressDialog?.dismiss()
     }
-    return context?.isOnline()!!
+    return context.isOnline()
 }
 
 
@@ -877,7 +877,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
     view.progress_bar.visibility = View.VISIBLE
 
     RetrofitClient.client.getCartList(context!!.getBearerToken()
-            ?: "", context!!.getOrderId())
+            ?: "", context.getOrderId())
             .onCall { networkException, response ->
 
                 networkException?.let {
@@ -889,7 +889,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                     if (response.isSuccessful) {
 
                         try {
-                            val body = JSONObject(response?.body()?.string())
+                            val body = JSONObject(response.body()?.string())
                             if (body.has("data_set") && !body.isNull("data_set") && body.get("data_set") is JSONArray) {
                                 val data = body.get("data_set") as JSONArray
                                 Log.e("CartData", data.toString())
@@ -1040,12 +1040,12 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
                     Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                     if (item != null) {
-                        item?.wish_list = "1"
-                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item?.seller_price.isNullOrBlank()) item?.seller_price?.toDouble()!! else 0.0)
+                        item.wish_list = "1"
+                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price?.toDouble()!! else 0.0)
 
                     } else if (productorworkshopObject != null) {
-                        productorworkshopObject?.wish_list = "1"
-                        logAddToWishlistEvent(this, if (productorworkshopObject.productName!!.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName!!, productId, ProductType, "USD", if (!productorworkshopObject?.sellerPrice.isNullOrBlank()) productorworkshopObject?.sellerPrice?.toDouble()!! else 0.0)
+                        productorworkshopObject.wish_list = "1"
+                        logAddToWishlistEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice?.toDouble()!! else 0.0)
 
                     }
 
@@ -1076,11 +1076,11 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
             if (response?.isSuccessful!!) {
                 val body = JSONObject(body)
                 if (body.has("message")) {
-                    Iv_favorite!!.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+                    Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
                     if (item != null) {
-                        item?.wish_list = "0"
+                        item.wish_list = "0"
                     } else if (productorworkshopObject != null) {
-                        productorworkshopObject?.wish_list = "0"
+                        productorworkshopObject.wish_list = "0"
                     }
                     if (productId != null && productId != "")
                         showInfoDialog(getString(R.string.productRemoved_formWishList))
@@ -1098,7 +1098,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
 
 inline fun getLastLocation(mFusedLocationClient: FusedLocationProviderClient, activity: Activity) {
 
-    mFusedLocationClient!!.lastLocation
+    mFusedLocationClient.lastLocation
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful && task.result != null) {
 
@@ -1115,7 +1115,7 @@ inline fun getLastLocation(mFusedLocationClient: FusedLocationProviderClient, ac
 fun Context.getLocale(): Locale {
     var locale = Locale.getDefault()
     if (getLangLocale() != null && getLangLocale() != "") {
-        locale = Locale(getLangLocale()?.toLowerCase())
+        locale = Locale(getLangLocale().toLowerCase())
     }
     return locale
 }
@@ -1123,13 +1123,13 @@ fun Context.getLocale(): Locale {
 
 fun DateFormatChangeYearToMonth(date: String): String? {
     var outputString = date
-    val input = SimpleDateFormat("yyyy-MM-dd");
-    val output = SimpleDateFormat("dd/MM/yyyy");
+    val input = SimpleDateFormat("yyyy-MM-dd")
+    val output = SimpleDateFormat("dd/MM/yyyy")
     try {
-        val inputDateFormat = input.parse(date);                 // parse input
-        outputString = (output.format(inputDateFormat));    // format output
+        val inputDateFormat = input.parse(date)                 // parse input
+        outputString = (output.format(inputDateFormat))    // format output
     } catch (e: Exception) {
-        e.printStackTrace();
+        e.printStackTrace()
     }
     return outputString
 }

@@ -57,9 +57,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2"
+
                     android:src="@drawable/no_image_placeholder"
                     app:imageResource="@{listItemViewModel.product_image_url!=null ? listItemViewModel.product_image_url : @string/url_not_found}"
-                    app:layout_constraintEnd_toStartOf="@+id/parts_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:scaleType="centerInside"
                     app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}" />
 

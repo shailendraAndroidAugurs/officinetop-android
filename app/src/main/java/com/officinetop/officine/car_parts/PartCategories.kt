@@ -113,9 +113,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             }
         }
 
-        search_product.setThreshold(2);
+        search_product.threshold = 2
         search_product.addTextChangedListener(textWatcher)
-        search_product.setOnItemClickListener(onItemClickListener)
+        search_product.onItemClickListener = onItemClickListener
         /*search_product.setOnDismissListener(
                 object : AutoCompleteTextView.OnDismissListener {
                     override fun onDismiss() {
@@ -280,10 +280,10 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         startActivity(intentFor<ProductListActivity>(Constant.Key.searchedKeyword to query,
                 Constant.Key.searchedCategoryType to null))
         if (containerFor_search.isVisible) {
-            val ft: FragmentTransaction = supportFragmentManager!!.beginTransaction()
+            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
             ft.detach(SparePartSearchFragment()).commit()
             search_product.setText("")
-            getSupportFragmentManager().popBackStackImmediate();
+            supportFragmentManager.popBackStackImmediate()
             containerFor_search.visibility = View.GONE
         }
     }
@@ -310,7 +310,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
            // ll_view_searchProduct.visibility = View.GONE
-            getSupportFragmentManager().popBackStackImmediate()
+            supportFragmentManager.popBackStackImmediate()
 
         } else {
             finish()
@@ -318,7 +318,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
     }
 
-    public fun setActivityListener(activityListener: SearchFilterInterface) {
+    fun setActivityListener(activityListener: SearchFilterInterface) {
         this.searchLitener = activityListener; }
 
 
@@ -370,14 +370,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                     myadpter.notifyDataSetChanged()*/
 
 
-                    runOnUiThread(Runnable() {
-                        run() {
+                    runOnUiThread(Runnable {
+                        run {
 
-                            val adaptorAutoComplete = ArrayAdapter<String>(this@PartCategories, android.R.layout.simple_dropdown_item_1line, stringlist);
-                            search_product.setAdapter(adaptorAutoComplete);
-                            adaptorAutoComplete.notifyDataSetChanged();
+                            val adaptorAutoComplete = ArrayAdapter<String>(this@PartCategories, android.R.layout.simple_dropdown_item_1line, stringlist)
+                            search_product.setAdapter(adaptorAutoComplete)
+                            adaptorAutoComplete.notifyDataSetChanged()
                         }
-                    });
+                    })
 
 
                 }
@@ -387,15 +387,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
     }
 
-    private val onItemClickListener = object : AdapterView.OnItemClickListener {
-        override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-            searchStoreQuery(stringlist[p2].split(" ")[0])
-        }
+    private val onItemClickListener = AdapterView.OnItemClickListener { p0, p1, p2, p3 -> searchStoreQuery(stringlist[p2].split(" ")[0]) }
 
-    }
-
-    class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
-    }
+    class Holder(view: View) : RecyclerView.ViewHolder(view)
 
 }

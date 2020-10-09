@@ -42,9 +42,9 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
         holder.partName.text = categoryDetails.optString("group_name", categoryDetails.optString("item"))
 
         if(position == 0)
-            mView?.onCategoryClicked(categoryDetails.getInt("id"))
+            mView.onCategoryClicked(categoryDetails.getInt("id"))
         holder.partContainer.setOnClickListener {
-            mView?.onCategoryClicked(categoryDetails.getInt("id"))
+            mView.onCategoryClicked(categoryDetails.getInt("id"))
         }
     }
 

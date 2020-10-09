@@ -36,7 +36,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup"
+        tools:targetApi="m">
 
         <activity android:name=".Online_Payment.OnlinePaymentScreen" />
         <activity android:name=".Support.Support_FAQ_Activity" />
@@ -70,9 +71,7 @@
             android:name=".push_notification.NotificationList"
             android:parentActivityName=".HomeActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Orders.Order_Tracking"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Orders.Order_List"
             android:screenOrientation="portrait" />
@@ -194,10 +193,7 @@
             android:name=".authentication.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".virtual_garage.MyVehicleActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".virtual_garage.AddVehicleActivity"
             android:screenOrientation="portrait"
@@ -263,8 +259,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="fb947980622315284" />
             </intent-filter>
         </activity> <!-- Connection callback service -->
         <meta-data

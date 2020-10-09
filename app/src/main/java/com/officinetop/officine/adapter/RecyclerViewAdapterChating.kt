@@ -1,18 +1,24 @@
 package com.officinetop.officine.adapter
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.Support.Support_Activity
+import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.utils.parseServerDateTime
 
-class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, private val supportActivity: Support_Activity) : RecyclerView.Adapter<RecyclerViewAdapterChating.ChatViewHolder>() {
+class RecyclerViewAdapterChating(val context: Context, val list: MutableList<Models.Messages>, private val supportActivity: Support_Activity) : RecyclerView.Adapter<RecyclerViewAdapterChating.ChatViewHolder>() {
 
     private var VIEW_TYPE_SEND: Int = 0
 
@@ -63,13 +69,32 @@ class RecyclerViewAdapterChating(val list: MutableList<Models.Messages>, private
             val message_body = itemView.findViewById(R.id.message_body) as TextView
             Log.d("sendString support", chat.messages)
             val message_time = itemView.findViewById(R.id.message_time) as TextView
-            val special = "'"
-            if (chat.messages.contains(special)){
-                message_body.text= chat.messages.substring(1, chat.messages.length-1);
 
-            }else{
-                message_body.text = chat.messages
+            if (chat.type.equals("1")) {
+
+
+
+                message_body.visibility = View.GONE
+                val receivedImage = itemView.findViewById(R.id.iv_receivedimage) as ImageView
+                receivedImage.visibility = View.VISIBLE
+                context.loadImage(chat.messages, receivedImage,R.drawable.ic_placeholder)
+                receivedImage.setOnClickListener {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(chat.messages)))
+
+                }
+            } else {
+                val special = "'"
+                if (chat.messages.contains(special)) {
+                    message_body.text = chat.messages.substring(1, chat.messages.length - 1)
+
+                } else {
+                    message_body.text = chat.messages
+                }
             }
+
+
+
+
 
             message_time.text = parseServerDateTime(chat.created_at)
 

@@ -302,7 +302,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
-                                    logAddToWishlistEvent(this, workshop_name.text.toString()!!, workshopUsersId.toString(), "workshop", "USD", 0.0)
+                                    logAddToWishlistEvent(this, workshop_name.text.toString(), workshopUsersId.toString(), "workshop", "USD", 0.0)
 
 
                                 }
@@ -757,7 +757,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         workshop_address.text = if (json.has("registered_office") && json.get("registered_office") != null) json.optString("registered_office") else ""
                         workshop_address.setOnClickListener {
 
-                            val mapUri = Uri.parse("geo:0,0?q=${workshop_address.text.toString().trim().takeIf { !it.isNullOrEmpty() }}")
+                            val mapUri = Uri.parse("geo:0,0?q=${workshop_address.text.toString().trim().takeIf { it1 -> !it1.isNullOrEmpty() }}")
                             val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
                             mapIntent.setPackage("com.google.android.apps.maps")
                             startActivity(mapIntent)
@@ -768,7 +768,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         workshop_description.text = json.optString("about_business", "")
 
                         if (workshop_description.text == "null")
-                            workshop_description.text = "Not Available"
+                            workshop_description.text = getString(R.string.not_applicable)
 
 
                         if (json.has("rating_count") && json.getString("rating_count") != null && json.getString("rating_count") != "" && json.getString("rating_count") != "null")
@@ -823,10 +823,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                         if (json.has("main_category_id") && !json.optInt("main_category_id").toString().isNullOrBlank()) {
-                            feedbackMain_categoryId = json.optInt("main_category_id").toString();
+                            feedbackMain_categoryId = json.optInt("main_category_id").toString()
                         }
                         if (json.has("service_id") && !json.optString("service_id").toString().isNullOrBlank()) {
-                            feedbackServices_id = json.optInt("service_id").toString();
+                            feedbackServices_id = json.optInt("service_id").toString()
                         }
 
 
@@ -861,11 +861,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val cartItem = intent.getSerializableExtra(Constant.Key.cartItem) as Models.CartItem
 
             if (isTyre) {
-                productID = cartItem.tyreDetail?.id.toString() ?: ""
+                productID = cartItem.tyreDetail?.id.toString()
             } else if (isAssembly) {
                 productID = cartItem.productDetail?.id ?: ""
             }
-            productQuantity = cartItem?.quantity.toString()
+            productQuantity = cartItem.quantity.toString()
             Log.e("productDetailswork==", productID)
             Log.e("productQuantity==", productQuantity)
 
@@ -1002,7 +1002,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun callWorkShop() {
-        if (workshopPhoneNumber != null && !workshopPhoneNumber.trim().isEmpty()) {
+        if (workshopPhoneNumber != null && workshopPhoneNumber.trim().isNotEmpty()) {
             // Call intent
             val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$workshopPhoneNumber"))
             startActivity(intent)
@@ -1135,8 +1135,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                             }
                             Log.d("Date", "DeliveryDates " + cartItem?.Deliverydays)
-                            val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(car1!!))
-                            Log.d("Date", "DeliveryDate" + getDateFor(car1!!))
+                            val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(car1))
+                            Log.d("Date", "DeliveryDate" + getDateFor(car1))
                             val currentDate = SimpleDateFormat("yyy-MM-dd").parse(selectedDateFilter)
                             Log.d("Date", "selectedDateforBooking$selectedDateFilter")
 
