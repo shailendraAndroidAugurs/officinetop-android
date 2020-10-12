@@ -5,10 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
@@ -18,6 +20,7 @@ import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
+import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
@@ -25,6 +28,7 @@ import java.lang.Exception
 
 
 class Order_List : BaseActivity() {
+    private var fromBooking = false
     private var couponsListItem: MutableList<Models.CartItemList> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,13 @@ class Order_List : BaseActivity() {
     }
 
     private fun initview() {
+
+
+        if (intent.hasExtra("fromBooking") && !intent.getStringExtra("fromBooking").isNullOrEmpty())
+            fromBooking = true
+
+
+
         progress_bar.visibility = View.VISIBLE
         RetrofitClient.client.getOrderlist(getBearerToken() ?: "")
                 .onCall { _, response ->
@@ -49,7 +60,7 @@ class Order_List : BaseActivity() {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
                                 bindView(dataSetArray)
-                            } else if (body.has("message") && !body.isNull("message") ) {
+                            } else if (body.has("message") && !body.isNull("message")) {
                                 showInfoDialog(body.getString("message"))
                             }
 
@@ -97,7 +108,7 @@ class Order_List : BaseActivity() {
                     /* val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
                      intent.putExtra("productList", couponsListItem[position].serviceProductDescription as Serializable)
                      startActivity(intent)*/
-                }  else if (view.tag == "105") {
+                } else if (view.tag == "105") {
                     try {
 
                         if (!couponsListItem[position].orderTracking.trackingUrl.startsWith("http://") && !couponsListItem[position].orderTracking.trackingUrl.startsWith("https://")) {
@@ -199,7 +210,7 @@ class Order_List : BaseActivity() {
 
     }
 
-    fun Returnpolicy(orderId: String,potion:Int) {
+    fun Returnpolicy(orderId: String, potion: Int) {
         RetrofitClient.client.returnOrder(orderId, getBearerToken() ?: "")
                 .onCall { _, response ->
                     response?.let {
@@ -230,7 +241,7 @@ class Order_List : BaseActivity() {
                                 showInfoDialog(body.get("message").toString())
                                 initview()
 
-                               // couponsListItem[postion].InvoiceStatus = "1"
+                                // couponsListItem[postion].InvoiceStatus = "1"
 
 
                             } else {
@@ -242,4 +253,22 @@ class Order_List : BaseActivity() {
                 }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home ->onBackPressed()
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (fromBooking) {
+            startActivity(intentFor<HomeActivity>().putExtra("login_success", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+
+    }
 }

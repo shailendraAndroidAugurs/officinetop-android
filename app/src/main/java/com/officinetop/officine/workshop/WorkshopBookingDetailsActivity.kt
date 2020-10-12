@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.samples.wallet.Constants
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.Online_Payment.OnlinePaymentScreen
@@ -33,7 +34,7 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
 
         // set on-click listener
         proceed_to_pay.setOnClickListener {
-            if (!cart_total_item_price.text.isNullOrEmpty() && !cart_total_price.text.isNullOrBlank()&& !cart_total_service_price.text.isNullOrBlank()) {
+            if (!cart_total_item_price.text.isNullOrEmpty() && !cart_total_price.text.isNullOrBlank() && !cart_total_service_price.text.isNullOrBlank()) {
 
 
                 val sharedprefrence1 = getSharedPreferences("Cart", Context.MODE_PRIVATE)
@@ -41,18 +42,19 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
                 val totalvat = sharedprefrence1?.getString("TotalVat", "")
                 val totalDiscount = sharedprefrence1?.getString("TotalDiscount", "")
                 val totalPfu = sharedprefrence1?.getString("TotalPFU", "")
-                val userWalletAmount = userWalletPref?.getString( Constant.Path.user_WalletAmount, "0")
+                val userWalletAmount = userWalletPref?.getString(Constant.Path.user_WalletAmount, "0")
                 startActivity(intentFor<OnlinePaymentScreen>(
                         Constant.Path.totalAmount to cart_total_price.text.split(" ")[1].toString(),
                         Constant.Path.totalPfu to totalPfu,
                         Constant.Path.totalItemAmount to (cart_total_item_price.text.split(" ")[1].toDouble() + cart_total_service_price.text.split(" ")[1].toDouble()).toString(),
                         Constant.Path.totalDiscount to totalDiscount,
                         Constant.Path.totalVat to totalvat,
-                                Constant.Path.user_WalletAmount to userWalletAmount
+                        Constant.Path.user_WalletAmount to userWalletAmount,
+                        "fromBooking" to "yes"
 
                 ))
             }
-            val sharedprefrence2= getSharedPreferences("Cart", Context.MODE_PRIVATE)
+            val sharedprefrence2 = getSharedPreferences("Cart", Context.MODE_PRIVATE)
             sharedprefrence2?.edit()?.clear()
             finish()
 

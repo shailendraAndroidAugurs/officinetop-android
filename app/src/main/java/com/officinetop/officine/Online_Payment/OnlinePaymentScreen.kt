@@ -59,7 +59,7 @@ class OnlinePaymentScreen : BaseActivity() {
     private var AmazonPayRequestCode = 992
     private var usedWalletAmount = "0"
     private var HaveBrowser = true
-
+    private var fromBooking = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_online_payment)
@@ -72,6 +72,10 @@ class OnlinePaymentScreen : BaseActivity() {
     private fun initviews() {
         if (intent.hasExtra(Constant.Path.totalAmount) && !intent.getStringExtra(Constant.Path.totalAmount).isNullOrEmpty())
             TotalAmount = intent.getStringExtra(Constant.Path.totalAmount)
+
+        if (intent.hasExtra("fromBooking") && !intent.getStringExtra("fromBooking").isNullOrEmpty())
+            fromBooking = true
+
 
         if (intent.hasExtra(Constant.Path.totalItemAmount) && !intent.getStringExtra(Constant.Path.totalItemAmount).isNullOrEmpty())
             totalPrices = intent.getStringExtra(Constant.Path.totalItemAmount)
@@ -148,8 +152,8 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = true
                 radioButton_COD.isChecked = false
                 //startUpiPayment()
-            }else{
-                radioButton_googlepay.isChecked=false
+            } else {
+                radioButton_googlepay.isChecked = false
             }
         })
 
@@ -162,8 +166,8 @@ class OnlinePaymentScreen : BaseActivity() {
                 showInfoDialog(getString(R.string.PayOnDelivery)) {
                     updatePaymentStatusForCOD()
                 }
-            } else{
-                radioButton_COD.isChecked=false
+            } else {
+                radioButton_COD.isChecked = false
             }
         })
 
@@ -453,7 +457,6 @@ class OnlinePaymentScreen : BaseActivity() {
                         Log.i("FuturePaymentExample", authorization_code)
 
 
-
                     } catch (e: JSONException) {
                         Log.e("FuturePaymentExample", "an extremely unlikely failure occurred: ", e)
                     }
@@ -475,7 +478,6 @@ class OnlinePaymentScreen : BaseActivity() {
 
                         val authorization_code = auth.authorizationCode
                         Log.i("ProfileSharingExample", authorization_code)
-
 
 
                     } catch (e: JSONException) {
@@ -515,10 +517,10 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         } else if (requestCode == AmazonPayRequestCode) {
             if (HaveBrowser) {
-                startActivity(intentFor<Order_List>())
+                startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
                 finish()
                 saveIsAvailableDataInCart(true)
-                logAddPaymentInfoEvent(this,true)
+                logAddPaymentInfoEvent(this, true)
             }
         } else {
             /////////////////////Upi pay//////////////////////////////////////
@@ -552,12 +554,10 @@ class OnlinePaymentScreen : BaseActivity() {
     }
 
 
-
-
-   /* private fun getThingToBuy(paymentIntent: String): PayPalPayment {
-        return PayPalPayment(BigDecimal(payableAmount), "USD", "sample item",
-                paymentIntent)
-    }*/
+    /* private fun getThingToBuy(paymentIntent: String): PayPalPayment {
+         return PayPalPayment(BigDecimal(payableAmount), "USD", "sample item",
+                 paymentIntent)
+     }*/
 
     ////////////////////////////////////// UPI Payment method //////////////////////////////////////////
     private fun payUsingUpi() {
@@ -600,10 +600,10 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>())
+                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
-                            logAddPaymentInfoEvent(this,true)
+                            logAddPaymentInfoEvent(this, true)
                         }
 
                     }
@@ -630,6 +630,7 @@ class OnlinePaymentScreen : BaseActivity() {
             return true
 
     }
+
     private fun isCartDataAvailable(): Boolean {
         return if (!IsCheckAvailablity) {
 
@@ -642,6 +643,7 @@ class OnlinePaymentScreen : BaseActivity() {
             true
 
     }
+
     private fun CheckCartItemAvailability() {
         AddressId?.let {
             contactId?.let { it1 ->
@@ -662,7 +664,7 @@ class OnlinePaymentScreen : BaseActivity() {
                                                 showInfoDialog(getString(R.string.PleasedeleteOutofStockorExpiredservices))
                                             }
                                         }
-                                    }else{
+                                    } else {
                                         showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
                                     }
                                 }
@@ -690,10 +692,10 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>())
+                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
-                            logAddPaymentInfoEvent(this,true)
+                            logAddPaymentInfoEvent(this, true)
                         }
                     }
                 }
@@ -715,10 +717,10 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>())
+                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
-                            logAddPaymentInfoEvent(this,true)
+                            logAddPaymentInfoEvent(this, true)
                             //saveOrderId("")
                         }
 
