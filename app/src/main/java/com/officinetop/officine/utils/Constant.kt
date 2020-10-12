@@ -402,6 +402,7 @@ object Constant {
         const val plateNumber = "plateNumber"
         const val scheduleId = "schedule_id"
         const val keyword = "keyword"
+        const val delivery_prices = "delivery_prices"
 
 
     }

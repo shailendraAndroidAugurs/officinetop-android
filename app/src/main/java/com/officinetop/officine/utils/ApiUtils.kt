@@ -310,7 +310,7 @@ inline fun convertToJson(model: Any): String {
 }
 
 
-fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayList<Models.CartDataList>) {
+fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartData) {
     var servicePrice = 0.0
     var productPrice = 0.0
     var productPricewithVat_Discount = 0.0
@@ -320,6 +320,8 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     var Totalvat = 0.0
     var TotalDiscount = 0.0
     var TotalPFU = 0.0
+    val cartDataList = cartData.CartDataList
+
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
         if (cartData.CartType == "SP") {
@@ -402,10 +404,34 @@ fun calculateCartItemViews(view: View, context: Context?, cartDataList: ArrayLis
     }
     context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString())
     context?.let {
+
+
         view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
+        if (!cartData.deliveryPricesList.isNullOrEmpty()) {
+            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, getDeliveryPricesAccordingToTotalPrices(view.cart_total_price.text.toString().split(" ")[1], cartData.deliveryPricesList))
+            view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + view.tv_delivery_prices.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
+
+        } else {
+            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, "0")
+
+        }
+
     }
+}
+
+fun getDeliveryPricesAccordingToTotalPrices(totalprices: String, deliveryPriceslist: ArrayList<Models.DeliveryPrices>): String {
+    var deliveryprices = "0"
+
+    for (item in deliveryPriceslist) {
+        if (item.from.toDouble() <= totalprices.toDouble() && item.to.toDouble() >= totalprices.toDouble()) {
+            deliveryprices = if (!item.prices.isNullOrBlank()) item.prices else "0"
+            break
+        }
+    }
+
+    return deliveryprices
 }
 
 inline fun Call<ResponseBody>.onCall(context: Context? = null, crossinline onResponse: (networkException: Throwable?, response: Response<ResponseBody>?) -> Unit) {
@@ -771,20 +797,6 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
         }
     }
 
-    /* val genericAdapter = GenericAdapter<Models.FeedbacksList>(this, R.layout.feedback_items_layout)
-
-     genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
-         override fun onClick(view: View, position: Int) {
-         }
-
-         override fun onItemClick(view: View, position: Int) {
-
-         }
-     })
-     val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-     fedback_recycler_list.layoutManager = linearLayoutManager
-     fedback_recycler_list.adapter = genericAdapter
-     genericAdapter.addItems(feedbackList)*/
 }
 
 
@@ -850,24 +862,24 @@ inline fun View.bindCartitemViews(onCartListCallback: OnCartListCallback, contex
     for (i in 0 until modelCart.CartDataList.size) {
         adapter.addProduct(modelCart.CartDataList[i])
         adapter.getItemAt(i)
-
-        calculateCartItemViews(this@bindCartitemViews, context, modelCart.CartDataList)
-
-        adapter.setOnItemChangedListener(object : CartItemAdapter.OnItemChanged {
-            override fun onDeleted(position: Int) {
-                //Log.d("bindCart", "onDeleted: position = $position")
-                calculateCartItemViews(this@bindCartitemViews, context, modelCart.CartDataList)
-            }
-
-            override fun onQuantityChanged(cartItem: Models.CartDataList?) {
-                //Log.d("bindCart", "onQuantityChanged: item = $cartItem")
-                calculateCartItemViews(this@bindCartitemViews, context, modelCart.CartDataList)
-            }
-
-        })
-
-
     }
+    calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+
+    adapter.setOnItemChangedListener(object : CartItemAdapter.OnItemChanged {
+        override fun onDeleted(position: Int) {
+            //Log.d("bindCart", "onDeleted: position = $position")
+            calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+        }
+
+        override fun onQuantityChanged(cartItem: Models.CartDataList?) {
+            //Log.d("bindCart", "onQuantityChanged: item = $cartItem")
+            calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+        }
+
+    })
+
+
+
 
     this.recycler_view.adapter = adapter
 }
@@ -934,7 +946,6 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                                             }
                                         } else {
                                             cartData.CartDataList = ArrayList()
-
                                             view.bindCartitemViews(onCartListCallback, context, true, cartData)
                                             view.image_emptycart.visibility = View.VISIBLE
                                             view.proceed_to_pay_container.visibility = View.GONE
@@ -1082,7 +1093,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject.wish_list = "0"
                     }
-                    if (productId != null && productId != "")
+                    if (!productId.isNullOrBlank())
                         showInfoDialog(getString(R.string.productRemoved_formWishList))
                     else
                         showInfoDialog(getString(R.string.WorkshopRemovedfromfavorite))

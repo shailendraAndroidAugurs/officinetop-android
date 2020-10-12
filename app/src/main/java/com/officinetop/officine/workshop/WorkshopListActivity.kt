@@ -381,7 +381,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         else if (isCarMaintenanceService) carMaintenanceCalendarCall.enqueue(callback)
         else if (isMotService) motServiceCall.enqueue(callback)
         else if (isSOSAppointment) sosAppointmentCall.enqueue(callback)
-        else nonAssemblyCall.enqueue(callback)
+        else if (isCarWash) nonAssemblyCall.enqueue(callback)
 
     }
 
