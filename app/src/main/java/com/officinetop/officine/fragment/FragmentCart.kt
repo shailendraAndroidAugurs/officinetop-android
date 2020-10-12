@@ -55,6 +55,7 @@ class FragmentCart : Fragment(), OnCartListCallback {
                         Constant.Path.totalDiscount to totalDiscount,
                         Constant.Path.totalVat to totalvat,
                         Constant.Path.user_WalletAmount to userWalletAmount
+
                 ))
             }
             val sharedprefrence2 = context?.getSharedPreferences("Cart", Context.MODE_PRIVATE)

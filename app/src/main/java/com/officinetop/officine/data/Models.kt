@@ -1854,6 +1854,8 @@ object Models {
             val transactionId: String?,
             @SerializedName("tyre_product_description")
             val tyreProductDescription: List<TyreProductDescription>,
+            @SerializedName("DeliveryPrices")
+            val deliveryPrices: ArrayList<DeliveryPrices> = ArrayList(),
 
             @SerializedName("updated_at")
             val updatedAt: String,
@@ -2344,6 +2346,8 @@ object Models {
 
             @SerializedName("CartDataList")
             var CartDataList: ArrayList<CartDataList> = ArrayList(),
+            @SerializedName("DeliveryPrices")
+            var deliveryPricesList: ArrayList<DeliveryPrices> = ArrayList(),
             @SerializedName("shipping_address_id")
             val shippingAddressId: String,
             @SerializedName("status")
@@ -3142,6 +3146,16 @@ object Models {
             val updated_at: String = "",
             val users_id: String = "",
             val version_id: String = ""
+    ) : Serializable
+
+    data class DeliveryPrices(
+            @SerializedName("From")
+            val from: String = "1000",
+            @SerializedName("To")
+            val to: String = "5000",
+            @SerializedName("Prices")
+            val prices: String = "100"
+
     ) : Serializable
 
 
