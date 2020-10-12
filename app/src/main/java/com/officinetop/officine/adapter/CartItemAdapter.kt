@@ -388,7 +388,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             }
             var ProductMaxQuantity = 1
             if (item.CartType == "SP") {
-                if (item.serviceAssemblyProductDescription.maxProductQuantity != null) {
+                if (item.serviceAssemblyProductDescription!=null&&item.serviceAssemblyProductDescription.maxProductQuantity != null) {
                     ProductMaxQuantity = if (item.serviceAssemblyProductDescription.maxProductQuantity.isNullOrBlank()) 1 else item.serviceAssemblyProductDescription.maxProductQuantity.toInt()
                 }
             } else {
