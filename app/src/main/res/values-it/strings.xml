@@ -2,18 +2,13 @@
     <string name="app_name">OfficineTop</string>
     <string name="tab_home">Casa</string>
     <string name="tab_feedback">Recensione</string>
-    <string name="tab_news">notizia</string>
     <string name="tab_profile">Profilo</string>
-    <string name="tab_carello">Carello</string>
     <string name="sample">""</string>
     <string name="string_not_found">0.0</string>
     <string name="string_space">"    "</string>
-    <string name="related_part">-------- Parte selezionata ----------</string>
     <string name="sample_title">""</string>
     <string name="sample_product">""</string>
     <string name="sample_workshop">Officina Cesena Workshop</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="sample_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -21,8 +16,6 @@
         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat
     </string>
-    <string name="hint_email">Inserisci la tua email</string>
-    <string name="hint_password">Inserisci la tua password</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
     <string name="login">Accesso</string>
@@ -30,16 +23,13 @@
     <string name="no_account">Non hai un account?</string>
     <string name="register">Registrati</string>
     <string name="reset_password">Ha dimenticato la password?</string>
-    <string name="first_name">Nome di battesimo</string>
     <string name="last_name">Cognome</string>
     <string name="mob_no">Numero di cellulare</string>
-    <string name="service_list">Elenco dei servizi</string>
     <string name="confirm_pass">conferma password</string>
     <!--  <string name="facebook_app_id">1183769028463257</string>
       <string name="fb_login_protocol_scheme">fb1183769028463257</string>-->
 
     <string name="facebook_app_id">947980622315284</string>
-    <string name="fb_login_protocol_scheme">fb947980622315284</string>
     <!-- <string name="fb_login_protocol_scheme">fb566332697636167</string>-->
 
 
@@ -48,24 +38,12 @@
     <string name="modify_car">Aggiorna auto</string>
     <string name="plate">Targa</string>
     <string name="plate_search_label">Oppure cerca con targa</string>
-    <string name="modify">Modificare</string>
-    <string name="remove">Rimuovere</string>
-    <string name="my_car">Le mie macchine</string>
     <string name="car_parts">Tipo di pezzi di ricambio</string>
     <string name="feedback">Recensioni</string>
-    <string name="product">Prodotto</string>
     <string name="best_selling_product">I più venduti</string>
-    <string name="product_feedback"> Recensioni prodotti</string>
-    <string name="workshop_feedback">Recensioni officine</string>
-    <string name="coupon_five">Coupon 5</string>
     <string name="more">Vedi tutto</string>
-    <string name="submit_feedback">Invia Recensioni</string>
-    <string name="dialog_message_feedback">Invia il tuo feedback per guadagnare coupon.</string>
     <string name="dialog_message_add_car">Aggiungi i dettagli dell\'auto per ottenere prodotti e servizi più adatti.</string>
     <string name="dialog_message_select_car">Seleziona i dettagli dell\'auto per ottenere prodotti e servizi adeguati.</string>
-    <string name="select_spare_part">Seleziona il tipo di pezzo di ricambio</string>
-    <string name="select_date">Seleziona la data</string>
-    <string name="booking_time">Tempo di prenotazione%s</string>
     <string name="sort">Ordina lista</string>
     <string name="WorkshopSort">Ordina</string>
     <string name="filter">Filtri</string>
@@ -99,12 +77,10 @@
     <string name="book">Prenota</string>
     <string name="services">Servizi</string>
     <string name="see_all">Vedi tutto</string>
-    <string name="feedback_">Recensioni</string>
     <string name="all">Tutti</string>
     <string name="price_range">Fascia di prezzo</string>
     <string name="clear_selection">Cancella selezione</string>
     <string name="Paypal">Aggiungi carta di debito / credito / bancomat</string>
-    <string name="UPI">UPI</string>
     <string name="paymet_type">Seleziona un metodo di pagamento</string>
     <string name="paymet_name">Pagamento</string>
     <string name="support">Supporto</string>
@@ -116,20 +92,17 @@
     <string name="name_on_card">Nome sulla carta</string>
     <string name="card_number">Numero di carta</string>
     <string name="expiry_date">Data di scadenza</string>
-    <string name="add_card">Paga ora</string>
     <string name="ReferralCode">Codice d\' invito</string>
     <string name="type_here">Messaggio..</string>
     <string name="may_help">Ciao, come posso aiutarti?</string>
     <string name="entermessage">Inserisci il messaggio</string>
-    <string name="ticketClose">Il biglietto è stato chiuso. Vuoi generare un nuovo biglietto?</string>
     <string name="euro_symbol">€</string>
     <string name="prepend_euro_symbol_with_da"> € %d</string>
     <string name="prepend_euro_symbol_with_da_string">€ %s</string>
-    <string name="prepend_euro_symbol">€ %d</string>
     <string name="prepend_euro_symbol_string">€ %s</string>
     <string name="tyre_detail">Dettaglio dei pneumatici</string>
-    <string name="tyre_price_text">Prezzo pneumatico: € %s</string> <!-- singola -->
-    <string name="tyre_price_one">%s ECO tassa PFU + 10%% tax</string> <!-- singola -->
+    <!-- singola -->
+    <!-- singola -->
     <string name="tyre_price_total">Totale: € %s </string>
     <string name="append_km">%d Km</string>
     <string name="distance">Distanza</string>
@@ -153,7 +126,6 @@
     <string name="parts">Parti</string>
     <string name="low_to_high">Crescente</string>
     <string name="high_to_low">Decrescente</string>
-    <string name="coupon_details">Dettagli del coupon</string>
     <string name="proceed_to_payment">Procedi all\'ordine</string>
     <string name="no_phone_number">Nessun numero di telefono associato per l\'officina</string>
     <string name="recommendation_msg">I clienti che hanno visto questo prodotto hanno anche visto:</string>
@@ -164,7 +136,6 @@
     <string name="confirm_online_request_only">Richiedi un preventivo online</string>
     <string name="add_to_cart">Aggiungi al carrello</string>
     <string name="tyres">Pneumatici</string>
-    <string name="vehicle_type">tipo di veicolo</string>
     <string name="tyre_type">Veicolo</string>
     <string name="season">Stagione</string>
     <string name="width">Larghezza</string>
@@ -179,46 +150,25 @@
     <string name="revision">Revisione</string>
     <string name="revision_detail">Revisione del regolamento di sicurezza generale \ nIspezione gratuita del veicolo</string>
     <string name="choose_workshop">Scegli un\'officina</string>
-    <string name="vehicle_precheck_revision">Controllo veicolo Pre + Revisione</string>
     <string name="maintenance">Manutenzione</string>
     <string name="partlist">Elenco delle parti</string>
-    <string name="sample_subtitle">Sottotitoli campione</string>
     <string name="register_privacy_text_1">Creando un account, accetterai le nostre </string>
     <string name="register_privacy_text_2"> le nostre politiche di privacy</string>
     <string name="other_seller">Altri venditori</string>
-    <string name="large_text">A meno che non sia richiesto dalla legge applicabile o concordato per iscritto, il software distribuito ai sensi della Licenza è distribuito in base alla "COSÌ COM'È", SENZA GARANZIE O CONDIZIONI DI QUALSIASI TIPO, esplicito o implicito. Consultare la Licenza per la lingua specifica che disciplina le autorizzazioni e le limitazioni sotto la Licenza.</string>
     <string name="name">Nome</string>
     <string name="busy">Occupato</string>
     <string name="not_applicable">Non applicabile</string>
-    <string name="officine_feedback">Feedback sulle Officine</string>
     <string name="diameter">Diametro</string>
-    <string name="rim_width">Larghezza del cerchione</string>
     <string name="title_activity_sos">SOS</string>
-    <string name="hello_blank_fragment">Ciao frammento vuoto</string>
     <string name="no_location_detected">Nessuna posizione rilevata. Assicurarsi che la posizione sia abilitata sul dispositivo.</string>
     <string name="success">Successo</string>
-    <string name="location_enabled">Posizione abilitata correttamente</string>
     <string name="gps_not_on">"GPS non attivo"</string>
     <string name="settings_change_not_allowed">"Modifica impostazione non consentita"</string>
-    <string name="enable_location">Abilita la tua posizione</string>
-    <string name="latitude_label">Latitudine</string>
-    <string name="longitude_label">Longitudine</string>
-    <string name="permission_rationale">L\'autorizzazione alla posizione è necessaria per le funzionalità principali</string>
     <string name="permission_denied_explanation">L\'autorizzazione è stata negata, ma è necessaria per ottenere la tua posizione.</string>
-    <string name="settings">impostazioni</string>
     <string name="user_location">Posizione dell\'utente</string>
     <string name="quotes">Preventivi</string>
     <string name="letichettatura">L\'etichettatura dei pneumatici UE, conformemente al regolamento(n. 1222/2009), viene applicata in tutti gli Stati membri dell\'UE. ll regolamento si applica a tutti i pneumatici di autovetture, autocarri leggeri e pesanti prodotti dopo il 01.07.2012 Con questa etichettatura tutti i pneumatici nell \'UE sono classificati in base a 3 criteri .</string>
-    <string name="efficienza_del">L\'efficienza del carburante dipende dal viecolo stesso a daile condizioni di guida. Un viecolo dotato di pneumatici di classe A e attrezzato in modo completo risparmia fino a 7.5% di carburante in plu rispetto a un veicoio con pneumatici di classe C.</string>
-    <string name="laderenza">L\'aderenza sul bagnato rappresenta la differenza di efficienza frenante sul bagnato rispetto all\'aderenza media su strada. Un veicolo dotato di pneumatici di classe A e attrezzato in modo completo puo vantare una distanza di frenata del 30%(18m) inferiore rispetto a un viecolo con pneumatici di classe F.</string>
-    <string name="ll_livello">ll livello di rumore prodotto dai pnemuatici \'e misurato in decibel. ll livello di rumore di ogni veicolo viene misurato in decibel, per un totale di tre categorie assegnate.</string>
-    <string name="tre_strisce">Tre strice: conforme alle normative UE in vigore fino at 2016.</string>
-    <string name="due_strisce">Due strice: conforme alle normative UE in vigore dal 2016 o il livello di rumore \'e inferiore alla media di fino a 3 decibel.</string>
-    <string name="una_strisce">Una strice: conforme alle normative UE in vigore dal 2016 o il livello di rumore \'e inferiore alla media di oltre 3 decibel.</string>
     <string name="current_km"> KM Auto</string>
-    <string name="current_Month">Corrente mese</string>
-    <string name="Find">Trova</string>
-    <string name="MotServiceTitle">Soluzione intelligente per la tua auto KM:</string>
     <string name="changepassword">Cambia la password</string>
     <string name="oldpasword">Inserisci la vecchia password</string>
     <string name="enterreferralcode">Inserisci il codice di riferimento</string>
@@ -235,13 +185,11 @@
     <string name="Return">Richiesta reso</string>
     <string name="contact_number">Numero cellulare</string>
     <string name="entercontact_number">Inserisci il numero di contatto</string>
-    <string name="Landmark">Punto di riferimento -</string>
     <string name="zipcode">Cap -</string>
     <string name="street">Via e numero, casella postale</string>
     <string name="apartment">Appartamento, abito, edificio, piano ecc.</string>
     <string name="city">Città</string>
     <string name="state">Stato / Provincia / Regione</string>
-    <string name="Replace">Sostituire</string>
     <string name="blank">0</string>
     <string name="partinfo">Lista prodotti</string>
     <string name="retry">riprova</string>
@@ -253,7 +201,6 @@
     <string name="add_contact">Aggiungi numero di contatto</string>
     <string name="enter_contact">Inserisci il numero di cellulare</string>
     <string name="add_address">Aggiungi un nuovo indirizzo</string>
-    <string name="referralcode">Codice di riferimento</string>
     <string name="invite">Invita &amp; Guadagna</string>
     <string name="invitefirend">condividi con i tuoi amici</string>
     <string name="invitefirendoffers">Ottieni un premio in euro dopo il primo ordine di ogni amico.</string>
@@ -270,7 +217,6 @@
     <string name="notification_workshop">Offerte dei servizi dalle officine</string>
     <string name="notification_revision">Avvisami sulla revisione della mia auto</string>
     <string name="account_delete">Cancella il mio account</string>
-    <string name="account_confirm">Account</string>
     <string name="profile_setting">impostazioni</string>
     <string name="contact_list">Lista dei contatti</string>
     <string name="app_info">Informazioni</string>
@@ -290,23 +236,18 @@
     <string name="config_host">officine</string>
     <string name="config_path_salads">https://www.blueappsoftware.com/logo-1.png</string>
     <string name="dynamic_links_uri_prefix">https://www.blueappsoftware.com</string>
-    <string name="costimizemessage">Aggiungi nuove misure personalizzate</string>
     <string name="orderId">ID ordine -</string>
     <string name="delivery_address">Indirizzo di consegna</string>
     <string name="paid_amount">Pagamento totale</string>
     <string name="product_detail">Prodotto ordinato</string>
     <string name="shipment_tracking">Monitoraggio della spedizione</string>
-    <string name="shipment">Spedizione</string>
     <string name="expectedtime">consegna prevista :</string>
-    <string name="orderplaced">Ordine effettuato :</string>
     <string name="courier">Corriere :</string>
     <string name="tracking_id">ID di monitoraggio :</string>
     <string name="car_services">Servizi auto</string>
     <string name="spare_part">Ricambi</string>
     <string name="car_rim">Cerchione</string>
     <string name="Invoice">Scarica fattura</string>
-    <string name="tracking">Traccia</string>
-    <string name="onTime">Puntuale</string>
     <string name="SENDER_ID"><!--850442644528-->976463692726</string>
     <string name="notifications_admin_channel_name">officinetop</string>
     <string name="notifications_admin_channel_description">officinetop Firebase PushNotification</string>
@@ -314,19 +255,16 @@
     <string name="update_address">Indirizzo di aggiornamento</string>
     <string name="new_address">Indirizzo</string>
     <string name="UpdateContact">Il numero di cellulare e il numero di cellulare aggiornato sono uguali. Inserisci un altro numero</string>
-    <string name="google_map_key">AIzaSyDAypvXOPP763qTp1kHymRujcgXNgEzGyE<!--AIzaSyBnJt0VAq7dBTmBSK7RrK2W-dkCyCQCwq8--><!--AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8--></string>
     <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
     <string name="Please_Select_Address">Si prega di selezionare l\'indirizzo</string>
     <string name="enterZipCode">Inserisci il codice postale</string>
     <string name="Zip_Code">Cap</string>
     <string name="Address_type">Tipo di Indirizzo</string>
-    <string name="enter_address_type">Tipo di Indirizzo</string>
     <string name="selectAddressType">Seleziona il tipo di indirizzo</string>
     <string name="delete_AddressConfirmation">Eliminare questo indirizzo dall\'elenco indirizzi?</string>
     <string name="delete_ContactConfirmation">Eliminare questo contatto dall\'elenco contatti?</string>
     <string name="orderDetail">Dettagli ordine</string>
     <string name="Concat">-</string>
-    <string name="Comma">,</string>
     <string name="Pending">in sospeso</string>
     <string name="Paid">Pagato</string>
     <string name="ZeroValue">00.0</string>
@@ -336,13 +274,10 @@
     <string name="Alphabetical">Alfabetico</string>
     <string name="Ascending">Ascendente</string>
     <string name="Descending">Discendente</string>
-    <string name="Server_Error">Accedi per i dettagli</string>
     <string name="Edit">Modifica</string>
     <string name="Buy_Now">Acquista ora</string>
     <string name="Search">Cerca…</string>
-    <string name="CouponDetail">Dettaglio coupon</string>
     <string name="tyreprice_text">Prezzo: € %s</string>
-    <string name="PFU_price">PFU: € %s</string>
     <string name="Deliveryaddress">Indirizzo di consegna</string>
     <string name="OutOfStock">Esaurito</string>
     <string name="ReMainingItem">Solo %S quantità disponibile in magazzino</string>
@@ -358,24 +293,10 @@
     <string name="how_works">Come funziona</string>
     <string name="href_how_works">Come funziona >></string>
     <string name="pieces">pezzi</string>
-    <string name="how_it_works">
-       Metodo di partecipazione:\n\n
-                1. Condividi il link per scaricare l\'app con un amico. Se il tuo amico completa la registrazione con il tuo codice di riferimento, riceverà un credito di €6\n\n
-                2. Se A invita B e B completa il suo primo ordine, A riceve un credito di € 5. Se B invita C a completare il suo primo ordine, non solo B
-                ottieni € 5 di credito ma anche A può ottenere € 1 di credito. Più amici inviti, più credito avrai a tua disposizione.\n\n\n
-                Metodo di rilascio:\n\n
-                Il premio di credito viene caricato nel tuo account e prelevabile quando supera i € 50\n\n\n\n
-                Lo stesso numero di cellulare, numero di targa e numero del dispositivo terminale sono considerati come lo stesso utente.\n
-                Solo il numero di cellulare, il numero di targa e il numero del dispositivo terminale sono tutti nuovi e registrati con un codice di riferimento, è considerato come un
-                rapporto di invito valido.\n
-                Dopo aver completato il primo ordine del servizio OfficineTop, è possibile ricevere il credito successivo.OfficineTop ha il diritto di ritirare
-                premi e relativi ordini nel caso in cui i premi vengano ottenuti con mezzi impropri e si riserva il diritto di perseguire con responsabilità legale.\n
-     </string>
     <string name="select_diameter">Seleziona una misura</string>
     <string name="select_measurements">Misure selezionate:</string>
 
 
-    <string name="with_diameter">con diametro:</string>
     <string name="select_car_measures">Seleziona una misura per la tua auto:</string>
     <string name="btn_invite_frnds">Invita gli amici</string>
     <string name="invite_text_more_invite_more_earn">Più inviti, più guadagni</string>
@@ -393,7 +314,6 @@
 
     <string name="washing_type">Tipi di lavaggio</string>
     <string name="detail">Dettaglio</string>
-    <string name="workshops">Officine</string>
 
     <string name="workshop_detail">Prenotazione</string>
     <string name="Comment">commento:</string>
@@ -403,14 +323,9 @@
     <!--// New String Added From hardcoded to String file-->
     <string name="ServiceName">Nome servizi</string>
     <string name="Failed_to_load_data">Impossibile caricare i dati</string>
-    <string name="SelectCoupontype">Seleziona il tipo di coupon</string>
-    <string name="Generic_coupon">Coupon generico</string>
     <string name="Choose_Officina">Scegli Officina</string>
 
-    <string name="SpareParts">Prodotto pezzi di ricambio</string>
-    <string name="Tyres">Tyres product</string>
     <string name="Rim">Rim</string>
-    <string name="EngineCheck"> - Controllo olio motore</string>
     <!-- Seleziona il tipo di tagliando-->
 
     <string name="onServices"> in servizio</string>
@@ -421,8 +336,6 @@
     <string name="EnteritManually"> Inseriscilo manualmente</string>
     <string name="ConfirmationOnLocation">La tua posizione verrà mostrata di seguito. Se non si desidera o si desidera eseguire il posizionamento automatico, è possibile modificare manualmente i dati</string>
 
-    <string name="Latitude">Latitudine</string>
-    <string name="Longitude">Longitudine</string>
     <string name="inputtextSingleline">Immettere il testo per un testo a riga singola</string>
     <string name="Zero_fifty">0/50</string>
 
@@ -432,7 +345,6 @@
     <string name="Description">Descrizione</string>
     <string name="Interval_Operation">Operazioni</string>
     <string name="upi_Mobileno">di cellulare @ upi</string>
-    <string name="DD">DD</string>
     <string name="YYYY">AAAA</string>
     <string name="SearchProducts">Cerca prodotti</string>
 
@@ -480,14 +392,12 @@
     <string name="Delivery_date">Data spedizione</string>
     <string name="Tipologio">Tipologio</string>
 
-    <string name="With_Service"> Con servizio</string>
     <string name="Comment_by_user">Commento dell utente</string>
     <string name="one_KM"> 1 Km</string>
     <string name="hundred_KM">100 Km</string>
     <string name="total">Totale</string>
     <string name="PFU">PFU</string>
     <string name="Discount">Sconto</string>
-    <string name="Vat">I.V.A</string>
     <string name="Intervention_date">Data intervento:</string>
     <string name="Intervention_time">Tempo di intervento: </string>
 
@@ -497,7 +407,6 @@
 
 
     <string name="AllReview">Tutte le recensioni</string>
-    <string name="buyWithAssemblyBooking">Acquista con prenotazione di assemblaggio:</string>
     <string name="car_name">Nome auto</string>
     <string name="String_Unicode">\u20ac79.00</string>
 
@@ -505,13 +414,8 @@
     <string name="Capac_Battery">Capac. Batteria (Ah)</string>
     <string name="special20">speciale 20</string>
     <string name="Not_Availabale">Non disponibile</string>
-    <string name="cutting_brakes">freni di taglio</string>
-    <string name="modification">Modifica</string>
     <string name="Shopping_Cart">Carrello della spesa</string>
-    <string name="Item">Articolo</string>
     <string name="Smart_solution_withCar">Trova servizi tagliandi per la tua auto</string>
-    <string name="Add_parts">Aggiungi parti</string>
-    <string name="apply">Applicare</string>
     <string name="Emergency_Service_Details">Dettagli del servizio di emergenza</string>
 
     <string name="Total_time_Arrives">Arriva il tempo totale</string>
@@ -522,9 +426,6 @@
     <string name="Emergency">Emergenza</string>
     <string name="Appointment">Appuntamento</string>
 
-    <string name="fuel_Efficiency">EFFICIENZA DEL CARBURANTE (DAA AA G)</string>
-    <string name="adhesion_bath">ADESIONE SUL BAGNO (DA AA F)</string>
-    <string name="noise_Emission">EMISSIONE DI RUMORE (IN DECIBEL)</string>
     <string name="feedback_Workshop">Recensioni officine</string>
     <string name="feedback_Product">Recensioni prodotti</string>
     <string name="request_invoice"> Richiedi fattura</string>
@@ -533,19 +434,15 @@
     <string name="return_request_accepted">La richiesta di reso è stata accettata</string>
     <string name="return_request_rejected">La richiesta di reso è stata respinta</string>
     <string name="product_name">Nome del prodotto</string>
-    <string name="PFU_Description">Descrizione PFU</string>
     <string name="Feedback_Detail">Dettaglio feedback</string>
     <string name="Workshop"> Officine</string>
     <string name="Please_wait"> Attendere prego…</string>
     <string name="partNotFound"> Parte non trovata per questo servizio. Per favore riprova</string>
     <string name="Feedback_List"> Elenco di feedback</string>
-    <string name="WorkshopDetail"> Prenotazione</string>
 
 
     <!--   end-->
     <string name="DeleteFromCart"> Eliminare questo articolo dal carrello?</string>
-    <string name="AreYouWanDelete"> Vuoi davvero eliminare questo elemento?</string>
-    <string name="washingType"> Tipi di lavaggio</string>
     <string name="Search_Location"> Cerca posizione</string>
     <string name="Failed_load_product_detail"> Impossibile caricare i dettagli del prodotto</string>
     <string name="MOT">Tagliandi</string>
@@ -561,7 +458,6 @@
     <string name="Delete_car_from_virtual_garage">Eliminare questa macchina dal garage virtuale?</string>
     <string name="Login_session_expired">Sessione di accesso scaduta. Effettua nuovamente l accesso per continuare</string>
     <string name="onResponseCode500">onResponse: errore nel codice 500 -</string>
-    <string name="Servicedeletesuccessfully"> Servizio eliminato con successo !!!</string>
     <string name="Successfully_addedProduct_to_wishlist"> Aggiunto con successo questo prodotto alla lista dei desideri</string>
     <string name="SuccessfullyaddedthisWorkshopfavorite">Aggiunto con successo questo seminario ai preferiti</string>
 
@@ -574,9 +470,6 @@
 
 
     <string name="postal_code">codice postale</string>
-    <string name="Home">Casa</string>
-    <string name="Office"> Ufficio</string>
-    <string name="Cardeletedfromvirtualgarage">Auto cancellata dal garage virtuale</string>
     <string name="Car">Auto</string>
     <string name="Wheel_Quad_tyre"> Pneumatico a 2 ruote / quad</string>
     <string name="Off_road_tyre"> Pneumatico fuoristrada</string>
@@ -584,22 +477,16 @@
     <string name="All">Tutti</string>
     <string name="Connection_Error">Errore di connessione</string>
     <string name="Something_went_wrong_Please_try_again">Qualcosa è andato storto. Per favore riprova</string>
-    <string name="data_fetched"> I dati non possono essere recuperati!</string>
 
     <string name="productRemoved_formWishList"> Questo prodotto è stato rimosso dalla lista dei desideri</string>
     <string name="WorkshopRemovedfromfavorite">Til suo Officine Rimosso dai preferiti</string>
     <string name="ContactAddSuccessFully">Aggiunto numero di cellulare con successo.</string>
     <string name="ContactUpdateSuccessFully">Contatta Update SuccessFully</string>
     <string name="ContactDeletedSuccessFully">Contatta Eliminato SuccessFully</string>
-    <string name="Searchingproductnotfound">Ricerca prodotto non trovato</string>
-    <string name="Failedtofetchuserdata">Impossibile recuperare i dati utente</string>
-    <string name="NoUPIappfoundpleaseinstallonetocontinue">Nessuna app UPI trovata, installane una per continuare</string>
     <string name="Failed"> Impossibile!</string>
-    <string name="ReferralCodeCopied">Codice di riferimento copiato</string>
     <string name="Noapplicationcanhandlethisrequest">Nessuna applicazione può gestire questa richiesta.</string>
     <string name="PriceNotSpecified">Prezzo non specificato</string>
     <string name="CallPermissionDenied">Autorizzazione di chiamata negata !!</string>
-    <string name="Timeout">Tempo scaduto</string>
     <string name="TheInternetConnectionAppearstobeoffline">La connessione Internet sembra essere offline</string>
     <string name="NoItemFound">Nessun articolo trovato!</string>
     <string name="TrackingIdnotFound"> ID di monitoraggio non trovato</string>
@@ -640,17 +527,13 @@
     <string name="PleasedeleteOutofStockorExpiredservices">Elimina i servizi esauriti o scaduti</string>
     <string name="Keywordcleared"> Parola chiave cancellata</string>
     <string name="Cannotclearsearchkeywords">Impossibile cancellare le parole chiave di ricerca</string>
-    <string name="AccountDeletedSuccessfully">Account eliminato correttamente</string>
     <string name="Cannotloadsubgroups">Impossibile caricare i sottogruppi</string>
-    <string name="Enterkeywordwithminimumfourcharacters">Inserisci una parola chiave con almeno 4 caratteri</string>
     <string name="SelectAction">Seleziona azione</string>
     <string name="Selectphotofromgallery">Seleziona la foto dalla galleria</string>
     <string name="Capturephotofromcamera">Scatta foto dalla fotocamera</string>
     <string name="PermissionDenied">Permesso negato</string>
     <string name="iva_inc_22Percentage"> iva inc. %s</string>
     <string name="SearchProductNotFound">Cerca prodotto non trovato</string>
-    <string name="Failed_to_load_Image">Impossibile caricare l immagine</string>
-    <string name="Failed_to_load_Data">Caricamento dei dati non riuscito</string>
     <string name="id_is_required">ID è richiesto !!</string>
     <string name="Filter_Workshops">Officine sui filtro</string>
     <string name="are_you_sure_to_book_this_slot">Sei sicuro di prenotare per questo orario?</string>
@@ -658,7 +541,6 @@
     <string name="chat_online">Ticket</string>
     <string name="Email">E-mail</string>
     <string name="FAQs">Domande frequenti</string>
-    <string name="permission_Denied">Permesso negato</string>
     <string name="phoneNo">3386450233</string>
     <string name="emailAddress"> info@officinetop.com</string>
 
@@ -667,7 +549,6 @@
     <string name="cart_items">Carrello Articoli</string>
     <string name="Conditions">Condizioni d uso</string>
     <string name="and">e</string>
-    <string name="Add">Inserisci</string>
     <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registrato correttamente, l link di verifica è stato inviato alla tua mail, confermala per attivare l’account</string>
     <string name="Add_address">Aggiungi indirizzo</string>
     <string name="Add_mobile_number">Aggiungi numero di cellulare</string>

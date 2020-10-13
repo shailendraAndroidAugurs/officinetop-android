@@ -30,8 +30,8 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tyre_list.*
+import kotlinx.android.synthetic.main.dialog_rating_tyrefilter.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
-import kotlinx.android.synthetic.main.dialog_tyre_filter.*
 import kotlinx.android.synthetic.main.dialog_tyre_filter_category.*
 import kotlinx.android.synthetic.main.dialog_tyre_filter_subcategory.*
 import kotlinx.android.synthetic.main.include_toolbar.*

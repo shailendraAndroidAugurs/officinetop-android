@@ -69,11 +69,11 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
     fun addLoading() {
         isLoadingVisible = true
-        listItems.add(Models.TyreDetailItem("", "", "", "", "", "", "", "",
-                "", "", 0, "", null, null, 0, "", "", "",
-                "", "", "", "", "", "", "", "", "", "",
-                "", "", "", "", "", "", 0, "", "", "", 0
-                , "", "", "", "", "", "", 0, "", "", "", "", "", "", "", "", "", null, "", "", null, "", "Y","","",null))
+        listItems.add(Models.TyreDetailItem("", "", "", "", 0, "", null, null,
+                "", "", "", "", "0", "0", "0", "", "", "",
+                "", "", "", "", "", "", 0, "", "", "",
+                "", "", null, "", "", null, "0", "Y", "", "", null
+                , ""))
 
     }
 

@@ -81,27 +81,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
         when (item?.itemId) {
             android.R.id.home -> finish()
-            R.id.item_home_options -> {
-                val menuBuilder = MenuBuilder(this)
-                val menuInflater = MenuInflater(this)
-                menuInflater.inflate(R.menu.menu_navigation_options, menuBuilder)
 
-                val menuPopUpHelper = MenuPopupHelper(this, menuBuilder, findViewById(R.id.item_home_options))
-                menuPopUpHelper.setForceShowIcon(true)
-
-                menuBuilder.setCallback(object : MenuBuilder.Callback {
-                    override fun onMenuItemSelected(menu: MenuBuilder, item: MenuItem): Boolean {
-                        startActivity(intentFor<HomeActivity>("fragmentID" to item.itemId).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
-                        finishAffinity()
-
-                        return true
-                    }
-
-                    override fun onMenuModeChange(menu: MenuBuilder) {}
-                })
-
-                menuPopUpHelper.show()
-            }
         }
         return super.onOptionsItemSelected(item)
     }

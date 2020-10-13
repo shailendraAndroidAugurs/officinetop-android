@@ -67,7 +67,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(
                     Constant.Path.productId to selectedProductID.toString(),
-                    Constant.Path.type to "1", Constant.Path.sellerId to detail?.usersId, Constant.Path.ProductOrWorkshopName to detail?.descrizione.takeIf { !it.isNullOrEmpty() }
+                    Constant.Path.type to "1", Constant.Path.sellerId to detail?.usersId, Constant.Path.ProductOrWorkshopName to detail?.Productdescription.takeIf { !it.isNullOrEmpty() }
                     , Constant.Path.productType to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""))
         }
 
@@ -160,7 +160,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 cartItem.finalPrice = cartItem.price * cartItem.quantity
                 try {
-                    addToCartProducts(this,selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
+                    addToCartProducts(this, selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
                             if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
 
                             cartItem.description!!, detail!!.usersId)
@@ -216,7 +216,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 wish_list = "1"
-                                logAddToWishlistEvent(this,detail?.productName!!,detail?.id.toString(),"1","USD",if(!detail?.sellerPrice.isNullOrBlank())detail?.sellerPrice?.toDouble()!! else 0.0)
+                                logAddToWishlistEvent(this, detail?.productName!!, detail?.id.toString(), "1", "USD", if (!detail?.sellerPrice.isNullOrBlank()) detail?.sellerPrice?.toDouble()!! else 0.0)
 
 
                                 showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))

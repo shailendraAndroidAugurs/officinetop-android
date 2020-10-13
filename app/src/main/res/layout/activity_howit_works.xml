@@ -36,7 +36,6 @@
             android:textStyle="bold"
             android:text="@string/participation_method"/>
         <TextView
-            android:id="@+id/text_participation_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -55,7 +54,6 @@
             android:text="@string/release_method"/>
 
         <TextView
-            android:id="@+id/text_release_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"

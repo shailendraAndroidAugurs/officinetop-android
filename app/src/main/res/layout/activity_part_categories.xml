@@ -8,7 +8,6 @@
     <include layout="@layout/include_toolbar" />
 
     <LinearLayout
-        android:id="@+id/search_view_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_light"
@@ -29,7 +28,6 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/search_field_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,7 +40,6 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/search_btn"
             style="@style/TextViewWhite"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -63,7 +60,6 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ll_view_searchProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

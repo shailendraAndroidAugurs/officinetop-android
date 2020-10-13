@@ -121,7 +121,6 @@
                                 android:layout_centerVertical="true"
                                 android:visibility="visible"
                                 android:layout_marginLeft="@dimen/_8sdp"
-                                android:id="@+id/ll_Product_prices"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
 

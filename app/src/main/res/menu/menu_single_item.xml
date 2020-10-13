@@ -4,7 +4,6 @@
 
 
     <item
-        android:id="@+id/item_done"
         android:title="@string/done"
         app:showAsAction="always" />
 

@@ -12,7 +12,7 @@ import com.officinetop.officine.News.WebViewClientImpl
 
 import com.officinetop.officine.R
 import kotlinx.android.synthetic.main.fragment_guide.view.*
-import kotlinx.android.synthetic.main.fragment_videos.*
+
 
 
 class VideosFragment : Fragment() {

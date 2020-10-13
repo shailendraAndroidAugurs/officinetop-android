@@ -56,7 +56,6 @@
 
                 <EditText
                     android:visibility="gone"
-                    android:id="@+id/edt_entered_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -70,7 +69,6 @@
 
                 <EditText
                     android:visibility="gone"
-                    android:id="@+id/edt_entered_aprtment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -83,7 +81,6 @@
                     android:importantForAutofill="no" />
                 <EditText
                     android:visibility="gone"
-                    android:id="@+id/edt_entered_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -96,7 +93,6 @@
                     android:importantForAutofill="no" />
                 <EditText
                     android:visibility="gone"
-                    android:id="@+id/edt_entered_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

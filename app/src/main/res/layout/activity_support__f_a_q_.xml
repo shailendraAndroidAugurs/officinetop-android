@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".Support.Support_FAQ_Activity">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/ll_collapsed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:liftOnScroll="true">

@@ -127,7 +127,6 @@
                 android:weightSum="2">
 
                 <LinearLayout
-                    android:id="@+id/ll_list_items"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
@@ -157,8 +156,7 @@
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:src="@drawable/cam_icon"
-                        android:layout_gravity="center"
-                        android:id="@+id/capture_images"/>
+                        android:layout_gravity="center" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
