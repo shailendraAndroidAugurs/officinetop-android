@@ -57,7 +57,6 @@
                     android:text="@string/maker" />
 
                 <FrameLayout
-                    android:id="@+id/fl_maker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp">

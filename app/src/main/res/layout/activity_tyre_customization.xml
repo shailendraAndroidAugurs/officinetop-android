@@ -100,7 +100,6 @@
 
 
             <FrameLayout
-                android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
                 android:layout_marginTop="@dimen/_10sdp">
@@ -135,14 +134,12 @@
                     android:weightSum="3">
 
                     <TextView
-                        android:id="@+id/txt_width"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/width" />
 
                     <TextView
-                        android:id="@+id/txt_aspect_ratio"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
@@ -150,7 +147,6 @@
                         android:text="@string/aspect_ratio" />
 
                     <TextView
-                        android:id="@+id/txt_diameter"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"

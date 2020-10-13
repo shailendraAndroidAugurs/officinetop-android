@@ -30,7 +30,6 @@
                 android:text="@string/clear_selection" />
 
             <LinearLayout
-                android:id="@+id/dialog_price_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

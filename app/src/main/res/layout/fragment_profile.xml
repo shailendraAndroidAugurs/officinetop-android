@@ -206,7 +206,6 @@
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
-                            android:id="@+id/badge2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <RelativeLayout
@@ -223,7 +222,6 @@
                             <TextView
                                 android:visibility="invisible"
                                 android:padding="@dimen/_2sdp"
-                                android:id="@+id/badge_notification_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignRight="@id/relative_layout1"

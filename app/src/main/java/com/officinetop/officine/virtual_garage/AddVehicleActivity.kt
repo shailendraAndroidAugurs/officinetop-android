@@ -663,7 +663,7 @@ class AddVehicleActivity : BaseActivity() {
                         modelTitle.add(data.model + " [${data.modelYear}]")
 
                         if (isForEdit) {
-                            if (data.modelID == myCar?.carModel?.modelID && data.modelYear==myCar?.carModel?.modelYear) {
+                            if (data.modelID == myCar?.carModel?.modelID && data.modelYear == myCar?.carModel?.modelYear) {
                                 selectedIndex = i
                             }
                         }
@@ -1381,7 +1381,7 @@ class AddVehicleActivity : BaseActivity() {
 
                         try {
                             val cal = Calendar.getInstance()
-                            cal.set(Calendar.DAY_OF_YEAR, year)
+                            cal.set(Calendar.YEAR, year)
                             cal.set(Calendar.MONTH, month)
                             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
@@ -1465,7 +1465,7 @@ class AddVehicleActivity : BaseActivity() {
     private fun getFuelType(fuelAbbrevation: String): String {
 
         return when {
-            fuelAbbrevation=="D"-> "Diesel"
+            fuelAbbrevation == "D" -> "Diesel"
             fuelAbbrevation == "B" -> "Petrol"
             fuelAbbrevation == "G" -> "Gas"
             else -> "Other"

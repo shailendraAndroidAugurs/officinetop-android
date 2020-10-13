@@ -17,7 +17,6 @@
         android:text="@string/clear_selection"/>
 
     <LinearLayout
-        android:id="@+id/dialog_other_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -95,7 +94,6 @@
                 android:paddingBottom="5dp">
 
                 <RadioButton
-                    android:id="@+id/rb_distance_low"
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,7 +110,6 @@
 
 
                 <RadioButton
-                    android:id="@+id/rb_distance_high"
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,7 +124,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_for"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

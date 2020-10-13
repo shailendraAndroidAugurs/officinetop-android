@@ -114,7 +114,7 @@ class MaintenanceActivity : BaseActivity() {
                                 hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
                                         if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
                                         else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
-                                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
+                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
 
                             } else {
                                 hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
@@ -301,7 +301,7 @@ class MaintenanceActivity : BaseActivity() {
                         displayCoupons(carMaintenanceServiceList[position].couponList, "workshop_coupon", tv_CouponTitle, carMaintenanceServiceList[position])
                     }
                 } else if (view.tag == "103") {
-                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, Iv_favorite_mainPart, carMaintenanceServiceList[position].productId, 0, position, false)
+                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), carMaintenanceServiceList[position].productId, 0, position, false)
 
                 } else {
                     if (carMaintenanceServiceList[position].parts != null && carMaintenanceServiceList[position].parts.size > 0) {
@@ -464,10 +464,7 @@ class MaintenanceActivity : BaseActivity() {
                         if (carMaintenanceServiceList[selectservice_position].parts[position].couponList != null) {
                             carMaintenanceServiceList[selectservice_position].parts[position].couponList = carMaintenanceServiceList[selectservice_position].parts[position].couponList
 
-                        } else {
-
                         }
-
 
                         carMaintenanceServiceList[selectservice_position].productName = if (carMaintenanceServiceList[selectservice_position].parts[position].productName.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].productName
                         carMaintenanceServiceList[selectservice_position].rating_star = if (carMaintenanceServiceList[selectservice_position].parts[position].rating_star.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].rating_star
@@ -491,7 +488,7 @@ class MaintenanceActivity : BaseActivity() {
         })
 
         view.imageCross.setOnClickListener {
-            getCarMaintenance()
+            // getCarMaintenance()
             dialog!!.dismiss()
 
         }
@@ -519,19 +516,19 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 if (frompart) {
-                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId.toString(), "1", "USD", if (!carMaintenanceServiceList[selectservice_position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
-
                                     carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
+                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].parts[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice.toDouble() else 0.0)
+
 
                                 } else {
                                     val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId == ProductId }
                                     list[0].wishlist = "1"
-
+                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
+                                    carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 }
-                                carMaintenanceServiceList[selectservice_position].wishlist = "1"
+
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[position].seller_price.toDouble() else 0.0)
 
                             }
 
@@ -561,9 +558,10 @@ class MaintenanceActivity : BaseActivity() {
                                 } else {
                                     val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId == ProductId }
                                     list[0].wishlist = "0"
+                                    carMaintenanceServiceList[selectservice_position].wishlist = "0"
 
                                 }
-                                carMaintenanceServiceList[selectservice_position].wishlist = "0"
+
                                 showInfoDialog(getString(R.string.productRemoved_formWishList))
 
                             }

@@ -7,13 +7,9 @@
     <dimen name="image_height">160dp</dimen>
 
     <dimen name="image_best_selling">100dp</dimen>
-    <dimen name="list_height">120dp</dimen>
-
-    <dimen name="wishlist_width">30dp</dimen>
 
     <!-- spare parts -->
     <dimen name="category_margin">10dp</dimen>
-    <dimen name="category_margin_large">20dp</dimen>
     <dimen name="category_item_padding">10dp</dimen>
     <dimen name="category_padding">5dp</dimen>
 
@@ -22,14 +18,9 @@
     <dimen name="category_list_width">110dp</dimen>
 
     <dimen name="n3_category_img_width">60dp</dimen>
-    <dimen name="n3_grid_height">300dp</dimen>
     <dimen name="tyre_measurement_list_height">230dp</dimen>
 
-    <dimen name="brand_image_height">20dp</dimen>
+    <dimen name="brand_image_height">30dp</dimen>
 
-    <dimen name="season_icon_width">25dp</dimen>
-    <dimen name="tyre_icon_width">30dp</dimen>
-    <dimen name="tyre_icon_width_large">40dp</dimen>
     <dimen name="tyre_icon_margin">8dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 </resources>

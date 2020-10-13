@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.officinetop.officine.R
 import io.blackbox_vision.wheelview.view.WheelView
 import kotlinx.android.synthetic.main.dialog_wheel_timepicker.*
-import kotlinx.android.synthetic.main.layout_spinner_textview.view.*
+
 import java.lang.IllegalStateException
 import kotlin.random.Random
 

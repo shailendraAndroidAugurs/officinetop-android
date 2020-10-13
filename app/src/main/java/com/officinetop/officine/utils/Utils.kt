@@ -400,7 +400,7 @@ fun Context?.createImageSliderDialog(imageUrl: String) {
 
 fun Context.movetologinPage(context: Context?) {
     startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-   var activity= context as Activity
+    var activity = context as Activity
     activity.finishAffinity()
 }
 

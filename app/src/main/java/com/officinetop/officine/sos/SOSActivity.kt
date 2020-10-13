@@ -326,10 +326,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         //check also by status code , if 1 then booking inserted .
                                         if (body.has("status_code") && body.get("status_code") != null) {
                                             if (body.get("status_code") == 1) {
-                                                val serviceModel: Models.ServiceBookingModel = Models.ServiceBookingModel(0, getCurrentTime(), "", 0.0, "SOS Service", Gson().toJson(items).toString(), selectedFormattedDate)
-                                                val cartItem = Models.CartItem(serviceModel = serviceModel)
-                                                cartItem.type = Constant.type_workshop
-                                                setCartItem(cartItem)
+
                                                 startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
                                             }
                                         }
