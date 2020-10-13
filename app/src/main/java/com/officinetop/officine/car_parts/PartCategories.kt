@@ -52,9 +52,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     lateinit var partCategoryAdapter: PartCategoryAdapter
     lateinit var subCategoryAdapter: SubPartCategoryAdapter
     private var previousExpandedGroupPosition: Int = 0
-    lateinit var myadpter: RecyclerView.Adapter<Holder>
-    var stringlist: ArrayList<String> = ArrayList<String>()
-    val filteredList = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
@@ -112,46 +109,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             }
         }
-
-        search_product.threshold = 2
         search_product.addTextChangedListener(textWatcher)
-        search_product.onItemClickListener = onItemClickListener
-        /*search_product.setOnDismissListener(
-                object : AutoCompleteTextView.OnDismissListener {
-                    override fun onDismiss() {
-                        ll_view_searchProduct.visibility = View.GONE
-                        containerFor_search.visibility = View.VISIBLE
-                    }
-
-                })*/
-        /*myadpter = object : RecyclerView.Adapter<Holder>() {
-
-            override fun getItemCount(): Int {
-                return filteredList.size
-            }
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                return Holder(layoutInflater.inflate(R.layout.item_checkbox, parent, false))
-            }
-
-            override fun onBindViewHolder(holder: Holder, position: Int) {
-                holder.itemView.item_checkbox_text.setText(filteredList[position])
-            }
-
-        }
-
-
-        ll_view_searchProduct.adapter = myadpter*/
-
-
-        /* search_btn.setOnClickListener {
-             if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
-                 searchStoreQuery(search_product.text.toString())
-             else
-                 showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))
-         }*/
-
 
     }
 
@@ -287,7 +245,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             containerFor_search.visibility = View.GONE
         }
     }
-
+//text watcher of edit text search
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
@@ -296,9 +254,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            searchPart(s.toString())
-
+            // send search value to fragment for filter search of discovery or history
+            searchLitener.SearchProduct(s.toString())
 
         }
 
@@ -309,7 +266,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
-           // ll_view_searchProduct.visibility = View.GONE
             supportFragmentManager.popBackStackImmediate()
 
         } else {
@@ -321,74 +277,5 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     fun setActivityListener(activityListener: SearchFilterInterface) {
         this.searchLitener = activityListener; }
 
-
-    private fun searchPart(searchProductString: String) {
-
-
-        /*  var progLanguages = arrayOf("Java", "aa", "aaa", "aaaa", "aaaaa", "adfgdfgdg", "aaassssss", "C", "C++", ".Net", "PHP", "Perl", "Objective-c", "Small-Talk", "C#", "Ruby", "ASP", "ASP .NET")
-
-          var arrayAdapter = ArrayAdapter(this@PartCategories, android.R.layout.select_dialog_item, progLanguages);
-          //Used to specify minimum number of
-          //characters the user has to type in order to display the drop down hint.
-          search_product.setThreshold(1);
-          //Setting adapter
-          search_product.setAdapter(arrayAdapter);*/
-
-        RetrofitClient.client.getSearchPartAutocomplete(searchProductString, selectedVehicleVersionID).genericAPICall { networkException, response ->
-
-            val body = response?.body()?.string()
-            if (!body.isNullOrBlank()) {
-
-                val jsonbody = JSONObject(body)
-
-                if (jsonbody.has("data_set") && !jsonbody.getString("data_set").isNullOrBlank() && !jsonbody.getString("data_set").equals("null")) {
-
-                    val gson = GsonBuilder().create()
-                    // stringlist.clear()
-                    stringlist = gson.fromJson(jsonbody.getString("data_set").toString(), kotlin.Array<String>::class.java).toCollection(java.util.ArrayList<String>())
-                /*  if(stringlist.size!=0){
-                      ll_view_searchProduct.visibility = View.VISIBLE
-                      containerFor_search.visibility = View.GONE
-                  }else{
-                      ll_view_searchProduct.visibility = View.GONE
-                      containerFor_search.visibility = View.VISIBLE
-                  }
-
-                    if (searchProductString == null || searchProductString.length == 0) {
-                        filteredList.clear()
-                        filteredList.addAll(stringlist);
-                    } else {
-                        filteredList.clear()
-                        val filterPattern = searchProductString.toString().toLowerCase().trim();
-                        for (item in stringlist) {
-                            if (item.toLowerCase().contains(filterPattern)) {
-                                filteredList.add(item);
-                            }
-                        }
-                    }
-
-                    myadpter.notifyDataSetChanged()*/
-
-
-                    runOnUiThread(Runnable {
-                        run {
-
-                            val adaptorAutoComplete = ArrayAdapter<String>(this@PartCategories, android.R.layout.simple_dropdown_item_1line, stringlist)
-                            search_product.setAdapter(adaptorAutoComplete)
-                            adaptorAutoComplete.notifyDataSetChanged()
-                        }
-                    })
-
-
-                }
-            }
-
-
-        }
-    }
-
-    private val onItemClickListener = AdapterView.OnItemClickListener { p0, p1, p2, p3 -> searchStoreQuery(stringlist[p2].split(" ")[0]) }
-
-    class Holder(view: View) : RecyclerView.ViewHolder(view)
 
 }

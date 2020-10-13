@@ -14,7 +14,7 @@
         android:background="@color/gray_light"
         android:padding="@dimen/category_margin">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/search_product"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
