@@ -162,10 +162,8 @@ object Models {
 
     data class ServiceCategory(
             val id: Int?,
-
             val category_name: String?,
             val description: String?,
-
             val cat_image_url: String?,
             val services_price: String?,
             @SerializedName("vat_percentage_set_by_admin")
@@ -179,7 +177,10 @@ object Models {
     data class ItemImages(
 
             @SerializedName("image_name")
-            var imageName: String = "")
+            var imageName: String = "",
+            @SerializedName("image_url")
+            var image_url: String = ""
+    ) : Serializable
 
 
     //"date":"2019-06-07","price":100
@@ -428,94 +429,23 @@ object Models {
             var SelectedTyreCouponId: String? = ""
 
     ) : Serializable
-/*------------------------------ Done customize -------------------------*/
+
 
     data class SpecialCondition(
-            @SerializedName("all_services")
-            val allServices: String = "",
-            @SerializedName("amount_percentage")
-            val amountPercentage: String = "",
-            @SerializedName("car_size")
-            val carSize: String = "",
-            @SerializedName("cars_id")
-            val carsId: String = "",
-            @SerializedName("cars_name")
-            val carsName: String = "",
-            @SerializedName("category_id")
-            val categoryId: String = "",
-            @SerializedName("created_at")
-            val createdAt: String = "",
-            @SerializedName("deleted_at")
-            val deletedAt: String = "",
-            @SerializedName("discount_type")
-            val discountType: String = "",
-            @SerializedName("end_hour")
-            val endHour: String = "",
-            @SerializedName("expiry_date")
-            val expiryDate: String = "",
             @SerializedName("id")
             val id: String = "",
             @SerializedName("item")
-            val item: String = "",
-            @SerializedName("main_category_id")
-            val mainCategoryId: String = "",
-            @SerializedName("makers")
-            val makers: String = "",
-            @SerializedName("max_appointement")
-            val maxAppointement: String = "",
-            @SerializedName("models")
-            val models: String = "",
-            @SerializedName("operation_type")
-            val operationType: String = "",
-            @SerializedName("season_type")
-            val seasonType: String = "",
-            @SerializedName("select_type")
-            val selectType: String = "",
-            @SerializedName("start_date")
-            val startDate: String = "",
-            @SerializedName("start_hour")
-            val startHour: String = "",
-            @SerializedName("status")
-            val status: String = "",
-            @SerializedName("updated_at")
-            val updatedAt: String = "",
-            @SerializedName("users_id")
-            val usersId: String = "",
-            @SerializedName("vehicle_type")
-            val vehicleType: String = "",
-            @SerializedName("versions")
-            val versions: String = "",
-            @SerializedName("weight_type")
-            val weightType: String = "",
-            @SerializedName("workshop_id")
-            val workshopId: String = ""
+            val item: String = ""
     ) : Serializable
 
 
     /*quotes main category*/
     data class MainCategory(
-            @SerializedName("created_at")
-            val createdAt: String = "",
-            @SerializedName("deleted_at")
-            val deletedAt: String = "",
-            @SerializedName("description")
-            val description: String = "",
             @SerializedName("id")
             val id: String = "",
             @SerializedName("main_cat_name")
-            val mainCatName: String = "",
-            @SerializedName("priority")
-            val priority: String = "",
-            @SerializedName("private")
-            val private: String = "",
-            @SerializedName("status")
-            val status: String = "",
-            @SerializedName("type")
-            val type: String = "",
-            @SerializedName("type_status")
-            val typeStatus: String = "",
-            @SerializedName("updated_at")
-            val updatedAt: String = ""
+            val mainCatName: String = ""
+
     ) : ListItemViewModel()
 
     data class CompCategory(
@@ -534,42 +464,21 @@ object Models {
             val frontRear: String = "",
             @SerializedName("id")
             var id: String = "",
-            @SerializedName("id_info")
-            val idInfo: String = "",
+
             @SerializedName("item")
             val item: String = "",
-            @SerializedName("item_id")
-            val itemId: String = "",
-            @SerializedName("items_repairs_time_ids_id")
-            val itemsRepairsTimeIdsId: String = "",
-            @SerializedName("k_time")
-            val kTime: String = "",
-            @SerializedName("language")
-            val language: String = "",
             @SerializedName("left_right")
             val leftRight: String = "",
             @SerializedName("our_description")
             val ourDescription: String = "",
-            @SerializedName("our_time")
-            val ourTime: String = "",
             @SerializedName("part_list")
             var parts: ArrayList<Part>,
-            @SerializedName("priority")
-            val priority: String = "",
-            @SerializedName("status")
-            val status: String = "",
-            @SerializedName("time_hrs")
-            val timeHrs: String = "",
             @SerializedName("type")
             val type: String = "",
             @SerializedName("users_id")
             var usersId: String = "",
             @SerializedName("price")
             val price: String = "",
-            @SerializedName("min_price")
-            val minPrice: String = "",
-            @SerializedName("max_price")
-            val maxPrice: String = "",
             @SerializedName("listino")
             var listino: String = "",
             @SerializedName("descrizione")
@@ -606,103 +515,33 @@ object Models {
             var productName: String,
             @SerializedName("p_description")
             var Productdescription: String,
-            @SerializedName("assemble_kromeda_time")
-            val assembleKromedaTime: String = "",
-            @SerializedName("assemble_status")
-            val assembleStatus: String = "",
-            @SerializedName("assemble_time")
-            val assembleTime: String = "",
-            @SerializedName("bar_code")
-            val barCode: String = "",
-            @SerializedName("CodiceArticolo")
-            val codiceArticolo: String = "",
-            @SerializedName("CodiceListino")
-            val codiceListino: String = "",
-            @SerializedName("created_at")
-            val createdAt: String = "",
-            @SerializedName("cs")
-            val cs: String = "",
-            @SerializedName("deleted_at")
-            val deletedAt: String = "",
-
             @SerializedName("descrizione")
             val descrizione: String = "",
-            @SerializedName("F")
-            val f: String = "",
+
             @SerializedName("for_pair")
             val forPair: String = "",
-            @SerializedName("Foto")
-            val foto: String = "",
+
             @SerializedName("id")
             val id: String = "",
-            @SerializedName("kromeda_description")
-            val kromedaDescription: String = "",
-            @SerializedName("kromeda_products_id")
-            val kromedaProductsId: String = "",
             @SerializedName("listino")
             val listino: String = "",
-            @SerializedName("meta_key_title")
-            val metaKeyTitle: String = "",
-            @SerializedName("meta_key_words")
-            val metaKeyWords: String = "",
-            @SerializedName("minimum_quantity")
-            val minimumQuantity: String = "",
-            @SerializedName("n")
-            val n: String = "",
-            @SerializedName("our_products_description")
-            val ourProductsDescription: String = "",
-            @SerializedName("out_of_stock_status")
-            val outOfStockStatus: String = "",
             @SerializedName("price")
             val price: String = "",
-            @SerializedName("products_groups_group_id")
-            val productsGroupsGroupId: String = "",
-            @SerializedName("products_groups_id")
-            val productsGroupsId: String = "",
-            @SerializedName("products_groups_items_id")
-            val productsGroupsItemsId: String = "",
-            @SerializedName("products_groups_items_item_id")
-            val productsGroupsItemsItemId: String = "",
-            @SerializedName("products_item_numbers_id")
-            val productsItemNumbersId: String = "",
-            @SerializedName("products_json")
-            val productsJson: String = "",
-            @SerializedName("products_name")
-            val productsName: String = "",
-            @SerializedName("products_quantiuty")
-            val productsQuantiuty: String = "",
-            @SerializedName("products_status")
-            val productsStatus: String = "",
-            @SerializedName("S")
-            val s: String = "",
+
+
             @SerializedName("seller_price")
             val sellerPrice: String,
-            @SerializedName("substract_stock")
-            val substractStock: String,
-            @SerializedName("tax")
-            val tax: String = "",
-            @SerializedName("tax_value")
-            val taxValue: String = "",
-            @SerializedName("tipo")
-            val tipo: String = "",
-            @SerializedName("type")
-            val type: String = "",
-            @SerializedName("unique_id")
-            val uniqueId: String = "",
-            @SerializedName("unit")
-            val unit: String = "",
+
             @SerializedName("product_image_url")
             var product_image_url: String = "",
-            @SerializedName("updated_at")
-            val updatedAt: String = "",
+
             @SerializedName("users_id")
             val usersId: String = "",
-            @SerializedName("v")
-            val v: String = "",
-            @SerializedName("image_name")
-            val imageName: String?,
+
+
             @SerializedName("image_url")
             val imageUrl: String?,
+
             @SerializedName("product_id")
             val productId: String = "",
             @SerializedName("product_type")
@@ -721,7 +560,6 @@ object Models {
             @SerializedName("coupon_list")
             var couponList: ArrayList<Coupon>,
 
-
             @SerializedName("mot_type")
             val mot_type: String = "",
             @SerializedName("version_id")
@@ -738,227 +576,46 @@ object Models {
     ) : ListItemViewModel()
 
 
-    data class AllCoupons(
-            @SerializedName("amount")
-            val amount: Int,
-            @SerializedName("avail_close_date")
-            val availCloseDate: String,
-            @SerializedName("avail_date")
-            val availDate: String,
-            @SerializedName("closed_date")
-            val closedDate: String,
-            @SerializedName("coupon_image")
-            val couponImage: Any?,
-            @SerializedName("coupon_quantity")
-            val couponQuantity: Int,
-            @SerializedName("coupon_title")
-            val couponTitle: String,
-            @SerializedName("coupon_type")
-            val couponType: Int,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("discount_condition")
-            val discountCondition: Int,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("launching_date")
-            val launchingDate: String,
-            @SerializedName("offer_type")
-            val offerType: Int,
-            @SerializedName("per_user_allot")
-            val perUserAllot: Int,
-            @SerializedName("status")
-            val status: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("users_in_group")
-            val usersInGroup: Any?
-    ) : ListItemViewModel()
-
-    data class CarServicesSpecification(val service_id: String, val price: String, val hourly_rate: String, val calculate_price: String,
-                                        val average_time: String)
-
-
-    data class ModelProductWorkshopList(
-            @SerializedName("about_business")
-            val aboutBusiness: String,
-            @SerializedName("about_services")
-            val aboutServices: String,
-            @SerializedName("available_status")
-            val availableStatus: Int,
-            @SerializedName("business_name")
-            val businessName: String,
-            @SerializedName("car_size")
-            val carSize: String,
-            @SerializedName("category_id")
-            val categoryId: String,
-            @SerializedName("company_name")
-            val companyName: String,
-            @SerializedName("coupon_list")
-            val couponList: List<Coupon>,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("days_id")
-            val daysId: Int,
-            @SerializedName("f_name")
-            val fName: String,
-            @SerializedName("hourly_rate")
-            val hourlyRate: String,
-            @SerializedName("is_deleted_at")
-            val isDeletedAt: Any?,
-            @SerializedName("l_name")
-            val lName: String,
-            @SerializedName("max_appointment")
-            val maxAppointment: Int,
-            @SerializedName("max_price")
-            val maxPrice: String,
-            @SerializedName("min_price")
-            val minPrice: String,
-            @SerializedName("mobile_number")
-            val mobileNumber: Long,
-            @SerializedName("owner_name")
-            val ownerName: String,
-            @SerializedName("package_list")
-            val packageList: Any?,
-            @SerializedName("products_id")
-            val productsId: Any?,
-            @SerializedName("profile_image")
-            val profileImage: String,
-            @SerializedName("profile_image_url")
-            val profileImageUrl: String,
-            @SerializedName("rating")
-            val rating: Rating,
-            @SerializedName("rating_count")
-            val ratingCount: Int,
-            @SerializedName("rating_star")
-            val ratingStar: Any?,
-            @SerializedName("registered_office")
-            val registeredOffice: String,
-            @SerializedName("service_average_time")
-            val serviceAverageTime: String,
-            @SerializedName("service_images")
-            val serviceImages: Any?,
-            @SerializedName("services_price")
-            val servicesPrice: String,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int
-    ) : ListItemViewModel()
-
     data class Coupon(
             @SerializedName("amount")
-            var amount: Any?,
-            @SerializedName("avail_close_date")
-            val availCloseDate: String,
-            @SerializedName("avail_date")
-            val availDate: String,
-            @SerializedName("closed_date")
-            val closedDate: String,
+            var amount: String?,
             @SerializedName("coupon_image")
             val couponImage: Any?,
             @SerializedName("coupon_quantity")
-            var couponQuantity: Any?,
+            var couponQuantity: String?,
             @SerializedName("coupon_title")
             var couponTitle: String,
             @SerializedName("coupon_type")
             val couponType: Int,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("discount_condition")
-            val discountCondition: Int,
             @SerializedName("id")
             var id: String,
-            @SerializedName("launching_date")
-            val launchingDate: String,
             @SerializedName("offer_type")
-            val offerType: String,
-            @SerializedName("per_user_allot")
-            val perUserAllot: Int,
-            @SerializedName("service_category_id")
-            val serviceCategoryId: Any?,
-            @SerializedName("services_id")
-            val servicesId: Int?,
-            @SerializedName("status")
-            val status: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: String,
-            @SerializedName("users_in_group")
-            val usersInGroup: Any?,
-            @SerializedName("workshop_list")
-            val workshopList: String
+            val offerType: String
     ) : ListItemViewModel()
 
 
     data class MotServicesList(
-            @SerializedName("additional")
-            val additional: Any?,
-            @SerializedName("automatic_transmission_time_hrs")
-            val automaticTransmissionTimeHrs: Any?,
-            @SerializedName("car_makers")
-            val carMakers: String,
-            @SerializedName("car_models")
-            val carModels: String,
-            @SerializedName("car_version")
-            val carVersion: String,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("extra_time_description")
-            val extraTimeDescription: Any?,
-            @SerializedName("extra_time_hrs")
-            val extraTimeHrs: Int,
             @SerializedName("id")
             val id: Int,
             @SerializedName("interval_description_for_kms")
             val intervalDescriptionForKms: String,
-            @SerializedName("language")
-            val language: Any?,
-            @SerializedName("month")
-            val month: Int,
+
             @SerializedName("service_advisory_message")
             val serviceAdvisoryMessage: Any?,
             @SerializedName("service_description")
             val serviceDescription: String,
             @SerializedName("service_interval_id")
             val serviceIntervalId: Any?,
-            @SerializedName("service_km")
-            val serviceKm: String? = "",
+
             @SerializedName("service_kms")
             val serviceKms: String,
-            @SerializedName("service_months")
-            val serviceMonths: Any?,
+
             @SerializedName("service_name")
             val serviceName: String,
-            @SerializedName("sort_order")
-            val sortOrder: Any?,
-            @SerializedName("standard_service_time_hrs")
-            val standardServiceTimeHrs: Any?,
+
             @SerializedName("type")
             val type: Int,
-            @SerializedName("type_status")
-            val typeStatus: String,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Any?,
-            @SerializedName("version_id")
-            val versionId: Any?,
-            @SerializedName("version_service_schedules_id")
-            val versionServiceSchedulesId: Any?,
+
             @SerializedName("min_price")
             val min_price: String?
     ) : ListItemViewModel()
@@ -976,213 +633,29 @@ object Models {
     ) : Serializable
 
     data class Data(
-            @SerializedName("additional")
-            val additional: String,
-            @SerializedName("automatic_transmission_time_hrs")
-            val automaticTransmissionTimeHrs: Int,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("extra_time_description")
-            val extraTimeDescription: String,
-            @SerializedName("extra_time_hrs")
-            val extraTimeHrs: Int,
-            @SerializedName("id")
-            val id: Int,
+
             @SerializedName("interval_description_for_kms")
             val intervalDescriptionForKms: String,
             @SerializedName("k_partList")
             val kPartList: List<Part>,
-            @SerializedName("language")
-            val language: String,
             @SerializedName("operations")
             val operations: List<Operation>,
-            @SerializedName("service_advisory_message")
-            val serviceAdvisoryMessage: String,
-            @SerializedName("service_interval_id")
-            val serviceIntervalId: Int,
-            @SerializedName("service_kms")
-            val serviceKms: Int,
-            @SerializedName("service_months")
-            val serviceMonths: Int,
-            @SerializedName("sort_order")
-            val sortOrder: Int,
-            @SerializedName("standard_service_time_hrs")
-            val standardServiceTimeHrs: Double,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("version_id")
-            val versionId: String,
+
+
             @SerializedName("service_average_time")
-            var serviceaveragetime: String,
-            @SerializedName("version_service_schedules_id")
-            val versionServiceSchedulesId: Int
+            var serviceaveragetime: String
     )
 
-    data class KPart(
-            @SerializedName("assemble_kromeda_time")
-            val assembleKromedaTime: String = "",
-            @SerializedName("assemble_status")
-            val assembleStatus: String,
-            @SerializedName("assemble_time")
-            val assembleTime: String = "",
-            @SerializedName("bar_code")
-            val barCode: String = "",
-            @SerializedName("brand_image_url")
-            val brandImageUrl: String,
-            @SerializedName("CodiceArticolo")
-            val codiceArticolo: String,
-            @SerializedName("CodiceListino")
-            val codiceListino: String,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("cs")
-            val cs: String,
-            @SerializedName("deleted_at")
-            val deletedAt: String = "",
-            @SerializedName("descrizione")
-            val descrizione: String,
-            @SerializedName("F")
-            val f: String = "",
-            @SerializedName("for_pair")
-            val forPair: String = "",
-            @SerializedName("Foto")
-            val foto: String,
-            @SerializedName("id")
-            val id: String = "",
-            @SerializedName("kromeda_description")
-            val kromedaDescription: String,
-            @SerializedName("kromeda_products_id")
-            val kromedaProductsId: String,
-            @SerializedName("listino")
-            val listino: String,
-            @SerializedName("meta_key_title")
-            val metaKeyTitle: String = "",
-            @SerializedName("meta_key_words")
-            val metaKeyWords: String = "",
-            @SerializedName("minimum_quantity")
-            val minimumQuantity: String = "",
-            @SerializedName("n")
-            val n: String = "",
-            @SerializedName("our_products_description")
-            val ourProductsDescription: String = "",
-            @SerializedName("out_of_stock_status")
-            val outOfStockStatus: String,
-            @SerializedName("price")
-            val price: String,
-            @SerializedName("product_image_url")
-            val productImageUrl: String = "",
-            @SerializedName("products_groups_group_id")
-            val productsGroupsGroupId: String = "",
-            @SerializedName("products_groups_id")
-            val productsGroupsId: String = "",
-            @SerializedName("products_groups_items_id")
-            val productsGroupsItemsId: String = "",
-            @SerializedName("products_groups_items_item_id")
-            val productsGroupsItemsItemId: String = "",
-            @SerializedName("products_item_numbers_id")
-            val productsItemNumbersId: String = "",
-            @SerializedName("products_json")
-            val productsJson: Any?,
-            @SerializedName("products_name")
-            val productsName: String,
-            @SerializedName("products_quantiuty")
-            val productsQuantiuty: String = "",
-            @SerializedName("products_status")
-            val productsStatus: String = "",
-            @SerializedName("S")
-            val s: String = "",
-            @SerializedName("seller_price")
-            val sellerPrice: String = "",
-            @SerializedName("substract_stock")
-            val substractStock: String = "",
-            @SerializedName("tax")
-            val tax: String = "",
-            @SerializedName("tax_value")
-            val taxValue: String = "",
-            @SerializedName("tipo")
-            val tipo: String = "",
-            @SerializedName("type")
-            val type: String = "",
-            @SerializedName("unique_id")
-            val uniqueId: String = "",
-            @SerializedName("unit")
-            val unit: String = "",
-            @SerializedName("updated_at")
-            val updatedAt: String = "",
-            @SerializedName("users_id")
-            val usersId: String = "",
-            @SerializedName("v")
-            val v: String = ""
-    ) : ListItemViewModel()
-
-
-    data class BrandLogo(
-            @SerializedName("brand_name")
-            val brandName: String,
-            @SerializedName("brand_type")
-            val brandType: Int,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("id")
-            val id: Int,
-            @SerializedName("image")
-            val image: Any?,
-            @SerializedName("image_url")
-            val imageUrl: Any?,
-            @SerializedName("unique_id")
-            val uniqueId: String,
-            @SerializedName("updated_at")
-            val updatedAt: String
-    )
 
 
     data class Operation(
-            @SerializedName("ad_part_id")
-            val adPartId: String,
-            @SerializedName("at_additional_charge")
-            val atAdditionalCharge: String,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
             @SerializedName("group_name")
             val groupName: String,
-            @SerializedName("group_sequence")
-            val groupSequence: Int,
+
             @SerializedName("id")
             val id: Int,
-            @SerializedName("kr_parts_count")
-            val krPartsCount: String,
-            @SerializedName("language")
-            val language: String,
-            @SerializedName("operation_action")
-            val operationAction: String,
             @SerializedName("operation_description")
-            val operationDescription: String,
-            @SerializedName("operation_id")
-            val operationId: Int,
-            @SerializedName("part_description")
-            val partDescription: String,
-            @SerializedName("service_note")
-            val serviceNote: String,
-            @SerializedName("sort_sequence")
-            val sortSequence: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("version_service_schedules_id")
-            val versionServiceSchedulesId: Int,
-            @SerializedName("version_services_schedules_intervals_id")
-            val versionServicesSchedulesIntervalsId: Int
+            val operationDescription: String
     ) : ListItemViewModel()
 
 
@@ -1201,24 +674,19 @@ object Models {
             val id: String,
             @SerializedName("images")
             var images: List<FeedbackImage> = ArrayList(),
-            @SerializedName("is_deleted")
-            val isDeleted: String = "",
+
             @SerializedName("l_name")
             val lName: String = "",
             @SerializedName("no_of_people")
             val noOfPeople: String? = "",
-            @SerializedName("products_id")
-            val productsId: String = "",
+
             @SerializedName("rating")
             val rating: String = "",
             @SerializedName("seller_id")
             val sellerId: String = "",
             @SerializedName("service_id")
             val serviceId: String = "",
-            @SerializedName("status")
-            val status: String = "",
-            @SerializedName("updated_at")
-            val updatedAt: String = "",
+
             @SerializedName("users_id")
             val usersId: String = "",
             @SerializedName("workshop_id")
@@ -1248,48 +716,12 @@ object Models {
 
 
     data class FeedbackImage(
-            @SerializedName("category_id")
-            val categoryId: Any?,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
-            @SerializedName("feedback_id")
-            val feedbackId: Int,
-            @SerializedName("group_id")
-            val groupId: Any?,
-            @SerializedName("id")
-            val id: Int,
             @SerializedName("image_name")
             val imageName: String,
             @SerializedName("image_url")
             val imageUrl: String,
-            @SerializedName("main_category_id")
-            val mainCategoryId: Any?,
-            @SerializedName("primary_image")
-            val primaryImage: Any?,
-            @SerializedName("product_group_group_id")
-            val productGroupGroupId: Int,
-            @SerializedName("product_sub_group_group_id")
-            val productSubGroupGroupId: Any?,
-            @SerializedName("products_groups_items_id")
-            val productsGroupsItemsId: Int,
-            @SerializedName("products_groups_items_item_id")
-            val productsGroupsItemsItemId: Int,
-            @SerializedName("services_id")
-            val servicesId: Any?,
             @SerializedName("type")
-            val type: String,
-            @SerializedName("type_status")
-            val typeStatus: String?,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("user_details_id")
-            val userDetailsId: Any?,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("workshops_id")
-            val workshopsId: Int?
+            val type: String
     ) : ListItemViewModel()
 
 
@@ -1302,24 +734,19 @@ object Models {
             val address3: Any?,
             @SerializedName("address_type")
             val addressType: String?,
-            @SerializedName("business_details_id")
-            val businessDetailsId: Any?,
-            @SerializedName("city_id")
-            val cityId: Any?,
+
             @SerializedName("city_name")
             val cityName: String?,
             @SerializedName("country_id")
             val countryId: Any?,
             @SerializedName("country_name")
             val countryName: String?,
-            @SerializedName("created_at")
-            val createdAt: String,
+
             @SerializedName("distance")
             val distance: Any?,
             @SerializedName("id")
             val id: Int,
-            @SerializedName("is_deleted")
-            val isDeleted: Int,
+
             @SerializedName("landmark")
             val landmark: String?,
             @SerializedName("latitude")
@@ -1332,12 +759,7 @@ object Models {
             val stateName: String?,
             @SerializedName("status")
             val status: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("workshops_id")
-            val workshopsId: Any?,
+
             @SerializedName("zip_code")
             val zipCode: String?
 
@@ -1354,43 +776,22 @@ object Models {
 
 
     data class UserContact(
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: String?,
+
             @SerializedName("id")
             val id: Int,
             @SerializedName("mobile")
-            var mobile: String,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("workshops_id")
-            val workshopsId: Int?
+            var mobile: String
     ) : ListItemViewModel()
 
     data class UserDetail(
-            @SerializedName("company_name")
-            val companyName: Any?,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: Any?,
+
             @SerializedName("email")
             val email: String,
-            @SerializedName("email_verified_at")
-            val emailVerifiedAt: String,
+
             @SerializedName("f_name")
             val fName: String,
-            @SerializedName("for_news_letter")
-            val forNewsLetter: Int,
             @SerializedName("id")
             val id: Int,
-            @SerializedName("is_signed")
-            val isSigned: String,
-            @SerializedName("know_us")
-            val knowUs: Int,
             @SerializedName("l_name")
             val lName: String,
             @SerializedName("mobile_number")
@@ -1403,18 +804,6 @@ object Models {
             val provider: Any?,
             @SerializedName("provider_id")
             val providerId: Any?,
-            @SerializedName("remember_token")
-            val rememberToken: String,
-            @SerializedName("roll_id")
-            val rollId: Int,
-            @SerializedName("term_and_condition")
-            val termAndCondition: Int,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("user_name")
-            val userName: String,
-            @SerializedName("users_status")
-            val usersStatus: String,
             @SerializedName("own_referal_code")
             val ownreferalcode: String
 
@@ -1423,72 +812,41 @@ object Models {
 
 
     data class CartItemList(
-            @SerializedName("address_type")
-            val addressType: String?,
-            @SerializedName("courier_id")
-            val courierId: String?,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: String?,
             @SerializedName("id")
             val id: String,
 
             @SerializedName("order_id")
             val orderId: String,
 
-            @SerializedName("no_of_products")
-            val noOfProducts: String,
             @SerializedName("order_date")
             val orderDate: String,
-            @SerializedName("payment_mode")
-            val paymentMode: String?,
+
             @SerializedName("payment_status")
             val paymentStatus: String,
-            @SerializedName("seller_id")
-            val sellerId: String,
-            @SerializedName("order_invoice_status")
-            var InvoiceStatus: String,
+
+
 
             @SerializedName("service_product_description")
             val serviceProductDescription: List<ServiceProductDescription>,
-            @SerializedName("shipping_address_id")
-            val shippingAddressId: String?,
+
             @SerializedName("spare_product_description")
             val spareProductDescription: List<SpareProductDescription>,
             @SerializedName("status")
             val status: String,
-            @SerializedName("total_discount")
-            val totalDiscount: String,
-            @SerializedName("total_price")
-            val totalPrice: String,
-            @SerializedName("tracking_id")
-            val trackingId: String?,
-            @SerializedName("transaction_id")
-            val transactionId: String?,
+
             @SerializedName("tyre_product_description")
             val tyreProductDescription: List<TyreProductDescription>,
-            @SerializedName("DeliveryPrices")
-            val deliveryPrices: ArrayList<DeliveryPrices> = ArrayList(),
 
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("user_details_id")
-            val userDetailsId: String,
+
             @SerializedName("return_request_status")
             var returnRequest: String,
-            @SerializedName("users_id")
-            val usersId: String,
+
             @SerializedName("address")
             val address: Address,
             @SerializedName("tracking_details")
             val orderTracking: OrderTracking,
             @SerializedName("final_order_price")
-            val finalOrderPrice: String,
-            @SerializedName("user_wallet")
-            val userWallet: UserWallet,
-            @SerializedName("vat_percentage_set_by_admin")
-            val vat_Admin: String
+            val finalOrderPrice: String
 
 
     ) : ListItemViewModel()
@@ -1501,12 +859,6 @@ object Models {
             val zip_code: String?
     )
 
-    data class TrackingDetails(
-            @SerializedName("address_1")
-            val address_1: String,
-            @SerializedName("zip_code")
-            val zip_code: String?
-    )
 
     data class OrderTracking(
             @SerializedName("id")
@@ -1517,12 +869,10 @@ object Models {
             val trackingUrl: String,
             @SerializedName("sample_tracking_id")
             val sample_tracking_id: String,
-            @SerializedName("deleted_at")
-            val deleted_at: String,
+
             @SerializedName("created_at")
             val created_at: String,
-            @SerializedName("updated_at")
-            val updated_at: String,
+
             @SerializedName("tracking_id")
             val trackingId: String
 
@@ -1532,71 +882,29 @@ object Models {
     data class ServiceProductDescription(
             @SerializedName("after_discount_price")
             val afterDiscountPrice: String,
-            @SerializedName("discount")
-            val discount: String,
+
             @SerializedName("booking_date")
             val bookingDate: String,
-            @SerializedName("car_size")
-            val carSize: String?,
 
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: String?,
+
+
             @SerializedName("end_time")
             val endTime: String,
-            @SerializedName("id")
-            val id: String,
-            @SerializedName("price")
-            val price: String = "0",
+
+
             @SerializedName("assembly_service_product_description")
             val serviceAssemblyProductDescription: ServiceAssemblyProductDescription,
-            @SerializedName("part_details")
-            val partDetails: List<Part>,
-            @SerializedName("product_id")
-            val productId: String?,
-            @SerializedName("product_order_id")
-            val productOrderId: String,
-            @SerializedName("quantity")
-            val quantity: String,
             @SerializedName("service_detail")
             val serviceDetail: ServiceDetail,
-            @SerializedName("servicequotes_id")
-            val servicequotesId: String?,
-            @SerializedName("services_id")
-            val servicesId: String,
-            @SerializedName("special_condition_id")
-            val specialConditionId: String?,
+
             @SerializedName("start_time")
             val startTime: String,
             @SerializedName("order_status")
             val status: String,
-            @SerializedName("type")
-            val type: String,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: String,
-            @SerializedName("users_latitude")
-            val usersLatitude: String?,
-            @SerializedName("users_longitude")
-            val usersLongitude: String?,
-            @SerializedName("workshop_address_id")
-            val workshopAddressId: String?,
+
             @SerializedName("workshop_details")
             val workshopDetails: WorkshopDetails,
-            @SerializedName("workshop_user_day_timings_id")
-            val workshopUserDayTimingsId: String,
-            @SerializedName("workshop_user_days_id")
-            val workshopUserDaysId: String,
-            @SerializedName("workshop_user_id")
-            val workshopUserId: String,
-            @SerializedName("wrecker_service_type")
-            val wreckerServiceType: String?,
-            @SerializedName("service_vat")
-            val serviceVat: String?,
-            @SerializedName("avilability")
-            val avilability: String?,
+
             @SerializedName("mot_service_type")
             val motServiceType: String?,
             @SerializedName("coupons_id")
@@ -1621,14 +929,10 @@ object Models {
 
 
     data class ServiceAssemblyProductDescription(
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("deleted_at")
-            val deletedAt: String?,
+
             @SerializedName("discount")
             val discount: String,
-            @SerializedName("for_assemble_service")
-            val forAssembleService: String?,
+
             @SerializedName("for_order_type")
             val forOrderType: String,
             @SerializedName("id")
@@ -1653,16 +957,10 @@ object Models {
             val productQuantity: String,
             @SerializedName("products_id")
             val productsId: String,
-            @SerializedName("products_orders_id")
-            val productsOrdersId: String,
-            @SerializedName("service_booking_id")
-            val serviceBookingId: String?,
-            @SerializedName("status")
-            val status: String,
+
             @SerializedName("total_price")
             val totalPrice: String?,
-            @SerializedName("updated_at")
-            val updatedAt: String,
+
             @SerializedName("users_id")
             val usersId: String,
             @SerializedName("seller_id")
@@ -1710,64 +1008,23 @@ object Models {
     ) : ListItemViewModel()
 
     data class WorkshopDetails(
-            @SerializedName("about_business")
-            val aboutBusiness: String,
-            @SerializedName("address_1")
-            val address1: Any?,
-            @SerializedName("address_2")
-            val address2: Any?,
-            @SerializedName("address_3")
-            val address3: Any?,
-            @SerializedName("address_proof")
-            val addressProof: String,
+
             @SerializedName("business_name")
             val businessName: String,
-            @SerializedName("city_id")
-            val cityId: Any?,
-            @SerializedName("city_name")
-            val cityName: Any?,
-            @SerializedName("country_id")
-            val countryId: Any?,
-            @SerializedName("country_name")
-            val countryName: Any?,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("fiscal_code")
-            val fiscalCode: String,
+
             @SerializedName("id")
             val id: Int,
-            @SerializedName("landmark")
-            val landmark: Any?,
+
             @SerializedName("langitude")
             val langitude: Double,
             @SerializedName("latitude")
             val latitude: Double,
-            @SerializedName("owner_name")
-            val ownerName: String,
-            @SerializedName("pec")
-            val pec: String,
-            @SerializedName("postal_code")
-            val postalCode: Int,
+
+
             @SerializedName("registered_office")
             val registeredOffice: String,
-            @SerializedName("registration_proof")
-            val registrationProof: String,
-            @SerializedName("sdi_recipient_code")
-            val sdiRecipientCode: String,
-            @SerializedName("state_id")
-            val stateId: Any?,
-            @SerializedName("state_name")
-            val stateName: Any?,
-            @SerializedName("status")
-            val status: String,
-            @SerializedName("term_and_condition")
-            val termAndCondition: Any?,
-            @SerializedName("updated_at")
-            val updatedAt: String,
-            @SerializedName("users_id")
-            val usersId: Int,
-            @SerializedName("vat_number")
-            val vatNumber: String,
+
+
             @SerializedName("profile_image")
             val Profile_image: String,
             @SerializedName("profile_image_url")
@@ -1785,7 +1042,7 @@ object Models {
             @SerializedName("coupon_list")
             var couponList: List<Coupon>
     ) : ListItemViewModel()
-
+/*------------------------------------------------ DataCustomize----------------------------*/
     data class SpareProductDescription(
 
             @SerializedName("created_at")
@@ -1947,6 +1204,8 @@ object Models {
             val deletedAt: String,
             @SerializedName("id")
             val id: String,
+            @SerializedName("delivery_price")
+            val deliveryPrice: String,
             @SerializedName("no_of_products")
             val noOfProducts: String,
             @SerializedName("order_date")
@@ -1960,8 +1219,7 @@ object Models {
 
             @SerializedName("CartDataList")
             var CartDataList: ArrayList<CartDataList> = ArrayList(),
-            @SerializedName("DeliveryPrices")
-            var deliveryPricesList: ArrayList<DeliveryPrices> = ArrayList(),
+
             @SerializedName("shipping_address_id")
             val shippingAddressId: String,
             @SerializedName("status")
@@ -2099,32 +1357,7 @@ object Models {
     ) : ListItemViewModel()
 
 
-    data class AllOrderList(
-            @SerializedName("id")
-            val orderId: String,
-            @SerializedName("total_price")
-            val totalPrice: String,
-            @SerializedName("tracking_id")
-            val trackingId: String,
-            @SerializedName("transaction_id")
-            val transactionId: String,
-            @SerializedName("payment_status")
-            val paymentStatus: String,
-            @SerializedName("payment_mode")
-            val paymentMode: String,
-            @SerializedName("order_date")
-            val orderDate: String,
-            @SerializedName("no_of_products")
-            val NumberofProducts: String,
-            @SerializedName("address_type")
-            val addressType: String,
-            @SerializedName("courier_id")
-            val courierId: String,
-            @SerializedName("created_at")
-            val createdAt: String,
-            @SerializedName("spare_product_description")
-            val sparePartVisibility: List<SparePartVisibility>
-    ) : ListItemViewModel()
+
 
 
     data class NotificationList(
@@ -2146,18 +1379,7 @@ object Models {
     ) : ListItemViewModel()
 
 
-    data class ChatingList(
-            @SerializedName("id")
-            val messageId: String,
-            @SerializedName("message")
-            val message: String,
-            @SerializedName("ticket_type")
-            val tickettype: String,
-            @SerializedName("ticket_id")
-            val ticketid: String,
-            @SerializedName("date")
-            val date: String
-    ) : ListItemViewModel()
+
 
 
     data class SparePartVisibility(
@@ -2218,9 +1440,6 @@ object Models {
             val workshopId: Int
     )
 
-
-    /* @SerializedName("coupon_list")
-     val couponList: List<Coupon>,*/
 
     data class WishListTyreProductDetail(
             @SerializedName("brand_image")
@@ -2532,16 +1751,7 @@ object Models {
             var isBrandchecked: Boolean = false
     )
 
-    data class Tyrecoupon(
-            @SerializedName("status")
-            val status: String?,
-            @SerializedName("coupon_id")
-            val coupon_id: String?,
-            @SerializedName("coupon_amount")
-            var coupon_amount: String,
-            @SerializedName("product_price")
-            var product_price: String
-    ) : Serializable
+
 
 
     data class servicesCouponData(
@@ -2565,48 +1775,7 @@ object Models {
     ) : Serializable
 
 
-    data class partData(
-            @SerializedName("descrizione")
-            val descrizione: String = "",
-            @SerializedName("for_pair")
-            val forPair: String = "",
-            @SerializedName("id")
-            val id: String = "",
-            @SerializedName("kromeda_description")
-            val kromedaDescription: String = "",
-            @SerializedName("kromeda_products_id")
-            val kromedaProductsId: String = "",
-            @SerializedName("listino")
-            val listino: String = "",
-            @SerializedName("price")
-            val price: String = "",
-            @SerializedName("seller_price")
-            val sellerPrice: String,
-            @SerializedName("substract_stock")
-            val substractStock: String,
-            @SerializedName("image_name")
-            val imageName: String?,
-            @SerializedName("image_url")
-            val imageUrl: String?,
-            @SerializedName("product_id")
-            val productId: String = "",
-            @SerializedName("product_type")
-            val productType: String = "",
-            @SerializedName("rating_star")
-            val rating_star: String = "",
-            @SerializedName("rating_count")
-            val rating_count: String = "",
-            @SerializedName("brand_image")
-            val brandImage: String = "",
-            @SerializedName("brand_image_url")
-            var brandImageURL: String = "",
-            @SerializedName("images")
-            val images: List<Image>,
-            var partimage: String = "",
-            @SerializedName("coupon_list")
-            var couponList: Coupon
 
-    ) : Serializable
 
     data class HighRatingfeedback(
             val comments: String,
@@ -2760,16 +1929,6 @@ object Models {
             val updated_at: String = "",
             val users_id: String = "",
             val version_id: String = ""
-    ) : Serializable
-
-    data class DeliveryPrices(
-            @SerializedName("From")
-            val from: String = "1000",
-            @SerializedName("To")
-            val to: String = "5000",
-            @SerializedName("Prices")
-            val prices: String = "100"
-
     ) : Serializable
 
 

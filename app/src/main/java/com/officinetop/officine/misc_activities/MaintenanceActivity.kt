@@ -209,7 +209,7 @@ class MaintenanceActivity : BaseActivity() {
                 if (carMaintenanceServiceList[i].parts != null) {
                     // Log.d("Maintenance", "part info" + carMaintenanceServiceList[i].parts[0].listino)
                     carMaintenanceServiceList[i].listino = carMaintenanceServiceList[i].parts[0].listino
-                    carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].descrizione != null) carMaintenanceServiceList[i].parts[0].descrizione else ""
+                    carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].Productdescription != null) carMaintenanceServiceList[i].parts[0].Productdescription else ""
                     carMaintenanceServiceList[i].productId = carMaintenanceServiceList[i].parts[0].id
                     carMaintenanceServiceList[i].couponList = carMaintenanceServiceList[i].parts[0].couponList
                     carMaintenanceServiceList[i].CouponTitle = if (carMaintenanceServiceList[i].parts[0].couponList != null && carMaintenanceServiceList[i].parts[0].couponList.size != 0) carMaintenanceServiceList[i].parts[0].couponList[0].couponTitle else ""
@@ -429,7 +429,7 @@ class MaintenanceActivity : BaseActivity() {
                 try {
                     if (carMaintenanceServiceList[selectservice_position].parts != null) {
                         carMaintenanceServiceList[selectservice_position].listino = carMaintenanceServiceList[selectservice_position].parts[position].listino
-                        carMaintenanceServiceList[selectservice_position].descrizione = if (carMaintenanceServiceList[selectservice_position].parts[position].descrizione != null) carMaintenanceServiceList[selectservice_position].parts[position].descrizione else ""
+                        carMaintenanceServiceList[selectservice_position].descrizione = if (carMaintenanceServiceList[selectservice_position].parts[position].Productdescription != null) carMaintenanceServiceList[selectservice_position].parts[position].Productdescription else ""
                         carMaintenanceServiceList[selectservice_position].productId = carMaintenanceServiceList[selectservice_position].parts[position].id
                         carMaintenanceServiceList[selectservice_position].usersId = carMaintenanceServiceList[selectservice_position].parts[position].usersId
                         carMaintenanceServiceList[selectservice_position].couponList = carMaintenanceServiceList[selectservice_position].parts[position].couponList

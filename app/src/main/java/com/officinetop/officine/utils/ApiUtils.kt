@@ -409,9 +409,10 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
-        if (!cartData.deliveryPricesList.isNullOrEmpty()) {
-            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, getDeliveryPricesAccordingToTotalPrices(view.cart_total_price.text.toString().split(" ")[1], cartData.deliveryPricesList))
-            view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + view.tv_delivery_prices.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
+        Log.d("CartList", "DeliveryPrices : " + cartData.deliveryPrice)
+        if (!cartData.deliveryPrice.isNullOrEmpty()) {
+            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, cartData.deliveryPrice)
+            view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
 
         } else {
             view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, "0")
@@ -421,18 +422,6 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     }
 }
 
-fun getDeliveryPricesAccordingToTotalPrices(totalprices: String, deliveryPriceslist: ArrayList<Models.DeliveryPrices>): String {
-    var deliveryprices = "0"
-
-    for (item in deliveryPriceslist) {
-        if (item.from.toDouble() <= totalprices.toDouble() && item.to.toDouble() >= totalprices.toDouble()) {
-            deliveryprices = if (!item.prices.isNullOrBlank()) item.prices else "0"
-            break
-        }
-    }
-
-    return deliveryprices
-}
 
 inline fun Call<ResponseBody>.onCall(context: Context? = null, crossinline onResponse: (networkException: Throwable?, response: Response<ResponseBody>?) -> Unit) {
     this.enqueue(object : Callback<ResponseBody> {

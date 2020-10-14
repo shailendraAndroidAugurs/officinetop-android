@@ -307,7 +307,6 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.getMotCalendar)
     fun getMotCalendar(@Query(Constant.Path.serviceID) serviceId: Int,
                        @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-
                        @Query(Constant.Path.type) type: String,
                        @Query("user_lat") user_lat: String,
                        @Query("user_long") user_long: String,
@@ -987,8 +986,10 @@ interface IRetrofitApis {
             @Query(Constant.Path.latitude) latitude: String,
             @Query(Constant.Path.longitude) longitude: String,
             @Query(Constant.Path.serviceID) serviceID: String,
-            @Query(Constant.Path.selectedCarId) selectedCarId: String
-    ): Call<ResponseBody>
+            @Query(Constant.Path.selectedCarId) selectedCarId: String,
+            @Query("distance_range") distance_range: String,
+            @Query(Constant.Path.version_id) version_id: String
+            ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getQuotesWorkshop)
     fun getQuotesWorkshops(
@@ -1208,7 +1209,14 @@ interface IRetrofitApis {
             @Query(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
             @Query(Constant.Path.serviceID) serviceId: String,
             @Query(Constant.Path.latitude) latitude: String,
-            @Query(Constant.Path.longitude) longitude: String
+            @Query(Constant.Path.longitude) longitude: String,
+            @Query("distance_range") distance_range: String,
+            @Query(Constant.Path.favorite) favorite: String,
+            @Query(Constant.Path.couponFilter) couponfilter: String,
+            @Query(Constant.Path.filterRating) rating: String,
+            @Query(Constant.Path.filterPriceRange) priceRange: String,
+            @Query(Constant.Path.sortPrice) priceLevel: Int,
+            @Query(Constant.Path.version_id) versionId: String
     ): Call<ResponseBody>
 
 
@@ -1227,7 +1235,14 @@ interface IRetrofitApis {
             @Query(Constant.Path.serviceID) serviceId: String,
             @Query(Constant.Path.latitude) latitude: String,
             @Query(Constant.Path.longitude) longitude: String,
-            @Query(Constant.Path.start_time) startTime: String
+            @Query(Constant.Path.start_time) startTime: String,
+            @Query("distance_range") distance_range: String,
+            @Query(Constant.Path.favorite) favorite: String,
+            @Query(Constant.Path.couponFilter) couponfilter: String,
+            @Query(Constant.Path.filterRating) rating: String,
+            @Query(Constant.Path.filterPriceRange) priceRange: String,
+            @Query(Constant.Path.sortPrice) priceLevel: Int,
+            @Query(Constant.Path.version_id) versionId: String
     ): Call<ResponseBody>
 
 

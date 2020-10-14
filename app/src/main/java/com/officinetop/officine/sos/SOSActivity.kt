@@ -174,7 +174,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             val allWrackers = it.tag as? Models.AllWrackerWorkshops
 
             allWrackers?.let { it1 ->
-                getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSavedSelectedVehicleID())
+                getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle)
+                if(it.isInfoWindowShown){
+                    it.hideInfoWindow()
+                }
             }
         }
     }
@@ -204,14 +207,17 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                 val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) jsonObject.getJSONArray("data_set") else JSONArray()
 
                                 if (data_set.length() > 0) {
+                                    allWrackerServicesWorkshopList.clear()
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
+
                                         allWrackerServicesWorkshopList.add(data)
                                         //val data = Gson().fromJson<Models.SOSWorkshop>(data_set.getJSONObject(i).toString(), Models.SOSWorkshop::class.java)
                                         //latlongList.add(data)
                                     }
                                     val data = allWrackerServicesWorkshopList.get(0)
-                                    getWrackersServices(data.id.toString(), data.usersId.toInt(), getSavedSelectedVehicleID())
+                                    getWrackersServices(data.id.toString(), data.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle
+                                            ?: "")
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
@@ -245,11 +251,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         allWrackerServicesWorkshopList.forEach { listData ->
             listData.let {
                 position = LatLng(listData.latitude.toString().toDouble(), listData.longitude.toString().toDouble())
-    /*
-                    with(mMap) {
-                        animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
-                    }*/
                 locationMarker = mMap.addMarker(
                         MarkerOptions()
                                 .position(position!!)
@@ -271,17 +273,20 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                         if (response.isSuccessful) {
                             try {
                                 val jsonObject = JSONObject(response.body()?.string())
-                                if (jsonObject.has("data_set") && !jsonObject.isNull("data_set") && !jsonObject.getString("data_set").isNullOrBlank()&& !jsonObject.getString("data_set").equals("null")) {
+                                if (jsonObject.has("data_set") && !jsonObject.isNull("data_set") && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) {
                                     val data_set = jsonObject.getJSONArray("data_set")
+                                    wrackersList.clear()
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.WrackerServices>(data_set.getJSONObject(i).toString(), Models.WrackerServices::class.java)
-                                        if (wrackersList.size == 0) {
-                                            wrackersList.add(data)
-                                        } else {
-                                            if (!wrackersList.contains(data)) {
-                                                wrackersList.add(data)
-                                            }
-                                        }
+
+                                        wrackersList.add(data)
+                                        /* if (wrackersList.size == 0) {
+                                             wrackersList.add(data)
+                                         } else {
+                                             if (!wrackersList.contains(data)) {
+                                                 wrackersList.add(data)
+                                             }
+                                         }*/
 
                                         Log.d("wrakerServicesCall", data.id.toString())
                                     }
@@ -492,8 +497,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
-                    mLatitude = location.latitude.toString()
-                    mLongitude = location.longitude.toString()
+                    mLatitude = /*location.latitude.toString()*/"44.1571507"
+                    mLongitude = /*location.longitude.toString()*/"12.2142107"
                 }
                 loadmapview()
             }

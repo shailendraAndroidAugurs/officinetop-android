@@ -154,7 +154,7 @@ class ServiceDetailActivity : BaseActivity() {
 
         image_slider.removeAllSliders()
         for (i in 0 until imagesArray.size) {
-            val imageRes = Constant.itemImageBaseURL + imagesArray[i].imageName
+            val imageRes = imagesArray[i].image_url
 
             val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
             image_slider.addSlider(slide)

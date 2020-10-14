@@ -44,7 +44,7 @@ class MotListActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.MOT)
         ed_search_km.isEnabled = false
-        ed_search_km.requestFocus()
+
         ed_search_km.setText(getMotKm())
 
         if (getSelectedCar()?.carConditionMotSchedule?.id.isNullOrBlank()) {
@@ -58,6 +58,7 @@ class MotListActivity : BaseActivity() {
 
         btn_edit.setOnClickListener {
             ed_search_km.isEnabled = true
+            ed_search_km.requestFocus()
             if (btn_edit.text == getString(R.string.add_car)) {
                 motServive(ed_search_km.text.toString(), "1")
 
@@ -75,7 +76,7 @@ class MotListActivity : BaseActivity() {
         mServicesList.clear()
         progress_bar.visibility = View.VISIBLE
         RetrofitClient.client.getMOT(getSavedSelectedVehicleID(), serviceKM, isEdit, "en", getSelectedCar()?.carVersionModel?.idVehicle!!, scheduleId)
-                .onCall { networkException, response ->
+                .onCall { _, response ->
                     response?.let {
                         progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
