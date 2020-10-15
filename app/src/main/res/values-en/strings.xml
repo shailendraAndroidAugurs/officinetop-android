@@ -466,7 +466,7 @@
 
     <string name="AddresUpdateSuccessFully">Address Update SuccessFully</string>
     <string name="AddressDeletedSuccessFully"> Address Deleted SuccessFully</string>
-    <string name="AddressAddSuccessFully">Address Add SuccessFully</string>
+    <string name="AddressAddSuccessFully">Saved successfully</string>
     <string name="Failed_pickplace">Failed to pick place</string>
 
 
