@@ -893,6 +893,7 @@ object Models {
             @SerializedName("service_detail")
             val serviceDetail: ServiceDetail,
 
+
             @SerializedName("start_time")
             val startTime: String,
             @SerializedName("order_status")
