@@ -473,8 +473,16 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     val carDefaultImage = car.carDefaultImage ?: ""
 
                     try {
-                        loadCarImage(carDefaultImage, car.carMakeModel.brandID, view.item_car_image_view)
+
+                        if (carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
+                            loadImage(carDefaultImage, view.item_car_image_view)
+
+                        } else {
+                            loadCarImage(carDefaultImage, car.carMakeModel.brandID, view.item_car_image_view)
+
+                        }
                     } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
                     }
 
 
@@ -577,7 +585,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             toolbar_car_subtitle.visibility = View.VISIBLE
 
             val carDefaultImage = car.carDefaultImage ?: ""
-            loadCarImage(carDefaultImage, car.carMakeModel.brandID, toolbar_image_view)
+
+
+            if (carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
+                loadImage(carDefaultImage, toolbar_image_view)
+
+            } else {
+                loadCarImage(carDefaultImage, car.carMakeModel.brandID, toolbar_image_view)
+
+            }
 
             Log.d("HomeActivity", "getView: setting toolbar values, value = ${car.carMakeName}, ${car.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
@@ -598,7 +614,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (json != null) {
                 saveSelectedCar(json)
                 hasSelectedCar = true
-                hasAddedCar=true
+                hasAddedCar = true
 
                 if (car.id != getSavedSelectedVehicleID()) {
 
@@ -966,8 +982,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     toolbar_car_subtitle.visibility = View.VISIBLE
                                     saveIsAvailableDataInCart(false)
                                     val carDefaultImage = car?.carDefaultImage ?: ""
-                                    loadCarImage(carDefaultImage, car?.carMakeModel?.brandID, toolbar_image_view)
-                                    1
+
+                                    if (carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
+                                        loadImage(carDefaultImage, toolbar_image_view)
+
+                                    } else {
+                                        loadCarImage(carDefaultImage, car?.carMakeModel?.brandID, toolbar_image_view)
+
+                                    }
+
                                     Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
 //            storeSelectedCar(car.carMakeName, car.carModelName)
 

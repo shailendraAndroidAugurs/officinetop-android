@@ -988,7 +988,7 @@ class AddVehicleActivity : BaseActivity() {
         spinner_version.clearSelection()
 
         Log.d("AddVehicleActivity", "onResponse: carversionsize before " + carVersions.size.toString())
-        var list = carVersions.filter { it.fueltype == fuelType }
+        var list = carVersions.filter { getFuelType(it.alimentazione) == fuelType }
         if (fuelType?.isEmpty()!!)
             list = carVersions
 
@@ -1466,9 +1466,9 @@ class AddVehicleActivity : BaseActivity() {
 
         return when {
             fuelAbbrevation == "D" -> "Diesel"
-            fuelAbbrevation == "B" -> "Petrol"
+            fuelAbbrevation == "B" -> getString(R.string.petrol)
             fuelAbbrevation == "G" -> "Gas"
-            else -> "Other"
+            else -> getString(R.string.other)
         }
 
     }
