@@ -532,7 +532,7 @@
 
 
     <string name="AddressDeletedSuccessFully"> Address Deleted SuccessFully</string>
-    <string name="AddressAddSuccessFully">Address Add SuccessFully</string>
+    <string name="AddressAddSuccessFully">Saved successfully</string>
     <string name="Failed_pickplace">Failed to pick place</string>
     <string name="postal_code">postal_code</string>
     <string name="Car">Car</string>

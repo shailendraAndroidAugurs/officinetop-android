@@ -647,7 +647,6 @@ object Models {
     )
 
 
-
     data class Operation(
             @SerializedName("group_name")
             val groupName: String,
@@ -825,7 +824,6 @@ object Models {
             val paymentStatus: String,
 
 
-
             @SerializedName("service_product_description")
             val serviceProductDescription: List<ServiceProductDescription>,
 
@@ -882,16 +880,14 @@ object Models {
     data class ServiceProductDescription(
             @SerializedName("after_discount_price")
             val afterDiscountPrice: String,
-
+            @SerializedName("price")
+            val price: String,
+            @SerializedName("id")
+            val id: String,
             @SerializedName("booking_date")
             val bookingDate: String,
-
-
-
             @SerializedName("end_time")
             val endTime: String,
-
-
             @SerializedName("assembly_service_product_description")
             val serviceAssemblyProductDescription: ServiceAssemblyProductDescription,
             @SerializedName("service_detail")
@@ -1042,7 +1038,8 @@ object Models {
             @SerializedName("coupon_list")
             var couponList: List<Coupon>
     ) : ListItemViewModel()
-/*------------------------------------------------ DataCustomize----------------------------*/
+
+    /*------------------------------------------------ DataCustomize----------------------------*/
     data class SpareProductDescription(
 
             @SerializedName("created_at")
@@ -1357,9 +1354,6 @@ object Models {
     ) : ListItemViewModel()
 
 
-
-
-
     data class NotificationList(
             @SerializedName("id")
             val messageId: String,
@@ -1377,9 +1371,6 @@ object Models {
             val createdAt: String
 
     ) : ListItemViewModel()
-
-
-
 
 
     data class SparePartVisibility(
@@ -1752,8 +1743,6 @@ object Models {
     )
 
 
-
-
     data class servicesCouponData(
             @SerializedName("service_partcouponID")
             val service_partcouponID: String = "",
@@ -1773,8 +1762,6 @@ object Models {
             val seller_ID: ArrayList<String> = ArrayList()
 
     ) : Serializable
-
-
 
 
     data class HighRatingfeedback(

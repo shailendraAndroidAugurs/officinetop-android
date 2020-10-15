@@ -465,7 +465,7 @@
     <string name="AddresUpdateSuccessFully">Indirizzo Update SuccessFully</string>
     <string name="Update_SuccessFully">Aggiornamento riuscito Completamente</string>
     <string name="AddressDeletedSuccessFully"> Indirizzo eliminato SuccessFully</string>
-    <string name="AddressAddSuccessFully">Indirizzo Aggiungi Successo Completamente</string>
+    <string name="AddressAddSuccessFully">Salvato con sucesso</string>
     <string name="Failed_pickplace">Impossibile selezionare il posto</string>
 
 
@@ -573,7 +573,7 @@
     <string name="add_feedback">Add Feedback</string>
     <string name="write_a_review">Scriviuna recensione</string>
     <string name="customer_rating">valutazione clienti</string>
-    <string name="speed_load_index">Indice di portanza</string>
+    <string name="speed_load_index">Indice di carico</string>
     <string name="license_plate">Targa :</string>
     <string name="all_in_italin">All</string>
     <string name="car_conditions">Condizioni auto</string>

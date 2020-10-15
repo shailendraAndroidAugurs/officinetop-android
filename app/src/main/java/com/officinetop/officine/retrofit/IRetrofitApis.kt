@@ -965,18 +965,18 @@ interface IRetrofitApis {
             @Query("distance_range") distance_range: String
 
     ): Call<ResponseBody>
-
-    @GET(Constant.UrlEndPoints.getCarMaintenanceCalendarPrice)
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.getCarMaintenanceCalendarPrice)
     fun getCarMaintenanceCalendar(
-            @Query(Constant.Path.serviceID) serviceID: String,
-            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-            @Query(Constant.Path.filterRating) rating: String,
-            @Query(Constant.Path.filterPriceRange) priceRange: String,
-            @Query(Constant.Path.sortPrice) priceSortLevel: Int,
-            @Query(Constant.Path.type) type: Int,
-            @Query("user_lat") user_lat: String,
-            @Query("user_long") user_long: String,
-            @Query("distance_range") distance_range: String
+             @Field(Constant.Path.serviceID) serviceID: String,
+            @Field(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+            @Field(Constant.Path.filterRating) rating: String,
+            @Field(Constant.Path.filterPriceRange) priceRange: String,
+            @Field(Constant.Path.sortPrice) priceSortLevel: Int,
+            @Field(Constant.Path.type) type: Int,
+            @Field("user_lat") user_lat: String,
+            @Field("user_long") user_long: String,
+            @Field("distance_range") distance_range: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getSOSAppointmentCalendarPrice)
@@ -1009,22 +1009,22 @@ interface IRetrofitApis {
             @Query(Constant.Path.favorite) favorite: String,
             @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
-
-    @GET(Constant.UrlEndPoints.getCarMaintenanceWorkshop)
-    fun getCarMaintenanceWorkshop(@Query(Constant.Path.version_id) versionId: String?,
-                                  @Query(Constant.Path.language) language: String,
-                                  @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                                  @Query(Constant.Path.serviceID) serviceID: String,
-                                  @Query(Constant.Path.filterRating) rating: String,
-                                  @Query(Constant.Path.filterPriceRange) priceRange: String,
-                                  @Query(Constant.Path.sortPrice) priceLevel: Int,
-                                  @Query(Constant.Path.selectedCarId) selectedCarId: String,
-                                  @Query("user_id") user_id: String,
-                                  @Query("user_lat") user_lat: String,
-                                  @Query("user_long") user_long: String,
-                                  @Query("distance_range") distance_range: String,
-                                  @Query(Constant.Path.favorite) favorite: String,
-                                  @Query(Constant.Path.couponFilter) couponfilter: String
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.getCarMaintenanceWorkshop)
+    fun getCarMaintenanceWorkshop(@Field(Constant.Path.version_id) versionId: String?,
+                                  @Field(Constant.Path.language) language: String,
+                                  @Field(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+                                  @Field(Constant.Path.serviceID) serviceID: String,
+                                  @Field(Constant.Path.filterRating) rating: String,
+                                  @Field(Constant.Path.filterPriceRange) priceRange: String,
+                                  @Field(Constant.Path.sortPrice) priceLevel: Int,
+                                  @Field(Constant.Path.selectedCarId) selectedCarId: String,
+                                  @Field("user_id") user_id: String,
+                                  @Field("user_lat") user_lat: String,
+                                  @Field("user_long") user_long: String,
+                                  @Field("distance_range") distance_range: String,
+                                  @Field(Constant.Path.favorite) favorite: String,
+                                  @Field(Constant.Path.couponFilter) couponfilter: String
 
     ): Call<ResponseBody>
 
