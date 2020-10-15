@@ -595,6 +595,7 @@
     <string name="_0">0</string>
     <string name="update_contact_number">Update Contact Number</string>
     <string name="deliveryPrices">Prezzi di consegna</string>
+    <string name="petrol">Benzina</string>
 
 
     <string-array name="home_icon_titles">
