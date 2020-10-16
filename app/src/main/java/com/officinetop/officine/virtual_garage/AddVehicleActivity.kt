@@ -678,7 +678,6 @@ class AddVehicleActivity : BaseActivity() {
                         spinner_fuel.setAdapter(getEmptyAdapter())
                         spinner_version.setAdapter(getEmptyAdapter())
 
-
                         loadCarVersion(model[position].modelID, model[position].modelYear)
                     }
 
@@ -695,18 +694,18 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun loadCarCriteria(SelectedVersioId: String) {
 
-        progressDialog.show()
+
 
         RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId, "ita").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                progressDialog.dismiss()
+
                 add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("AddVehicleActivity", "onResponse: car criteria")
                 val body = response.body()?.string()
-                progressDialog.dismiss()
+
 
                 if (isStatusCodeValid(body)) {
                     carCriteriaList.clear()
@@ -799,18 +798,17 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun loadCarConditionMotSchedule(SelectedVersioId: String) {
 
-        progressDialog.show()
 
         RetrofitClient.client.getMotServiceSchedule(SelectedVersioId).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                progressDialog.dismiss()
+
                 add_from_fields.snackbar(getString(R.string.ConnectionErrorPleaseretry))
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.d("AddVehicleActivity", "onResponse: car criteria")
                 val body = response.body()?.string()
-                progressDialog.dismiss()
+
 
                 if (isStatusCodeValid(body)) {
                     carConditionMotScheduleList.clear()

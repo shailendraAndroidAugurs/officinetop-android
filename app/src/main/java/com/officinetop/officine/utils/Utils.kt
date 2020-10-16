@@ -339,8 +339,6 @@ fun FragmentManager?.setPlacePicker(
     try {
         Places.initialize(context, context.getString(R.string.google_places_key))
         Places.createClient(context)
-
-
         fragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.PLUS_CODE))
 
         fragment.setHint(context.getString(R.string.Search_Location))

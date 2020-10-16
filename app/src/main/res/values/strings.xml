@@ -328,7 +328,7 @@
     <string name="Ascending">Ascending</string>
     <string name="Descending">Descending</string>
     <string name="Edit">Edit</string>
-    <string name="Buy_Now">Buy Now</string>
+    <string name="Buy_Now">Details</string>
 
     <string name="Search">Search…</string>
     <string name="tyreprice_text">Product price: € %s</string>

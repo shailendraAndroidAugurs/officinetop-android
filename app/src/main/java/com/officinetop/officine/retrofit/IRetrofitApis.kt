@@ -965,10 +965,11 @@ interface IRetrofitApis {
             @Query("distance_range") distance_range: String
 
     ): Call<ResponseBody>
+
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.getCarMaintenanceCalendarPrice)
     fun getCarMaintenanceCalendar(
-             @Field(Constant.Path.serviceID) serviceID: String,
+            @Field(Constant.Path.serviceID) serviceID: String,
             @Field(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
             @Field(Constant.Path.filterRating) rating: String,
             @Field(Constant.Path.filterPriceRange) priceRange: String,
@@ -989,7 +990,7 @@ interface IRetrofitApis {
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
             @Query("distance_range") distance_range: String,
             @Query(Constant.Path.version_id) version_id: String
-            ): Call<ResponseBody>
+    ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getQuotesWorkshop)
     fun getQuotesWorkshops(
@@ -1009,6 +1010,7 @@ interface IRetrofitApis {
             @Query(Constant.Path.favorite) favorite: String,
             @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>
+
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.getCarMaintenanceWorkshop)
     fun getCarMaintenanceWorkshop(@Field(Constant.Path.version_id) versionId: String?,
@@ -1513,4 +1515,9 @@ interface IRetrofitApis {
 
 
     ): Call<ResponseBody>
+
+
+    @GET(Constant.UrlEndPoints.selectedCar)
+    fun getselectedUserCar(
+                  @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
 }

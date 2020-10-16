@@ -245,7 +245,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             containerFor_search.visibility = View.GONE
         }
     }
-//text watcher of edit text search
+
+    //text watcher of edit text search
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }

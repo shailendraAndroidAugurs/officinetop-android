@@ -212,7 +212,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         //setting initial car image
         Glide.with(this).load(R.drawable.ic_car).thumbnail(0.1f).into(toolbar_image_view)
 
-        loadMyCars()
+        carList.clear()
+        carListAdapter.notifyDataSetChanged()
+        if (!isLoggedIn()) {
+            setCarListFromLocal()
+
+            return
+        } else {
+            getSelectedCarAccordingToUser()
+        }
 
         // load screens if navigated from options menu
         if (intent != null && intent.hasExtra("fragmentID")) {
@@ -249,7 +257,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!isLoggedIn())
                 setCarListFromLocal()
             else if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false)) {
-                getCarListAPI()
+                // getCarListAPI()
+                getSelectedCarAccordingToUser()
             }
 
         } catch (e: Exception) {
@@ -489,7 +498,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     view.item_delete_car.setOnClickListener {
 
                         if (isLoggedIn())
-                            deleteCar(car.id)
+                            deleteCar(car.id, position)
                         else {
                             alert {
                                 message = "Delete this car from virtual garage?"
@@ -717,7 +726,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             if (requestCode == Constant.RC.onCarEdited) {
-                getCarListAPI()
+                getSelectedCarAccordingToUser()
             } else if (requestCode == Constant.RC.onCarAdded) {
                 try {
                     if (data != null && data.extras != null) {
@@ -731,7 +740,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
             } else if (requestCode == 108) {
                 if (getMotKm() != getSelectedCar()?.km_of_cars)
-                    getCarListAPI()
+                    getSelectedCarAccordingToUser()
             }
 
 
@@ -741,7 +750,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    fun deleteCar(carID: String) {
+    fun deleteCar(carID: String, postion: Int) {
 
         alert {
             message = getString(R.string.Delete_car_from_virtual_garage)
@@ -770,7 +779,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                             if (response.code() == 200) {
 
-                                loadMyCars()
+
+                               // loadMyCars()
                                 progressDialog.dismiss()
                                 setCarList(responseBody)
                             }
@@ -1063,6 +1073,56 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 return true
         }
         return false
+    }
+
+    private fun getSelectedCarAccordingToUser() {
+        progressDialog.show()
+        getBearerToken()?.let {
+            RetrofitClient.client.getselectedUserCar(it)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                            response.body()?.string()?.let { body ->
+                                if (isStatusCodeValid(body)) {
+
+                                    progressDialog.dismiss()
+
+                                    Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $body")
+
+                                    isConnectionError = false
+
+                                    if (response.code() == 500) {
+                                        Log.e("HomeActivity", getString(R.string.onResponseCode500) + { response.errorBody()?.string() })
+                                        isConnectionError = true
+                                        return
+                                    }
+
+
+
+                                    if (response.code() == 401) {
+                                        showInfoDialog(getString(R.string.Login_session_expired), false) {
+                                            removeUserDetail()
+                                            startActivity(intentFor<LoginActivity>().clearTop())
+                                            finish()
+                                        }
+                                        return
+                                    }
+
+                                    if (body == null) {
+                                        Log.d("HomeActivity", "onResponse: response body is null")
+                                        isConnectionError = true
+                                        return
+                                    }
+                                    val UserSelectedCarRespnces = Gson().fromJson<Models.MyCar>(body, Models.MyCar::class.java)
+                                    setCarList(UserSelectedCarRespnces)
+                                }
+                            }
+
+                        }
+                    })
+        }
     }
 
 }
