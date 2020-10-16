@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
@@ -13,11 +14,12 @@ import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.item_part_detail.view.*
 import org.json.JSONArray
 
-class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartCategoryInterface): RecyclerView.Adapter<PartCategoryAdapter.PartViewHolder>(){
+class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartCategoryInterface) : RecyclerView.Adapter<PartCategoryAdapter.PartViewHolder>() {
 
     private var mCategoryArrayList: JSONArray
     lateinit var context: Context
     private var mView: PartCategoryInterface
+    private var row_index = 0
 
     init {
         mCategoryArrayList = categoryArray
@@ -35,27 +37,40 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
         //get details of each category
         val categoryDetails = mCategoryArrayList.getJSONObject(position)
 
-        if(!categoryDetails.isNull("images")) {
+        if (!categoryDetails.isNull("images")) {
             context.loadImage(categoryDetails.getJSONArray("images").getJSONObject(0).getString("image_url"), holder.partImage)
         }
 
         holder.partName.text = categoryDetails.optString("group_name", categoryDetails.optString("item"))
 
-        if(position == 0)
+        if (position == 0)
             mView.onCategoryClicked(categoryDetails.getInt("id"))
         holder.partContainer.setOnClickListener {
+            row_index = position
             mView.onCategoryClicked(categoryDetails.getInt("id"))
+            notifyDataSetChanged()
         }
+
+        if (row_index == position) {
+            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.theme_orange_light));
+
+        } else {
+            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.white));
+
+        }
+
+
     }
 
     override fun getItemCount(): Int {
         return mCategoryArrayList.length()
     }
 
-    class PartViewHolder(view: View): RecyclerView.ViewHolder(view)
-    {
+    class PartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var partContainer = view.part_container
         var partImage: ImageView = view.part_image
         var partName: TextView = view.part_name
+
+
     }
 }

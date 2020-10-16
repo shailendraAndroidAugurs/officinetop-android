@@ -193,6 +193,8 @@ object Constant {
         const val addCarByPlateNumber = "addCarByPlateNumber"
         const val editTyreMeasurementdetails = "edit_user_tyre_details"
         const val searchPartAutocomplete = "searchPartsAutocomplete"
+        const val selectedCar = "selectedCar"
+
     }
 
     object Key {
