@@ -788,11 +788,11 @@ object Models {
             val email: String,
 
             @SerializedName("f_name")
-            val fName: String,
+            val fName: String = "",
             @SerializedName("id")
             val id: Int,
             @SerializedName("l_name")
-            val lName: String,
+            val lName: String = "",
             @SerializedName("mobile_number")
             val mobileNumber: Long,
             @SerializedName("password")

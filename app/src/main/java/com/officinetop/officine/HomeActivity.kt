@@ -498,7 +498,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     view.item_delete_car.setOnClickListener {
 
                         if (isLoggedIn())
-                            deleteCar(car.id, position)
+                            deleteCar(car.id)
                         else {
                             alert {
                                 message = "Delete this car from virtual garage?"
@@ -750,7 +750,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    fun deleteCar(carID: String, postion: Int) {
+    fun deleteCar(carID: String) {
 
         alert {
             message = getString(R.string.Delete_car_from_virtual_garage)

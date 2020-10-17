@@ -922,7 +922,10 @@ interface IRetrofitApis {
             @Header(Constant.Fields.authorization) authToken: String,
             @Part("email") email: RequestBody,
             @Part("mobile") mobile: RequestBody,
-            @Part profile_pic: MultipartBody.Part?
+            @Part profile_pic: MultipartBody.Part?,
+            @Part("first_name") User_name: RequestBody,
+            @Part("last_name") last_name: RequestBody
+
     ): Call<ResponseBody>
 
 
@@ -1519,5 +1522,5 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.selectedCar)
     fun getselectedUserCar(
-                  @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
+            @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
 }
