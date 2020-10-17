@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
@@ -43,11 +42,12 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
 
         holder.partName.text = categoryDetails.optString("group_name", categoryDetails.optString("item"))
 
-        if (position == 0)
+        if (row_index == 0 && position == 0)
             mView.onCategoryClicked(categoryDetails.getInt("id"))
         holder.partContainer.setOnClickListener {
             row_index = position
-            mView.onCategoryClicked(categoryDetails.getInt("id"))
+            if (row_index != 0)
+                mView.onCategoryClicked(categoryDetails.getInt("id"))
             notifyDataSetChanged()
         }
 

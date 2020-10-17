@@ -132,6 +132,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                     intent.putExtra("Email", textview_email.text.toString())
                     intent.putExtra("Mobile", textview_mobile.text.toString())
                     intent.putExtra("Pic_url", imageurl)
+                    intent.putExtra("user_name", textview_name.text.toString())
                     intent.putExtra("Token", context?.getBearerToken()!!)
                     startActivityForResult(intent, 100)
                 }
@@ -340,7 +341,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
         textview_mobile.text = mobileNumber
         textview_email.text = email
-        textview_name.text = unername
+        textview_name.text = unername?.trim()
         text_address.text = address
         txt_referralcode.text = referralcode
         //text_landmark.text = getString(R.string.Landmark) + landmark
@@ -361,7 +362,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userContact = userDetailData.userContact.get(0)
@@ -378,7 +379,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userContact = userDetailData.userContact.get(0)
@@ -394,7 +395,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userAddress = userDetailData.userAddress.get(0)
@@ -409,7 +410,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, userDetail.fName, imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 uicontents("", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
