@@ -1083,11 +1083,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
+                            progressDialog.dismiss()
                             response.body()?.string()?.let { body ->
                                 if (isStatusCodeValid(body)) {
-
-                                    progressDialog.dismiss()
 
                                     Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $body")
 
