@@ -1087,8 +1087,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                             response.body()?.string()?.let { body ->
                                 if (isStatusCodeValid(body)) {
 
-
-
                                     Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $body")
 
                                     isConnectionError = false
