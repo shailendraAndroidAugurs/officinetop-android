@@ -169,6 +169,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         createMyCarDialog()
         toolbar_car_subtitle.visibility = View.GONE
 
+
+
+
         toolbar_title_layout.setOnClickListener {
 
             if (isLoggedIn() && isConnectionError) {
@@ -212,15 +215,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         //setting initial car image
         Glide.with(this).load(R.drawable.ic_car).thumbnail(0.1f).into(toolbar_image_view)
 
-        carList.clear()
-        carListAdapter.notifyDataSetChanged()
-        if (!isLoggedIn()) {
-            setCarListFromLocal()
 
-            return
-        } else {
-            getSelectedCarAccordingToUser()
-        }
 
         // load screens if navigated from options menu
         if (intent != null && intent.hasExtra("fragmentID")) {
@@ -232,7 +227,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     .replace(R.id.container, fragmentHome, "Home")
                     .commit()
         }
-
+        if (!isLoggedIn()) {
+            setCarListFromLocal()
+            return
+        } else {
+            getSelectedCarAccordingToUser()
+        }
 
         user_location.setOnClickListener {
             startActivity(intentFor<LocationActivity>())
@@ -780,7 +780,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                             if (response.code() == 200) {
 
 
-                               // loadMyCars()
+                                // loadMyCars()
                                 progressDialog.dismiss()
                                 setCarList(responseBody)
                             }
