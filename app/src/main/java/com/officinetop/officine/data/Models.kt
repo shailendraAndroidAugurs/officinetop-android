@@ -1920,5 +1920,28 @@ object Models {
     ) : Serializable
 
 
+    data class SparePartSearchData(
+            @SerializedName("n3response")
+            val n3response: ArrayList<Search_N3response>,
+            @SerializedName("oeResponse")
+            val oeResponse: ArrayList<Search_OenPart>,
+            @SerializedName("spareParts")
+            val spareParts: ArrayList<Search_SparePart>
+    )
+
+    data class Search_N3response(
+            @SerializedName("name")
+            val name: String
+    )
+
+    data class Search_SparePart(
+            @SerializedName("name")
+            val name: String
+    )
+
+    data class Search_OenPart(
+            @SerializedName("name")
+            val name: String
+    )
 }
 

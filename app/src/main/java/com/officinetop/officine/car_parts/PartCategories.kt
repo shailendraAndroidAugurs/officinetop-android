@@ -5,9 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.PartCategoryAdapter
@@ -17,10 +23,13 @@ import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.genericAPICall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_part_categories.*
+import kotlinx.android.synthetic.main.activity_search_preview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.search_preview_layout.view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +47,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     lateinit var partCategoryAdapter: PartCategoryAdapter
     lateinit var subCategoryAdapter: SubPartCategoryAdapter
     private var previousExpandedGroupPosition: Int = 0
+    private var SearchProductList: ArrayList<Models.Search_SparePart> = ArrayList()
+    private var SearchN3PartList: ArrayList<Models.Search_N3response> = ArrayList()
+    private var SearchOENList: ArrayList<Models.Search_OenPart> = ArrayList()
+
+    var layoutheight = 0
+    private lateinit var myadpterOEN: RecyclerView.Adapter<Holder>
+    private lateinit var myadpterSparePart: RecyclerView.Adapter<Holder>
+    private lateinit var myadpterN3Part: RecyclerView.Adapter<Holder>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
@@ -45,7 +62,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         selectedVehicleVersionID = getSelectedCar()?.carVersionModel?.idVehicle ?: ""
         Log.d("PartsCategoryActivity", "onCreate: $selectedVehicleVersionID")
         initViews()
-
+        layoutheight = (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18.toFloat(), resources.displayMetrics)).toInt()
         loadN1Groups(RetrofitClient.client.sparePartsGroup(selectedVehicleVersionID))
 
 
@@ -87,11 +104,12 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.containerFor_search, SparePartSearchFragment()).addToBackStack("Search")
                         .commit()
+
             } else {
                 if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
                     searchStoreQuery(search_product.text.toString())
-                /*else
-                    showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))*/
+                /*  else
+                      showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))*/
 
             }
         }
@@ -168,7 +186,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
     private fun loadN3Groups(call: Call<SpareSubGroupCategoryResponse>, expandedGroupPosition: Int) {
         progress_bar.visibility = View.VISIBLE
-
         call.enqueue(object : Callback<SpareSubGroupCategoryResponse> {
             override fun onFailure(call: Call<SpareSubGroupCategoryResponse>, t: Throwable) {
 
@@ -229,6 +246,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             search_product.setText("")
             supportFragmentManager.popBackStackImmediate()
             containerFor_search.visibility = View.GONE
+            layout_searchview.visibility = View.GONE
         }
     }
 
@@ -242,7 +260,19 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             // send search value to fragment for filter search of discovery or history
-            searchLitener.SearchProduct(s.toString())
+            // searchLitener.SearchProduct(s.toString())
+
+
+            if (s.toString().isBlank()) {
+                containerFor_search.visibility = View.VISIBLE
+                layout_searchview.visibility = View.GONE
+            } else {
+                getDataforSerachaccordingTokeyword(s.toString())
+                containerFor_search.visibility = View.GONE
+                layout_searchview.visibility = View.VISIBLE
+
+
+            }
 
         }
 
@@ -253,6 +283,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
+            layout_searchview.visibility = View.GONE
             supportFragmentManager.popBackStackImmediate()
 
         } else {
@@ -265,4 +296,186 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         this.searchLitener = activityListener; }
 
 
+    private fun getDataforSerachaccordingTokeyword(serachKeyword: String) {
+        RetrofitClient.client.getSearchPartAutocomplete(serachKeyword, getSelectedCar()?.carVersionModel?.idVehicle
+                ?: "").enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                progress_bar.visibility = View.GONE
+
+                val body = response.body()?.string()
+                body?.let {
+
+                    if (isStatusCodeValid(body)) {
+                        val bodyJsonObject = JSONObject(body)
+                        if (bodyJsonObject.has("data") && bodyJsonObject.opt("data") != null && !bodyJsonObject.getString("data").isNullOrBlank() && !bodyJsonObject.getString("data").equals("null")) {
+                            val SearchData = Gson().fromJson<Models.SparePartSearchData>(bodyJsonObject.getString("data"), Models.SparePartSearchData::class.java)
+                            /*  var searchproductlistlocal = ArrayList<Models.Search_SparePart>()
+                              var searchOENlistlocal = ArrayList<Models.Search_OenPart>()
+                              var searchN3Responceslistlocal = ArrayList<Models.Search_N3response>()
+
+                              if (!SearchData.spareParts.isNullOrEmpty()) {
+                                  searchproductlistlocal.addAll(SearchData.spareParts)
+                              }
+                              if (!SearchData.oeResponse.isNullOrEmpty()) {
+                                  searchOENlistlocal.addAll(SearchData.oeResponse)
+                              }
+                              if (!SearchData.n3response.isNullOrEmpty()) {
+                                  searchN3Responceslistlocal.addAll(SearchData.n3response)
+                              }
+
+
+
+                              if (searchproductlistlocal.size > 0) {
+                                  SearchProductList = searchproductlistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
+
+                              }
+                              if (searchN3Responceslistlocal.size > 0) {
+                                  SearchN3PartList = searchN3Responceslistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
+
+                              }
+                              if (searchOENlistlocal.size > 0) {
+                                  SearchOENList = searchOENlistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
+
+                              }*/
+                            SearchProductList.clear()
+                            SearchN3PartList.clear()
+                            SearchOENList.clear()
+                            if (!SearchData.spareParts.isNullOrEmpty()) SearchProductList.addAll(SearchData.spareParts)
+                            if (!SearchData.n3response.isNullOrEmpty()) SearchN3PartList.addAll(SearchData.n3response)
+                            if (!SearchData.oeResponse.isNullOrEmpty()) SearchOENList.addAll(SearchData.oeResponse)
+                            OENSerachBindInView()
+                            PartSerachBindInView()
+                            ProductSerachBindInView()
+                        } else {
+
+                        }
+
+                    } else {
+                        showInfoDialog(getMessageFromJSON(it)) {
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+
+    private fun OENSerachBindInView() {
+
+
+        myadpterOEN = object : RecyclerView.Adapter<Holder>() {
+
+            override fun getItemCount(): Int {
+                return SearchOENList.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.search_preview_layout, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+                holder.itemView.tv_search_item.text = SearchOENList[position].name
+            }
+        }
+        var heightdata = 0
+        if (SearchOENList.size >= 5) {
+            for (i in 0 until 5) {
+                heightdata = layoutheight * 5
+            }
+        } else {
+            for (i in 0 until SearchOENList.size) {
+                heightdata = layoutheight * SearchOENList.size
+            }
+        }
+
+
+        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
+        var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
+        llOEn.layoutParams = param
+
+        rv_OENSearch.adapter = myadpterOEN
+
+
+    }
+
+    private fun PartSerachBindInView() {
+
+
+        myadpterN3Part = object : RecyclerView.Adapter<Holder>() {
+
+            override fun getItemCount(): Int {
+                return SearchN3PartList.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.search_preview_layout, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+                holder.itemView.tv_search_item.text = SearchN3PartList[position].name
+
+            }
+        }
+        var heightdata = 0
+        if (SearchN3PartList.size >= 5) {
+            for (i in 0 until 5) {
+                heightdata = layoutheight * 5
+            }
+        } else {
+            for (i in 0 until SearchN3PartList.size) {
+                heightdata = layoutheight * SearchN3PartList.size
+            }
+        }
+
+        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
+        var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
+        ll_part.layoutParams = param
+        rv_Partearch.adapter = myadpterN3Part
+    }
+
+    private fun ProductSerachBindInView() {
+
+
+        myadpterSparePart = object : RecyclerView.Adapter<Holder>() {
+
+            override fun getItemCount(): Int {
+                return SearchProductList.size
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.search_preview_layout, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+
+                holder.itemView.tv_search_item.text = SearchProductList[position].name
+            }
+        }
+        var heightdata = 0
+        if (SearchProductList.size >= 5) {
+            for (i in 0 until 5) {
+                heightdata = layoutheight * 5
+            }
+        } else {
+            for (i in 0 until SearchProductList.size) {
+                heightdata = layoutheight * SearchProductList.size
+            }
+        }
+
+        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
+        var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
+        ll_product.layoutParams = param
+
+        rv_ProductSearch.adapter = myadpterSparePart
+    }
+
+
+    class Holder(view: View) : RecyclerView.ViewHolder(view)
 }

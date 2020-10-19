@@ -1513,8 +1513,8 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.searchPartAutocomplete)
     fun getSearchPartAutocomplete(
-            @Query(Constant.Path.keyword) categoryType: String,
-            @Query(Constant.Path.version_id) workshopUserDaysId: String
+            @Query(Constant.Path.keyword) search_keyword: String,
+            @Query(Constant.Path.version_id) versionId: String
 
 
     ): Call<ResponseBody>

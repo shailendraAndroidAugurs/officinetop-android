@@ -1,7 +1,6 @@
 package com.officinetop.officine.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,8 @@ import com.officinetop.officine.R
 import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.utils.*
-import kotlinx.android.synthetic.main.item_product_or_workshop_detail.view.*
 import kotlinx.android.synthetic.main.item_tyre.view.*
-import kotlinx.android.synthetic.main.item_tyre.view.Iv_favorite
-import kotlinx.android.synthetic.main.item_tyre.view.item_image
-import kotlinx.android.synthetic.main.item_tyre.view.item_price
-import kotlinx.android.synthetic.main.item_tyre.view.item_rating
-import kotlinx.android.synthetic.main.item_tyre.view.item_rating_count
-import kotlinx.android.synthetic.main.item_tyre.view.item_sub_title
-import kotlinx.android.synthetic.main.item_tyre.view.item_title
-import kotlinx.android.synthetic.main.item_tyre.view.offer_badge
-import kotlinx.android.synthetic.main.item_tyre.view.tv_AppliedCoupon
-import kotlinx.android.synthetic.main.item_tyre.view.tv_couponLabel
 import org.jetbrains.anko.intentFor
-import java.lang.Exception
 
 class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDetailItem>) : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -129,9 +116,9 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             val items: Models.TyreDetailItem = listItems.get(position)
             context.loadImage(items.imageUrl, icon)
 
-            if(items.brand_image.isNullOrBlank()){
-                brand_image.visibility=View.GONE
-            }else{
+            if (items.brand_image.isNullOrBlank()) {
+                brand_image.visibility = View.GONE
+            } else {
                 context.loadImage(items.brand_image, brand_image)
             }
 
@@ -149,7 +136,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 ourDescription.text = items.manufacturer_description
             }
             rating.rating = if (!items.ratingStar.isNullOrEmpty()) items.ratingStar.toFloat() else 0.0F
-            ratingCount.text = if (!items.ratingCount .isNullOrEmpty()) items.ratingCount else ""
+            ratingCount.text = if (!items.ratingCount.isNullOrEmpty()) items.ratingCount else ""
 
             // set tyre icons
             tyreWetGripValue.text = items.wetGrip
@@ -187,11 +174,10 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 }
 
 
-
             }
 
 
-            if(!items.tyreImageURL.isNullOrBlank()){
+            if (!items.tyreImageURL.isNullOrBlank()) {
                 context.loadImage(items.tyreImageURL, tyreTypeIcon)
             }
 
@@ -215,19 +201,19 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 }
 
             }
-            if(!items.tyreSeasonImageURL.isNullOrBlank()){
+            if (!items.tyreSeasonImageURL.isNullOrBlank()) {
                 context.loadImage(items.tyreSeasonImageURL, season_icon)
             }
 
 
-            if (items.couponList != null && items.couponList.size !=0) {
+            if (items.couponList != null && items.couponList.size != 0) {
 
-                AppliedCouponName.text=(items.couponList.get(0).couponTitle)
+                AppliedCouponName.text = (items.couponList.get(0).couponTitle)
                 AppliedCouponName.visibility = View.VISIBLE
-                CouponLabel.visibility=View.VISIBLE
+                CouponLabel.visibility = View.VISIBLE
                 offerBadge.visibility = /*if (p1 % 2 == 0)*/ View.GONE /*else View.GONE*/
             } else {
-                CouponLabel.visibility=View.GONE
+                CouponLabel.visibility = View.GONE
                 AppliedCouponName.visibility = View.GONE
                 offerBadge.visibility = View.GONE
             }
@@ -270,7 +256,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                         context.AddToFavoritesendRquest(context, items.id.toString(), "2", Iv_favorite, items)
                         notifyDataSetChanged()
                     } else {
-                        context.RemoveFromFavoritesendRquest(context, items.id.toString(), Iv_favorite, items,"",null,"2")
+                        context.RemoveFromFavoritesendRquest(context, items.id.toString(), Iv_favorite, items, "", null, "2")
                         notifyDataSetChanged()
                     }
 
