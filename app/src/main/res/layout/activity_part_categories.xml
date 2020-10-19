@@ -18,8 +18,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_white_background"
+            android:background="@color/white"
+            android:drawablePadding="@dimen/_5sdp"
             android:cursorVisible="true"
+            android:drawableLeft="@drawable/ic_search_gray_24dp"
             android:focusable="true"
             android:hint="@string/SearchProducts"
             android:importantForAutofill="no"
@@ -46,7 +48,6 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/Search"
             android:textColor="@color/gray_dark"
-
             android:visibility="gone" />
 
     </LinearLayout>
@@ -60,17 +61,11 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 
+    <include
+        android:id="@+id/layout_searchview"
+        layout="@layout/activity_search_preview"
+        android:visibility="gone" />
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="match_parent"
