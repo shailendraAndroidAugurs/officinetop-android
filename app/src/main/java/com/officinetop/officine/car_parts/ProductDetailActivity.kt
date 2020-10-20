@@ -20,7 +20,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.getSelectedCar
@@ -28,6 +27,7 @@ import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -54,6 +54,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var productIsPair = false
     private var min_price = ""
     private var Deliverydays = ""
+    private var productId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
@@ -63,7 +64,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         initViews()
         setImageSlider()
-        loadProductDetails()
+
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(
                     Constant.Path.productId to selectedProductID.toString(),
@@ -82,118 +83,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun initViews() {
 
         if (intent.hasExtra(Constant.Path.productDetails))
-            productDetails = JSONObject(intent.getStringExtra(Constant.Path.productDetails))
+            productId = intent.getStringExtra(Constant.Path.productDetails)
 
-        productDetails?.let {
-            Log.d("ProductDetailActivity", "initViews: = $it")
-            detail = Gson().fromJson<Models.ProductDetail>(it.toString(), Models.ProductDetail::class.java)
-
-            loadProductDetailApi(detail?.id ?: "")
-            getSimilarProduct(detail?.id ?: "")
-            val json = it
-            if (!detail?.productsName.isNullOrBlank()) {
-                item_number.visibility = View.VISIBLE
-                item_number.text = getString(R.string.itemnumber, detail?.productsName)
-            }
-            val price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
-            else json.optString("seller_price")
-            if (!detail?.forPair.isNullOrBlank() && !detail?.forPair.equals("0")) {
-                Log.d("spare part", "is pair")
-                productIsPair = true
-                item_qty.text = "2"
-            }
-            if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
-                wish_list = intent.getStringExtra(Constant.Key.wishList)
-                if (wish_list == "1")
-                    Iv_favorite.setImageResource(R.drawable.ic_heart)
-                else {
-                    Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                }
-            } else {
-                Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-            }
-
-            Iv_favorite.setOnClickListener {
-
-                add_remove_product__Wishlist()
-
-            }
-            if (detail?.couponList != null && detail?.couponList?.size != 0) {
-                detail?.selectedProductCouponId = (detail?.couponList?.get(0)?.id.toString())
-                AppliedCouponName_SP.text = (detail?.couponList?.get(0)?.couponTitle)
-                AppliedCouponName_SP.visibility = View.VISIBLE
-                CouponLabel_SP.visibility = View.INVISIBLE
-                offerBadge_SP.visibility = View.VISIBLE
-            } else {
-                CouponLabel_SP.visibility = View.GONE
-                AppliedCouponName_SP.visibility = View.GONE
-                offerBadge_SP.visibility = View.GONE
-                detail?.selectedProductCouponId = ""
-            }
-
-            offerBadge_SP.setOnClickListener {
-                if (detail?.couponList != null && detail?.couponList?.size != 0) {
-
-                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>, "workshop_coupon", AppliedCouponName_SP)
-                }
-            }
-
-            if (json.optString("brand_image_url").isNullOrBlank() || json.optString("brand_image_url").equals("null")) {
-                item_brand_image.visibility = View.GONE
-            } else {
-                loadImage(json.optString("brand_image_url"), item_brand_image)
-            }
-            val cartItem = Models.CartItem(name = detail?.productName.toString(),
-                    description = detail?.Productdescription,
-                    price = price?.replace(",", "")?.toDouble() ?: 0.0,
-                    type = Constant.type_product,
-                    productDetail = detail)
-
-
-            Log.d("ProductDetailActivity", "initViews: adding item = $cartItem")
-
-
-
-            add_product_to_cart.setOnClickListener {
-                Log.e("Sparepart Add to cart", "onClickCall:yes")
-                cartItem.quantity = item_qty.text.toString().toInt()
-
-                cartItem.finalPrice = cartItem.price * cartItem.quantity
-                try {
-                    addToCartProducts(this, selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
-                            if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
-
-                            cartItem.description!!, detail!!.usersId)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-            }
-
-            buy_product_with_assembly.setOnClickListener {
-                Log.e("Cartassembly", productDetails.toString())
-                if (productDetails != null) {
-                    cartItem.quantity = item_qty.text.toString().toInt()
-
-                    cartItem.finalPrice = cartItem.price * cartItem.quantity
-                    cartItem.Deliverydays = Deliverydays
-                    Log.e("assembly", cartItem.finalPrice.toString())
-
-                    val myIntent = intentFor<WorkshopListActivity>(
-                            Constant.Key.is_workshop to true,
-                            Constant.Key.is_assembly_service to true,
-                            Constant.Path.productId to selectedProductID,
-                            Constant.Key.productDetail to productDetails?.toString(),
-                            Constant.Key.cartItem to cartItem
-                    )
-                    startActivity(myIntent)
-                }
-            }
-
-            itemQty(cartItem)
-
-
-        }
+        loadProductDetailApi(productId)
+        getSimilarProduct(productId)
 
 
     }
@@ -316,13 +209,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun loadProductDetails() {
-
-        val productDetailsString = intent.getStringExtra(Constant.Path.productDetails)
         var productPrice: Double? = 0.0
-
-        if (productDetailsString != null)
-            productDetails = JSONObject(productDetailsString)
-
         if (productDetails != null) {
             selectedProductID = productDetails!!.optInt("id")
 
@@ -522,15 +409,13 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun loadProductDetailApi(id: String) {
 
-
-        if (id.isEmpty()) {
+        if (id.isNullOrBlank()) {
             Log.e("ProductDetailActivity", "loadProductDetailApi: loadProductDetailApi , invalid id ")
-            3
             return
         }
         val dialog = getProgressDialog(true)
 
-        RetrofitClient.client.productDetail(id)
+        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.version!!, getSelectedCar()?.carMakeModel?.brandID!!)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         dialog.dismiss()
@@ -546,7 +431,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 try {
                                     val productData = JSONObject(body)
                                     if (productData.has("data") && !productData.isNull("data")) {
-                                        val data = JSONObject(JSONObject(it).getString("data"))
+
+                                        setProductDetailData(productData.getString("data"))
+
+                                        val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
                                         if (!min_price.isNullOrBlank()) {
                                             if (productIsPair)
@@ -691,6 +579,122 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                         })
+    }
+
+    private fun setProductDetailData(jsonSring: String) {
+        productDetails = JSONObject(jsonSring)
+
+        productDetails?.let {
+            Log.d("ProductDetailActivity", "initViews: = $it")
+            detail = Gson().fromJson<Models.ProductDetail>(it.toString(), Models.ProductDetail::class.java)
+
+            loadProductDetails()
+            val json = it
+            if (!detail?.productsName.isNullOrBlank()) {
+                item_number.visibility = View.VISIBLE
+                item_number.text = getString(R.string.itemnumber, detail?.productsName)
+            }
+            val price: String? = if (detail?.sellerPrice == "null" || detail?.sellerPrice.isNullOrEmpty()) "0"
+            else json.optString("seller_price")
+            if (!detail?.forPair.isNullOrBlank() && !detail?.forPair.equals("0")) {
+                Log.d("spare part", "is pair")
+                productIsPair = true
+                item_qty.text = "2"
+            }
+            if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
+                wish_list = intent.getStringExtra(Constant.Key.wishList)
+                if (wish_list == "1")
+                    Iv_favorite.setImageResource(R.drawable.ic_heart)
+                else {
+                    Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+                }
+            } else {
+                Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
+            }
+
+            Iv_favorite.setOnClickListener {
+
+                add_remove_product__Wishlist()
+
+            }
+            if (detail?.couponList != null && detail?.couponList?.size != 0) {
+                detail?.selectedProductCouponId = (detail?.couponList?.get(0)?.id.toString())
+                AppliedCouponName_SP.text = (detail?.couponList?.get(0)?.couponTitle)
+                AppliedCouponName_SP.visibility = View.VISIBLE
+                CouponLabel_SP.visibility = View.INVISIBLE
+                offerBadge_SP.visibility = View.VISIBLE
+            } else {
+                CouponLabel_SP.visibility = View.GONE
+                AppliedCouponName_SP.visibility = View.GONE
+                offerBadge_SP.visibility = View.GONE
+                detail?.selectedProductCouponId = ""
+            }
+
+            offerBadge_SP.setOnClickListener {
+                if (detail?.couponList != null && detail?.couponList?.size != 0) {
+
+                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>, "workshop_coupon", AppliedCouponName_SP)
+                }
+            }
+
+            if (json.optString("brand_image_url").isNullOrBlank() || json.optString("brand_image_url").equals("null")) {
+                item_brand_image.visibility = View.GONE
+            } else {
+                loadImage(json.optString("brand_image_url"), item_brand_image)
+            }
+            val cartItem = Models.CartItem(name = detail?.productName.toString(),
+                    description = detail?.Productdescription,
+                    price = price?.replace(",", "")?.toDouble() ?: 0.0,
+                    type = Constant.type_product,
+                    productDetail = detail)
+
+
+            Log.d("ProductDetailActivity", "initViews: adding item = $cartItem")
+
+
+
+            add_product_to_cart.setOnClickListener {
+                Log.e("Sparepart Add to cart", "onClickCall:yes")
+                cartItem.quantity = item_qty.text.toString().toInt()
+
+                cartItem.finalPrice = cartItem.price * cartItem.quantity
+                try {
+                    addToCartProducts(this, selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
+                            if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
+
+                            cartItem.description!!, detail!!.usersId)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            buy_product_with_assembly.setOnClickListener {
+                Log.e("Cartassembly", productDetails.toString())
+                if (productDetails != null) {
+                    cartItem.quantity = item_qty.text.toString().toInt()
+
+                    cartItem.finalPrice = cartItem.price * cartItem.quantity
+                    cartItem.Deliverydays = Deliverydays
+                    Log.e("assembly", cartItem.finalPrice.toString())
+
+                    val myIntent = intentFor<WorkshopListActivity>(
+                            Constant.Key.is_workshop to true,
+                            Constant.Key.is_assembly_service to true,
+                            Constant.Path.productId to selectedProductID,
+                            Constant.Key.productDetail to productDetails?.toString(),
+                            Constant.Key.cartItem to cartItem
+                    )
+                    startActivity(myIntent)
+                }
+            }
+
+            itemQty(cartItem)
+
+
+        }
+
+
     }
 
 }

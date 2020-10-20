@@ -667,7 +667,7 @@ class FragmentHome : Fragment() {
                             p0.itemView.setOnClickListener {
 
                                 startActivity(intentFor<ProductDetailActivity>(
-                                        Constant.Path.productDetails to Gson().toJson(sparePart), Constant.Key.wishList to sparePart.wish_list).forwardResults())
+                                        Constant.Path.productDetails to sparePart.id, Constant.Key.wishList to sparePart.wish_list).forwardResults())
 
                             }
 

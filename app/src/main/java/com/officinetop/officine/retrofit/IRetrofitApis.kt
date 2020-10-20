@@ -1523,4 +1523,16 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.selectedCar)
     fun getselectedUserCar(
             @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
+
+    @GET(Constant.UrlEndPoints.getSparePartDetail)
+    fun getSparePartDetail(
+            @Query(Constant.Path.language) language: String,
+            @Query(Constant.Path.productid) productId: String,
+            @Query(Constant.Path.model) model: String,
+            @Query(Constant.Path.car_version_id) versionId: String,
+            @Query(Constant.Path.maker) search_keyword: String
+
+
+    ): Call<ResponseBody>
+
 }

@@ -9,7 +9,9 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
+import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,7 @@ import com.officinetop.officine.adapter.PartCategoryAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.forwardResults
 import com.officinetop.officine.utils.genericAPICall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_part_categories.*
@@ -105,14 +108,17 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                         .replace(R.id.containerFor_search, SparePartSearchFragment()).addToBackStack("Search")
                         .commit()
 
-            } else {
-                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length > 3)
-                    searchStoreQuery(search_product.text.toString())
-                /*  else
-                      showInfoDialog(getString(R.string.Enterkeywordwithminimumfourcharacters))*/
-
             }
         }
+        search_product.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length >= 2)
+                    searchStoreQuery(search_product.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
         search_product.addTextChangedListener(textWatcher)
 
     }
@@ -247,6 +253,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             supportFragmentManager.popBackStackImmediate()
             containerFor_search.visibility = View.GONE
             layout_searchview.visibility = View.GONE
+            progressbar.visibility = View.GONE
+            rv_partCategory.visibility = View.VISIBLE
         }
     }
 
@@ -266,10 +274,13 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             if (s.toString().isBlank()) {
                 containerFor_search.visibility = View.VISIBLE
                 layout_searchview.visibility = View.GONE
+                progressbar.visibility = View.GONE
+                rv_partCategory.visibility = View.VISIBLE
             } else {
                 getDataforSerachaccordingTokeyword(s.toString())
                 containerFor_search.visibility = View.GONE
                 layout_searchview.visibility = View.VISIBLE
+                rv_partCategory.visibility = View.GONE
 
 
             }
@@ -284,6 +295,8 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             search_product.setText("")
             containerFor_search.visibility = View.GONE
             layout_searchview.visibility = View.GONE
+            progressbar.visibility = View.GONE
+            rv_partCategory.visibility = View.VISIBLE
             supportFragmentManager.popBackStackImmediate()
 
         } else {
@@ -297,6 +310,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
     private fun getDataforSerachaccordingTokeyword(serachKeyword: String) {
+        progressbar.visibility = View.VISIBLE
         RetrofitClient.client.getSearchPartAutocomplete(serachKeyword, getSelectedCar()?.carVersionModel?.idVehicle
                 ?: "").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -304,7 +318,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                progress_bar.visibility = View.GONE
+                progressbar.visibility = View.GONE
 
                 val body = response.body()?.string()
                 body?.let {
@@ -456,6 +470,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             override fun onBindViewHolder(holder: Holder, position: Int) {
 
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
+
+                holder.itemView.setOnClickListener {
+                    startActivity(intentFor<ProductDetailActivity>(
+                            Constant.Path.productDetails to SearchProductList[position].productid).forwardResults())
+                }
             }
         }
         var heightdata = 0

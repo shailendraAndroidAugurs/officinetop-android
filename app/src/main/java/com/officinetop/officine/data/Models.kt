@@ -1931,17 +1931,27 @@ object Models {
 
     data class Search_N3response(
             @SerializedName("name")
-            val name: String
+            val name: String,
+            @SerializedName("search_type")
+            val type: String
     )
 
     data class Search_SparePart(
             @SerializedName("name")
-            val name: String
+            val name: String,
+            @SerializedName("search_type")
+            val type: String,
+            @SerializedName("productid")
+            val productid: String
+
     )
 
     data class Search_OenPart(
             @SerializedName("name")
-            val name: String
+            val name: String,
+            @SerializedName("search_type")
+            val type: String
+
     )
 }
 

@@ -14,6 +14,7 @@ object Constant {
     const val all_advertisement = "all_advertisement"
 
     const val baseUrl = "https://services.officinetop.com/api/"//https://officine.augurstech.com/officineTop/api/
+
     //  const val baseUrl = "http://18.223.98.226/api/"
     const val headerJSON = "Accept: application/json"
     const val domainBaseURL = "https://services.officinetop.com/"//https://officine.augurstech.com/officineTop/
@@ -25,6 +26,7 @@ object Constant {
     const val profileBaseUrl = domainBaseURL + "public/storage/profile_image/"
 
     const val itemProductGroupImageUrl = domainBaseURL + "storage/group_image/"
+
     ///http:\/\/127.0.0.1:8000\/storage\/group_image
     const val pref_selected_car = "selected_car"
     const val pref_login_from = "login_from"
@@ -194,6 +196,7 @@ object Constant {
         const val editTyreMeasurementdetails = "edit_user_tyre_details"
         const val searchPartAutocomplete = "searchPartsAutocomplete"
         const val selectedCar = "selectedCar"
+        const val getSparePartDetail = "spare_part_detail"
 
     }
 
@@ -404,7 +407,7 @@ object Constant {
         const val plateNumber = "plateNumber"
         const val scheduleId = "schedule_id"
         const val keyword = "keyword"
-        const val delivery_prices = "delivery_prices"
+        const val maker = "maker"
 
 
     }

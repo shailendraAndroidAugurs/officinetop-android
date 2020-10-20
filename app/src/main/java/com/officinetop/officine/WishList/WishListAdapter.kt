@@ -52,7 +52,7 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
             if (wishListIterator[position].spareProductDetail != null) {
                 context.startActivity(context.intentFor<ProductDetailActivity>(
-                        Constant.Path.productDetails to Gson().toJson(wishListIterator[position].spareProductDetail).toString(), Constant.Key.wishList to "1").forwardResults())
+                        Constant.Path.productDetails to wishListIterator[position].spareProductDetail?.id, Constant.Key.wishList to "1").forwardResults())
             } else if (wishListIterator[position].tyreProductDetail != null) {
                 val tyreString = Gson().toJson(wishListIterator[position].tyreProductDetail)
                 val selectedData: Models.TyreDetailItem = Gson().fromJson<Models.TyreDetailItem>(tyreString, Models.TyreDetailItem::class.java)
