@@ -7,33 +7,44 @@
 
     <include layout="@layout/include_toolbar" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
         android:background="@color/gray_light"
         android:padding="@dimen/category_margin">
 
         <EditText
             android:id="@+id/search_product"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/white"
-            android:drawablePadding="@dimen/_5sdp"
             android:cursorVisible="true"
             android:drawableLeft="@drawable/ic_search_gray_24dp"
+            android:drawablePadding="@dimen/_5sdp"
             android:focusable="true"
             android:hint="@string/SearchProducts"
+            android:imeOptions="actionSearch"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:padding="@dimen/_5sdp"
+            android:padding="@dimen/_7sdp"
             android:singleLine="true" />
 
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+             />
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_white_background"
+
             android:hint="@string/SearchProducts"
             android:importantForAutofill="no"
             android:inputType="text"
@@ -50,7 +61,7 @@
             android:textColor="@color/gray_dark"
             android:visibility="gone" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <FrameLayout
@@ -68,6 +79,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rv_partCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -110,4 +122,6 @@
             android:layout_gravity="center"
             android:visibility="gone" />
     </RelativeLayout>
+
+
 </LinearLayout>

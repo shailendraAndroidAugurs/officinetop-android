@@ -309,7 +309,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
                 if (!isCarWash && !isWorkshop && !isRevision && !isTyre && !isCarMaintenanceServices && !isQuotesServices && !isMotService && !isSOSAppointment && !isSosEmergency) {
                     mcontext.startActivity(mcontext.intentFor<ProductDetailActivity>(
-                            Constant.Path.productDetails to JSONObject(filteredJSONArray[p1].toString()).toString(), Constant.Key.wishList to productOrWorkshopList[p1].wish_list).forwardResults())
+                            Constant.Path.productDetails to productOrWorkshopList[p1].id, Constant.Key.wishList to productOrWorkshopList[p1].wish_list).forwardResults())
                 } else {
 
                     val json = JSONObject(filteredJSONArray[p1].toString())

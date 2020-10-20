@@ -187,7 +187,7 @@ inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView
                 p0.itemView.setOnClickListener {
 
                     startActivity(intentFor<ProductDetailActivity>(
-                            Constant.Path.productDetails to Gson().toJson(SimilarproductList[p1]), Constant.Key.wishList to SimilarproductList[p1].wish_list).forwardResults())
+                            Constant.Path.productDetails to SimilarproductList[p1].id, Constant.Key.wishList to SimilarproductList[p1].wish_list).forwardResults())
                     finish()
 
                 }
@@ -1133,7 +1133,6 @@ fun DateFormatChangeYearToMonth(date: String): String? {
     }
     return outputString
 }
-
 
 
 
