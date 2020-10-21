@@ -191,7 +191,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
     private fun UpdateAddressFromServer(address_id: String, addressType: String) {
-        RetrofitClient.client.UpdateAddress(this@Addresslist_Activity.getBearerToken(), Address, postalCode, latitude, longitude, address_id, addressType).onCall { networkException, response ->
+        RetrofitClient.client.updateAddress(this@Addresslist_Activity.getBearerToken(), Address, postalCode, latitude, longitude, address_id, addressType).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.AddresUpdateSuccessFully), false, { getUserDetail(this, this) })
@@ -205,7 +205,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
 
     private fun DeleteAddress(address_id: String) {
-        RetrofitClient.client.DeleteAddress(this@Addresslist_Activity.getBearerToken(), address_id).onCall { networkException, response ->
+        RetrofitClient.client.deleteAddress(this@Addresslist_Activity.getBearerToken(), address_id).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.AddressDeletedSuccessFully), false, { getUserDetail(this, this) })

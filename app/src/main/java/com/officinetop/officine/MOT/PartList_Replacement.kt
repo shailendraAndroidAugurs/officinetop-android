@@ -53,7 +53,7 @@ class PartList_Replacement : BaseActivity() {
     private fun N3partList() {
        val progressDialog= getProgressDialog()
         progressDialog.show()
-        RetrofitClient.client.PartListForMotReplacement(n3_services_id,versionId,mottype,getUserId()).onCall { networkException, response ->
+        RetrofitClient.client.partListForMotReplacement(n3_services_id,versionId,mottype,getUserId()).onCall { networkException, response ->
             networkException?.let {
                 progressDialog.dismiss()
             }

@@ -43,7 +43,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.Feedback_List)
 
-        AndroidThreeTen.init(this)
+    //    AndroidThreeTen.init(this)
 
         intent.printValues(localClassName)
 

@@ -12,7 +12,6 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.google.gson.GsonBuilder
@@ -31,7 +30,6 @@ import kotlinx.android.synthetic.main.dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_checkbox.view.*
-import kotlinx.android.synthetic.main.item_dateview_selected.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.design.snackbar
@@ -54,6 +52,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     private var isBestSelling = false
+    private var isSearchPreview = false
     val filterBrandList: MutableList<String> = ArrayList()
     private var selectedFormattedDate = ""
     private var ratingString = ""
@@ -103,8 +102,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         sort_btn.setOnClickListener { sortDialog.show() }
 
         isBestSelling = intent?.getBooleanExtra(Constant.Key.is_best_selling, false) ?: false
-        selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
+        isSearchPreview = intent?.getBooleanExtra(Constant.Key.is_searchPreview, false) ?: false
 
+        selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
+        searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
+        searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
         bindRecyclerView(JSONArray())
         createFilterDialog(progress_bar)
         createSortDialog()
@@ -127,8 +129,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         drawableRight.setBounds(100, 100, 100, 100)
         // products list
-        searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
-        searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
+
         reloadPage()
 
 
@@ -205,53 +206,72 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             CategoryType = "0"
         }
 
-
-
-        RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
-                , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else "")
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        progress_bar.visibility = View.GONE
-                    }
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        try {
-                            progress_bar.visibility = View.GONE
-                            recycler_view.visibility = View.VISIBLE
-
-                            val body = response.body()?.string()
-
-                            body?.let {
-                                if (isStatusCodeValid(body)) {
-                                    val dataSet = getDataSetArrayFromResponse(it)
-                                    bindRecyclerView(dataSet)
-                                    if (brandlist.size == 0) {
-                                        val brandJSONArray = JSONObject(body).getJSONArray("brands")
-                                        val gson = GsonBuilder().create()
-                                        brandlist = gson.fromJson(brandJSONArray.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
-
-
-                                        brandlist.sortBy { it.brandName }
-                                        bindBrandData()
-
-                                    } else {
-                                    }
-                                } else {
-
-
-                                    bindRecyclerView(JSONArray())
-                                    showInfoDialog(getMessageFromJSON(it)) {
-                                        finish()
-                                        logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
-                                    }
-                                }
+        if (isSearchPreview) {
+            searchedCategoryType?.let {
+                RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord,version_id=selectedVehicleVersionID,type= it,coupon = coupon/*,partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
+                        , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else ""*/)
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                progress_bar.visibility = View.GONE
                             }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
 
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                sparepartServerResponces(response)
+                            }
+                        })
+            }
+        } else {
+            RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
+                    , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else "")
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progress_bar.visibility = View.GONE
                         }
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            sparepartServerResponces(response)
+                        }
+                    })
+        }
+
+
+    }
+
+
+    private fun sparepartServerResponces(response: Response<ResponseBody>) {
+        try {
+            progress_bar.visibility = View.GONE
+            recycler_view.visibility = View.VISIBLE
+
+            val body = response.body()?.string()
+
+            body?.let {
+                if (isStatusCodeValid(body)) {
+                    val dataSet = getDataSetArrayFromResponse(it)
+                    bindRecyclerView(dataSet)
+                    if (brandlist.size == 0) {
+                        val brandJSONArray = JSONObject(body).getJSONArray("brands")
+                        val gson = GsonBuilder().create()
+                        brandlist = gson.fromJson(brandJSONArray.toString(), Array<Models.brand>::class.java).toCollection(java.util.ArrayList<Models.brand>())
+                        brandlist.sortBy { it.brandName }
+                        bindBrandData()
+
+                    } else {
                     }
-                })
+                } else {
+
+
+                    bindRecyclerView(JSONArray())
+                    showInfoDialog(getMessageFromJSON(it)) {
+                        finish()
+                        logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
     }
 
     //best selling products
@@ -443,8 +463,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                 priceRangeFinal = -1
                 priceRangeInitial = 0
-                 tempPriceInitial=0
-                 tempPriceFinal=-1
+                tempPriceInitial = 0
+                tempPriceFinal = -1
 
                 //reset rating filter
                 dialog_rating_five.isChecked = false

@@ -1942,7 +1942,9 @@ object Models {
             @SerializedName("search_type")
             val type: String,
             @SerializedName("productid")
-            val productid: String
+            val productid: String,
+            @SerializedName("products_name")
+            val productsName: String
 
     )
 
@@ -1951,6 +1953,8 @@ object Models {
             val name: String,
             @SerializedName("search_type")
             val type: String
+
+
 
     )
 }

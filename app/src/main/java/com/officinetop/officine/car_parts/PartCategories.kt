@@ -112,8 +112,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
         search_product.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length >= 2)
+                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length >= 2){
                     searchStoreQuery(search_product.text.toString())
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.searchedKeyword to search_product.text.toString(),
+                            Constant.Key.searchedCategoryType to null))
+                }
                 return@OnEditorActionListener true
             }
             false
@@ -244,8 +247,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
         }
 
-        startActivity(intentFor<ProductListActivity>(Constant.Key.searchedKeyword to query,
-                Constant.Key.searchedCategoryType to null))
+
         if (containerFor_search.isVisible) {
             val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
             ft.detach(SparePartSearchFragment()).commit()
@@ -327,34 +329,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                         val bodyJsonObject = JSONObject(body)
                         if (bodyJsonObject.has("data") && bodyJsonObject.opt("data") != null && !bodyJsonObject.getString("data").isNullOrBlank() && !bodyJsonObject.getString("data").equals("null")) {
                             val SearchData = Gson().fromJson<Models.SparePartSearchData>(bodyJsonObject.getString("data"), Models.SparePartSearchData::class.java)
-                            /*  var searchproductlistlocal = ArrayList<Models.Search_SparePart>()
-                              var searchOENlistlocal = ArrayList<Models.Search_OenPart>()
-                              var searchN3Responceslistlocal = ArrayList<Models.Search_N3response>()
-
-                              if (!SearchData.spareParts.isNullOrEmpty()) {
-                                  searchproductlistlocal.addAll(SearchData.spareParts)
-                              }
-                              if (!SearchData.oeResponse.isNullOrEmpty()) {
-                                  searchOENlistlocal.addAll(SearchData.oeResponse)
-                              }
-                              if (!SearchData.n3response.isNullOrEmpty()) {
-                                  searchN3Responceslistlocal.addAll(SearchData.n3response)
-                              }
-
-
-
-                              if (searchproductlistlocal.size > 0) {
-                                  SearchProductList = searchproductlistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
-
-                              }
-                              if (searchN3Responceslistlocal.size > 0) {
-                                  SearchN3PartList = searchN3Responceslistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
-
-                              }
-                              if (searchOENlistlocal.size > 0) {
-                                  SearchOENList = searchOENlistlocal.filter { it.name.contains(serachKeyword) || it.name.matches(serachKeyword.toRegex()) } as ArrayList
-
-                              }*/
                             SearchProductList.clear()
                             SearchN3PartList.clear()
                             SearchOENList.clear()
@@ -394,6 +368,12 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchOENList[position].name
+                holder.itemView.setOnClickListener {
+                    searchStoreQuery(SearchOENList[position].name)
+
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type,Constant.Key.searchedKeyword to SearchOENList[position].name))
+
+                }
             }
         }
         var heightdata = 0
@@ -433,7 +413,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchN3PartList[position].name
+                holder.itemView.setOnClickListener { searchStoreQuery(SearchN3PartList[position].name)
 
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type,Constant.Key.searchedKeyword to SearchN3PartList[position].name))
+
+                }
             }
         }
         var heightdata = 0
@@ -472,6 +456,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
 
                 holder.itemView.setOnClickListener {
+                    searchStoreQuery(SearchProductList[position].productsName)
                     startActivity(intentFor<ProductDetailActivity>(
                             Constant.Path.productDetails to SearchProductList[position].productid).forwardResults())
                 }

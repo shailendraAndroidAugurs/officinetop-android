@@ -198,6 +198,8 @@ object Constant {
         const val selectedCar = "selectedCar"
         const val getSparePartDetail = "spare_part_detail"
 
+        const val getSearchSparePartsBykeywords = "searchSparePartsBykeywords"
+
     }
 
     object Key {
@@ -227,6 +229,7 @@ object Constant {
         const val is_revision = "is_revision"
         const val is_tyre = "is_tyre"
         const val is_best_selling = "is_best_selling"
+        const val is_searchPreview = "is_searchPreview"
         const val is_assembly_service = "is_assembly_service"
         const val is_sos_service = "is_sos_service"
         const val is_sos_service_emergency = "is_sos_service_emergency"
@@ -350,6 +353,7 @@ object Constant {
         const val orderid = "order_id"
         const val type = "type"
         const val model = "model"
+        const val coupon = "coupon"
 
         const val ProductOrWorkshopName = "ProductOrWorkshopName"
 

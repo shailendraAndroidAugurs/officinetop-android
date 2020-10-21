@@ -1079,7 +1079,7 @@ class AddVehicleActivity : BaseActivity() {
         }*/
 
         if (getUserId().isNullOrBlank()) {
-            RetrofitClient.client.GetAddCarByPlateNumber(plate_editText.text.toString())
+            RetrofitClient.client.getAddCarByPlateNumber(plate_editText.text.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()

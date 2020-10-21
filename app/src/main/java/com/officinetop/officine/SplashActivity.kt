@@ -42,10 +42,12 @@ class SplashActivity : BaseActivity() {
         setContentView(R.layout.activity_splash)
         // getUserAppSettings()
         initView()
-        logSentFriendRequestEvent()
-        setAutoLogAppEventsEnabled(true)
         FacebookSdk.setAutoInitEnabled(true)
         FacebookSdk.fullyInitialize()
+        logSentFriendRequestEvent()
+        setAutoLogAppEventsEnabled(true)
+
+
 
         Handler().postDelayed({
 
@@ -202,7 +204,7 @@ class SplashActivity : BaseActivity() {
 
     private fun getUserAppSettings() {
         getBearerToken()?.let {
-            RetrofitClient.client.GetUpdatesettings(it).onCall { networkException, response ->
+            RetrofitClient.client.getUpdatesettings(it).onCall { networkException, response ->
                 networkException.let {
                     //ProgressDialog.dismiss()
                 }

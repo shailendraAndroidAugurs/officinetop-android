@@ -471,7 +471,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         bindFeedbackList(list, this)
     }
 
-    private fun displayCoupons(couponsList: MutableList<Models.Coupon>, couponType: String, AppliedCouponName: TextView) {
+    private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {
         val dialog = Dialog(this@ProductDetailActivity)
         val dialogView: View = LayoutInflater.from(this@ProductDetailActivity).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -633,7 +633,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             offerBadge_SP.setOnClickListener {
                 if (detail?.couponList != null && detail?.couponList?.size != 0) {
 
-                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>, "workshop_coupon", AppliedCouponName_SP)
+                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>,  AppliedCouponName_SP)
                 }
             }
 

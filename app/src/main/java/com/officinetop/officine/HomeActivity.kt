@@ -980,7 +980,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun DeleteCartData(car: Models.MyCarDataSet?) {
         getBearerToken()?.let {
-            RetrofitClient.client.RemoveCart(it)
+            RetrofitClient.client.removeCart(it)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

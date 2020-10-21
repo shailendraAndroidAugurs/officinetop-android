@@ -146,7 +146,7 @@ class TyreCustomizationActivity : BaseActivity() {
 
 
             } else if (!IsMeaurementEditId.isNullOrBlank()) {
-                RetrofitClient.client.EditUserTyreDetails(
+                RetrofitClient.client.editUserTyreDetails(
                         getUserId(),
                         vehicleType,
                         seasonType,
