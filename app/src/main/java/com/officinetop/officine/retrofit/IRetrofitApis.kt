@@ -177,10 +177,6 @@ interface IRetrofitApis {
                           @Header("X-Restli-Protocol-Version") protocol: String = "2.0.0"): Call<ResponseBody>
 
 
-    /**
-     * Upload car image API
-     */
-
     @Multipart
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.uploadCarImage)
@@ -327,12 +323,6 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.productqty) productqty: String
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getWorkshopPackageDetail)
-    fun getWorkshopPackageDetail(@Path(Constant.Path.workshopUsersId) workshopUserId: Int, @Path(Constant.Path.categoryId) categoryId: Int,
-                                 @Path(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                                 @Path(Constant.Path.carSize) carSize: String? = "1",
-                                 @Path(Constant.Path.userid) userid: String? = "1",
-                                 @Path(Constant.Path.selectedCarId) selectedCarId: String): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshopPackageDetailNew)
     fun getWorkshopPackageDetailNew(@Query(Constant.Path.workshopUsersId) workshopUserId: Int, @Query(Constant.Path.categoryId) categoryId: Int,
@@ -371,11 +361,6 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getWorkshopPackageDetailWithProductID + "/{productID}")
-    fun getWorkshopPackageDetailWithProductID(@Path(Constant.Path.workshopUsersId) workshopUserId: Int, @Path(Constant.Path.categoryId) categoryId: Int
-                                              , @Path(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-                                              @Path("productID") productID: String): Call<ResponseBody>
-
 
     /** Brands must be comma seperated*/
     @GET(Constant.UrlEndPoints.get_products)
@@ -395,11 +380,6 @@ interface IRetrofitApis {
                       @Query("model") model: String
 
 
-    ): Call<ResponseBody>
-
-    @GET("${Constant.UrlEndPoints.get_product_detail}/{product_id}")
-    fun productDetail(@Path("product_id") productId: String,
-                      @Query("language") language: String = "ENG"
     ): Call<ResponseBody>
 
 
@@ -488,21 +468,11 @@ interface IRetrofitApis {
                                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
-    @FormUrlEncoded
-    @POST(Constant.UrlEndPoints.checkServiceBooking)
-    fun checkServiceBooking(@Field("package_id") packageID: Int,
-                            @Field("start_time") startTime: String,
-                            @Field("end_time") endTime: String,
-                            @Field("price") price: Int,
-                            @Field("selected_date") selectedDate: String,
-                            @Field(Constant.Path.couponId) couponId: String,
-                            @Header("accept") accept: String = "application/json"): Call<ResponseBody>
-
     @GET("selected_car/{selected_car_id}")
     fun selectCar(@Path("selected_car_id") car_id: String,
                   @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.productBrandList)//@Path("type")type:String +"/{type}"
+    @GET(Constant.UrlEndPoints.productBrandList)
     fun getProductBrandList(@Query("type") type: String): Call<ResponseBody>
 
     @POST("search_key/{query}")
@@ -513,9 +483,6 @@ interface IRetrofitApis {
     fun clearSearchKeyWords(@Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
 
 
-    /*
-    * https://officine.augurstech.com/officineTop/api/get_tyre_specification?maker_slug=alfa-romeo&model_slug=145&year=1995
-    * */
     @GET(Constant.UrlEndPoints.getTyreSpecification)
     fun getTyreSpecification(
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
@@ -597,25 +564,6 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-
-    //vehicle_tyre_type=39,41&search_string=2056517&brand=PIRELLI&season_type=36,37&limit=20&favourite=1&offer_coupon&rein_forced&run_flat&price_level=1&price_range=0.0,26.0
-
-
-    /* @Headers(Constant.headerJSON)
-       @GET(Constant.UrlEndPoints.tyre)
-       fun sortFilterTyreList(@Query("tyre_type") tyre_Type : String,
-                    @Query("search_string") search_string: String,
-                    @Query("speed_index") speed_index : String,
-                    @Query("price_level") price_level : String,
-                    @Query(Constant.Path.filterPriceRange) priceRange:String,
-                    @Query("brand") brands:String? = ""):Call<ResponseBody>*/
-
-    @FormUrlEncoded
-    @POST(Constant.UrlEndPoints.workshopAddressInfo)
-    fun getWorkshopAddressInfo(
-            @Field("latitude") latitude: String,
-            @Field("longitude") longitude: String
-    ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getTyreWorkshop)
 
@@ -1033,21 +981,6 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-    /*service_id:[{"part_id":"1","quantity":"1","seller_id":"3","serviceId":1},{"part_id":"2" , "quantity":"1","seller_id":"3","serviceId":2}]
-    version_id:95794
-    language:en
-    selected_date:2020-09-10
-    rating:
-    price_level:1
-    price_range:
-    selected_car_id:15
-    user_id:101*/
-
-
-    @GET(Constant.UrlEndPoints.getAllCoupons)
-    fun getAllCoupons(
-            @Header(Constant.Fields.authorization) authToken: String
-    ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getOrderlist)
     fun getOrderlist(
@@ -1164,12 +1097,12 @@ interface IRetrofitApis {
 
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.updateContact)
-    fun UpdateContact(@Header("Authorization") authToken: String?, @Query("contact_id") ContactId: String,
+    fun updateContact(@Header("Authorization") authToken: String?, @Query("contact_id") ContactId: String,
                       @Query("mobile_no") mobile_no: String): Call<ResponseBody>
 
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.updatenotification)
-    fun Updatesettings(@Header(Constant.Fields.authorization) authToken: String,
+    fun updatesettings(@Header(Constant.Fields.authorization) authToken: String,
                        @Query(Constant.Path.lang) lang: String,
                        @Query(Constant.Path.notification_setting) notification_setting: String,
                        @Query(Constant.Path.notification_for_offer) notification_for_offer: String,
@@ -1187,7 +1120,7 @@ interface IRetrofitApis {
 
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.updateAddress)
-    fun UpdateAddress(@Header("Authorization") authToken: String?,
+    fun updateAddress(@Header("Authorization") authToken: String?,
                       @Query(Constant.Key.address) address: String,
                       @Query(Constant.Key.zip_code) zip_code: String,
                       @Query(Constant.Key.lat) lat: String,
@@ -1196,12 +1129,12 @@ interface IRetrofitApis {
 
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.deleteContact)
-    fun DeleteContact(@Header("Authorization") authToken: String?, @Query("contact_id") ContactId: String): Call<ResponseBody>
+    fun deleteContact(@Header("Authorization") authToken: String?, @Query("contact_id") ContactId: String): Call<ResponseBody>
 
 
     @Headers(Constant.headerJSON)
     @POST(Constant.UrlEndPoints.deleteAddress)
-    fun DeleteAddress(@Header("Authorization") authToken: String?, @Query("address_id") ContactId: String): Call<ResponseBody>
+    fun deleteAddress(@Header("Authorization") authToken: String?, @Query("address_id") ContactId: String): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getCartList)
     fun getCartList(@Header(Constant.Fields.authorization) authToken: String, @Query(Constant.Path.orderId) orderId: String): Call<ResponseBody>
@@ -1226,7 +1159,7 @@ interface IRetrofitApis {
 
 
     @POST(Constant.UrlEndPoints.updateProductQuantity)
-    fun UpdateCartProductQuantity(@Header("Authorization") authToken: String?,
+    fun updateCartProductQuantity(@Header("Authorization") authToken: String?,
                                   @Query(Constant.Path.quantity) quantity: String,
                                   @Query(Constant.Path.productid) productid: String,
                                   @Query(Constant.Path.price) price: String,
@@ -1252,7 +1185,7 @@ interface IRetrofitApis {
 
 
     @POST(Constant.UrlEndPoints.deleteCartItem)
-    fun DeleteCartItem(@Header("Authorization") authToken: String?,
+    fun deleteCartItem(@Header("Authorization") authToken: String?,
                        @Query("book_id") book_id: String,
                        @Query(Constant.Path.total_price) total_price: String,
                        @Query(Constant.Path.type) type: String): Call<ResponseBody>
@@ -1341,29 +1274,25 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getnotificationdetail)
-    fun GetUpdatesettings(
+    fun getUpdatesettings(
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.deleteaccountforcustomer)
-    fun DeleteAccount(
+    fun deleteAccount(
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getbrandcarmaintenance)
-    fun PartList(@Query(Constant.Path.productitem) lang: String
-    ): Call<ResponseBody>
-
 
     @GET(Constant.UrlEndPoints.getPartForMotReplacement)
-    fun PartListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String, @Query(Constant.Path.version_id) version_id: String, @Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
+    fun partListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String, @Query(Constant.Path.version_id) version_id: String, @Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 
     @GET(Constant.UrlEndPoints.removeCartItems)
-    fun RemoveCart(
+    fun removeCart(
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
@@ -1465,15 +1394,6 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-    /* @GET(Constant.UrlEndPoints.carSpareKromedaCall+ "/{versionId}")
-     fun getCarSpareKromedaCall(
-             @Path(Constant.Path.version_id) versionId: String
-     ): Call<ResponseBody>
-     @GET(Constant.UrlEndPoints.carMOTKromedaCall+ "/{versionId}")
-     fun getCarMOTKromedaCall(
-             @Path(Constant.Path.version_id) versionId: String
-     ): Call<ResponseBody>*/
-
 
     @GET(Constant.UrlEndPoints.carMOTKromedaCall + "/{versionId}")
     fun getCarMOTKromedaCall(
@@ -1489,11 +1409,11 @@ interface IRetrofitApis {
 
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.addCarByPlateNumber)
-    fun GetAddCarByPlateNumber(@Field(Constant.Path.plateNumber) plateNumber: String): Call<ResponseBody>
+    fun getAddCarByPlateNumber(@Field(Constant.Path.plateNumber) plateNumber: String): Call<ResponseBody>
 
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.editTyreMeasurementdetails)
-    fun EditUserTyreDetails(@Field("user_id") user_id: String,
+    fun editUserTyreDetails(@Field("user_id") user_id: String,
                             @Field("vehicle_type") vehicle_type: String,
                             @Field("season") season: String,
                             @Field("width") width: Int,
@@ -1535,4 +1455,26 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+
+
+
+    @GET(Constant.UrlEndPoints.getSearchSparePartsBykeywords)
+    fun getSearchSparePartsBykeywords(
+                      @Query(Constant.Path.keyword) keyword: String,
+                      @Query(Constant.Path.version_id) version_id: String,
+                      @Query(Constant.Path.type) type: String,
+                      @Query(Constant.Path.coupon) coupon: String
+                           /*           ,
+                      @Query("language") language: String = "ENG",
+                      @Query("brand") brands: String? = "",
+                      @Query("category_type") categoryType: String?,
+                      @Query("product_keyword") productKeyword: String? = "",
+                      @Query("product_type") product_type: String, @Query("user_id") user_id: String,
+                      @Query("rating_level") ratingLevel: String, @Query("rating_range") ratingRange: String,
+                      @Query("favorite") favorite: String,
+                      @Query("coupon") coupon: String,
+                      @Query("model") model: String*/
+
+
+    ): Call<ResponseBody>
 }

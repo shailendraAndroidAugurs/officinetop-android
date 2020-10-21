@@ -149,7 +149,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun UpdateContactFromServer(mobileNo: String, ContactId: String) {
 
-        RetrofitClient.client.UpdateContact(this@ContactList_Activity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
+        RetrofitClient.client.updateContact(this@ContactList_Activity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactUpdateSuccessFully), false, { getUserDetail(this, this) })
@@ -164,7 +164,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     private fun deleteContact(ContactId: String) {
 
-        RetrofitClient.client.DeleteContact(this@ContactList_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
+        RetrofitClient.client.deleteContact(this@ContactList_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactDeletedSuccessFully), true, { getUserDetail(this, this) })

@@ -14,6 +14,7 @@ import android.view.*
 import android.widget.*
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -170,7 +171,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         createImageSliderDialog()
         //  setImageSlider()
-        AndroidThreeTen.init(this)
+       AndroidThreeTen.init(this)
 
 
         intent.printValues(localClassName)
@@ -551,15 +552,17 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                         val childCount = container.legendLayout.childCount
 
-                        for (index in 0 until childCount) {
+                      /*  for (index in 0 until childCount) {
                             val dynamicViewID = "legendText" + (index + 1)
                             val resourceId = resources.getIdentifier(dynamicViewID, "id", packageName)
 
-                            val textView: TextView = container.legendLayout.findViewById(resourceId) as TextView
+                            val textView = container.legendLayout.findViewById(resourceId) as TextView
                             textView.text = daysOfWeek[index].name.take(3)
                             textView.setTextColorRes(R.color.black)
                             textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12f)
-                        }
+
+
+                        }*/
 
                         month.yearMonth
                     }

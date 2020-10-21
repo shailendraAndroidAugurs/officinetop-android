@@ -509,7 +509,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             price = item.serviceAssemblyProductDescription.price
         }
 
-        RetrofitClient.client.UpdateCartProductQuantity(context.getBearerToken(), selectedQuantity.toString(), productID,
+        RetrofitClient.client.updateCartProductQuantity(context.getBearerToken(), selectedQuantity.toString(), productID,
                 price, totalPrice.toString())
                 .onCall { networkException, response ->
                     response?.let {
@@ -536,7 +536,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
     private fun DeleteCartItem(item: Models.CartDataList, type: String, CartTotalPrice: String) {
 
 
-        RetrofitClient.client.DeleteCartItem(context.getBearerToken(), item.id, CartTotalPrice, type).onCall { networkException, response ->
+        RetrofitClient.client.deleteCartItem(context.getBearerToken(), item.id, CartTotalPrice, type).onCall { networkException, response ->
             response?.let {
 
 

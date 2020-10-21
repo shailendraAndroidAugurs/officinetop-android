@@ -38,7 +38,7 @@ class OfficineApplication : Application() {
 
     private fun getUserAppSettings() {
         getBearerToken()?.let {
-            RetrofitClient.client.GetUpdatesettings(it).onCall { networkException, response ->
+            RetrofitClient.client.getUpdatesettings(it).onCall { networkException, response ->
                 networkException.let {
                     //ProgressDialog.dismiss()
                 }
@@ -67,7 +67,7 @@ class OfficineApplication : Application() {
 
     private fun UpdateSettings(lang: String) {
         getBearerToken()?.let {
-            RetrofitClient.client.Updatesettings(it, lang, "0", "0", "0").onCall { networkException, response ->
+            RetrofitClient.client.updatesettings(it, lang, "0", "0", "0").onCall { networkException, response ->
                 response.let {
                     if (!response?.body().toString().isNullOrEmpty()) {
                         val res = response?.body()

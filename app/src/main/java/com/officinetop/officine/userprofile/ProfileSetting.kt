@@ -185,7 +185,7 @@ class ProfileSetting : BaseActivity() {
 
     private fun UpdateSettings(lang: String) {
         getBearerToken()?.let {
-            RetrofitClient.client.Updatesettings(it, lang, notification, carservices, carRevision).onCall { networkException, response ->
+            RetrofitClient.client.updatesettings(it, lang, notification, carservices, carRevision).onCall { networkException, response ->
                 response.let {
                     if (!response?.body().toString().isNullOrEmpty()) {
                         val res = response?.body()
@@ -207,7 +207,7 @@ class ProfileSetting : BaseActivity() {
     private fun deleteAccount() {
         try {
             getBearerToken()?.let {
-                RetrofitClient.client.DeleteAccount(it).onCall { networkException, response ->
+                RetrofitClient.client.deleteAccount(it).onCall { networkException, response ->
                     response.let {
                         if (!response?.body().toString().isNullOrEmpty()) {
                             val res = response?.body()
@@ -237,7 +237,7 @@ class ProfileSetting : BaseActivity() {
 
         try {
             getBearerToken()?.let {
-                RetrofitClient.client.GetUpdatesettings(it).onCall { networkException, response ->
+                RetrofitClient.client.getUpdatesettings(it).onCall { networkException, response ->
                     networkException.let {
                         //ProgressDialog.dismiss()
                     }
