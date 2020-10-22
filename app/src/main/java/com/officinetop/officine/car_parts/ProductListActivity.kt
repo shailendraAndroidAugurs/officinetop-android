@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.google.gson.GsonBuilder
@@ -19,6 +20,7 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
+import com.officinetop.officine.adapter.PaginationListener
 import com.officinetop.officine.adapter.ProductOrWorkshopListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -90,7 +92,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     lateinit var listAdapter: ProductOrWorkshopListAdapter
     var brandlist = ArrayList<Models.brand>()
-
+    private val PAGE_START = 0
+    private var current_page = PAGE_START
+    private var isLastPage = false
+    private var totalPage = 500
+    private var isLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -120,9 +126,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             progress_bar.layoutParams = params
         }
 
-        app_bar.viewTreeObserver.addOnGlobalLayoutListener {
 
-        }
 
         drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)!!
         drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)!!
@@ -172,8 +176,13 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun loadProductItems() {
 
         val partID = intent.getIntExtra(Constant.Key.partItemID, 0)
+        if (current_page == 0) {
+            progress_bar.visibility = View.VISIBLE
 
-        progress_bar.visibility = View.VISIBLE
+        } else {
+            layoutprogress.visibility = View.VISIBLE
+        }
+        //
 
         bindRecyclerView(JSONArray())
 
@@ -208,7 +217,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         if (isSearchPreview) {
             searchedCategoryType?.let {
-                RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord,version_id=selectedVehicleVersionID,type= it,coupon = coupon/*,partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
+
+                RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon,limit=current_page.toString(),favorite = favorite,user_id = getUserId()/*,partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
                         , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else ""*/)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -240,6 +250,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     private fun sparepartServerResponces(response: Response<ResponseBody>) {
         try {
+            layoutprogress.visibility = View.GONE
             progress_bar.visibility = View.GONE
             recycler_view.visibility = View.VISIBLE
 
@@ -309,17 +320,51 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
+        if (current_page == 0) {
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
 
+        } else {
+            listAdapter?.addItems(productOrWorkshopList)
+        }
+        Log.d("currentPageList", current_page.toString() + " : " + productOrWorkshopList.size.toString())
 
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
+        if (current_page != PAGE_START) listAdapter?.removeLoading()
+        //check if last page or not
+        if (current_page < totalPage) {
+            listAdapter?.addLoading()
+        } else {
+            isLastPage = true
+            listAdapter?.removeLoading()
+        }
+        isLoading = false
+
 
         intent.printValues(localClassName)
 
         if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
             listAdapter.setAssembledProduct(assembledProductDetail)
         }
-
+        val linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
         recycler_view.adapter = listAdapter
+        recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+
+            override fun loadMoreItems() {
+                isLoading = true
+                current_page += 10
+
+                reloadPage()
+            }
+
+            override fun isLastPage(): Boolean {
+                layoutprogress.visibility = View.GONE
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
 
         if (hasRecyclerLoadedOnce)
             return
@@ -432,6 +477,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 distanceRangeInitial = tempDistanceInitial
                 distanceRangeFinal = tempDistanceFinal
 
+                current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
+                listAdapter!!.clear()
+
 
 
                 reloadPage()
@@ -480,6 +528,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                 filterBrandList.clear()
                 bindBrandData(true)
+                current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
+                listAdapter!!.clear()
 
 
                 reloadPage()
@@ -516,6 +566,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                 isPriceLowToHigh = priceIndex == 0
                 isDistanceLowToHigh = distanceIndex == 0
+                current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
+                listAdapter!!.clear()
 
                 reloadPage()
                 dismiss()

@@ -8,11 +8,11 @@
     <include layout="@layout/include_toolbar" />
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
         android:background="@color/gray_light"
+        android:orientation="horizontal"
         android:padding="@dimen/category_margin">
 
         <EditText
@@ -31,15 +31,25 @@
             android:padding="@dimen/_7sdp"
             android:singleLine="true" />
 
+        <ImageView
+            android:id="@+id/iv_cross"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_2sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:src="@drawable/ic_cross" />
 
         <ProgressBar
             android:id="@+id/progressbar"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
-            android:visibility="gone"
             android:layout_alignParentRight="true"
-             />
+            android:layout_marginTop="@dimen/_5sdp"
+            android:visibility="gone" />
+
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"

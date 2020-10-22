@@ -1458,22 +1458,27 @@ interface IRetrofitApis {
 
 
 
-    @GET(Constant.UrlEndPoints.getSearchSparePartsBykeywords)
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.getSearchSparePartsBykeywords)
     fun getSearchSparePartsBykeywords(
-                      @Query(Constant.Path.keyword) keyword: String,
-                      @Query(Constant.Path.version_id) version_id: String,
-                      @Query(Constant.Path.type) type: String,
-                      @Query(Constant.Path.coupon) coupon: String
-                           /*           ,
-                      @Query("language") language: String = "ENG",
-                      @Query("brand") brands: String? = "",
-                      @Query("category_type") categoryType: String?,
-                      @Query("product_keyword") productKeyword: String? = "",
-                      @Query("product_type") product_type: String, @Query("user_id") user_id: String,
-                      @Query("rating_level") ratingLevel: String, @Query("rating_range") ratingRange: String,
-                      @Query("favorite") favorite: String,
-                      @Query("coupon") coupon: String,
-                      @Query("model") model: String*/
+            @Field(Constant.Path.keyword) keyword: String,
+            @Field(Constant.Path.version_id) version_id: String,
+            @Field(Constant.Path.type) type: String,
+            @Field(Constant.Path.coupon) coupon: String,
+            @Field("limit") limit: String,
+            @Field("favorite") favorite: String,
+            @Field("user_id") user_id: String
+
+            /*           ,
+       @Query("language") language: String = "ENG",
+       @Query("brand") brands: String? = "",
+       @Query("category_type") categoryType: String?,
+       @Query("product_keyword") productKeyword: String? = "",
+       @Query("product_type") product_type: String, @Query("user_id") user_id: String,
+       @Query("rating_level") ratingLevel: String, @Query("rating_range") ratingRange: String,
+       @Query("favorite") favorite: String,
+       @Query("coupon") coupon: String,
+       @Query("model") model: String*/
 
 
     ): Call<ResponseBody>

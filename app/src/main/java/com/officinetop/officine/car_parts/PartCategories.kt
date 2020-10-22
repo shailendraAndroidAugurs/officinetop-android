@@ -3,7 +3,10 @@ package com.officinetop.officine.car_parts
 import adapter.SubPartCategoryAdapter
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.BackgroundColorSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -37,31 +40,26 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executors
-
-
 class PartCategories : BaseActivity(), PartCategoryInterface {
     private lateinit var searchLitener: SearchFilterInterface
     private var selectedVehicleVersionID: String = ""
     private var categoryArrayList: JSONArray = JSONArray()
-
     private var subGroupCategoryArrayList: MutableList<DataSetItem?> = ArrayList()
     private var subN3GroupCategoryArrayList: MutableList<DataSetSubGroupCatItem?> = ArrayList()
-
     lateinit var partCategoryAdapter: PartCategoryAdapter
     lateinit var subCategoryAdapter: SubPartCategoryAdapter
     private var previousExpandedGroupPosition: Int = 0
     private var SearchProductList: ArrayList<Models.Search_SparePart> = ArrayList()
     private var SearchN3PartList: ArrayList<Models.Search_N3response> = ArrayList()
     private var SearchOENList: ArrayList<Models.Search_OenPart> = ArrayList()
-
     var layoutheight = 0
     private lateinit var myadpterOEN: RecyclerView.Adapter<Holder>
     private lateinit var myadpterSparePart: RecyclerView.Adapter<Holder>
     private lateinit var myadpterN3Part: RecyclerView.Adapter<Holder>
+    private var searchText = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
-
         selectedVehicleVersionID = getSelectedCar()?.carVersionModel?.idVehicle ?: ""
         Log.d("PartsCategoryActivity", "onCreate: $selectedVehicleVersionID")
         initViews()
@@ -70,7 +68,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
     }
-
 
     private fun initViews() {
         setSupportActionBar(toolbar)
@@ -112,7 +109,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         }
         search_product.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length >= 2){
+                if (search_product.text.toString().isNotEmpty() && search_product.text.toString().length >= 2) {
                     searchStoreQuery(search_product.text.toString())
                     startActivity(intentFor<ProductListActivity>(Constant.Key.searchedKeyword to search_product.text.toString(),
                             Constant.Key.searchedCategoryType to null))
@@ -123,7 +120,15 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         })
 
         search_product.addTextChangedListener(textWatcher)
-
+        iv_cross.setOnClickListener {
+            containerFor_search.visibility = View.VISIBLE
+            layout_searchview.visibility = View.GONE
+            progressbar.visibility = View.GONE
+            rv_partCategory.visibility = View.VISIBLE
+            iv_cross.visibility = View.GONE
+            searchText=""
+            search_product.setText("")
+        }
     }
 
     private fun collapseHeaderGroup() {
@@ -278,8 +283,16 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 layout_searchview.visibility = View.GONE
                 progressbar.visibility = View.GONE
                 rv_partCategory.visibility = View.VISIBLE
+                iv_cross.visibility = View.GONE
             } else {
-                getDataforSerachaccordingTokeyword(s.toString())
+                if (s?.length!! >= 2) {
+                    searchText = s.toString()
+                    iv_cross.visibility = View.VISIBLE
+                    getDataforSerachaccordingTokeyword(s.toString())
+                } else {
+                    iv_cross.visibility = View.GONE
+                }
+
                 containerFor_search.visibility = View.GONE
                 layout_searchview.visibility = View.VISIBLE
                 rv_partCategory.visibility = View.GONE
@@ -368,10 +381,23 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchOENList[position].name
+                if (searchText.length > 0) {
+                    var index: Int = SearchOENList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
+                    val sb = SpannableStringBuilder(SearchOENList[position].name)
+                    while (index > 0) {
+
+                        val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
+                        sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        index = SearchOENList[position].name.indexOf(searchText, index + 1, true)
+                        holder.itemView.tv_search_item.setText(sb)
+                    }
+
+                }
+
                 holder.itemView.setOnClickListener {
                     searchStoreQuery(SearchOENList[position].name)
 
-                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type,Constant.Key.searchedKeyword to SearchOENList[position].name))
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type, Constant.Key.searchedKeyword to SearchOENList[position].name))
 
                 }
             }
@@ -413,9 +439,27 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchN3PartList[position].name
-                holder.itemView.setOnClickListener { searchStoreQuery(SearchN3PartList[position].name)
 
-                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type,Constant.Key.searchedKeyword to SearchN3PartList[position].name))
+                if (searchText.length > 0) {
+                    var index: Int = SearchN3PartList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
+                    val sb = SpannableStringBuilder(SearchN3PartList[position].name)
+                    while (index > 0) {
+
+                        val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
+                        sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        index = SearchN3PartList[position].name.indexOf(searchText, index + 1, true)
+                        holder.itemView.tv_search_item.setText(sb)
+                    }
+
+                }
+
+
+
+
+                holder.itemView.setOnClickListener {
+                    searchStoreQuery(SearchN3PartList[position].name)
+
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type, Constant.Key.searchedKeyword to SearchN3PartList[position].name))
 
                 }
             }
@@ -454,6 +498,19 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             override fun onBindViewHolder(holder: Holder, position: Int) {
 
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
+                if (searchText.length > 0) {
+                    var index: Int = SearchProductList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
+                    val sb = SpannableStringBuilder(SearchProductList[position].name)
+                    while (index > 0) {
+
+                        val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
+                        sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        index = SearchProductList[position].name.indexOf(searchText, index + 1, true)
+                        holder.itemView.tv_search_item.setText(sb)
+                    }
+
+                }
+
 
                 holder.itemView.setOnClickListener {
                     searchStoreQuery(SearchProductList[position].productsName)

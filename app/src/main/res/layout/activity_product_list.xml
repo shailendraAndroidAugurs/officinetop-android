@@ -70,8 +70,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -167,10 +165,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="@color/black"
                         android:drawableLeft="@drawable/ic_sort_black_24dp"
                         android:drawablePadding="5dp"
-                        android:text="@string/map" />
+                        android:text="@string/map"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
 
@@ -178,8 +176,21 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          <include
+              android:layout_above="@+id/layoutprogress"
+              android:id="@+id/layout_recyclerview"
+              layout="@layout/layout_recycler_view" />
+          <include
+              android:layout_below="@+id/layout_recyclerview"
+              android:id="@+id/layoutprogress"
+              layout="@layout/progresslayout_loading"
+              android:visibility="gone" />
 
-        <include layout="@layout/layout_recycler_view" />
+      </RelativeLayout>
+
 
 
     </LinearLayout>

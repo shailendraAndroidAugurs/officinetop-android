@@ -1,9 +1,7 @@
 package com.officinetop.officine.tyre
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -28,7 +26,6 @@ import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
-import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tyre_list.*
 import kotlinx.android.synthetic.main.dialog_rating_tyrefilter.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
@@ -40,7 +37,6 @@ import kotlinx.android.synthetic.main.item_tyre.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -569,7 +565,6 @@ class TyreListActivity : BaseActivity() {
     private fun loadSortedProducts() {
 
         progress_bar.visibility = View.VISIBLE
-
         priceSortLevel = tyreDetail.priceLevel.toInt()
         tyreDetail.priceRange = priceRange
         setTyreDetail(tyreDetail)
@@ -1139,11 +1134,9 @@ class TyreListActivity : BaseActivity() {
                     if (minPrice == maxPrice) {
                         minPrice = 0f
                     }
-                    Log.d("tyre_List", "maxPrices$maxPrice")
-                    Log.d("tyre_List", "minPrices$minPrice")
+
                     if (current_page != PAGE_START) recyclerViewAdapter?.removeLoading()
                     recyclerViewAdapter?.addItems(tyreListItems)
-
                     //check if last page or not
                     if (current_page < totalPage) {
                         recyclerViewAdapter?.addLoading()
@@ -1151,7 +1144,6 @@ class TyreListActivity : BaseActivity() {
                         isLastPage = true
                         recyclerViewAdapter?.removeLoading()
                     }
-                    //if (tyreListItems.size<10) recyclerViewAdapter?.removeLoading()
                     isLoading = false
 
                 }
