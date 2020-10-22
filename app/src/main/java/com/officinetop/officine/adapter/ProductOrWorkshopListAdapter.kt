@@ -3,8 +3,10 @@ package com.officinetop.officine.adapter
 import android.app.Activity
 import android.content.Context
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.BackgroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +16,6 @@ import android.widget.Filterable
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.toolbox.HttpResponse
-import com.google.android.gms.common.util.IOUtils
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
@@ -27,19 +27,9 @@ import com.officinetop.officine.workshop.WorkshopDetailActivity
 import kotlinx.android.synthetic.main.item_product_or_workshop_detail.view.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
-import org.w3c.dom.NodeList
-import java.io.BufferedInputStream
-import java.io.IOException
-import java.io.InputStream
 import java.io.Serializable
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.ProtocolException
-import java.net.URL
 import java.text.DecimalFormat
-import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.math.*
 
 class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
@@ -54,7 +44,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var selectedFormattedDate: String
     var mcontext: Context
     var mView: FilterListInterface
-
+    var searchText = ""
     private var assembledProductDetail = ""
     private var isAssembly = false
     private var isRevision = false
@@ -89,7 +79,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var cartItem: Models.CartItem? = null
     private var currentLatLong: LatLng? = null
     private var mot_type: String = ""
-
+    private val VIEW_TYPE_LOADING: Int = 0
+    private val VIEW_TYPE_NORMAL: Int = 1
+    private var isLoadingVisible = false
     fun setWorkshopCategory(workshopDetail: String) {
         this.workshopCategoryDetail = workshopDetail
     }
@@ -147,8 +139,14 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     }
 
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.item_product_or_workshop_detail, p0, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        when (viewType) {
+            VIEW_TYPE_NORMAL -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product_or_workshop_detail, parent, false))
+            //  VIEW_TYPE_LOADING -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.progresslayout_loading, parent, false))
+            else -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product_or_workshop_detail, parent, false))
+        }
+
+
     }
 
     override fun getItemCount(): Int = getProductOrWorkshopListAdapter()
@@ -289,6 +287,24 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
                 titleString = titleString.replace(" null ", " ")
                 title.text = titleString
+
+                if (searchText.length > 0) {
+                    var index: Int = titleString.toLowerCase().indexOf(searchText.toLowerCase())
+                    val sb = SpannableStringBuilder(titleString)
+                    while (index > 0) {
+
+                        val fcs = BackgroundColorSpan(mcontext.resources.getColor(R.color.theme_orange))
+                        sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        index = titleString.indexOf(searchText, index + 1, true)
+                        title.setText(sb)
+                    }
+
+                }
+
+
+
+
+
                 subtitle.text = "${if (productOrWorkshopList[p1].Productdescription != null) productOrWorkshopList[p1].Productdescription else ""} "
 
                 ll_workshopKm.visibility = View.GONE
@@ -437,13 +453,11 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 if (constraint == null || constraint.isEmpty()) {
                     filteredJSONArray = JSONArray()
                     filteredJSONArray = jsonArray
-
                     filterResults.count = filteredJSONArray.length()
                     filterResults.values = filteredJSONArray
-
-
+                    searchText=""
                 } else {
-
+                    searchText = constraint.toString()
 
                     for (i in 0 until jsonArray.length()) {
                         val json = JSONObject(jsonArray[i].toString())
@@ -669,4 +683,48 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         }
         return result_in_kms
     }*/
+
+    override fun getItemViewType(position: Int): Int {
+        if (isLoadingVisible) {
+            if (position == productOrWorkshopList.size - 1) return VIEW_TYPE_LOADING
+            else return VIEW_TYPE_NORMAL
+        } else
+            return VIEW_TYPE_NORMAL
+    }
+
+    fun addItems(items: MutableList<Models.ProductOrWorkshopList>) {
+        productOrWorkshopList.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addLoading() {
+        isLoadingVisible = true
+
+
+    }
+
+    fun removeLoading() {
+
+        isLoadingVisible = false
+        val position = productOrWorkshopList.size - 1
+        if (position >= 0) {
+            val item: Models.ProductOrWorkshopList = getItem(position)
+            if (item != null) {
+                productOrWorkshopList.removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
+    }
+
+
+    fun clear() {
+        productOrWorkshopList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getItem(position: Int): Models.ProductOrWorkshopList {
+        return productOrWorkshopList.get(position)
+    }
+
+
 }

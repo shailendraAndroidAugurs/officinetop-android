@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder
 import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.MOT.MotListActivity
 import com.officinetop.officine.R
+import com.officinetop.officine.Washing.CarServiceListActivity
 import com.officinetop.officine.adapter.ViewPagerAdapter
 import com.officinetop.officine.car_parts.PartCategories
 import com.officinetop.officine.car_parts.ProductDetailActivity
@@ -37,7 +38,6 @@ import com.officinetop.officine.sos.SOSActivity
 import com.officinetop.officine.tyre.TyreDiameterActivity
 import com.officinetop.officine.tyre.TyreListActivity
 import com.officinetop.officine.utils.*
-import com.officinetop.officine.Washing.CarServiceListActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.item_title
@@ -53,7 +53,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class FragmentHome : Fragment() {
 

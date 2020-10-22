@@ -5,17 +5,17 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var currentPosition : Int? = 0
+    private var currentPosition: Int? = 0
 
     protected abstract fun clear()
 
-    open fun onBind(position : Int){
+    open fun onBind(position: Int) {
         currentPosition = position
         clear()
     }
 
 
-     fun getCurrentPosition(): Int? {
+    fun getCurrentPosition(): Int? {
         return currentPosition
     }
 
