@@ -1,7 +1,5 @@
 package com.officinetop.officine.car_parts
 
-import java.text.FieldPosition
-
 interface PartCategoryInterface {
 
     fun onCategoryClicked(categoryID: Int)
