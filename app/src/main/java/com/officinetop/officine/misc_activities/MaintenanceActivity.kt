@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -17,8 +18,8 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.adapter.GenericAdapter
+import com.officinetop.officine.adapter.PaginationListener
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.getSelectedCar
@@ -26,6 +27,7 @@ import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.databinding.ActivityMaintenanceBinding
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -46,7 +48,6 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 class MaintenanceActivity : BaseActivity() {
-
     private var carMaintenanceServiceList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private lateinit var filterDialog: Dialog
@@ -61,7 +62,7 @@ class MaintenanceActivity : BaseActivity() {
     private var frontRear: String = ""
     private var leftRight: String = ""
     private var maxPrice = 0f
-
+    val arrayListParts = ArrayList<Models.Part>()
     private var selectedServicesTotalPrice: Double = 0.0
     private var genericAdapterParts: GenericAdapter<Models.Part>? = null
     var genericAdapter: GenericAdapter<Models.CarMaintenanceServices>? = null
@@ -70,7 +71,11 @@ class MaintenanceActivity : BaseActivity() {
     var dialog: Dialog? = null
     private var hashMap: HashMap<String, Models.servicesCouponData> = HashMap<String, Models.servicesCouponData>()
     lateinit var checkBox: CheckBox
-
+    private val PAGE_START = 0
+    private var current_page = PAGE_START
+    private var isLastPage = false
+    private var totalPage = 500
+    private var isLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
@@ -304,20 +309,8 @@ class MaintenanceActivity : BaseActivity() {
                     add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), carMaintenanceServiceList[position].productId, 0, position, false)
 
                 } else {
-                    if (carMaintenanceServiceList[position].parts != null && carMaintenanceServiceList[position].parts.size > 0) {
-
-                        if (carMaintenanceServiceList[position].parts.size > 1) {
-                            partsDialog(carMaintenanceServiceList[position].parts)
-                        } else {
-                            getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
-                        }
-
-                        selectservice_position = position
-
-                    } else {
-                        progress_bar.visibility = View.VISIBLE
-                        getAllParts(carMaintenanceServiceList[position].id, position)
-                    }
+                    arrayListParts.clear()
+                    bindReplacementPartOption(position)
                 }
             }
         })
@@ -326,9 +319,29 @@ class MaintenanceActivity : BaseActivity() {
         genericAdapter!!.addItems(carMaintenanceServiceList)
     }
 
+    private fun bindReplacementPartOption(position: Int) {
+        if (carMaintenanceServiceList[position].parts != null && carMaintenanceServiceList[position].parts.size > 0) {
+
+            if (carMaintenanceServiceList[position].parts.size > 1) {
+                partsDialog(carMaintenanceServiceList[position].parts)
+            } else {
+
+                getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
+            }
+
+
+            selectservice_position = position
+
+        } else {
+            progress_bar.visibility = View.VISIBLE
+            getAllParts(carMaintenanceServiceList[position].id, position)
+        }
+    }
+
     private fun getAllParts(serviceId: String, position: Int) {
         try {
-            RetrofitClient.client.kromedaParts(getBearerToken() ?: "", serviceId, getUserId())
+            RetrofitClient.client.kromedaParts(getBearerToken()
+                    ?: "", serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
 
                         networkException?.let { progress_bar.visibility = View.GONE }
@@ -369,7 +382,7 @@ class MaintenanceActivity : BaseActivity() {
     private fun getAllPartsMaintaince(serviceId: String, position: Int) {
         progress_bar.visibility = View.VISIBLE
         try {
-            RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!, serviceId, getUserId())
+            RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!, serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
 
                         networkException?.let { progress_bar.visibility = View.GONE }
@@ -386,14 +399,17 @@ class MaintenanceActivity : BaseActivity() {
                                     val jsonPartsArray = jsonObj.getJSONArray("data_set")
                                     if (jsonPartsArray.length() > 0) {
                                         val arrayListParts = ArrayList<Models.Part>()
-                                        arrayListParts.clear()
+
                                         for (i in 0 until jsonPartsArray.length()) {
                                             val modelPart = Gson().fromJson<Models.Part>(jsonPartsArray.get(i).toString(), Models.Part::class.java)
                                             arrayListParts.add(modelPart)
                                         }
+
+                                        Log.d("currentPageList", current_page.toString() + " : " + arrayListParts.size.toString() + " : " + position.toString())
                                         carMaintenanceServiceList[position].parts = arrayListParts
                                         partsDialog(carMaintenanceServiceList[position].parts)
                                         selectservice_position = position
+
                                         genericAdapter!!.addItems(carMaintenanceServiceList)
                                     }
                                 }
@@ -492,7 +508,30 @@ class MaintenanceActivity : BaseActivity() {
             dialog!!.dismiss()
 
         }
+
+        val linearLayoutManager = LinearLayoutManager(this)
+        view.dialog_recycler_view.layoutManager = linearLayoutManager
         view.dialog_recycler_view.adapter = genericAdapterParts
+        view.dialog_recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+
+            override fun loadMoreItems() {
+                isLoading = true
+                current_page += 10
+                bindReplacementPartOption(selectservice_position)
+
+            }
+
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
+
+
+
         genericAdapterParts!!.addItems(parts)
 
         dialog!!.show()

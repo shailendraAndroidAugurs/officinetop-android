@@ -522,7 +522,7 @@ object Models {
             val forPair: String = "",
 
             @SerializedName("id")
-            val id: String = "",
+            var id: String = "",
             @SerializedName("listino")
             val listino: String = "",
             @SerializedName("price")

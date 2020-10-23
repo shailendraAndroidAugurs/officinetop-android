@@ -726,5 +726,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         return productOrWorkshopList.get(position)
     }
 
+    fun getListSize(): Int{
+       return productOrWorkshopList.size
+    }
 
 }

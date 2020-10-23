@@ -396,7 +396,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 }
 
                 holder.itemView.setOnClickListener {
-                    searchStoreQuery(SearchOENList[position].name)
+                   if(isLoggedIn()){
+                       searchStoreQuery(SearchOENList[position].name)
+                   }
 
                     startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type, Constant.Key.searchedKeyword to SearchOENList[position].name))
 
@@ -458,8 +460,10 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
                 holder.itemView.setOnClickListener {
-                    searchStoreQuery(SearchN3PartList[position].name)
 
+                    if(isLoggedIn()){
+                        searchStoreQuery(SearchN3PartList[position].name)
+                    }
                     startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type, Constant.Key.searchedKeyword to SearchN3PartList[position].name))
 
                 }
@@ -514,7 +518,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
                 holder.itemView.setOnClickListener {
-                    searchStoreQuery(SearchProductList[position].productsName)
+                    if(isLoggedIn()){
+                        searchStoreQuery(SearchProductList[position].productsName)
+                    }
+
+
                     startActivity(intentFor<ProductDetailActivity>(
                             Constant.Path.productDetails to SearchProductList[position].productid).forwardResults())
                 }
