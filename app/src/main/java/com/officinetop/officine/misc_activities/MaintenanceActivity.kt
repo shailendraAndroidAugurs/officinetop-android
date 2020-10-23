@@ -363,6 +363,7 @@ class MaintenanceActivity : BaseActivity() {
                                             val modelPart = Gson().fromJson<Models.Part>(jsonPartsArray.get(i).toString(), Models.Part::class.java)
                                             arrayListParts.add(modelPart)
                                         }
+
                                         carMaintenanceServiceList[position].parts = arrayListParts
                                         partsDialog(carMaintenanceServiceList[position].parts)
                                         selectservice_position = position
