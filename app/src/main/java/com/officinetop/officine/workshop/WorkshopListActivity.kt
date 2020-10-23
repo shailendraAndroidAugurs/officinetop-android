@@ -1,5 +1,4 @@
 package com.officinetop.officine.workshop
-
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -42,8 +41,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
-
 class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
@@ -131,13 +128,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         isCarMaintenanceService = intent?.getBooleanExtra(Constant.Key.is_car_maintenance_service, false)
                 ?: false
         isMotService = intent?.getBooleanExtra(Constant.Key.is_motService, false) ?: false
-
-
         isSOSAppointment = intent?.getBooleanExtra(Constant.Key.is_sos_service, false) ?: false
         isSOSServiceEmergency = intent?.getBooleanExtra(Constant.Key.is_sos_service_emergency, false)
                 ?: false
         isCarWash = intent?.getBooleanExtra(Constant.Key.is_car_wash, false) ?: false
-
         if (intent.hasExtra(Constant.Key.cartItem)) {
 
             // for assembly

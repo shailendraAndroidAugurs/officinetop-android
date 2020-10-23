@@ -22,7 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CarServiceListActivity : BaseActivity() {
-
     var arrayList: MutableList<Models.ServiceCategory> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

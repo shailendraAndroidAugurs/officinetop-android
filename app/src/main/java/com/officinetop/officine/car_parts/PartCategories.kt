@@ -40,6 +40,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executors
+
 class PartCategories : BaseActivity(), PartCategoryInterface {
     private lateinit var searchLitener: SearchFilterInterface
     private var selectedVehicleVersionID: String = ""
@@ -126,7 +127,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             progressbar.visibility = View.GONE
             rv_partCategory.visibility = View.VISIBLE
             iv_cross.visibility = View.GONE
-            searchText=""
+            searchText = ""
             search_product.setText("")
         }
     }

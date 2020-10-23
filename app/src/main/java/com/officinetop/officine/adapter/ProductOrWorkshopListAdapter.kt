@@ -455,7 +455,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     filteredJSONArray = jsonArray
                     filterResults.count = filteredJSONArray.length()
                     filterResults.values = filteredJSONArray
-                    searchText=""
+                    searchText = ""
                 } else {
                     searchText = constraint.toString()
 

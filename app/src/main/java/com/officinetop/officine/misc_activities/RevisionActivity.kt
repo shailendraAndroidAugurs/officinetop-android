@@ -14,10 +14,8 @@ import kotlinx.android.synthetic.main.activity_revision.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
 class RevisionActivity : BaseActivity() {
-
     private lateinit var revisionServiceAdapter: RevisionServiceAdapter
     private var revisionServiceList: MutableList<RevDataSetItem?>? = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_revision)
