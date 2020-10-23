@@ -46,6 +46,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.ceil
 import kotlin.math.floor
+
 class ProductListActivity : BaseActivity(), FilterListInterface {
     private lateinit var drawableLeft: Drawable
     private lateinit var drawableRight: Drawable
@@ -217,8 +218,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         if (isSearchPreview) {
             searchedCategoryType?.let {
 
-                RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon, limit = current_page.toString(), favorite = favorite, user_id = getUserId()/*,partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
-                        , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else ""*/)
+                RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon, limit = current_page.toString(), favorite = favorite, user_id = getUserId()
+                        ,priceRange=if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel=priceSortLevel,brands = filterBrandList.joinToString(","),ratingLevel = ratingLevel, ratingRange = ratingString)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progress_bar.visibility = View.GONE
@@ -270,12 +271,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 } else {
                     bindRecyclerView(JSONArray())
 
-                    // if (!this::listAdapter.isInitialized && listAdapter.getItem == 0) {
-                    showInfoDialog(getMessageFromJSON(it)) {
-                        finish()
-                        logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
+                    if (listAdapter.getListSize() == 0) {
+                        showInfoDialog(getMessageFromJSON(it)) {
+                            finish()
+                            logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
+                        }
                     }
-                    // }
 
                 }
             }
@@ -320,12 +321,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        if (current_page == 0) {
+        if (current_page == 0)
             listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
+        else
+             listAdapter?.addItems(productOrWorkshopList)
 
-        } else {
-            listAdapter?.addItems(productOrWorkshopList)
-        }
         Log.d("currentPageList", current_page.toString() + " : " + productOrWorkshopList.size.toString())
 
         if (current_page != PAGE_START) listAdapter?.removeLoading()

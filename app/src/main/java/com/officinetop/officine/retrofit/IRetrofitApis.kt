@@ -1337,7 +1337,8 @@ interface IRetrofitApis {
     fun kromedaParts(
             @Header(Constant.Fields.authorization) authToken: String,
             @Query("id") id: String,
-            @Query("user_id") user_id: String
+            @Query("user_id") user_id: String,
+            @Query("limit") limit: String
     ): Call<ResponseBody>
 
 
@@ -1390,8 +1391,8 @@ interface IRetrofitApis {
     fun getCarMaintenancePart(
             @Query(Constant.Path.version_id) versionId: String,
             @Query(Constant.Path.serviceid) serviceid: String,
-            @Query(Constant.Path.userid) userid: String
-
+            @Query(Constant.Path.userid) userid: String,
+            @Query("limit") limit: String
     ): Call<ResponseBody>
 
 
@@ -1456,8 +1457,6 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
-
-
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.getSearchSparePartsBykeywords)
     fun getSearchSparePartsBykeywords(
@@ -1467,19 +1466,12 @@ interface IRetrofitApis {
             @Field(Constant.Path.coupon) coupon: String,
             @Field("limit") limit: String,
             @Field("favorite") favorite: String,
-            @Field("user_id") user_id: String
-
-            /*           ,
-       @Query("language") language: String = "ENG",
-       @Query("brand") brands: String? = "",
-       @Query("category_type") categoryType: String?,
-       @Query("product_keyword") productKeyword: String? = "",
-       @Query("product_type") product_type: String, @Query("user_id") user_id: String,
-       @Query("rating_level") ratingLevel: String, @Query("rating_range") ratingRange: String,
-       @Query("favorite") favorite: String,
-       @Query("coupon") coupon: String,
-       @Query("model") model: String*/
-
+            @Field("user_id") user_id: String,
+            @Field(Constant.Path.filterPriceRange) priceRange: String,
+            @Field(Constant.Path.sortPrice) priceSortLevel: Int,
+            @Field("brand") brands: String? = "",
+            @Field("rating_level") ratingLevel: String,
+            @Field("rating_range") ratingRange: String
 
     ): Call<ResponseBody>
 }
