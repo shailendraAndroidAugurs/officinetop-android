@@ -12,12 +12,17 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
-import com.officinetop.officine.data.*
+import com.officinetop.officine.adapter.PaginationListener
+import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -34,8 +39,12 @@ class PartList_Replacement : BaseActivity() {
     private lateinit var versionId: String
     private lateinit var n3_services_id: String
     private lateinit var mottype: String
-
-
+    private val PAGE_START = 0
+    private var current_page = PAGE_START
+    private var isLastPage = false
+    private var totalPage = 500
+    private var isLoading = false
+    lateinit var linearLayoutManager: LinearLayoutManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_list__replacement)
@@ -46,47 +55,56 @@ class PartList_Replacement : BaseActivity() {
         n3_services_id = intent?.getStringExtra("n3_services_Id") ?: ""
         versionId = intent?.getStringExtra("version_id") ?: ""
         mottype = intent?.getStringExtra("Mot_type") ?: ""
-        Log.d("mottype",mottype)
+        Log.d("mottype", mottype)
         N3partList()
     }
 
     private fun N3partList() {
-       val progressDialog= getProgressDialog()
+        val progressDialog = getProgressDialog()
         progressDialog.show()
-        RetrofitClient.client.partListForMotReplacement(n3_services_id,versionId,mottype,getUserId()).onCall { networkException, response ->
+        RetrofitClient.client.partListForMotReplacement(n3_services_id, versionId, mottype, getUserId(), current_page.toString()).onCall { networkException, response ->
             networkException?.let {
                 progressDialog.dismiss()
             }
             response.let {
 
-                    if (response!!.isSuccessful) {
+                if (response!!.isSuccessful) {
+                    val body = JSONObject(response.body()?.string())
+                    if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
+                        progressDialog.dismiss()
+                        for (i in 0 until body.getJSONArray("data_set").length()) {
 
+                            val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
 
-                        val body = JSONObject(response.body()?.string())
-
-                        if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
-                            progressDialog.dismiss()
-                            for (i in 0 until body.getJSONArray("data_set").length()) {
-
-                                val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
-
-                                val carMaintenance = Gson().fromJson<Models.Part>(servicesObj.toString(), Models.Part::class.java)
-                                if (carMaintenance.images != null && carMaintenance.images.size!=0 ) {
-                                    carMaintenance.partimage = carMaintenance.images[0].imageUrl.takeIf { !it.isNullOrEmpty() }!!
-                                }
-                                carMaintenanceServiceList.add(carMaintenance)
+                            val carMaintenance = Gson().fromJson<Models.Part>(servicesObj.toString(), Models.Part::class.java)
+                            if (carMaintenance.images != null && carMaintenance.images.size != 0) {
+                                carMaintenance.partimage = carMaintenance.images[0].imageUrl.takeIf { !it.isNullOrEmpty() }!!
                             }
-                            setAdapter()
+
+                            carMaintenanceServiceList.add(carMaintenance)
                         }
-                        else{
-                            progressDialog.dismiss()
+                        if (body.getJSONArray("data_set").length() < 10) {
+                            isLoading = false
+                        } else {
+                            isLoading = true
+                        }
+                        setAdapter()
+                    } else {
+                        progressDialog.dismiss()
+                        if (carMaintenanceServiceList.size != 0) {
                             showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
                         }
 
-                }else{
-                        progressDialog.dismiss()
+
+                    }
+
+                } else {
+                    progressDialog.dismiss()
+                    if (carMaintenanceServiceList.size != 0) {
                         showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
                     }
+
+                }
 
             }
         }
@@ -104,17 +122,46 @@ class PartList_Replacement : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                if(view.tag=="103"){
+                if (view.tag == "103") {
                     Log.d("partist_Replacement", "listPosition$position")
-                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist,view.findViewById(R.id.Iv_favorite_mot_part),carMaintenanceServiceList[position].id,position)
-                }else{
-                if (carMaintenanceServiceList[position].couponList != null) {
-                    displayCoupons(carMaintenanceServiceList[position].couponList)
-                }}
+                    add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mot_part), carMaintenanceServiceList[position].id, position)
+                } else {
+                    if (carMaintenanceServiceList[position].couponList != null) {
+                        displayCoupons(carMaintenanceServiceList[position].couponList)
+                    }
+                }
             }
         })
-        recycler_view.adapter = genericAdapter
+        if (current_page == 0) {
+            linearLayoutManager = LinearLayoutManager(this)
+            recycler_view.layoutManager = linearLayoutManager
+            recycler_view.adapter = genericAdapter
+        }
+
         genericAdapter.addItems(carMaintenanceServiceList)
+
+
+
+        if (this::linearLayoutManager.isInitialized) {
+            recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    current_page += 10
+
+                    N3partList()
+                }
+
+                override fun isLastPage(): Boolean {
+
+                    return isLastPage
+                }
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
+        }
     }
 
     private fun displayCoupons(couponsList: List<Models.Coupon>) {
@@ -156,9 +203,10 @@ class PartList_Replacement : BaseActivity() {
         }
         dialog.show()
     }
-    private fun add_remove_product__Wishlist(wish_list:String, Iv_favorite: ImageView, ProductId:String, position:Int) {
+
+    private fun add_remove_product__Wishlist(wish_list: String, Iv_favorite: ImageView, ProductId: String, position: Int) {
         try {
-            if (wish_list.isNullOrBlank()||wish_list == "0") {
+            if (wish_list.isNullOrBlank() || wish_list == "0") {
 
                 Log.d("perameterAddtoWishlist", "Productid: $ProductId ")
                 RetrofitClient.client.addToFavorite(getBearerToken()
@@ -176,10 +224,10 @@ class PartList_Replacement : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
 
-                                carMaintenanceServiceList[position].wishlist="1"
+                                carMaintenanceServiceList[position].wishlist = "1"
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName,ProductId,"1","USD",if(!carMaintenanceServiceList[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[position].sellerPrice.toDouble() else 0.0)
+                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }
@@ -203,7 +251,7 @@ class PartList_Replacement : BaseActivity() {
                             val body = JSONObject(body)
                             if (body.has("message")) {
                                 Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                                carMaintenanceServiceList[position].wishlist="0"
+                                carMaintenanceServiceList[position].wishlist = "0"
                                 showInfoDialog(getString(R.string.productRemoved_formWishList))
 
                             }
