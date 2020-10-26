@@ -62,7 +62,7 @@ class MaintenanceActivity : BaseActivity() {
     private var frontRear: String = ""
     private var leftRight: String = ""
     private var maxPrice = 0f
-    val arrayListParts = ArrayList<Models.Part>()
+
     private var selectedServicesTotalPrice: Double = 0.0
     private var genericAdapterParts: GenericAdapter<Models.Part>? = null
     var genericAdapter: GenericAdapter<Models.CarMaintenanceServices>? = null
@@ -76,6 +76,8 @@ class MaintenanceActivity : BaseActivity() {
     private var isLastPage = false
     private var totalPage = 500
     private var isLoading = false
+    lateinit var linearLayoutManager: LinearLayoutManager
+    val ReplacementPartList = ArrayList<Models.Part>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
@@ -220,12 +222,12 @@ class MaintenanceActivity : BaseActivity() {
                     carMaintenanceServiceList[i].CouponTitle = if (carMaintenanceServiceList[i].parts[0].couponList != null && carMaintenanceServiceList[i].parts[0].couponList.size != 0) carMaintenanceServiceList[i].parts[0].couponList[0].couponTitle else ""
                     carMaintenanceServiceList[i].CouponId = if (carMaintenanceServiceList[i].parts[0].couponList != null && carMaintenanceServiceList[i].parts[0].couponList.size != 0) carMaintenanceServiceList[i].parts[0].couponList[0].id else ""
 
+
                     if (carMaintenanceServiceList[i].parts[0].forPair != null) {
                         carMaintenanceServiceList[i].forPair = carMaintenanceServiceList[i].parts[0].forPair
                     } else {
                         carMaintenanceServiceList[i].forPair = ""
                     }
-
 
                     if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) {
                         carMaintenanceServiceList[i].seller_price = if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) carMaintenanceServiceList[i].parts[0].sellerPrice else "0"
@@ -309,7 +311,8 @@ class MaintenanceActivity : BaseActivity() {
                     add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), carMaintenanceServiceList[position].productId, 0, position, false)
 
                 } else {
-                    arrayListParts.clear()
+                    ReplacementPartList.clear()
+                    current_page = PAGE_START
                     bindReplacementPartOption(position)
                 }
             }
@@ -321,18 +324,17 @@ class MaintenanceActivity : BaseActivity() {
 
     private fun bindReplacementPartOption(position: Int) {
         if (carMaintenanceServiceList[position].parts != null && carMaintenanceServiceList[position].parts.size > 0) {
-
-            if (carMaintenanceServiceList[position].parts.size > 1) {
+            /* if (carMaintenanceServiceList[position].parts.size > 1) {
                 partsDialog(carMaintenanceServiceList[position].parts)
             } else {
 
-                getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
-            }
+            }*/
 
-
+            getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
             selectservice_position = position
 
         } else {
+
             progress_bar.visibility = View.VISIBLE
             getAllParts(carMaintenanceServiceList[position].id, position)
         }
@@ -357,17 +359,23 @@ class MaintenanceActivity : BaseActivity() {
                                 if (jsonObj.has("data_set") && jsonObj.get("data_set") is JSONArray && !jsonObj.isNull("data_set")) {
                                     val jsonPartsArray = jsonObj.getJSONArray("data_set")
                                     if (jsonPartsArray.length() > 0) {
-                                        val arrayListParts = ArrayList<Models.Part>()
-                                        arrayListParts.clear()
+
                                         for (i in 0 until jsonPartsArray.length()) {
                                             val modelPart = Gson().fromJson<Models.Part>(jsonPartsArray.get(i).toString(), Models.Part::class.java)
-                                            arrayListParts.add(modelPart)
+                                            ReplacementPartList.add(modelPart)
+                                        }
+                                        if (current_page == 0) {
+                                            partsDialog()
+                                        } else {
+                                            genericAdapterParts!!.notifyDataSetChanged()
                                         }
 
-                                        carMaintenanceServiceList[position].parts = arrayListParts
-                                        partsDialog(carMaintenanceServiceList[position].parts)
+                                        if(carMaintenanceServiceList[position].parts.isNullOrEmpty() && carMaintenanceServiceList[position].parts[0]==null )
+                                        {
+                                            binddataofselectedReplacementPart(0)
+                                        }
                                         selectservice_position = position
-                                        genericAdapter!!.addItems(carMaintenanceServiceList)
+
                                     }
                                 }
                             }
@@ -399,19 +407,25 @@ class MaintenanceActivity : BaseActivity() {
                                 if (jsonObj.has("data_set") && jsonObj.get("data_set") is JSONArray && !jsonObj.isNull("data_set")) {
                                     val jsonPartsArray = jsonObj.getJSONArray("data_set")
                                     if (jsonPartsArray.length() > 0) {
-                                        val arrayListParts = ArrayList<Models.Part>()
+
 
                                         for (i in 0 until jsonPartsArray.length()) {
                                             val modelPart = Gson().fromJson<Models.Part>(jsonPartsArray.get(i).toString(), Models.Part::class.java)
-                                            arrayListParts.add(modelPart)
+                                            ReplacementPartList.add(modelPart)
                                         }
 
-                                        Log.d("currentPageList", current_page.toString() + " : " + arrayListParts.size.toString() + " : " + position.toString())
-                                        carMaintenanceServiceList[position].parts = arrayListParts
-                                        partsDialog(carMaintenanceServiceList[position].parts)
+                                        if (current_page == 0) {
+                                            partsDialog()
+                                        } else {
+                                            genericAdapterParts!!.notifyDataSetChanged()
+                                        }
+                                        if(carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0]==null )
+                                        {
+
+                                            binddataofselectedReplacementPart(0)
+                                        }
                                         selectservice_position = position
 
-                                        genericAdapter!!.addItems(carMaintenanceServiceList)
                                     }
                                 }
                             }
@@ -423,7 +437,7 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    private fun partsDialog(parts: ArrayList<Models.Part>) {
+    private fun partsDialog() {
 
         dialog = Dialog(this)
         val view: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
@@ -443,64 +457,16 @@ class MaintenanceActivity : BaseActivity() {
         genericAdapterParts = GenericAdapter<Models.Part>(this@MaintenanceActivity, R.layout.maintenance_part_dialog)
         genericAdapterParts!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                try {
-                    if (carMaintenanceServiceList[selectservice_position].parts != null) {
-                        carMaintenanceServiceList[selectservice_position].listino = carMaintenanceServiceList[selectservice_position].parts[position].listino
-                        carMaintenanceServiceList[selectservice_position].descrizione = if (carMaintenanceServiceList[selectservice_position].parts[position].Productdescription != null) carMaintenanceServiceList[selectservice_position].parts[position].Productdescription else ""
-                        carMaintenanceServiceList[selectservice_position].productId = carMaintenanceServiceList[selectservice_position].parts[position].id
-                        carMaintenanceServiceList[selectservice_position].usersId = carMaintenanceServiceList[selectservice_position].parts[position].usersId
-                        carMaintenanceServiceList[selectservice_position].couponList = carMaintenanceServiceList[selectservice_position].parts[position].couponList
-
-                        carMaintenanceServiceList[selectservice_position].CouponTitle = if (carMaintenanceServiceList[selectservice_position].parts[position].couponList != null && carMaintenanceServiceList[selectservice_position].parts[position].couponList.size != 0) carMaintenanceServiceList[selectservice_position].parts[position].couponList[0].couponTitle else ""
-                        carMaintenanceServiceList[selectservice_position].CouponId = if (carMaintenanceServiceList[selectservice_position].parts[position].couponList != null && carMaintenanceServiceList[selectservice_position].parts[position].couponList.size != 0) carMaintenanceServiceList[selectservice_position].parts[position].couponList[0].id else ""
-
-                        if (carMaintenanceServiceList[selectservice_position].parts[position].forPair != null) {
-                            carMaintenanceServiceList[selectservice_position].forPair = carMaintenanceServiceList[selectservice_position].parts[position].forPair
-                        } else {
-                            carMaintenanceServiceList[selectservice_position].forPair = ""
-                        }
-
-
-                        if (carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice != null) {
-                            carMaintenanceServiceList[selectservice_position].seller_price = carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice
-                        } else {
-                            carMaintenanceServiceList[selectservice_position].seller_price = "0"
-                        }
-                        if (carMaintenanceServiceList[selectservice_position].parts[position].product_image_url != null) {
-                            carMaintenanceServiceList[selectservice_position].product_image_url = carMaintenanceServiceList[selectservice_position].parts[position].product_image_url
-                        } else {
-                            carMaintenanceServiceList[selectservice_position].product_image_url = ""
-                        }
-
-
-                        if (carMaintenanceServiceList[selectservice_position].parts[position].brandImageURL != null) {
-                            carMaintenanceServiceList[selectservice_position].brandImageURL = carMaintenanceServiceList[selectservice_position].parts[position].brandImageURL
-                        } else {
-                            carMaintenanceServiceList[selectservice_position].brandImageURL = ""
-                        }
-                        if (carMaintenanceServiceList[selectservice_position].parts[position].couponList != null) {
-                            carMaintenanceServiceList[selectservice_position].parts[position].couponList = carMaintenanceServiceList[selectservice_position].parts[position].couponList
-
-                        }
-
-                        carMaintenanceServiceList[selectservice_position].productName = if (carMaintenanceServiceList[selectservice_position].parts[position].productName.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].productName
-                        carMaintenanceServiceList[selectservice_position].rating_star = if (carMaintenanceServiceList[selectservice_position].parts[position].rating_star.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].rating_star
-                        carMaintenanceServiceList[selectservice_position].rating_count = if (carMaintenanceServiceList[selectservice_position].parts[position].rating_count.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].rating_count
-                        carMaintenanceServiceList[selectservice_position].wishlist = if (carMaintenanceServiceList[selectservice_position].parts[position].wishlist.isNullOrEmpty()) "" else carMaintenanceServiceList[selectservice_position].parts[position].wishlist
-
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+              binddataofselectedReplacementPart(position)
                 dialog!!.dismiss()
-                genericAdapter!!.notifyDataSetChanged()
-                Log.e("SELECTPART", Gson().toJson(carMaintenanceServiceList[selectservice_position]).toString())
+
+
 
             }
 
             override fun onItemClick(view: View, position: Int) {
 
-                add_remove_product__Wishlist(carMaintenanceServiceList[selectservice_position].parts[position].wishlist, view.findViewById(R.id.part_Iv_favorite), carMaintenanceServiceList[selectservice_position].parts[position].productId, position, selectservice_position, true)
+                add_remove_product__Wishlist(ReplacementPartList[position].wishlist, view.findViewById(R.id.part_Iv_favorite), ReplacementPartList[position].productId, position, selectservice_position, true)
             }
         })
 
@@ -509,33 +475,87 @@ class MaintenanceActivity : BaseActivity() {
             dialog!!.dismiss()
 
         }
+        if (current_page == 0) {
+            linearLayoutManager = LinearLayoutManager(this)
+            view.dialog_recycler_view.layoutManager = linearLayoutManager
+            view.dialog_recycler_view.adapter = genericAdapterParts
+        }
 
-        val linearLayoutManager = LinearLayoutManager(this)
-        view.dialog_recycler_view.layoutManager = linearLayoutManager
-        view.dialog_recycler_view.adapter = genericAdapterParts
-        view.dialog_recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+        if (this::linearLayoutManager.isInitialized) {
+            view.dialog_recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
 
-            override fun loadMoreItems() {
-                isLoading = true
-                current_page += 10
-                bindReplacementPartOption(selectservice_position)
+                override fun loadMoreItems() {
+                    isLoading = true
+                    current_page += 10
+                    bindReplacementPartOption(selectservice_position)
 
-            }
+                }
 
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
+                override fun isLastPage(): Boolean {
+                    return isLastPage
+                }
 
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
-
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
+        }
 
 
-        genericAdapterParts!!.addItems(parts)
 
+        genericAdapterParts!!.addItems(ReplacementPartList)
+        genericAdapterParts!!.notifyDataSetChanged()
         dialog!!.show()
+    }
+
+    private fun binddataofselectedReplacementPart(position:Int) {
+        try {
+            if (ReplacementPartList.size != 0 && ReplacementPartList[position] != null) {
+                carMaintenanceServiceList[selectservice_position].parts.clear()
+                carMaintenanceServiceList[selectservice_position].parts.add(0, ReplacementPartList[position])
+                carMaintenanceServiceList[selectservice_position].listino = ReplacementPartList[position].listino
+                carMaintenanceServiceList[selectservice_position].descrizione = if (ReplacementPartList[position].Productdescription != null) ReplacementPartList[position].Productdescription else ""
+                carMaintenanceServiceList[selectservice_position].productId = ReplacementPartList[position].id
+                carMaintenanceServiceList[selectservice_position].usersId = ReplacementPartList[position].usersId
+                carMaintenanceServiceList[selectservice_position].couponList = ReplacementPartList[position].couponList
+
+                carMaintenanceServiceList[selectservice_position].CouponTitle = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].couponTitle else ""
+                carMaintenanceServiceList[selectservice_position].CouponId = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].id else ""
+
+                if (ReplacementPartList[position].forPair != null) {
+                    carMaintenanceServiceList[selectservice_position].forPair = ReplacementPartList[position].forPair
+                } else {
+                    carMaintenanceServiceList[selectservice_position].forPair = ""
+                }
+
+
+                if (ReplacementPartList[position].sellerPrice != null) {
+                    carMaintenanceServiceList[selectservice_position].seller_price = ReplacementPartList[position].sellerPrice
+                } else {
+                    carMaintenanceServiceList[selectservice_position].seller_price = "0"
+                }
+                if (ReplacementPartList[position].product_image_url != null) {
+                    carMaintenanceServiceList[selectservice_position].product_image_url = ReplacementPartList[position].product_image_url
+                } else {
+                    carMaintenanceServiceList[selectservice_position].product_image_url = ""
+                }
+
+
+                if (ReplacementPartList[position].brandImageURL != null) {
+                    carMaintenanceServiceList[selectservice_position].brandImageURL = ReplacementPartList[position].brandImageURL
+                } else {
+                    carMaintenanceServiceList[selectservice_position].brandImageURL = ""
+                }
+
+                carMaintenanceServiceList[selectservice_position].productName = if (ReplacementPartList[position].productName.isNullOrEmpty()) "" else ReplacementPartList[position].productName
+                carMaintenanceServiceList[selectservice_position].rating_star = if (ReplacementPartList[position].rating_star.isNullOrEmpty()) "" else ReplacementPartList[position].rating_star
+                carMaintenanceServiceList[selectservice_position].rating_count = if (ReplacementPartList[position].rating_count.isNullOrEmpty()) "" else ReplacementPartList[position].rating_count
+                carMaintenanceServiceList[selectservice_position].wishlist = if (ReplacementPartList[position].wishlist.isNullOrEmpty()) "" else ReplacementPartList[position].wishlist
+                genericAdapter!!.notifyDataSetChanged()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun add_remove_product__Wishlist(wish_list: String, Iv_favorite: ImageView, ProductId: String, position: Int, selectservice_position: Int, frompart: Boolean) {
@@ -556,13 +576,10 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 if (frompart) {
-                                    carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "1"
-                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].parts[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].parts[position].sellerPrice.toDouble() else 0.0)
-
-
+                                    ReplacementPartList[position].wishlist = "1"
+                                    logAddToWishlistEvent(this, ReplacementPartList[position].productName, ProductId, "1", "USD", if (!ReplacementPartList[position].sellerPrice.isNullOrBlank()) ReplacementPartList[position].sellerPrice.toDouble() else 0.0)
                                 } else {
-                                    val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId == ProductId }
-                                    list[0].wishlist = "1"
+                                    carMaintenanceServiceList[selectservice_position].parts[0].wishlist = "1"
                                     logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
                                     carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 }
@@ -593,11 +610,10 @@ class MaintenanceActivity : BaseActivity() {
                                 Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
 
                                 if (frompart) {
-                                    carMaintenanceServiceList[selectservice_position].parts[position].wishlist = "0"
+                                    ReplacementPartList[position].wishlist = "0"
 
                                 } else {
-                                    val list = carMaintenanceServiceList[selectservice_position].parts.filter { it.productId == ProductId }
-                                    list[0].wishlist = "0"
+                                    carMaintenanceServiceList[selectservice_position].parts[0].wishlist = "0"
                                     carMaintenanceServiceList[selectservice_position].wishlist = "0"
 
                                 }
@@ -724,11 +740,6 @@ class MaintenanceActivity : BaseActivity() {
                     if (ratingString.toCharArray()[ratingString.lastIndex] == ',')
                         ratingString = ratingString.substring(0, ratingString.lastIndex).trim()
                 }
-
-
-
-
-
                 priceRangeInitial = tempPriceInitial
                 priceRangeFinal = tempPriceFinal
                 if (!leftRight.isBlank() || !frontRear.isBlank() || !ratingString.isBlank() || priceRangeInitial.toInt() != 0 || priceRangeFinal.toInt() != -1) {

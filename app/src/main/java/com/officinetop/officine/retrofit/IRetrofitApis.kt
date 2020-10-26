@@ -1287,7 +1287,11 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.getPartForMotReplacement)
-    fun partListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String, @Query(Constant.Path.version_id) version_id: String, @Query(Constant.Path.motservicetype) motservicetype: String, @Query("user_id") user_id: String
+    fun partListForMotReplacement(@Query(Constant.Path.N3Service_id) N3Service_id: String,
+                                  @Query(Constant.Path.version_id) version_id: String,
+                                  @Query(Constant.Path.motservicetype) motservicetype: String,
+                                  @Query("user_id") user_id: String,
+                                  @Query("limit") limit: String
     ): Call<ResponseBody>
 
 

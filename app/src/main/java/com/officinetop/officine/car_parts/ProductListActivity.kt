@@ -60,7 +60,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private var ratingString = ""
     private var priceRangeInitial = 0
     private var priceRangeFinal = -1
-
+   lateinit var  linearLayoutManager:LinearLayoutManager
     var tempPriceFinal = -1
     var tempPriceInitial = 0
 
@@ -113,7 +113,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
         searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
         searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
-        bindRecyclerView(JSONArray())
+      //  bindRecyclerView(JSONArray())
         createFilterDialog(progress_bar)
         createSortDialog()
 
@@ -184,7 +184,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }
         //
 
-        bindRecyclerView(JSONArray())
+    //    bindRecyclerView(JSONArray())
 
 
         val priceRangeString = "$priceRangeInitial,${priceRangeFinal}"
@@ -269,9 +269,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                     } else {
                     }
                 } else {
-                    bindRecyclerView(JSONArray())
+                    //bindRecyclerView(JSONArray())
 
-                    if (listAdapter.getListSize() == 0) {
+                    if (!this :: listAdapter.isInitialized  || listAdapter.getListSize() == 0) {
                         showInfoDialog(getMessageFromJSON(it)) {
                             finish()
                             logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
@@ -305,7 +305,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                             val dataSet = getDataSetArrayFromResponse(body)
                             bindRecyclerView(dataSet)
                         } else {
-                            bindRecyclerView(JSONArray())
+                         //   bindRecyclerView(JSONArray())
                             showInfoDialog(getMessageFromJSON(it)) {
                             }
                         }
@@ -321,8 +321,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        if (current_page == 0)
+        if (current_page == 0) {
             listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
+            linearLayoutManager = LinearLayoutManager(this)
+            recycler_view.layoutManager = linearLayoutManager
+            recycler_view.adapter = listAdapter
+        }
         else
              listAdapter?.addItems(productOrWorkshopList)
 
@@ -344,27 +348,27 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
             listAdapter.setAssembledProduct(assembledProductDetail)
         }
-        val linearLayoutManager = LinearLayoutManager(this)
-        recycler_view.layoutManager = linearLayoutManager
-        recycler_view.adapter = listAdapter
-        recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+      if(this::linearLayoutManager.isInitialized ){
+          recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
 
-            override fun loadMoreItems() {
-                isLoading = true
-                current_page += 10
+              override fun loadMoreItems() {
+                  isLoading = true
+                  current_page += 10
 
-                reloadPage()
-            }
+                  reloadPage()
+              }
 
-            override fun isLastPage(): Boolean {
-                layoutprogress.visibility = View.GONE
-                return isLastPage
-            }
+              override fun isLastPage(): Boolean {
+                  layoutprogress.visibility = View.GONE
+                  return isLastPage
+              }
 
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
+              override fun isLoading(): Boolean {
+                  return isLoading
+              }
+          })
+      }
+
 
         if (hasRecyclerLoadedOnce)
             return
