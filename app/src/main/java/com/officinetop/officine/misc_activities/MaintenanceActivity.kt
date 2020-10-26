@@ -222,13 +222,12 @@ class MaintenanceActivity : BaseActivity() {
                     carMaintenanceServiceList[i].CouponTitle = if (carMaintenanceServiceList[i].parts[0].couponList != null && carMaintenanceServiceList[i].parts[0].couponList.size != 0) carMaintenanceServiceList[i].parts[0].couponList[0].couponTitle else ""
                     carMaintenanceServiceList[i].CouponId = if (carMaintenanceServiceList[i].parts[0].couponList != null && carMaintenanceServiceList[i].parts[0].couponList.size != 0) carMaintenanceServiceList[i].parts[0].couponList[0].id else ""
 
+
                     if (carMaintenanceServiceList[i].parts[0].forPair != null) {
                         carMaintenanceServiceList[i].forPair = carMaintenanceServiceList[i].parts[0].forPair
                     } else {
                         carMaintenanceServiceList[i].forPair = ""
                     }
-
-
 
                     if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) {
                         carMaintenanceServiceList[i].seller_price = if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) carMaintenanceServiceList[i].parts[0].sellerPrice else "0"
