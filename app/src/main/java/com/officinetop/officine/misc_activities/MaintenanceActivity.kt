@@ -229,6 +229,7 @@ class MaintenanceActivity : BaseActivity() {
                     }
 
 
+
                     if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) {
                         carMaintenanceServiceList[i].seller_price = if (carMaintenanceServiceList[i].parts[0].sellerPrice != null) carMaintenanceServiceList[i].parts[0].sellerPrice else "0"
                     } else {
