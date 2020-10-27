@@ -213,7 +213,7 @@ class MaintenanceActivity : BaseActivity() {
         }
         try {
             for (i in 0 until carMaintenanceServiceList.size) {
-                if (carMaintenanceServiceList[i].parts != null) {
+                if (carMaintenanceServiceList[i].parts != null && carMaintenanceServiceList[i].parts.size != 0) {
                     // Log.d("Maintenance", "part info" + carMaintenanceServiceList[i].parts[0].listino)
                     carMaintenanceServiceList[i].listino = carMaintenanceServiceList[i].parts[0].listino
                     carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].Productdescription != null) carMaintenanceServiceList[i].parts[0].Productdescription else ""
@@ -246,9 +246,6 @@ class MaintenanceActivity : BaseActivity() {
                     } else {
                         carMaintenanceServiceList[i].brandImageURL = ""
                     }
-
-
-
                     carMaintenanceServiceList[i].productName = carMaintenanceServiceList[i].parts[0].productName
                     carMaintenanceServiceList[i].rating_star = carMaintenanceServiceList[i].parts[0].rating_star
                     carMaintenanceServiceList[i].rating_count = carMaintenanceServiceList[i].parts[0].rating_count
@@ -370,8 +367,7 @@ class MaintenanceActivity : BaseActivity() {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
 
-                                        if(carMaintenanceServiceList[position].parts.isNullOrEmpty() && carMaintenanceServiceList[position].parts[0]==null )
-                                        {
+                                        if (carMaintenanceServiceList[position].parts.isNullOrEmpty() && carMaintenanceServiceList[position].parts[0] == null) {
                                             binddataofselectedReplacementPart(0)
                                         }
                                         selectservice_position = position
@@ -419,8 +415,7 @@ class MaintenanceActivity : BaseActivity() {
                                         } else {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
-                                        if(carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0]==null )
-                                        {
+                                        if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
 
                                             binddataofselectedReplacementPart(0)
                                         }
@@ -457,9 +452,8 @@ class MaintenanceActivity : BaseActivity() {
         genericAdapterParts = GenericAdapter<Models.Part>(this@MaintenanceActivity, R.layout.maintenance_part_dialog)
         genericAdapterParts!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-              binddataofselectedReplacementPart(position)
+                binddataofselectedReplacementPart(position)
                 dialog!!.dismiss()
-
 
 
             }
@@ -508,7 +502,7 @@ class MaintenanceActivity : BaseActivity() {
         dialog!!.show()
     }
 
-    private fun binddataofselectedReplacementPart(position:Int) {
+    private fun binddataofselectedReplacementPart(position: Int) {
         try {
             if (ReplacementPartList.size != 0 && ReplacementPartList[position] != null) {
                 carMaintenanceServiceList[selectservice_position].parts.clear()

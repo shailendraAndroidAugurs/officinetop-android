@@ -158,44 +158,4 @@ class PartsCategoryActivity : BaseActivity() {
     }
 
 
-//    private fun bindRecyclerView(titles: List<String>, partItemID: List<String>) {
-//
-//        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//            val title = view.item_title
-//            val icon = view.item_image
-//            val priceView = view.item_sub_title
-//        }
-//
-//        recycler_view.adapter = object : RecyclerView.Adapter<ViewHolder>() {
-//            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-//                return ViewHolder(layoutInflater.inflate(R.layout.item_category, p0, false))
-//            }
-//
-//            override fun getItemCount(): Int = titles.size
-//
-//            override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-//
-//                p0.title.text = titles[p1]
-//                p0.priceView.visibility = View.GONE
-//
-////                Glide.with(this@PartsCategoryActivity)
-////                        .load(R.drawable.ic_battery)
-////                        .error(R.drawable.ic_placeholder)
-////                        .into(p0.icon)
-//
-//
-//                if (serviceList[p1].itemImages != null && serviceList[p1].itemImages.size > 0)
-//                    loadImageWithName(serviceList[p1].itemImages[0].imageName, p0.icon, R.drawable.ic_battery)
-//
-//                p0.itemView.setOnClickListener {
-//                    startActivity(intentFor<ProductListActivity>(
-//                            Constant.Key.partItemID to partItemID[p1],
-//                            Constant.Key.partCategory to titles[p1]))
-//                }
-//
-//            }
-//
-//        }
-//
-//    }
 }
