@@ -384,9 +384,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 holder.itemView.tv_search_item.text = SearchOENList[position].name
                 if (searchText.length > 0) {
                     var index: Int = SearchOENList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
-                    val sb = SpannableStringBuilder(SearchOENList[position].name)
-                    while (index > 0) {
 
+                    while (index >= 0) {
+                        val sb = SpannableStringBuilder(SearchOENList[position].name)
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchOENList[position].name.indexOf(searchText, index + 1, true)
@@ -445,9 +445,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
                 if (searchText.length > 0) {
                     var index: Int = SearchN3PartList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
-                    val sb = SpannableStringBuilder(SearchN3PartList[position].name)
-                    while (index > 0) {
 
+                    while (index >= 0) {
+                        val sb = SpannableStringBuilder(SearchN3PartList[position].name)
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchN3PartList[position].name.indexOf(searchText, index + 1, true)
@@ -505,9 +505,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
                 if (searchText.length > 0) {
                     var index: Int = SearchProductList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
-                    val sb = SpannableStringBuilder(SearchProductList[position].name)
-                    while (index > 0) {
 
+                    while (index >= 0) {
+                        val sb = SpannableStringBuilder(SearchProductList[position].name)
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchProductList[position].name.indexOf(searchText, index + 1, true)

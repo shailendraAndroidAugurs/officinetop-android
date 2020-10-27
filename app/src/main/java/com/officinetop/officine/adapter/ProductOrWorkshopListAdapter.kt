@@ -291,7 +291,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 if (searchText.length > 0) {
                     var index: Int = titleString.toLowerCase().indexOf(searchText.toLowerCase())
                     val sb = SpannableStringBuilder(titleString)
-                    while (index > 0) {
+                    while (index >= 0) {
 
                         val fcs = BackgroundColorSpan(mcontext.resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)

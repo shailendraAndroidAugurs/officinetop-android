@@ -131,7 +131,6 @@ class AddVehicleActivity : BaseActivity() {
                 else
                     addCarFromFields()
 
-//                showConfirmDialog("Do you want to ${if(isForEdit) "update" else "add"} this car${ if(isForEdit) "" else " to your Virtual Garage"}?") {}
             }
         }
 
@@ -153,19 +152,10 @@ class AddVehicleActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            /*  if (isLoggedIn())
-                  addFromPlate()
-              else
-                  searchFromPlate()
-  //            showConfirmDialog("Do you want to add this car to your Virtual Garage?"){}
-  */
+
             addFromPlate()
         }
 
-
-        //todo temporary
-        title_text.setOnClickListener {
-        }
     }
 
 
