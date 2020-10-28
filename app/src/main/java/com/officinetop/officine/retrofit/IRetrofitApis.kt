@@ -373,11 +373,14 @@ interface IRetrofitApis {
                       @Query("brand") brands: String? = "",
                       @Query("category_type") categoryType: String?,
                       @Query("product_keyword") productKeyword: String? = "",
-                      @Query("product_type") product_type: String, @Query("user_id") user_id: String,
-                      @Query("rating_level") ratingLevel: String, @Query("rating_range") ratingRange: String,
+                      @Query("product_type") product_type: String,
+                      @Query("user_id") user_id: String,
+                      @Query("rating_level") ratingLevel: String,
+                      @Query("rating_range") ratingRange: String,
                       @Query("favorite") favorite: String,
                       @Query("coupon") coupon: String,
-                      @Query("model") model: String
+                      @Query("model") model: String,
+                      @Query("limit") limit: String
 
 
     ): Call<ResponseBody>

@@ -60,10 +60,10 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private var ratingString = ""
     private var priceRangeInitial = 0
     private var priceRangeFinal = -1
-   lateinit var  linearLayoutManager:LinearLayoutManager
+    lateinit var linearLayoutManager: LinearLayoutManager
     var tempPriceFinal = -1
     var tempPriceInitial = 0
-
+    var isfilterApply = false
     private var distanceRangeFinal = 0
     private var distanceRangeInitial = 100
 
@@ -113,7 +113,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
         searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
         searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
-      //  bindRecyclerView(JSONArray())
+        //  bindRecyclerView(JSONArray())
         createFilterDialog(progress_bar)
         createSortDialog()
 
@@ -184,7 +184,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }
         //
 
-    //    bindRecyclerView(JSONArray())
+        //    bindRecyclerView(JSONArray())
 
 
         val priceRangeString = "$priceRangeInitial,${priceRangeFinal}"
@@ -219,7 +219,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             searchedCategoryType?.let {
 
                 RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon, limit = current_page.toString(), favorite = favorite, user_id = getUserId()
-                        ,priceRange=if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel=priceSortLevel,brands = filterBrandList.joinToString(","),ratingLevel = ratingLevel, ratingRange = ratingString)
+                        , priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel = priceSortLevel, brands = filterBrandList.joinToString(","), ratingLevel = ratingLevel, ratingRange = ratingString)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progress_bar.visibility = View.GONE
@@ -232,7 +232,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
         } else {
             RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
-                    , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else "")
+                    , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else "", limit = current_page.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -271,9 +271,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 } else {
                     //bindRecyclerView(JSONArray())
 
-                    if (!this :: listAdapter.isInitialized  || listAdapter.getListSize() == 0) {
+                    if (!this::listAdapter.isInitialized || listAdapter.getListSize() == 0) {
                         showInfoDialog(getMessageFromJSON(it)) {
-                            finish()
+                          if(!isfilterApply) { finish()}
                             logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
                         }
                     }
@@ -305,7 +305,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                             val dataSet = getDataSetArrayFromResponse(body)
                             bindRecyclerView(dataSet)
                         } else {
-                         //   bindRecyclerView(JSONArray())
+                            //   bindRecyclerView(JSONArray())
                             showInfoDialog(getMessageFromJSON(it)) {
                             }
                         }
@@ -326,9 +326,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             linearLayoutManager = LinearLayoutManager(this)
             recycler_view.layoutManager = linearLayoutManager
             recycler_view.adapter = listAdapter
-        }
-        else
-             listAdapter?.addItems(productOrWorkshopList)
+        } else
+            listAdapter?.addItems(productOrWorkshopList)
 
         Log.d("currentPageList", current_page.toString() + " : " + productOrWorkshopList.size.toString())
 
@@ -348,26 +347,26 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
             listAdapter.setAssembledProduct(assembledProductDetail)
         }
-      if(this::linearLayoutManager.isInitialized ){
-          recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+        if (this::linearLayoutManager.isInitialized) {
+            recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
 
-              override fun loadMoreItems() {
-                  isLoading = true
-                  current_page += 10
+                override fun loadMoreItems() {
+                    isLoading = true
+                    current_page += 10
 
-                  reloadPage()
-              }
+                    reloadPage()
+                }
 
-              override fun isLastPage(): Boolean {
-                  layoutprogress.visibility = View.GONE
-                  return isLastPage
-              }
+                override fun isLastPage(): Boolean {
+                    layoutprogress.visibility = View.GONE
+                    return isLastPage
+                }
 
-              override fun isLoading(): Boolean {
-                  return isLoading
-              }
-          })
-      }
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
+        }
 
 
         if (hasRecyclerLoadedOnce)
@@ -484,7 +483,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
                 listAdapter!!.clear()
 
-
+                isfilterApply = true
 
                 reloadPage()
 
@@ -535,7 +534,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
                 listAdapter!!.clear()
 
-
+                isfilterApply = false
                 reloadPage()
 
             }
@@ -572,7 +571,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 isDistanceLowToHigh = distanceIndex == 0
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
                 listAdapter!!.clear()
-
+                isfilterApply = true
                 reloadPage()
                 dismiss()
                 return@setOnMenuItemClickListener true
