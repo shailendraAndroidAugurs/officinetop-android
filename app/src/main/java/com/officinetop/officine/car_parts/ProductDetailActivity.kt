@@ -84,7 +84,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         if (intent.hasExtra(Constant.Path.productDetails))
             productId = intent.getStringExtra(Constant.Path.productDetails)
-
+        selectedProductID = if (!productId.isNullOrBlank()) productId.toInt() else 0
         loadProductDetailApi(productId)
         getSimilarProduct(productId)
 
@@ -633,7 +633,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             offerBadge_SP.setOnClickListener {
                 if (detail?.couponList != null && detail?.couponList?.size != 0) {
 
-                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>,  AppliedCouponName_SP)
+                    displayCoupons(detail?.couponList as MutableList<Models.Coupon>, AppliedCouponName_SP)
                 }
             }
 

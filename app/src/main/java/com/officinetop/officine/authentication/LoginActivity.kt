@@ -75,6 +75,8 @@ class LoginActivity : BaseActivity() {
         initGoogleSignIn()
         initFacebookLogin()
         referralCode = ""
+        disconnectFromFacebook()
+        LoginManager.getInstance().logOut()
 
         continueWithoutLoginBtn.setOnClickListener()
         {
@@ -117,11 +119,10 @@ class LoginActivity : BaseActivity() {
 
             startActivity(intentFor<AddVehicleActivity>().clearTask().clearTop())
 
-        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle"){
+        } else if (loginType == "continueWithoutLogin" && intent != null && intent.hasExtra(Constant.pref_login_from) && intent.getStringExtra(Constant.pref_login_from) == "AddSecondVehicle") {
             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
             finish()
-        }
-        else {
+        } else {
 
             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).clearTask().clearTop().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
             finish()
@@ -371,6 +372,7 @@ class LoginActivity : BaseActivity() {
             negativeButton(getString(R.string.no)) {
                 referralCode = ""
                 if (socialmediaflag == 0) {
+
                     Facebooklogin()
 
                 } else if (socialmediaflag == 1) {
@@ -388,7 +390,7 @@ class LoginActivity : BaseActivity() {
         dialog.setCancelable(false)
         bottomSheet.referralBtn.setOnClickListener {
             referralCode = bottomSheet.edt_referralcode.text.toString()
-            if (referralCode.length > 1) {
+            if (!referralCode.isNullOrBlank()) {
                 if (socialmediaflag == 0) {
                     Facebooklogin()
                 } else if (socialmediaflag == 1) {
@@ -430,8 +432,7 @@ class LoginActivity : BaseActivity() {
         LoginManager.getInstance().logInWithReadPermissions(this,
                 arrayListOf("email", "public_profile", "user_friends"))
 
-        disconnectFromFacebook()
-        LoginManager.getInstance().logOut()
+
         LoginManager.getInstance().registerCallback(facebookCallbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
@@ -481,6 +482,7 @@ class LoginActivity : BaseActivity() {
                             val parameters = Bundle()
                             parameters.putString("fields", "id,name,email,gender, birthday")
                             graphRequest.parameters = parameters
+
                             graphRequest.executeAsync()
 
                         }
