@@ -51,6 +51,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private lateinit var drawableLeft: Drawable
     private lateinit var drawableRight: Drawable
 
+
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     private var isBestSelling = false
