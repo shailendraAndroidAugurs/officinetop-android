@@ -23,6 +23,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
@@ -415,7 +416,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         val dialog = getProgressDialog(true)
 
-        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!)
+        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!,getUserId())
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         dialog.dismiss()
@@ -545,7 +546,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
-                ?: "", "1", productId)
+                ?: "", "1", productId,getUserId())
                 .enqueue(
                         object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -574,7 +575,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                             Log.e("ProductDetailActivity", "onResponse: onResponse", e)
                                         }
                                     }
-                                } else showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again)) { finish() }
+                                }
                             }
 
 

@@ -208,12 +208,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         if (isFavouriteChecked) {
             favorite = "1"
-            CategoryType = "0"
+            //CategoryType = "0"
         }
 
         if (isOfferChecked) {
             coupon = "1"
-            CategoryType = "0"
+            //CategoryType = "0"
         }
 
         if (isSearchPreview) {
@@ -233,7 +233,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
         } else {
             RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
-                    , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModelName != null) getSelectedCar()?.carModelName!! else "", limit = current_page.toString())
+                    , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModel != null) getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear!! else "", limit = current_page.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -274,7 +274,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                     if (!this::listAdapter.isInitialized || listAdapter.getListSize() == 0) {
                         showInfoDialog(getMessageFromJSON(it)) {
-                          if(!isfilterApply) { finish()}
+                            if (!isfilterApply) {
+                                finish()
+                            }
                             logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
                         }
                     }
@@ -485,14 +487,17 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 listAdapter!!.clear()
 
                 isfilterApply = true
+                if (!isLoggedIn() && isFavouriteChecked) {
+                    showInfoDialog(getString(R.string.Products_not_available_at_the_moment))
+                } else {
+                    reloadPage()
+                }
 
-                reloadPage()
 
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
             toolbar.setNavigationOnClickListener { dismiss() }
-
 
             dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
             dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
