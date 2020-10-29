@@ -598,7 +598,7 @@
     <string name="update_contact_number">Update Contact Number</string>
     <string name="deliveryPrices">Delivery Prices</string>
     <string name="petrol">Petrol</string>
-
+    <string name="Products_not_available_at_the_moment">Products not available at the moment !!!</string>
     <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string-array name="home_icon_titles">
         <item>Tyre</item>

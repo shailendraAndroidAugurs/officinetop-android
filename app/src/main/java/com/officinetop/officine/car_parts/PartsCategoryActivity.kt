@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.*
+import com.officinetop.officine.data.getDataSetArrayFromResponse
+import com.officinetop.officine.data.getMessageFromJSON
+import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.loadImageWithName
@@ -38,7 +41,7 @@ class PartsCategoryActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.car_parts)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        selectedVehicleVersionID = getSelectedCar()?.carVersionModel?.idVehicle?:""
+        selectedVehicleVersionID = getSelectedCar()?.carVersionModel?.idVehicle ?: ""
         Log.d("PartsCategoryActivity", "onCreate: $selectedVehicleVersionID")
 
         progress_bar.visibility = View.VISIBLE
@@ -59,21 +62,21 @@ class PartsCategoryActivity : BaseActivity() {
     }
 
 
-    private fun loadGroups(call:Call<ResponseBody>){
-         call.enqueue(object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        progress_bar.visibility = View.GONE
-                    }
+    private fun loadGroups(call: Call<ResponseBody>) {
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                progress_bar.visibility = View.GONE
+            }
 
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        val body = response.body()?.string()
-                        progress_bar.visibility = View.GONE
-                        body?.let {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val body = response.body()?.string()
+                progress_bar.visibility = View.GONE
+                body?.let {
 
 
-                            if (isStatusCodeValid(body)) {
-                                val dataset = getDataSetArrayFromResponse(it)
-                                bindRecyclerView(dataset)
+                    if (isStatusCodeValid(body)) {
+                        val dataset = getDataSetArrayFromResponse(it)
+                        bindRecyclerView(dataset)
 //                                val titles: MutableList<String> = ArrayList()
 //                                val partIDs: MutableList<String> = ArrayList()
 //                                for (i in 0 until dataset.length()) {
@@ -83,20 +86,20 @@ class PartsCategoryActivity : BaseActivity() {
 //                                    partIDs.add(partID)
 //                                }
 //                                bindRecyclerView(titles, partIDs)
-                            } else {
-                                showInfoDialog(getMessageFromJSON(it)) {
-                                    finish()
-                                }
-                            }
+                    } else {
+                        showInfoDialog(getMessageFromJSON(it)) {
+                            finish()
                         }
-
                     }
-                })
+                }
+
+            }
+        })
 
     }
 
 
-    private fun bindRecyclerView(jsonArray:JSONArray) {
+    private fun bindRecyclerView(jsonArray: JSONArray) {
 
         class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
             val title = view.item_title
@@ -120,29 +123,31 @@ class PartsCategoryActivity : BaseActivity() {
                 p0.title.text = jsonDetails.optString("group_name", jsonDetails.optString("item"))
                 p0.priceView.visibility = View.GONE
 
-                if(intent.hasExtra(Constant.Key.is_sub_n3_group)){
+                if (intent.hasExtra(Constant.Key.is_sub_n3_group)) {
                     //n3 group
                     p0.title.text = p0.title.text.toString() + " ${jsonDetails.optString("front_rear")} ${jsonDetails.optString("left_right")}"
                 }
 
 
-                if (jsonDetails.has("images") &&  !jsonDetails.isNull("images") && jsonDetails.getJSONArray("images").length()>0)
+                if (jsonDetails.has("images") && !jsonDetails.isNull("images") && jsonDetails.getJSONArray("images").length() > 0)
                     loadImageWithName(jsonDetails.getJSONArray("images").getJSONObject(0).getString("image_name"),
                             p0.icon, R.drawable.no_image_placeholder,
                             jsonDetails.getJSONArray("images").getJSONObject(0).getString("image_url")
-                            )
+                    )
 
                 p0.itemView.setOnClickListener {
                     val id = jsonDetails.getInt("id")
-                    when{
-                        intent.hasExtra(Constant.Key.is_sub_group)->
+
+                    when {
+                        intent.hasExtra(Constant.Key.is_sub_group) ->
                             startActivity(intentFor<PartsCategoryActivity>(Constant.Key.id to id,
                                     Constant.Key.is_sub_n3_group to true,
                                     Constant.Key.partCategory to jsonDetails.optString("group_name")))
 
-                        intent.hasExtra(Constant.Key.is_sub_n3_group)->
+                        intent.hasExtra(Constant.Key.is_sub_n3_group) ->
                             startActivity(intentFor<ProductListActivity>(
-                                    Constant.Key.partItemID to id))
+                                    Constant.Key.partItemID to id)
+                            )
                         else ->
                             startActivity(intentFor<PartsCategoryActivity>(Constant.Key.id to id,
                                     Constant.Key.is_sub_group to true,

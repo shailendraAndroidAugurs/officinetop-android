@@ -1354,7 +1354,8 @@ interface IRetrofitApis {
             @Header(Constant.Fields.authorization) authToken: String,
             @Query(Constant.Path.version_id) versionId: String,
             @Query(Constant.Path.productType) productType: String,
-            @Query(Constant.Path.productid) productid: String
+            @Query(Constant.Path.productid) productid: String,
+            @Query(Constant.Path.userid) userid: String
     ): Call<ResponseBody>
 
 
@@ -1458,7 +1459,8 @@ interface IRetrofitApis {
             @Query(Constant.Path.productid) productId: String,
             @Query(Constant.Path.model) model: String,
             @Query(Constant.Path.car_version_id) versionId: String,
-            @Query(Constant.Path.maker) search_keyword: String
+            @Query(Constant.Path.maker) search_keyword: String,
+            @Query("user_id") user_id: String
 
 
     ): Call<ResponseBody>

@@ -596,7 +596,7 @@
     <string name="update_contact_number">Update Contact Number</string>
     <string name="deliveryPrices">Prezzi di consegna</string>
     <string name="petrol">Benzina</string>
-
+    <string name="Products_not_available_at_the_moment">Prodotti non disponibili al momento !!!</string>
 
     <string-array name="home_icon_titles">
         <item>Gomme</item>

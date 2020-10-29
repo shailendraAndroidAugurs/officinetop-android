@@ -741,7 +741,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         //val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
-                ?: "", "2", productId)
+                ?: "", "2", productId,getUserId())
                 .enqueue(
                         object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
