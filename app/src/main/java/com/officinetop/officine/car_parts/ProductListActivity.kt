@@ -499,7 +499,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
             toolbar.setNavigationOnClickListener { dismiss() }
 
-
             dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
             dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
 
