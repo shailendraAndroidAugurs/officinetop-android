@@ -1,5 +1,6 @@
 package com.officinetop.officine.retrofit
 
+import com.google.gson.JsonObject
 import com.officinetop.officine.data.*
 import com.officinetop.officine.utils.Constant
 import okhttp3.MultipartBody
@@ -10,6 +11,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface IRetrofitApis {
+
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.login)
     fun login(@Field("email") email: String,
@@ -1483,4 +1485,10 @@ interface IRetrofitApis {
             @Field("rating_range") ratingRange: String
 
     ): Call<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+
+    @POST("login/Login")
+    fun logindata( @Body  body: JsonObject): Call<String>
+
 }

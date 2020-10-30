@@ -78,6 +78,7 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
                 if (productFeedbackList[p1].ProductFeedbackDetail!=null && !productFeedbackList[p1].ProductFeedbackDetail.product_name.isNullOrBlank()) {
                     p0.itemView.tv_NameofProductorWorkshop.text = productFeedbackList[p1].ProductFeedbackDetail.product_name
+                    Log.d("productname",productFeedbackList[p1].ProductFeedbackDetail.product_name)
                 } else {
                     p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
                 }

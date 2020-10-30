@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.Orders.Order_List
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GridItemDecoration
 import com.officinetop.officine.adapter.QuotesGridAdapter
@@ -21,6 +22,9 @@ import kotlinx.android.synthetic.main.add_fedback_layout.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.io.OutputStream
 import okhttp3.MultipartBody
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -34,15 +38,13 @@ class FeedbackAddActivity : BaseActivity() {
     private var attachedImagePath: String? = null
     private var imagesList: MutableList<String> = ArrayList()//to bind in adapter view
     private var imagesAdapter: QuotesGridAdapter? = null
-    private var mianCategoryID: String? = ""
 
     private var images: MutableList<String> = ArrayList()//to send with api
-    private var imagesFile: MutableList<String> = ArrayList()//to send with api
 
     private var workshopId: String = ""
     private var productId: String = ""
     private var sellerId: String = ""
-    private var Orderstatus: String = ""
+
 
     private var mainCategoryId: String = ""
     private var orderid: String = ""
@@ -256,10 +258,15 @@ class FeedbackAddActivity : BaseActivity() {
                             val data = JSONObject(body)
                             if (data.has("message") && !data.isNull("message")) {
                                 showInfoDialog(data.get("message").toString())
-                                // startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                if (withoutPurchase.isNullOrBlank()) {
+                                    startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                }
+
+
+
                                 finish()
                                 logRateEvent(this, if (type.equals("1")) "product" else if (type.equals("2")) "workshop" else "workshop with product", productorWorkshopName, if (workshopId.equals("")) productId else workshopId, 5, ratings.rating.toDouble())
-                                Log.d("Feedback", "yes")
+
                             }
 
                             imagesList.clear()

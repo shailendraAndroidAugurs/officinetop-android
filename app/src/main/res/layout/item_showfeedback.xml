@@ -7,9 +7,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="5dp">
 
-    <LinearLayout
-
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
@@ -36,42 +34,42 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="5"
-                android:orientation="vertical"
-                android:weightSum="2">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_3sdp"
                     android:weightSum="3">
 
                     <TextView
-                        android:textSize="@dimen/_10sdp"
                         android:id="@+id/tv_userName"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10sdp">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/tv_product_type"
                         android:layout_width="0dp"
-                        android:textSize="@dimen/_10sdp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10sdp">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/tv_date"
                         android:layout_width="0dp"
-                        android:textSize="@dimen/_10sdp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10sdp">
 
                     </TextView>
 
@@ -79,25 +77,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1">
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:weightSum="2">
 
                     <com.officinetop.officine.utils.CustomRatingBar
                         android:id="@+id/ratngbar_ratingFeedback"
                         style="@style/custom_ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_10sdp"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
-                        android:gravity="center" />
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/tv_NameofProductorWorkshop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
                         android:gravity="center"
-                        android:padding="@dimen/_5sdp"
-                        android:textColor="@color/colorPrimaryDark"/>
+                        android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -127,19 +127,16 @@
         </LinearLayout>
 
 
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feedbackImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="horizontal"
-            android:scrollIndicators="end"
-            android:overScrollMode="ifContentScrolls"
             android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollIndicators="end"
+            android:scrollbars="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
 
     </LinearLayout>
