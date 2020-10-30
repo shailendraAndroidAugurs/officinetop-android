@@ -177,7 +177,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
                     if (min_price != "") {
-                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
+                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).roundTo2Places().toString())})"
                     }
                 }
             }
@@ -191,7 +191,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     qty_text -= 2
                     item_qty.text = (qty_text).toString()
                     if (min_price != "") {
-                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
+                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).roundTo2Places().toString())})"
                     }
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
 
@@ -200,7 +200,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     item_qty.text = qty_text.toString()
                     productTotalPrices.text = getString(R.string.tyre_price_total, (cartItem.price.toFloat().toDouble().roundTo2Places() * qty_text.toDouble()).toDouble().roundTo2Places().toString())
                     if (min_price != "") {
-                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).toString())})"
+                        buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble() * qty_text).roundTo2Places().toString())})"
                     }
                 }
             }
@@ -416,7 +416,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         val dialog = getProgressDialog(true)
 
-        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!,getUserId())
+        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId())
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         dialog.dismiss()
@@ -546,7 +546,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
-                ?: "", "1", productId,getUserId())
+                ?: "", "1", productId, getUserId())
                 .enqueue(
                         object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

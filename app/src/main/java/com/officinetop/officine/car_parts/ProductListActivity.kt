@@ -248,7 +248,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
     }
 
-
     private fun sparepartServerResponces(response: Response<ResponseBody>) {
         try {
             layoutprogress.visibility = View.GONE
