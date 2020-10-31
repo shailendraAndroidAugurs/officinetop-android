@@ -1,5 +1,6 @@
 package com.officinetop.officine.misc_activities
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.places.api.model.Place
@@ -49,7 +51,7 @@ class LocationActivity : BaseActivity() {
     private var countryName: String? = null
     private var stateName: String? = null
     private var streetName: String? = null
-    private var isAutomaticLocationSave=false
+    private var isAutomaticLocationSave = false
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +71,7 @@ class LocationActivity : BaseActivity() {
         getSavedUserLocation()
 
         locationBtn.setOnClickListener {
-            isAutomaticLocationSave=true
+            isAutomaticLocationSave = true
             getcurrentLocation()
         }
 
@@ -95,7 +97,6 @@ class LocationActivity : BaseActivity() {
                                     cap.setText(dataModels.countryName ?: "")
                                     citta.setText(dataModels.cityName ?: "")
                                     via.setText(dataModels.address1)
-
                                     location.text = "Lat: " + dataModels.latitude + ", Long:" + dataModels.longitude
                                     completeAddress = dataModels.address1 + " " + (dataModels.zipCode
                                             ?: "") + " " + (dataModels.cityName
@@ -110,22 +111,22 @@ class LocationActivity : BaseActivity() {
                                     zipCode = dataModels.zipCode ?: ""
                                     disableTextField()
                                     logFindLocationEvent(this)
-                                    if(!dataModels.latitude.isNullOrBlank() && !dataModels.longitude.isNullOrBlank() ){
-                                        UserAddressLatLong(dataModels.latitude.toDouble(),dataModels.longitude.toDouble())
+                                    if (!dataModels.latitude.isNullOrBlank() && !dataModels.longitude.isNullOrBlank()) {
+                                        UserAddressLatLong(dataModels.latitude.toDouble(), dataModels.longitude.toDouble())
 
-                                    }else{
-                                        UserAddressLatLong(0.0,0.0)
+                                    } else {
+                                        UserAddressLatLong(0.0, 0.0)
 
                                     }
 
                                 } else {
                                     getcurrentLocation()
-                                    UserAddressLatLong(0.0,0.0)
+                                    UserAddressLatLong(0.0, 0.0)
                                 }
 
                             } else {
                                 getcurrentLocation()
-                                UserAddressLatLong(0.0,0.0)
+                                UserAddressLatLong(0.0, 0.0)
                             }
 
                         } else {
@@ -138,6 +139,16 @@ class LocationActivity : BaseActivity() {
 
 
     private fun getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         mFusedLocationClient!!.lastLocation
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful && task.result != null) {
@@ -212,7 +223,7 @@ class LocationActivity : BaseActivity() {
             longitude = place?.latLng?.longitude.toString()
             Address = place?.address.toString()
             if (place != null) {
-                isAutomaticLocationSave=false
+                isAutomaticLocationSave = false
                 setLocationInView(place.latLng?.latitude, place.latLng?.longitude)
 
 
@@ -273,9 +284,9 @@ class LocationActivity : BaseActivity() {
         citta.setText(cityName)
         via.setText("${streetName}")
         disableTextField()
-       if(isAutomaticLocationSave){
-           saveLocation()
-       }
+        if (isAutomaticLocationSave) {
+            saveLocation()
+        }
     }
 
     private fun getcurrentLocation() {
@@ -293,29 +304,28 @@ class LocationActivity : BaseActivity() {
         via.isEnabled = false
     }
 
-    private fun saveLocation(){
-        if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)){
+    private fun saveLocation() {
+        if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)) {
+            completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
+            RetrofitClient.client.saveUserLocation(getBearerToken()
+                    ?: "", latitude, longitude, "", completeAddress, "", "",
+                    via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
+                    .onCall { networkException, response ->
+                        response?.let {
+                            if (response.isSuccessful) {
+                                val jsonObject = JSONObject(response.body()?.string())
+                                if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
+                                    UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                                    showInfoDialog(jsonObject.optString("message")) {
+                                        finish()
+                                    }
 
-        completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
-        RetrofitClient.client.saveUserLocation(getBearerToken()
-                ?: "", latitude, longitude, "", completeAddress, "", "",
-                via.text.toString(), zipCode, cap.text.toString(), prov.text.toString(), citta.text.toString())
-                .onCall { networkException, response ->
-                    response?.let {
-                        if (response.isSuccessful) {
-                            val jsonObject = JSONObject(response.body()?.string())
-                            if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
-
-                                UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
-                                showInfoDialog(jsonObject.optString("message")) {
-                                    finish()
                                 }
 
                             }
-
                         }
                     }
-                }
-    }}
+        }
+    }
 }

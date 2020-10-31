@@ -24,12 +24,12 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_tyre_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -86,7 +86,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     , Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""
 
             ))
-
         }
         if (intent.hasExtra(Constant.Path.productDetails))
 
@@ -200,24 +199,23 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             add_product_to_cart.setOnClickListener {
-                cartItem?.quantity = item_qty.text.toString().toInt()
+              /*  if (item_qty.text.toString().toInt() >= 0) {
+                    showInfoDialog("")
+                } else if (price.toFloat() >= 0.toFloat()) {
+                    showInfoDialog("")
+                } else {*/
+                    cartItem?.quantity = item_qty.text.toString().toInt()
+                    cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
+                    cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
+                    try {
+                        addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
+                                if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else "",
+                                price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
 
-
-                cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
-
-                cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
-
-                try {
-                    addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
-                            if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else ""
-
-
-                            ,
-                            price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+              //  }
 
 
             }
@@ -741,7 +739,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         //val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
-                ?: "", "2", productId,getUserId())
+                ?: "", "2", productId, getUserId())
                 .enqueue(
                         object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

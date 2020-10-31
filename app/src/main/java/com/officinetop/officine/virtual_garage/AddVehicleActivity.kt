@@ -38,9 +38,11 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.jetbrains.anko.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.okButton
+import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -683,7 +685,6 @@ class AddVehicleActivity : BaseActivity() {
     }
 
     private fun loadCarCriteria(SelectedVersioId: String) {
-
 
 
         RetrofitClient.client.getCarMaintenanceCriteria(SelectedVersioId, "ita").enqueue(object : Callback<ResponseBody> {
