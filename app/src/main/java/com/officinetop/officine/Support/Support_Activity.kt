@@ -21,7 +21,6 @@ import org.json.JSONObject
 
 class Support_Activity : BaseActivity() {
 
-    var mListRecyclerView = null
     private var selecttokenid = ""
     private var selectcat_id = ""
 

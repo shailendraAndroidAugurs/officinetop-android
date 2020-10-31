@@ -76,7 +76,7 @@
     <string name="fuel_type">Fuel Type</string>
     <string name="car_km">Km of car</string>
 
-    <string name="car_km_hint">Enter km of car</string>
+    <string name="car_km_hint">Enter the km of the car</string>
     <string name="car_km_annual">Km travelled annually</string>
     <string name="car_km_annual_hint">Enter km travelled annually</string>
     <string name="car_revision">Revision Date</string>
@@ -674,6 +674,11 @@
     <string name="deliveryPrices">Delivery Prices</string>
     <string name="petrol">Petrol</string>
     <string name="Products_not_available_at_the_moment">Products not available at the moment !!!</string>
+
+    <string name="PleaselogintocontinueforAddtocart">Please login to continue for Add to cart</string>
+
+
+
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
@@ -698,7 +703,6 @@
         <item>No Email</item>
 
     </string-array>
-
 
 
 </resources>

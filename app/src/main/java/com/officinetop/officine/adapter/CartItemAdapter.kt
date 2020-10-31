@@ -328,7 +328,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 }
                 if (item.workshopDetail != null) {
-                    workshopName.text = item.workshopDetail.businessName.takeIf { !it.isNullOrEmpty() }
+                    workshopName.text = item.workshopDetail.companyName.takeIf { !it.isNullOrEmpty() }
                     workshopAddress.text = item.workshopDetail.registeredOffice.takeIf { !it.isNullOrEmpty() }
                     context.loadImage(item.workshopDetail.workShopImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemWorkshopImage)
                 }

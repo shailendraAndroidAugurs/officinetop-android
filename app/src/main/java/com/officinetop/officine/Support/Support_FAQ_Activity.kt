@@ -23,8 +23,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.URLEncoder
-
-
 class Support_FAQ_Activity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

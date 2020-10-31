@@ -990,7 +990,7 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
+                showInfoDialog(getString(R.string.PleaselogintocontinueforAddtocart), true) { movetologinPage(context) }
 
             if (response.isSuccessful) {
                 try {
