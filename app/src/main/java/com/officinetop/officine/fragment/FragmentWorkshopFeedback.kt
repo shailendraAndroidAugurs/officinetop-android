@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
 import org.jetbrains.anko.support.v4.intentFor
 class FragmentWorkshopFeedback : Fragment() {
-
     private lateinit var rootView: View
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
 
@@ -31,9 +30,9 @@ class FragmentWorkshopFeedback : Fragment() {
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_feedback_show, container, false)
         if (arguments != null) {
-            WorkshopFeedBackList = arguments!!.getSerializable("list") as ArrayList<Models.HighRatingfeedback>
-            if (!arguments!!.getBoolean("product")) {
-                if (arguments!!.getBoolean("MyReview")) {
+            WorkshopFeedBackList = requireArguments().getSerializable("list") as ArrayList<Models.HighRatingfeedback>
+            if (!requireArguments().getBoolean("product")) {
+                if (requireArguments().getBoolean("MyReview")) {
                     val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
 
                     WorkshopFeedBackListfilter.addAll(WorkshopFeedBackList.filter {
@@ -55,11 +54,8 @@ class FragmentWorkshopFeedback : Fragment() {
         }
         return rootView
     }
-
     private fun getHighRatingWorkshopData(WorshopFeedbackList: ArrayList<Models.HighRatingfeedback>) {
-        rootView.rv_product_feedback_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-
-
+        rootView.rv_product_feedback_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         //workshop feedback
         rootView.rv_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {

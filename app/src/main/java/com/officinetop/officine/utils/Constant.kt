@@ -200,6 +200,7 @@ object Constant {
         const val getSparePartDetail = "spare_part_detail"
 
         const val getSearchSparePartsBykeywords = "searchSparePartsBykeywords"
+        const val getCarMakerslogo = "getCarMakersImage"
 
     }
 
@@ -357,7 +358,7 @@ object Constant {
         const val coupon = "coupon"
 
         const val ProductOrWorkshopName = "ProductOrWorkshopName"
-
+        const val makerName = "maker_name"
 
         const val language = "language"
         const val car_version_id = "car_version_id"
