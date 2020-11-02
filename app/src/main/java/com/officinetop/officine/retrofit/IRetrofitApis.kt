@@ -1,6 +1,5 @@
 package com.officinetop.officine.retrofit
 
-import com.google.gson.JsonObject
 import com.officinetop.officine.data.*
 import com.officinetop.officine.utils.Constant
 import okhttp3.MultipartBody
@@ -1486,9 +1485,11 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-    @Headers("Content-Type: application/json")
+    @GET(Constant.UrlEndPoints.getCarMakerslogo)
+    fun getcarLogo(
+            @Query(Constant.Path.makerName) brandName: String
 
-    @POST("login/Login")
-    fun logindata( @Body  body: JsonObject): Call<String>
+
+    ): Call<ResponseBody>
 
 }

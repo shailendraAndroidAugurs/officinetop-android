@@ -1,5 +1,6 @@
 package com.officinetop.officine.virtual_garage
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
@@ -344,6 +345,7 @@ class AddVehicleActivity : BaseActivity() {
             carDetails.addProperty("user_id", "")
             carDetails.addProperty("number_plate", tv_plate_number.text.toString())
 
+
             carDetails.addProperty("carMakeName", manufacturers[manufacturerIndex].brandID)
             carDetails.addProperty("carModelName", model[modelIndex].modelID + "/" + model[modelIndex].modelYear)
             carDetails.addProperty("carVersion", finalCarVersion[versionIndex].idVehicle)
@@ -363,9 +365,8 @@ class AddVehicleActivity : BaseActivity() {
             carMakeDetails.addProperty("idMarca", manufacturers[manufacturerIndex].brandID)
             carMakeDetails.addProperty("Marca", manufacturers[manufacturerIndex].brand)
             carMakeDetails.addProperty("CodiceListino", manufacturers[manufacturerIndex].codeList)
+            //  getImagefrombarand(carDetails, manufacturers[manufacturerIndex].brandID)
 
-
-            carDetails.add("carMake", carMakeDetails)
 
             // Add car make details
             val carModelDetails: JsonObject = JsonObject()
@@ -495,6 +496,37 @@ class AddVehicleActivity : BaseActivity() {
 
                     })
         }
+    }
+
+    private fun getImagefrombarand(carDetails: JsonObject, brandID: String) {
+        RetrofitClient.client.getcarLogo(brandID)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                    }
+
+                    @SuppressLint("SetTextI18n")
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()
+                            body?.let {
+
+                                val dataJson = JSONObject(body)
+                                if (dataJson.has("data_set") && !dataJson.isNull("data_set")) {
+
+                                    val jsondata = JSONObject(dataJson.getString("data_set"))
+
+                                    if (jsondata.has("image") && !jsondata.isNull("image")) {
+
+                                        carDetails.addProperty("image", jsondata.getString("image"))
+                                    }
+                                }
+
+
+                            }
+                        }
+                    }
+                })
     }
 
     private fun editCarFromFields() {
@@ -1461,6 +1493,8 @@ class AddVehicleActivity : BaseActivity() {
         }
 
     }
+
+
 }
 
 

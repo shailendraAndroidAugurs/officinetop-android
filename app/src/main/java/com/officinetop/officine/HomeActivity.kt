@@ -21,9 +21,9 @@ import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
+import com.officinetop.officine.Support.Support_FAQ_Activity
 import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
-import com.officinetop.officine.Support.Support_FAQ_Activity
 import com.officinetop.officine.fragment.*
 import com.officinetop.officine.misc_activities.LocationActivity
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -214,7 +214,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         //
         //setting initial car image
         Glide.with(this).load(R.drawable.ic_car).thumbnail(0.1f).into(toolbar_image_view)
-
 
 
         // load screens if navigated from options menu
@@ -596,7 +595,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             val carDefaultImage = car.carDefaultImage ?: ""
 
 
-            if (carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
+            if (!carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
                 loadImage(carDefaultImage, toolbar_image_view)
 
             } else {
@@ -662,6 +661,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
 
     }
+
 
     private fun logout(authToken: String) {
 
