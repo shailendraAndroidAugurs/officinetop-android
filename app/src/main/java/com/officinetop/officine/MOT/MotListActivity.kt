@@ -2,9 +2,12 @@ package com.officinetop.officine.MOT
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
@@ -14,7 +17,6 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
-import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.mot_search_activity.*
 import okhttp3.ResponseBody
@@ -53,6 +55,7 @@ class MotListActivity : BaseActivity() {
             scheduleId = getSelectedCar()?.carConditionMotSchedule?.id!!
             motServive(getMotKm()!!, "0")
         }
+
 
         //CallMotSchedule()
 

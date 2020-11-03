@@ -55,10 +55,8 @@ import kotlin.collections.ArrayList
 
 //AX123YY, EN301MW licience nn
 class AddVehicleActivity : BaseActivity() {
-
     lateinit var progressDialog: ProgressDialog
     var isLoaded = false
-
     val manufacturers: MutableList<Models.Manufacturer> = ArrayList()
     val model: MutableList<Models.CarModels> = ArrayList()
     var carVersions: MutableList<Models.CarVersion> = ArrayList()
@@ -332,123 +330,8 @@ class AddVehicleActivity : BaseActivity() {
         }
 
         if (!isLoggedIn()) {
-
-
-            val carDetails = JsonObject()
-
             val manufacturerIndex = spinner_manufacturer.selectedItemPosition
-            val versionIndex = spinner_version.selectedItemPosition
-            val modelIndex = spinner_model.selectedItemPosition
-            val criteriaIndex = spinner_criteria.selectedItemPosition
-            val CarConditionMotSchedule = spinner_car_condition.selectedItemPosition
-            carDetails.addProperty("id", "")
-            carDetails.addProperty("user_id", "")
-            carDetails.addProperty("number_plate", tv_plate_number.text.toString())
-
-
-            carDetails.addProperty("carMakeName", manufacturers[manufacturerIndex].brandID)
-            carDetails.addProperty("carModelName", model[modelIndex].modelID + "/" + model[modelIndex].modelYear)
-            carDetails.addProperty("carVersion", finalCarVersion[versionIndex].idVehicle)
-            carDetails.addProperty("addedTo", "")
-            carDetails.addProperty("created_at", "")
-            carDetails.addProperty("updated_at", "")
-
-            carDetails.addProperty("km_of_cars", edit_text_km_car.text.toString())
-            carDetails.addProperty("km_traveled_annually", edit_text_km_annual.text.toString())
-            carDetails.addProperty("revision_date_km", text_revision_date.text.toString())
-            carDetails.addProperty("revesion_km", edit_text_km_on_revision_date.text.toString())
-            carDetails.addProperty("alloy_wheels", if (alloy.isChecked) "1" else "0")
-
-
-            // Add car make details
-            val carMakeDetails: JsonObject = JsonObject()
-            carMakeDetails.addProperty("idMarca", manufacturers[manufacturerIndex].brandID)
-            carMakeDetails.addProperty("Marca", manufacturers[manufacturerIndex].brand)
-            carMakeDetails.addProperty("CodiceListino", manufacturers[manufacturerIndex].codeList)
-            //  getImagefrombarand(carDetails, manufacturers[manufacturerIndex].brandID)
-
-
-            // Add car make details
-            val carModelDetails: JsonObject = JsonObject()
-            carModelDetails.addProperty("idModello", model[modelIndex].modelID)
-            carModelDetails.addProperty("Modello", model[modelIndex].model)
-            carModelDetails.addProperty("ModelloAnno", model[modelIndex].modelYear)
-
-            carDetails.add("carModel", carModelDetails)
-
-
-            // Add car version details
-            val carVersionDetails: JsonObject = JsonObject()
-            carVersionDetails.addProperty("Versione", finalCarVersion[versionIndex].version)
-            carVersionDetails.addProperty("Dal", finalCarVersion[versionIndex].dal)
-            carVersionDetails.addProperty("Cv", finalCarVersion[versionIndex].cv)
-            carVersionDetails.addProperty("Kw", finalCarVersion[versionIndex].kw)
-            carVersionDetails.addProperty("idVeicolo", finalCarVersion[versionIndex].idVehicle)
-            carVersionDetails.addProperty("fuel_type", spinner_fuel.selectedItem.toString())
-            carVersionDetails.addProperty("Alimentazione", finalCarVersion[versionIndex].alimentazione)
-
-
-            //modified to add car size as per
-            carDetails.addProperty("car_size", finalCarVersion[spinner_version.selectedItemPosition].carSize.toString())
-
-
-            carDetails.add("carVers", carVersionDetails)
-
-            // Add car Criteria details
-            if (criteriaIndex != -1) {
-                val carCriteriaDetails: JsonObject = JsonObject()
-                carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
-                carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
-                carDetails.add("criteriaResponse", carCriteriaDetails)
-            } else if (carCriteriaList.size != 0) {
-                val carCriteriaDetails: JsonObject = JsonObject()
-                carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[0].repair_times_description)
-                carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[0].repair_times_id)
-                carDetails.add("criteriaResponse", carCriteriaDetails)
-            }
-
-            // Add Car Condition Mot schedule data
-            if (CarConditionMotSchedule != -1) {
-                val CarConditionMotScheduleJson: JsonObject = JsonObject()
-                CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[CarConditionMotSchedule].id)
-                CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[CarConditionMotSchedule].service_schedule_description)
-                carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
-            } else if (carConditionMotScheduleList.size != 0) {
-                val CarConditionMotScheduleJson: JsonObject = JsonObject()
-                CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[0].id)
-                CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[0].service_schedule_description)
-                carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
-            }
-
-            val json = carDetails.toString()
-            removeLocalSavedCar()
-            saveLocalCarInJSON(json)
-            val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
-            val carIntent = Intent()
-            carIntent.putExtra(Constant.Key.myCar, car as Serializable)
-            CallKromedaApi(finalCarVersion[versionIndex].idVehicle)
-            if (isForEdit) {
-                showInfoDialog(getString(R.string.CarDetailSavedSuccessfully), false) {
-                    setResult(Activity.RESULT_OK, carIntent)
-                    finish()
-                }
-            } else {
-                alert {
-                    message = getString(R.string.Doyouwanttocompletethecardetailspersonalizedsuggestions)
-                    positiveButton(getString(R.string.yes)) {
-
-                        myCar = car
-                        isForEdit = true
-                        iscompletedlater = true
-                        setEditMode()
-                    }
-                    negativeButton(getString(R.string.Completelater)) {
-                        setResult(Activity.RESULT_OK, carIntent)
-                        finish()
-                    }
-                    isCancelable = false
-                }.show()
-            }
+            getImagefrombarand(manufacturers[manufacturerIndex].brand)
 
 
         } else {
@@ -498,7 +381,124 @@ class AddVehicleActivity : BaseActivity() {
         }
     }
 
-    private fun getImagefrombarand(carDetails: JsonObject, brandID: String) {
+    private fun saveLocaldataOfAddedCar(carImagelogo: String) {
+        val carDetails = JsonObject()
+        val manufacturerIndex = spinner_manufacturer.selectedItemPosition
+        val versionIndex = spinner_version.selectedItemPosition
+        val modelIndex = spinner_model.selectedItemPosition
+        val criteriaIndex = spinner_criteria.selectedItemPosition
+        val CarConditionMotSchedule = spinner_car_condition.selectedItemPosition
+        carDetails.addProperty("id", "")
+        carDetails.addProperty("user_id", "")
+        carDetails.addProperty("number_plate", tv_plate_number.text.toString())
+
+
+        carDetails.addProperty("carMakeName", manufacturers[manufacturerIndex].brandID)
+        carDetails.addProperty("carModelName", model[modelIndex].modelID + "/" + model[modelIndex].modelYear)
+        carDetails.addProperty("carVersion", finalCarVersion[versionIndex].idVehicle)
+        carDetails.addProperty("addedTo", "")
+        carDetails.addProperty("created_at", "")
+        carDetails.addProperty("updated_at", "")
+
+        carDetails.addProperty("km_of_cars", edit_text_km_car.text.toString())
+        carDetails.addProperty("km_traveled_annually", edit_text_km_annual.text.toString())
+        carDetails.addProperty("revision_date_km", text_revision_date.text.toString())
+        carDetails.addProperty("revesion_km", edit_text_km_on_revision_date.text.toString())
+        carDetails.addProperty("alloy_wheels", if (alloy.isChecked) "1" else "0")
+        carDetails.addProperty("image", carImagelogo)
+
+        // Add car make details
+        val carMakeDetails: JsonObject = JsonObject()
+        carMakeDetails.addProperty("idMarca", manufacturers[manufacturerIndex].brandID)
+        carMakeDetails.addProperty("Marca", manufacturers[manufacturerIndex].brand)
+        carMakeDetails.addProperty("CodiceListino", manufacturers[manufacturerIndex].codeList)
+
+        carDetails.add("carMake", carMakeDetails)
+        // Add car make details
+        val carModelDetails: JsonObject = JsonObject()
+        carModelDetails.addProperty("idModello", model[modelIndex].modelID)
+        carModelDetails.addProperty("Modello", model[modelIndex].model)
+        carModelDetails.addProperty("ModelloAnno", model[modelIndex].modelYear)
+
+        carDetails.add("carModel", carModelDetails)
+
+
+        // Add car version details
+        val carVersionDetails: JsonObject = JsonObject()
+        carVersionDetails.addProperty("Versione", finalCarVersion[versionIndex].version)
+        carVersionDetails.addProperty("Dal", finalCarVersion[versionIndex].dal)
+        carVersionDetails.addProperty("Cv", finalCarVersion[versionIndex].cv)
+        carVersionDetails.addProperty("Kw", finalCarVersion[versionIndex].kw)
+        carVersionDetails.addProperty("idVeicolo", finalCarVersion[versionIndex].idVehicle)
+        carVersionDetails.addProperty("fuel_type", spinner_fuel.selectedItem.toString())
+        carVersionDetails.addProperty("Alimentazione", finalCarVersion[versionIndex].alimentazione)
+
+
+        //modified to add car size as per
+        carDetails.addProperty("car_size", finalCarVersion[spinner_version.selectedItemPosition].carSize.toString())
+
+
+        carDetails.add("carVers", carVersionDetails)
+
+        // Add car Criteria details
+        if (criteriaIndex != -1) {
+            val carCriteriaDetails: JsonObject = JsonObject()
+            carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[criteriaIndex].repair_times_description)
+            carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[criteriaIndex].repair_times_id)
+            carDetails.add("criteriaResponse", carCriteriaDetails)
+        } else if (carCriteriaList.size != 0) {
+            val carCriteriaDetails: JsonObject = JsonObject()
+            carCriteriaDetails.addProperty("repair_times_description", carCriteriaList[0].repair_times_description)
+            carCriteriaDetails.addProperty("repair_times_id", carCriteriaList[0].repair_times_id)
+            carDetails.add("criteriaResponse", carCriteriaDetails)
+        }
+
+        // Add Car Condition Mot schedule data
+        if (CarConditionMotSchedule != -1) {
+            val CarConditionMotScheduleJson: JsonObject = JsonObject()
+            CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[CarConditionMotSchedule].id)
+            CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[CarConditionMotSchedule].service_schedule_description)
+            carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
+        } else if (carConditionMotScheduleList.size != 0) {
+            val CarConditionMotScheduleJson: JsonObject = JsonObject()
+            CarConditionMotScheduleJson.addProperty("id", carConditionMotScheduleList[0].id)
+            CarConditionMotScheduleJson.addProperty("service_schedule_description", carConditionMotScheduleList[0].service_schedule_description)
+            carDetails.add("scheduleResponse", CarConditionMotScheduleJson)
+        }
+
+        val json = carDetails.toString()
+        removeLocalSavedCar()
+        saveLocalCarInJSON(json)
+        val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
+        val carIntent = Intent()
+        carIntent.putExtra(Constant.Key.myCar, car as Serializable)
+        CallKromedaApi(finalCarVersion[versionIndex].idVehicle)
+        if (isForEdit) {
+            showInfoDialog(getString(R.string.CarDetailSavedSuccessfully), false) {
+                setResult(Activity.RESULT_OK, carIntent)
+                finish()
+            }
+        } else {
+            alert {
+                message = getString(R.string.Doyouwanttocompletethecardetailspersonalizedsuggestions)
+                positiveButton(getString(R.string.yes)) {
+
+                    myCar = car
+                    isForEdit = true
+                    iscompletedlater = true
+                    setEditMode()
+                }
+                negativeButton(getString(R.string.Completelater)) {
+                    setResult(Activity.RESULT_OK, carIntent)
+                    finish()
+                }
+                isCancelable = false
+            }.show()
+        }
+
+    }
+
+    private fun getImagefrombarand(brandID: String) {
         RetrofitClient.client.getcarLogo(brandID)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -512,19 +512,19 @@ class AddVehicleActivity : BaseActivity() {
                             body?.let {
 
                                 val dataJson = JSONObject(body)
-                                if (dataJson.has("data_set") && !dataJson.isNull("data_set")) {
+                                if (dataJson.has("data") && !dataJson.isNull("data")) {
 
-                                    val jsondata = JSONObject(dataJson.getString("data_set"))
+                                    val jsondata = JSONObject(dataJson.getString("data"))
 
                                     if (jsondata.has("image") && !jsondata.isNull("image")) {
 
-                                        carDetails.addProperty("image", jsondata.getString("image"))
-                                    }
-                                }
+                                        saveLocaldataOfAddedCar(jsondata.getString("image"))
+                                    } else saveLocaldataOfAddedCar("")
+                                } else saveLocaldataOfAddedCar("")
 
 
                             }
-                        }
+                        } else saveLocaldataOfAddedCar("")
                     }
                 })
     }
@@ -818,7 +818,6 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-
     private fun loadCarConditionMotSchedule(SelectedVersioId: String) {
 
 
@@ -919,7 +918,6 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-
     private fun loadCarVersion(modelID: String, year: String) {
 
         progressDialog.show()
@@ -1001,7 +999,6 @@ class AddVehicleActivity : BaseActivity() {
 
 
     }
-
 
     private fun loadVersionAccordingToFuel(carVersions: MutableList<Models.CarVersion>, fuelType: String?, shouldBindAll: Boolean) {
 
@@ -1263,7 +1260,6 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-
     private fun getLastCarIntent(bodyString: String): Intent {
         val carIntent = Intent()
         val dataSet = getDataSetArrayFromResponse(bodyString)
@@ -1493,8 +1489,6 @@ class AddVehicleActivity : BaseActivity() {
         }
 
     }
-
-
 }
 
 
