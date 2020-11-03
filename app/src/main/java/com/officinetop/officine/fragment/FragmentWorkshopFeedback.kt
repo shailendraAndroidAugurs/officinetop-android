@@ -100,10 +100,7 @@ class FragmentWorkshopFeedback : Fragment() {
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.Concat)
                 }
-
-
                 p0.itemView.tv_product_type.text = getString(R.string.Workshop)
-
                 if (!WorshopFeedbackList[p1].created_at.isNullOrBlank()) {
                     p0.itemView.tv_date.text = DateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
                 } else {
@@ -114,10 +111,7 @@ class FragmentWorkshopFeedback : Fragment() {
                 } else {
                     p0.itemView.tv_userComment.text = getString(R.string.Concat)
                 }
-
                 if (WorshopFeedbackList[p1].feedback_image != null && WorshopFeedbackList[p1].feedback_image.size != 0) {
-
-
                     p0.itemView.rv_feedbackImage.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
 
                         override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {

@@ -31,18 +31,20 @@
             <EditText
                 android:id="@+id/ed_search_km"
                 android:layout_width="0dp"
+                android:imeOptions="actionSend"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/shape_border_gray"
+                android:importantForAutofill="no"
                 android:inputType="number"
+                android:maxLines="5"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/btn_edit"
                 app:layout_constraintStart_toEndOf="@+id/text_km"
-                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition"
-                android:importantForAutofill="no" />
+                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
 
 
             <LinearLayout
@@ -50,45 +52,44 @@
                 android:id="@+id/ll_carcondition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:orientation="horizontal"
                 android:visibility="gone"
+                android:weightSum="3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_car">
+
                 <TextView
                     android:id="@+id/tv_schedule"
+                    style="@style/TextViewNormal"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
-                   android:paddingTop="@dimen/_5sdp"
-                    style="@style/TextViewNormal"
                     android:gravity="center_horizontal|center_vertical"
-                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_5sdp"
                     android:text="@string/car_conditions"
                     android:textColor="@color/black"
                     android:visibility="visible" />
+
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/_5sdp"
                     style="@style/TextViewNormal"
                     android:layout_width="0dp"
-                    android:background="@drawable/shape_rectangle_gray"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="2"
 
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rectangle_gray"
                     app:layout_constraintStart_toEndOf="@+id/tv_schedule"
                     app:layout_constraintTop_toBottomOf="@+id/text_car">
 
                     <Spinner
                         android:id="@+id/spinner_schedule"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
-
-
-
 
 
             </LinearLayout>

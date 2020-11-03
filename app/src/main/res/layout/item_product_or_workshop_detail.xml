@@ -5,8 +5,15 @@
     android:layout_margin="5dp"
     android:background="?selectableItemBackground"
     android:gravity="center"
-    android:orientation="horizontal"
+
+    android:orientation="vertical"
     android:padding="0dp">
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,38 +23,38 @@
         android:orientation="horizontal"
         android:weightSum="6">
 
-       <!-- <RelativeLayout
-            android:paddingBottom="@dimen/_5sdp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical">
+        <!-- <RelativeLayout
+             android:paddingBottom="@dimen/_5sdp"
+             android:layout_width="0dp"
+             android:layout_height="match_parent"
+             android:layout_weight="2"
+             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/item_brand_image"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/brand_image_height"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/no_image_placeholder" />
+             <ImageView
+                 android:id="@+id/item_brand_image"
+                 android:layout_width="wrap_content"
+                 android:layout_height="@dimen/brand_image_height"
+                 android:layout_alignParentBottom="true"
+                 android:layout_gravity="bottom|center_horizontal"
+                 android:layout_marginStart="5dp"
+                 android:layout_marginTop="0dp"
+                 android:layout_marginBottom="0dp"
+                 android:scaleType="centerInside"
+                 android:src="@drawable/no_image_placeholder" />
 
-            <ImageView
-                android:id="@+id/item_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/item_brand_image"
-                android:layout_gravity="bottom|center_horizontal"
-                android:scaleType="centerInside"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:src="@drawable/no_image_placeholder" />
+             <ImageView
+                 android:id="@+id/item_image"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_above="@id/item_brand_image"
+                 android:layout_gravity="bottom|center_horizontal"
+                 android:scaleType="centerInside"
+                 android:layout_marginStart="5dp"
+                 android:layout_marginTop="0dp"
+                 android:layout_marginBottom="0dp"
+                 android:src="@drawable/no_image_placeholder" />
 
-        </RelativeLayout>-->
+         </RelativeLayout>-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -55,26 +62,25 @@
             android:orientation="vertical">
 
 
-
             <ImageView
                 android:id="@+id/item_image"
-                android:layout_weight=".6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom|center_horizontal"
+                android:layout_weight=".6"
                 android:scaleType="centerInside"
                 android:src="@drawable/no_image_placeholder" />
+
             <ImageView
-                android:layout_weight="1.4"
                 android:id="@+id/item_brand_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/item_brand_image"
                 android:layout_gravity="center"
+                android:layout_weight="1.4"
                 android:scaleType="centerInside"
-                android:src="@drawable/no_image_placeholder"
-                />
+                android:src="@drawable/no_image_placeholder" />
 
 
         </LinearLayout>
@@ -210,33 +216,36 @@
                 </LinearLayout>
 
             </LinearLayout>
-<LinearLayout
-    android:weightSum="2"
-    android:visibility="visible"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_couponLabel"
-        android:text="@string/AppliedCoupon"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/_10sdp"
-        android:textColor="@color/green"
 
-        android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:weightSum="2">
 
-    </TextView>
-    <TextView
-        android:id="@+id/tv_AppliedCoupon"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/_10sdp"
-        android:textColor="@color/green"
+                <TextView
+                    android:id="@+id/tv_couponLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AppliedCoupon"
+                    android:textColor="@color/green"
 
-android:gravity="center"
-        android:layout_height="wrap_content">
+                    android:textSize="@dimen/_10sdp">
 
-    </TextView>
+                </TextView>
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tv_AppliedCoupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10sdp">
+
+                </TextView>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -245,11 +254,11 @@ android:gravity="center"
                 android:gravity="center">
 
                 <com.officinetop.officine.utils.CustomRatingBar
+                    android:id="@+id/item_rating"
                     style="@style/custom_ratingBar"
-                    android:layout_width="@dimen/_80sdp"
 
-                    android:layout_height="@dimen/_15sdp"
-                    android:id="@+id/item_rating"/>
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_15sdp" />
 
                 <TextView
                     android:id="@+id/item_rating_count"

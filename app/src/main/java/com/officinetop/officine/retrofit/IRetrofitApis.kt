@@ -1484,10 +1484,10 @@ interface IRetrofitApis {
             @Field("rating_range") ratingRange: String
 
     ): Call<ResponseBody>
-
-    @GET(Constant.UrlEndPoints.getCarMakerslogo)
+@FormUrlEncoded
+    @POST(Constant.UrlEndPoints.getCarMakerslogo)
     fun getcarLogo(
-            @Query(Constant.Path.makerName) brandName: String
+            @Field(Constant.Path.makerName) brandName: String
 
 
     ): Call<ResponseBody>

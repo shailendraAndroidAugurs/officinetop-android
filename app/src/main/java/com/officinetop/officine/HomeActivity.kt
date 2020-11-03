@@ -597,9 +597,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             if (!carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
                 loadImage(carDefaultImage, toolbar_image_view)
-
             } else {
-                loadCarImage(carDefaultImage, car.carMakeModel.brandID, toolbar_image_view)
+                loadImage(carDefaultImage,  toolbar_image_view)
 
             }
 
@@ -898,18 +897,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         if (requestCode == 1000) {
-             if (resultCode == Activity.RESULT_OK) {
-                 //val result : String = data!!.getStringExtra("result")
-                 getLastLocation()
-             }
-             if (resultCode == Activity.RESULT_CANCELED) {
-                 //Write your code if there's no result
-             }
-         }
-         super.onActivityResult(requestCode, resultCode, data)
-     }*/
 
 
     override fun onConnected(p0: Bundle?) {
@@ -1125,3 +1112,34 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 }
 
+/*
+private fun getImagefrombarand(carDetails: JsonObject, brandID: String) {
+    RetrofitClient.client.getcarLogo(brandID)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                }
+
+                @SuppressLint("SetTextI18n")
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful) {
+                        val body = response.body()?.string()
+                        body?.let {
+
+                            val dataJson = JSONObject(body)
+                            if (dataJson.has("data_set") && !dataJson.isNull("data_set")) {
+
+                                val jsondata = JSONObject(dataJson.getString("data_set"))
+
+                                if (jsondata.has("image") && !jsondata.isNull("image")) {
+
+                                    carDetails.addProperty("image", jsondata.getString("image"))
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            })
+}*/

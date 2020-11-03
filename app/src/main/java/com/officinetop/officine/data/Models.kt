@@ -1571,6 +1571,8 @@ object Models {
     )
 
     data class ProductOrWorkshopList(
+            @SerializedName("main_category_id")
+            val main_category_id: String,
             @SerializedName("p_name")
             val productName: String,
             @SerializedName("p_description")
@@ -1587,7 +1589,6 @@ object Models {
             val brandImage: String,
             @SerializedName("brand_image_url")
             val brandImageurl: String,
-
             @SerializedName("CodiceArticolo")
             val codiceArticolo: String,
             @SerializedName("CodiceListino")
@@ -1694,7 +1695,17 @@ object Models {
             @SerializedName("category_id")
             val categoryId: String?,
             @SerializedName("company_name")
+
+
             val companyName: String,
+
+
+            @SerializedName("service_id")
+
+
+            val service_id: String,
+
+
             @SerializedName("f_name")
             val fName: String,
             @SerializedName("l_name")
@@ -1953,7 +1964,6 @@ object Models {
             val name: String,
             @SerializedName("search_type")
             val type: String
-
 
 
     )

@@ -577,25 +577,20 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
     /*private fun getDistancebetweenTwoLatLong(currentLatLong: LatLng, latitude: String, longitude: String, tv_workshopKm: TextView) {
          if (!latitude.isNullOrBlank() && !longitude.isNullOrBlank() && currentLatLong != null && !currentLatLong.latitude.equals("0.0") && !currentLatLong.latitude.equals("0.0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0") && !latitude.equals("0")) {
-
              var lat1 = currentLatLong.latitude;
              val lat2 = latitude.toDouble();
              val lon1 = currentLatLong.longitude;
              val lon2 = longitude.toDouble();
              Log.d("CalculateDistanceClass", "Yes")
              CalculateDistance(mcontext,lat1.toString(),lon1.toString(),lat2.toString(),lon2.toString(),tv_workshopKm).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
          }
      }*/
 /*
     fun getDistancebetweenTwoLatLong(currentLat: String,currentLong: String, latitude: String, longitude: String, tv_workshopKm: TextView) {
          var parsedDistance = "";
          var response = "";
-
          var thread = Thread(Runnable {
-
              try {
-
                  var lat1 = currentLat
                  val lon1 = currentLong
                  var url = URL("https://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + latitude.toDouble() + "," + longitude.toDouble() + "&sensor=false&units=metric&mode=driving&key="+mcontext.getString(R.string.google_api_key));
@@ -621,19 +616,14 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
              } catch (e: JSONException) {
                  e.printStackTrace();
              }
-
-
          })
-
          thread.start();
-
         */
 /* try {
              thread.join();
          } catch (e: InterruptedException) {
              e.printStackTrace();
          }*//*
-
          Log.d(" test Distance", parsedDistance.toString())
          tv_workshopKm.text = (parsedDistance);
      }
@@ -646,7 +636,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 + latitude + "," + longitude + "&destination=" + prelatitute
                 + "," + prelongitude + "&sensor=false&units=metric")*//*
         var url = URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + latitude + "," + longitude + "&destination=" + prelatitute.toDouble() + "," + prelongitude.toDouble() + "&sensor=false&units=metric&mode=driving");
-
         val tag = arrayOf<String>("text")
         val response: HttpResponse? = null
         try
@@ -727,7 +716,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     }
 
     fun getListSize(): Int{
-       return productOrWorkshopList.size
+        return productOrWorkshopList.size
     }
 
 }
+
