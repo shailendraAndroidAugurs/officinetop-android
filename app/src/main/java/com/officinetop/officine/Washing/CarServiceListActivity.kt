@@ -11,6 +11,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.Constant.defaultDistance
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -40,7 +41,7 @@ class CarServiceListActivity : BaseActivity() {
         if (isOnline()) {
             val dialog = getProgressDialog(true)
 
-            RetrofitClient.client.getServiceCategory(1, getSelectedCar()?.carSize, getLat(), getLong(), "0,25")
+            RetrofitClient.client.getServiceCategory(1, getSelectedCar()?.carSize, getLat(), getLong(), defaultDistance)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             dialog.dismiss()

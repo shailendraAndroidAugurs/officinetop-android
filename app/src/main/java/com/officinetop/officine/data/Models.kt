@@ -222,7 +222,13 @@ object Models {
             @SerializedName("type")
             val type: String,
             @SerializedName("users_id")
-            val usersId: String
+            val usersId: String,
+
+            @SerializedName("service_average_time")
+            val serviceAverageTime: String,
+            @SerializedName("main_category_id")
+            val mainCategoryId: String
+
 
     ) : Serializable
 

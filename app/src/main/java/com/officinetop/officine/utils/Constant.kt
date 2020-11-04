@@ -12,6 +12,7 @@ object Constant {
     const val file_tyre = "tyre"
     const val user_id = "user_id"
     const val all_advertisement = "all_advertisement"
+    const val defaultDistance = "0,25"
 
     const val baseUrl = "https://services.officinetop.com/api/"//https://officine.augurstech.com/officineTop/api/
 
@@ -371,6 +372,7 @@ object Constant {
         const val end_time = "end_time"
         const val mot_id = "mot_id"
         const val motservices_time = "service_average_time"
+        const val servicesAverageTime = "service_average_time"
         const val servicekm = "service_km"
         const val editStatus = "edit_status"
 

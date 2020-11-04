@@ -17,7 +17,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.officinetop.officine.R
 import com.officinetop.officine.car_parts.ProductDetailActivity
 import com.officinetop.officine.data.Models
@@ -154,6 +156,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
         with(p0) {
+           // tv_count.text=(p1+1).toString()
             val product_workshopList = productOrWorkshopList[p1]
             if (isQuotesServices) {
                 llayoutSpecialCoupons.visibility = View.GONE
@@ -300,11 +303,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     }
 
                 }
-
-
-
-
-
                 subtitle.text = "${if (productOrWorkshopList[p1].Productdescription != null) productOrWorkshopList[p1].Productdescription else ""} "
 
                 ll_workshopKm.visibility = View.GONE
@@ -398,7 +396,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
             } else {
                 itemView.Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-
             }
 
             itemView.Iv_favorite.setOnClickListener {
@@ -447,6 +444,13 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
+                if (jsonArray.length() != productOrWorkshopList.size) {
+                    val listString: String = Gson().toJson(
+                            productOrWorkshopList,
+                            object : TypeToken<ArrayList<Models.ProductOrWorkshopList?>?>() {}.getType())
+                    jsonArray = JSONArray()
+                    jsonArray = JSONArray(listString)
+                }
                 val filterResults = FilterResults()
                 val filteredList = JSONArray()
 
@@ -524,6 +528,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         val CouponLabel = view.tv_couponLabel
         val offerBadge = view.offer_badge
         val ll_workshopKm = view.ll_workshopKm
+        val tv_count = view.tv_count
 
     }
 
@@ -683,6 +688,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
     fun addItems(items: MutableList<Models.ProductOrWorkshopList>) {
         productOrWorkshopList.addAll(items)
+
         notifyDataSetChanged()
     }
 
@@ -694,15 +700,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
     fun removeLoading() {
 
-        isLoadingVisible = false
-        val position = productOrWorkshopList.size - 1
-        if (position >= 0) {
-            val item: Models.ProductOrWorkshopList = getItem(position)
-            if (item != null) {
-                productOrWorkshopList.removeAt(position)
-                notifyItemRemoved(position)
-            }
-        }
+       isLoadingVisible = false
+
     }
 
 
@@ -715,7 +714,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         return productOrWorkshopList.get(position)
     }
 
-    fun getListSize(): Int{
+    fun getListSize(): Int {
         return productOrWorkshopList.size
     }
 
