@@ -9,6 +9,7 @@ import com.officinetop.officine.data.getLat
 import com.officinetop.officine.data.getLong
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.utils.genericAPICall
 import kotlinx.android.synthetic.main.activity_revision.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -34,7 +35,7 @@ class RevisionActivity : BaseActivity() {
     }
 
     private fun getRevisionServices() {
-        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),"0,25").genericAPICall { _, response ->
+        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),defaultDistance).genericAPICall { _, response ->
             response?.let {
                 val revisionServices = it.body()
 

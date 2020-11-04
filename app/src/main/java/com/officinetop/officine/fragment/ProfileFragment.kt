@@ -47,7 +47,6 @@ import java.io.FileOutputStream
 
 
 class ProfileFragment : Fragment(), OnGetLoginUserDetail {
-
     private lateinit var textview_mobile: TextView
     private lateinit var textview_email: TextView
     private lateinit var textview_name: TextView

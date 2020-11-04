@@ -2,6 +2,7 @@ package com.officinetop.officine.retrofit
 
 import com.officinetop.officine.data.*
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.Constant.defaultDistance
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -200,7 +201,7 @@ interface IRetrofitApis {
                            @Path(Constant.Path.carSize) carSize: String? = "2",
                            @Path(Constant.Path.userLat) user_lat: String? = "0",
                            @Path(Constant.Path.userLong) user_long: String = "0",
-                           @Path(Constant.Path.distanceRange) distance_range: String? = "0,25"
+                           @Path(Constant.Path.distanceRange) distance_range: String? = defaultDistance
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshop)
@@ -321,7 +322,14 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.workShopType) workShopType: Int,
                                  @Query(Constant.Path.carSize) carSize: String,
                                  @Query(Constant.Path.version_id) version_id: String,
-                                 @Query(Constant.Path.productqty) productqty: String
+                                 @Query(Constant.Path.productqty) productqty: String,
+                                 @Query(Constant.Path.userLat) user_lat: String,
+                                 @Query(Constant.Path.userLong) user_long: String,
+                                 @Query(Constant.Path.distanceRange) distance_range: String,
+                                 @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                                 @Query(Constant.Path.servicesAverageTime) servicesAverageTime: String
+
+
     ): Call<ResponseBody>
 
 
@@ -1461,8 +1469,10 @@ interface IRetrofitApis {
             @Query(Constant.Path.model) model: String,
             @Query(Constant.Path.car_version_id) versionId: String,
             @Query(Constant.Path.maker) search_keyword: String,
-            @Query("user_id") user_id: String
-
+            @Query("user_id") user_id: String,
+            @Query(Constant.Path.userLat) user_lat: String,
+            @Query(Constant.Path.userLong) user_long: String,
+            @Query(Constant.Path.distanceRange) distance_range: String
 
     ): Call<ResponseBody>
 
@@ -1484,7 +1494,8 @@ interface IRetrofitApis {
             @Field("rating_range") ratingRange: String
 
     ): Call<ResponseBody>
-@FormUrlEncoded
+
+    @FormUrlEncoded
     @POST(Constant.UrlEndPoints.getCarMakerslogo)
     fun getcarLogo(
             @Field(Constant.Path.makerName) brandName: String

@@ -122,12 +122,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
         search_product.addTextChangedListener(textWatcher)
         iv_cross.setOnClickListener {
+
             containerFor_search.visibility = View.VISIBLE
             layout_searchview.visibility = View.GONE
             progressbar.visibility = View.GONE
             rv_partCategory.visibility = View.VISIBLE
             iv_cross.visibility = View.GONE
             searchText = ""
+
             search_product.setText("")
         }
     }
@@ -258,6 +260,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
             ft.detach(SparePartSearchFragment()).commit()
             search_product.setText("")
+            clearAdpater()
             supportFragmentManager.popBackStackImmediate()
             containerFor_search.visibility = View.GONE
             layout_searchview.visibility = View.GONE
@@ -285,12 +288,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 progressbar.visibility = View.GONE
                 rv_partCategory.visibility = View.VISIBLE
                 iv_cross.visibility = View.GONE
+                clearAdpater()
             } else {
                 if (s?.length!! >= 2) {
                     searchText = s.toString()
                     iv_cross.visibility = View.VISIBLE
                     getDataforSerachaccordingTokeyword(s.toString())
                 } else {
+                    clearAdpater()
                     iv_cross.visibility = View.GONE
                 }
 
@@ -309,6 +314,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             search_product.setText("")
+            clearAdpater()
             containerFor_search.visibility = View.GONE
             layout_searchview.visibility = View.GONE
             progressbar.visibility = View.GONE
@@ -343,9 +349,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                         val bodyJsonObject = JSONObject(body)
                         if (bodyJsonObject.has("data") && bodyJsonObject.opt("data") != null && !bodyJsonObject.getString("data").isNullOrBlank() && !bodyJsonObject.getString("data").equals("null")) {
                             val SearchData = Gson().fromJson<Models.SparePartSearchData>(bodyJsonObject.getString("data"), Models.SparePartSearchData::class.java)
-                            SearchProductList.clear()
-                            SearchN3PartList.clear()
                             SearchOENList.clear()
+                            SearchN3PartList.clear()
+                            SearchProductList.clear()
                             if (!SearchData.spareParts.isNullOrEmpty()) SearchProductList.addAll(SearchData.spareParts)
                             if (!SearchData.n3response.isNullOrEmpty()) SearchN3PartList.addAll(SearchData.n3response)
                             if (!SearchData.oeResponse.isNullOrEmpty()) SearchOENList.addAll(SearchData.oeResponse)
@@ -396,9 +402,9 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 }
 
                 holder.itemView.setOnClickListener {
-                   if(isLoggedIn()){
-                       searchStoreQuery(SearchOENList[position].name)
-                   }
+                    if (isLoggedIn()) {
+                        searchStoreQuery(SearchOENList[position].name)
+                    }
 
                     startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type, Constant.Key.searchedKeyword to SearchOENList[position].name))
 
@@ -461,7 +467,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
                 holder.itemView.setOnClickListener {
 
-                    if(isLoggedIn()){
+                    if (isLoggedIn()) {
                         searchStoreQuery(SearchN3PartList[position].name)
                     }
                     startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type, Constant.Key.searchedKeyword to SearchN3PartList[position].name))
@@ -501,7 +507,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
-
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
                 if (searchText.length > 0) {
                     var index: Int = SearchProductList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
@@ -518,7 +523,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
                 holder.itemView.setOnClickListener {
-                    if(isLoggedIn()){
+                    if (isLoggedIn()) {
                         searchStoreQuery(SearchProductList[position].productsName)
                     }
 
@@ -546,6 +551,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         rv_ProductSearch.adapter = myadpterSparePart
     }
 
+    fun clearAdpater() {
+        SearchOENList.clear()
+        SearchN3PartList.clear()
+        SearchProductList.clear()
+        OENSerachBindInView()
+        PartSerachBindInView()
+        ProductSerachBindInView()
+    }
 
     class Holder(view: View) : RecyclerView.ViewHolder(view)
 }

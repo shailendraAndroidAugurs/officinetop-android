@@ -2,12 +2,9 @@ package com.officinetop.officine.MOT
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
@@ -131,6 +128,10 @@ class MotListActivity : BaseActivity() {
         })
         recycler_view_mot.adapter = genericAdapter
         genericAdapter.addItems(mServicesList)
+    }
+
+    private fun bindMotServicesviewModel() {
+
     }
 
 

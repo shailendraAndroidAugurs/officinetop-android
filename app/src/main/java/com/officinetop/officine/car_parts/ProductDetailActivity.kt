@@ -20,13 +20,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.data.getUserId
+import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -416,7 +414,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         val dialog = getProgressDialog(true)
 
-        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId())
+        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId(), getLat(), getLong(),defaultDistance )
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         dialog.dismiss()

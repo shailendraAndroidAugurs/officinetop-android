@@ -28,6 +28,7 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_tyre_detail.*
@@ -410,7 +411,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun loadTyreDetails(id: Int, userId: Int) {
         try {
             val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
-            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), "0,25")
+            RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), defaultDistance)
                     .onCall { _, response ->
 
                         response?.body()?.string()?.let {

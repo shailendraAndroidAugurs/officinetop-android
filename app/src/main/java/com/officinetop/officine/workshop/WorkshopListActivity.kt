@@ -1,4 +1,5 @@
 package com.officinetop.officine.workshop
+
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -21,6 +22,7 @@ import com.officinetop.officine.adapter.ProductOrWorkshopListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.views.FilterListInterface
 import kotlinx.android.synthetic.main.activity_part_categories.progress_bar
 import kotlinx.android.synthetic.main.activity_product_list.*
@@ -41,6 +43,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+
 class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
@@ -98,7 +101,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     var dataSet: JSONArray = JSONArray()
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap()
-    private var WorkshopDistanceforDefault = "0,25"
+    private var WorkshopDistanceforDefault = defaultDistance
     private var tyre_mainCategory_id = ""
     private var washing_mainCategory_id = ""
     private var misdistancefilter = false
@@ -107,6 +110,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private lateinit var drawableRight: Drawable
     private var SelectedCalendarDateIntial: String = ""
     private var pricesFilter = false
+
+    private var servicesAverageTime = ""
+    private var mainCategoryId = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -173,8 +181,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra(Constant.Path.productId)) {
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
             }
-            if (intent.hasExtra(Constant.Key.productDetail))
+            if (intent.hasExtra(Constant.Key.productDetail)) {
                 assembledProductDetail = intent.getStringExtra(Constant.Key.productDetail)
+
+                if (!assembledProductDetail.isNullOrBlank()) {
+                    val productdetail = Gson().fromJson<Models.ProductDetail>(assembledProductDetail, Models.ProductDetail::class.java)
+                    servicesAverageTime = productdetail.serviceAverageTime
+                    mainCategoryId = productdetail.mainCategoryId
+                }
+            }
+
 
             if (!cartItem?.Deliverydays.isNullOrBlank() && (!cartItem?.Deliverydays.equals("0"))) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1))
@@ -318,7 +334,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val assemblyCall = RetrofitClient.client.getAssemblyCalendarPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
                 getSelectedCar()?.carSize
-                        ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString())
+                        ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = defaultDistance, mainCategoryId=mainCategoryId,servicesAverageTime=servicesAverageTime)
 
 
         val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = revisionMain_categoryId)
