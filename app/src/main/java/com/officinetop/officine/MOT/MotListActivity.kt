@@ -168,23 +168,27 @@ class MotListActivity : BaseActivity() {
                                         }
 
                                         scheduleId = mMotSchedule[0].id
-                                        motServive(getMotKm()!!, "0")
+
                                     } else {
-                                        showInfoDialog(getString(R.string.DatanotFound))
+                                        motServive(getMotKm()!!, "0")
+                                        // showInfoDialog(getString(R.string.DatanotFound))
                                     }
 
                                 } else {
-
-                                    if (!body.getString("message").isNullOrBlank()) {
-                                        showInfoDialog(body.getString("message"))
-                                    } else {
-                                        showInfoDialog(getString(R.string.DatanotFound))
-                                    }
+                                    motServive(getMotKm()!!, "0")
+                                    /*  if (!body.getString("message").isNullOrBlank()) {
+                                          showInfoDialog(body.getString("message"))
+                                      } else {
+                                          showInfoDialog(getString(R.string.DatanotFound))
+                                      }*/
 
                                 }
                             } else
 
+
                                 showInfoDialog(response.message())
+
+
                         }
                     }
 

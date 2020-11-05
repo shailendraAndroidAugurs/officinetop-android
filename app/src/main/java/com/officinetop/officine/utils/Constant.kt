@@ -61,6 +61,9 @@ object Constant {
         const val sparePartSubGroup = "get_spare_sub_group"
         const val spareN3Groups = "get_spare_n3_groups"
 
+        const val assembleServiceWorkshop = "assembleServiceWorkshop"
+
+
         const val deleteCar = "deleteCar"
         const val uploadCarImage = "upload_car_pic"
         const val deleteCarImage = "garage/remove_car_image"

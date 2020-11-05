@@ -246,7 +246,7 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
-    @GET(Constant.UrlEndPoints.getWorkshop)
+    @GET(Constant.UrlEndPoints.assembleServiceWorkshop)
     fun getAssemblyWorkshops(@Query(Constant.Path.productId) categoryId: Int,
                              @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
                              @Query(Constant.Path.filterRating) rating: String,
@@ -260,7 +260,9 @@ interface IRetrofitApis {
                              @Query(Constant.Path.productqty) productqty: String,
                              @Query("user_lat") user_lat: String,
                              @Query("user_long") user_long: String,
-                             @Query("distance_range") distance_range: String
+                             @Query("distance_range") distance_range: String,
+                             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                             @Query(Constant.Path.servicesAverageTime) servicesAverageTime: String
 
 
     ): Call<ResponseBody>
