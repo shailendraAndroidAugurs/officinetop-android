@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.workshop.WorkshopListActivity
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_mot_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -152,9 +152,9 @@ class MotDetailActivity : BaseActivity() {
             ll_intervalOperation.visibility = View.VISIBLE
             bindMotOPerationServices()
         } else if (mKPartServicesList.size != 0 && mOPerationServicesList.size == 0) {
-            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+           /* val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                     width, height / 2)
-            ll_sparePart.layoutParams = params
+            ll_sparePart.layoutParams = params*/
             ll_intervalOperation.visibility = View.GONE
             ll_sparePart.visibility = View.VISIBLE
             bindMotPartNumberServices()
@@ -326,7 +326,7 @@ class MotDetailActivity : BaseActivity() {
 
                                 mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this, mKPartServicesList[position].productName,ProductId,"1","USD",if(!mKPartServicesList[position].sellerPrice.isNullOrBlank()) mKPartServicesList[position].sellerPrice.toDouble() else 0.0)
+                                logAddToWishlistEvent(this, mKPartServicesList[position].productName, ProductId, "1", "USD", if (!mKPartServicesList[position].sellerPrice.isNullOrBlank()) mKPartServicesList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }

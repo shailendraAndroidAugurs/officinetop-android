@@ -334,7 +334,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val assemblyCall = RetrofitClient.client.getAssemblyCalendarPrice(serviceID, productID, selectedFormattedDate,
                 ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType,
                 getSelectedCar()?.carSize
-                        ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = defaultDistance, mainCategoryId=mainCategoryId,servicesAverageTime=servicesAverageTime)
+                        ?: "", getSelectedCar()?.carVersionModel?.idVehicle!!, productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = defaultDistance, mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime)
 
 
         val revisionServiceCall = RetrofitClient.client.getRevisionCalendar(revisionServiceID, getSelectedCar()?.carVersionModel?.idVehicle!!, selectedFormattedDate, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = revisionMain_categoryId)
@@ -546,7 +546,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
             RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE

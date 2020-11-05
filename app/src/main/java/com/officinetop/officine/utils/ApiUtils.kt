@@ -4,41 +4,39 @@ package com.officinetop.officine.utils
 
 import android.Manifest
 import android.app.Activity
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestOptions
-import com.daimajia.slider.library.Indicators.PagerIndicator
-import com.daimajia.slider.library.SliderLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.R
-
 import com.officinetop.officine.adapter.CartItemAdapter
 import com.officinetop.officine.car_parts.ProductDetailActivity
 import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopBookingDetailsActivity
 import kotlinx.android.synthetic.main.activity_shopping_cart_single_item_detail.view.*
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
-import kotlinx.android.synthetic.main.include_toolbar.view.*
 import kotlinx.android.synthetic.main.item_grid_home_square.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
@@ -47,11 +45,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.collections.forEachWithIndex
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -1134,5 +1128,150 @@ fun DateFormatChangeYearToMonth(date: String): String? {
     return outputString
 }
 
+/*fun makeTextViewResizable(tv: TextView, maxLine: Int, expandText: String) {
+    if (tv.getTag() == null) {
+        tv.setTag(tv.getText())
+    }
+    val vto: ViewTreeObserver = tv.getViewTreeObserver()
+    vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            val obs: ViewTreeObserver = tv.getViewTreeObserver()
+            obs.removeGlobalOnLayoutListener(this)
+            if (maxLine <= 0) {
+                val lineEndIndex: Int = tv.getLayout().getLineEnd(0)
+                val text: String = tv.getText().subSequence(0, lineEndIndex - expandText.length + 1).toString() + " " + expandText
+                tv.setText(text)
+            } else if (tv.getLineCount() >= maxLine) {
+                val lineEndIndex: Int = tv.getLayout().getLineEnd(maxLine - 1)
+                val text: String = tv.getText().subSequence(0, lineEndIndex - expandText.length + 1).toString() + " " + expandText
+                tv.setText(text)
+            }
+        }
+    })
+}*/
 
+fun makeTextViewResizable(tv: TextView,
+                          maxLine: Int, expandText: String, viewMore: Boolean) {
+    if (tv.tag == null) {
+        tv.tag = tv.text
+    }
+    val vto = tv.viewTreeObserver
+    vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            val obs = tv.viewTreeObserver
+            obs.removeGlobalOnLayoutListener(this)
+            if (maxLine == 0) {
+                val lineEndIndex = tv.layout.getLineEnd(0)
+                val text = tv.text.subSequence(0,
+                        lineEndIndex - expandText.length + 1)
+                        .toString() + " " + expandText
+                tv.text = text
+                tv.movementMethod = LinkMovementMethod.getInstance()
+                tv.setText(
+                        addClickablePartTextViewResizable(tv.text
+                                .toString(), tv, maxLine, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE)
+            } else if (maxLine > 0 && tv.lineCount >= maxLine) {
+                val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
+                val text = tv.text.subSequence(0,
+                        lineEndIndex - expandText.length + 1)
+                        .toString() + " " + expandText
+                tv.text = text
+                tv.movementMethod = LinkMovementMethod.getInstance()
+                tv.setText(
+                        addClickablePartTextViewResizable(tv.text
+                                .toString(), tv, maxLine, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE)
+            } else {
+                val lineEndIndex = tv.layout.getLineEnd(
+                        tv.layout.lineCount - 1)
+                val text = tv.text.subSequence(0, lineEndIndex)
+                        .toString() + " " + expandText
+                tv.text = text
+                tv.movementMethod = LinkMovementMethod.getInstance()
+                tv.setText(
+                        addClickablePartTextViewResizable(tv.text
+                                .toString(), tv, lineEndIndex, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE)
+            }
+        }
+    })
+}
+
+fun addClickablePartTextViewResizable(
+        strSpanned: String, tv: TextView, maxLine: Int,
+        spanableText: String, viewMore: Boolean): SpannableStringBuilder? {
+    val ssb = SpannableStringBuilder(strSpanned)
+    if (strSpanned.contains(spanableText)) {
+        ssb.setSpan(
+                object : ClickableSpan() {
+                    override fun onClick(widget: View?) {
+                        if (viewMore) {
+                            tv.layoutParams = tv.layoutParams
+                            tv.setText(tv.tag.toString(),
+                                    TextView.BufferType.SPANNABLE)
+                            tv.invalidate()
+                            makeTextViewResizable(tv, -4, "...Less",
+                                    false)
+                            tv.setTextColor(Color.BLACK)
+                        } else {
+                            tv.layoutParams = tv.layoutParams
+                            tv.setText(tv.tag.toString(),
+                                    TextView.BufferType.SPANNABLE)
+                            tv.invalidate()
+                            makeTextViewResizable(tv, 4, "...More",
+                                    true)
+                            tv.setTextColor(Color.BLACK)
+                        }
+                    }
+                }, strSpanned.indexOf(spanableText),
+                strSpanned.indexOf(spanableText) + spanableText.length, 0)
+    }
+    return ssb
+}
+
+
+fun Context.addReadMore(text: String, textView: TextView) {
+    val ss = SpannableString(text.substring(0, 150) + "...more")
+    val clickableSpan: ClickableSpan = object : ClickableSpan() {
+        override fun onClick(view: View) {
+            addReadLess(text, textView)
+        }
+
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.setUnderlineText(false)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ds.setColor(getResources().getColor(R.color.com_facebook_blue, getTheme()))
+            } else {
+                ds.setColor(getResources().getColor(R.color.com_facebook_blue))
+            }
+        }
+    }
+    ss.setSpan(clickableSpan, ss.length - 7, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    textView.setText(ss)
+    textView.setMovementMethod(LinkMovementMethod.getInstance())
+}
+
+fun Context.addReadLess(text: String, textView: TextView) {
+    val ss = SpannableString("$text  ...less")
+    val clickableSpan: ClickableSpan = object : ClickableSpan() {
+        override fun onClick(view: View) {
+            addReadMore(text, textView)
+        }
+
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.setUnderlineText(false)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ds.setColor(getResources().getColor(R.color.red, getTheme()))
+            } else {
+                ds.setColor(getResources().getColor(R.color.red))
+            }
+        }
+    }
+    ss.setSpan(clickableSpan, ss.length - 7, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    textView.setText(ss)
+    textView.setMovementMethod(LinkMovementMethod.getInstance())
+}
 
