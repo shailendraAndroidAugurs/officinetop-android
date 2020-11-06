@@ -22,7 +22,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.URLEncoder
+
 class Support_FAQ_Activity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,55 +60,56 @@ class Support_FAQ_Activity : BaseActivity() {
                  showInfoDialog("Whatsapp App is not install in your phone")
              }}*/
             val packageManager = packageManager
-            val i =  Intent(Intent.ACTION_VIEW)
+            val i = Intent(Intent.ACTION_VIEW)
 
             try {
-                val url = "https://api.whatsapp.com/send?phone="+393386450233/*+"&text="+ URLEncoder.encode("hii", "UTF-8");*/
+                val url = "https://api.whatsapp.com/send?phone=" + 393386450233/*+"&text="+ URLEncoder.encode("hii", "UTF-8");*/
                 i.setPackage("com.whatsapp")
                 i.data = Uri.parse(url)
                 if (i.resolveActivity(packageManager) != null) {
                     startActivity(i)
-                } else{
+                } else {
                     showInfoDialog("WhatsApp app is not installed in your Phone")
                 }
-            } catch ( e:Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
         }
     }
-        private fun getFAQ_Data_fromServer() {
-            progress_bar.visibility = View.VISIBLE
-            RetrofitClient.client.getFAQ_Data(getBearerToken()
-                    ?: "")
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            progress_bar.visibility = View.GONE
-                        }
 
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            progress_bar.visibility = View.GONE
-                            if (response.isSuccessful) {
-                                try {
-                                    val body = JSONObject(response.body()?.string())
-                                    Log.d("FAQ_Api_Call", "yes")
-                                    if (body.has("data_set") && body.get("data_set") != null) {
-                                        val jsonarray = body.get("data_set") as JSONArray
-                                        val gson = GsonBuilder().create()
-                                        val fAQ_Question_AnswerList = gson.fromJson(jsonarray.toString(), Array<Models.FAQ_Question_Answer>::class.java).toCollection(java.util.ArrayList<Models.FAQ_Question_Answer>())
-                                        rv_FaqQuestion_Answer.adapter = FAQ_Adapter(this@Support_FAQ_Activity, fAQ_Question_AnswerList)
-                                    }
+    private fun getFAQ_Data_fromServer() {
+        progress_bar.visibility = View.VISIBLE
+        RetrofitClient.client.getFAQ_Data(getBearerToken()
+                ?: "")
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        progress_bar.visibility = View.GONE
+                    }
 
-
-                                } catch (e: Exception) {
-
-                                    e.printStackTrace()
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        progress_bar.visibility = View.GONE
+                        if (response.isSuccessful) {
+                            try {
+                                val body = JSONObject(response.body()?.string())
+                                Log.d("FAQ_Api_Call", "yes")
+                                if (body.has("data_set") && body.get("data_set") != null) {
+                                    val jsonarray = body.get("data_set") as JSONArray
+                                    val gson = GsonBuilder().create()
+                                    val fAQ_Question_AnswerList = gson.fromJson(jsonarray.toString(), Array<Models.FAQ_Question_Answer>::class.java).toCollection(java.util.ArrayList<Models.FAQ_Question_Answer>())
+                                    rv_FaqQuestion_Answer.adapter = FAQ_Adapter(this@Support_FAQ_Activity, fAQ_Question_AnswerList)
                                 }
 
+
+                            } catch (e: Exception) {
+
+                                e.printStackTrace()
                             }
 
-
                         }
-                    })
-        }
+
+
+                    }
+                })
     }
+}

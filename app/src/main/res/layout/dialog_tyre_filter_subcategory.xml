@@ -24,8 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:background="@color/white"
-                android:queryHint="@string/Search"
                 android:focusable="false"
+                android:queryHint="@string/Search"
                 app:defaultQueryHint="@string/Search"
                 app:iconifiedByDefault="false"
                 app:queryHint="@string/Search" />
@@ -35,9 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:visibility="gone"
                 android:paddingRight="10dp"
-                android:paddingBottom="5dp">
+                android:paddingBottom="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/item_checkbox_text"

@@ -14,9 +14,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:background="@drawable/rounded_white_background"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -83,10 +83,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:visibility="gone"
                     android:padding="0dp"
                     android:text="@{listItemViewModel.productDescription!=null?listItemViewModel.productDescription :@string/url_not_found}"
-                    android:textColor="@color/gray_dark" />
+                    android:textColor="@color/gray_dark"
+                    android:visibility="gone" />
 
 
                 <RelativeLayout
@@ -125,9 +125,9 @@
                         android:padding="0dp"
                         android:textColor="@color/theme_orange"
                         android:textSize="12sp"
-                        app:tyre_Order_price="@{listItemViewModel.finalOrderPrice!=null?listItemViewModel.finalOrderPrice :@string/zero }"
                         app:tyrePfu="@{listItemViewModel.pfuTax!=null?listItemViewModel.pfuTax:@string/zero}"
-                        app:tyreQuantity="@{listItemViewModel.productQuantity!=null?listItemViewModel.productQuantity:@string/zero}"/>
+                        app:tyreQuantity="@{listItemViewModel.productQuantity!=null?listItemViewModel.productQuantity:@string/zero}"
+                        app:tyre_Order_price="@{listItemViewModel.finalOrderPrice!=null?listItemViewModel.finalOrderPrice :@string/zero }" />
 
                 </RelativeLayout>
 
@@ -155,9 +155,9 @@
                         android:layout_centerVertical="true"
                         android:gravity="left"
                         android:padding="0dp"
-                        app:Order_Quantity="@{listItemViewModel.productQuantity!=null ?listItemViewModel.productQuantity :@string/zero}"
+                        android:textColor="@color/black"
                         app:Ispair="@{listItemViewModel.isProductPair!=null ?listItemViewModel.isProductPair :@string/zero}"
-                        android:textColor="@color/black" />
+                        app:Order_Quantity="@{listItemViewModel.productQuantity!=null ?listItemViewModel.productQuantity :@string/zero}" />
                 </LinearLayout>
 
 
@@ -165,8 +165,8 @@
                     android:id="@+id/ll_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{listItemViewModel.couponTitle!=null ? View.VISIBLE : View.GONE}"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{listItemViewModel.couponTitle!=null ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,12 +184,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="right"
-                        android:textSize="@dimen/_10sdp"
                         android:padding="@dimen/_5sdp"
-                        app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/Concat }"
-                        app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/Concat }"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10sdp"
                         app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/Concat }"
-                        android:textColor="@color/green" />
+                        app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/Concat }"
+                        app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/Concat }" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -202,9 +202,9 @@
             android:background="@color/gray" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,8 +213,8 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="2"
                 android:padding="@dimen/_5sdp"
-                app:feedbackvisibility="@{listItemViewModel.status}"
-                app:feedbackStatus="@{listItemViewModel.feedbackstatus}">
+                app:feedbackStatus="@{listItemViewModel.feedbackstatus}"
+                app:feedbackvisibility="@{listItemViewModel.status}">
 
                 <TextView
                     android:id="@+id/iv_delete"
@@ -229,23 +229,24 @@
 
 
             </LinearLayout>
+
             <LinearLayout
-                android:visibility="gone"
-                app:layoutvisibility="@{listItemViewModel.feedbackstatus}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layoutvisibility="@{listItemViewModel.feedbackstatus}">
+
                 <TextView
                     android:id="@+id/iv_AddtoCart"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:src="@drawable/ic_cart_menu"
                     android:text="@string/SeeFeedback"
-                    android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:textColor="@color/lite_blue"
-                    android:tint="@color/gray_dark"
-                    />
+                    android:tint="@color/gray_dark" />
 
             </LinearLayout>
 

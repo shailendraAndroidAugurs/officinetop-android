@@ -9,7 +9,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import kotlinx.android.synthetic.main.spinner_item_layout.view.*
 
-class SpinnerAdapterForVehicalType (ctx: Context, items: List<Models.TypeSpecificationForVehicalType>) : ArrayAdapter<Models.TypeSpecificationForVehicalType>(ctx, R.layout.spinner_item_layout, items) {
+class SpinnerAdapterForVehicalType(ctx: Context, items: List<Models.TypeSpecificationForVehicalType>) : ArrayAdapter<Models.TypeSpecificationForVehicalType>(ctx, R.layout.spinner_item_layout, items) {
 
     override fun getView(position: Int, v: View?, parent: ViewGroup): View {
 

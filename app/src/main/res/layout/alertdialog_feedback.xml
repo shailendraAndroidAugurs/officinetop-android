@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <TextView
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/_12sdp"
-        android:text="@string/Comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/Comment"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_12sdp" />
+
     <TextView
-        android:layout_marginTop="5dp"
-        android:textColor="@color/black"
-        android:text="@string/Comment_by_user"
         android:id="@+id/textview_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/Comment_by_user"
+        android:textColor="@color/black" />
+
     <TextView
-        android:textSize="@dimen/_12sdp"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/rating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_12sdp" />
+
     <com.officinetop.officine.utils.CustomRatingBar
         android:id="@+id/rating"
         style="@style/custom_ratingBar"
@@ -33,10 +36,10 @@
 
     <Button
         android:id="@+id/button_close"
-        android:layout_marginTop="10dp"
-        android:text="@string/close"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="@string/close" />
 
 </LinearLayout>

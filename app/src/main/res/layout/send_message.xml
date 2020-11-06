@@ -48,6 +48,7 @@
             android:layout_above="@+id/message_time"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_user" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_receivedimage"
             android:layout_width="@dimen/_150sdp"

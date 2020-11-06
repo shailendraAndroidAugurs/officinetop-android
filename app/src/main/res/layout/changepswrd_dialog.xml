@@ -3,122 +3,126 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!-- A6000000-->
+    <!-- A6000000-->
 
     <FrameLayout
-        android:background="#A0000000"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:background="@color/white"
-        android:layout_margin="@dimen/_10sdp"
-        android:padding="@dimen/_25sdp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TextView
-        android:textColor="@color/gradient_orange_dark"
-        android:textSize="@dimen/_18sdp"
-        android:text="@string/changepassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:text="@string/oldpasword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/oldpaswrdEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:importantForAutofill="no" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:text="@string/newpasword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/newpaswrdEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:importantForAutofill="no" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:text="@string/retypepasword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/retypepaswrdEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:importantForAutofill="no" />
-
-    </LinearLayout>
-    <Button
-        android:id="@+id/submit_change_password"
-        style="@style/RoundButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/shape_button_rounded_orange"
-        android:text="@string/submit" />
+        android:background="#A0000000">
 
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/close_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:adjustViewBounds="true"
-        android:paddingTop="-10dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/ic_quit" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/_25sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/changepassword"
+                android:textColor="@color/gradient_orange_dark"
+                android:textSize="@dimen/_18sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/oldpasword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <EditText
+                    android:id="@+id/oldpaswrdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/newpasword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <EditText
+                    android:id="@+id/newpaswrdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/retypepasword"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <EditText
+                    android:id="@+id/retypepaswrdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_change_password"
+                style="@style/RoundButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/shape_button_rounded_orange"
+                android:text="@string/submit" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/close_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:adjustViewBounds="true"
+            android:paddingTop="-10dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_quit" />
     </FrameLayout>
 </FrameLayout>

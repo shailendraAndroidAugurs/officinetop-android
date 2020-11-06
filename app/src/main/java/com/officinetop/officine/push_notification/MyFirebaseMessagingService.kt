@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.R
 import java.util.*
 
@@ -30,11 +29,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.i(TAG, p0)
         Log.e("messageonNewtokens==", p0)
     }
+
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
         Log.e("messages==", p0.toString())
         Log.e("messages1==", p0.notification?.body)
-        Log.e("messages2==", ""+p0.data.size)
+        Log.e("messages2==", "" + p0.data.size)
         if (p0.notification != null) {
             Log.i(TAG, p0.notification?.title!!)
             Log.i(TAG, p0.notification?.body!!)
@@ -53,11 +53,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
 
 
-
             // Log.i(TAG, message.getData().get("message"))
             notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             //Setting up Notification channels for android O and above
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { setupNotificationChannels() }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                setupNotificationChannels()
+            }
 
             val notificationId = Random().nextInt(60000)
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -69,10 +70,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 notificationBuilder.setSmallIcon(R.mipmap.ic_stat_app_icon)  //a resource for your custom small
                 notificationBuilder.color = resources.getColor(R.color.color9)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title.toString(),Html.FROM_HTML_MODE_COMPACT))
-                    notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body.toString(),Html.FROM_HTML_MODE_COMPACT))
-                }else
-                {
+                    notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title.toString(), Html.FROM_HTML_MODE_COMPACT))
+                    notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body.toString(), Html.FROM_HTML_MODE_COMPACT))
+                } else {
                     notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title))
                     notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body))
 
@@ -80,16 +80,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 notificationBuilder.setAutoCancel(true)  //dismisses the notification on click
                 notificationBuilder.setColorized(true)
                 notificationBuilder.setSound(defaultSoundUri)
-            }else{
+            } else {
                 notificationBuilder.setSmallIcon(R.mipmap.ic_stat_app_icon)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title.toString(),Html.FROM_HTML_MODE_COMPACT))
-                    notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body.toString(),Html.FROM_HTML_MODE_COMPACT))
+                    notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title.toString(), Html.FROM_HTML_MODE_COMPACT))
+                    notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body.toString(), Html.FROM_HTML_MODE_COMPACT))
 
 
-                }else
-                {
+                } else {
                     notificationBuilder.setContentTitle(Html.fromHtml(p0.notification?.title.toString()))
                     notificationBuilder.setContentText(Html.fromHtml(p0.notification?.body.toString()))
 
@@ -110,6 +109,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun setupNotificationChannels() {
         val adminChannelName = getString(R.string.notifications_admin_channel_name)

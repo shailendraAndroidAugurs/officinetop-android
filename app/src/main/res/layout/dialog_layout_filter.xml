@@ -16,9 +16,9 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:orientation="vertical">
 
             <TextView
@@ -100,13 +100,13 @@
                     android:id="@+id/dialog_distance_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:rsb_max="100"
                     app:rsb_min="0"
                     app:rsb_mode="range"
                     app:rsb_progress_color="@color/colorAccent"
                     app:rsb_thumb_drawable="@drawable/shape_circle_white"
-                    app:rsb_thumb_size="28dp"
-                    android:visibility="gone"/>
+                    app:rsb_thumb_size="28dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -304,8 +304,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     style="@style/TextViewSubHeadingBlack"

@@ -10,13 +10,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include layout="@layout/include_toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-    <include layout="@layout/layout_recycler_view"/>
+
+        <include layout="@layout/layout_recycler_view" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

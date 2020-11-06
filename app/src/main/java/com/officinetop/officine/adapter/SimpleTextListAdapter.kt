@@ -1,23 +1,18 @@
 package com.officinetop.officine.adapter
 
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
 import com.officinetop.officine.data.MeasurementDataSetItem
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.tyre.TyreCustomizationActivity
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showConfirmDialog
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.item_text_only.view.*
-import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 
 class SimpleTextListAdapter(private var context: Context, private var titleList: MutableList<MeasurementDataSetItem>, private var listenerRecycler: OnRecyclerItemClickListener) :

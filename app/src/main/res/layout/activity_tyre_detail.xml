@@ -757,10 +757,10 @@
 
                     <LinearLayout
                         android:id="@+id/ll_DOT"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <View
                             android:layout_width="match_parent"

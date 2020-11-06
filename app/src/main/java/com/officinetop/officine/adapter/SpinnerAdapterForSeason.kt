@@ -9,7 +9,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import kotlinx.android.synthetic.main.spinner_item_layout.view.*
 
-class SpinnerAdapterForSeason (ctx: Context, items: List<Models.TypeSpecificationForSeason>) : ArrayAdapter<Models.TypeSpecificationForSeason>(ctx, R.layout.spinner_item_layout, items) {
+class SpinnerAdapterForSeason(ctx: Context, items: List<Models.TypeSpecificationForSeason>) : ArrayAdapter<Models.TypeSpecificationForSeason>(ctx, R.layout.spinner_item_layout, items) {
 
     override fun getView(position: Int, v: View?, parent: ViewGroup): View {
 

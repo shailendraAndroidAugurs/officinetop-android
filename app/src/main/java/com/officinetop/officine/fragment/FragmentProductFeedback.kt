@@ -19,7 +19,6 @@ import com.officinetop.officine.utils.DateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
 import org.jetbrains.anko.support.v4.intentFor
@@ -36,22 +35,22 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
             if (arguments!!.getBoolean("product")) {
                 if (arguments!!.getBoolean("MyReview")) {
 
-                     val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
+                    val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
 
-                    WorkshopFeedBackListfilter.addAll( WorkshopFeedBackList.filter {
+                    WorkshopFeedBackListfilter.addAll(WorkshopFeedBackList.filter {
                         Log.d("MyReview", "userid:" + it.users_id)
                         it.users_id == activity?.getUserId()
                     })
 
                     getHighRatingProductData(WorkshopFeedBackListfilter)
 
-                    Log.d("MyReview","true_forProduct + list size"+ WorkshopFeedBackList.size)
-                }else{
+                    Log.d("MyReview", "true_forProduct + list size" + WorkshopFeedBackList.size)
+                } else {
                     getHighRatingProductData(WorkshopFeedBackList)
                 }
 
 
-                Log.d("FragmnetFor", "Product"+ "product list size"+WorkshopFeedBackList.size)
+                Log.d("FragmnetFor", "Product" + "product list size" + WorkshopFeedBackList.size)
             }
 
             Log.d("list", "WorkshopFeedBackListfragment" + WorkshopFeedBackList.size)
@@ -76,9 +75,9 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
             override fun getItemCount(): Int = productFeedbackList.size
 
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-                if (productFeedbackList[p1].ProductFeedbackDetail!=null && !productFeedbackList[p1].ProductFeedbackDetail.product_name.isNullOrBlank()) {
+                if (productFeedbackList[p1].ProductFeedbackDetail != null && !productFeedbackList[p1].ProductFeedbackDetail.product_name.isNullOrBlank()) {
                     p0.itemView.tv_NameofProductorWorkshop.text = productFeedbackList[p1].ProductFeedbackDetail.product_name
-                    Log.d("productname",productFeedbackList[p1].ProductFeedbackDetail.product_name)
+                    Log.d("productname", productFeedbackList[p1].ProductFeedbackDetail.product_name)
                 } else {
                     p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
                 }
@@ -179,9 +178,8 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
                     }
 
 
-                }else
-                {
-                    p0.itemView.rv_feedbackImage.adapter= null
+                } else {
+                    p0.itemView.rv_feedbackImage.adapter = null
                 }
 
 
@@ -193,7 +191,7 @@ class FragmentProductFeedback : Fragment()/*, FragmentFeedback.OnAboutDataReceiv
                     startActivity(intentFor<FeedbackDetailActivity>(
                             Constant.Path.type to productFeedbackList[p1].product_type,
                             Constant.Path.model to Gson().toJson(productFeedbackList[p1]),
-                            Constant.Path.ProductOrWorkshopName to if(productFeedbackList[p1].ProductFeedbackDetail!=null)productFeedbackList[p1].ProductFeedbackDetail.product_name else "",
+                            Constant.Path.ProductOrWorkshopName to if (productFeedbackList[p1].ProductFeedbackDetail != null) productFeedbackList[p1].ProductFeedbackDetail.product_name else "",
                             "forHighRating" to "1"
                     ))
                 }

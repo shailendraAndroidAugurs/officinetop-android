@@ -2,9 +2,9 @@ package com.officinetop.officine.views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.viewpager.widget.ViewPager
 import com.officinetop.officine.R
 
 

@@ -3,7 +3,6 @@ package com.officinetop.officine.tyre
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -24,12 +23,9 @@ import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.utils.makeRound
 import com.officinetop.officine.utils.showInfoDialog
-import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody
-import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call

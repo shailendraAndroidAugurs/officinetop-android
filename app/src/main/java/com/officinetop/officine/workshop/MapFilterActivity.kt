@@ -23,7 +23,6 @@ import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.storeLatLong
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.loadImageWithName
 import kotlinx.android.synthetic.main.activity_map_filter.*
@@ -64,6 +63,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var motType = ""
     private var calendarPriceMap: HashMap<String, String> = HashMap()
     private var workshopCategoryDetail = ""
+
     // set location callback
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
@@ -71,14 +71,13 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             if (locationList != null && locationList.size > 0) {
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
-                var currentLatLong=LatLng(0.0,0.0)
+                var currentLatLong = LatLng(0.0, 0.0)
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() &&  !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
-                {
+                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
                     currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
-                }else{
+                } else {
                     currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
                 }
 
@@ -281,16 +280,16 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 item_price.text = getString(R.string.prepend_euro_symbol_with_da_string, jsonObject.optString("services_price"))
 
 
-          /*  if (!jsonObject.optString("rating_star").isNullOrEmpty() && !jsonObject.optString("rating_star").equals("null")) {
-                item_rating.rating = jsonObject.optString("rating_star").toFloat()
-            } else
-                item_rating.rating = 0f*/
+            /*  if (!jsonObject.optString("rating_star").isNullOrEmpty() && !jsonObject.optString("rating_star").equals("null")) {
+                  item_rating.rating = jsonObject.optString("rating_star").toFloat()
+              } else
+                  item_rating.rating = 0f*/
 
 
 
-            if(jsonObject.has("rating")){
+            if (jsonObject.has("rating")) {
                 val jsonObjectRating = JSONObject(jsonObject.optString("rating"))
-                if (jsonObjectRating!=null && jsonObjectRating.has("rating")&&!jsonObjectRating.optString("rating").isNullOrEmpty() && jsonObjectRating.optString("rating") != "null") {
+                if (jsonObjectRating != null && jsonObjectRating.has("rating") && !jsonObjectRating.optString("rating").isNullOrEmpty() && jsonObjectRating.optString("rating") != "null") {
                     item_rating.rating = jsonObjectRating.optString("rating").toFloat()
                 } else
                     item_rating.rating = 0f

@@ -5,19 +5,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_7sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:background="@color/white"
         android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
         android:orientation="horizontal"
         android:padding="@dimen/_5sdp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:orientation="horizontal"
-
-            app:layout_constraintTop_toBottomOf="@+id/text_partinfo"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintTop_toBottomOf="@+id/text_partinfo">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,12 +39,10 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:scaleType="centerInside"
-                    app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}"
-
-                    />
+                    app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}" />
 
 
             </LinearLayout>
@@ -57,7 +54,6 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:id="@+id/item_price"
                     android:layout_width="wrap_content"
@@ -66,10 +62,10 @@
                     android:layout_marginRight="@dimen/_2sdp"
                     android:textColor="@color/theme_orange"
                     app:amount="@{listItemViewModel.sellerPrice!=null ?  listItemViewModel.sellerPrice: @string/blank}"
-                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
-
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon" />
+
+                    app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon"
+                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
 
                 <TextView
@@ -78,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
-                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     android:background="@drawable/shape_dotted_orange"
                     android:gravity="center"
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
@@ -86,6 +81,7 @@
                     android:tag="102"
                     android:text="@string/updateCoupon"
                     android:textColor="@color/black"
+                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_CouponTitle_mot"
                     app:layout_constraintTop_toBottomOf="@+id/parts_title" />
@@ -97,10 +93,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
-                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
-
                     android:text="@{ listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?listItemViewModel.couponTitle:@string/blank}"
+
                     android:textColor="@color/md_teal_700"
+                    android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toStartOf="@+id/tv_changecoupon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/parts_title" />
@@ -109,29 +105,28 @@
                     android:id="@+id/parts_title"
                     android:layout_width="@dimen/_170sdp"
                     android:layout_height="wrap_content"
+                    android:maxLines="2"
                     android:padding="@dimen/_5sdp"
                     android:text="@{listItemViewModel.productName}"
                     android:textColor="@color/black"
-                    android:maxLines="2"
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_for_pair" />
 
 
-
                 <ImageView
                     android:id="@+id/Iv_favorite_mainPart"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_favorite_border_black_empty_24dp"
                     android:tag="103"
-                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
+                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}" />
 
 
                 <TextView
@@ -156,7 +151,7 @@
                     app:PairText="@{listItemViewModel.forPair !=null  ? @string/pieces : @string/pieces}"
                     app:Quantity="@{listItemViewModel.forPair !=null  ? listItemViewModel.forPair : @string/blank}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.officinetop.officine.utils.CustomRatingBar
                     android:id="@+id/item_rating"
@@ -175,11 +170,12 @@
         </LinearLayout>
 
 
-
     </LinearLayout>
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="listItemViewModel"
             type="com.officinetop.officine.data.Models.Part" />

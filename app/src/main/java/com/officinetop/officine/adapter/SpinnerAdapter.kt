@@ -1,14 +1,10 @@
 package com.officinetop.officine.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import kotlinx.android.synthetic.main.spinner_item_layout.view.*

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
 
-class  OrderDetailActivity : BaseActivity() {
+class OrderDetailActivity : BaseActivity() {
     private lateinit var forWhich: String
     lateinit var orderid: String
     lateinit var Orderstatus: String
@@ -98,14 +98,6 @@ class  OrderDetailActivity : BaseActivity() {
                         Constant.Path.ProductOrWorkshopName to SpareProductList[position].productName,
                         Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to "", Constant.Path.motservicetype to ""), 102)
                 finish()
-
-
-
-
-
-
-
-
 
 
             }

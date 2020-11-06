@@ -109,13 +109,13 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_choose_workshop"
+                style="@style/RoundButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/RoundButton"
-                android:id="@+id/btn_choose_workshop"
                 android:layout_alignParentBottom="true"
                 android:text="@string/choose_workshop"
-                />
+                android:textSize="@dimen/_12sdp" />
 
         </RelativeLayout>
     </RelativeLayout>

@@ -13,11 +13,9 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.convertToJsonString
 import com.officinetop.officine.utils.genericAPICall
-import kotlinx.android.synthetic.main.activity_tyre_customization.*
 import kotlinx.android.synthetic.main.activity_tyre_diameter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 
 class TyreDiameterActivity : BaseActivity() {

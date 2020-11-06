@@ -1,81 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <FrameLayout
-            android:id="@+id/header"
-            android:background="@color/colorPrimaryDark"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextViewHeading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text=""
-                android:id="@+id/title"
-                android:textColor="@color/white"
-                style="@style/TextViewHeading"
-                android:gravity="center"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_delete"
-                android:layout_gravity="end|center"
-                android:id="@+id/imageCross"
-                android:paddingEnd="@dimen/_10sdp"/>
-
-        </FrameLayout>
-        <LinearLayout
-            android:layout_margin="@dimen/_5sdp"
-            android:id="@+id/ll_Note_ApplyCoupon"
-            android:layout_below="@+id/header"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-
-                android:textColor="@color/green"
-                android:text="@string/Note"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_weight=".4"
-                android:background="?android:windowBackground"
-                android:layout_height="match_parent">
-
-            </TextView>
-            <TextView
-
-android:textSize="@dimen/_10sdp"
-                android:text="@string/Apply_Coupon_Note"
-                android:layout_width="0dp"
-                android:layout_weight="1.6"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:background="?android:windowBackground"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/dialog_recycler_view"
-            android:layout_below="@+id/ll_Note_ApplyCoupon"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="?android:windowBackground">
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:id="@+id/imageCross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:paddingEnd="@dimen/_10sdp"
+            android:src="@android:drawable/ic_delete" />
 
+    </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_Note_ApplyCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_margin="@dimen/_5sdp"
+        android:weightSum="2">
 
+        <TextView
 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4"
+            android:background="?android:windowBackground"
+            android:gravity="center"
+            android:text="@string/Note"
+            android:textColor="@color/green"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_weight="1.6"
+            android:background="?android:windowBackground"
+            android:text="@string/Apply_Coupon_Note"
+            android:textSize="@dimen/_10sdp">
+
+        </TextView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialog_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_Note_ApplyCoupon"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="?android:windowBackground"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

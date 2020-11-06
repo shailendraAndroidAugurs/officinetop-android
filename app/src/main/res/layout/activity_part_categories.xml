@@ -33,14 +33,14 @@
 
         <ImageView
             android:id="@+id/iv_cross"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_2sdp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_35sdp"
-            android:src="@drawable/ic_cross" />
+            android:padding="@dimen/_2sdp"
+            android:src="@drawable/ic_cross"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/progressbar"

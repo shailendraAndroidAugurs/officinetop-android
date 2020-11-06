@@ -152,9 +152,9 @@ class MotDetailActivity : BaseActivity() {
             ll_intervalOperation.visibility = View.VISIBLE
             bindMotOPerationServices()
         } else if (mKPartServicesList.size != 0 && mOPerationServicesList.size == 0) {
-           /* val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                    width, height / 2)
-            ll_sparePart.layoutParams = params*/
+            /* val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                     width, height / 2)
+             ll_sparePart.layoutParams = params*/
             ll_intervalOperation.visibility = View.GONE
             ll_sparePart.visibility = View.VISIBLE
             bindMotPartNumberServices()

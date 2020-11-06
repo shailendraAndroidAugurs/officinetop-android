@@ -57,7 +57,7 @@ class Support_Activity : BaseActivity() {
                 selectcat_id = messageList.ticket_type
                 val linearLayoutManager = LinearLayoutManager(this)
                 recycler_view_chatlist.layoutManager = linearLayoutManager
-                recyclerViewAdapter = RecyclerViewAdapterChating(this,messagemodel as MutableList<Models.Messages>, this)
+                recyclerViewAdapter = RecyclerViewAdapterChating(this, messagemodel as MutableList<Models.Messages>, this)
                 recycler_view_chatlist.adapter = recyclerViewAdapter
                 val count = recyclerViewAdapter!!.changeposition()
                 recycler_view_chatlist.scrollToPosition(count)
@@ -127,7 +127,7 @@ class Support_Activity : BaseActivity() {
         val messagemodel = messageList.messages
         val linearLayoutManager = LinearLayoutManager(this)
         recycler_view_chatlist.layoutManager = linearLayoutManager
-        recyclerViewAdapter = RecyclerViewAdapterChating(this,messagemodel as MutableList<Models.Messages>, this)
+        recyclerViewAdapter = RecyclerViewAdapterChating(this, messagemodel as MutableList<Models.Messages>, this)
         recycler_view_chatlist.adapter = recyclerViewAdapter
         val count = recyclerViewAdapter!!.changeposition()
         recycler_view_chatlist.scrollToPosition(count)

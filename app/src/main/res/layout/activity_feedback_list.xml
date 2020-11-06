@@ -38,13 +38,14 @@
                     android:layout_height="@dimen/_15sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp" />
+
                 <TextView
                     android:id="@+id/tv_rating_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_0"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@string/_0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -53,8 +54,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp">
 
                 <Button
                     android:id="@+id/btn_addfedback"
@@ -87,10 +88,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:textSize="@dimen/_12sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="@string/_0" />
+                    android:text="@string/_0"
+                    android:textSize="@dimen/_12sdp" />
 
             </RelativeLayout>
 

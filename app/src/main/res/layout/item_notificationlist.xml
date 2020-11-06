@@ -2,71 +2,77 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="listItemViewModel"
             type="com.officinetop.officine.data.Models.NotificationList" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_margin="@dimen/_3sdp"
-        app:cardElevation="@dimen/_3sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <LinearLayout
-
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:padding="@dimen/_10sdp"
-            android:orientation="vertical"
-            android:layout_weight="1"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp">
 
-            <TextView
-                android:textColor="@color/black"
-                android:text="@{listItemViewModel.title}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                app:htmlText="@{listItemViewModel.content}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
 
-        </LinearLayout>
-        <LinearLayout
-            android:padding="@dimen/_5sdp"
-            android:orientation="vertical"
-            android:layout_weight="3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:visibility="gone"
-                android:textSize="@dimen/_10sdp"
-                android:gravity="end"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textSize="@dimen/_10sdp"
-                app:dateformateText="@{listItemViewModel.createdAt}" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{listItemViewModel.title}"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:htmlText="@{listItemViewModel.content}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textSize="@dimen/_10sdp"
+                        app:dateformateText="@{listItemViewModel.createdAt}" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-</LinearLayout></layout>
+</layout>

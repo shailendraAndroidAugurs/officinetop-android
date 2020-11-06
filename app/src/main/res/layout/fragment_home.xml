@@ -2,9 +2,9 @@
 
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -130,9 +130,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingBottom="10dp"
             android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            android:paddingBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
         <LinearLayout
@@ -168,15 +168,15 @@
 
         </LinearLayout>
 
-<TextView
-    android:layout_width="match_parent"
-    android:text="@string/feedback_Product_home"
-    android:padding="@dimen/_5sdp"
-    android:textColor="@color/black"
-    android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/feedback_Product_home"
+            android:textColor="@color/black">
 
 
-</TextView>
+        </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_grid_product_feedback_recycler_view"
@@ -185,20 +185,20 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:descendantFocusability="blocksDescendants"
-            android:paddingBottom="10dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:nestedScrollingEnabled="false"
-            />
+            android:paddingBottom="10dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@string/feedback_Workshop_home"
+            android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content">
+            android:text="@string/feedback_Workshop_home"
+            android:textColor="@color/black">
 
 
         </TextView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_grid_workshop_feedback_recycler_view"
             android:layout_width="match_parent"

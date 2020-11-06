@@ -3,18 +3,16 @@ package com.officinetop.officine.workshop
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.samples.wallet.Constants
-import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.Online_Payment.OnlinePaymentScreen
 import com.officinetop.officine.R
-import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.OnCartListCallback
+import com.officinetop.officine.utils.getCartItemsList
 import kotlinx.android.synthetic.main.activity_shopping_cart_single_item_detail.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.support.v4.intentFor
 
 class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
 

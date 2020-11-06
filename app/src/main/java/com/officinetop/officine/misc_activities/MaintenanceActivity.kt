@@ -64,6 +64,8 @@ class MaintenanceActivity : BaseActivity() {
     private var maxPrice = 0f
 
     private var selectedServicesTotalPrice: Double = 0.0
+
+    private var selectedServicesProductTotalPrices: Double = 0.0
     private var genericAdapterParts: GenericAdapter<Models.Part>? = null
     var genericAdapter: GenericAdapter<Models.CarMaintenanceServices>? = null
     private var selectitem_position: Int = 0
@@ -101,7 +103,7 @@ class MaintenanceActivity : BaseActivity() {
             sortDialog.show()
         }
         selectedCarMaintenanceServices.clear()
-
+        CalculateWorkshopPricesAndSparepartPrices()
         btn_choose_workshop.setOnClickListener {
 
 
@@ -276,23 +278,14 @@ class MaintenanceActivity : BaseActivity() {
 
                             carMaintenanceServiceList[position].isChecked = true//for checkbox during recycler view scroll not to change view state.
                             selectedCarMaintenanceServices.add(carMaintenanceServiceList[position])
-                            selectedServicesTotalPrice = (selectedServicesTotalPrice + (carMaintenanceServiceList[position].price.toDouble())).roundTo2Places()
-                            btn_choose_workshop.text = getString(R.string.choose_workshop) + " (${getString(R.string.prepend_euro_symbol_string, selectedServicesTotalPrice.toString())})"
-
+                            CalculateWorkshopPricesAndSparepartPrices()
                         } else {
                             carMaintenanceServiceList[position].isChecked = false
-
                             if (selectedCarMaintenanceServices.contains(carMaintenanceServiceList[position])) {
-                                //hashMap.remove(carMaintenanceServiceList[position].id)
                                 Log.e("carMaintenance_Id::", carMaintenanceServiceList[position].id)
                                 selectedCarMaintenanceServices.remove(carMaintenanceServiceList[position])
-                                // Log.e("selecteServiceUNCHECD::", "${position} ${selectedCarMaintenanceServices.size}")
-                                if (selectedServicesTotalPrice > 0) {
-                                    // Log.e("Price", "${(carMaintenanceServiceList[position].price!!.toDouble()).roundTo2Places()}")
-                                    selectedServicesTotalPrice = (selectedServicesTotalPrice - (carMaintenanceServiceList[position].price.toDouble())).roundTo2Places()
-                                    btn_choose_workshop.text = getString(R.string.choose_workshop) + "  (${getString(R.string.prepend_euro_symbol_string, selectedServicesTotalPrice.toString())})"
+                                CalculateWorkshopPricesAndSparepartPrices()
 
-                                }
                             }
                         }
                     } else {
@@ -331,7 +324,6 @@ class MaintenanceActivity : BaseActivity() {
             selectservice_position = position
 
         } else {
-
             progress_bar.visibility = View.VISIBLE
             getAllParts(carMaintenanceServiceList[position].id, position)
         }
@@ -433,7 +425,6 @@ class MaintenanceActivity : BaseActivity() {
     }
 
     private fun partsDialog() {
-
         dialog = Dialog(this)
         val view: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -546,6 +537,8 @@ class MaintenanceActivity : BaseActivity() {
                 carMaintenanceServiceList[selectservice_position].rating_count = if (ReplacementPartList[position].rating_count.isNullOrEmpty()) "" else ReplacementPartList[position].rating_count
                 carMaintenanceServiceList[selectservice_position].wishlist = if (ReplacementPartList[position].wishlist.isNullOrEmpty()) "" else ReplacementPartList[position].wishlist
                 genericAdapter!!.notifyDataSetChanged()
+                CalculateWorkshopPricesAndSparepartPrices()
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -891,5 +884,29 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
+    fun CalculateWorkshopPricesAndSparepartPrices() {
+        selectedServicesTotalPrice = 0.0
+        selectedServicesProductTotalPrices = 0.0
+        for (item in selectedCarMaintenanceServices) {
+
+            if (!item.seller_price.isNullOrBlank()) {
+                selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
+            }
+            if (item.parts.isNotEmpty() && item.parts[0] != null && !item.parts[0].sellerPrice.isNullOrBlank()) {
+                if (!item.parts[0].forPair.isNullOrBlank() && !item.parts[0].forPair.equals("0")) {
+                    selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + (item.parts[0].sellerPrice.toDouble()) * 2).roundTo2Places()
+
+                } else {
+                    selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + item.parts[0].sellerPrice.toDouble()).roundTo2Places()
+
+                }
+
+            }
+
+        }
+        btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
+
+
+    }
 
 }

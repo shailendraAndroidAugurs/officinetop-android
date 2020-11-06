@@ -2,7 +2,6 @@ package com.officinetop.officine.News
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
@@ -18,10 +17,8 @@ import android.webkit.WebView.WebViewTransport
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.officinetop.officine.R
-import com.officinetop.officine.data.getUserId
 import kotlinx.android.synthetic.main.fragment_guide.view.*
 
 
@@ -33,18 +30,20 @@ private var mWebviewPop: WebView? = null
 private val mContainer: FrameLayout? = null
 private const val mLastBackPressTime: Long = 0
 private val mToast: Toast? = null
+
 class Fragmentnews : Fragment() {
 
 
     lateinit var rootview: View
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootview = inflater.inflate(R.layout.fragment_guide, container, false)
         with(rootview) {
             val webSettings = webview!!.settings
-           webview!!.loadUrl("https://www.officinetop.com/news/")
-         //   webview!!.loadUrl("https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${activity?.getUserId()}&payble_amount=${1000}")
+            webview!!.loadUrl("https://www.officinetop.com/news/")
+            //   webview!!.loadUrl("https://services.officinetop.com/public/amazon_pay_checkout_add?user_id=${activity?.getUserId()}&payble_amount=${1000}")
 
             webview.requestFocus()
             webSettings.javaScriptEnabled = true

@@ -10,11 +10,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.officinetop.officine.R
+import com.officinetop.officine.Support.Support_Activity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
-import com.officinetop.officine.Support.Support_Activity
 import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.utils.parseServerDateTime
 
@@ -73,11 +72,10 @@ class RecyclerViewAdapterChating(val context: Context, val list: MutableList<Mod
             if (chat.type.equals("1")) {
 
 
-
                 message_body.visibility = View.GONE
                 val receivedImage = itemView.findViewById(R.id.iv_receivedimage) as ImageView
                 receivedImage.visibility = View.VISIBLE
-                context.loadImage(chat.messages, receivedImage,R.drawable.ic_placeholder)
+                context.loadImage(chat.messages, receivedImage, R.drawable.ic_placeholder)
                 receivedImage.setOnClickListener {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(chat.messages)))
 

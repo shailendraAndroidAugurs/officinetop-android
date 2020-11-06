@@ -1,7 +1,7 @@
 package com.officinetop.officine.car_parts
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.officinetop.officine.R
 
 class RimActicvity : AppCompatActivity() {
@@ -14,4 +14,4 @@ class RimActicvity : AppCompatActivity() {
     }
 
 
-   }
+}

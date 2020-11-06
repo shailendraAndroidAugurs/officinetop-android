@@ -1,7 +1,6 @@
 package com.officinetop.officine.data
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class DataSetSubGroupCatItem(
 

@@ -1,214 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/include_toolbar"/>
+
+        <include layout="@layout/include_toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
-<ScrollView android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-    >
-
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".authentication.RegisterActivity">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-
-    <LinearLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:background="@drawable/rounded_white_background"
-        >
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:paddingBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/name"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:maxLength="50"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textCapWords"
-            android:importantForAutofill="no" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".authentication.RegisterActivity">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/last_name"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:maxLength="30"
-            android:paddingBottom="10dp"
-            android:visibility="gone"
-            />
-
-        <EditText
-            android:id="@+id/lastName"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/last_name"
-            android:visibility="gone"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textCapWords"
-            android:importantForAutofill="no" />
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:paddingBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="textEmailAddress"
-            android:importantForAutofill="no" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mob_no"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:paddingBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/mob_no"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/mob_no"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:inputType="phone"
-            android:maxLength="14"
-            android:importantForAutofill="no" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:paddingBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
-            android:hint="@string/password"
-            android:background="@drawable/rectangle_gray_empty"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:maxLength="50"
-            android:inputType="textPassword"
-            android:importantForAutofill="no" />
-
-
-            <CheckBox
-                android:id="@+id/checkbox_referral"
-                android:text="@string/checkreferral"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white_background"
+                android:orientation="vertical"
+                android:padding="20dp">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/confirm_pass"
-            style="@style/TextViewSubHeadingBlack"
-            android:paddingLeft="0dp"
-            android:paddingBottom="10dp"
-            android:visibility="gone"
-            />
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/name" />
 
-        <EditText
-            android:id="@+id/confirmPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="30dp"
-            android:hint="@string/confirm_pass"
-            android:background="@drawable/rectangle_gray_empty"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:inputType="textPassword"
-            android:visibility="gone"
-            android:importantForAutofill="no" />
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/name"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapWords"
+                    android:maxLength="50"
+                    android:padding="10dp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewWhite.VerySmall"
-            android:textColor="@color/black"
-            android:paddingLeft="5dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:lineSpacingExtra="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:paddingRight="5dp"
-            android:id="@+id/register_privacy_text"
-            android:text="@string/register_privacy_text_1"
-            />
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/last_name"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/last_name"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:visibility="gone" />
 
 
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/email" />
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="match_parent"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_height="wrap_content"
-        style="@style/RoundButton"
-        android:background="@drawable/rounded_theme_color_background"
-        android:text="@string/register" />
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/email"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp" />
 
-</LinearLayout>
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/mob_no" />
 
-</ScrollView>
+                <EditText
+                    android:id="@+id/mob_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/mob_no"
+                    android:importantForAutofill="no"
+                    android:inputType="phone"
+                    android:maxLength="14"
+                    android:padding="10dp" />
 
+
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/password" />
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:maxLength="50"
+                    android:padding="10dp" />
+
+
+                <CheckBox
+                    android:id="@+id/checkbox_referral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkreferral" />
+
+
+                <TextView
+                    style="@style/TextViewSubHeadingBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/confirm_pass"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/confirmPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/rectangle_gray_empty"
+                    android:hint="@string/confirm_pass"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/register_privacy_text"
+                style="@style/TextViewWhite.VerySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/_5sdp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/register_privacy_text_1"
+                android:textColor="@color/black" />
+
+
+            <Button
+                android:id="@+id/registerBtn"
+                style="@style/RoundButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/rounded_theme_color_background"
+                android:text="@string/register" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

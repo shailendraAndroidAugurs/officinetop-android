@@ -156,7 +156,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
         with(p0) {
-           // tv_count.text=(p1+1).toString()
+            // tv_count.text=(p1+1).toString()
             val product_workshopList = productOrWorkshopList[p1]
             if (isQuotesServices) {
                 llayoutSpecialCoupons.visibility = View.GONE
@@ -700,7 +700,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
     fun removeLoading() {
 
-       isLoadingVisible = false
+        isLoadingVisible = false
 
     }
 

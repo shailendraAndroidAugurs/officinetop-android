@@ -3,22 +3,20 @@ package com.officinetop.officine.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import com.officinetop.officine.News.WebViewClientImpl
-
 import com.officinetop.officine.R
 import kotlinx.android.synthetic.main.fragment_guide.view.*
-
 
 
 class VideosFragment : Fragment() {
 
 
     lateinit var rootview: View
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,7 +43,6 @@ class VideosFragment : Fragment() {
 
         return rootview
     }
-
 
 
 }

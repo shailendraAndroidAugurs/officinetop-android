@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.officinetop.officine.R
@@ -33,7 +32,7 @@ class DialogTouchImageSlider(context: Context, placeholderImage: Int) : BaseSlid
         val imageView = view.dialog_image_view
         try {
             Glide.with(context)
-            .setDefaultRequestOptions(RequestOptions().placeholder(mPlaceholderImage).error(mPlaceholderImage))
+                    .setDefaultRequestOptions(RequestOptions().placeholder(mPlaceholderImage).error(mPlaceholderImage))
                     .load(imageRes)
                     .thumbnail(0.7f)
                     .into(imageView)

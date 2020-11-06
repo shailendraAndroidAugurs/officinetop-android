@@ -24,7 +24,6 @@ import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
-import java.lang.Exception
 
 
 class Order_List : BaseActivity() {
@@ -255,7 +254,7 @@ class Order_List : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home ->onBackPressed()
+            android.R.id.home -> onBackPressed()
 
         }
         return super.onOptionsItemSelected(item)

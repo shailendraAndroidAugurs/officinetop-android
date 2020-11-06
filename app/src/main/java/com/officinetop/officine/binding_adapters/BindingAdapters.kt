@@ -26,7 +26,7 @@ fun bindImages(imageView: ImageView, imageUrl: String) {
 fun bindPrice(textView: TextView, price: String, value: String) {
     if (!price.isNullOrBlank()) {
         var amount = price.toDouble().roundTo2Places()
-        textView.text = value + " " + amount.toString()
+        textView.text = (value + " " + amount.toString()).trim()
 
     }
     textView.visibility = if (!price.toString().isNullOrEmpty()) View.VISIBLE else View.GONE

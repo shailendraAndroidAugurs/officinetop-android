@@ -598,6 +598,8 @@
     <string name="petrol">Benzina</string>
     <string name="Products_not_available_at_the_moment">Prodotti non disponibili al momento !!!</string>
     <string name="PleaselogintocontinueforAddtocart">Effettua il login per continuare per Aggiungi al carrello</string>
+    <string name="workshopWithSparepart">Ricambi: €%s + Scegli un\'officina da: €%s</string>
+
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

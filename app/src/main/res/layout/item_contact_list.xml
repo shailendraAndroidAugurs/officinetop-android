@@ -2,52 +2,60 @@
 <layout>
 
     <data>
+
         <variable
             name="listItemViewModel"
             type="com.officinetop.officine.userprofile.ContactsInfo" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:padding="@dimen/_10sdp"
-    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
-    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:visibility="gone"
-            android:text="@string/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp"
-            android:text="@{listItemViewModel.displayName}"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:text="@{listItemViewModel.displayName}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:text="@{listItemViewModel.phoneNumber}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:visibility="gone"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:text="@{listItemViewModel.phoneNumber}"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-</LinearLayout></layout>
+</layout>

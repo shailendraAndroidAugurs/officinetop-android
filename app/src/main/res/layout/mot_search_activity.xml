@@ -31,11 +31,11 @@
             <EditText
                 android:id="@+id/ed_search_km"
                 android:layout_width="0dp"
-                android:imeOptions="actionSend"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/shape_border_gray"
+                android:imeOptions="actionSend"
                 android:importantForAutofill="no"
                 android:inputType="number"
                 android:maxLines="5"

@@ -598,7 +598,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!carDefaultImage.isNullOrBlank() || carDefaultImage.contains("http")) {
                 loadImage(carDefaultImage, toolbar_image_view)
             } else {
-                loadImage(carDefaultImage,  toolbar_image_view)
+                loadImage(carDefaultImage, toolbar_image_view)
 
             }
 
@@ -896,7 +896,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
 
 
     override fun onConnected(p0: Bundle?) {

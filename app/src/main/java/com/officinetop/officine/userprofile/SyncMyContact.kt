@@ -5,14 +5,18 @@ import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.utils.Constant
 import kotlinx.android.synthetic.main.activity_sync_my_contact.*
@@ -21,10 +25,6 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 import net.kibotu.urlshortener.UrlShortener
 import rx.functions.Action1
 import rx.schedulers.Schedulers
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.widget.ImageView
-import com.officinetop.officine.R
 import java.io.File
 import java.io.FileOutputStream
 
