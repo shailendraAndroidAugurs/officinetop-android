@@ -39,8 +39,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:scaleType="centerInside"
                     app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}"
 
@@ -52,8 +52,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
 
@@ -104,10 +104,10 @@
                     android:layout_marginEnd="@dimen/_3sdp"
                     android:textColor="@color/theme_orange"
                     app:amount="@{listItemViewModel.sellerPrice!=null ? listItemViewModel.sellerPrice : @string/blank}"
-                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
-
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle" />
+
+                    app:layout_constraintTop_toBottomOf="@+id/tv_CouponTitle"
+                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
 
                 <TextView

@@ -200,23 +200,23 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             add_product_to_cart.setOnClickListener {
-              /*  if (item_qty.text.toString().toInt() >= 0) {
-                    showInfoDialog("")
-                } else if (price.toFloat() >= 0.toFloat()) {
-                    showInfoDialog("")
-                } else {*/
-                    cartItem?.quantity = item_qty.text.toString().toInt()
-                    cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
-                    cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
-                    try {
-                        addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
-                                if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else "",
-                                price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
+                /*  if (item_qty.text.toString().toInt() >= 0) {
+                      showInfoDialog("")
+                  } else if (price.toFloat() >= 0.toFloat()) {
+                      showInfoDialog("")
+                  } else {*/
+                cartItem?.quantity = item_qty.text.toString().toInt()
+                cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
+                cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
+                try {
+                    addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
+                            if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else "",
+                            price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
 
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-              //  }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                //  }
 
 
             }

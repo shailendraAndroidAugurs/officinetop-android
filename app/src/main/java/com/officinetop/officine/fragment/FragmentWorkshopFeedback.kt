@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
 import org.jetbrains.anko.support.v4.intentFor
+
 class FragmentWorkshopFeedback : Fragment() {
     private lateinit var rootView: View
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
@@ -54,6 +55,7 @@ class FragmentWorkshopFeedback : Fragment() {
         }
         return rootView
     }
+
     private fun getHighRatingWorkshopData(WorshopFeedbackList: ArrayList<Models.HighRatingfeedback>) {
         rootView.rv_product_feedback_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         //workshop feedback

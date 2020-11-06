@@ -33,12 +33,13 @@ class Genrated_UserTicket : BaseActivity() {
 
         fab_new_complaint.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, ComplaintTypeFragment::class.java)
-            startActivityForResult(intent,100)
+            startActivityForResult(intent, 100)
         })
         initview()
     }
+
     private fun initview() {
-        progress_bar_ticket.visibility=View.VISIBLE
+        progress_bar_ticket.visibility = View.VISIBLE
         RetrofitClient.client.getTicketlist(getBearerToken() ?: "")
                 .onCall { _, response ->
                     response?.let {
@@ -48,29 +49,31 @@ class Genrated_UserTicket : BaseActivity() {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 ticketListItem.clear()
                                 bindView(dataSetArray)
-                            }else{
-                                progress_bar_ticket.visibility=View.GONE
+                            } else {
+                                progress_bar_ticket.visibility = View.GONE
                             }
-                        }else{
-                            progress_bar_ticket.visibility=View.GONE
+                        } else {
+                            progress_bar_ticket.visibility = View.GONE
                         }
                     }
                 }
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         ticketListItem.clear()
-        recycler_view.visibility=View.GONE
+        recycler_view.visibility = View.GONE
         initview()
     }
+
     private fun bindView(dataSetArray: JSONArray?) {
         val genericAdapter = GenericAdapter<Models.TicketList>(this, R.layout.item_ticket_list)
         genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 Log.e("orderClickedItems::", "${ticketListItem.size}")
-                if(ticketListItem.size ==0){
-                }else{
+                if (ticketListItem.size == 0) {
+                } else {
                     /*if(ticketListItem[position].status=="C"){
                         alert {
                             message =getString(R.string.ticketClose)
@@ -91,10 +94,11 @@ class Genrated_UserTicket : BaseActivity() {
 
                     }*/
                     startActivityForResult(intentFor<Support_Activity>(
-                            "MSG" to Gson().toJson(ticketListItem[position]).toString()),100)
+                            "MSG" to Gson().toJson(ticketListItem[position]).toString()), 100)
 
                 }
             }
+
             override fun onItemClick(view: View, position: Int) {
                 Log.e("ClickedItems::", "${ticketListItem[position]}")
             }
@@ -103,10 +107,10 @@ class Genrated_UserTicket : BaseActivity() {
             val data = Gson().fromJson<Models.TicketList>(dataSetArray.get(i).toString(), Models.TicketList::class.java)
             ticketListItem.add(data)
         }
-        recycler_view.visibility=View.VISIBLE
+        recycler_view.visibility = View.VISIBLE
         recycler_view.adapter = genericAdapter
         genericAdapter.addItems(ticketListItem)
-        progress_bar_ticket.visibility=View.GONE
+        progress_bar_ticket.visibility = View.GONE
 
     }
 }

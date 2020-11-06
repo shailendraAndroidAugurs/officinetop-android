@@ -32,7 +32,7 @@ class RangeTimePickerDialog extends TimePickerDialog {
             mTimePicker.setOnTimeChangedListener(this);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

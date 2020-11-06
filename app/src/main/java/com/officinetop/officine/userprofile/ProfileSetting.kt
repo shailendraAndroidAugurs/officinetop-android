@@ -117,14 +117,14 @@ class ProfileSetting : BaseActivity() {
         val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this, R.array.notify, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_carservices.adapter = adapter
-        spinner_carRevision.adapter=adapter
+        spinner_carRevision.adapter = adapter
 
 
-        if(!carservices.isNullOrBlank()){
+        if (!carservices.isNullOrBlank()) {
             spinner_carservices.setSelection(Integer.parseInt(carservices))
 
         }
-        if(!carRevision.isNullOrBlank()){
+        if (!carRevision.isNullOrBlank()) {
 
             spinner_carRevision.setSelection(Integer.parseInt(carRevision))
 

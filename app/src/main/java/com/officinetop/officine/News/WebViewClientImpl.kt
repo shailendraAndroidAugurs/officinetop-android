@@ -1,16 +1,14 @@
 package com.officinetop.officine.News
 
 import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.net.http.SslError
 import android.util.Log
 import android.view.View
-import android.webkit.*
-import android.widget.Toast
+import android.webkit.ClientCertRequest
+import android.webkit.SslErrorHandler
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.officinetop.officine.utils.showInfoDialog
-import kotlinx.android.synthetic.main.fragment_guide.*
 
 
 class WebViewClientImpl(activity: Activity?, var view1: View) : WebViewClient() {
@@ -35,7 +33,7 @@ class WebViewClientImpl(activity: Activity?, var view1: View) : WebViewClient() 
 
     override fun onReceivedClientCertRequest(view: WebView?, request: ClientCertRequest?) {
         super.onReceivedClientCertRequest(view, request)
-       Log.d("Amazon",request.toString())
+        Log.d("Amazon", request.toString())
     }
 
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {

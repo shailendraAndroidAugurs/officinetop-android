@@ -35,27 +35,6 @@ import static android.util.TypedValue.applyDimension;
 
 public class CustomRatingBar extends View {
 
-    public enum Gravity {
-
-        Left(0),
-        Right(1);
-
-        final int id;
-
-        Gravity(int id) {
-            this.id = id;
-        }
-
-        static CustomRatingBar.Gravity fromId(int id) {
-            for (CustomRatingBar.Gravity f : values()) {
-                if (f.id == id) return f;
-            }
-            // default value
-            Log.w("CustomRatingBar", String.format("Gravity chosen is neither 'left' nor 'right', I will set it to Left"));
-            return Left;
-        }
-    }
-
     // Configurable variables
     private @ColorInt
     int borderColor;
@@ -84,7 +63,6 @@ public class CustomRatingBar extends View {
     private float starBorderWidth;
     private float starCornerRadius;
     private boolean drawBorderEnabled;
-
     // Internal variables
     private float currentStarSize;
     private float defaultStarSize;
@@ -103,7 +81,6 @@ public class CustomRatingBar extends View {
     private RectF starsTouchSpace;
     private Canvas internalCanvas;
     private Bitmap internalBitmap;
-
     public CustomRatingBar(Context context) {
         super(context);
         initView();
@@ -681,43 +658,6 @@ public class CustomRatingBar extends View {
         setRating(savedState.rating);
     }
 
-    private static class SavedState extends BaseSavedState {
-        public static final Parcelable.Creator<CustomRatingBar.SavedState> CREATOR = new Creator<CustomRatingBar.SavedState>() {
-            @Override
-            public CustomRatingBar.SavedState createFromParcel(Parcel parcel) {
-                return new CustomRatingBar.SavedState(parcel);
-            }
-
-            @Override
-            public CustomRatingBar.SavedState[] newArray(int size) {
-                return new CustomRatingBar.SavedState[size];
-            }
-        };
-        private float rating = 0.0f;
-
-        SavedState(Parcel source) {
-            super(source);
-            rating = source.readFloat();
-        }
-
-        @TargetApi(Build.VERSION_CODES.N)
-        protected SavedState(Parcel source, ClassLoader loader) {
-            super(source, loader);
-        }
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeFloat(rating);
-        }
-    }
-
-    /* ----------- GETTERS AND SETTERS ----------- */
-
     public float getRating() {
         return rating;
     }
@@ -737,6 +677,8 @@ public class CustomRatingBar extends View {
             ratingListener.onRatingChanged(this, rating, false);
         }
     }
+
+    /* ----------- GETTERS AND SETTERS ----------- */
 
     public float getStepSize() {
         return stepSize;
@@ -846,16 +788,6 @@ public class CustomRatingBar extends View {
     }
 
     /**
-     * Returns stars separation in the requested dimension.
-     *
-     * @param dimen
-     * @return
-     */
-    public float getStarsSeparation(@Dimension int dimen) {
-        return valueFromPixels(starsSeparation, dimen);
-    }
-
-    /**
      * Sets separation between stars in pixels.
      *
      * @param starsSeparation
@@ -867,6 +799,16 @@ public class CustomRatingBar extends View {
         generateInternalCanvas(getWidth(), getHeight());
         // request redraw of the view
         invalidate();
+    }
+
+    /**
+     * Returns stars separation in the requested dimension.
+     *
+     * @param dimen
+     * @return
+     */
+    public float getStarsSeparation(@Dimension int dimen) {
+        return valueFromPixels(starsSeparation, dimen);
     }
 
     /**
@@ -1192,6 +1134,27 @@ public class CustomRatingBar extends View {
         this.ratingListener = listener;
     }
 
+    public enum Gravity {
+
+        Left(0),
+        Right(1);
+
+        final int id;
+
+        Gravity(int id) {
+            this.id = id;
+        }
+
+        static CustomRatingBar.Gravity fromId(int id) {
+            for (CustomRatingBar.Gravity f : values()) {
+                if (f.id == id) return f;
+            }
+            // default value
+            Log.w("CustomRatingBar", String.format("Gravity chosen is neither 'left' nor 'right', I will set it to Left"));
+            return Left;
+        }
+    }
+
     interface OnRatingBarChangeListener {
 
         /**
@@ -1209,6 +1172,41 @@ public class CustomRatingBar extends View {
          */
         void onRatingChanged(CustomRatingBar CustomRatingBar, float rating, boolean fromUser);
 
+    }
+
+    private static class SavedState extends BaseSavedState {
+        public static final Parcelable.Creator<CustomRatingBar.SavedState> CREATOR = new Creator<CustomRatingBar.SavedState>() {
+            @Override
+            public CustomRatingBar.SavedState createFromParcel(Parcel parcel) {
+                return new CustomRatingBar.SavedState(parcel);
+            }
+
+            @Override
+            public CustomRatingBar.SavedState[] newArray(int size) {
+                return new CustomRatingBar.SavedState[size];
+            }
+        };
+        private float rating = 0.0f;
+
+        SavedState(Parcel source) {
+            super(source);
+            rating = source.readFloat();
+        }
+
+        @TargetApi(Build.VERSION_CODES.N)
+        protected SavedState(Parcel source, ClassLoader loader) {
+            super(source, loader);
+        }
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeFloat(rating);
+        }
     }
 
     /**

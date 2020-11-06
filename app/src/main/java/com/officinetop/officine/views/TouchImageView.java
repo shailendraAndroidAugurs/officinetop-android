@@ -1190,9 +1190,9 @@ public class TouchImageView extends androidx.appcompat.widget.AppCompatImageView
 
     @TargetApi(VERSION_CODES.GINGERBREAD)
     private class CompatScroller {
+        final boolean isPreGingerbread;
         Scroller scroller;
         OverScroller overScroller;
-        final boolean isPreGingerbread;
 
         CompatScroller(Context context) {
             if (VERSION.SDK_INT < VERSION_CODES.GINGERBREAD) {

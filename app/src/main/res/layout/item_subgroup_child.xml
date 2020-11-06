@@ -4,9 +4,9 @@
     android:id="@+id/n3_subgroup_category"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    android:clipToPadding="false"
     android:nestedScrollingEnabled="true"
-    android:clipToPadding="false">
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-<!--    @dimen/n3_grid_height-->
+    <!--    @dimen/n3_grid_height-->
 </androidx.recyclerview.widget.RecyclerView>

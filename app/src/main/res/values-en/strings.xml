@@ -254,7 +254,7 @@
     <string name="update_address">Update Address</string>
     <string name="new_address">Address</string>
     <string name="UpdateContact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
-   <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
+    <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
 
     <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
     <string name="Please_Select_Address">Please Select Address</string>
@@ -601,6 +601,7 @@
     <string name="Products_not_available_at_the_moment">Products not available at the moment !!!</string>
     <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string name="PleaselogintocontinueforAddtocart">Please login to continue for Add to cart</string>
+    <string name="workshopWithSparepart">Spare parts: € %s + Choose a workshop from: € %s</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

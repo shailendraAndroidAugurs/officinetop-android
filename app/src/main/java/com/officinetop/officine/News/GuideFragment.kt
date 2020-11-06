@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.officinetop.officine.R
 import kotlinx.android.synthetic.main.fragment_guide.view.*
-import java.util.*
-import kotlin.collections.HashMap
 
 
 class GuideFragment : Fragment() {
     lateinit var rootview: View
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

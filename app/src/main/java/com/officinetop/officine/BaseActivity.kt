@@ -9,11 +9,8 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
@@ -31,7 +28,6 @@ import com.officinetop.officine.utils.setAppLanguage
 import com.officinetop.officine.utils.showInfoDialog
 import com.officinetop.officine.utils.snack
 import kotlinx.android.synthetic.main.activity_product_list.*
-import org.jetbrains.anko.intentFor
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
@@ -49,7 +45,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         connectionCallback.registerDisconnectable {
             showInfoDialog(getString(R.string.Connection_Error))
         }
-        if ( getLangLocale() != "") {
+        if (getLangLocale() != "") {
             setAppLanguage()
         } else {
             storeLangLocale("it")
@@ -108,8 +104,8 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                 //currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-                  //currentLatLong = LatLng(44.186516, 12.1662333)
-               currentLatLong = LatLng(44.1571507, 12.2142107)
+                //currentLatLong = LatLng(44.186516, 12.1662333)
+                currentLatLong = LatLng(44.1571507, 12.2142107)
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")

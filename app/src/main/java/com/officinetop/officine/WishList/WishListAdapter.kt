@@ -104,9 +104,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
         var tyreSeason = ""
         context.loadImage(wishList.tyreProductDetail?.imageUrl, view.item_Productimage)
 
-        if(wishList.tyreProductDetail?.brandImage.isNullOrBlank()){
-            view.item_Productbrand_image.visibility=View.GONE
-        }else{
+        if (wishList.tyreProductDetail?.brandImage.isNullOrBlank()) {
+            view.item_Productbrand_image.visibility = View.GONE
+        } else {
             context.loadImage(wishList.tyreProductDetail?.brandImage, view.item_Productbrand_image)
 
         }
@@ -278,9 +278,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
 
         // Display brand image if this is spare part
-        if(wishList.spareProductDetail?.brandImage.isNullOrBlank()){
-            view.item_Productbrand_image.visibility=View.GONE
-        }else{
+        if (wishList.spareProductDetail?.brandImage.isNullOrBlank()) {
+            view.item_Productbrand_image.visibility = View.GONE
+        } else {
             context.loadImage(wishList.spareProductDetail?.brandImage, view.item_Productbrand_image)
 
         }
@@ -297,7 +297,7 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
         } else
             view.workshop_item_rating.rating = 0f
-        if (wishList.workshopDetails?.ratingCount!=0)
+        if (wishList.workshopDetails?.ratingCount != 0)
             view.wishList_item_rating_count.text = wishList.workshopDetails?.ratingCount.toString()
         else
             view.wishList_item_rating_count.text = "0"

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
 
     <TextView
+        style="@style/TextViewSubHeadingBlack"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        style="@style/TextViewSubHeadingBlack"
-        android:text="@string/Capac_Battery"
-        android:layout_height="wrap_content" />
+        android:text="@string/Capac_Battery" />
 
 
     <TextView
+        style="@style/TextViewSubHeadingBlack"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="@color/theme_orange"
-        style="@style/TextViewSubHeadingBlack"
         android:text="@string/one"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/theme_orange" />
 
 </LinearLayout>

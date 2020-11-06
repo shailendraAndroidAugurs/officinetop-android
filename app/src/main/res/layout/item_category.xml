@@ -21,12 +21,12 @@
 
 
         <ImageView
-            android:layout_weight="1"
             android:id="@+id/item_image"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:src="@drawable/ic_placeholder" />
 
         <LinearLayout

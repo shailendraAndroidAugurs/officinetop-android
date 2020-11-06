@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
@@ -34,7 +33,6 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
     private var serviceID: String = ""
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback_list)
@@ -43,7 +41,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.Feedback_List)
 
-    //    AndroidThreeTen.init(this)
+        //    AndroidThreeTen.init(this)
 
         intent.printValues(localClassName)
 
@@ -151,7 +149,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                         p0.itemView.tv_product_type.text = getString(R.string.tyres)
                     }
 
-                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase == "1" && list[p1].usersId==getUserId()) {
+                    if (!list[p1].withoutPurchase.isNullOrBlank() && list[p1].withoutPurchase == "1" && list[p1].usersId == getUserId()) {
                         btn_addfedback.visibility = View.GONE
 
                     }

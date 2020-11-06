@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
@@ -9,54 +9,48 @@
         android:layout_height="wrap_content">
 
 
-
-
-
         <ImageView
             android:layout_width="match_parent"
-            android:src="@drawable/banner"
-            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:layout_height="wrap_content" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/banner" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <TextView
+                    style="@style/TextViewHeadingWhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TextViewHeadingWhite"
                     android:paddingBottom="5dp"
-                    android:text="@string/sample_title"
-                    />
+                    android:text="@string/sample_title" />
 
                 <TextView
+                    style="@style/TextViewSubHeadingWhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="0dp"
-                    style="@style/TextViewSubHeadingWhite"
-                    android:text="@string/sample_title"
-                    />
+                    android:text="@string/sample_title" />
 
             </LinearLayout>
 
             <TextView
+                style="@style/RoundButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/RoundButtonTextView"
 
                 android:padding="10dp"
-                android:text="@string/sample_title"
-                />
+                android:text="@string/sample_title" />
 
         </LinearLayout>
 

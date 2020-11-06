@@ -1,7 +1,6 @@
 package com.officinetop.officine.adapter
 
 import android.content.Context
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,6 @@ class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<
         }
 
         mContext.addReadMore(holder.revDesc.text.toString(), holder.revDesc)
-
 
 
     }

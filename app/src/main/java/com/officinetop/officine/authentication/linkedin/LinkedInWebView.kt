@@ -4,15 +4,14 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.getProgressDialog
 import kotlinx.android.synthetic.main.activity_linkedin_login.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.*
@@ -22,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
@@ -34,26 +32,30 @@ class LinkedInWebView : AppCompatActivity() {
     /****FILL THIS WITH YOUR INFORMATION */
     //This is the public api key of our application// 81nih3m4xgyr71
     private val API_KEY = "81txmpo07r3ew8"
+
     //This is the private api key of our application // ytP7ra2wy419xkvt
     private val SECRET_KEY = "mCnCDHjxDWtUB8Lv"
+
     //This is any string we want to use. This will be used for avoiding CSRF attacks. You can generate one here: http://strongpasswordgenerator.com/
     private val STATE = "xyz"
+
     //E3ZYKC1T6H2yP4z
     //This is the url that LinkedIn Auth process will redirect to. We can put whatever we want that starts with http:// or https:// .
     //We use a made up url that we will intercept when redirecting. Avoid Uppercases.
     private val REDIRECT_URI = Constant.domainBaseURL
     private val scope = //"scope=r_emailaddress"
             "scope=r_liteprofile%20r_emailaddress%20w_member_social"
+
     /** */
 
     //These are constants used for build the urls
     private val AUTHORIZATION_URL =
             "https://www.linkedin.com/oauth/v2/authorization"
-//            "https://www.linkedin.com/uas/oauth2/authorization"
+
+    //            "https://www.linkedin.com/uas/oauth2/authorization"
     private val ACCESS_TOKEN_URL =
             "https://www.linkedin.com/oauth/v2/accessToken"
-                  //  "https://www.linkedin.com/uas/oauth2/accessToken"
-
+    //  "https://www.linkedin.com/uas/oauth2/accessToken"
 
 
     private val SECRET_KEY_PARAM = "client_secret"
@@ -64,13 +66,14 @@ class LinkedInWebView : AppCompatActivity() {
     private val CLIENT_ID_PARAM = "client_id"
     private val STATE_PARAM = "state"
     private val REDIRECT_URI_PARAM = "redirect_uri"
+
     /*---------------------------------------*/
     private val QUESTION_MARK = "?"
     private val AMPERSAND = "&"
     private val EQUALS = "="
 
     lateinit var webView: WebView
-    lateinit var pd:ProgressDialog
+    lateinit var pd: ProgressDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,8 +122,6 @@ class LinkedInWebView : AppCompatActivity() {
                     Log.i("LinkedIn", "Auth token received: $authorizationToken")
 
 
-
-
                     //Generate URL for requesting Access Token
                     val accessTokenUrl = getAccessTokenUrl(authorizationToken)
                     Log.d("LinkedInWebView", "shouldOverrideUrlLoading: access token url = $accessTokenUrl")
@@ -138,8 +139,6 @@ class LinkedInWebView : AppCompatActivity() {
         }
 
 
-
-
         //Get the authorization Url
         val authUrl = getAuthorizationUrl()
         Log.i("LinkedIn", "Loading Auth Url: $authUrl")
@@ -148,7 +147,7 @@ class LinkedInWebView : AppCompatActivity() {
     }
 
 
-    private fun loadAuthURL(authURL : String){
+    private fun loadAuthURL(authURL: String) {
 
 
         doAsync {
@@ -160,12 +159,12 @@ class LinkedInWebView : AppCompatActivity() {
 
             val reader = BufferedReader(InputStreamReader(connection.inputStream))
             var response = ""
-            var line : String?
+            var line: String?
 
             do {
 
                 line = reader.readLine()
-                response+=line
+                response += line
 
                 if (line == null)
 
@@ -177,7 +176,7 @@ class LinkedInWebView : AppCompatActivity() {
 
             reader.close()
 
-            if(response.contains("access_token")){
+            if (response.contains("access_token")) {
                 val json = JSONObject(response)
                 val accessToken = json.getString("access_token")
                 val expiresIn = json.getLong("expires_in")
@@ -200,7 +199,7 @@ class LinkedInWebView : AppCompatActivity() {
                                 try {
 
                                     val rootJSON = JSONObject(body)
-                                    val elementArray  = rootJSON.getJSONArray("elements")
+                                    val elementArray = rootJSON.getJSONArray("elements")
                                     val handleItem = JSONObject(elementArray[0].toString())
                                     val handleObject = handleItem.getString("handle~")
                                     val emailAddress = JSONObject(handleObject).getString("emailAddress")
@@ -209,7 +208,7 @@ class LinkedInWebView : AppCompatActivity() {
                                     if (emailAddress.isNotEmpty()) {
 
 
-                                        RetrofitClient.linkedInClient.linkedInGetDetail("Bearer $accessToken").enqueue(object : Callback<ResponseBody>{
+                                        RetrofitClient.linkedInClient.linkedInGetDetail("Bearer $accessToken").enqueue(object : Callback<ResponseBody> {
                                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                                 Log.d("LinkedInWebView", "onFailure: detail error = ${t.message}")
                                             }
@@ -224,7 +223,7 @@ class LinkedInWebView : AppCompatActivity() {
                                                 val intent = intentFor<Any>("first" to firstName,
                                                         "last" to lastName,
                                                         "id" to id,
-                                                "email" to emailAddress)
+                                                        "email" to emailAddress)
 
                                                 setResult(Activity.RESULT_OK, intent)
                                                 finish()
@@ -234,8 +233,7 @@ class LinkedInWebView : AppCompatActivity() {
 
                                         })
 
-                                    }
-                                    else{
+                                    } else {
                                         alert {
                                             message = ("User either doesn't have email or has kept hidden from public")
                                             isCancelable = false
@@ -245,12 +243,11 @@ class LinkedInWebView : AppCompatActivity() {
                                             }
                                         }.show()
                                     }
-                                }
-                                catch (e:Exception){
+                                } catch (e: Exception) {
                                     e.printStackTrace()
                                     toast("Failed to fetch user data")
                                     finish()
-                                    Log.e("LinkedIN", "LinkedInWebView: onResponse = ${e.message}" )
+                                    Log.e("LinkedIN", "LinkedInWebView: onResponse = ${e.message}")
                                 }
 
                             }
@@ -293,8 +290,6 @@ class LinkedInWebView : AppCompatActivity() {
                 + AMPERSAND + REDIRECT_URI_PARAM + EQUALS + REDIRECT_URI
                 + AMPERSAND + scope)
     }
-
-
 
 
 }

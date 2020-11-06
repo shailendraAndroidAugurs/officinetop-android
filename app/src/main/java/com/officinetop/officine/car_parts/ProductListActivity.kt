@@ -46,6 +46,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.ceil
 import kotlin.math.floor
+
 class ProductListActivity : BaseActivity(), FilterListInterface {
     private lateinit var drawableLeft: Drawable
     private lateinit var drawableRight: Drawable

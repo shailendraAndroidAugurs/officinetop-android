@@ -32,13 +32,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.workshop.WorkshopListActivity
-import com.officinetop.officine.data.*
+import com.officinetop.officine.data.Models
+import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.getOrderId
+import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.databinding.MapLayoutBinding
 import com.officinetop.officine.databinding.SosEmergencyPopupWindowBinding
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.workshop.WorkshopBookingDetailsActivity
+import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_sos.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -175,7 +178,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
             allWrackers?.let { it1 ->
                 getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle)
-                if(it.isInfoWindowShown){
+                if (it.isInfoWindowShown) {
                     it.hideInfoWindow()
                 }
             }

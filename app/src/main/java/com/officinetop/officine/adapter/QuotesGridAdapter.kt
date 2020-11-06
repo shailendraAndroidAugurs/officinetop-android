@@ -10,10 +10,9 @@ import com.officinetop.officine.R
 import com.officinetop.officine.utils.createImageSliderDialog
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.quotes_images_item_view.view.*
-import java.lang.Exception
 
-class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private val imagesList : MutableList<String>, private var listenerRecycler: OnRecyclerItemClickListener)
-    : RecyclerView.Adapter<QuotesGridAdapter.QuotesImagesViewHolder> (){
+class QuotesGridAdapter(val isFeedback: Boolean, val context: Context, private val imagesList: MutableList<String>, private var listenerRecycler: OnRecyclerItemClickListener)
+    : RecyclerView.Adapter<QuotesGridAdapter.QuotesImagesViewHolder>() {
 
 
     override fun getItemCount(): Int = imagesList.size
@@ -24,44 +23,45 @@ class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private va
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuotesImagesViewHolder {
-        return QuotesImagesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.quotes_images_item_view,parent,false))
+        return QuotesImagesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.quotes_images_item_view, parent, false))
     }
 
-    fun addItem(item: MutableList<String>){
+    fun addItem(item: MutableList<String>) {
         imagesList.addAll(item)
         notifyDataSetChanged()
 
         listenerRecycler.onItemAdd(item)
     }
 
-    fun getItem(position: Int) : String{
+    fun getItem(position: Int): String {
         return imagesList.get(position)
     }
 
-    fun removeItem(position: Int){
+    fun removeItem(position: Int) {
         imagesList.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position,imagesList.size)
+        notifyItemRangeChanged(position, imagesList.size)
     }
-    fun removeAll(){
-        try{
+
+    fun removeAll() {
+        try {
             imagesList.clear()
             notifyDataSetChanged()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
 
-   inner class QuotesImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class QuotesImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-       private val image_view = itemView.quotation_images
-       private val delete_image = itemView.delete_image
+        private val image_view = itemView.quotation_images
+        private val delete_image = itemView.delete_image
 
-        fun bindView(item: String){
+        fun bindView(item: String) {
             Log.e("imagesPath==", item)
             context.loadImage(item, image_view)
-            if(isFeedback){
+            if (isFeedback) {
                 delete_image.visibility = View.GONE
             }
 
@@ -78,8 +78,8 @@ class QuotesGridAdapter(val isFeedback:Boolean, val context: Context, private va
         }
     }
 
-    interface OnRecyclerItemClickListener{
+    interface OnRecyclerItemClickListener {
         fun onItemAdd(item: MutableList<String>)
-        fun onItemRemove(path:String)
+        fun onItemRemove(path: String)
     }
 }

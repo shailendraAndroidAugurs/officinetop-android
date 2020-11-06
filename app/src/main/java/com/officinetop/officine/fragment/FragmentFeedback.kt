@@ -46,12 +46,12 @@ class FragmentFeedback : Fragment() {
         if (context?.getLangLocale() != null && !context?.getLangLocale().equals("")) {
             context?.setAppLanguage()
         } else {
-            context?. storeLangLocale("it")
-            context?. setAppLanguage()
+            context?.storeLangLocale("it")
+            context?.setAppLanguage()
         }
         if (!isAdded) {
             return
-        }else{
+        } else {
             highRatingFeedback("2")
 
             MyFeedBackReview = findViewById(R.id.tv_review)

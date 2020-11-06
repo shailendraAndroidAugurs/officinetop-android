@@ -16,15 +16,12 @@ import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
-
 import kotlinx.android.synthetic.main.activity_contactlist.*
 import kotlinx.android.synthetic.main.changepswrd_dialog.view.close_dialog
 import kotlinx.android.synthetic.main.changepswrd_dialog.view.submit_change_password
 import kotlinx.android.synthetic.main.dialog_add_contact.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_list_contact.view.*
-import kotlinx.android.synthetic.main.item_list_contact.view.item_delete_car
-import kotlinx.android.synthetic.main.item_list_contact.view.swipelayout
 
 class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     var fromPayment = false

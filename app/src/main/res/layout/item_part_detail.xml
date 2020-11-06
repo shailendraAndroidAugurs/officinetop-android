@@ -3,22 +3,22 @@
     android:id="@+id/part_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/category_padding"
-    android:paddingBottom="@dimen/category_padding"
-    android:paddingStart="@dimen/category_item_padding"
-    android:paddingEnd="@dimen/category_item_padding"
-    android:gravity="center"
-    android:background="@color/white"
     android:layout_marginStart="@dimen/category_margin"
+    android:layout_marginTop="@dimen/category_margin"
     android:layout_marginEnd="@dimen/category_margin"
-    android:layout_marginTop="@dimen/category_margin">
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/category_item_padding"
+    android:paddingTop="@dimen/category_padding"
+    android:paddingEnd="@dimen/category_item_padding"
+    android:paddingBottom="@dimen/category_padding">
 
     <ImageView
         android:id="@+id/part_image"
         android:layout_width="@dimen/category_img_width"
         android:layout_height="@dimen/category_img_width"
-        android:src="@drawable/no_image_placeholder"/>
+        android:src="@drawable/no_image_placeholder" />
 
     <TextView
         android:id="@+id/part_name"
@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
 
 </LinearLayout>

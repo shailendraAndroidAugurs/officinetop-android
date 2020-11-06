@@ -101,10 +101,10 @@
                     android:text="@string/brand" />
 
                 <TextView
-                   android:paddingLeft="@dimen/_15sdp"
                     android:id="@+id/tv_Brand_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
                     android:textColor="@color/theme_orange">
 
                 </TextView>
@@ -133,8 +133,8 @@
                 <TextView
                     android:id="@+id/tv_Rating_name"
                     android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
                     android:textColor="@color/theme_orange">
 
                 </TextView>
@@ -194,8 +194,8 @@
                 <TextView
                     android:id="@+id/tv_Speed_load_Index_name"
                     android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
                     android:textColor="@color/theme_orange">
 
                 </TextView>
@@ -223,8 +223,8 @@
                 <TextView
                     android:id="@+id/tv_Speed_Index_name"
                     android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
                     android:textColor="@color/theme_orange">
 
                 </TextView>

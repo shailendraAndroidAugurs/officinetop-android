@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <include layout="@layout/include_toolbar"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
 
     <com.officinetop.officine.utils.CustomLayout
         android:layout_width="match_parent"
@@ -31,20 +32,19 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:src="@drawable/call"/>
+                android:src="@drawable/call" />
         </FrameLayout>
 
 
     </com.officinetop.officine.utils.CustomLayout>
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-        <include layout="@layout/layout_recycler_view"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <include layout="@layout/layout_recycler_view" />
 
     </LinearLayout>
 

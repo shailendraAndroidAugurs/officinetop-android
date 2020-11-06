@@ -34,7 +34,6 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     style="@style/TextViewHeadingWhite"
                     android:layout_width="match_parent"
@@ -204,6 +203,7 @@
 
 
             </LinearLayout>
+
             <TextView
                 style="@style/TextViewHeadingWhite"
                 android:layout_width="match_parent"

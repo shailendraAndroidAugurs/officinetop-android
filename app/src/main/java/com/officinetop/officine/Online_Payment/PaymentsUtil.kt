@@ -64,7 +64,7 @@ object PaymentsUtil {
         if (Constants.PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS.isEmpty()) {
             throw RuntimeException(
                     "Please edit the Constants.java file to add gateway name and other " +
-                    "parameters your processor requires")
+                            "parameters your processor requires")
         }
 
         return JSONObject().apply {
@@ -88,7 +88,7 @@ object PaymentsUtil {
     private fun directTokenizationSpecification(): JSONObject {
         if (Constants.DIRECT_TOKENIZATION_PUBLIC_KEY == "REPLACE_ME" ||
                 (Constants.DIRECT_TOKENIZATION_PARAMETERS.isEmpty() ||
-                 Constants.DIRECT_TOKENIZATION_PUBLIC_KEY.isEmpty())) {
+                        Constants.DIRECT_TOKENIZATION_PUBLIC_KEY.isEmpty())) {
 
             throw RuntimeException(
                     "Please edit the Constants.java file to add protocol version & public key.")

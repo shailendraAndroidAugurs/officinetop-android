@@ -5,69 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Support.Support_Activity">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <include layout="@layout/include_toolbar"/>
+
+            <include layout="@layout/include_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:id="@+id/text_tagline"
-                android:textSize="@dimen/_16sdp"
-                android:textColor="@color/md_green_800"
-                android:text="@string/may_help"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/may_help"
+                android:textColor="@color/md_green_800"
+                android:textSize="@dimen/_16sdp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_chatlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:stackFromEnd="true"
-                android:layout_marginBottom="60dp"/>
+                android:layout_marginBottom="60dp"
+                app:stackFromEnd="true" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_forSendMessage"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="65dp">
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_marginBottom="2dp"
-            android:padding="@dimen/_6sdp"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_6sdp">
+
             <EditText
                 android:id="@+id/edit_text_message"
-                android:hint="@string/type_here"
-                android:paddingLeft="10dp"
-                android:background="@drawable/shape_border_round_gray"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/shape_border_round_gray"
+                android:hint="@string/type_here"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:paddingLeft="10dp" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginBottom="2dp"
             android:id="@+id/layout_send_message"
-            android:padding="@dimen/_5sdp"
-            android:layout_weight="5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="5"
+            android:padding="@dimen/_5sdp">
+
             <ImageView
-                android:src="@drawable/ic_send_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_send_message" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

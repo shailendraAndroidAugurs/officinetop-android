@@ -66,8 +66,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:scaleType="centerInside"
                     app:imageResource="@{listItemViewModel.brandImageURL!=null ? listItemViewModel.brandImageURL : @string/url_not_found}" />
 
@@ -81,7 +81,6 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:id="@+id/item_price"
                     android:layout_width="wrap_content"
@@ -89,10 +88,10 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColor="@color/theme_orange"
                     app:amount="@{listItemViewModel.seller_price!=null ?  listItemViewModel.seller_price : @string/blank}"
-                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
-
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon" />
+
+                    app:layout_constraintTop_toBottomOf="@+id/tv_changecoupon"
+                    app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
 
                 <TextView
@@ -131,27 +130,26 @@
                     android:id="@+id/parts_title"
                     android:layout_width="@dimen/_180sdp"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
                     android:text="@{listItemViewModel.productName!=null ? listItemViewModel.productName :@string/sample}"
                     android:textColor="@color/black"
-                    android:padding="@dimen/_5sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_for_pair" />
 
 
-
                 <ImageView
                     android:id="@+id/Iv_favorite_mainPart"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/ic_favorite_border_black_empty_24dp"
                     android:tag="103"
-                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_for_pair"
+                    app:wishlist="@{listItemViewModel.wishlist!=null ? listItemViewModel.wishlist : @string/sample}" />
 
 
                 <TextView
@@ -233,12 +231,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:amount="@{listItemViewModel.price!=null  ?  listItemViewModel.price: @string/blank}"
-            app:value="@{listItemViewModel.price!=null  ? String.format(@string/prepend_euro_symbol_without_string) : @string/prepend_euro_symbol_without_string}"
-
-
             app:layout_constraintEnd_toEndOf="parent"
+
+
             app:layout_constraintStart_toEndOf="@+id/maintenance_item"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
         <TextView
             android:id="@+id/text_partinfo"

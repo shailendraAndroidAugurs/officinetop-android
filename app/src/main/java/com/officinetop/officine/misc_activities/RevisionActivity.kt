@@ -35,11 +35,12 @@ class RevisionActivity : BaseActivity() {
     }
 
     private fun getRevisionServices() {
-        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!,getLat(),getLong(),defaultDistance).genericAPICall { _, response ->
+        RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), defaultDistance).genericAPICall { _, response ->
             response?.let {
                 val revisionServices = it.body()
 
-                revisionServiceList?.let { revisionServiceAdapter = RevisionServiceAdapter(this, revisionServices?.revDataSet) //revisionServiceList)
+                revisionServiceList?.let {
+                    revisionServiceAdapter = RevisionServiceAdapter(this, revisionServices?.revDataSet) //revisionServiceList)
                     revision_service_list.adapter = revisionServiceAdapter
                 }
             }

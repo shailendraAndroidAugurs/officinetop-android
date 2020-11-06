@@ -144,6 +144,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <include layout="@layout/layout_recycler_view" />
 
 

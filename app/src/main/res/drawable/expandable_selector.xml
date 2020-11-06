@@ -3,21 +3,24 @@
 
     <item android:state_checked="false">
         <layer-list>
-            <item android:drawable="?selectableItemBackground"/>
+            <item android:drawable="?selectableItemBackground" />
 
-            <item android:drawable="@drawable/ic_arrow_drop_up_black_24dp"  android:gravity="end" />
+            <item
+                android:drawable="@drawable/ic_arrow_drop_up_black_24dp"
+                android:gravity="end" />
 
         </layer-list>
 
     </item>
 
 
-
     <item android:state_checked="true">
         <layer-list>
-            <item android:drawable="?selectableItemBackground"/>
+            <item android:drawable="?selectableItemBackground" />
 
-            <item android:drawable="@drawable/ic_arrow_drop_down" android:gravity="end"/>
+            <item
+                android:drawable="@drawable/ic_arrow_drop_down"
+                android:gravity="end" />
 
         </layer-list>
 

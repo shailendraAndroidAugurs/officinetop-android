@@ -51,59 +51,60 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
-               <!-- address new label-->
+                <!-- address new label-->
 
 
                 <EditText
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:hint="@string/street"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="15"
                     android:padding="10dp"
-                    android:importantForAutofill="no" />
+                    android:visibility="gone" />
 
                 <EditText
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:hint="@string/apartment"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="15"
                     android:padding="10dp"
-                    android:importantForAutofill="no" />
+                    android:visibility="gone" />
+
                 <EditText
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:hint="@string/city"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="15"
                     android:padding="10dp"
-                    android:importantForAutofill="no" />
+                    android:visibility="gone" />
+
                 <EditText
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:hint="@string/state"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="15"
                     android:padding="10dp"
-                    android:importantForAutofill="no" />
-
+                    android:visibility="gone" />
 
 
                 <EditText
@@ -115,29 +116,29 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rectangle_gray_empty"
                     android:hint="@string/Zip_Code"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="15"
-                    android:padding="10dp"
-                    android:importantForAutofill="no" />
+                    android:padding="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="@string/Address_type"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/Address_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@drawable/shape_rectangle_gray"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_rectangle_gray">
+
                     <Spinner
                         android:id="@+id/spinner_AddressType"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
+                        android:layout_height="match_parent" />
                 </FrameLayout>
 
 

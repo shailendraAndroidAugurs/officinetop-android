@@ -5,10 +5,9 @@
             android:fromDegrees="45"
             android:pivotX="135%"
             android:pivotY="15%"
-            android:toDegrees="45"
-            >
+            android:toDegrees="45">
             <shape android:shape="rectangle">
-                <solid android:color="@color/gradient_orange_dark"/>
+                <solid android:color="@color/gradient_orange_dark" />
 
             </shape>
         </rotate>

@@ -2,13 +2,10 @@
 
 package com.officinetop.officine.feedback
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
@@ -20,7 +17,6 @@ import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.activity_feedback_detail.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import org.json.JSONObject
 
 class FeedbackDetailActivity : BaseActivity() {
 

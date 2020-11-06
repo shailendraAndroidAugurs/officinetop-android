@@ -1,21 +1,19 @@
 package com.officinetop.officine
 
 import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.DisplayMetrics
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import com.facebook.FacebookSdk
+import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
+import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
-import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.onCall
@@ -24,13 +22,9 @@ import kotlinx.serialization.cbor.Cbor.Companion.context
 import net.kibotu.urlshortener.UrlShortener
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
-import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
 import rx.schedulers.Schedulers
 import java.io.IOException
-import com.facebook.FacebookSdk
-import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
-import com.facebook.appevents.AppEventsLogger
 
 class SplashActivity : BaseActivity() {
 

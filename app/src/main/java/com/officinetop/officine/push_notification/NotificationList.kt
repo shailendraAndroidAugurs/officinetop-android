@@ -51,6 +51,7 @@ class NotificationList : BaseActivity() {
             override fun onClick(view: View, position: Int) {
                 Log.e("orderClickedItems::", "${couponsListItem[position]}")
             }
+
             override fun onItemClick(view: View, position: Int) {
                 Log.e("ClickedItems::", "${couponsListItem[position]}")
             }

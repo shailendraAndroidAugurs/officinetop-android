@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
+    android:background="@color/white"
+    android:padding="@dimen/_5sdp">
+
+
+    <TextView
+        android:id="@+id/coupons_name"
+        style="@style/TextViewNormal"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="@dimen/_5sdp"
-        android:padding="@dimen/_5sdp">
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/coupons_quantity"
+        style="@style/TextViewNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/coupons_check"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coupons_name" />
+
+    <CheckBox
+        android:id="@+id/coupons_check"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coupons_quantity"
+        app:layout_constraintTop_toBottomOf="@+id/coupons_name" />
+
+    <TextView
+        android:id="@+id/coupons_amount"
+        style="@style/TextViewNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coupons_check" />
 
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/coupons_name"
-
-            style="@style/TextViewNormal"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/coupons_quantity"
-            style="@style/TextViewNormal"
-            android:visibility="invisible"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/coupons_check"
-            app:layout_constraintTop_toBottomOf="@+id/coupons_name"/>
-
-        <CheckBox
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/coupons_check"
-            app:layout_constraintStart_toEndOf="@+id/coupons_quantity"
-            app:layout_constraintTop_toBottomOf="@+id/coupons_name"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coupons_check"
-            android:id="@+id/coupons_amount"
-            style="@style/TextViewNormal"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

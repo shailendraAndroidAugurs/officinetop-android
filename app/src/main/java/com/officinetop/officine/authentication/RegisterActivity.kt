@@ -19,7 +19,10 @@ import com.officinetop.officine.data.getFCMToken
 import com.officinetop.officine.data.getMessageFromJSON
 import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.*
+import com.officinetop.officine.utils.getProgressDialog
+import com.officinetop.officine.utils.hideKeyboard
+import com.officinetop.officine.utils.isOnline
+import com.officinetop.officine.utils.logCompleteRegistrationEvent
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.emailEditText
@@ -121,13 +124,13 @@ class RegisterActivity : BaseActivity() {
                             }
                             val body = JSONObject(bodyString)
                             clearAll()
-                            logCompleteRegistrationEvent(this@RegisterActivity,"Manually")
+                            logCompleteRegistrationEvent(this@RegisterActivity, "Manually")
                             alert {
                                 isCancelable = false
                                 message = (if (!body.getString("message").isNullOrBlank()) {
                                     body.getString("message")
                                 } else {
-                                   getString(R.string.registered_successfully_verification_link_sent_on_your_registered_mail)
+                                    getString(R.string.registered_successfully_verification_link_sent_on_your_registered_mail)
 
                                 })
                                 okButton {

@@ -1,100 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chauthai.swipereveallayout.SwipeRevealLayout
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:mode="same_level"
-    app:dragEdge="right"
     android:layout_margin="5dp"
     android:background="?selectableItemBackground"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:dragEdge="right"
+    app:mode="same_level">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:scaleType="fitXY"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:id="@+id/item_edit_car"
-            android:src="@drawable/ic_edit_white_24dp"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_width="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_edit_white_24dp" />
+
+        <ImageView
             android:id="@+id/item_delete_car"
-            android:src="@drawable/ic_delete_white_24dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_delete_white_24dp" />
 
     </LinearLayout>
 
     <FrameLayout
-    android:layout_width="match_parent"
-    android:padding="10dp"
-    android:id="@+id/item_my_car_small_layout"
-    android:layout_height="wrap_content">
+        android:id="@+id/item_my_car_small_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-    <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/circle_transparent">
-    <ImageView
-        android:id="@+id/item_car_image_view"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_centerInParent="true"
-        android:padding="5dp"
-        />
-        </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:layout_weight="3"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:padding="0dp"
-            android:id="@+id/item_title_car"
-            style="@style/TextViewHeadingWhite"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:padding="0dp"
-            android:id="@+id/item_sub_title_car"
-            style="@style/TextViewHeadingWhite"
-            android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/circle_transparent">
+
+                <ImageView
+                    android:id="@+id/item_car_image_view"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerInParent="true"
+                    android:padding="5dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
 
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/item_title_car"
+                    style="@style/TextViewHeadingWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="0dp" />
+
+                <TextView
+                    android:id="@+id/item_sub_title_car"
+                    style="@style/TextViewHeadingWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="0dp" />
 
 
+            </LinearLayout>
 
 
-</LinearLayout>
+        </LinearLayout>
 
-</FrameLayout>
+    </FrameLayout>
 
 
 </com.chauthai.swipereveallayout.SwipeRevealLayout>

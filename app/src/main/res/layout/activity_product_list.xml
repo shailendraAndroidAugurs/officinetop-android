@@ -176,21 +176,23 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          <include
-              android:layout_above="@+id/layoutprogress"
-              android:id="@+id/layout_recyclerview"
-              layout="@layout/layout_recycler_view" />
-          <include
-              android:layout_below="@+id/layout_recyclerview"
-              android:id="@+id/layoutprogress"
-              layout="@layout/progresslayout_loading"
-              android:visibility="gone" />
 
-      </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <include
+                android:id="@+id/layout_recyclerview"
+                layout="@layout/layout_recycler_view"
+                android:layout_above="@+id/layoutprogress" />
+
+            <include
+                android:id="@+id/layoutprogress"
+                layout="@layout/progresslayout_loading"
+                android:layout_below="@+id/layout_recyclerview"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>

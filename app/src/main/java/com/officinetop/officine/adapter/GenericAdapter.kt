@@ -8,7 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.officinetop.officine.BR
 import com.officinetop.officine.view_models.ListItemViewModel
 

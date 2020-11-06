@@ -74,12 +74,12 @@ class ServiceDetailActivity : BaseActivity() {
             if (!serviceDetails.vat_Admin.isNullOrBlank())
                 tv_Include_Vat.text = getString(R.string.iva_inc_22Percentage, serviceDetails.vat_Admin) + "%"
             else
-                tv_Include_Vat.text=""
-                proceed_to_list.setOnClickListener {
-                    startActivity(intentFor<WorkshopListActivity>(
-                            Constant.Key.is_car_wash to true,
-                            Constant.Path.washServiceDetails to serviceDetails))
-                }
+                tv_Include_Vat.text = ""
+            proceed_to_list.setOnClickListener {
+                startActivity(intentFor<WorkshopListActivity>(
+                        Constant.Key.is_car_wash to true,
+                        Constant.Path.washServiceDetails to serviceDetails))
+            }
 
             //Add slider images
             if (serviceDetails.itemImages != null && serviceDetails.itemImages.size > 0) {
