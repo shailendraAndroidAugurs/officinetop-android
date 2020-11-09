@@ -18,7 +18,7 @@ import com.officinetop.officine.utils.*
 
 @BindingAdapter("imageResource")
 fun bindImages(imageView: ImageView, imageUrl: String) {
-    if (imageUrl.contains("https"))
+    if (!imageUrl.isNullOrBlank() && imageUrl.contains("http"))
         imageView.context.loadImage(imageUrl, imageView)
 }
 

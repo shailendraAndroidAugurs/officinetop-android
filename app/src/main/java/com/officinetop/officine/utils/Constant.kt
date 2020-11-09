@@ -205,6 +205,7 @@ object Constant {
 
         const val getSearchSparePartsBykeywords = "searchSparePartsBykeywords"
         const val getCarMakerslogo = "getCarMakersImage"
+        const val minPriceForMotServices = "minPriceForMotServices"
 
     }
 

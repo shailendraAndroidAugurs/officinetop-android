@@ -97,6 +97,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             return@setOnGroupClickListener true
         }
+
         search_product.requestFocus()
         search_product.setOnClickListener {
 

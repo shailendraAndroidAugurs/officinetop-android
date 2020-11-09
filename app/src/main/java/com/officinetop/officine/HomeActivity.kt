@@ -617,6 +617,17 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 saveMotCarKM(car.km_of_cars)
 
             }
+            if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
+                if (getIsAvailableDataInCart()) {
+                    Log.d("HomeActivity", "Delete Call")
+                    showConfirmDialog(getString(R.string.CartDataRemoved)) { DeleteCartData(car) }
+                } else {
+                    DeleteCartData(car)
+                }
+
+            }
+
+
 
             if (json != null) {
                 saveSelectedCar(json)
@@ -644,15 +655,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             // }
 
-            if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
-                if (getIsAvailableDataInCart()) {
-                    Log.d("HomeActivity", "Delete Call")
-                    showConfirmDialog(getString(R.string.CartDataRemoved)) { DeleteCartData(car) }
-                } else {
-                    DeleteCartData(car)
-                }
 
-            }
 
         } catch (e: Exception) {
             e.printStackTrace()

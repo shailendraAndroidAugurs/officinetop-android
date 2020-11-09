@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MotDetailActivity : BaseActivity() {
@@ -43,8 +44,11 @@ class MotDetailActivity : BaseActivity() {
     var genericAdapter: GenericAdapter<Models.Part>? = null
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     lateinit var motdata: Models.MotservicesCouponData
+    var workshopPrices: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override
+
+    fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
         setSupportActionBar(toolbar)
@@ -112,7 +116,7 @@ class MotDetailActivity : BaseActivity() {
                                 if (itemsData.data.serviceaveragetime == null) {
                                     itemsData.data.serviceaveragetime = "0"
                                 }
-
+                              //  getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
                                 if (itemsData.data.operations != null) {
                                     for (i in 0 until itemsData.data.operations.size) {
                                         mOPerationServicesList.add(itemsData.data.operations[i])
@@ -137,6 +141,38 @@ class MotDetailActivity : BaseActivity() {
                     }
                 }
     }
+
+
+    private fun getminPriceForMotServicesl(mot_id: String, type: Int, serviceaveragetime: String) {
+        val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
+        val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
+        progress_bar.visibility = View.VISIBLE
+        RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong())
+                .onCall { _, response ->
+                    response?.let {
+                        progress_bar.visibility = View.GONE
+                        if (response.isSuccessful) {
+                            val body = JSONObject(response.body()?.string())
+                            if (body.has("data") && !body.isNull("data")) {
+                                val jsondata = JSONObject(body.getString("data"))
+                                if (jsondata.has("workshop_price") && !jsondata.getString("workshop_price").isNullOrBlank()) {
+                                    workshopPrices = jsondata.getString("workshop_price")
+                                } else {
+                                    workshopPrices = ""
+                                }
+
+
+                            } else {
+                                showInfoDialog(getString(R.string.DatanotFound))
+                            }
+                        } else {
+                            showInfoDialog(response.message())
+                        }
+
+                    }
+                }
+    }
+
 
     private fun binndDataInRecyclerview() {
         button_proceed.visibility = View.VISIBLE
