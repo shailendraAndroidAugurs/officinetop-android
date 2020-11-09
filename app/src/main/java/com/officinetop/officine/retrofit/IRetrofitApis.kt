@@ -1505,4 +1505,18 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.minPriceForMotServices)
+    fun getminPriceForMotServicesl(
+            @Query(Constant.Path.serviceid) mot_id: String,
+            @Query(Constant.Path.type) type: String,
+            @Query(Constant.Path.version) version: String,
+            @Query(Constant.user_id) user_id: String,
+            @Query(Constant.Path.service_average_time) service_average_time: String,
+            @Query(Constant.Path.distanceRange) distanceRange: String,
+            @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
+            @Query(Constant.Path.userLat) userLat: String,
+            @Query(Constant.Path.userLong) userLong: String
+
+    ): Call<ResponseBody>
+
 }

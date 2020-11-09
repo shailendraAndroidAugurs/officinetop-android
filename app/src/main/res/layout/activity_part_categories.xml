@@ -15,7 +15,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/category_margin">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/search_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,6 +25,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:focusable="true"
             android:hint="@string/SearchProducts"
+            android:imeActionLabel="search"
             android:imeOptions="actionSearch"
             android:importantForAutofill="no"
             android:inputType="text"

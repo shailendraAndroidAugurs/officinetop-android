@@ -861,7 +861,7 @@ class AddVehicleActivity : BaseActivity() {
                         }
 
                         carConditionMotScheduleList.forEachWithIndex { i, it ->
-                            val title = if (it.service_schedule_description != null) {
+                            val title = if (!it.service_schedule_description.isNullOrBlank()) {
                                 it.service_schedule_description
                             } else {
                                 it.service_schedule_id
