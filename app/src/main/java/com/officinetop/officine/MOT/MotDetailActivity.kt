@@ -46,9 +46,7 @@ class MotDetailActivity : BaseActivity() {
     lateinit var motdata: Models.MotservicesCouponData
     var workshopPrices: String = ""
 
-    override
-
-    fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
         setSupportActionBar(toolbar)
