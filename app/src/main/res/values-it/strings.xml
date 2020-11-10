@@ -353,7 +353,7 @@
     <string name="one">1</string>
 
     <string name="plus">+</string>
-    <string name="deliveryDate">Data spedizione</string>
+    <string name="deliveryDate">Consegna prevista</string>
 
 
     <string name="sellerDetail">Dettagli del venditore</string>
@@ -599,7 +599,10 @@
     <string name="Products_not_available_at_the_moment">Prodotti non disponibili al momento !!!</string>
     <string name="PleaselogintocontinueforAddtocart">Effettua il login per continuare per Aggiungi al carrello</string>
     <string name="workshopWithSparepart">Ricambi: €%s + Scegli un\'officina da: €%s</string>
-
+    <string name="select">Seleziona</string>
+    <string name="please_select_width"> Seleziona la larghezza</string>
+    <string name="please_select_aspect">  Seleziona le altezza</string>
+    <string name="please_select_diameter"> Seleziona il diametro</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -168,19 +168,14 @@ class MotListActivity : BaseActivity() {
                                         }
 
                                         scheduleId = mMotSchedule[0].id
-
+                                        motServive(getMotKm()!!, "0")
                                     } else {
                                         motServive(getMotKm()!!, "0")
-                                        // showInfoDialog(getString(R.string.DatanotFound))
                                     }
 
                                 } else {
                                     motServive(getMotKm()!!, "0")
-                                    /*  if (!body.getString("message").isNullOrBlank()) {
-                                          showInfoDialog(body.getString("message"))
-                                      } else {
-                                          showInfoDialog(getString(R.string.DatanotFound))
-                                      }*/
+
 
                                 }
                             } else

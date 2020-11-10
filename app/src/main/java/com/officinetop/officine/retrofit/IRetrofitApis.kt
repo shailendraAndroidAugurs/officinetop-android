@@ -310,7 +310,12 @@ interface IRetrofitApis {
                        @Query(Constant.Path.type) type: String,
                        @Query("user_lat") user_lat: String,
                        @Query("user_long") user_long: String,
-                       @Query("distance_range") distance_range: String
+                       @Query("distance_range") distance_range: String,
+                       @Query(Constant.Path.version) version_id: String,
+                       @Query(Constant.Path.userid) userId: String,
+                       @Query(Constant.Path.service_average_time) service_average_time: String
+
+
     ): Call<ResponseBody>
 
 
@@ -606,12 +611,11 @@ interface IRetrofitApis {
                         @Query(Constant.Path.filterPriceRange) filterPriceRange: String,
                         @Query(Constant.Path.sortPrice) sortPrice: Int,
                         @Query("user_id") user_id: String,
-                        @Query(Constant.Path.selectedCarId) selectedCarId: String?,
+                        @Query(Constant.Path.version) selectedCarId: String?,
                         @Query(Constant.Path.motservices_time) motservicestime: String?,
                         @Query("user_lat") user_lat: String,
                         @Query("user_long") user_long: String,
-                        @Query("distance_range") distance_range: String
-                        ,
+                        @Query("distance_range") distance_range: String,
                         @Query(Constant.Path.favorite) favorite: String,
                         @Query(Constant.Path.couponFilter) couponfilter: String
     ): Call<ResponseBody>

@@ -893,7 +893,7 @@ class MaintenanceActivity : BaseActivity() {
                 selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
             }
             if (item.parts.isNotEmpty() && item.parts[0] != null && !item.parts[0].sellerPrice.isNullOrBlank()) {
-                if (!item.parts[0].forPair.isNullOrBlank() && !item.parts[0].forPair.equals("0")) {
+                if (!item.parts[0].forPair.isNullOrBlank() && item.parts[0].forPair.equals("1")) {
                     selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + (item.parts[0].sellerPrice.toDouble()) * 2).roundTo2Places()
 
                 } else {

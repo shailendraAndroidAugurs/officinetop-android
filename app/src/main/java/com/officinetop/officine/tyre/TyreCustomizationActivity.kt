@@ -7,11 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.google.gson.Gson
+import com.isapanah.awesomespinner.AwesomeSpinner
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.SpinnerAdapter
@@ -88,9 +86,26 @@ class TyreCustomizationActivity : BaseActivity() {
         getTyreSpecificationApi()
 
         submit.setOnClickListener {
+
+            if (spinner_width.selectedItemPosition == 0) {
+                Toast.makeText(this, getString(R.string.please_select_width), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (spinner_aspect_ratio.selectedItemPosition == 0) {
+                Toast.makeText(this, getString(R.string.please_select_aspect), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (spinner_diameter.selectedItemPosition == 0) {
+                Toast.makeText(this, getString(R.string.please_select_diameter), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
             val specification: String = spinner_vehicle_type.selectedItem.toString() + spinner_width.selectedItem.toString() +
                     spinner_aspect_ratio.selectedItem.toString() + spinner_speed_limit.selectedItem.toString()
             Log.d("tryeSpecification: ", "${specification}")
+
 
             val tyre = Models.TyreDetail(
                     id = IsSavedInlocal,
@@ -281,18 +296,30 @@ class TyreCustomizationActivity : BaseActivity() {
                                 val season_tyre_type = data.getJSONArray("season_tyre_type") as JSONArray
                                 val speed_load_index = data.getJSONArray("load_index") as JSONArray
 
+                                widthList.clear()
+                                aspectRatioList.clear()
+                                diameterList.clear()
 
+
+
+                                widthList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
                                 for (widthobj in 0 until width.length()) {
                                     val widthobjdata: JSONObject = width.get(widthobj) as JSONObject
-                                    widthList.add(Models.TypeSpecification(widthobjdata.optString("value"), widthobjdata.optString("id")))
+
+                                    widthList.add(widthobj + 1, Models.TypeSpecification(widthobjdata.optString("value"), widthobjdata.optString("id")))
                                 }
+                                aspectRatioList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
                                 for (aspectratio in 0 until aspect_ratio.length()) {
                                     val aspectratioObj: JSONObject = aspect_ratio.get(aspectratio) as JSONObject
-                                    aspectRatioList.add(Models.TypeSpecification(aspectratioObj.optString("value"), aspectratioObj.optString("id")))
+
+
+                                    aspectRatioList.add(aspectratio + 1, Models.TypeSpecification(aspectratioObj.optString("value"), aspectratioObj.optString("id")))
                                 }
+                                diameterList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
                                 for (diameterobj in 0 until diameter.length()) {
                                     val diameterobjdata: JSONObject = diameter.get(diameterobj) as JSONObject
-                                    diameterList.add(Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
+
+                                    diameterList.add(diameterobj+1,Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
                                 speedIndexList.clear()
                                 speedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
@@ -310,7 +337,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                     if (speedindexObj != null)
                                         speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("load_speed_index"), ""))
                                 }
-                                /* speedLoadIndexList.sortBy { it.name }*/
 
                                 for (tyretype in 0 until tyre_type.length()) {
                                     val vehicaltypeObject: JSONObject = tyre_type.get(tyretype) as JSONObject
@@ -568,4 +594,21 @@ class TyreCustomizationActivity : BaseActivity() {
 
     }
 
+    private fun bindSpinner(spinner: AwesomeSpinner, titles: List<String>) {
+
+
+        spinner.clearSelection()
+
+        if (spinner.id == R.id.spinner_version) {
+            spinner.setSpinnerHint(if (titles.isEmpty()) "No Car for this type" else getString(R.string.sel_version))
+        }
+
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, titles)
+
+        spinner.setOnSpinnerItemClickListener { _, _ -> }
+
+        spinner.setAdapter(adapter)
+
+
+    }
 }

@@ -1,6 +1,5 @@
 package com.officinetop.officine.MOT
 
-
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -36,16 +35,15 @@ import java.util.*
 
 class MotDetailActivity : BaseActivity() {
     private var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
-    private var motdeatilsList: ArrayList<Models.Data> = ArrayList()
+
     private var mOPerationServicesList: ArrayList<Models.Operation> = ArrayList()
     lateinit var motServiceObject: Models.MotServicesList
     private lateinit var itemsData: Models.MotDetail
     var selectitem_position: Int = 0
     var genericAdapter: GenericAdapter<Models.Part>? = null
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
-    lateinit var motdata: Models.MotservicesCouponData
-    var workshopPrices: String = ""
-
+    var workshopPrices = 0.0
+    var sparePartPrices = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
@@ -114,7 +112,7 @@ class MotDetailActivity : BaseActivity() {
                                 if (itemsData.data.serviceaveragetime == null) {
                                     itemsData.data.serviceaveragetime = "0"
                                 }
-                                //  getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
+                                getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
                                 if (itemsData.data.operations != null) {
                                     for (i in 0 until itemsData.data.operations.size) {
                                         mOPerationServicesList.add(itemsData.data.operations[i])
@@ -144,21 +142,19 @@ class MotDetailActivity : BaseActivity() {
     private fun getminPriceForMotServicesl(mot_id: String, type: Int, serviceaveragetime: String) {
         val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
-        progress_bar.visibility = View.VISIBLE
         RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong())
                 .onCall { _, response ->
                     response?.let {
-                        progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
                             val body = JSONObject(response.body()?.string())
                             if (body.has("data") && !body.isNull("data")) {
                                 val jsondata = JSONObject(body.getString("data"))
                                 if (jsondata.has("workshop_price") && !jsondata.getString("workshop_price").isNullOrBlank()) {
-                                    workshopPrices = jsondata.getString("workshop_price")
+                                    workshopPrices = (jsondata.getString("workshop_price")).toDouble().roundTo2Places()
                                 } else {
-                                    workshopPrices = ""
+                                    workshopPrices = 0.0
                                 }
-
+                                bindPricesinButton()
 
                             } else {
                                 showInfoDialog(getString(R.string.DatanotFound))
@@ -220,6 +216,7 @@ class MotDetailActivity : BaseActivity() {
 
     private fun bindMotPartNumberServices() {
         Log.d("motSparePartList", mKPartServicesList.toString())
+
         genericAdapter = GenericAdapter<Models.Part>(this@MotDetailActivity, R.layout.item_sparepart_mot)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
@@ -257,13 +254,13 @@ class MotDetailActivity : BaseActivity() {
             val partdata = data.getStringExtra("data")
             // val partID=data.getStringExtra("ID")
             val partmod = Gson().fromJson<Models.Part>(partdata, Models.Part::class.java)
-            if (partmod.partimage != null) {
+            /*if (partmod.partimage != null) {
                 partmod.product_image_url = partmod.partimage.takeIf { !it.isNullOrEmpty() }!!
             }
             if (partmod.brandImage != null) {
                 partmod.brandImageURL = partmod.brandImage.takeIf { !it.isNullOrEmpty() }!!
             }
-            mKPartServicesList[selectitem_position] = partmod
+
             partmod.productName = partmod.productName
             partmod.rating_count = partmod.rating_count
             partmod.rating_star = partmod.rating_star
@@ -272,8 +269,9 @@ class MotDetailActivity : BaseActivity() {
                 partmod.couponTitle = partmod.couponList[0].couponTitle
                 partmod.couponId = partmod.couponList[0].id
 
-            }
-
+            }*/
+            mKPartServicesList[selectitem_position] = partmod
+            bindPricesinButton()
             Log.e("replaceSelectID", partmod.toString())
             bindMotPartNumberServices()
             recycler_view.layoutManager!!.scrollToPosition(selectitem_position)
@@ -402,4 +400,20 @@ class MotDetailActivity : BaseActivity() {
         }
     }
 
+    private fun bindPricesinButton() {
+        if (mKPartServicesList != null && mKPartServicesList.size != 0) {
+            sparePartPrices = 0.0
+            for (partobject in mKPartServicesList) {
+                if (!partobject.forPair.isNullOrBlank() && partobject.forPair.equals("1")) {
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) 2 * (partobject.sellerPrice.toDouble()) else 0.0
+                } else {
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) partobject.sellerPrice.toDouble() else 0.0
+                }
+
+
+            }
+
+        }
+        button_proceed.setText(getString(R.string.workshopWithSparepart, sparePartPrices.toString(), workshopPrices.toString()))
+    }
 }
