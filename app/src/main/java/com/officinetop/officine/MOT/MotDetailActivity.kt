@@ -116,7 +116,7 @@ class MotDetailActivity : BaseActivity() {
                                 if (itemsData.data.serviceaveragetime == null) {
                                     itemsData.data.serviceaveragetime = "0"
                                 }
-                              //  getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
+                                //  getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
                                 if (itemsData.data.operations != null) {
                                     for (i in 0 until itemsData.data.operations.size) {
                                         mOPerationServicesList.add(itemsData.data.operations[i])
