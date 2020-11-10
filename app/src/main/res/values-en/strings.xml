@@ -354,7 +354,7 @@
     <string name="one">1</string>
 
     <string name="plus">+</string>
-    <string name="deliveryDate">Delivery Date</string>
+    <string name="deliveryDate">Scheduled delivery</string>
 
 
     <string name="sellerDetail">Seller details</string>
@@ -602,6 +602,10 @@
     <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->
     <string name="PleaselogintocontinueforAddtocart">Please login to continue for Add to cart</string>
     <string name="workshopWithSparepart">Spare parts: € %s + Choose a workshop from: € %s</string>
+    <string name="select">Select</string>
+    <string name="please_select_width"> Please select width</string>
+    <string name="please_select_aspect">   Please select aspect ratio</string>
+    <string name="please_select_diameter"> Please select diameter</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

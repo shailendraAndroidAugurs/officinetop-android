@@ -83,11 +83,12 @@ class PartList_Replacement : BaseActivity() {
 
                             carMaintenanceServiceList.add(carMaintenance)
                         }
-                        if (body.getJSONArray("data_set").length() < 10) {
-                            isLoading = false
-                        } else {
-                            isLoading = true
-                        }
+
+                        /*  if (current_page == 0) {
+
+                          } else {
+
+                          }*/
                         setAdapter()
                     } else {
                         progressDialog.dismiss()
@@ -132,15 +133,20 @@ class PartList_Replacement : BaseActivity() {
                 }
             }
         })
-        if (current_page == 0) {
-            linearLayoutManager = LinearLayoutManager(this)
-            recycler_view.layoutManager = linearLayoutManager
-            recycler_view.adapter = genericAdapter
-        }
 
+
+
+        linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
+        recycler_view.adapter = genericAdapter
+
+
+      /*  if (current_page == 0) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.smoothScrollToPosition(carMaintenanceServiceList.size-1)
+        }*/
         genericAdapter.addItems(carMaintenanceServiceList)
-
-
 
         if (this::linearLayoutManager.isInitialized) {
             recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
@@ -162,6 +168,10 @@ class PartList_Replacement : BaseActivity() {
                 }
             })
         }
+
+        isLoading = false
+
+
     }
 
     private fun displayCoupons(couponsList: List<Models.Coupon>) {

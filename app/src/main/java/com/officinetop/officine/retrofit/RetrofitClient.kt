@@ -11,10 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-
 object RetrofitClient {
-
-
     val client: IRetrofitApis
         get() = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

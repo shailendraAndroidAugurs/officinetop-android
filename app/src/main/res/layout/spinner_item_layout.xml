@@ -8,6 +8,9 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:paddingStart="4dp"
     android:paddingEnd="4dp"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:textSize="@dimen/_11sdp"
     android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
 
