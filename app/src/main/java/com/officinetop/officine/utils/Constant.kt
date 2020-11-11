@@ -379,7 +379,7 @@ object Constant {
         const val servicesAverageTime = "service_average_time"
         const val servicekm = "service_km"
         const val editStatus = "edit_status"
-
+        const val deliveryDate = "deliveryDate"
         const val old_password = "old_password"
         const val new_password = "new_password"
         const val confirm_password = "confirm_password"
