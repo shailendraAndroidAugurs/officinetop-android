@@ -571,6 +571,10 @@ object Models {
             @SerializedName("version_id")
             val version_id: String = "",
 
+            @SerializedName("number_of_delivery_days")
+            val numberOfDeliveryDays: String = "",
+
+
             @SerializedName("n3_service_id")
             val n3_service_id: String = "",
             @SerializedName("wish_list")

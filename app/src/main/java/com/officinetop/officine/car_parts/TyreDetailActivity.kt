@@ -421,10 +421,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                     val tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it1.toString(), Models.TyreDetailData::class.java)
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
-                                        delivery_date.text = getDate(tyreDetailData.delivery_days.toInt() + 1)
+                                        delivery_date.text = getDate(tyreDetailData.delivery_days.toInt())
                                         Deliverydays = tyreDetailData.delivery_days
+                                    } else {
+                                        delivery_date.text = getDate(0)
                                     }
-                                    if (!tyreDetailData.delivery_days.isNullOrBlank()) {
+                                    if (!tyreDetailData.tyre_mainCategory_id.isNullOrBlank()) {
                                         tyre_mainCategory_id = tyreDetailData.tyre_mainCategory_id
                                     }
 

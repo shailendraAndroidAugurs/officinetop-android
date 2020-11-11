@@ -44,6 +44,8 @@ class MotDetailActivity : BaseActivity() {
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     var workshopPrices = 0.0
     var sparePartPrices = 0.0
+
+    var deliveryDate = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
@@ -78,8 +80,6 @@ class MotDetailActivity : BaseActivity() {
 
 
                 hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
-
-
                 val bundle = Bundle()
                 bundle.putSerializable(Constant.Path.Motpartdata, hashMap as Serializable)
                 Log.e("replacePartID", partId.toString())
@@ -87,6 +87,7 @@ class MotDetailActivity : BaseActivity() {
                         Constant.Key.is_motService to true,
                         Constant.Path.mot_id to motServiceObject.id.toString(),
                         "mot_type" to motServiceObject.type.toString(),
+                        Constant.Path.deliveryDate to deliveryDate.toString(),
                         Constant.Path.motservices_time to itemsData.data.serviceaveragetime).putExtras(bundle))
 
             } else {
@@ -405,15 +406,21 @@ class MotDetailActivity : BaseActivity() {
             sparePartPrices = 0.0
             for (partobject in mKPartServicesList) {
                 if (!partobject.forPair.isNullOrBlank() && partobject.forPair.equals("1")) {
-                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) 2 * (partobject.sellerPrice.toDouble()) else 0.0
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) 2 * (partobject.sellerPrice.toDouble().roundTo2Places()) else 0.0
                 } else {
-                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) partobject.sellerPrice.toDouble() else 0.0
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) partobject.sellerPrice.toDouble().roundTo2Places() else 0.0
                 }
+                if (!partobject.numberOfDeliveryDays.isNullOrBlank() && !partobject.numberOfDeliveryDays.equals("0")) {
 
+                    if (deliveryDate < partobject.numberOfDeliveryDays.toInt()) {
+                        deliveryDate = partobject.numberOfDeliveryDays.toInt()
+                    }
+
+                }
 
             }
 
         }
-        button_proceed.setText(getString(R.string.workshopWithSparepart, sparePartPrices.toString(), workshopPrices.toString()))
+        button_proceed.text = getString(R.string.workshopWithSparepart, sparePartPrices.toString(), workshopPrices.toString())
     }
 }

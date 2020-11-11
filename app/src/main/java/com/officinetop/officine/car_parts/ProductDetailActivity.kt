@@ -444,11 +444,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         Log.d("Product_Detail", "min_price$min_price")
                                         if (data.has("number_of_delivery_days") && !data.getString("number_of_delivery_days").isNullOrBlank() && data.getString("number_of_delivery_days") != "null") {
 
-                                            ll_delivery_date.visibility = View.VISIBLE
-                                            delivery_date.text = getDate(data.getString("number_of_delivery_days").toInt() + 1)
+
+                                            delivery_date.text = getDate(data.getString("number_of_delivery_days").toInt())
                                             Deliverydays = data.getString("number_of_delivery_days")
                                         } else {
-                                            Deliverydays = ""
+                                            delivery_date.text = getDate(0)
+
                                         }
                                     } else {
                                         Log.e("data is null", "${productData}")

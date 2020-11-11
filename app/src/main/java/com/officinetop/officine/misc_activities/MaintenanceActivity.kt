@@ -63,6 +63,9 @@ class MaintenanceActivity : BaseActivity() {
     private var leftRight: String = ""
     private var maxPrice = 0f
 
+    private var deliveryDate = 0
+
+
     private var selectedServicesTotalPrice: Double = 0.0
 
     private var selectedServicesProductTotalPrices: Double = 0.0
@@ -142,6 +145,7 @@ class MaintenanceActivity : BaseActivity() {
                 startActivity(intentFor<WorkshopListActivity>(
                         Constant.Key.is_car_maintenance_service to true,
                         Constant.Path.serviceID to /*serviceId.joinToString(",")*/  Gson().toJson(selectedServices_partList),
+                        Constant.Path.deliveryDate to deliveryDate.toString(),
                         Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
                 ).putExtras(bundle)
                 )
@@ -900,7 +904,13 @@ class MaintenanceActivity : BaseActivity() {
                     selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + item.parts[0].sellerPrice.toDouble()).roundTo2Places()
 
                 }
+                if (!item.parts[0].numberOfDeliveryDays.isNullOrBlank() && !item.parts[0].numberOfDeliveryDays.equals("0")) {
 
+                    if (deliveryDate < item.parts[0].numberOfDeliveryDays.toInt()) {
+                        deliveryDate = item.parts[0].numberOfDeliveryDays.toInt()
+                    }
+
+                }
             }
 
         }
