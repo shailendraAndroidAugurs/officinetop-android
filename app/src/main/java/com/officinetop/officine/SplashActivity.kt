@@ -7,6 +7,7 @@ import android.os.Handler
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.FacebookSdk
 import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.facebook.appevents.AppEventsLogger
@@ -26,7 +27,7 @@ import rx.functions.Action1
 import rx.schedulers.Schedulers
 import java.io.IOException
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
 
 
     private val TAG = "MyFirebaseToken"
@@ -46,15 +47,14 @@ class SplashActivity : BaseActivity() {
         Handler().postDelayed({
 
             if (!isLoggedIn() && isFirstRun()) {
-                startActivity(intentFor<HomeActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                 //startActivity(intentFor<LoginActivity>())
                 setFirstRun(false)
-            } else {
-                startActivity(intentFor<HomeActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+
             }
-
-
+            startActivity(intentFor<HomeActivity>())
             finish()
+
+
         }, 1000)
 
         validateAppCode()

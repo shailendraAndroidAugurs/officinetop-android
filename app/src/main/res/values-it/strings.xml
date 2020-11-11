@@ -389,7 +389,7 @@
     <string name="Three_peak_mountain">3PMSF</string>
     <string name="Ean">Ean</string>
     <string name="Special_Condition">Condizioni speciali</string>
-    <string name="Delivery_date">Data spedizione</string>
+    <string name="Delivery_date"> Consegna prevista</string>
     <string name="Tipologio">Tipologio</string>
 
     <string name="Comment_by_user">Commento dell utente</string>

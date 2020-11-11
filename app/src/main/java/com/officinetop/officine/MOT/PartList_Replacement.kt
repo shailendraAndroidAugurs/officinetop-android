@@ -33,7 +33,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class PartList_Replacement : BaseActivity() {
-
     private var carMaintenanceServiceList: MutableList<Models.Part> = ArrayList()
     private lateinit var partID: String
     private lateinit var versionId: String

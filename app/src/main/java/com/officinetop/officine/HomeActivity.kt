@@ -892,8 +892,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 getLastLocation(mFusedLocationClient!!, this) else
                 enableLocation()
         } else {
+
             // Permission denied.
-            container.snack(getString(R.string.permission_denied_explanation), duration = Snackbar.LENGTH_INDEFINITE) {
+          container.snack(getString(R.string.permission_denied_explanation), duration = Snackbar.LENGTH_INDEFINITE) {
                 if (hasLocationPermission()) getLastLocation(mFusedLocationClient!!, this)
             }
         }
