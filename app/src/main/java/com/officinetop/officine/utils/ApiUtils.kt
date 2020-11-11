@@ -358,7 +358,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
         } else if (cartData.CartType == "T" || cartData.CartType == "S") {
 
-            val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() + 1 else 0))
+            val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() else 0))
             if (deliveryDatePridicted.isNullOrBlank()) {
                 val dateFormat = SimpleDateFormat("yyy-MM-dd")
                 deliveryDatePridicted = dateFormat.format(bookingDate)
