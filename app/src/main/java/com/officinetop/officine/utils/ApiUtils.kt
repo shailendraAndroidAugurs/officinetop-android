@@ -369,7 +369,6 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
                     deliveryDatePridicted = dateFormat.format(bookingDate)
 
-
                 }
             }
             if (!cartData.totalPrice.isNullOrBlank() && cartData.totalPrice != "null")
