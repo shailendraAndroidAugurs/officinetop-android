@@ -296,7 +296,7 @@
                     android:padding="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
 
                 <ImageView
