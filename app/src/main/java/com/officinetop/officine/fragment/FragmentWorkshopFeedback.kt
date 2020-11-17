@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.R
+import com.officinetop.officine.car_parts.PartCategories
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackDetailActivity
+import com.officinetop.officine.feedback.FeedbackReview
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.DateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
@@ -23,13 +25,15 @@ import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
 import org.jetbrains.anko.support.v4.intentFor
 
-class FragmentWorkshopFeedback : Fragment() {
+class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
     private lateinit var rootView: View
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_feedback_show, container, false)
+
+
         if (arguments != null) {
             WorkshopFeedBackList = requireArguments().getSerializable("list") as ArrayList<Models.HighRatingfeedback>
             if (!requireArguments().getBoolean("product")) {
@@ -171,5 +175,26 @@ class FragmentWorkshopFeedback : Fragment() {
 
             }
         }
+    }
+
+    override fun myReviewshow(MyReview: Boolean) {
+        if (MyReview) {
+
+            val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
+
+            WorkshopFeedBackListfilter.addAll(WorkshopFeedBackList.filter {
+                Log.d("MyReview", "userid:" + it.users_id)
+                it.users_id == activity?.getUserId()
+            })
+
+            getHighRatingWorkshopData(WorkshopFeedBackListfilter)
+        } else {
+            getHighRatingWorkshopData(WorkshopFeedBackList)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (parentFragment as FragmentFeedback?)?.setActivityListener(this@FragmentWorkshopFeedback)
     }
 }

@@ -379,24 +379,25 @@ interface IRetrofitApis {
 
 
     /** Brands must be comma seperated*/
-    @GET(Constant.UrlEndPoints.get_products)
-    fun getSpareParts(@Query(Constant.Path.car_version_id) carVersionID: String,
-                      @Query(Constant.Path.categoryId) categoryId: Int,
-                      @Query(Constant.Path.filterPriceRange) priceRange: String,
-                      @Query(Constant.Path.sortPrice) priceSortLevel: Int,
-                      @Query(Constant.Path.carSize) carSize: String,
-                      @Query("language") language: String = "ENG",
-                      @Query("brand") brands: String? = "",
-                      @Query("category_type") categoryType: String?,
-                      @Query("product_keyword") productKeyword: String? = "",
-                      @Query("product_type") product_type: String,
-                      @Query("user_id") user_id: String,
-                      @Query("rating_level") ratingLevel: String,
-                      @Query("rating_range") ratingRange: String,
-                      @Query("favorite") favorite: String,
-                      @Query("coupon") coupon: String,
-                      @Query("model") model: String,
-                      @Query("limit") limit: String
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.get_products)
+    fun getSpareParts(@Field(Constant.Path.car_version_id) carVersionID: String,
+                      @Field(Constant.Path.categoryId) categoryId: Int,
+                      @Field(Constant.Path.filterPriceRange) priceRange: String,
+                      @Field(Constant.Path.sortPrice) priceSortLevel: Int,
+                      @Field(Constant.Path.carSize) carSize: String,
+                      @Field("language") language: String = "ENG",
+                      @Field("brand") brands: String? = "",
+                      @Field("category_type") categoryType: String?,
+                      @Field("product_keyword") productKeyword: String? = "",
+                      @Field("product_type") product_type: String,
+                      @Field("user_id") user_id: String,
+                      @Field("rating_level") ratingLevel: String,
+                      @Field("rating_range") ratingRange: String,
+                      @Field("favorite") favorite: String,
+                      @Field("coupon") coupon: String,
+                      @Field("model") model: String,
+                      @Field("limit") limit: String
 
 
     ): Call<ResponseBody>
@@ -1454,11 +1455,11 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-
-    @GET(Constant.UrlEndPoints.searchPartAutocomplete)
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.searchPartAutocomplete)
     fun getSearchPartAutocomplete(
-            @Query(Constant.Path.keyword) search_keyword: String,
-            @Query(Constant.Path.version_id) versionId: String
+            @Field(Constant.Path.keyword) search_keyword: String,
+            @Field(Constant.Path.version_id) versionId: String
 
 
     ): Call<ResponseBody>

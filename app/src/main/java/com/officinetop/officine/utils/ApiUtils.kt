@@ -539,7 +539,7 @@ inline fun Activity.hasLocationPermission(): Boolean {
                             Manifest.permission.ACCESS_FINE_LOCATION)) {
                 //Can ask user for permission
 
-              //  ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constant.REQUEST_PERMISSIONS_LOCATION);
+                //  ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constant.REQUEST_PERMISSIONS_LOCATION);
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                     true
@@ -1138,28 +1138,6 @@ fun DateFormatChangeYearToMonth(date: String): String? {
     return outputString
 }
 
-/*fun makeTextViewResizable(tv: TextView, maxLine: Int, expandText: String) {
-    if (tv.getTag() == null) {
-        tv.setTag(tv.getText())
-    }
-    val vto: ViewTreeObserver = tv.getViewTreeObserver()
-    vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            val obs: ViewTreeObserver = tv.getViewTreeObserver()
-            obs.removeGlobalOnLayoutListener(this)
-            if (maxLine <= 0) {
-                val lineEndIndex: Int = tv.getLayout().getLineEnd(0)
-                val text: String = tv.getText().subSequence(0, lineEndIndex - expandText.length + 1).toString() + " " + expandText
-                tv.setText(text)
-            } else if (tv.getLineCount() >= maxLine) {
-                val lineEndIndex: Int = tv.getLayout().getLineEnd(maxLine - 1)
-                val text: String = tv.getText().subSequence(0, lineEndIndex - expandText.length + 1).toString() + " " + expandText
-                tv.setText(text)
-            }
-        }
-    })
-}*/
-
 fun makeTextViewResizable(tv: TextView,
                           maxLine: Int, expandText: String, viewMore: Boolean) {
     if (tv.tag == null) {
@@ -1284,4 +1262,7 @@ fun Context.addReadLess(text: String, textView: TextView) {
     textView.setText(ss)
     textView.setMovementMethod(LinkMovementMethod.getInstance())
 }
+
+
+
 

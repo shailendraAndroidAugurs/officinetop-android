@@ -16,6 +16,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
+import com.officinetop.officine.feedback.FeedbackReview
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.setAppLanguage
 import okhttp3.ResponseBody
@@ -27,6 +28,8 @@ import retrofit2.Response
 
 
 class FragmentFeedback : Fragment() {
+
+    private lateinit var feedbackListener: FeedbackReview
     private var tabLayout: TabLayout? = null
     var viewPager: ViewPager? = null
     private var MyFeedBackReview: TextView? = null
@@ -41,19 +44,24 @@ class FragmentFeedback : Fragment() {
     }
 
     private fun View.bindViews() {
-
-
         if (context?.getLangLocale() != null && !context?.getLangLocale().equals("")) {
             context?.setAppLanguage()
         } else {
             context?.storeLangLocale("it")
             context?.setAppLanguage()
         }
+
+
+        viewPager = findViewById(R.id.feedback_viewpager)
+        tabLayout = findViewById(R.id.tabs)
+        tabLayout!!.setupWithViewPager(viewPager)
+
+
         if (!isAdded) {
             return
         } else {
-            highRatingFeedback("2")
 
+            highRatingFeedback("2")
             MyFeedBackReview = findViewById(R.id.tv_review)
             MyFeedBackReview?.setOnClickListener {
                 if (MyFeedBackReview?.tag == "100") {
@@ -61,30 +69,37 @@ class FragmentFeedback : Fragment() {
                     MyFeedBackReview?.tag = "101"
                     MyReview = false
                     viewPager?.isSaveFromParentEnabled = false
-                    setupViewPager(viewPager!!)
+                     setupViewPager(viewPager!!)
 
-                    val fragmenttransaction = childFragmentManager.beginTransaction()
-                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
-                    //   fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
-                    Log.d("Tag", "value" + MyFeedBackReview?.tag)
+
+                  //  feedbackListener.myReviewshow(MyReview)
+
+                     val fragmenttransaction = childFragmentManager.beginTransaction()
+                     fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
+                    // fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
+
+
                 } else {
                     MyReview = true
                     MyFeedBackReview?.text = getString(R.string.AllReview)
                     MyFeedBackReview?.tag = "100"
-                    viewPager?.isSaveFromParentEnabled = false
-                    setupViewPager(viewPager!!)
-                    Log.d("Tag", "value" + MyFeedBackReview?.tag)
-                    val fragmenttransaction = childFragmentManager.beginTransaction()
-                    fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
+
+
+                   // feedbackListener.myReviewshow(MyReview)
+                      viewPager?.isSaveFromParentEnabled = false
+                      viewPager?.adapter?.notifyDataSetChanged()
+
+                      setupViewPager(viewPager!!)
+                      Log.d("Tag", "value" + MyFeedBackReview?.tag)
+                      val fragmenttransaction = childFragmentManager.beginTransaction()
+                      fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
                     //  fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
+
                 }
 
             }
 
 
-            viewPager = findViewById(R.id.feedback_viewpager)
-            tabLayout = findViewById(R.id.tabs)
-            tabLayout!!.setupWithViewPager(viewPager)
         }
 
     }
@@ -97,6 +112,7 @@ class FragmentFeedback : Fragment() {
             adapter.addFragment(FragmentWorkshopFeedback(), getString(R.string.feedback_Workshop))
             adapter.addFragment(FragmentProductFeedback(), getString(R.string.feedback_Product))
             viewPager.adapter = adapter
+
         }
 
     }
@@ -109,8 +125,14 @@ class FragmentFeedback : Fragment() {
 
         override fun getItem(position: Int): Fragment {
 
-            val bundle: Bundle = Bundle()
+            val bundle = Bundle()
             if (position == 1) {
+                if (ProductFeedBackList.size != 0 && MyFeedBackReview != null) {
+                    MyFeedBackReview!!.visibility = View.VISIBLE
+
+                } else {
+                    MyFeedBackReview!!.visibility = View.GONE
+                }
                 bundle.putSerializable("list", ProductFeedBackList)
                 bundle.putBoolean("product", true)
                 bundle.putBoolean("MyReview", MyReview)
@@ -118,6 +140,7 @@ class FragmentFeedback : Fragment() {
                 Log.d("FragmnetFor", "Product" + "true")
                 Log.d("list", "ProductFeedBackList" + ProductFeedBackList.size)
             } else {
+
                 bundle.putSerializable("list", WorkshopFeedBackList)
                 bundle.putBoolean("product", false)
                 bundle.putBoolean("MyReview", MyReview)
@@ -144,6 +167,7 @@ class FragmentFeedback : Fragment() {
         override fun getPageTitle(position: Int): CharSequence {
             return mFragmentTitleList[position]
         }
+
     }
 
     private fun highRatingFeedback(type: String) {
@@ -168,7 +192,6 @@ class FragmentFeedback : Fragment() {
 
                                     } else if (type == "2") {
                                         WorkshopFeedBackList.addAll(productOrworkshopFeedback)
-                                        highRatingFeedback("1")
 
 
                                     }
@@ -183,9 +206,19 @@ class FragmentFeedback : Fragment() {
                             }
 
                         }
+                        if (type == "2") {
 
+                            highRatingFeedback("1")
+
+
+                        }
 
                     }
                 })
     }
+
+    fun setActivityListener(activityListener: FeedbackReview) {
+        this.feedbackListener = activityListener; }
+
+
 }

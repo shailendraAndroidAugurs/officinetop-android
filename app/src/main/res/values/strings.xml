@@ -681,6 +681,14 @@
     <string name="please_select_width"> Please select width</string>
     <string name="please_select_aspect">   Please select aspect ratio</string>
     <string name="please_select_diameter"> Please select diameter</string>
+    <string name="staus">Staus:</string>
+    <string name="inProgress">In Process</string>
+    <string name="dispatched">Dispatched</string>
+
+
+    <string name="intransit">Intransit</string>
+    <string name="delivered">Delivered</string>
+    <string name="workComplete">WorkComplete</string>
 
 
     <string-array name="home_icon_titles">

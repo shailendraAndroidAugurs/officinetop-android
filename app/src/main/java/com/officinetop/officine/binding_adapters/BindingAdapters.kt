@@ -364,3 +364,19 @@ fun setWishlist(Iv_favorite: ImageView, wish_list: String) {
     }
 
 }
+
+@BindingAdapter("orderStatus")
+fun orderStatus(tv_ordersatatus: TextView, status: String) {
+    var order = when (status) {
+        "I" -> tv_ordersatatus.context.getString(R.string.inProgress)
+        "D" -> tv_ordersatatus.context.getString(R.string.dispatched)
+        "IN" -> tv_ordersatatus.context.getString(R.string.intransit)
+        "F" -> tv_ordersatatus.context.getString(R.string.delivered)
+        "P" -> tv_ordersatatus.context.getString(R.string.Pending)
+        "C" -> tv_ordersatatus.context.getString(R.string.confirm)
+        "WC" -> tv_ordersatatus.context.getString(R.string.workComplete)
+        else -> ""
+    }
+    tv_ordersatatus.text = order
+
+}
