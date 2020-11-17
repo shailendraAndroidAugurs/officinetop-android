@@ -603,6 +603,12 @@
     <string name="please_select_width"> Seleziona la larghezza</string>
     <string name="please_select_aspect">  Seleziona le altezza</string>
     <string name="please_select_diameter"> Seleziona il diametro</string>
+    <string name="staus">Stato:</string>
+    <string name="inProgress">In Process</string>
+    <string name="dispatched">inviata</string>
+    <string name="intransit">Intransit</string>
+    <string name="delivered">Delivered</string>
+    <string name="workComplete">WorkComplete</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

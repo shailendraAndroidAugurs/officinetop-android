@@ -129,8 +129,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
 
 
-
-        deliveryDate = intent?.getStringExtra(Constant.Path.deliveryDate)!!
+        if (intent?.hasExtra(Constant.Path.deliveryDate)!!) {
+            deliveryDate = intent?.getStringExtra(Constant.Path.deliveryDate)!!
+        }
 
 
         isAssemblyService = intent?.getBooleanExtra(Constant.Key.is_assembly_service, false)
