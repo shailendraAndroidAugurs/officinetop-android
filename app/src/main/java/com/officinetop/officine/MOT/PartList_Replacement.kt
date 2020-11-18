@@ -43,6 +43,7 @@ class PartList_Replacement : BaseActivity() {
     private var isLastPage = false
     private var totalPage = 500
     private var isLoading = false
+    private var genericAdapter: GenericAdapter<Models.Part>? = null
     lateinit var linearLayoutManager: LinearLayoutManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,16 +84,20 @@ class PartList_Replacement : BaseActivity() {
                             carMaintenanceServiceList.add(carMaintenance)
                         }
 
-                        /*  if (current_page == 0) {
+                        if (current_page == 0) {
+                            setAdapter()
+                        } else {
+                            genericAdapter?.addItems(carMaintenanceServiceList)
+                            genericAdapter?.notifyDataSetChanged()
+                            isLoading = false
 
-                          } else {
+                        }
 
-                          }*/
-                        setAdapter()
                     } else {
                         progressDialog.dismiss()
-                        if (carMaintenanceServiceList.size != 0) {
-                            showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                        if (carMaintenanceServiceList.size == 0) {
+                            showInfoDialog(body.getString("message"))
+                        } else {
                         }
 
 
@@ -102,6 +107,8 @@ class PartList_Replacement : BaseActivity() {
                     progressDialog.dismiss()
                     if (carMaintenanceServiceList.size != 0) {
                         showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+                    } else {
+
                     }
 
                 }
@@ -111,8 +118,8 @@ class PartList_Replacement : BaseActivity() {
     }
 
     private fun setAdapter() {
-        val genericAdapter = GenericAdapter<Models.Part>(this, R.layout.maintenance_part_replacement)
-        genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+        genericAdapter = GenericAdapter<Models.Part>(this, R.layout.maintenance_part_replacement)
+        genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val output = Intent()
                 output.putExtra("data", Gson().toJson(carMaintenanceServiceList[position]).toString())
@@ -134,18 +141,18 @@ class PartList_Replacement : BaseActivity() {
         })
 
 
-
         linearLayoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = linearLayoutManager
         recycler_view.adapter = genericAdapter
 
 
-      /*  if (current_page == 0) {
-            recycler_view.smoothScrollToPosition(0)
-        } else {
-            recycler_view.smoothScrollToPosition(carMaintenanceServiceList.size-1)
-        }*/
-        genericAdapter.addItems(carMaintenanceServiceList)
+        /*  if (current_page == 0) {
+              recycler_view.smoothScrollToPosition(0)
+          } else {
+              recycler_view.smoothScrollToPosition(carMaintenanceServiceList.size-1)
+          }*/
+        genericAdapter?.addItems(carMaintenanceServiceList)
+
 
         if (this::linearLayoutManager.isInitialized) {
             recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {

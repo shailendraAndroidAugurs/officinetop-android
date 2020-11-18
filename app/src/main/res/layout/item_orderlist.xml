@@ -310,76 +310,69 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_weight="1.7"
-                            android:orientation="horizontal">
+                            android:text="@string/courier"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp"
+                            android:visibility="visible" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/courier"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_12sdp"
-                                android:visibility="visible" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.tracking_by !=null ? listItemViewModel.orderTracking.tracking_by : @string/Concat}"
+                            android:textSize="@dimen/_12sdp"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
+                        android:orientation="horizontal"
+                        android:tag="105">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tracking_id"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12sdp"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_5sdp"
-                                android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.tracking_by !=null ? listItemViewModel.orderTracking.tracking_by : @string/Concat}"
-                                android:textSize="@dimen/_12sdp"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
-                            android:orientation="horizontal"
-                            android:tag="105">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/_5sdp"
-                                    android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId !=null ? listItemViewModel.orderTracking.trackingId : @string/Concat}"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="@dimen/_12sdp"
-                                    android:visibility="visible" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_1sdp"
-                                    android:layout_marginLeft="@dimen/_5sdp"
-                                    android:background="@color/colorPrimaryDark" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tracking_id"
-                                android:textColor="@color/black"
+                                android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId !=null ? listItemViewModel.orderTracking.trackingId : @string/Concat}"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp"
                                 android:visibility="visible" />
 
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:background="@color/colorPrimaryDark" />
 
                         </LinearLayout>
+
 
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

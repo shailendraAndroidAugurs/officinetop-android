@@ -109,7 +109,6 @@ class Order_List : BaseActivity() {
                      startActivity(intent)*/
                 } else if (view.tag == "105") {
                     try {
-
                         if (!couponsListItem[position].orderTracking.trackingUrl.startsWith("http://") && !couponsListItem[position].orderTracking.trackingUrl.startsWith("https://")) {
                             // val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://" + couponsListItem[position].orderTracking.trackingUrl + "?number=" + couponsListItem[position].orderTracking.trackingId))
                             if (couponsListItem[position].orderTracking.sample_tracking_id != null && couponsListItem[position].orderTracking.trackingUrl.contains(couponsListItem[position].orderTracking.sample_tracking_id)) {
@@ -119,10 +118,8 @@ class Order_List : BaseActivity() {
                                 startActivity(browserIntent)
                             }
 
-
                         } else {
                             if (couponsListItem[position].orderTracking.sample_tracking_id != null && couponsListItem[position].orderTracking.trackingUrl.contains(couponsListItem[position].orderTracking.sample_tracking_id)) {
-
                                 val trackingurl = couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
                                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(trackingurl))
                                 startActivity(browserIntent)
@@ -137,7 +134,6 @@ class Order_List : BaseActivity() {
                     } catch (e: Exception) {
                         Toast.makeText(this@Order_List, getString(R.string.retry), Toast.LENGTH_LONG).show()
                     }
-
 
                 } else if (view.tag == "200") {
                     if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank())

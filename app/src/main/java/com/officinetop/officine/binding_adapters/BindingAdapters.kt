@@ -29,7 +29,7 @@ fun bindPrice(textView: TextView, price: String, value: String) {
         textView.text = (value + " " + amount.toString()).trim()
 
     }
-    textView.visibility = if (!price.toString().isNullOrEmpty()) View.VISIBLE else View.GONE
+
 
 }
 
@@ -220,7 +220,7 @@ fun CarKM(textView: TextView, CarKM: String) {
 
 @BindingAdapter("orderDelivered")
 fun orderDelivered(linearLayout: LinearLayout, status: String) {
-    if (!status.isNullOrBlank() && status != "null" && status == "F")
+    if (!status.isNullOrBlank() && status != "null" && (status == "F" || status == "WC"))
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -283,7 +283,7 @@ fun orderReturnbutton(textview: TextView, status: String) {
 
 @BindingAdapter("orderProgress")
 fun orderProgress(linearLayout: LinearLayout, status: String) {
-    if (!status.isNullOrBlank() && status != "null" && status != "-" && status != "F")
+    if (!status.isNullOrBlank() && status != "null" && status != "-" && status != "F" && status != "WC")
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -293,7 +293,7 @@ fun orderProgress(linearLayout: LinearLayout, status: String) {
 
 @BindingAdapter("feedbackvisibility", "feedbackStatus")
 fun feedbackvisibility(linearLayout: LinearLayout, status: String, feedbackStatus: String) {
-    if (feedbackStatus == "0" && status == "F")
+    if (feedbackStatus == "0" && (status == "F" || status == "WC"))
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
@@ -373,7 +373,7 @@ fun orderStatus(tv_ordersatatus: TextView, status: String) {
         "IN" -> tv_ordersatatus.context.getString(R.string.intransit)
         "F" -> tv_ordersatatus.context.getString(R.string.delivered)
         "P" -> tv_ordersatatus.context.getString(R.string.Pending)
-        "C" -> tv_ordersatatus.context.getString(R.string.confirm)
+        "C" -> tv_ordersatatus.context.getString(R.string.confirmOrder)
         "WC" -> tv_ordersatatus.context.getString(R.string.workComplete)
         else -> ""
     }
