@@ -504,7 +504,7 @@ object Models {
             var CouponTitle: String = "",
             var CouponId: String = "",
             @SerializedName("coupon_list")
-            var couponList: ArrayList<Coupon>,
+            var couponList: ArrayList<Coupon> = ArrayList<Coupon>(),
             @SerializedName("p_name")
             var productName: String,
             @SerializedName("rating_star")
@@ -564,7 +564,7 @@ object Models {
             val images: List<Image>,
             var partimage: String = "",
             @SerializedName("coupon_list")
-            var couponList: ArrayList<Coupon>,
+            var couponList: ArrayList<Coupon> = ArrayList<Coupon>(),
 
             @SerializedName("mot_type")
             val mot_type: String = "",

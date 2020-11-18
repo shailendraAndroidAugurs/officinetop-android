@@ -20,10 +20,7 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.adapter.PaginationListener
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.data.getUserId
+import com.officinetop.officine.data.*
 import com.officinetop.officine.databinding.ActivityMaintenanceBinding
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
@@ -62,7 +59,7 @@ class MaintenanceActivity : BaseActivity() {
     private var frontRear: String = ""
     private var leftRight: String = ""
     private var maxPrice = 0f
-
+    private var serviceID = ""
     private var deliveryDate = 0
 
 
@@ -112,51 +109,14 @@ class MaintenanceActivity : BaseActivity() {
 
             if (selectedCarMaintenanceServices.size > 0) {
 
-                val selectedServices_partList = ArrayList<Models.servicesCouponData>()
-
-                val serviceId: MutableList<String> = ArrayList()
-
-                for (j in 0 until selectedCarMaintenanceServices.size) {
-                    serviceId.add(selectedCarMaintenanceServices.get(j).id.toString())
-                    for (i in 0 until carMaintenanceServiceList.size) {
-                        if (selectedCarMaintenanceServices.get(j).id == carMaintenanceServiceList[i].id) {
-                            Log.e("PARTIDSSERVICES", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "custom part" else carMaintenanceServiceList[i].productId)
-                            if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
-
-                                hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
-                                        if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
-                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
-                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
-
-                            } else {
-                                hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
-                                        if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
-                                        else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
-                                selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
-                            }
-                        }
-                    }
-                }
-
-
-                val bundle = Bundle()
-                bundle.putSerializable(Constant.Path.PartID, hashMap as Serializable)
-                val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
-                startActivity(intentFor<WorkshopListActivity>(
-                        Constant.Key.is_car_maintenance_service to true,
-                        Constant.Path.serviceID to /*serviceId.joinToString(",")*/  Gson().toJson(selectedServices_partList),
-                        Constant.Path.deliveryDate to deliveryDate.toString(),
-                        Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
-                ).putExtras(bundle)
-                )
-
-
+                calculateselectedservicesorPart(true)
             } else {
                 Snackbar.make(btn_choose_workshop, getString(R.string.please_select_maintenance), Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
         }
     }
+
 
     private fun getCarMaintenance() {
         try {
@@ -363,9 +323,9 @@ class MaintenanceActivity : BaseActivity() {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
 
-                                        if (carMaintenanceServiceList[position].parts.isNullOrEmpty() && carMaintenanceServiceList[position].parts[0] == null) {
+                                       /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
                                             binddataofselectedReplacementPart(0)
-                                        }
+                                        }*/
                                         selectservice_position = position
 
                                     }
@@ -378,7 +338,6 @@ class MaintenanceActivity : BaseActivity() {
             e.printStackTrace()
         }
     }
-
 
     private fun getAllPartsMaintaince(serviceId: String, position: Int) {
         progress_bar.visibility = View.VISIBLE
@@ -411,10 +370,10 @@ class MaintenanceActivity : BaseActivity() {
                                         } else {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
-                                        if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
+                                        /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
 
-                                            binddataofselectedReplacementPart(0)
-                                        }
+                                             binddataofselectedReplacementPart(0)
+                                         }*/
                                         selectservice_position = position
 
                                     }
@@ -506,8 +465,7 @@ class MaintenanceActivity : BaseActivity() {
                 carMaintenanceServiceList[selectservice_position].descrizione = if (ReplacementPartList[position].Productdescription != null) ReplacementPartList[position].Productdescription else ""
                 carMaintenanceServiceList[selectservice_position].productId = ReplacementPartList[position].id
                 carMaintenanceServiceList[selectservice_position].usersId = ReplacementPartList[position].usersId
-                carMaintenanceServiceList[selectservice_position].couponList = ReplacementPartList[position].couponList
-
+                carMaintenanceServiceList[selectservice_position].couponList = if (ReplacementPartList[position].couponList.isNullOrEmpty())ArrayList<Models.Coupon>() else ReplacementPartList[position].couponList
                 carMaintenanceServiceList[selectservice_position].CouponTitle = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].couponTitle else ""
                 carMaintenanceServiceList[selectservice_position].CouponId = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].id else ""
 
@@ -889,34 +847,110 @@ class MaintenanceActivity : BaseActivity() {
     }
 
     fun CalculateWorkshopPricesAndSparepartPrices() {
-        selectedServicesTotalPrice = 0.0
+
         selectedServicesProductTotalPrices = 0.0
-        for (item in selectedCarMaintenanceServices) {
+        if (selectedCarMaintenanceServices.size != 0) {
+            calculateselectedservicesorPart()
+            for (item in selectedCarMaintenanceServices) {
 
-            if (!item.seller_price.isNullOrBlank()) {
-                selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
-            }
-            if (item.parts.isNotEmpty() && item.parts[0] != null && !item.parts[0].sellerPrice.isNullOrBlank()) {
-                if (!item.parts[0].forPair.isNullOrBlank() && item.parts[0].forPair.equals("1")) {
-                    selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + (item.parts[0].sellerPrice.toDouble()) * 2).roundTo2Places()
+                /*  if (!item.seller_price.isNullOrBlank()) {
+                      selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
+                  }*/
+                if (item.parts.isNotEmpty() && item.parts[0] != null && !item.parts[0].sellerPrice.isNullOrBlank()) {
+                    if (!item.parts[0].forPair.isNullOrBlank() && item.parts[0].forPair.equals("1")) {
+                        selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + (item.parts[0].sellerPrice.toDouble()) * 2).roundTo2Places()
 
-                } else {
-                    selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + item.parts[0].sellerPrice.toDouble()).roundTo2Places()
+                    } else {
+                        selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + item.parts[0].sellerPrice.toDouble()).roundTo2Places()
 
+                    }
+                    if (!item.parts[0].numberOfDeliveryDays.isNullOrBlank() && !item.parts[0].numberOfDeliveryDays.equals("0")) {
+
+                        if (deliveryDate < item.parts[0].numberOfDeliveryDays.toInt()) {
+                            deliveryDate = item.parts[0].numberOfDeliveryDays.toInt()
+                        }
+
+                    }
                 }
-                if (!item.parts[0].numberOfDeliveryDays.isNullOrBlank() && !item.parts[0].numberOfDeliveryDays.equals("0")) {
 
-                    if (deliveryDate < item.parts[0].numberOfDeliveryDays.toInt()) {
-                        deliveryDate = item.parts[0].numberOfDeliveryDays.toInt()
+            }
+            selectedServicesTotalPrice = 0.0
+            getminPricesOfselectedService()
+
+        } else {
+            selectedServicesTotalPrice = 0.0
+            btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
+
+        }
+
+
+    }
+
+    private fun calculateselectedservicesorPart(isfromBooking: Boolean = false) {
+        val selectedServices_partList = ArrayList<Models.servicesCouponData>()
+        val serviceId: MutableList<String> = ArrayList()
+        for (j in 0 until selectedCarMaintenanceServices.size) {
+            serviceId.add(selectedCarMaintenanceServices.get(j).id.toString())
+            for (i in 0 until carMaintenanceServiceList.size) {
+                if (selectedCarMaintenanceServices.get(j).id == carMaintenanceServiceList[i].id) {
+                    Log.e("PARTIDSSERVICES", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "custom part" else carMaintenanceServiceList[i].productId)
+                    if (!carMaintenanceServiceList[i].CouponId.isNullOrBlank()) {
+
+                        hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData(carMaintenanceServiceList[i].CouponId, if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
+                                else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
+                        selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
+
+                    } else {
+                        hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
+                                if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
+                                else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
+                        selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
+                    }
+                }
+            }
+        }
+        serviceID = Gson().toJson(selectedServices_partList)
+        if (isfromBooking) {
+            val bundle = Bundle()
+            bundle.putSerializable(Constant.Path.PartID, hashMap as Serializable)
+            val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
+            startActivity(intentFor<WorkshopListActivity>(
+                    Constant.Key.is_car_maintenance_service to true,
+                    Constant.Path.serviceID to serviceID /*serviceId.joinToString(",")*/,
+                    Constant.Path.deliveryDate to deliveryDate.toString(),
+                    Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
+            ).putExtras(bundle)
+            )
+        }
+
+
+    }
+
+    private fun getminPricesOfselectedService() {
+        RetrofitClient.client.getminPriceForMaintenanceServices(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, getUserId(), "eng", Constant.defaultDistance, getDateFor(deliveryDate)!!, getLat(), getLong()).onCall { networkException, response ->
+            if (response?.isSuccessful!!) {
+                response.let {
+
+                    val bodyJsonObject = JSONObject(response.body()?.string())
+                    if (response.isSuccessful) {
+
+                        if (bodyJsonObject.has("data") && bodyJsonObject.get("data") != null) {
+                            val datajson = JSONObject(bodyJsonObject.getString("data"))
+                            if (datajson.has("totalMinWorkshopServicePrice") && !datajson.getString("totalMinWorkshopServicePrice").isNullOrBlank())
+
+                                selectedServicesTotalPrice = datajson.getString("totalMinWorkshopServicePrice").toDouble().roundTo2Places()
+                            btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
+
+                        }
                     }
 
                 }
             }
 
+
         }
-        btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
-
-
     }
+
 
 }

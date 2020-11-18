@@ -1524,4 +1524,18 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.minPricesForMaintenanceServices)
+    fun getminPriceForMaintenanceServices(
+            @Field(Constant.Path.serviceid) mot_id: String,
+            @Field(Constant.Path.version_id) version: String,
+            @Field(Constant.user_id) user_id: String,
+            @Field(Constant.Path.language) language: String,
+            @Field(Constant.Path.distanceRange) distanceRange: String,
+            @Field(Constant.Path.workshopFilterSelectedDate) selected_date: String,
+            @Field(Constant.Path.userLat) userLat: String,
+            @Field(Constant.Path.userLong) userLong: String
+
+    ): Call<ResponseBody>
+
 }

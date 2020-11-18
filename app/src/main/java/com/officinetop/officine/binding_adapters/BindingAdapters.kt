@@ -29,7 +29,7 @@ fun bindPrice(textView: TextView, price: String, value: String) {
         textView.text = (value + " " + amount.toString()).trim()
 
     }
-    textView.visibility = if (!price.toString().isNullOrEmpty()) View.VISIBLE else View.GONE
+
 
 }
 

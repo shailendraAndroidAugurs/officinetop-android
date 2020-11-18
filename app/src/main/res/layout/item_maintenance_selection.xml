@@ -30,7 +30,8 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
             android:src="@drawable/info_icon"
-            android:visibility="@{listItemViewModel.parts==null ? View.GONE : View.VISIBLE}"
+
+            android:visibility="@{listItemViewModel.ourDescription==null  ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@+id/maintenance_item_chk"
             app:layout_constraintStart_toEndOf="@+id/maintenance_actiondescription"
             app:layout_constraintTop_toBottomOf="@+id/maintenance_item" />
@@ -232,11 +233,11 @@
             android:layout_height="wrap_content"
             app:amount="@{listItemViewModel.price!=null  ?  listItemViewModel.price: @string/blank}"
             app:layout_constraintEnd_toEndOf="parent"
-
-
             app:layout_constraintStart_toEndOf="@+id/maintenance_item"
             app:layout_constraintTop_toTopOf="parent"
-            app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
+            app:value="@{listItemViewModel.price!=null  ? String.format(@string/euro_symbol) : @string/euro_symbol}"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/text_partinfo"

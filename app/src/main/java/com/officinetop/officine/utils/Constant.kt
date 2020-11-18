@@ -30,7 +30,7 @@ object Constant {
     const val itemProductGroupImageUrl = domainBaseURL + "storage/group_image/"
 
     ///http:\/\/127.0.0.1:8000\/storage\/group_image
-    const val pref_selected_car = "selected_car"
+
     const val pref_login_from = "login_from"
 
     const val dateformat_workshop = "yyyy-MM-dd"
@@ -38,7 +38,6 @@ object Constant {
     const val connection_failed_dialog = "Connection Failed, Tap to Retry"
 
     const val type_product = "product"
-    const val type_workshop = "workshop"
 
 
     object UrlEndPoints {
@@ -81,8 +80,6 @@ object Constant {
         const val getQuotesCalendarPrice = "next_seven_days_request_quotes"
         const val getCarMaintenanceCalendarPrice = "get_next_seven_days_min_price_for_car_maintenance"
         const val getSOSAppointmentCalendarPrice = "next_thirty_days_for_sos"
-
-        const val getWorkshopPackageDetail = "get_workshop_service_package/{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.workshopFilterSelectedDate}}/{${Path.carSize}}/{${Path.selectedCarId}}/{${Path.userid}}"
         const val getWorkshopPackageDetailNew = "get_workshop_service_package_new"
         const val getCarRevisionPackageDetail = "car_revision_workshop_package"
         const val getAssembleWorkshopPackageNew = "get_assemble_workshop_package_new"
@@ -92,14 +89,11 @@ object Constant {
         const val getCarMaintenancePackageDetail = "car_maintenance_services_package"
         const val getQuotesPackageDetail = "workshop_package_for_service_quotes"
         const val getCarMaintenanceWorkshop = "car_maintenance_workshop"
-        const val getWorkshopPackageDetailWithProductID = "get_workshop_service_package/{${Path.workshopUsersId}}/{${Path.categoryId}}/{${Path.workshopFilterSelectedDate}}"
         const val get_products = "get_productsnew"
-        const val get_product_detail = "get_products_details"
         const val serviceBooking = "service_booking"
         const val revisionServiceBooking = "car_revision_service_booking"
         const val carWashServiceBooking = "car_wash_service_booking"
         const val serviceAssemblyBooking = "assemble_service_booking"
-        const val checkServiceBooking = "check_service_booking"
         const val tyreServiceBooking = "tyre_service_booking"
         const val sosServiceBooking = "sos_service_booking"
         const val serviceBookingForCarMaintenance = "service_booking_for_car_maintenance"
@@ -123,7 +117,6 @@ object Constant {
 
         const val revisionServices = "get_revision_services"
 
-        const val workshopAddressInfo = "get_workshop_address_info"
         const val emergencySOServiceBooking = "emergency_sos_service_booking"
         const val wrackerServices = "get_wrackerservices"
         const val allWrackerServices = "get_all_wracker_workshop_services"
@@ -135,7 +128,6 @@ object Constant {
         const val getCategoryQuotes = "get_main_category"
         const val supporttype = "support_type"
         const val getCarMaintenanceServices = "car_maintenance_services"
-        const val getAllCoupons = "get_all_coupon"
         const val getOrderlist = "get_user_order_details"
         const val getTicketlist = "support_ticket"
         const val getNotificationlist = "show_notification"
@@ -152,7 +144,6 @@ object Constant {
         const val updateContact = "update_coustmer_contact"
         const val updatenotification = "add_notification_detail"
         const val deleteaccountforcustomer = "delete_account_for_customer"
-        const val getbrandcarmaintenance = "get_brand_car_maintenance"
         const val getPartForMotReplacement = "load_mot_spare_parts_for_replace"
 
         const val addUserAddress = "add_user_address_list"
@@ -206,6 +197,7 @@ object Constant {
         const val getSearchSparePartsBykeywords = "searchSparePartsBykeywords"
         const val getCarMakerslogo = "getCarMakersImage"
         const val minPriceForMotServices = "minPriceForMotServices"
+        const val minPricesForMaintenanceServices = "carMaintennaceMinWorkshopPrice"
 
     }
 
