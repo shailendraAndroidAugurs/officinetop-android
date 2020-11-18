@@ -243,7 +243,7 @@
     <string name="shipment_tracking">Monitoraggio della spedizione</string>
     <string name="expectedtime">consegna prevista :</string>
     <string name="courier">Corriere :</string>
-    <string name="tracking_id">ID di monitoraggio :</string>
+    <string name="tracking_id">ID monitoraggio:</string>
     <string name="car_services">Servizi auto</string>
     <string name="spare_part">Ricambi</string>
     <string name="car_rim">Cerchione</string>
@@ -605,10 +605,11 @@
     <string name="please_select_diameter"> Seleziona il diametro</string>
     <string name="staus">Stato:</string>
     <string name="inProgress">In Process</string>
-    <string name="dispatched">inviata</string>
-    <string name="intransit">Intransit</string>
-    <string name="delivered">Delivered</string>
-    <string name="workComplete">WorkComplete</string>
+    <string name="dispatched">Inviato</string>
+    <string name="intransit">Intransita</string>
+    <string name="delivered">Consegnato</string>
+    <string name="workComplete">Lavoro Completato</string>
+    <string name="confirmOrder">Confirm</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -689,7 +689,7 @@
     <string name="intransit">Intransit</string>
     <string name="delivered">Delivered</string>
     <string name="workComplete">WorkComplete</string>
-
+    <string name="confirmOrder">Confirm</string>
 
     <string-array name="home_icon_titles">
         <item>Tyre</item>
