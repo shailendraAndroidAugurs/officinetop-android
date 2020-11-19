@@ -4,11 +4,14 @@ package com.officinetop.officine.utils
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -19,7 +22,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,6 +31,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.DexterError
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.PermissionRequestErrorListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.CartItemAdapter
 import com.officinetop.officine.car_parts.ProductDetailActivity
@@ -129,20 +139,13 @@ inline fun Context.loadImageWithName(name: String?, imageView: ImageView, placeh
             imageURL = overrideURL
         }
 
-        //Log.v("IMG ", "URL &&&&&&&&&&&&&&&&&&&&&&&& $imageURL , filename = $name")
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
                 .load(imageURL)
                 .thumbnail(0.7f)
-                .into(imageView)
-        /*Glide.with(context)
-                    .load(imageRes)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .fitCenter()
-                    .placeholder(mPlaceholderImage)
-                    .into(imageView)*/
+
     } catch (e: GlideException) {
-        //Log.e("ApiUtils", "loadImage: loadImage: " + e.rootCauses.toString())
+
     }
 }
 
@@ -517,51 +520,15 @@ inline fun <reified T> Call<T>.genericAPICall(crossinline onResponse: (networkEx
     enqueue(object : Callback<T> {
         override fun onFailure(call: Call<T>, error: Throwable) {
             onResponse.invoke(error, null)
-//            result(GenericResult.Failure(call,error))
+
         }
 
         override fun onResponse(call: Call<T>, response: Response<T>?) {
             if (response != null)
                 onResponse.invoke(null, response)
-//            result(GenericResult.Success(call, response))
+
         }
     })
-}
-
-inline fun Activity.hasLocationPermission(): Boolean {
-
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            true
-        else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)) {
-                //Can ask user for permission
-
-                //  ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constant.REQUEST_PERMISSIONS_LOCATION);
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                    true
-            }
-            // requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), Constant.REQUEST_PERMISSIONS_LOCATION)
-            false
-        }
-    } else true
-}
-
-inline fun Activity.hasStoragePermission(): Boolean {
-
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
-            true
-        else {
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA), Constant.RP_STORAGE)
-            false
-        }
-    } else true
 }
 
 
@@ -1263,6 +1230,77 @@ fun Context.addReadLess(text: String, textView: TextView) {
     textView.setMovementMethod(LinkMovementMethod.getInstance())
 }
 
+
+inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline onOkClick: (() -> Unit?)? = null) {
+    try {
+        Dexter.withActivity(this)
+                .withPermissions(permissionlist)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+
+                            onOkClick?.let { it1 -> it1() }
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied) {
+                            // show alert dialog navigating to Settings
+                            showSettingsDialog()
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest?>?, token: PermissionToken) {
+                        token.continuePermissionRequest()
+                    }
+                }).withErrorListener(object : PermissionRequestErrorListener {
+                    override fun onError(error: DexterError?) {
+                        Toast.makeText(applicationContext, getString(R.string.Unspecifiederroroccurred), Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .onSameThread()
+                .check()
+    } catch (e: java.lang.Exception) {
+
+    }
+
+
+}
+
+fun Activity.showSettingsDialog() {
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle(getString(R.string.need_permissions))
+    builder.setMessage(getString(R.string.permission_denied))
+    builder.setPositiveButton(getString(R.string.goto_setting)) { dialogInterface, i ->
+
+        dialogInterface.cancel()
+        openSettings()
+
+    }
+
+    builder.setNegativeButton(getString(R.string.cancel)) { dialogInterface, i ->
+
+        dialogInterface.cancel()
+
+
+    }
+    builder.show()
+}
+
+// navigating user to app settings
+fun Activity.openSettings() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+    val uri: Uri = Uri.fromParts("package", packageName, null)
+    intent.data = uri
+    startActivityForResult(intent, 101)
+}
+
+fun storagePermissionRequestList(): ArrayList<String> {
+    var permissionlist = ArrayList<String>()
+    permissionlist.add(Manifest.permission.ACCESS_FINE_LOCATION)
+    permissionlist.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+    return permissionlist
+}
 
 
 

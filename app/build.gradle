@@ -146,7 +146,6 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-
     implementation "android.arch.paging:runtime:1.0.1"
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
@@ -163,7 +162,7 @@ dependencies {
 
     implementation "com.github.skydoves:progressview:1.0.5"
     implementation 'com.github.kibotu:UrlShortener:-SNAPSHOT'
-
+    implementation 'com.karumi:dexter:6.2.2'
     implementation('com.paypal.sdk:paypal-android-sdk:2.16.0')
             {
                 exclude group: 'io.card'

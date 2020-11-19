@@ -6,7 +6,7 @@
     android:layout_marginStart="@dimen/category_margin"
     android:layout_marginTop="@dimen/category_padding"
     android:layout_marginEnd="@dimen/category_padding"
-    android:background="@color/white"
+    android:background="@color/white_100"
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="@dimen/category_padding">

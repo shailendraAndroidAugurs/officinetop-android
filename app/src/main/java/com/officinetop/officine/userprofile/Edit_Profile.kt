@@ -1,5 +1,6 @@
 package com.officinetop.officine.userprofile
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.ContextWrapper
@@ -79,11 +80,11 @@ class Edit_Profile : BaseActivity() {
         }
 
         textview_changepic.setOnClickListener(View.OnClickListener {
-            if (hasStoragePermission()) {
-                showPictureDialog()
-            }
+            var permissionlist = ArrayList<String>()
 
+            permissionlist.add(Manifest.permission.CAMERA)
 
+            checkpermission(permissionlist, { showPictureDialog() })
         })
 
         button_updateprofile.setOnClickListener(View.OnClickListener {

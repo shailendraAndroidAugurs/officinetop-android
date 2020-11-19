@@ -61,10 +61,7 @@ class MaintenanceActivity : BaseActivity() {
     private var maxPrice = 0f
     private var serviceID = ""
     private var deliveryDate = 0
-
-
     private var selectedServicesTotalPrice: Double = 0.0
-
     private var selectedServicesProductTotalPrices: Double = 0.0
     private var genericAdapterParts: GenericAdapter<Models.Part>? = null
     var genericAdapter: GenericAdapter<Models.CarMaintenanceServices>? = null
@@ -105,10 +102,7 @@ class MaintenanceActivity : BaseActivity() {
         selectedCarMaintenanceServices.clear()
         CalculateWorkshopPricesAndSparepartPrices()
         btn_choose_workshop.setOnClickListener {
-
-
             if (selectedCarMaintenanceServices.size > 0) {
-
                 calculateselectedservicesorPart(true)
             } else {
                 Snackbar.make(btn_choose_workshop, getString(R.string.please_select_maintenance), Snackbar.LENGTH_SHORT).show()
@@ -880,12 +874,8 @@ class MaintenanceActivity : BaseActivity() {
         } else {
             selectedServicesTotalPrice = 0.0
             btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
-
         }
-
-
     }
-
     private fun calculateselectedservicesorPart(isfromBooking: Boolean = false) {
         val selectedServices_partList = ArrayList<Models.servicesCouponData>()
         val serviceId: MutableList<String> = ArrayList()

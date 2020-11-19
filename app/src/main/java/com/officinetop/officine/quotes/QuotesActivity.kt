@@ -1,5 +1,6 @@
 package com.officinetop.officine.quotes
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
@@ -13,8 +14,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GridItemDecoration
@@ -61,10 +68,10 @@ class QuotesActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ll_take_images.setOnClickListener {
-            if (hasStoragePermission()) {
-                // pickImage(this)
-                showSelectImageDialog()
-            }
+            var permissionlist = ArrayList<String>()
+            permissionlist.add(Manifest.permission.CAMERA)
+
+            checkpermission(permissionlist, {showSelectImageDialog() })
         }
 
         quotes_recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
@@ -280,15 +287,7 @@ class QuotesActivity : BaseActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (grantResults.isNotEmpty()) {
-
-            //this.pickImage(this)
-            showSelectImageDialog()
-        }
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -358,5 +357,8 @@ class QuotesActivity : BaseActivity() {
         }
         return file
     }
+
+
+
 
 }
