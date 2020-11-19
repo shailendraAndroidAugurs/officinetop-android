@@ -615,25 +615,24 @@ class OnlinePaymentScreen : BaseActivity() {
     }
 
     private fun isaddress_ContactSelect(): Boolean {
-        if (contactNo.isNullOrBlank()) {
+        if (Address.isNullOrBlank() && AddressId.isNullOrBlank()) {
+            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectAddress), Snackbar.LENGTH_SHORT).show()
+
+            return false
+        } else if (contactNo.isNullOrBlank()) {
 
             Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectContactNo), Snackbar.LENGTH_SHORT).show()
 
             return false
 
 
-        } else if (Address.isNullOrBlank() && AddressId.isNullOrBlank()) {
-            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectAddress), Snackbar.LENGTH_SHORT).show()
-
-            return false
-        } else
-            return true
+        }
+        return true
 
     }
 
     private fun isCartDataAvailable(): Boolean {
         return if (!IsCheckAvailablity) {
-
             Snackbar.make(ll_container_payment, getString(R.string.Something_went_wrong_Please_try_again), Snackbar.LENGTH_SHORT).show()
 
             false

@@ -27,7 +27,7 @@
         android:background="@drawable/rounded_white_background"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/Concat"
+        android:text="@string/concatDateformate"
         android:textColor="@color/colorAccent" />
 
     <TextView

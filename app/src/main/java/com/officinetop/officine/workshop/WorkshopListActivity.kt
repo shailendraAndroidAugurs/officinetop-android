@@ -460,7 +460,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
                     try {
                         val formattedDate = sdf.parse(dateString)
-                        item_text_middle.text = SimpleDateFormat("d - M", getLocale()).format(formattedDate)
+                        item_text_middle.text = SimpleDateFormat("d / M", getLocale()).format(formattedDate)
                         val format2 = SimpleDateFormat("E", getLocale())
                         val finalDay = format2.format(formattedDate)
 

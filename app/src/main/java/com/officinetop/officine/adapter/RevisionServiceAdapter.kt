@@ -33,7 +33,7 @@ class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<
             it[position]?.let { it1 ->
                 holder.revTitle.text = it1.categoryName
                 holder.revDesc.text = it1.description
-                holder.revMinPrice.text = mContext.getString(R.string.prepend_euro_symbol_with_from_string, it1.minPrice)
+                holder.revMinPrice.text = if (!it1.minPrice.isNullOrBlank()) mContext.getString(R.string.prepend_euro_symbol_with_from_string, it1.minPrice) else mContext.getString(R.string.prepend_euro_symbol_with_from_string, "0")
 
 
                 holder.revChooseWorkshopBtn.setOnClickListener { view ->

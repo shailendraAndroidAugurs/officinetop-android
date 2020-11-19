@@ -1,18 +1,16 @@
 package com.officinetop.officine
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -23,10 +21,7 @@ import com.novoda.merlin.Merlin
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
 import com.officinetop.officine.data.storeLatLong
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.setAppLanguage
-import com.officinetop.officine.utils.showInfoDialog
-import com.officinetop.officine.utils.snack
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_product_list.*
 
 @SuppressLint("Registered")
@@ -54,7 +49,13 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         mLocationRequest = LocationRequest()
         mLocationRequest?.interval = 150000
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        checkRequestLocationPermission()
+        var permissionlist = ArrayList<String>()
+        permissionlist.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissionlist.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        checkpermission(permissionlist, { enableLocation() })
+
+
     }
 
     @Override
@@ -89,13 +90,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     }
 
-    private fun checkRequestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            enableLocation()
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_RQ)
-        }
-    }
 
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {

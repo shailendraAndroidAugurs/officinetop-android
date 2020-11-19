@@ -656,7 +656,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             // }
 
 
-
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("exception", e.toString())
@@ -881,24 +880,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(internetBroadcast)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-
-        if (/*requestCode == Constant.REQUEST_PERMISSIONS_LOCATION &&*/ grantResults[0] == PackageManager.PERMISSION_GRANTED /*&&
-                grantResults[1] == PackageManager.PERMISSION_GRANTED*/) {
-            if (!isLocationOn)
-
-                getLastLocation(mFusedLocationClient!!, this) else
-                enableLocation()
-        } else {
-
-            // Permission denied.
-          container.snack(getString(R.string.permission_denied_explanation), duration = Snackbar.LENGTH_INDEFINITE) {
-                if (hasLocationPermission()) getLastLocation(mFusedLocationClient!!, this)
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 

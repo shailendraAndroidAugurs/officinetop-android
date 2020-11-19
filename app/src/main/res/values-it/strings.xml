@@ -610,6 +610,10 @@
     <string name="delivered">Consegnato</string>
     <string name="workComplete">Lavoro Completato</string>
     <string name="confirmOrder">Confirm</string>
+    <string name="concatDateformate">/</string>
+    <string name="need_permissions">Hai bisogno di autorizzazioni</string>
+    <string name="permission_denied">Questa app necessita dell\'autorizzazione per utilizzare questa funzione. Puoi concederli nelle impostazioni dell\'app.</string>
+    <string name="goto_setting">VAI ALLE IMPOSTAZIONI</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

@@ -100,13 +100,11 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mapFragment.getMapAsync(this)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if (hasLocationPermission()) {
 
-            if (isLocationOn)
-                getcurrentlocation() else
-                enableLocation()
+        checkpermission(storagePermissionRequestList(), { if (isLocationOn)
+            getcurrentlocation() else
+            enableLocation() })
 
-        }
 
         emergency_call.setOnClickListener {
             callEmergency()
@@ -456,21 +454,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == Constant.REQUEST_PERMISSIONS_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            // Permission granted.
-            enableLocation()
-            //  getLastLocation()
 
-        } else {
-            // Permission denied.
-            container.snack(getString(R.string.permission_denied_explanation), duration = Snackbar.LENGTH_INDEFINITE) {
-                if (hasLocationPermission()) getcurrentlocation()
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1000) {

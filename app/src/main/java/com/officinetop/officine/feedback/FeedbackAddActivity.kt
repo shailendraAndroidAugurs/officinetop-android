@@ -1,5 +1,6 @@
 package com.officinetop.officine.feedback
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
@@ -107,13 +108,14 @@ class FeedbackAddActivity : BaseActivity() {
 
         capture_images_for_fedback.setOnClickListener {
             if (images.size < 5) {
-                if (hasStoragePermission()) {
-                    try {
-                        showSelectImageDialog()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
+                var permissionlist = ArrayList<String>()
+
+                permissionlist.add(Manifest.permission.CAMERA)
+
+
+                checkpermission(permissionlist, { showSelectImageDialog() })
+
+
             } else showInfoDialog(getString(R.string.MaxImagesnotmorethanthat))
         }
 

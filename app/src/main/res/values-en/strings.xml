@@ -613,6 +613,12 @@
     <string name="delivered">Delivered</string>
     <string name="workComplete">WorkComplete</string>
     <string name="confirmOrder">Confirm</string>
+    <string name="concatDateformate">/</string>
+    <string name="need_permissions">Need Permissions</string>
+    <string name="permission_denied">This app needs permission to use this feature. You can grant them in app settings.</string>
+
+
+    <string name="goto_setting">GOTO SETTINGS</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

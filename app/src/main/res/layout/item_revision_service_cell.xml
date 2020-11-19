@@ -22,9 +22,7 @@
         style="@style/TextViewHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:paddingLeft="0dp"
-        android:text="ghdfjkghkdjfghdkjghdkfgjsnkgjdflgvjlgjdkgjryiruiyurniyuuuuuueriyueryibyoeoyuenoyennnnnnnnnyuroybuurnioyyyyyyyyyyybueniunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnru,op;,x''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''sfitvoritosr efjksgldfgjdfjgituhytijgiouyrtyyyyyvn;wleuritu;ibmgkvvvvvvvvvvvvvvvvvvvvvw;itjmiil____ Amit 1 amit 2 fvdhvfavsfhsvfhvhfgeruguerbbrutvbituhetbhbethebjthvbejthertbeiutheuitheiubhirhe amit 3"
         android:textColor="@color/black" />
 
     <FrameLayout
@@ -37,8 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:text="@string/dummy_prepend_euro_symbol_with_da" />
+            android:paddingRight="0dp" />
 
         <TextView
             android:id="@+id/rev_choose_workshop"
