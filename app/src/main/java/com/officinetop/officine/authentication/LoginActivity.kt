@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.R
@@ -59,18 +60,13 @@ class LoginActivity : BaseActivity() {
     private var uniqueId: String? = null
 
     //0=facebook 1=google  2=linkdin
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         printHash()
-
-
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.login)
         progressDialog = getProgressDialog()
-
         initRetrofitSigning()
         initGoogleSignIn()
         initFacebookLogin()
@@ -130,18 +126,19 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initGoogleSignIn() {
+        val lastAccount = GoogleSignIn.getLastSignedInAccount(this)
+
 
         googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-
-        val lastAccount = GoogleSignIn.getLastSignedInAccount(this)
 
         lastAccount?.let {
             googleSignInClient.signOut().addOnCompleteListener {
                 //toast("Logged out from ${lastAccount.email}")
             }
         }
+
     }
 
 
@@ -169,8 +166,6 @@ class LoginActivity : BaseActivity() {
                     }
 
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
-
                         val responseString = response.body()?.string()
                         progressDialog.dismiss()
                         Log.d("LoginActivity", "onResponse: code = ${response.code()}")
@@ -181,7 +176,10 @@ class LoginActivity : BaseActivity() {
                                 if (getMessageFromJSON(responseString).isEmpty())
                                     loginBtn.longSnackbar(getString(R.string.Invalidusernamepassword))
                                 else
-                                    loginBtn.longSnackbar(getMessageFromJSON(responseString))
+                                    if (socialmediaflag == 1) {
+                                        googleSignInClient.signOut()
+                                    }
+                                loginBtn.longSnackbar(getMessageFromJSON(responseString))
                                 return
                             }
                             if (isStatusCodeValid(responseString)) {
@@ -206,7 +204,7 @@ class LoginActivity : BaseActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
+       // LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
         Log.d("LoginActivity", requestCode.toString() + "///" + resultCode + "//" + Activity.RESULT_OK + "//" + data)
         val googleSignedAccount = GoogleSignIn.getSignedInAccountFromIntent(data)
         Log.d("GogleSign=ActivityRslt", googleSignedAccount.toString())
@@ -499,5 +497,22 @@ class LoginActivity : BaseActivity() {
                 })
     }
 
+    /*fun loginHandle() {
+        LISessionManager.getInstance(applicationContext).init(this@LoginActivity, buildScope(), object : AuthListener {
+            override fun onAuthSuccess() {
+                // Authentication was successful.  You can now do other calls with the SDK.
+             *//*   val intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+                startActivity(intent)*//*
+            }
 
+            override fun onAuthError(error: LIAuthError) {
+                // Handle authentication errors
+                Toast.makeText(applicationContext, "Login Error " + error.toString(), Toast.LENGTH_LONG).show()
+            }
+        }, true)
+    }
+
+    private fun buildScope(): Scope? {
+        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS)
+    }*/
 }

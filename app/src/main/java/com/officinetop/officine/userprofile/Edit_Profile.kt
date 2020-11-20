@@ -41,8 +41,6 @@ import java.io.IOException
 import java.util.*
 
 class Edit_Profile : BaseActivity() {
-
-
     private lateinit var profile_imagefull: ImageView
     private lateinit var edittext_mobile: TextView
     private lateinit var edittext_email: TextView
@@ -51,7 +49,6 @@ class Edit_Profile : BaseActivity() {
     private val CAMERA = 2
     private var attachedImage: File? = null
     private var updateimage: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +65,6 @@ class Edit_Profile : BaseActivity() {
             val user_email = intent?.getStringExtra("Email") ?: ""
             val user_mobile = intent?.getStringExtra("Mobile") ?: ""
             val user_picurl = intent?.getStringExtra("Pic_url") ?: ""
-            val authtoken = intent?.getStringExtra("Token") ?: ""
-
             val userName = intent?.getStringExtra("user_name") ?: ""
 
             edittext_mobile.text = user_mobile
@@ -101,8 +96,6 @@ class Edit_Profile : BaseActivity() {
             }
 
         })
-
-        // file?.toMultipartBody("images[]")
 
     }
 
@@ -153,9 +146,6 @@ class Edit_Profile : BaseActivity() {
                                     e.printStackTrace()
                                 }
                             }
-                            /* responseString?.let {
-                                 toast(getMessageFromJSON(it))
-                             }*/
                         }
                     })
         } catch (e: Exception) {
@@ -205,17 +195,12 @@ class Edit_Profile : BaseActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
-        /* if (resultCode == this.RESULT_CANCELED)
-         {
-         return
-         }*/
+
         if (requestCode == GALLERY) {
             if (data != null) {
                 val contentURI = data.data
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                    //val path = saveImage(bitmap)
-                    // Toast.makeText(this@Edit_Profile, "Image Saved!", Toast.LENGTH_SHORT).show()
                     profile_imagefull.setImageBitmap(bitmap)
                     convertTofile(bitmap)
                 } catch (e: IOException) {
@@ -229,7 +214,6 @@ class Edit_Profile : BaseActivity() {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             profile_imagefull.setImageBitmap(thumbnail)
             convertTofile(thumbnail)
-            //Toast.makeText(this@Edit_Profile, "Image Saved!", Toast.LENGTH_SHORT).show()
         }
     }
 
