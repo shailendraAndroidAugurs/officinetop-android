@@ -3,15 +3,14 @@ package com.officinetop.officine.authentication.linkedin
 import android.app.Activity
 import android.app.ProgressDialog
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.Constant
 import kotlinx.android.synthetic.main.activity_linkedin_login.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.*
@@ -31,10 +30,13 @@ class LinkedInWebView : AppCompatActivity() {
 
     /****FILL THIS WITH YOUR INFORMATION */
     //This is the public api key of our application// 81nih3m4xgyr71
-    private val API_KEY = "81txmpo07r3ew8"
+
+    // old Api key 81txmpo07r3ew8
+    private val API_KEY = "78b17mrjc03j5x"
 
     //This is the private api key of our application // ytP7ra2wy419xkvt
-    private val SECRET_KEY = "mCnCDHjxDWtUB8Lv"
+    //old Secret key mCnCDHjxDWtUB8Lv
+    private val SECRET_KEY = "69Wl5HEwf5DdGtnV"
 
     //This is any string we want to use. This will be used for avoiding CSRF attacks. You can generate one here: http://strongpasswordgenerator.com/
     private val STATE = "xyz"
@@ -42,9 +44,10 @@ class LinkedInWebView : AppCompatActivity() {
     //E3ZYKC1T6H2yP4z
     //This is the url that LinkedIn Auth process will redirect to. We can put whatever we want that starts with http:// or https:// .
     //We use a made up url that we will intercept when redirecting. Avoid Uppercases.
-    private val REDIRECT_URI = Constant.domainBaseURL
+    private val REDIRECT_URI = "https://www.linkedin.com/company/officinetop/"/*Constant.domainBaseURL*/
+
     private val scope = //"scope=r_emailaddress"
-            "scope=r_liteprofile%20r_emailaddress%20w_member_social"
+            "scope=r_liteprofile%20r_emailaddress"
 
     /** */
 
@@ -79,12 +82,50 @@ class LinkedInWebView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_linkedin_login)
-
+        //fetchuserData()
         //get the webView from the layout
         webView = linkedin_web_view
 
         //Request focus for the webview
         webView.requestFocus(View.FOCUS_DOWN)
+
+
+        val cookieManager: CookieManager = CookieManager.getInstance()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookies(object : ValueCallback<Boolean?> {
+            override    fun onReceiveValue(value: Boolean?) {
+                    //Removed?
+                }
+            })
+            cookieManager.flush()
+        } else {
+            CookieSyncManager.createInstance(this)
+            cookieManager.removeAllCookie()
+        }
+
+        WebView(applicationContext).clearCache(true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Show a progress filterDialog to the user
         pd = ProgressDialog.show(this, "", getString(R.string.Please_wait), true)
@@ -141,6 +182,12 @@ class LinkedInWebView : AppCompatActivity() {
 
         //Get the authorization Url
         val authUrl = getAuthorizationUrl()
+        Log.d("tagdata", AUTHORIZATION_URL
+                + QUESTION_MARK + RESPONSE_TYPE_PARAM + EQUALS + RESPONSE_TYPE_VALUE
+                + AMPERSAND + CLIENT_ID_PARAM + EQUALS + API_KEY
+                + AMPERSAND + STATE_PARAM + EQUALS + STATE
+                + AMPERSAND + REDIRECT_URI_PARAM + EQUALS + REDIRECT_URI
+                + AMPERSAND + scope)
         Log.i("LinkedIn", "Loading Auth Url: $authUrl")
         //Load the authorization URL into the webView
         webView.loadUrl(authUrl)
@@ -289,7 +336,48 @@ class LinkedInWebView : AppCompatActivity() {
                 + AMPERSAND + STATE_PARAM + EQUALS + STATE
                 + AMPERSAND + REDIRECT_URI_PARAM + EQUALS + REDIRECT_URI
                 + AMPERSAND + scope)
+
+
     }
 
+/*    private fun fetchuserData() {
+        val url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)"
+        val apiHelper = APIHelper.getInstance(applicationContext)
+        apiHelper.getRequest(this, url, object : ApiListener {
+            override fun onApiSuccess(apiResponse: ApiResponse) {
+                // Success!
+                try {
+                    val jsonObject = apiResponse.responseDataAsJson
+                    var firstName = jsonObject.getString("firstName")
+                    var lastName = jsonObject.getString("lastName")
+                    var userEmail = jsonObject.getString("emailAddress")
+                    val stringBuilder = StringBuilder()
+                    stringBuilder.append("""
+    First Name ${firstName.toString()}
+    
+    
+    """.trimIndent())
+                    stringBuilder.append("""
+    Last Name ${lastName.toString()}
+    
+    
+    """.trimIndent())
+                    val intent = intentFor<Any>("first" to firstName,
+                            "last" to lastName,
+                            "id" to "id",
+                            "email" to userEmail)
 
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onApiError(liApiError: LIApiError) {
+                // Error making GET request!
+                Toast.makeText(applicationContext, "API Error$liApiError", Toast.LENGTH_LONG).show()
+            }
+        })
+    }*/
 }

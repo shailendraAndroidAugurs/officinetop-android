@@ -31,18 +31,12 @@ import org.json.JSONObject
 
 
 class LocationActivity : BaseActivity() {
-
-    var postalCode = ""
     var Address = ""
-
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-
     private var mLastLocation: Location? = null
     var container: ConstraintLayout? = null
-
     private var geoCoder: Geocoder? = null
     private var addressList: MutableList<Address> = ArrayList()
-
     private var latitude: String? = null
     private var longitude: String? = null
     private var completeAddress: String? = null
@@ -65,7 +59,7 @@ class LocationActivity : BaseActivity() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        checkpermission(storagePermissionRequestList(), {setPlacePicker() })
+        checkpermission(storagePermissionRequestList(), { setPlacePicker() })
 
         getSavedUserLocation()
 
@@ -289,9 +283,7 @@ class LocationActivity : BaseActivity() {
     }
 
     private fun getcurrentLocation() {
-        checkpermission(storagePermissionRequestList(), {  getLastLocation() })
-
-
+        checkpermission(storagePermissionRequestList(), { getLastLocation() })
 
 
     }
