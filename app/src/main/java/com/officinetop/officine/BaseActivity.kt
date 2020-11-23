@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.activity_product_list.*
 open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
     private lateinit var connectionCallback: Merlin
-    private var LOCATION_RQ = 10001
     private var currentLatLong: LatLng? = LatLng(0.0, 0.0)
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLocationRequest: LocationRequest? = null

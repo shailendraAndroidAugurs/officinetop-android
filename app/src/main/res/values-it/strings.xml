@@ -448,7 +448,7 @@
     <string name="MOT">Tagliandi</string>
     <string name="MOTDetail">Dettaglio tagliandi</string>
     <string name="Product_detail">Dettagli prodotto</string>
-    <string name="PayOnDelivery">Il pagamento alla consegna continuerà</string>
+    <string name="PayOnDelivery">Vuoi procedere con il Pagamento in Contrassegno?</string>
     <string name="partNotAvailable">Parte non disponibile per il servizio</string>
     <string name="FiledRequired"> Campo richiesto</string>
     <string name="Summer">Estate</string>
@@ -614,6 +614,16 @@
     <string name="need_permissions">Hai bisogno di autorizzazioni</string>
     <string name="permission_denied">Questa app necessita dell\'autorizzazione per utilizzare questa funzione. Puoi concederli nelle impostazioni dell\'app.</string>
     <string name="goto_setting">VAI ALLE IMPOSTAZIONI</string>
+
+    <string name="bankTransfer">Bonifico Bancario</string>
+    <string name="registered_person">Instatario:</string>
+    <string name="iban">Iban:</string>
+    <string name="please_send_backcopyto_receipt">Si prega di inviare copia della ricevuta del bonifico a:</string>
+    <string name="backTransfer_note1">indicare nella causale il numero di ordine a cui si riferisce il pagamento.</string>
+    <string name="backTransfer_note2">l\'ordine sarà valido solo dopo ricevuto l\'accredito sul nostro conto.</string>
+
+    <string name="bank_transfer_proceed">Vuoi procedere con Bonifico Bancario ?</string>
+    <string name="PleaselogintocontinueforAddWishList">Effettua il login per continuare per Aggiungi alla lista dei desideri</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

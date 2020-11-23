@@ -9,9 +9,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.FacebookSdk
-import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.facebook.appevents.AppEventsLogger
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
@@ -28,28 +26,21 @@ import rx.schedulers.Schedulers
 import java.io.IOException
 
 class SplashActivity : AppCompatActivity() {
-
-
     private val TAG = "MyFirebaseToken"
-    private var googleApiClient: GoogleApiClient? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        // getUserAppSettings()
         initView()
-        FacebookSdk.setAutoInitEnabled(true)
+        // FacebookSdk.setAutoInitEnabled(true)
         FacebookSdk.fullyInitialize()
-        logSentFriendRequestEvent()
-        setAutoLogAppEventsEnabled(true)
-
+        // logSentFriendRequestEvent()
+        //  setAutoLogAppEventsEnabled(true)
 
 
         Handler().postDelayed({
 
             if (!isLoggedIn() && isFirstRun()) {
-                //startActivity(intentFor<LoginActivity>())
                 setFirstRun(false)
-
             }
             startActivity(intentFor<HomeActivity>())
             finish()

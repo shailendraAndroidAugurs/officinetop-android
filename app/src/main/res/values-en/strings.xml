@@ -450,7 +450,7 @@
     <string name="MOT">MOT</string>
     <string name="MOTDetail">MOT Details</string>
     <string name="Product_detail">Product Detail</string>
-    <string name="PayOnDelivery">Pay on Delivery will proceed</string>
+    <string name="PayOnDelivery">Do you want to proceed Pay on Delivery ?</string>
     <string name="partNotAvailable">Part not available for service</string>
     <string name="FiledRequired"> Field required</string>
     <string name="Summer">Summer</string>
@@ -616,9 +616,16 @@
     <string name="concatDateformate">/</string>
     <string name="need_permissions">Need Permissions</string>
     <string name="permission_denied">This app needs permission to use this feature. You can grant them in app settings.</string>
-
-
     <string name="goto_setting">GOTO SETTINGS</string>
+
+    <string name="bankTransfer">Bank Transfer</string>
+    <string name="registered_person">Registered person: </string>
+    <string name="iban">Iban:</string>
+    <string name="please_send_backcopyto_receipt">Please send a copy of the bank transfer receipt to:</string>
+    <string name="backTransfer_note1">indicate in the reason for the order number to which the payment refers.</string>
+    <string name="backTransfer_note2">the order will be valid only after receiving the credit on our account.</string>
+    <string name="bank_transfer_proceed">Do you want to proceed Bank Transfer ?</string>
+    <string name="PleaselogintocontinueforAddWishList">Please login to continue for Add to WishList</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

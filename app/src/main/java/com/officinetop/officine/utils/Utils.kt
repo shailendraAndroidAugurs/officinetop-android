@@ -518,3 +518,14 @@ fun logSearchEvent(context: Context, contentType: String, contentData: String, c
 
     logger.logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params)
 }
+
+
+inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline onOkClick: (() -> Unit?)?, noinline onNoClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        message = dialogMessage
+        positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
+        negativeButton(getString(R.string.no)) { onNoClick?.let { noclick -> noclick() } }
+    }
+    alert.show()
+    return alert
+}
