@@ -10,10 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.samples.wallet.PaymentsUtil
 import com.google.android.gms.wallet.*
@@ -30,17 +27,22 @@ import com.paypal.android.sdk.payments.*
 import kotlinx.android.synthetic.main.activity_online_payment.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.jetbrains.anko.intentFor
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
 class OnlinePaymentScreen : BaseActivity() {
-    private lateinit var radioButton_googlepay: RadioButton
+    private lateinit var radioButton_bankTransfer: RadioButton
     private lateinit var radioButton_COD: RadioButton
+
+    private lateinit var radioButton_googlepay: RadioButton
+
     private lateinit var paymentsClient: PaymentsClient
-    private val shippingCost = (90 * 1000000).toLong()
-    private lateinit var garmentList: JSONArray
-    private lateinit var selectedGarment: JSONObject
+
+    private lateinit var paypal_payment: LinearLayout
+
+    private lateinit var layout_amazonupid: LinearLayout
+    private lateinit var tv_emailAddress: TextView
+
     private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
     private val UPI_PAYMENT = 0
     private var payableAmount: String = ""
@@ -66,10 +68,29 @@ class OnlinePaymentScreen : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.paymet_name)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initviewsId()
         initviews()
     }
 
+    private fun initviewsId() {
+        radioButton_COD = findViewById(R.id.radio_button_cod)
+        radioButton_bankTransfer = findViewById(R.id.radio_button_banktransfer)
+        radioButton_googlepay = findViewById(R.id.radio_button_banktransfer)
+        paypal_payment = findViewById<LinearLayout>(R.id.layout_cardpayment)
+        layout_amazonupid = findViewById<LinearLayout>(R.id.layout_amazonupid)
+        progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+        tv_emailAddress = findViewById<TextView>(R.id.tv_emailAddress)
+
+    }
+
     private fun initviews() {
+        if (getLangLocale() != "") {
+            setAppLanguage()
+        } else {
+            storeLangLocale("it")
+            setAppLanguage()
+        }
+
         if (intent.hasExtra(Constant.Path.totalAmount) && !intent.getStringExtra(Constant.Path.totalAmount).isNullOrEmpty())
             TotalAmount = intent.getStringExtra(Constant.Path.totalAmount)
 
@@ -134,23 +155,19 @@ class OnlinePaymentScreen : BaseActivity() {
         Log.e("user_WalletAmount", user_WalletAmount)
         Log.e("FinalPrices", TotalAmount)
 
-        radioButton_googlepay = findViewById(R.id.radio_button_googlepay)
-        radioButton_COD = findViewById(R.id.radio_button_cod)
-        val paypal_payment = findViewById<LinearLayout>(R.id.layout_cardpayment)
-        val layout_amazonupid = findViewById<LinearLayout>(R.id.layout_amazonupid)
-        progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+
 
         paypal_payment.visibility = View.GONE
         layout_amazonupid.visibility = View.GONE
 
         radioButton_googlepay.setOnClickListener(View.OnClickListener {
             if (isaddress_ContactSelect() && isCartDataAvailable()) {
-
                 payUsingUpi()
                 paypal_payment.visibility = View.GONE
                 layout_amazonupid.visibility = View.GONE
                 radioButton_googlepay.isChecked = true
                 radioButton_COD.isChecked = false
+                radioButton_bankTransfer.isChecked = false
                 //startUpiPayment()
             } else {
                 radioButton_googlepay.isChecked = false
@@ -163,13 +180,31 @@ class OnlinePaymentScreen : BaseActivity() {
                 layout_amazonupid.visibility = View.GONE
                 radioButton_COD.isChecked = true
                 radioButton_googlepay.isChecked = false
-                showInfoDialog(getString(R.string.PayOnDelivery)) {
-                    updatePaymentStatusForCOD()
-                }
+                radioButton_bankTransfer.isChecked = false
+
+                showConfirmDialogforPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD() }, { uncheckedAllPaymentmethod() })
+
+
             } else {
                 radioButton_COD.isChecked = false
             }
         })
+
+
+        radioButton_bankTransfer.setOnClickListener(View.OnClickListener {
+            if (isaddress_ContactSelect() && isCartDataAvailable()) {
+                paypal_payment.visibility = View.GONE
+                layout_amazonupid.visibility = View.GONE
+                radioButton_COD.isChecked = false
+                radioButton_googlepay.isChecked = false
+                radioButton_bankTransfer.isChecked = true
+                showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), { updatePaymentStatusForCOD() }, { uncheckedAllPaymentmethod() })
+
+            } else {
+                radioButton_bankTransfer.isChecked = false
+            }
+        })
+
 
         ////////////////////////////////PayPal  payment/////////////////////////////////////////
         /*val intent = Intent(this, PayPalService::class.java)
@@ -180,6 +215,7 @@ class OnlinePaymentScreen : BaseActivity() {
             if (isaddress_ContactSelect() && isCartDataAvailable()) {
                 radioButton_COD.isChecked = false
                 radioButton_googlepay.isChecked = false
+                radioButton_bankTransfer.isChecked = false
                 // paypal sdk implement for payment through paypal , now it is commented as a client requirement
                 /*val thingToBuy = getThingToBuy(PayPalPayment.PAYMENT_INTENT_SALE)
                 val intent = Intent(this@OnlinePaymentScreen, PaymentActivity::class.java)
@@ -212,6 +248,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 requestPayment()
                 radioButton_COD.isChecked = false
                 radioButton_googlepay.isChecked = false
+                radioButton_bankTransfer.isChecked = false
 
             }
         }
@@ -294,7 +331,20 @@ class OnlinePaymentScreen : BaseActivity() {
             CheckCartItemAvailability()
         }
 
+        tv_emailAddress.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_SEND)
+                val recipients = arrayOf(getString(R.string.emailAddress))
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+                intent.type = "text/html"
+                intent.setPackage("com.google.android.gm")
+                startActivity(Intent.createChooser(intent, "Send mail"))
+            } catch (e: Exception) {
 
+            }
+
+
+        }
     }
 
 
@@ -729,5 +779,11 @@ class OnlinePaymentScreen : BaseActivity() {
         }
 
 
+    }
+
+    private fun uncheckedAllPaymentmethod() {
+        radioButton_googlepay?.isChecked = false
+        radioButton_bankTransfer?.isChecked = false
+        radioButton_COD?.isChecked = false
     }
 }

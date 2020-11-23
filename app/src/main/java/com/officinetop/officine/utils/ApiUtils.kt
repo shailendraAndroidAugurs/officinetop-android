@@ -961,8 +961,7 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.PleaselogintocontinueforAddtocart), true) { movetologinPage(context) }
-
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(context) })
             if (response.isSuccessful) {
                 try {
                     val responseData = JSONObject(body)
@@ -1002,7 +1001,7 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(context) })
 
 
             if (response?.isSuccessful!!) {

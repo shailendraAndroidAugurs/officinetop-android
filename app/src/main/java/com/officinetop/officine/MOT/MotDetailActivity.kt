@@ -406,9 +406,9 @@ class MotDetailActivity : BaseActivity() {
             sparePartPrices = 0.0
             for (partobject in mKPartServicesList) {
                 if (!partobject.forPair.isNullOrBlank() && partobject.forPair.equals("1")) {
-                    sparePartPrices = sparePartPrices.roundTo2Places() + if (!partobject.sellerPrice.isNullOrBlank()) (2 * (partobject.sellerPrice.toDouble()).roundTo2Places()) else 0.0
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) (2 * (partobject.sellerPrice.toDouble())) else 0.0
                 } else {
-                    sparePartPrices = sparePartPrices.roundTo2Places() + if (!partobject.sellerPrice.isNullOrBlank()) partobject.sellerPrice.toDouble().roundTo2Places() else 0.0
+                    sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) partobject.sellerPrice.toDouble() else 0.0
                 }
                 if (!partobject.numberOfDeliveryDays.isNullOrBlank() && !partobject.numberOfDeliveryDays.equals("0")) {
 
@@ -421,6 +421,6 @@ class MotDetailActivity : BaseActivity() {
             }
 
         }
-        button_proceed.text = getString(R.string.workshopWithSparepart, sparePartPrices.toString(), workshopPrices.toString())
+        button_proceed.text = getString(R.string.workshopWithSparepart, sparePartPrices.roundTo2Places().toString(), workshopPrices.roundTo2Places().toString())
     }
 }

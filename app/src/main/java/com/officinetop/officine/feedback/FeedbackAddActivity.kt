@@ -223,23 +223,6 @@ class FeedbackAddActivity : BaseActivity() {
         }
         val res = "workshopId=" + workshopId + ",productId=" + productId + ",ratings=" + ratings.rating.toString() + ",images=" + imageList + ",comments=" + comments.text.toString() + ",sellerId=" + sellerId + ",productType=" + productType + ",mainCategoryId=" + mainCategoryId + ",type=" + type + ",serviceID=" + serviceID + ", withoutPurchase" + withoutPurchase
         Log.v("FEEDBACK", res)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         RetrofitClient.client.addFeedback(authToken = getBearerToken()
                 ?: "", workshopId = workshopId.toRequestBody(),
                 productId = productId.toRequestBody(), ratings = ratings.rating.toString().toRequestBody(), images = imageList,
@@ -254,7 +237,8 @@ class FeedbackAddActivity : BaseActivity() {
 
                         val body = response.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithsforating), true) { movetologinPage(this@FeedbackAddActivity) }
+
+                            showConfirmDialog(getString(R.string.Pleaselogintocontinuewithsforating), { movetologinPage(this) })
                         if (response.isSuccessful) {
 
                             val data = JSONObject(body)

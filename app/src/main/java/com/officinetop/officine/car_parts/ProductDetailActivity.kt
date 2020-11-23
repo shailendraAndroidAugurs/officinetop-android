@@ -41,8 +41,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
-
-
     private lateinit var imageDialog: Dialog
     private lateinit var dialogSlider: SliderLayout
     var disableSliderTouch = false
@@ -101,7 +99,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
                             showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
-
+                        showConfirmDialog(getString(R.string.Pleaselogintocontinuewithsforating), { movetologinPage(this) })
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
                             if (body.has("message")) {
