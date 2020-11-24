@@ -148,14 +148,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:drawableRight="@drawable/ic_copy"
-                                    android:drawablePadding="5dp"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:drawablePadding="5dp" android:textColor="@color/colorPrimaryDark"
                                     android:textSize="@dimen/_10sdp" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center|end"
+
                                     android:text="@string/ReferralCode"
                                     android:textSize="@dimen/_8sdp" />
 

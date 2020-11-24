@@ -404,6 +404,7 @@ class MotDetailActivity : BaseActivity() {
     private fun bindPricesinButton() {
         if (mKPartServicesList != null && mKPartServicesList.size != 0) {
             sparePartPrices = 0.0
+            deliveryDate = 0
             for (partobject in mKPartServicesList) {
                 if (!partobject.forPair.isNullOrBlank() && partobject.forPair.equals("1")) {
                     sparePartPrices = sparePartPrices + if (!partobject.sellerPrice.isNullOrBlank()) (2 * (partobject.sellerPrice.toDouble())) else 0.0

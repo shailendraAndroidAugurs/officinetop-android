@@ -136,20 +136,28 @@ class Order_List : BaseActivity() {
                     }
 
                 } else if (view.tag == "200") {
-                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank())
+                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()){
+
                         DownloadInvoice(couponsListItem[position].orderTracking.id, true)
+                    }
+
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
                 } else if (view.tag == "201") {
-                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank())
+                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()){
                         DownloadInvoice(couponsListItem[position].orderTracking.id, false)
+
+                    }
+
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
                 } else if (view.tag == "203") {
-                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].id.isNullOrBlank())
+                    if (!couponsListItem[position].id.isNullOrBlank()){
                         Returnpolicy(couponsListItem[position].id, position)
+                    }
+
                     else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
