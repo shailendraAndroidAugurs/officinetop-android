@@ -63,7 +63,7 @@ class Support_FAQ_Activity : BaseActivity() {
             val i = Intent(Intent.ACTION_VIEW)
 
             try {
-                val url = "https://api.whatsapp.com/send?phone=" +( getString(R.string.phoneNo)).toInt()/*+"&text="+ URLEncoder.encode("hii", "UTF-8");*/
+                val url = "https://api.whatsapp.com/send?phone=" +(getString(R.string.phoneNo)).toLong()/*+"&text="+ URLEncoder.encode("hii", "UTF-8");*/
                 i.setPackage("com.whatsapp")
                 i.data = Uri.parse(url)
                 if (i.resolveActivity(packageManager) != null) {

@@ -1426,9 +1426,10 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.carSpareKromedaCall + "/{versionId}")
+    @GET(Constant.UrlEndPoints.carSpareKromedaCall + "/{versionId}" + "/{callingFrom}")
     fun getCarSpareKromedaCall(
-            @Path("versionId") versionId: String
+            @Path("versionId") versionId: String,
+            @Path("callingFrom") callingFrom: String
 
     ): Call<ResponseBody>
 
