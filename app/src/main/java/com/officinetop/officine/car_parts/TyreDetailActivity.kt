@@ -516,7 +516,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         for ((k, v) in speedIndexMap) {
-            if (k.contains(detail.speed_index!!)) {
+            if (!detail?.speed_index.isNullOrBlank() && k.contains(detail?.speed_index!!)) {
                 speed_index.text = "${detail.speed_index}: " + getString(R.string.speed_index_value, v)
             }
         }

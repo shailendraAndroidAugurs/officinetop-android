@@ -342,7 +342,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         textview_email.text = email
         textview_name.text = unername?.trim()
         text_address.text = address
-        txt_referralcode.text = referralcode
+        txt_referralcode.text = if (!referralcode.isNullOrBlank()) referralcode.toUpperCase() else ""
         //text_landmark.text = getString(R.string.Landmark) + landmark
         text_zipcode.text = getString(R.string.zipcode) + zipCode
         text_contactnumber.text = mobileno

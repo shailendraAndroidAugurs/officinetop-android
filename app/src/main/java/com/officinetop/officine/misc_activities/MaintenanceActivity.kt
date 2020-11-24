@@ -317,9 +317,9 @@ class MaintenanceActivity : BaseActivity() {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
 
-                                       /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
-                                            binddataofselectedReplacementPart(0)
-                                        }*/
+                                        /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
+                                             binddataofselectedReplacementPart(0)
+                                         }*/
                                         selectservice_position = position
 
                                     }
@@ -459,7 +459,7 @@ class MaintenanceActivity : BaseActivity() {
                 carMaintenanceServiceList[selectservice_position].descrizione = if (ReplacementPartList[position].Productdescription != null) ReplacementPartList[position].Productdescription else ""
                 carMaintenanceServiceList[selectservice_position].productId = ReplacementPartList[position].id
                 carMaintenanceServiceList[selectservice_position].usersId = ReplacementPartList[position].usersId
-                carMaintenanceServiceList[selectservice_position].couponList = if (ReplacementPartList[position].couponList.isNullOrEmpty())ArrayList<Models.Coupon>() else ReplacementPartList[position].couponList
+                carMaintenanceServiceList[selectservice_position].couponList = if (ReplacementPartList[position].couponList.isNullOrEmpty()) ArrayList<Models.Coupon>() else ReplacementPartList[position].couponList
                 carMaintenanceServiceList[selectservice_position].CouponTitle = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].couponTitle else ""
                 carMaintenanceServiceList[selectservice_position].CouponId = if (ReplacementPartList[position].couponList != null && ReplacementPartList[position].couponList.size != 0) ReplacementPartList[position].couponList[0].id else ""
 
@@ -843,6 +843,7 @@ class MaintenanceActivity : BaseActivity() {
     fun CalculateWorkshopPricesAndSparepartPrices() {
 
         selectedServicesProductTotalPrices = 0.0
+        deliveryDate = 0
         if (selectedCarMaintenanceServices.size != 0) {
             calculateselectedservicesorPart()
             for (item in selectedCarMaintenanceServices) {
@@ -876,6 +877,7 @@ class MaintenanceActivity : BaseActivity() {
             btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
         }
     }
+
     private fun calculateselectedservicesorPart(isfromBooking: Boolean = false) {
         val selectedServices_partList = ArrayList<Models.servicesCouponData>()
         val serviceId: MutableList<String> = ArrayList()
