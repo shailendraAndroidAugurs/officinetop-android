@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.GsonBuilder
@@ -68,16 +69,6 @@ class FragmentFeedback : Fragment() {
                     MyFeedBackReview?.text = getString(R.string.MyReview)
                     MyFeedBackReview?.tag = "101"
                     MyReview = false
-                    viewPager?.isSaveFromParentEnabled = false
-                     setupViewPager(viewPager!!)
-
-
-                  //  feedbackListener.myReviewshow(MyReview)
-
-                     val fragmenttransaction = childFragmentManager.beginTransaction()
-                     fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
-                    // fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
-
 
                 } else {
                     MyReview = true
@@ -85,18 +76,9 @@ class FragmentFeedback : Fragment() {
                     MyFeedBackReview?.tag = "100"
 
 
-                   // feedbackListener.myReviewshow(MyReview)
-                      viewPager?.isSaveFromParentEnabled = false
-                      viewPager?.adapter?.notifyDataSetChanged()
-
-                      setupViewPager(viewPager!!)
-                      Log.d("Tag", "value" + MyFeedBackReview?.tag)
-                      val fragmenttransaction = childFragmentManager.beginTransaction()
-                      fragmenttransaction.detach(FragmentWorkshopFeedback()).attach(FragmentWorkshopFeedback()).commit()
-                    //  fragmenttransaction.detach(FragmentProductFeedback()).attach(FragmentProductFeedback()).commit();
-
                 }
-
+                viewPager?.invalidate()
+                viewPager?.adapter?.notifyDataSetChanged()
             }
 
 
@@ -168,6 +150,9 @@ class FragmentFeedback : Fragment() {
             return mFragmentTitleList[position]
         }
 
+        override fun getItemPosition(postion: Any): Int {
+            return PagerAdapter.POSITION_NONE
+        }
     }
 
     private fun highRatingFeedback(type: String) {

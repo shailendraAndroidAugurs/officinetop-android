@@ -971,7 +971,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
 
             //Show distance sort option only if workshop
-            sort_distance_container.visibility = View.VISIBLE
+            sort_distance_container.visibility = View.GONE
 
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             toolbar.setNavigationOnClickListener { dismiss() }
@@ -989,6 +989,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 reloadPage()
                 dismiss()
                 return@setOnMenuItemClickListener true
+            }
+
+            tv_Sort_ClearSection.setOnClickListener {
+                rb_price_low.isChecked=true
+                rb_price_high.isChecked=false
             }
             create()
 
