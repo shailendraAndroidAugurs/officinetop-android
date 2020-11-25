@@ -9,6 +9,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.FacebookSdk
+import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
@@ -31,10 +32,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initView()
-        // FacebookSdk.setAutoInitEnabled(true)
+         FacebookSdk.setAutoInitEnabled(true)
         FacebookSdk.fullyInitialize()
         // logSentFriendRequestEvent()
-        //  setAutoLogAppEventsEnabled(true)
+         setAutoLogAppEventsEnabled(true)
 
 
         Handler().postDelayed({

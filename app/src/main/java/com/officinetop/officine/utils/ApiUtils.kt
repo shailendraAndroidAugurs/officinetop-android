@@ -133,17 +133,19 @@ inline fun Context.loadImage(url: String?, imageView: ImageView, placeholderImag
 
 inline fun Context.loadImageWithName(name: String?, imageView: ImageView, placeholderImage: Int, overrideURL: String = "", baseURL: String = Constant.itemImageBaseURL) {
     try {
-        var imageURL = baseURL + name
+        var imageURL = ""
 
         if (overrideURL.isNotEmpty()) {
             imageURL = overrideURL
+        }else {
+            imageURL = baseURL + name
         }
 
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
-                .load(imageURL)
+                .load(imageURL).centerInside()
                 .thumbnail(0.7f)
-
+                .into(imageView)
     } catch (e: GlideException) {
 
     }

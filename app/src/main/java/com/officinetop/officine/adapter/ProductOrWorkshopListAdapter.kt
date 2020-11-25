@@ -81,8 +81,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var cartItem: Models.CartItem? = null
     private var currentLatLong: LatLng? = null
     private var mot_type: String = ""
-    private val VIEW_TYPE_LOADING: Int = 0
-    private val VIEW_TYPE_NORMAL: Int = 1
+
     private var isLoadingVisible = false
     fun setWorkshopCategory(workshopDetail: String) {
         this.workshopCategoryDetail = workshopDetail
@@ -142,11 +141,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        when (viewType) {
-            VIEW_TYPE_NORMAL -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product_or_workshop_detail, parent, false))
-            //  VIEW_TYPE_LOADING -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.progresslayout_loading, parent, false))
-            else -> return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product_or_workshop_detail, parent, false))
-        }
+
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product_or_workshop_detail, parent, false))
 
 
     }
@@ -164,7 +160,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
             if (isCarWash || isWorkshop || isTyre || isRevision || isCarMaintenanceServices || isQuotesServices ||
                     isMotService || isSOSAppointment || isSosEmergency) {
-                brandImage.visibility = View.INVISIBLE
+                brandImage.visibility = View.GONE
+                icon.visibility = View.GONE
+                item_image_workshop.visibility = View.VISIBLE
                 getDistancebetweenTwoLatLong(currentLat, currentLong, product_workshopList.latitude, product_workshopList.longitude, tv_workshopKm)
                 if (isSosEmergency) {
                     llAverageTimeEmergency.visibility = View.VISIBLE
@@ -232,24 +230,23 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 }
 
 
-
-
-
-                icon.setImageResource(R.drawable.no_image_placeholder)
-
                 //load images
                 try {
                     val name = product_workshopList.profileImage
-                    mcontext.loadImageWithName(name, icon, R.drawable.no_image_placeholder, baseURL = Constant.profileBaseUrl)
+
+                    mcontext.loadImageWithName(name, item_image_workshop, R.drawable.no_image_placeholder, baseURL = Constant.profileBaseUrl)
 
                 } catch (e: Exception) {
                 }
             } else {
 
                 if (!product_workshopList.forPair.isNullOrBlank()) {
+
                     if (product_workshopList.forPair.equals("0")) {
                         textview_quantity.text = ""
+                        textview_quantity.visibility = View.GONE
                     } else {
+                        textview_quantity.visibility = View.VISIBLE
                         textview_quantity.text = "2 " + mcontext.getString(R.string.price)
                     }
                 }
@@ -529,6 +526,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         val offerBadge = view.offer_badge
         val ll_workshopKm = view.ll_workshopKm
         val tv_count = view.tv_count
+        val item_image_workshop = view.item_image_workshop
 
     }
 
@@ -678,13 +676,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         return result_in_kms
     }*/
 
-    override fun getItemViewType(position: Int): Int {
-        if (isLoadingVisible) {
-            if (position == productOrWorkshopList.size - 1) return VIEW_TYPE_LOADING
-            else return VIEW_TYPE_NORMAL
-        } else
-            return VIEW_TYPE_NORMAL
-    }
 
     fun addItems(items: MutableList<Models.ProductOrWorkshopList>) {
         productOrWorkshopList.addAll(items)

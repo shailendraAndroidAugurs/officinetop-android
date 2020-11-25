@@ -1,6 +1,4 @@
 package com.officinetop.officine.fragment
-
-
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -44,8 +42,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
-
-
 class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     private lateinit var textview_mobile: TextView
     private lateinit var textview_email: TextView
@@ -66,7 +62,6 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
 
