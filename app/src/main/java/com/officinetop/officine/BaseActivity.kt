@@ -1,6 +1,5 @@
 package com.officinetop.officine
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -18,9 +17,7 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.novoda.merlin.Merlin
-import com.officinetop.officine.data.getLangLocale
-import com.officinetop.officine.data.storeLangLocale
-import com.officinetop.officine.data.storeLatLong
+import com.officinetop.officine.data.*
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_product_list.*
 
@@ -48,11 +45,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         mLocationRequest = LocationRequest()
         mLocationRequest?.interval = 150000
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        var permissionlist = ArrayList<String>()
-        permissionlist.add(Manifest.permission.ACCESS_FINE_LOCATION)
-        permissionlist.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-        checkpermission(permissionlist, { enableLocation() })
 
 
     }
@@ -115,11 +107,11 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         }
     }
 
-    private fun enableLocation() {
+    fun enableLocation() {
 
         if (googleApiClient == null) {
             googleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API).addConnectionCallbacks(this)
+                    .addApi(LocationServices.API)/*.addConnectionCallbacks(this)*/
                     .addOnConnectionFailedListener(this).build()
             googleApiClient!!.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
@@ -176,5 +168,11 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    fun getLocation() {
+
+        if (getLat().isNullOrBlank() || getLat().equals("0") || getLat().equals("0.0") || getLong().isNullOrBlank() || getLong().equals("0") || getLong().equals("0.0")) {
+            checkpermission(storagePermissionRequestList(), { enableLocation() })
+        }
+    }
 
 }

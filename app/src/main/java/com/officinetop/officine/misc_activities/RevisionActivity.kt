@@ -29,6 +29,7 @@ class RevisionActivity : BaseActivity() {
     }
 
     private fun initView() {
+        getLocation()
         revisionServiceAdapter = RevisionServiceAdapter(this, revisionServiceList)
         revision_service_list.adapter = revisionServiceAdapter
         getRevisionServices()

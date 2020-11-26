@@ -33,7 +33,7 @@ class CarServiceListActivity : BaseActivity() {
 
         toolbar_title.text = resources.getString(R.string.washing_type)
 
-
+        getLocation()
         loadData()
     }
 

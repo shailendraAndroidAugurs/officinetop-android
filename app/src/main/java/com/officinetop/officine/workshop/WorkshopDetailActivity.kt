@@ -90,7 +90,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private var slotStartTime = ""
     private var slotEndTime = ""
-
+    private var slotId = ""
     var selectedDateFilter = ""
 
     var currentWorkshopDetail = ""
@@ -291,7 +291,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             val body = response?.body()?.string()
                             if (body.isNullOrEmpty() || response.code() == 401)
 
-                            showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { movetologinPage(this) })
+                                showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { movetologinPage(this) })
 
 
                             if (response?.isSuccessful!!) {
@@ -1332,7 +1332,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             max_appointment = packageDetail.optString("max_appointment")
             slotStartTime = packageDetail.optString("start_time")
             slotEndTime = packageDetail.optString("end_time")
-
+            slotId = packageDetail.optString("temp_slot_id")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
             Log.d("averageServiceTime tyre", averageServiceTime.toString())
@@ -1487,7 +1487,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     maxAppointment = max_appointment,
                     service_average_time = (averageServiceTime.toInt() / 60).toString(),
                     workshopUsersId = workshopUsersId.toString(),
-                    discountPrice = DiscountPrices
+                    discountPrice = DiscountPrices, slot_id = slotId
             )
 
             serviceTyreBookingCall.enqueue(callback)

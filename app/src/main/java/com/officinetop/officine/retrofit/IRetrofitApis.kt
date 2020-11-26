@@ -724,6 +724,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.service_average_time) service_average_time: String,
             @Field(Constant.Path.workshopUsersId) workshopUsersId: String,
             @Field(Constant.Path.discountPrice) discountPrice: String,
+            @Field(Constant.Path.slot_id) slot_id: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -1539,4 +1540,8 @@ interface IRetrofitApis {
 
     ): Call<ResponseBody>
 
+
+    @GET(Constant.UrlEndPoints.getbank_paymentInformation)
+    fun getBankPaymentInformation(
+            @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
 }

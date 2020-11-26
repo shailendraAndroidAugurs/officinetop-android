@@ -58,7 +58,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.Product_detail)
-
+        getLocation()
         initViews()
         setImageSlider()
 

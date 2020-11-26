@@ -76,6 +76,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.tyre_detail)
         initViews()
+        getLocation()
     }
 
 

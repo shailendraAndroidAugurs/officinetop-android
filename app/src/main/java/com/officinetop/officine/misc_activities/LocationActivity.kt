@@ -58,14 +58,23 @@ class LocationActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getLocation()
 
         checkpermission(storagePermissionRequestList(), { setPlacePicker() })
-
+        disableTextField()
         getSavedUserLocation()
 
         locationBtn.setOnClickListener {
-            isAutomaticLocationSave = true
-            getcurrentLocation()
+
+
+            if (isLocationEnabled(this)) {
+                isAutomaticLocationSave = true
+                getcurrentLocation()
+            } else {
+               showInfoDialog("need to enable location services")
+            }
+
+
         }
 
         aggioraBtn.setOnClickListener {
@@ -123,7 +132,8 @@ class LocationActivity : BaseActivity() {
                             }
 
                         } else {
-                            showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again))
+
+
                         }
 
                     }
@@ -314,6 +324,11 @@ class LocationActivity : BaseActivity() {
 
                                 }
 
+                            } else if (response.code() == 401) {
+                                UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                                showInfoDialog("successFully Saved") {
+                                    finish()
+                                }
                             }
                         }
                     }

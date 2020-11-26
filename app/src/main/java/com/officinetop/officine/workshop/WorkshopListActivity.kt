@@ -124,6 +124,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
         toolbar_title.text = getString(R.string.Workshop)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        getLocation()
         filter_btn.setOnClickListener { filterDialog.show() }
         sort_btn.setOnClickListener { sortDialog.show() }
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())

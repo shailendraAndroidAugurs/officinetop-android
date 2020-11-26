@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.samples.wallet.PaymentsUtil
 import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.Orders.Order_List
 import com.officinetop.officine.R
@@ -43,6 +44,10 @@ class OnlinePaymentScreen : BaseActivity() {
     private lateinit var layout_amazonupid: LinearLayout
     private lateinit var tv_emailAddress: TextView
 
+    private lateinit var tv_bank_holdername: TextView
+    private lateinit var tv_iban: TextView
+
+
     private val LOAD_PAYMENT_DATA_REQUEST_CODE = 991
     private val UPI_PAYMENT = 0
     private var payableAmount: String = ""
@@ -62,6 +67,7 @@ class OnlinePaymentScreen : BaseActivity() {
     private var usedWalletAmount = "0"
     private var HaveBrowser = true
     private var fromBooking = false
+    private lateinit var bankpaymentobject: Models.BankPaymentInfo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_online_payment)
@@ -80,7 +86,9 @@ class OnlinePaymentScreen : BaseActivity() {
         layout_amazonupid = findViewById<LinearLayout>(R.id.layout_amazonupid)
         progressBar = findViewById<ProgressBar>(R.id.progress_bar)
         tv_emailAddress = findViewById<TextView>(R.id.tv_emailAddress)
+        tv_bank_holdername = findViewById<TextView>(R.id.tv_registered_person)
 
+        tv_iban = findViewById<TextView>(R.id.tv_iban)
     }
 
     private fun initviews() {
@@ -154,6 +162,7 @@ class OnlinePaymentScreen : BaseActivity() {
         Log.e("payableAmount", payableAmount)
         Log.e("user_WalletAmount", user_WalletAmount)
         Log.e("FinalPrices", TotalAmount)
+        getBankTransferPaymentInfo()
 
 
 
@@ -334,7 +343,7 @@ class OnlinePaymentScreen : BaseActivity() {
         tv_emailAddress.setOnClickListener {
             try {
                 val intent = Intent(Intent.ACTION_SEND)
-                val recipients = arrayOf(getString(R.string.emailAddress))
+                val recipients = arrayOf(tv_emailAddress.text.toString())
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients)
                 intent.type = "text/html"
                 intent.setPackage("com.google.android.gm")
@@ -785,5 +794,31 @@ class OnlinePaymentScreen : BaseActivity() {
         radioButton_googlepay?.isChecked = false
         radioButton_bankTransfer?.isChecked = false
         radioButton_COD?.isChecked = false
+    }
+
+    private fun bindBankdetailInView() {
+        if (this::bankpaymentobject.isInitialized && bankpaymentobject != null) {
+            tv_emailAddress.text = bankpaymentobject?.email.let { it }
+            tv_bank_holdername.text = bankpaymentobject?.instatario.let { it }
+            tv_iban.text = bankpaymentobject?.iban.let { it }
+        }
+    }
+
+    private fun getBankTransferPaymentInfo() {
+
+        getBearerToken()?.let {
+            RetrofitClient.client.getBankPaymentInformation(it).onCall { networkException, response ->
+
+                val responseDataBank = JSONObject(response?.body()?.string())
+                responseDataBank.let {
+                    if (it.has("data") && !it.getString("data").isNullOrBlank()) {
+                        bankpaymentobject = Gson().fromJson(it.getString("data"), Models.BankPaymentInfo::class.java)
+                        bindBankdetailInView()
+                    }
+                }
+
+
+            }
+        }
     }
 }
