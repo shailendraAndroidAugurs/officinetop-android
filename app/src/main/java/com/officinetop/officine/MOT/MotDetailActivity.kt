@@ -52,6 +52,7 @@ class MotDetailActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.MOTDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        getLocation()
         if (intent.hasExtra("motObject")) {
             motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
             tv_title.text = motServiceObject.serviceName

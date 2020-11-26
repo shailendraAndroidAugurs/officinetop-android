@@ -261,8 +261,8 @@
     <string name="Zip_Code">Cap</string>
     <string name="Address_type">Tipo di Indirizzo</string>
     <string name="selectAddressType">Seleziona il tipo di indirizzo</string>
-    <string name="delete_AddressConfirmation">Eliminare questo indirizzo dall\'elenco indirizzi?</string>
-    <string name="delete_ContactConfirmation">Eliminare questo contatto dall\'elenco contatti?</string>
+    <string name="delete_AddressConfirmation">Vuoi eliminare questo indirizzo?</string>
+    <string name="delete_ContactConfirmation">Vuoi eliminare questo contatto?</string>
     <string name="orderDetail">Dettagli ordine</string>
     <string name="Concat">-</string>
     <string name="Pending">in sospeso</string>
@@ -464,7 +464,7 @@
 
     <string name="AddresUpdateSuccessFully">Indirizzo Update SuccessFully</string>
     <string name="Update_SuccessFully">Aggiornamento riuscito Completamente</string>
-    <string name="AddressDeletedSuccessFully"> Indirizzo eliminato SuccessFully</string>
+    <string name="AddressDeletedSuccessFully">eliminato con successo</string>
     <string name="AddressAddSuccessFully">Salvato con sucesso</string>
     <string name="Failed_pickplace">Impossibile selezionare il posto</string>
 

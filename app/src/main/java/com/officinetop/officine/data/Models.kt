@@ -1977,5 +1977,30 @@ object Models {
 
 
     )
+
+data class BankPaymentInfo(
+    @SerializedName("account_number")
+    val accountNumber: String,
+    @SerializedName("bank_name")
+    val bankName: String,
+    @SerializedName("created_at")
+    val createdAt: String,
+    @SerializedName("deleted_at")
+    val deletedAt: Any?,
+    @SerializedName("description")
+    val description: String,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("iban")
+    val iban: String,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("instatario")
+    val instatario: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("updated_at")
+    val updatedAt: String
+)
 }
 

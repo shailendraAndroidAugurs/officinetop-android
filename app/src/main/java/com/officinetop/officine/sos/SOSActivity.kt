@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
-import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -20,8 +18,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -100,10 +96,12 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mapFragment.getMapAsync(this)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-
-        checkpermission(storagePermissionRequestList(), { if (isLocationOn)
-            getcurrentlocation() else
-            enableLocation() })
+        getLocation()
+        checkpermission(storagePermissionRequestList(), {
+            if (isLocationOn)
+                getcurrentlocation() else
+                enableLocation()
+        })
 
 
         emergency_call.setOnClickListener {
@@ -122,49 +120,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     }
 
-
-    private fun enableLocation() {
-
-        if (googleApiClient == null) {
-            googleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API).addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build()
-            googleApiClient!!.connect()
-            val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            locationRequest.interval = 10 * 1000
-            locationRequest.fastestInterval = 2 * 1000
-            val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-            builder.setAlwaysShow(true)
-
-
-            val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-            result.setResultCallback {
-                val status: Status = it.status
-                val state: LocationSettingsStates = it.locationSettingsStates
-                when (status.statusCode) {
-                    LocationSettingsStatusCodes.SUCCESS -> {
-                        isLocationOn = true
-                        //container.snack(getString(R.string.success))
-                        getcurrentlocation()
-
-                    }
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        container.snack(getString(R.string.gps_not_on))
-                        try {
-                            status.startResolutionForResult(this@SOSActivity, 1000)
-                        } catch (e: IntentSender.SendIntentException) {
-                            e.printStackTrace()
-                        }
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        container.snack(getString(R.string.settings_change_not_allowed))
-                    }
-
-                }
-            }
-        }
-    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -453,7 +408,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             items.sosActivityListener = it
         }
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

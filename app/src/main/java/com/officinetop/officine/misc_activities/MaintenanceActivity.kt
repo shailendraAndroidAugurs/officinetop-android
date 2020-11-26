@@ -88,6 +88,7 @@ class MaintenanceActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.maintenance)
+        getLocation()
         getCarMaintenance()
         createFilterDialog()
         createSortDialog()

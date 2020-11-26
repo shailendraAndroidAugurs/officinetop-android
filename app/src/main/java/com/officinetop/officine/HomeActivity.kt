@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.*
-import android.content.pm.PackageManager
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,9 +17,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
@@ -82,8 +83,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.container, FragmentHome(), "Home")
                         .commit()
-
-
                 home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
             }
 
@@ -152,6 +151,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        getLocation()
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -170,6 +170,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         toolbar_car_subtitle.visibility = View.GONE
 
 
+        user_location.setOnClickListener {
+            startActivity(intentFor<LocationActivity>())
+        }
+
+        image_support.setOnClickListener(View.OnClickListener {
+            startActivity(intentFor<Support_FAQ_Activity>())
+        })
 
 
         toolbar_title_layout.setOnClickListener {
@@ -233,13 +240,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             getSelectedCarAccordingToUser()
         }
 
-        user_location.setOnClickListener {
-            startActivity(intentFor<LocationActivity>())
-        }
-
-        image_support.setOnClickListener(View.OnClickListener {
-            startActivity(intentFor<Support_FAQ_Activity>())
-        })
         if (intent.hasExtra("loadProfileFragment")) {
             val isTrue = intent?.getBooleanExtra("loadProfileFragment", false) ?: false
             if (isTrue) {
@@ -724,8 +724,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-
-
             if (requestCode == Constant.RC.onCarEdited) {
                 getSelectedCarAccordingToUser()
             } else if (requestCode == Constant.RC.onCarAdded) {
@@ -743,7 +741,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 if (getMotKm() != getSelectedCar()?.km_of_cars)
                     getSelectedCarAccordingToUser()
             }
-
 
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -894,48 +891,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         container.snack("Failed")
     }
 
-    private fun enableLocation() {
-
-        if (googleApiClient == null) {
-            googleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API).addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build()
-            googleApiClient!!.connect()
-            val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            locationRequest.interval = 10 * 1000
-            locationRequest.fastestInterval = 2 * 1000
-            val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-            builder.setAlwaysShow(true)
-
-
-            val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-            result.setResultCallback {
-                val status: Status = it.status
-                val state: LocationSettingsStates = it.locationSettingsStates
-                when (status.statusCode) {
-                    LocationSettingsStatusCodes.SUCCESS -> {
-                        isLocationOn = true
-                        container.snack(getString(R.string.success))
-                        getLastLocation(mFusedLocationClient!!, this)
-                    }
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        container.snack(getString(R.string.gps_not_on))
-                        try {
-                            status.startResolutionForResult(this, 1000)
-                        } catch (e: IntentSender.SendIntentException) {
-                            e.printStackTrace()
-                        }
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        container.snack(getString(R.string.settings_change_not_allowed))
-                    }
-
-                }
-
-            }
-        }
-    }
 
     override fun onStart() {
         super.onStart()
@@ -1096,34 +1051,3 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 }
 
-/*
-private fun getImagefrombarand(carDetails: JsonObject, brandID: String) {
-    RetrofitClient.client.getcarLogo(brandID)
-            .enqueue(object : Callback<ResponseBody> {
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                }
-
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    if (response.isSuccessful) {
-                        val body = response.body()?.string()
-                        body?.let {
-
-                            val dataJson = JSONObject(body)
-                            if (dataJson.has("data_set") && !dataJson.isNull("data_set")) {
-
-                                val jsondata = JSONObject(dataJson.getString("data_set"))
-
-                                if (jsondata.has("image") && !jsondata.isNull("image")) {
-
-                                    carDetails.addProperty("image", jsondata.getString("image"))
-                                }
-                            }
-
-
-                        }
-                    }
-                }
-            })
-}*/

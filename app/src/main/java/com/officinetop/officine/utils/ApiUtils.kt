@@ -9,6 +9,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -137,7 +138,7 @@ inline fun Context.loadImageWithName(name: String?, imageView: ImageView, placeh
 
         if (overrideURL.isNotEmpty()) {
             imageURL = overrideURL
-        }else {
+        } else {
             imageURL = baseURL + name
         }
 
@@ -1303,5 +1304,10 @@ fun storagePermissionRequestList(): ArrayList<String> {
     return permissionlist
 }
 
+ fun isLocationEnabled(mContext: Context): Boolean {
+    val lm = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER)
+}
 
 

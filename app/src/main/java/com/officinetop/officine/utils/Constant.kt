@@ -198,6 +198,7 @@ object Constant {
         const val getCarMakerslogo = "getCarMakersImage"
         const val minPriceForMotServices = "minPriceForMotServices"
         const val minPricesForMaintenanceServices = "carMaintennaceMinWorkshopPrice"
+        const val getbank_paymentInformation = "payment_management"
 
     }
 
@@ -314,6 +315,7 @@ object Constant {
         const val workshopId = "workshop_id"
         const val motservicetype = "mot_service_type"
         const val service_average_time = "service_average_time"
+        const val slot_id = "temp_slot_id"
 
         const val maxAppointment = "max_appointment"
         const val slotEndTime = "slot_end_time"

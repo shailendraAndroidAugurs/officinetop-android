@@ -540,7 +540,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_4sdp"
-                                android:text="OFFICINETOP SRL"
+
                                 android:textSize="@dimen/_10sdp" />
 
                         </LinearLayout>
@@ -563,7 +563,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_4sdp"
-                                android:text="IT48M0306913298100000008092"
+
                                 android:textSize="@dimen/_10sdp" />
 
                         </LinearLayout>
@@ -581,7 +581,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="25dp"
-                            android:text="@string/emailAddress"
                             android:textColor="@color/com_facebook_blue"
                             android:textSize="@dimen/_12sdp" />
 
