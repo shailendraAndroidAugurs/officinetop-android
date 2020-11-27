@@ -1092,7 +1092,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     val delayMillis = 20 * 60 * 1000
                     Log.d("Time Delay", delayMillis.toString())
 
-                    var endLimit = parsedEndTime.time - averageMillis - delayMillis // additional 20 min delay
+                    var endLimit = parsedEndTime.time - averageMillis /*- delayMillis*/ // additional 20 min delay
                     Log.d("Time endLimit", endLimit.toString())
 
                     //re adding if additional delay is greater

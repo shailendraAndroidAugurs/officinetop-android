@@ -64,20 +64,18 @@ class TimeWheelPicker {
                 }
             }
 
+            /* for (i in startHour..endHour)
+                 hourList.add(addFormatter(i) + i.toString())
 
-
-            for (i in startHour..endHour)
-                hourList.add(addFormatter(i) + i.toString())
-
-            for (i in startMin..endMin)
-                minuteList.add(addFormatter(i) + i.toString())
+             for (i in startMin..endMin)
+                 minuteList.add(addFormatter(i) + i.toString())
 
 
 
-            initialMinuteList.addAll(minuteList)
+             initialMinuteList.addAll(minuteList)
 
-            wheelViewMinute.setItems(minuteList)
-            wheelViewHour.setItems(hourList)
+             wheelViewMinute.setItems(minuteList)
+             wheelViewHour.setItems(hourList)*/
 
             cancelBtn.setOnClickListener { this.dialog.dismiss() }
 
@@ -88,12 +86,15 @@ class TimeWheelPicker {
 
             }
 
-            wheelViewHour.setLoopListener { position ->
+      /*      wheelViewHour.setLoopListener { position ->
 
-                if (!is12Hour)
+                if (!is12Hour) {
+                    Log.d("start_end_time","SetLoopListnere:                  "+"startHour: "+ startHour+" startMin: "+startMin+" endHour:"+endHour+" endMin: "+endMin)
                     setWheelValues(position)
+                }
 
-            }
+
+            }*/
 
 
         }
@@ -238,11 +239,10 @@ class TimeWheelPicker {
                 hourList.add(addFormatter(i) + i.toString())
             }
 
-            if (endMin.equals("0")) {
+            if (endMin == 0) {
                 for (i in startMin..endMinl)
                     minuteList.add(addFormatter(i) + i.toString())
-            }else
-            {
+            } else {
                 for (i in startMin..endMin)
                     minuteList.add(addFormatter(i) + i.toString())
             }
