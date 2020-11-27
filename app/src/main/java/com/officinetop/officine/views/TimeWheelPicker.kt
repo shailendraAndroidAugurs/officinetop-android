@@ -33,7 +33,7 @@ class TimeWheelPicker {
 
         private var startMin = 0
         private var endMin = 59
-
+        private var endMinl = 59
 
         private var onTimePicked: OnTimePicked? = null
 
@@ -63,6 +63,8 @@ class TimeWheelPicker {
                     setItems(listOf("AM", "PM"))
                 }
             }
+
+
 
             for (i in startHour..endHour)
                 hourList.add(addFormatter(i) + i.toString())
@@ -117,7 +119,7 @@ class TimeWheelPicker {
 
                     minuteList.clear()
 
-                    for (i in 0..endMin)
+                    for (i in startMin..endMin)
                         minuteList.add(addFormatter(i) + i.toString())
 
                     for (i in endMin + 1..59)
@@ -206,7 +208,6 @@ class TimeWheelPicker {
 
             for (i in endMin + 1..59)
                 minuteList.remove(addFormatter(i) + i.toString())
-
             wheelViewMinute.setItems(minuteList)
 
             setWheelValues(0)
@@ -217,6 +218,44 @@ class TimeWheelPicker {
 
         }
 
+        fun setStartEndTime(startHour: Int, endHour: Int, startMin: Int, endMin: Int): Builder {
+
+            if (is12Hour) {
+                throw IllegalStateException("Time Range is not allowed in 12 hour mode")
+            }
+
+            this.startHour = startHour
+            this.startMin = startMin
+            this.endHour = endHour
+            this.endMin = endMin
+            if (startHour > endHour)
+                throw IllegalStateException("Start hour must not be greater than end hour, start hour = $startHour, end hour = $endHour")
+
+
+            hourList.clear()
+            minuteList.clear()
+            for (i in startHour..endHour) {
+                hourList.add(addFormatter(i) + i.toString())
+            }
+
+            if (endMin.equals("0")) {
+                for (i in startMin..endMinl)
+                    minuteList.add(addFormatter(i) + i.toString())
+            }else
+            {
+                for (i in startMin..endMin)
+                    minuteList.add(addFormatter(i) + i.toString())
+            }
+            wheelViewHour.setItems(hourList)
+            wheelViewMinute.setItems(minuteList)
+
+            //setWheelValues(0)
+            wheelViewHour.setInitPosition(0)
+            wheelViewMinute.setInitPosition(0)
+
+            return this
+
+        }
 
         fun setConfirmText(text: String): Builder {
             confirmBtn.text = text

@@ -63,7 +63,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -377,13 +376,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
-
         // open calendar for booking date
         booking_date.setOnClickListener {
 
-            val formatter= org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
-
+            val formatter = org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
             //convert String to LocalDate
 
             //convert String to LocalDate
@@ -1162,9 +1158,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 showInfoDialog(getString(R.string.Invalidinterventiontime))
                                 return@setOnClickListener
                             } else {
+                                Log.d("start_end_time","startHour: "+ startHour+" startMin: "+startMin+" endHour:"+endHour+" endMin: "+endMin)
                                 TimeWheelPicker.Builder(this@WorkshopDetailActivity)
-                                        .setStartTime(startHour, startMin)
-                                        .setEndTime(endHour, endMin)
+                                      /*  .setStartTime(startHour, startMin)
+                                        .setEndTime(endHour, endMin)*/
+                                        .setStartEndTime(startHour,endHour,startMin,endMin)
                                         .setTitle(formattedDate)
                                         .setOnTimePickedListener(object : TimeWheelPicker.OnTimePicked {
                                             override fun onPicked(hourOfDay: Int, minute: Int) {
