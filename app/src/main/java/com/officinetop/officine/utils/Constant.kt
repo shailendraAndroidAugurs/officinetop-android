@@ -414,6 +414,7 @@ object Constant {
         const val scheduleId = "schedule_id"
         const val keyword = "keyword"
         const val maker = "maker"
+        const val bankDetailId = "payment_managements_id"
 
 
     }
