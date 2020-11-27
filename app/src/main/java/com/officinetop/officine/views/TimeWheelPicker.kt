@@ -147,6 +147,7 @@ class TimeWheelPicker {
 
                     wheelViewMinute.setItems(minuteList)*/
 
+
                     if (endMin == 0) {
                         for (i in startMin..endMinl)
                             minuteList.add(addFormatter(i) + i.toString())
