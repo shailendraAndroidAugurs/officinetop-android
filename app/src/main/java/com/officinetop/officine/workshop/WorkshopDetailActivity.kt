@@ -63,6 +63,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -379,7 +380,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         // open calendar for booking date
         booking_date.setOnClickListener {
-            today = LocalDate.now()
+
+            val formatter= org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+
+            //convert String to LocalDate
+
+            //convert String to LocalDate
+            val localDate = LocalDate.parse(DateFormatChangeYearToMonth(selectedDateFilter), formatter)
+            today = localDate/*LocalDate.now()*/
             val dialogView = Dialog(this, R.style.DialogSlideAnimStyle)
             dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
