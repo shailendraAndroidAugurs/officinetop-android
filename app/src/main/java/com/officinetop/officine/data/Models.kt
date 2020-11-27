@@ -1994,7 +1994,7 @@ data class BankPaymentInfo(
     @SerializedName("iban")
     val iban: String,
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("instatario")
     val instatario: String,
     @SerializedName("title")

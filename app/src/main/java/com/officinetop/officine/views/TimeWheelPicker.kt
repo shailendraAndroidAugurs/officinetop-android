@@ -34,7 +34,7 @@ class TimeWheelPicker {
         private var startMin = 0
         private var endMin = 59
         private var endMinl = 59
-
+        private var startMinl = 0
         private var onTimePicked: OnTimePicked? = null
 
         init {
@@ -86,15 +86,13 @@ class TimeWheelPicker {
 
             }
 
-      /*      wheelViewHour.setLoopListener { position ->
-
+            wheelViewHour.setLoopListener { position ->
                 if (!is12Hour) {
-                    Log.d("start_end_time","SetLoopListnere:                  "+"startHour: "+ startHour+" startMin: "+startMin+" endHour:"+endHour+" endMin: "+endMin)
                     setWheelValues(position)
                 }
 
 
-            }*/
+            }
 
 
         }
@@ -105,41 +103,75 @@ class TimeWheelPicker {
 
             when {
                 hourList[position].toInt() == startHour && startHour != endHour -> {
+                    Log.d("start_end_time", "tartHour && startHour != endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
 
                     minuteList.clear()
-                    minuteList.addAll(initialMinuteList)
+                    for (i in startMin..endMinl)
+                        minuteList.add(addFormatter(i) + i.toString())
+                    if (hourList.size == 1) {
+                        minuteList.clear()
+                        for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    }
+                    wheelViewMinute.setItems(minuteList)
+                }
 
-                    for (i in 0 until startMin)
-                        minuteList.remove(addFormatter(i) + i.toString())
+                hourList[position].toInt() == startHour || startHour != endHour && hourList[position].toInt() != endHour -> {
+                    Log.d("start_end_time", "tartHour && startHour != endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
+
+                    minuteList.clear()
+                    for (i in startMinl..endMinl)
+                        minuteList.add(addFormatter(i) + i.toString())
+
+                    if (hourList.size == 1) {
+                        minuteList.clear()
+                        for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    }
+
 
                     wheelViewMinute.setItems(minuteList)
                 }
 
                 hourList[position].toInt() == endHour -> {
 
+                    Log.d("start_end_time", "endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
 
                     minuteList.clear()
 
-                    for (i in startMin..endMin)
+                    /*for (i in startMin..endMin)
                         minuteList.add(addFormatter(i) + i.toString())
 
                     for (i in endMin + 1..59)
                         minuteList.remove(addFormatter(i) + i.toString())
 
+                    wheelViewMinute.setItems(minuteList)*/
+
+                    if (endMin == 0) {
+                        for (i in startMin..endMinl)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    } else {
+                        for (i in startMinl..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    }
+                    if (hourList.size == 1) {
+                        minuteList.clear()
+                        for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    }
+
                     wheelViewMinute.setItems(minuteList)
                 }
 
-                else -> {
-                    minuteList.clear()
-                    minuteList.addAll(initialMinuteList)
-                    wheelViewMinute.setItems(initialMinuteList)
-                }
+                /*  else -> {
+                      minuteList.clear()
+                      minuteList.addAll(initialMinuteList)
+                      wheelViewMinute.setItems(initialMinuteList)
+                  }*/
 
             }
 
             wheelViewMinute.setInitPosition(0)
-
-
         }
 
         fun setOnTimePickedListener(onTimePicked: OnTimePicked): Builder {
@@ -239,13 +271,22 @@ class TimeWheelPicker {
                 hourList.add(addFormatter(i) + i.toString())
             }
 
-            if (endMin == 0) {
-                for (i in startMin..endMinl)
-                    minuteList.add(addFormatter(i) + i.toString())
-            } else {
+            for (i in startMin..endMinl)
+                minuteList.add(addFormatter(i) + i.toString())
+
+            if (hourList.size == 1) {
+                minuteList.clear()
                 for (i in startMin..endMin)
                     minuteList.add(addFormatter(i) + i.toString())
             }
+
+
+            /* if (endMin == 0) {
+
+             } else {
+                 for (i in startMin..endMin)
+                     minuteList.add(addFormatter(i) + i.toString())
+             }*/
             wheelViewHour.setItems(hourList)
             wheelViewMinute.setItems(minuteList)
 

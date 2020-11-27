@@ -207,7 +207,15 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_COD.isChecked = false
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = true
-                showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), { updatePaymentStatusForCOD() }, { uncheckedAllPaymentmethod() })
+                if (this::bankpaymentobject.isInitialized && bankpaymentobject != null) {
+                    showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), {
+                        updatePaymentStatusForCOD(bankpaymentobject.id)
+
+                    }, { uncheckedAllPaymentmethod() })
+                }else {
+                    showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again),true,{uncheckedAllPaymentmethod()})
+                }
+
 
             } else {
                 radioButton_bankTransfer.isChecked = false
@@ -650,7 +658,7 @@ class OnlinePaymentScreen : BaseActivity() {
         }
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
-                        ?: "", id, "1", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+                        ?: "", id, "1", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, ""
 
         ).onCall { networkException, response ->
             response?.let {
@@ -735,12 +743,12 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun updatePaymentStatusForCOD() {
+    private fun updatePaymentStatusForCOD(bankDetailId: String = "") {
         Log.e("payment mode", "COD :2")
 
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
-                        ?: "", "", "2", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+                        ?: "", "", "2", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, bankDetailId
         ).onCall { networkException, response ->
 
 
@@ -767,7 +775,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
-                        ?: "", "", "3", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount
+                        ?: "", "", "3", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, ""
         ).onCall { eeeseeewwenetworkException, response ->
             response?.let {
                 if (response.isSuccessful) {

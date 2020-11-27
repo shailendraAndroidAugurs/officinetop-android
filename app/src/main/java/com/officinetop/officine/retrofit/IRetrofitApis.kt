@@ -1247,6 +1247,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.totalPfu) totalPfu: String,
             @Field(Constant.Path.payableAmount) payableAmount: String,
             @Field(Constant.Path.walletAmount) walletAmount: String,
+            @Field(Constant.Path.bankDetailId) bankDetailId: String,
 
             @Header("accept") accept: String = "application/json"
 
