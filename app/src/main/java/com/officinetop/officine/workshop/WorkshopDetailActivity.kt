@@ -76,23 +76,18 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     lateinit var dialogSlider: SliderLayout
     var serviceID = ""
     private var main_category_id = ""
-
     var disableSliderTouch = false
-
     var averageServiceTime = 0.0
     var categoryID = ""
-
     private var SpecialConditionId = ""
     private var DiscountType = ""
     private var DiscountPrices = ""
     private var max_appointment = ""
-
-
     private var slotStartTime = ""
     private var slotEndTime = ""
     private var slotId = ""
     var selectedDateFilter = ""
-
+    var calendar_selectedDateFilter = ""
     var currentWorkshopDetail = ""
 
     private var isSparePartAssembly = false
@@ -114,7 +109,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     var mainCategoryIDForAssembly: String = ""
     private var mainCategoryIDForCarWash: String = ""
 
-    //    var calendarPriceList: MutableList<Models.CalendarPrice> = ArrayList()
     var calendarPriceMap: HashMap<String, String> = HashMap()
     lateinit var today: LocalDate
     lateinit var bookingCalendar: CalendarView
@@ -151,10 +145,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var cartItem: Models.CartItem? = null
     private var partidMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap<String, Models.servicesCouponData>()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap<String, Models.MotservicesCouponData>()
-
-    val buttonIcons = arrayListOf<Int>(R.drawable.tire, R.drawable.ic_maintenance,
-            R.drawable.ic_revisione, R.drawable.ic_washing, R.drawable.settings,
-            R.drawable.ic_scheduled_car_inspection, R.drawable.ic_sos, R.drawable.ic_estimate)
     var wishList = "0"
     private var WorkshopJson: JSONObject = JSONObject()
     private var feedbackMain_categoryId = ""
@@ -376,14 +366,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
+        calendar_selectedDateFilter = DateFormatChangeYearToMonth(selectedDateFilter)!!
         // open calendar for booking date
         booking_date.setOnClickListener {
 
             val formatter = org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
             //convert String to LocalDate
-
             //convert String to LocalDate
-            val localDate = LocalDate.parse(DateFormatChangeYearToMonth(selectedDateFilter), formatter)
+            val localDate = LocalDate.parse(DateFormatChangeYearToMonth(calendar_selectedDateFilter), formatter)
             today = localDate/*LocalDate.now()*/
             val dialogView = Dialog(this, R.style.DialogSlideAnimStyle)
             dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1099,10 +1089,23 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (endLimit < parseTimeHHmmss(startTimeString).time)
                         endLimit += delayMillis
 
-                    val endTime = SimpleDateFormat("HH:m", getLocale()).format(Date(endLimit.toLong()))
+                    var endTime = SimpleDateFormat("HH:m", getLocale()).format(Date(endLimit.toLong()))
 
-                    val endHour = endTime.split(":")[0].toInt()
-                    val endMin = endTime.split(":")[1].toInt()
+                    var endHour = endTime.split(":")[0].toInt()
+                    var endMin = endTime.split(":")[1].toInt()
+
+                    /*   if (endMin == 0) {
+                           endLimit = endLimit - averageMillis
+                       }
+
+                       if (endLimit < parseTimeHHmmss(startTimeString).time)
+                           endLimit += delayMillis
+
+                        endTime = SimpleDateFormat("HH:m", getLocale()).format(Date(endLimit.toLong()))
+
+                        endHour = endTime.split(":")[0].toInt()
+                        endMin = endTime.split(":")[1].toInt()*/
+
                     Log.d("Time endHour", endHour.toString())
                     Log.d("Time endMin", endMin.toString())
 
@@ -1158,11 +1161,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 showInfoDialog(getString(R.string.Invalidinterventiontime))
                                 return@setOnClickListener
                             } else {
-                                Log.d("start_end_time","startHour: "+ startHour+" startMin: "+startMin+" endHour:"+endHour+" endMin: "+endMin)
+                                Log.d("start_end_time", "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
                                 TimeWheelPicker.Builder(this@WorkshopDetailActivity)
-                                      /*  .setStartTime(startHour, startMin)
-                                        .setEndTime(endHour, endMin)*/
-                                        .setStartEndTime(startHour,endHour,startMin,endMin)
+                                        /*  .setStartTime(startHour, startMin)
+                                          .setEndTime(endHour, endMin)*/
+                                        .setStartEndTime(startHour, endHour, startMin, endMin)
                                         .setTitle(formattedDate)
                                         .setOnTimePickedListener(object : TimeWheelPicker.OnTimePicked {
                                             override fun onPicked(hourOfDay: Int, minute: Int) {

@@ -106,26 +106,23 @@ class TimeWheelPicker {
                     Log.d("start_end_time", "tartHour && startHour != endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
 
                     minuteList.clear()
-                    for (i in startMin..endMinl)
-                        minuteList.add(addFormatter(i) + i.toString())
                     if (hourList.size == 1) {
-                        minuteList.clear()
                         for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    } else {
+                        for (i in startMin..endMinl)
                             minuteList.add(addFormatter(i) + i.toString())
                     }
                     wheelViewMinute.setItems(minuteList)
                 }
 
                 hourList[position].toInt() == startHour || startHour != endHour && hourList[position].toInt() != endHour -> {
-                    Log.d("start_end_time", "tartHour && startHour != endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
-
                     minuteList.clear()
-                    for (i in startMinl..endMinl)
-                        minuteList.add(addFormatter(i) + i.toString())
-
                     if (hourList.size == 1) {
-                        minuteList.clear()
                         for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    } else {
+                        for (i in startMinl..endMinl)
                             minuteList.add(addFormatter(i) + i.toString())
                     }
 
@@ -138,15 +135,6 @@ class TimeWheelPicker {
                     Log.d("start_end_time", "endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
 
                     minuteList.clear()
-
-                    /*for (i in startMin..endMin)
-                        minuteList.add(addFormatter(i) + i.toString())
-
-                    for (i in endMin + 1..59)
-                        minuteList.remove(addFormatter(i) + i.toString())
-
-                    wheelViewMinute.setItems(minuteList)*/
-
 
                     if (endMin == 0) {
                         for (i in startMin..endMinl)
@@ -163,12 +151,11 @@ class TimeWheelPicker {
 
                     wheelViewMinute.setItems(minuteList)
                 }
-
-                /*  else -> {
-                      minuteList.clear()
-                      minuteList.addAll(initialMinuteList)
-                      wheelViewMinute.setItems(initialMinuteList)
-                  }*/
+                else -> {
+                    minuteList.clear()
+                    minuteList.addAll(initialMinuteList)
+                    wheelViewMinute.setItems(initialMinuteList)
+                }
 
             }
 
@@ -180,77 +167,6 @@ class TimeWheelPicker {
             return this
         }
 
-        fun setStartTime(startHour: Int, startMin: Int): Builder {
-
-
-            if (is12Hour) {
-                throw IllegalStateException("Time Range is not allowed in 12 hour mode")
-            }
-
-            this.startHour = startHour
-            this.startMin = startMin
-
-            if (startHour > endHour)
-                throw IllegalStateException("Start hour must not be greater than end hour, start hour = $startHour, end hour = $endHour")
-
-            for (i in 0 until startHour) {
-                hourList.remove(addFormatter(i) + i.toString())
-            }
-
-
-            minuteList.clear()
-            minuteList.addAll(initialMinuteList)
-
-            for (i in 0 until startMin)
-                minuteList.remove(addFormatter(i) + i.toString())
-
-
-            wheelViewMinute.setItems(minuteList)
-
-            Log.d("Builder", "setStartTime: $startHour:$startMin")
-
-            setWheelValues(0)
-
-
-            return this
-
-        }
-
-        fun setEndTime(endHour: Int, endMin: Int): Builder {
-
-            if (is12Hour) {
-                throw IllegalStateException("Time Range is not allowed in 12 hour mode")
-            }
-
-            this.endHour = endHour
-            this.endMin = endMin
-
-            if (endHour < startHour)
-                throw IllegalStateException("End hour must not be smaller than start hour, start hour = $startHour, end hour = $endHour")
-
-            for (i in endHour + 1..23) {
-                hourList.remove(addFormatter(i) + i.toString())
-            }
-
-            Log.d("Builder", "setEndTime: $endHour:$endMin")
-
-
-            minuteList.clear()
-
-            for (i in 0..endMin)
-                minuteList.add(addFormatter(i) + i.toString())
-
-            for (i in endMin + 1..59)
-                minuteList.remove(addFormatter(i) + i.toString())
-            wheelViewMinute.setItems(minuteList)
-
-            setWheelValues(0)
-
-
-
-            return this
-
-        }
 
         fun setStartEndTime(startHour: Int, endHour: Int, startMin: Int, endMin: Int): Builder {
 
@@ -281,17 +197,8 @@ class TimeWheelPicker {
                     minuteList.add(addFormatter(i) + i.toString())
             }
 
-
-            /* if (endMin == 0) {
-
-             } else {
-                 for (i in startMin..endMin)
-                     minuteList.add(addFormatter(i) + i.toString())
-             }*/
             wheelViewHour.setItems(hourList)
             wheelViewMinute.setItems(minuteList)
-
-            //setWheelValues(0)
             wheelViewHour.setInitPosition(0)
             wheelViewMinute.setInitPosition(0)
 
