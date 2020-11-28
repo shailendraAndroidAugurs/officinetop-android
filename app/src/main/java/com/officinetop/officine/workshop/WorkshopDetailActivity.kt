@@ -361,7 +361,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         offerBadge.setOnClickListener {
             if (couponList != null) {
                 displayCoupons(couponList as MutableList<Models.Coupon>, AppliedCouponName)
-                //else Snackbar.make("no coupons assigned!")
+
             }
         }
         //set selected date from workshop calendar screen calendar
@@ -369,12 +369,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         calendar_selectedDateFilter = DateFormatChangeYearToMonth(selectedDateFilter)!!
         // open calendar for booking date
         booking_date.setOnClickListener {
-
             val formatter = org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            //convert String to LocalDate
-            //convert String to LocalDate
             val localDate = LocalDate.parse(DateFormatChangeYearToMonth(calendar_selectedDateFilter), formatter)
-            today = localDate/*LocalDate.now()*/
+            today = localDate
             val dialogView = Dialog(this, R.style.DialogSlideAnimStyle)
             dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -912,92 +909,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-    private fun getSpecialCondition(workshopCategoryId: String, workshopUsersId: Int) {
 
-        RetrofitClient.client.getSpecialCondition(workshopCategoryId, workshopUsersId)
-                .onCall { networkException, response ->
-
-                    response?.let {
-
-                        if (response.isSuccessful) {
-                            try {
-                                val body = JSONObject(response.body()?.string())
-
-                                if (body.has("data_set") && body.get("data_set") != null) {
-                                    if (body.get("data_set") is JSONArray) {
-                                        val data = body.getJSONArray("data_set")
-                                        ll_special_cond.visibility = View.VISIBLE
-                                        val listSpecialCondition: MutableList<Models.SpecialCondition> = ArrayList()
-
-                                        val listCheckbox: MutableList<CheckBox> = ArrayList()
-
-                                        special_condition.removeAllViews()
-
-                                        for (i in 0 until data.length()) {
-
-                                            val specialCondObj = Gson().fromJson<Models.SpecialCondition>(data.get(i).toString(), Models.SpecialCondition::class.java)
-                                            listSpecialCondition.add(specialCondObj)
-
-                                            val rlayout = RelativeLayout(this)
-                                            val text = TextView(this)
-                                            val checkbox = CheckBox(this)
-
-                                            text.text = if (!specialCondObj.item.isNullOrEmpty()) specialCondObj.item else "none"
-                                            text.id = specialCondObj.id.toInt()
-                                            checkbox.id = specialCondObj.id.toInt()
-                                            checkbox.gravity = Gravity.END
-
-                                            text.gravity = Gravity.START
-                                            text.setTextColor(resources.getColor(R.color.black))
-
-                                            rlayout.id = i
-
-                                            val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-                                            rlayout.layoutParams = lp
-
-                                            text.layoutParams = lp
-
-                                            val chkParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-                                            checkbox.layoutParams = chkParams
-
-                                            chkParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-
-                                            rlayout.addView(text)
-                                            rlayout.addView(checkbox)
-                                            special_condition.addView(rlayout)
-
-                                            listCheckbox.add(checkbox)
-
-                                            checkbox.setOnCheckedChangeListener { compoundButton, isChecked ->
-
-                                                if (isChecked) {
-                                                    for (k in 0 until listCheckbox.size) {
-                                                        if (checkbox.id == listCheckbox.get(k).id) {
-                                                            if (checkbox.id.equals(listSpecialCondition.get(k).id)) {
-                                                                // Log.e("checkedObjectITem=", listSpecialCondition.get(k).toString())
-                                                                specialConditionObject = listSpecialCondition.get(k)
-                                                            }
-                                                        } else {
-                                                            listCheckbox.get(k).isChecked = false
-                                                        }
-                                                    }
-                                                } else {
-                                                    specialConditionObject = null
-                                                    //Log.e("unchecked", specialConditionObject.toString())
-                                                }
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                            } catch (e: java.lang.Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                }
-    }
 
     private fun callWorkShop() {
         if (workshopPhoneNumber != null && workshopPhoneNumber.trim().isNotEmpty()) {
@@ -1072,8 +984,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     val startHour = startTimeString.split(":")[0].trim().toInt()
                     val startMin = startTimeString.split(":")[1].trim().toInt()
-
-
                     packageTiming.text = "${startTimeString.split(":")[0]}:${startTimeString.split(":")[1]} - " + endTimeString.split(":")[0] + ":" + endTimeString.split(":")[1]
                     Log.d("Time start end time", packageTiming.text.toString())
                     val parsedEndTime = parseTimeHHmmss(endTimeString)
@@ -1093,24 +1003,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     var endHour = endTime.split(":")[0].toInt()
                     var endMin = endTime.split(":")[1].toInt()
-
-                    /*   if (endMin == 0) {
-                           endLimit = endLimit - averageMillis
-                       }
-
-                       if (endLimit < parseTimeHHmmss(startTimeString).time)
-                           endLimit += delayMillis
-
-                        endTime = SimpleDateFormat("HH:m", getLocale()).format(Date(endLimit.toLong()))
-
-                        endHour = endTime.split(":")[0].toInt()
-                        endMin = endTime.split(":")[1].toInt()*/
-
-                    Log.d("Time endHour", endHour.toString())
-                    Log.d("Time endMin", endMin.toString())
-
-
-//                    packageTiming.text = "$startHour:$startMin - $endHour:$endMin"
 
                     if (isAvailable == "1") {
                         bookPackage.text = getString(R.string.book)
@@ -1163,8 +1055,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             } else {
                                 Log.d("start_end_time", "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
                                 TimeWheelPicker.Builder(this@WorkshopDetailActivity)
-                                        /*  .setStartTime(startHour, startMin)
-                                          .setEndTime(endHour, endMin)*/
                                         .setStartEndTime(startHour, endHour, startMin, endMin)
                                         .setTitle(formattedDate)
                                         .setOnTimePickedListener(object : TimeWheelPicker.OnTimePicked {
@@ -1230,10 +1120,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         slider.stopAutoCycle()
         slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//        slider.setCustomIndicator(PagerIndicator(this).apply {
-//        setDefaultIndicatorColor(Color.BLACK, Color.GRAY)
-//        indicatorVisibility =  PagerIndicator.IndicatorVisibility.Visible
-//        })
 
         dialogSlider = slider
 
@@ -1691,5 +1577,89 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         bindFeedbackList(list, this)
     }
 
+    private fun getSpecialCondition(workshopCategoryId: String, workshopUsersId: Int) {
 
+        RetrofitClient.client.getSpecialCondition(workshopCategoryId, workshopUsersId)
+                .onCall { networkException, response ->
+
+                    response?.let {
+
+                        if (response.isSuccessful) {
+                            try {
+                                val body = JSONObject(response.body()?.string())
+
+                                if (body.has("data_set") && body.get("data_set") != null) {
+                                    if (body.get("data_set") is JSONArray) {
+                                        val data = body.getJSONArray("data_set")
+                                        ll_special_cond.visibility = View.VISIBLE
+                                        val listSpecialCondition: MutableList<Models.SpecialCondition> = ArrayList()
+
+                                        val listCheckbox: MutableList<CheckBox> = ArrayList()
+
+                                        special_condition.removeAllViews()
+
+                                        for (i in 0 until data.length()) {
+
+                                            val specialCondObj = Gson().fromJson<Models.SpecialCondition>(data.get(i).toString(), Models.SpecialCondition::class.java)
+                                            listSpecialCondition.add(specialCondObj)
+
+                                            val rlayout = RelativeLayout(this)
+                                            val text = TextView(this)
+                                            val checkbox = CheckBox(this)
+
+                                            text.text = if (!specialCondObj.item.isNullOrEmpty()) specialCondObj.item else "none"
+                                            text.id = specialCondObj.id.toInt()
+                                            checkbox.id = specialCondObj.id.toInt()
+                                            checkbox.gravity = Gravity.END
+
+                                            text.gravity = Gravity.START
+                                            text.setTextColor(resources.getColor(R.color.black))
+
+                                            rlayout.id = i
+
+                                            val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+                                            rlayout.layoutParams = lp
+
+                                            text.layoutParams = lp
+
+                                            val chkParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+                                            checkbox.layoutParams = chkParams
+
+                                            chkParams.addRule(RelativeLayout.ALIGN_PARENT_END)
+
+                                            rlayout.addView(text)
+                                            rlayout.addView(checkbox)
+                                            special_condition.addView(rlayout)
+
+                                            listCheckbox.add(checkbox)
+
+                                            checkbox.setOnCheckedChangeListener { compoundButton, isChecked ->
+
+                                                if (isChecked) {
+                                                    for (k in 0 until listCheckbox.size) {
+                                                        if (checkbox.id == listCheckbox.get(k).id) {
+                                                            if (checkbox.id.equals(listSpecialCondition.get(k).id)) {
+                                                                // Log.e("checkedObjectITem=", listSpecialCondition.get(k).toString())
+                                                                specialConditionObject = listSpecialCondition.get(k)
+                                                            }
+                                                        } else {
+                                                            listCheckbox.get(k).isChecked = false
+                                                        }
+                                                    }
+                                                } else {
+                                                    specialConditionObject = null
+                                                }
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                            } catch (e: java.lang.Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+                }
+    }
 }

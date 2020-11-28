@@ -47,12 +47,6 @@ class ServiceDetailActivity : BaseActivity() {
 
     private fun loadServiceDetails() {
         val serviceDetails: Models.ServiceCategory = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
-
-
-
-
-
-
         Log.v("SERVICE DTAILS ", "****************************** $serviceDetails")
         if (serviceDetails != null) {
             var servicePrice = ""

@@ -5,10 +5,15 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.TextUtils
 import android.text.format.Formatter
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Base64
 import android.util.Log
 import android.view.View
@@ -31,6 +36,9 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.virtual_garage.AddVehicleActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.emailEditText
+import kotlinx.android.synthetic.main.activity_login.passwordEditText
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_sheet_referral.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody
@@ -67,6 +75,7 @@ class LoginActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.login)
         progressDialog = getProgressDialog()
+        setSpannableText()
         initRetrofitSigning()
         initGoogleSignIn()
         initFacebookLogin()
@@ -204,7 +213,7 @@ class LoginActivity : BaseActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-       // LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+        // LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
         Log.d("LoginActivity", requestCode.toString() + "///" + resultCode + "//" + Activity.RESULT_OK + "//" + data)
         val googleSignedAccount = GoogleSignIn.getSignedInAccountFromIntent(data)
         Log.d("GogleSign=ActivityRslt", googleSignedAccount.toString())
@@ -515,4 +524,32 @@ class LoginActivity : BaseActivity() {
     private fun buildScope(): Scope? {
         return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS)
     }*/
+
+    private fun setSpannableText() {
+        val textMain = getString(R.string.termCondition_policy_login)
+        val text1 = getString(R.string.Conditions)
+        val termsAndConditions = SpannableString(text1)
+        termsAndConditions.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                browse(getString(R.string.condition_link))
+            }
+
+        }, 0, text1.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // text.indexOf(getString(R.string.Conditions)), text.indexOf(getString(R.string.and)), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        val privacyPolicy = SpannableString(getString(R.string.register_privacy_text_2))
+        privacyPolicy.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                browse(getString(R.string.policy_link))
+            }
+
+        }, 0, privacyPolicy.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        termCondition_policy_login.text = TextUtils.concat(textMain, " ", termsAndConditions, " ", getString(R.string.and), " ", privacyPolicy)
+        termCondition_policy_login.movementMethod = LinkMovementMethod.getInstance()
+        termCondition_policy_login.highlightColor = Color.TRANSPARENT
+    }
+
+
 }

@@ -542,6 +542,7 @@
     <string name="Email">E-mail</string>
     <string name="FAQs">Domande frequenti</string>
     <string name="phoneNo">3285668826</string>
+    <string name="whatsapp_no">393285668826</string>
     <string name="emailAddress"> info@officinetop.com</string>
 
     <string name="FAQtitle"> FAQ</string>
@@ -601,8 +602,10 @@
     <string name="workshopWithSparepart">Ricambi: €%s + Scegli un\'officina da: €%s</string>
     <string name="select">Seleziona</string>
     <string name="please_select_width"> Seleziona la larghezza</string>
-    <string name="please_select_aspect">  Seleziona le altezza</string>
-    <string name="please_select_diameter"> Seleziona il diametro</string>
+    <string name="please_select_aspect">Seleziona l\’altezza</string>
+    <string name="please_select_diameter">Seleziona il diametro</string>
+
+
     <string name="staus">Stato:</string>
     <string name="inProgress">In Process</string>
     <string name="dispatched">Inviato</string>
@@ -624,6 +627,11 @@
 
     <string name="bank_transfer_proceed">Vuoi procedere con Bonifico Bancario ?</string>
     <string name="PleaselogintocontinueforAddWishList">Effettua il login per continuare per Aggiungi alla lista dei desideri</string>
+    <string name="termCondition_policy_login">Continuando, consenti a questa app di utilizzare le tue informazioni in conformità con il </string>
+    <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
+    <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
+    <string name="Aboutus_link">https://www.officinetop.com/chi-siamo/</string>
+    <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
