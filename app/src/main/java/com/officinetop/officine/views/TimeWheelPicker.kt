@@ -136,16 +136,12 @@ class TimeWheelPicker {
 
                     minuteList.clear()
 
-                    if (endMin == 0) {
-                        for (i in startMin..endMinl)
-                            minuteList.add(addFormatter(i) + i.toString())
-                    } else {
-                        for (i in startMinl..endMin)
-                            minuteList.add(addFormatter(i) + i.toString())
-                    }
                     if (hourList.size == 1) {
                         minuteList.clear()
                         for (i in startMin..endMin)
+                            minuteList.add(addFormatter(i) + i.toString())
+                    } else {
+                        for (i in startMinl..endMin)
                             minuteList.add(addFormatter(i) + i.toString())
                     }
 
