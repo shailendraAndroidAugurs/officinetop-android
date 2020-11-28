@@ -175,7 +175,19 @@
 
             </LinearLayout>
 
-
+            <TextView
+                android:id="@+id/termCondition_policy_login"
+                style="@style/TextViewWhite.VerySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/_5sdp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/termCondition_policy_login"
+                android:textColor="@color/black" />
         </LinearLayout>
 
 

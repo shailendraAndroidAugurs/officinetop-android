@@ -191,7 +191,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = false
 
-                showConfirmDialogforPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD() }, { uncheckedAllPaymentmethod() })
+                showConfirmDialogforPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD_BankTransfer("", "2") }, { uncheckedAllPaymentmethod() })
 
 
             } else {
@@ -209,11 +209,11 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_bankTransfer.isChecked = true
                 if (this::bankpaymentobject.isInitialized && bankpaymentobject != null) {
                     showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), {
-                        updatePaymentStatusForCOD(bankpaymentobject.id)
+                        updatePaymentStatusForCOD_BankTransfer(bankpaymentobject.id, "4")
 
                     }, { uncheckedAllPaymentmethod() })
-                }else {
-                    showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again),true,{uncheckedAllPaymentmethod()})
+                } else {
+                    showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again), true, { uncheckedAllPaymentmethod() })
                 }
 
 
@@ -743,12 +743,12 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun updatePaymentStatusForCOD(bankDetailId: String = "") {
+    private fun updatePaymentStatusForCOD_BankTransfer(bankDetailId: String = "", paymentMode: String) {
         Log.e("payment mode", "COD :2")
 
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
-                        ?: "", "", "2", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, bankDetailId
+                        ?: "", "", paymentMode, getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, bankDetailId
         ).onCall { networkException, response ->
 
 

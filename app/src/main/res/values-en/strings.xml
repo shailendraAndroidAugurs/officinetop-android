@@ -543,6 +543,7 @@
     <string name="Email">Email</string>
     <string name="FAQs">Frequently Asked Questions</string>
     <string name="phoneNo">3285668826</string>
+    <string name="whatsapp_no">393285668826</string>
     <string name="emailAddress"> info@officinetop.com</string>
     <string name="FAQtitle"> FAQ</string>
     <string name="please_select_maintenance">Please Select Maintenance!</string>
@@ -603,9 +604,9 @@
     <string name="PleaselogintocontinueforAddtocart">Please login to continue for Add to cart</string>
     <string name="workshopWithSparepart">Spare parts: € %s + Choose a workshop from: € %s</string>
     <string name="select">Select</string>
-    <string name="please_select_width"> Please select width</string>
-    <string name="please_select_aspect">   Please select aspect ratio</string>
-    <string name="please_select_diameter"> Please select diameter</string>
+    <string name="please_select_width">  Select width</string>
+    <string name="please_select_aspect"> Select the height</string>
+    <string name="please_select_diameter"> Select diameter</string>
     <string name="staus">Staus:</string>
     <string name="inProgress">In Process</string>
     <string name="dispatched">Dispatched</string>
@@ -626,6 +627,16 @@
     <string name="backTransfer_note2">the order will be valid only after receiving the credit on our account.</string>
     <string name="bank_transfer_proceed">Do you want to proceed Bank Transfer ?</string>
     <string name="PleaselogintocontinueforAddWishList">Please login to continue for Add to WishList</string>
+
+    <string name="termCondition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
+    <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
+    <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
+
+
+    <string name="Aboutus_link">https://www.officinetop.com/chi-siamo/</string>
+    <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
+
+
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

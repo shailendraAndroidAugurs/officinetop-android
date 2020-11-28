@@ -2,6 +2,7 @@ package com.officinetop.officine.car_parts
 
 import adapter.SubPartCategoryAdapter
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -58,6 +59,18 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     private lateinit var myadpterSparePart: RecyclerView.Adapter<Holder>
     private lateinit var myadpterN3Part: RecyclerView.Adapter<Holder>
     private var searchText = ""
+
+    var delay: Long = 1000 // 1 seconds after user stops typing
+
+    var last_text_edit: Long = 0
+    var handler: Handler = Handler()
+
+
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
@@ -273,14 +286,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     //text watcher of edit text search
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // send search value to fragment for filter search of discovery or history
-            // searchLitener.SearchProduct(s.toString())
 
 
             if (s.toString().isBlank()) {
@@ -290,11 +295,13 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 rv_partCategory.visibility = View.VISIBLE
                 iv_cross.visibility = View.GONE
                 clearAdpater()
-            } else {
+            }
+            else {
                 if (s?.length!! >= 2) {
-                    searchText = s.toString()
-                    iv_cross.visibility = View.VISIBLE
-                    getDataforSerachaccordingTokeyword(s.toString())
+
+                    last_text_edit = System.currentTimeMillis();
+                    handler.postDelayed(input_finish_checker, delay);
+
                 } else {
                     clearAdpater()
                     iv_cross.visibility = View.GONE
@@ -306,6 +313,19 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
 
             }
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // send search value to fragment for filter search of discovery or history
+            // searchLitener.SearchProduct(s.toString())
+            //You need to remove this to run only once
+            handler.removeCallbacks(input_finish_checker);
+
+
 
         }
 
@@ -560,6 +580,14 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         PartSerachBindInView()
         ProductSerachBindInView()
     }
+    private val input_finish_checker = Runnable {
+        if (System.currentTimeMillis() > last_text_edit + delay - 500) {
+            searchText = search_product.text.toString()
+            iv_cross.visibility = View.VISIBLE
+            getDataforSerachaccordingTokeyword(search_product.text.toString())
+        }
+    }
+
 
     class Holder(view: View) : RecyclerView.ViewHolder(view)
 }
