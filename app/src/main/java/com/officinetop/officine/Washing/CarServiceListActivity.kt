@@ -71,10 +71,10 @@ class CarServiceListActivity : BaseActivity() {
                         }
                     })
         } else {
-
-            showConnectionFailedDialog {
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+           /* showConnectionFailedDialog {
                 loadData()
-            }
+            }*/
         }
     }
 

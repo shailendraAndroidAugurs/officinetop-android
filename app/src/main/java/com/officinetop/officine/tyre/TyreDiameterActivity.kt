@@ -13,6 +13,8 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.convertToJsonString
 import com.officinetop.officine.utils.genericAPICall
+import com.officinetop.officine.utils.isOnline
+import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_tyre_diameter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -53,8 +55,12 @@ class TyreDiameterActivity : BaseActivity() {
 
 
         }
+        if (isOnline()) {
+            getUserTyreDetailsApi()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
 
-        getUserTyreDetailsApi()
     }
 
     private fun getUserTyreDetailsApi() {

@@ -124,30 +124,27 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             params.setMargins(0, 0, 0, app_bar.height / 2)
             progress_bar.layoutParams = params
         }
-
-
-
         drawableLeft = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.ic_sort_black_24dp)!!
         drawableRight = ContextCompat.getDrawable(this@ProductListActivity, R.drawable.shape_circle_orange_8dp)!!
 
         drawableRight.setBounds(100, 100, 100, 100)
         // products list
-
         reloadPage()
-
-
     }
-
-
     private fun reloadPage() {
         horizontal_calendar_layout.visibility = View.VISIBLE
         map_btn.visibility = View.GONE
         toolbar_title.text = getString(R.string.parts)
 
-        if (isBestSelling)
-            bestSellingApi()
-        else
-            loadProductItems()
+        if (isOnline()) {
+            if (isBestSelling)
+                bestSellingApi()
+            else
+                loadProductItems()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
+
 
 
         if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1 || priceRangeInitial != 0) || filterBrandList.size != 0) {

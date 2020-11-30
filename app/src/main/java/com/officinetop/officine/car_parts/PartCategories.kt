@@ -25,10 +25,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.adapter.PartCategoryAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.forwardResults
-import com.officinetop.officine.utils.genericAPICall
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_part_categories.*
 import kotlinx.android.synthetic.main.activity_search_preview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -42,7 +39,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executors
 
-class PartCategories : BaseActivity(), PartCategoryInterface {
+class   PartCategories : BaseActivity(), PartCategoryInterface {
     private lateinit var searchLitener: SearchFilterInterface
     private var selectedVehicleVersionID: String = ""
     private var categoryArrayList: JSONArray = JSONArray()
@@ -78,9 +75,11 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
         Log.d("PartsCategoryActivity", "onCreate: $selectedVehicleVersionID")
         initViews()
         layoutheight = (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18.toFloat(), resources.displayMetrics)).toInt()
-        loadN1Groups(RetrofitClient.client.sparePartsGroup(selectedVehicleVersionID))
-
-
+        if (isOnline()) {
+            loadN1Groups(RetrofitClient.client.sparePartsGroup(selectedVehicleVersionID))
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
     private fun initViews() {
@@ -103,11 +102,13 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                 previousExpandedGroupPosition = groupPosition
                 val subCategoryDetails = subGroupCategoryArrayList.get(groupPosition)
                 val subCategoryId = subCategoryDetails?.id
-
                 if (subCategoryId != null)
-                    loadN3Groups(RetrofitClient.client.spareN3GroupsUpdated(subCategoryId), groupPosition)
+                    if (isOnline()) {
+                        loadN3Groups(RetrofitClient.client.spareN3GroupsUpdated(subCategoryId), groupPosition)
+                    }else{
+                        showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                    }
             }
-
             return@setOnGroupClickListener true
         }
 
@@ -244,7 +245,12 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
     override fun onCategoryClicked(selectedCategoryID: Int) {
         collapseHeaderGroup()
         // Load N2 category
-        loadN2Groups(RetrofitClient.client.sparePartsSubGroupUpdated(selectedCategoryID))
+        if (isOnline()) {
+            loadN2Groups(RetrofitClient.client.sparePartsSubGroupUpdated(selectedCategoryID))
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
+
     }
 
     override fun onSubCategoryClicked(selectedSubCategoryID: Int) {
@@ -469,7 +475,6 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchN3PartList[position].name
-
                 if (searchText.length > 0) {
                     var index: Int = SearchN3PartList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
 
@@ -480,11 +485,7 @@ class PartCategories : BaseActivity(), PartCategoryInterface {
                         index = SearchN3PartList[position].name.indexOf(searchText, index + 1, true)
                         holder.itemView.tv_search_item.setText(sb)
                     }
-
                 }
-
-
-
 
                 holder.itemView.setOnClickListener {
 

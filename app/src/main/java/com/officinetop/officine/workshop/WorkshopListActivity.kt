@@ -329,7 +329,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         createSortDialog()
 
         getCalendarMinPriceRange(selectedFormattedDate)
-        reloadPage()
+        if (isOnline()) {
+            reloadPage()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
 
         app_bar.post {
             val params = progress_bar.layoutParams as FrameLayout.LayoutParams
@@ -485,12 +489,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun reloadPage() {
-
-
         if (!isSOSServiceEmergency)
             horizontal_calendar_layout.visibility = View.VISIBLE
 
-        loadWorkshops()
+           loadWorkshops()
 
         // Click for map filter
         map_btn.setOnClickListener {

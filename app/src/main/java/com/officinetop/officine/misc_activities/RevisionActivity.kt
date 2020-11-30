@@ -11,6 +11,8 @@ import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.utils.genericAPICall
+import com.officinetop.officine.utils.isOnline
+import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_revision.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
@@ -32,7 +34,11 @@ class RevisionActivity : BaseActivity() {
         getLocation()
         revisionServiceAdapter = RevisionServiceAdapter(this, revisionServiceList)
         revision_service_list.adapter = revisionServiceAdapter
-        getRevisionServices()
+        if (isOnline()) {
+            getRevisionServices()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
     private fun getRevisionServices() {

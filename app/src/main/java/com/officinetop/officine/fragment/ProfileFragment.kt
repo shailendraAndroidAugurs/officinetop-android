@@ -91,7 +91,10 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         val copyreferral = view.findViewById(R.id.copyreferral) as LinearLayout
         val layout_wishlist = view.findViewById(R.id.layout_wishlist) as LinearLayout
         Log.d("HomeActivity", "Click")
-
+        if (context?.isOnline()!!) {
+        }else{
+            context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
         button_logout.setOnClickListener(View.OnClickListener {
             if (!context?.isLoggedIn()!!) {
                 alert {
@@ -119,31 +122,42 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             alertchangepswrd()
         })
         layout_editprofile.setOnClickListener(View.OnClickListener {
+            if (context?.isOnline()!!) {
+                try {
+                    if (!textview_email.text.toString().isNullOrEmpty() && !textview_mobile.text.toString().isNullOrEmpty()) {
+                        val intent = Intent(context, Edit_Profile::class.java)
+                        intent.putExtra("Email", textview_email.text.toString())
+                        intent.putExtra("Mobile", textview_mobile.text.toString())
+                        intent.putExtra("Pic_url", imageurl)
+                        intent.putExtra("user_name", textview_name.text.toString())
+                        intent.putExtra("Token", context?.getBearerToken()!!)
+                        startActivityForResult(intent, 100)
+                    }
+                } catch (e: Exception) {
 
-            try {
-                if (!textview_email.text.toString().isNullOrEmpty() && !textview_mobile.text.toString().isNullOrEmpty()) {
-                    val intent = Intent(context, Edit_Profile::class.java)
-                    intent.putExtra("Email", textview_email.text.toString())
-                    intent.putExtra("Mobile", textview_mobile.text.toString())
-                    intent.putExtra("Pic_url", imageurl)
-                    intent.putExtra("user_name", textview_name.text.toString())
-                    intent.putExtra("Token", context?.getBearerToken()!!)
-                    startActivityForResult(intent, 100)
                 }
-            } catch (e: Exception) {
-
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
+
 
         })
 
         layout_addcontact.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, ContactList_Activity::class.java)
-            startActivityForResult(intent, 100)
-
+            if (context?.isOnline()!!) {
+                val intent = Intent(context, ContactList_Activity::class.java)
+                startActivityForResult(intent, 100)
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
         })
         layout_address.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, Addresslist_Activity::class.java)
-            startActivityForResult(intent, 100)
+            if (context?.isOnline()!!) {
+                val intent = Intent(context, Addresslist_Activity::class.java)
+                startActivityForResult(intent, 100)
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
         })
         layout_profile_setting.setOnClickListener(View.OnClickListener {
             val intent = Intent(context, ProfileSetting::class.java)
@@ -152,14 +166,17 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         copyreferral.setOnClickListener(View.OnClickListener {
             myClip = ClipData.newPlainText("text", txt_referralcode.text)
             myClipboard?.primaryClip = myClip!!
-
-            Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
-
+           // Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
         })
 
         rootView = view
         layout_wishlist.setOnClickListener {
-            startActivity(intentFor<WishListActivity>())
+            if (context?.isOnline()!!) {
+                startActivity(intentFor<WishListActivity>())
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         }
 
         button_invite.setOnClickListener(View.OnClickListener {
@@ -174,12 +191,22 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             startActivity(intent)
         })
         layout_orders.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, Order_List::class.java)
-            startActivity(intent)
+            if (context?.isOnline()!!) {
+                val intent = Intent(context, Order_List::class.java)
+                startActivity(intent)
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         })
         layout_notification.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, NotificationList::class.java)
-            startActivity(intent)
+            if (context?.isOnline()!!) {
+                val intent = Intent(context, NotificationList::class.java)
+                startActivity(intent)
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         })
         // getUserDetailsApi(context?.getBearerToken()!!)
         return view

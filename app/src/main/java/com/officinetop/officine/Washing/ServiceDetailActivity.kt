@@ -15,7 +15,9 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.loadImage
+import com.officinetop.officine.utils.showInfoDialog
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_service_detail.*
@@ -40,9 +42,11 @@ class ServiceDetailActivity : BaseActivity() {
 
         //Default slider images
         setImageSlider()
-        loadServiceDetails()
-
-
+        if (isOnline()) {
+            loadServiceDetails()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
     private fun loadServiceDetails() {

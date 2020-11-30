@@ -247,6 +247,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }
         }
 
+        if (!isOnline()) {
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
 
     }
 
@@ -279,6 +282,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         val rotateAnimation = getRotateAnimation()
         dialog.dialog_refresh.startAnimation(rotateAnimation)
+
 
         getCarListAPI()
     }
@@ -1006,7 +1010,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         getBearerToken()?.let {
             RetrofitClient.client.getselectedUserCar(it)
                     .enqueue(object : Callback<ResponseBody> {
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            progressDialog.dismiss()
+                        }
 
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             progressDialog.dismiss()

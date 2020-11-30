@@ -14,8 +14,10 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.loadImage
 import com.officinetop.officine.utils.onCall
+import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_invite_friends.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.jetbrains.anko.intentFor
@@ -52,7 +54,11 @@ class InviteFriendsActivity : BaseActivity() {
 
             startActivity(intentFor<HowItWorksActivity>())
         }
-        getApi()
+        if (isOnline()) {
+            getApi()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
 
