@@ -197,6 +197,7 @@ class TyreListActivity : BaseActivity() {
             edit_tyre.setOnClickListener {
 
                 startActivityForResult(intentFor<TyreDiameterActivity>().putExtra("currentlySelectedMeasurement", tyreDetail.convertToJsonString()).putExtra("TyreSelectedId", tyreDetail.id), 100)
+                finish()
             }
 
             filter_btn.setOnClickListener {
@@ -213,7 +214,10 @@ class TyreListActivity : BaseActivity() {
             createSortDialog()
 
         }
-
+        if (!isOnline()) {
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            return
+        }
 
     }
 

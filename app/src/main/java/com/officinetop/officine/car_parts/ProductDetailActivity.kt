@@ -78,14 +78,15 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun initViews() {
-
         if (intent.hasExtra(Constant.Path.productDetails))
             productId = intent.getStringExtra(Constant.Path.productDetails)
         selectedProductID = if (!productId.isNullOrBlank()) productId.toInt() else 0
-        loadProductDetailApi(productId)
-        getSimilarProduct(productId)
-
-
+        if (isOnline()) {
+            loadProductDetailApi(productId)
+            getSimilarProduct(productId)
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
     private fun add_remove_product__Wishlist() {
@@ -611,9 +612,11 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             Iv_favorite.setOnClickListener {
-
-                add_remove_product__Wishlist()
-
+                if (isOnline()) {
+                    add_remove_product__Wishlist()
+                }else{
+                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                }
             }
             if (detail?.couponList != null && detail?.couponList?.size != 0) {
                 detail?.selectedProductCouponId = (detail?.couponList?.get(0)?.id.toString())

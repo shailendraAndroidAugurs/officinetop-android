@@ -52,12 +52,17 @@ class MotDetailActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.MOTDetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        progress_bar.visibility = View.GONE
         getLocation()
         if (intent.hasExtra("motObject")) {
             motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
             tv_title.text = motServiceObject.serviceName
             tv_description.text = motServiceObject.intervalDescriptionForKms
-            motDetailService(motServiceObject.id.toString(), motServiceObject.type)
+            if (isOnline()) {
+                motDetailService(motServiceObject.id.toString(), motServiceObject.type)
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
             saveServicesType(motServiceObject.type.toString())
         }
 

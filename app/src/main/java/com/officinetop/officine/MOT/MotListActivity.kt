@@ -12,6 +12,7 @@ import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.adapter.SpinnerAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -45,12 +46,21 @@ class MotListActivity : BaseActivity() {
         ed_search_km.isEnabled = false
 
         ed_search_km.setText(getMotKm())
-
+        progress_bar.visibility = View.GONE
         if (getSelectedCar()?.carConditionMotSchedule?.id.isNullOrBlank()) {
-            CallMotSchedule()
+            if (isOnline()) {
+                CallMotSchedule()
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
         } else {
             scheduleId = getSelectedCar()?.carConditionMotSchedule?.id!!
-            motServive(getMotKm()!!, "0")
+            if (isOnline()) {
+                motServive(getMotKm()!!, "0")
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         }
 
 

@@ -33,6 +33,7 @@ import com.officinetop.officine.utils.*
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_add_vehicle.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_add_car_image.view.*
 import okhttp3.MediaType
@@ -161,12 +162,16 @@ class AddVehicleActivity : BaseActivity() {
 
 
     private fun bindOnCreateValues() {
-
         getMerlinConnectionCallback().registerConnectable {
             if (isForEdit) {
                 bindEditables()
             }
-            loadCarManufacturer()
+            if (isOnline()) {
+                loadCarManufacturer()
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         }
     }
 
@@ -1103,6 +1108,10 @@ class AddVehicleActivity : BaseActivity() {
         }*/
 
         if (getUserId().isNullOrBlank()) {
+            if (!isOnline()) {
+                Snackbar.make(loginBtn, getString(R.string.ConnectionErrorPleaseretry), Snackbar.LENGTH_LONG).show()
+                return
+            }
             RetrofitClient.client.getAddCarByPlateNumber(plate_editText.text.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -1131,7 +1140,10 @@ class AddVehicleActivity : BaseActivity() {
 
                     })
         } else {
-
+            if (!isOnline()) {
+                Snackbar.make(loginBtn, getString(R.string.ConnectionErrorPleaseretry), Snackbar.LENGTH_LONG).show()
+                return
+            }
             RetrofitClient.client.addCarFromPlate(plate_editText.text.toString(), authToken = token!!)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

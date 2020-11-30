@@ -107,7 +107,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         emergency_call.setOnClickListener {
             callEmergency()
         }
-
+        if (!isOnline()) {
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
     }
 
 
@@ -480,7 +482,13 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     .position(myLocation))
         }
         Log.e("latitudeloadmapview", mLatitude.toString() + "location")
-        getAllWrackerWorkshopAddressInfo()
+
+        if (isOnline()) {
+            getAllWrackerWorkshopAddressInfo()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
+
     }
 }
 

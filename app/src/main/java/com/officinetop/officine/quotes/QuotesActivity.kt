@@ -104,7 +104,14 @@ class QuotesActivity : BaseActivity() {
         })
         quotes_recycler_view.adapter = imagesAdapter
 
-        getQuotesCategory()
+        if (isOnline()) {
+            getQuotesCategory()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {
+                finish()
+            }
+        }
+
 
         confirm_online_request_only.setOnClickListener {
             if (!isEditTextValid(this@QuotesActivity, edt_describe_request)) return@setOnClickListener

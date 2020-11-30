@@ -89,7 +89,12 @@ class MaintenanceActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
-        getCarMaintenance()
+        if (isOnline()) {
+            getCarMaintenance()
+        }else{
+            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
+
         createFilterDialog()
         createSortDialog()
 
@@ -230,6 +235,7 @@ class MaintenanceActivity : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
+                if (isOnline()) {
                 if (view.tag == "100") {
                     checkBox = view.findViewById(R.id.maintenance_item_chk) as CheckBox
                     if (carMaintenanceServiceList[position].productId != null || carMaintenanceServiceList[position].type == "2") {
@@ -244,7 +250,6 @@ class MaintenanceActivity : BaseActivity() {
                                 Log.e("carMaintenance_Id::", carMaintenanceServiceList[position].id)
                                 selectedCarMaintenanceServices.remove(carMaintenanceServiceList[position])
                                 CalculateWorkshopPricesAndSparepartPrices()
-
                             }
                         }
                     } else {
@@ -264,9 +269,13 @@ class MaintenanceActivity : BaseActivity() {
                     current_page = PAGE_START
                     bindReplacementPartOption(position)
                 }
+                }else{
+                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {
+                        finish()
+                    }
+                }
             }
         })
-
         recycler_view.adapter = genericAdapter
         genericAdapter!!.addItems(carMaintenanceServiceList)
     }
