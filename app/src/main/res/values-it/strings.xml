@@ -482,7 +482,7 @@
     <string name="WorkshopRemovedfromfavorite">Til suo Officine Rimosso dai preferiti</string>
     <string name="ContactAddSuccessFully">Aggiunto numero di cellulare con successo.</string>
     <string name="ContactUpdateSuccessFully">Contatta Update SuccessFully</string>
-    <string name="ContactDeletedSuccessFully">Contatta Eliminato SuccessFully</string>
+    <string name="ContactDeletedSuccessFully">eliminato con successo</string>
     <string name="Failed"> Impossibile!</string>
     <string name="Noapplicationcanhandlethisrequest">Nessuna applicazione può gestire questa richiesta.</string>
     <string name="PriceNotSpecified">Prezzo non specificato</string>

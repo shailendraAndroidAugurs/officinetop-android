@@ -287,13 +287,21 @@ class MaintenanceActivity : BaseActivity() {
             } else {
 
             }*/
-
-            getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
+            if (isOnline()) {
+                getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
             selectservice_position = position
 
         } else {
             progress_bar.visibility = View.VISIBLE
-            getAllParts(carMaintenanceServiceList[position].id, position)
+            if (isOnline()) {
+                getAllParts(carMaintenanceServiceList[position].id, position)
+            }else{
+                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
         }
     }
 
@@ -770,7 +778,6 @@ class MaintenanceActivity : BaseActivity() {
     }
 
     private fun displayCoupons(couponsList: ArrayList<Models.Coupon>, couponType: String, textView: TextView, CarMaintenanceServicesObject: Models.CarMaintenanceServices) {
-
         val dialog = Dialog(this)
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.recycler_view_for_dialog, null, false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -780,21 +787,16 @@ class MaintenanceActivity : BaseActivity() {
         window.setDimAmount(0f)
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 1200)//height should be fixed
         val title = dialog.findViewById(R.id.title) as TextView
-
-
         title.text = getString(R.string.coupon_list)
 
 
         with(dialog) {
 
-
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val couponsName = view.coupons_name
                 val couponsQuantity = view.coupons_quantity
-
                 val couponsAmount = view.coupons_amount
             }
-
             dialog_recycler_view.adapter = object : RecyclerView.Adapter<ViewHolder>() {
                 override fun getItemCount(): Int = couponsList.size
 
@@ -817,22 +819,16 @@ class MaintenanceActivity : BaseActivity() {
                         dismiss()
                     }
                 }
-
                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
                     return ViewHolder(layoutInflater.inflate(R.layout.dialog_offer_coupons_layout, parent, false))
                 }
-
             }
             imageCross.setOnClickListener {
                 dialog.dismiss()
             }
-
-
         }
         dialog.show()
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
@@ -845,19 +841,14 @@ class MaintenanceActivity : BaseActivity() {
             dialog_recycler_view2.adapter = genericAdapterParts
             genericAdapterParts!!.addItems(carMaintenanceServiceList[selectservice_position].parts)
             dialog_recycler_view2.layoutManager!!.scrollToPosition(selectitem_position)
-
-
         }
     }
-
     fun CalculateWorkshopPricesAndSparepartPrices() {
-
         selectedServicesProductTotalPrices = 0.0
         deliveryDate = 0
         if (selectedCarMaintenanceServices.size != 0) {
             calculateselectedservicesorPart()
             for (item in selectedCarMaintenanceServices) {
-
                 /*  if (!item.seller_price.isNullOrBlank()) {
                       selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
                   }*/
@@ -874,20 +865,16 @@ class MaintenanceActivity : BaseActivity() {
                         if (deliveryDate < item.parts[0].numberOfDeliveryDays.toInt()) {
                             deliveryDate = item.parts[0].numberOfDeliveryDays.toInt()
                         }
-
                     }
                 }
-
             }
             selectedServicesTotalPrice = 0.0
             getminPricesOfselectedService()
-
         } else {
             selectedServicesTotalPrice = 0.0
             btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
         }
     }
-
     private fun calculateselectedservicesorPart(isfromBooking: Boolean = false) {
         val selectedServices_partList = ArrayList<Models.servicesCouponData>()
         val serviceId: MutableList<String> = ArrayList()
@@ -902,7 +889,6 @@ class MaintenanceActivity : BaseActivity() {
                                 if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
                                 else if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.equals("1"))) "2" else "0", carMaintenanceServiceList[i].id)
                         selectedServices_partList.add(hashMap.get(carMaintenanceServiceList[i].id)!!)
-
                     } else {
                         hashMap[carMaintenanceServiceList[i].id] = Models.servicesCouponData("", if (carMaintenanceServiceList[i].productId.isNullOrBlank()) "" else carMaintenanceServiceList[i].productId, carMaintenanceServiceList[i].usersId,
                                 if (!carMaintenanceServiceList[i].productId.isNullOrBlank() && (carMaintenanceServiceList[i].forPair.isNullOrBlank() || carMaintenanceServiceList[i].forPair.equals("0"))) "1"
@@ -925,10 +911,7 @@ class MaintenanceActivity : BaseActivity() {
             ).putExtras(bundle)
             )
         }
-
-
     }
-
     private fun getminPricesOfselectedService() {
         RetrofitClient.client.getminPriceForMaintenanceServices(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, getUserId(), "eng", Constant.defaultDistance, getDateFor(deliveryDate)!!, getLat(), getLong()).onCall { networkException, response ->
             if (response?.isSuccessful!!) {

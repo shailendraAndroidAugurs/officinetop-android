@@ -1114,45 +1114,34 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun createImageSliderDialog() {
 
         imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
-
         val slider = SliderLayout(this)
-
         slider.stopAutoCycle()
         slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-
         dialogSlider = slider
-
         with(imageDialog) {
             requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
             setContentView(slider)
-
             window?.setGravity(Gravity.TOP)
             window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
             window?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
             create()
-
         }
     }
 
     private fun checkAndBookService(packageDetail: JSONObject, bookingStartTime: String) {
         var endTime = "00:00"
         var finalPrice: Double = 0.0
-
         //check for timeslot
         val packageID = packageDetail.getInt("id")
         if (bookServicesWithoutCoupon) {
             workshopCouponId = ""
         }
-
-
         if (isRevision) {
             SpecialConditionId = packageDetail.optString("special_condition_id", "0.0")
             DiscountType = packageDetail.optString("discount_price")
             DiscountPrices = packageDetail.optString("discount_type")
-
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
-
             Log.d("Revision", "averageServiceTime$averageServiceTime")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
@@ -1180,13 +1169,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 Log.e("ENDTIME", "$bookingDuration/////$endTime///$aver_time")
 
                 var calculate_price = (hourly_rate.toDouble().roundTo2Places() / 60) * bookingDuration
-
-
                 val jsonObj = JSONObject()
                 val jsonObjpart = JSONObject()
                 val jsonArray = JSONArray()
                 val partdata = partidMap.get(service_id)
-
                 jsonObj.put("service_id", partdata?.servicesid)
                 jsonObj.put("price", price)
                 jsonObj.put("hourly_rate", hourly_rate)
@@ -1196,9 +1182,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 jsonObjpart.put("part_coupon_id", partdata.service_partcouponID)
                 jsonObjpart.put("seller_id", partdata.seller_ID)
                 jsonObj.put("parts", jsonArray.put(jsonObjpart))
-
                 serviceSpecification.put(jsonObj)
-
             }
         } else if (isSosEmergency || isSOSService) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
@@ -1221,7 +1205,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
         } else if (isTyre) {
-
             SpecialConditionId = packageDetail.optString("special_condition_id", "0.0")
             DiscountType = packageDetail.optString("discount_price")
             DiscountPrices = packageDetail.optString("discount_type")
@@ -1244,17 +1227,13 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             finalPrice = (hourlyRate / 60) * bookingDuration
             finalPrice = finalPrice.roundTo2Places()
         } else if (isQuotesService) {
-
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-
             var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
-
-
         } else if (isCarWash) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
@@ -1286,47 +1265,36 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         val dialog = getProgressDialog(true)
-
-
         val callback = (object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("WorkshopDetailActivity", "onFailure: onFailure", t)
                 toast(getString(R.string.ConnectionErrorPleaseretry))
                 dialog.dismiss()
                 serviceSpecArray = JSONArray()
-
             }
-
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 dialog.dismiss()
                 serviceSpecArray = JSONArray()
-
                 val body = response.body()?.string()
                 if (body.isNullOrEmpty() || response.code() == 401)
                     showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
-
                 body?.let {
                     if (isStatusCodeValid(body)) {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
                             createDialogforInvalidCoupon(packageDetail, bookingStartTime)
-
                         } else {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
                             finishAffinity()
                         }
-
-
                     } else {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
                             createDialogforInvalidCoupon(packageDetail, bookingStartTime)
-
                         } else {
                             showInfoDialog(getMessageFromJSON(it), true)
                         }
-
                     }
                     Log.d("WorkshopDetailActivity", "onResponse: $it")
                 }
@@ -1345,9 +1313,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
                         , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "")
             }
-
             serviceAssemblyBookingCall?.enqueue(callback)
-
         } else if (isRevision) {
             Log.d("Revision finalPrice ", finalPrice.toString())
             Log.d("Revision startTime", bookingStartTime)
@@ -1361,10 +1327,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             serviceRevisionBookingCall.enqueue(callback)
         } else if (isTyre) {
-
-
             var maincategoryId = intent.getStringExtra(Constant.Path.mainCategoryIdTyre)
-
             if (maincategoryId == null) {
                 maincategoryId = ""
             }
@@ -1387,8 +1350,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             )
 
             serviceTyreBookingCall.enqueue(callback)
-
-
         } else if (isSOSService) {
             val serviceSOSBookingCall = RetrofitClient.client.sosServiceBooking(
                     packageID.toString(),
@@ -1397,7 +1358,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopWreckerId, getOrderId(), getBearerToken() ?: "", workshopCouponId
             )
             serviceSOSBookingCall.enqueue(callback)
-
         } else if (isSosEmergency) {
             val serviceSOSBookingCallEmergency = RetrofitClient.client.emergencySosServiceBooking(
                     getBearerToken() ?: "",
@@ -1472,7 +1432,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
     }
 
-
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {
         val dialog = Dialog(this@WorkshopDetailActivity)
         val dialogView: View = LayoutInflater.from(this@WorkshopDetailActivity).inflate(R.layout.recycler_view_for_dialog, null, false)
@@ -1485,22 +1444,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         val title = dialog.findViewById(R.id.title) as TextView
 
         title.text = getString(R.string.coupon_list)
-
-
         with(dialog) {
-
-
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val couponsName = view.coupons_name
                 val couponsQuantity = view.coupons_quantity
                 val couponsAmount = view.coupons_amount
             }
-
             dialog_recycler_view.adapter = object : RecyclerView.Adapter<ViewHolder>() {
-
-
                 override fun getItemCount(): Int = couponsList.size
-
                 override fun onBindViewHolder(holder: ViewHolder, position: Int) {
                     val items = couponsList[position]
                     holder.couponsName.text = items.couponTitle
@@ -1512,58 +1463,37 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             holder.couponsAmount.text = items.amount.toString() + getString(R.string.prepend_percentage_symbol)
                         }
                     }
-
-
                     holder.itemView.setOnClickListener {
-
-
                         if (!couponsList[position].id.isNullOrBlank()) {
                             workshopCouponId = couponsList[position].id.toString()
                             AppliedCouponName.text = (couponsList[position].couponTitle)
                             AppliedCouponName.visibility = View.VISIBLE
                             dialog.dismiss()
                         }
-
                     }
-
-
                 }
-
                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
                     return ViewHolder(layoutInflater.inflate(R.layout.dialog_offer_coupons_layout, parent, false))
                 }
-
-
             }
-
-
-
             imageCross.setOnClickListener {
                 dialog.dismiss()
             }
-
-
         }
-
         dialog.show()
     }
-
-
     private fun createDialogforInvalidCoupon(packageDetail: JSONObject, bookingStartTime: String) {
         val builder = AlertDialog.Builder(this@WorkshopDetailActivity)
-
         //set title for alert dialog
         builder.setTitle(getString(R.string.coupon_is_invalid))
         //set message for alert dialog
         builder.setMessage(getString(R.string.doyouwanttobookservices))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-
         //performing positive action
         builder.setPositiveButton("Yes") { dialogInterface, which ->
             bookServicesWithoutCoupon = true
             checkAndBookService(packageDetail, bookingStartTime)
         }
-
         //performing negative action
         builder.setNegativeButton("No") { dialogInterface, which ->
             //alertDialog.dismiss()
@@ -1576,7 +1506,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
         bindFeedbackList(list, this)
     }
-
     private fun getSpecialCondition(workshopCategoryId: String, workshopUsersId: Int) {
 
         RetrofitClient.client.getSpecialCondition(workshopCategoryId, workshopUsersId)
@@ -1587,54 +1516,37 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         if (response.isSuccessful) {
                             try {
                                 val body = JSONObject(response.body()?.string())
-
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     if (body.get("data_set") is JSONArray) {
                                         val data = body.getJSONArray("data_set")
                                         ll_special_cond.visibility = View.VISIBLE
                                         val listSpecialCondition: MutableList<Models.SpecialCondition> = ArrayList()
-
                                         val listCheckbox: MutableList<CheckBox> = ArrayList()
-
                                         special_condition.removeAllViews()
-
                                         for (i in 0 until data.length()) {
-
                                             val specialCondObj = Gson().fromJson<Models.SpecialCondition>(data.get(i).toString(), Models.SpecialCondition::class.java)
                                             listSpecialCondition.add(specialCondObj)
-
                                             val rlayout = RelativeLayout(this)
                                             val text = TextView(this)
                                             val checkbox = CheckBox(this)
-
                                             text.text = if (!specialCondObj.item.isNullOrEmpty()) specialCondObj.item else "none"
                                             text.id = specialCondObj.id.toInt()
                                             checkbox.id = specialCondObj.id.toInt()
                                             checkbox.gravity = Gravity.END
-
                                             text.gravity = Gravity.START
                                             text.setTextColor(resources.getColor(R.color.black))
-
                                             rlayout.id = i
-
                                             val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
                                             rlayout.layoutParams = lp
-
                                             text.layoutParams = lp
-
                                             val chkParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
                                             checkbox.layoutParams = chkParams
-
                                             chkParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-
                                             rlayout.addView(text)
                                             rlayout.addView(checkbox)
                                             special_condition.addView(rlayout)
-
                                             listCheckbox.add(checkbox)
-
                                             checkbox.setOnCheckedChangeListener { compoundButton, isChecked ->
-
                                                 if (isChecked) {
                                                     for (k in 0 until listCheckbox.size) {
                                                         if (checkbox.id == listCheckbox.get(k).id) {
@@ -1650,9 +1562,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                                     specialConditionObject = null
                                                 }
                                             }
-
                                         }
-
                                     }
                                 }
                             } catch (e: java.lang.Exception) {

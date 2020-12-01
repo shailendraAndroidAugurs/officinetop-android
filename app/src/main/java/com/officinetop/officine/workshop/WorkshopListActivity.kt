@@ -147,6 +147,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         isSOSAppointment = intent?.getBooleanExtra(Constant.Key.is_sos_service, false) ?: false
         isSOSServiceEmergency = intent?.getBooleanExtra(Constant.Key.is_sos_service_emergency, false)
                 ?: false
+
         isCarWash = intent?.getBooleanExtra(Constant.Key.is_car_wash, false) ?: false
         if (intent.hasExtra(Constant.Key.cartItem)) {
 
@@ -156,6 +157,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
 
         }
+
         if (intent.hasExtra(Constant.Path.PartID))
             partidhasMap = intent.getSerializableExtra(Constant.Path.PartID) as HashMap<String, Models.servicesCouponData>
 
@@ -806,16 +808,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-
         }
-
         Log.d("ProductOrWorkshop", "bindRecyclerView: price range = $seekbarPriceInitialLimit - $seekbarPriceFinalLimit")
     }
 
     private fun createFilterDialog() {
         filterDialog = Dialog(this, R.style.DialogSlideAnimStyle)
         val brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-
 
         drawableLeft = ContextCompat.getDrawable(this@WorkshopListActivity, R.drawable.ic_sort_black_24dp)!!
         drawableRight = ContextCompat.getDrawable(this@WorkshopListActivity, R.drawable.shape_circle_orange_8dp)!!
@@ -834,7 +833,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             dialog_price_range.setOnRangeChangedListener(object : OnRangeChangedListener {
                 override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
-
 
                     tempPriceInitial = leftValue.toInt()
                     tempPriceFinal = rightValue.toInt() /*+ 1*/
@@ -866,7 +864,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             toolbar.setOnMenuItemClickListener {
 
                 ratingString = ""
-
                 if (dialog_rating_five.isChecked)
                     ratingString += "5,"
                 if (dialog_rating_four.isChecked)
@@ -886,7 +883,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         ratingString = ratingString.substring(0, ratingString.lastIndex).trim()
                 }
 
-
                 priceRangeInitial = tempPriceInitial
                 priceRangeFinal = tempPriceFinal
 
@@ -897,7 +893,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     Log.d("getCalendarMin", "distance filter or clear selection")
                     getCalendarMinPriceRange(SelectedCalendarDateIntial)
                 }
-
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
@@ -919,7 +914,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             setCheckedListener(dialog_layout_offers, dialog_offers_check_box)
 
             dialog_brand_layout.visibility = View.GONE
-
             clear_selection.setOnClickListener {
 
                 priceRangeFinal = -1
@@ -964,9 +958,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun createSortDialog() {
         sortDialog = Dialog(this@WorkshopListActivity, R.style.DialogSlideAnimStyle)
 
-
-
-
         with(sortDialog) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(R.layout.dialog_sorting)
@@ -993,7 +984,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
-
             tv_Sort_ClearSection.setOnClickListener {
                 rb_price_low.isChecked=true
                 rb_price_high.isChecked=false
@@ -1015,19 +1005,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         if (resultCode == Activity.RESULT_OK && requestCode == 111) {
             val query = data?.getStringExtra("query")
             recycler_view.snackbar(getString(R.string.Searchingresultfor) + " \"$query\"")
             search_view.setQuery(query, true)
-
         } else {
             search_view.setQuery("", true)
         }
 
         super.onActivityResult(requestCode, resultCode, data)
     }
-
     private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
         Log.d("Revision", "DistanceInitial$tempDistanceInitial")
         Log.d("Revision", "DistanceFinal$tempDistanceFinal")

@@ -11,10 +11,7 @@ import com.officinetop.officine.Online_Payment.OnlinePaymentScreen
 import com.officinetop.officine.R
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.OnCartListCallback
-import com.officinetop.officine.utils.getCartItemsList
-import com.officinetop.officine.utils.setAppLanguage
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_shopping_cart_single_item_detail.*
 import kotlinx.android.synthetic.main.layout_recycler_view.view.*
 import org.jetbrains.anko.support.v4.intentFor
@@ -63,7 +60,12 @@ class FragmentCart : Fragment(), OnCartListCallback {
         }
         rootView = view
 
-        getCartApi()
+        if (context?.isOnline()!!) {
+            getCartApi()
+        }else{
+            context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
+
 
         // view.bindCartViews(context)
 
