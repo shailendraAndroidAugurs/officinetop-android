@@ -66,10 +66,12 @@ class Edit_Profile : BaseActivity() {
             val user_mobile = intent?.getStringExtra("Mobile") ?: ""
             val user_picurl = intent?.getStringExtra("Pic_url") ?: ""
             val userName = intent?.getStringExtra("user_name") ?: ""
+            val userlName = intent?.getStringExtra("user_lname") ?: ""
 
             edittext_mobile.text = user_mobile
             edittext_email.text = user_email
             ed_userName.setText(userName)
+            ed_userlName.setText(userlName)
             ed_userName.requestFocus()
             loadImageprofile(user_picurl, profile_imagefull)
         }
@@ -88,31 +90,30 @@ class Edit_Profile : BaseActivity() {
                 Toast.makeText(this@Edit_Profile, getString(R.string.mobileblank), Toast.LENGTH_LONG).show()
             } else if (edittext_email.text.isEmpty()) {
                 Toast.makeText(this@Edit_Profile, getString(R.string.emailblank), Toast.LENGTH_LONG).show()
-            } else {
+            }else {
                 val imagedata = attachedImage?.toMultipartBody("profile_pic")
                 val emailid = edittext_email.text.toString()
                 val mobileno = edittext_mobile.text.toString()
-                updateuserprofile(emailid, mobileno, imagedata, ed_userName.text.toString())
+                updateuserprofile(emailid, mobileno, imagedata,ed_userName.text.toString(),ed_userlName.text.toString())
             }
 
         })
 
     }
 
-    private fun updateuserprofile(emailid: String, mobileno: String, imagedata: MultipartBody.Part?, User_name: String) {
+    private fun updateuserprofile(emailid: String, mobileno: String, imagedata: MultipartBody.Part?, User_name: String, userlName: String) {
         try {
             val progressDialog = this.getProgressDialog()
             progressDialog.show()
             if (!showOnlineSnack(progressDialog))
                 return
             RetrofitClient.client.updateprofile(authToken = getBearerToken()
-                    ?: "", email = emailid.toRequestBody(), mobile = mobileno.toRequestBody(), profile_pic = imagedata, User_name = User_name.toRequestBody(), last_name = "".toRequestBody())
+                    ?: "", email = emailid.toRequestBody(), mobile = mobileno.toRequestBody(), profile_pic = imagedata, User_name = User_name.toRequestBody(), last_name = userlName.toRequestBody())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()
                             toast(t.message!!)
                         }
-
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             val body = response.body()?.string()
                             progressDialog.dismiss()
@@ -181,9 +182,7 @@ class Edit_Profile : BaseActivity() {
     }
 
     private fun choosePhotoFromGallary() {
-        val galleryIntent = Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-
+        val galleryIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, GALLERY)
     }
 
@@ -193,9 +192,7 @@ class Edit_Profile : BaseActivity() {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == GALLERY) {
             if (data != null) {
                 val contentURI = data.data
@@ -207,9 +204,7 @@ class Edit_Profile : BaseActivity() {
                     e.printStackTrace()
                     Toast.makeText(this@Edit_Profile, getString(R.string.Failed), Toast.LENGTH_SHORT).show()
                 }
-
             }
-
         } else if (requestCode == CAMERA) {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             profile_imagefull.setImageBitmap(thumbnail)
@@ -220,34 +215,25 @@ class Edit_Profile : BaseActivity() {
     private fun convertTofile(bitmap: Bitmap): File {
         // Get the context wrapper
         val wrapper = ContextWrapper(applicationContext)
-
         // Initialize a new file instance to save bitmap object
         var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
         file = File(file, "${UUID.randomUUID()}.jpg")
-
         try {
             // Compress the bitmap and save in jpg format
             val stream: OutputStream = FileOutputStream(file)
-
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
             stream.close()
-
             attachedImage = file
             Log.e("file select camera=", "${attachedImage}")
             updateimage = true
             //val file = File(images.get(i))
-
             //imageList.add(attachedImage?.toMultipartBodyImages("images[]"))
-
-
         } catch (e: IOException) {
             e.printStackTrace()
         }
         return file
     }
-
-
     fun saveImage(myBitmap: Bitmap): String {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)

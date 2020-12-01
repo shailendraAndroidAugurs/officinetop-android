@@ -46,6 +46,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     private lateinit var textview_mobile: TextView
     private lateinit var textview_email: TextView
     private lateinit var textview_name: TextView
+    private lateinit var textview_lname: TextView
     private lateinit var text_address: TextView
     private lateinit var text_landmark: TextView
     private lateinit var text_zipcode: TextView
@@ -72,6 +73,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         textview_walletamount = view.findViewById(R.id.textview_walletamount) as TextView
         textview_email = view.findViewById(R.id.textview_email) as TextView
         textview_name = view.findViewById(R.id.textview_name) as TextView
+        textview_lname= view.findViewById(R.id.textview_lname) as TextView
         text_address = view.findViewById(R.id.text_address) as TextView
         text_landmark = view.findViewById(R.id.text_landmark) as TextView
         text_zipcode = view.findViewById(R.id.text_zipcode) as TextView
@@ -130,6 +132,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                         intent.putExtra("Mobile", textview_mobile.text.toString())
                         intent.putExtra("Pic_url", imageurl)
                         intent.putExtra("user_name", textview_name.text.toString())
+                        intent.putExtra("user_lname", textview_lname.text.toString())
                         intent.putExtra("Token", context?.getBearerToken()!!)
                         startActivityForResult(intent, 100)
                     }
@@ -353,7 +356,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     }
 
 
-    private fun uicontents(mobileNumber: String?, email: String?, unername: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
+    private fun uicontents(mobileNumber: String?, email: String?, fname: String?, lname: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
         if (!isAdded) return
         if (walletamount == "null")
             textview_walletamount.text = getString(R.string.euro_symbol) + " 0"
@@ -362,7 +365,8 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
         textview_mobile.text = mobileNumber
         textview_email.text = email
-        textview_name.text = unername?.trim()
+        textview_name.text = fname?.trim()
+        textview_lname.text=lname?.trim()
         text_address.text = address
         txt_referralcode.text = if (!referralcode.isNullOrBlank()) referralcode.toUpperCase() else ""
         //text_landmark.text = getString(R.string.Landmark) + landmark
@@ -383,16 +387,13 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents("", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
-
+                uicontents("", "", "", "","", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
             }
-
-
         } else if (userDetailData?.userContact?.size!! > 0) {
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
                 val userDetail = userDetailData.userDetails.get(0)
@@ -400,48 +401,35 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
-
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userContact = userDetailData.userContact.get(0)
-                uicontents("", "", "", "", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
+                uicontents("", "", "", "","", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
             }
-
         } else if (userDetailData.userAddress.size > 0) {
-
-
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
                 val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
-
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents("", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
-
+                uicontents("", "", "", "","", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
             }
-
         } else {
-
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
                 val userDetail = userDetailData.userDetails.get(0)
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" + " " + if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
-
+                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
-                uicontents("", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
-
+                uicontents("", "", "", "","", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
             }
-
         }
-
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

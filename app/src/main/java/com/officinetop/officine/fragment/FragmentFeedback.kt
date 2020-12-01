@@ -19,7 +19,9 @@ import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
 import com.officinetop.officine.feedback.FeedbackReview
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.setAppLanguage
+import com.officinetop.officine.utils.showInfoDialog
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -51,7 +53,10 @@ class FragmentFeedback : Fragment() {
             context?.storeLangLocale("it")
             context?.setAppLanguage()
         }
-
+        if (context?.isOnline()!!) {
+        }else{
+            context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        }
 
         viewPager = findViewById(R.id.feedback_viewpager)
         tabLayout = findViewById(R.id.tabs)
@@ -61,31 +66,27 @@ class FragmentFeedback : Fragment() {
         if (!isAdded) {
             return
         } else {
-
-            highRatingFeedback("2")
+            if (context?.isOnline()!!) {
+                highRatingFeedback("2")
+            }else{
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
             MyFeedBackReview = findViewById(R.id.tv_review)
             MyFeedBackReview?.setOnClickListener {
                 if (MyFeedBackReview?.tag == "100") {
                     MyFeedBackReview?.text = getString(R.string.MyReview)
                     MyFeedBackReview?.tag = "101"
                     MyReview = false
-
                 } else {
                     MyReview = true
                     MyFeedBackReview?.text = getString(R.string.AllReview)
                     MyFeedBackReview?.tag = "100"
-
-
                 }
                 viewPager?.invalidate()
                 viewPager?.adapter?.notifyDataSetChanged()
             }
-
-
         }
-
     }
-
     private fun setupViewPager(viewPager: ViewPager) {
         if (!isAdded) {
             return
@@ -94,19 +95,13 @@ class FragmentFeedback : Fragment() {
             adapter.addFragment(FragmentWorkshopFeedback(), getString(R.string.feedback_Workshop))
             adapter.addFragment(FragmentProductFeedback(), getString(R.string.feedback_Product))
             viewPager.adapter = adapter
-
         }
-
     }
-
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
-
-
         override fun getItem(position: Int): Fragment {
-
             val bundle = Bundle()
             if (position == 1) {
                 if (ProductFeedBackList.size != 0 && MyFeedBackReview != null) {
@@ -130,9 +125,7 @@ class FragmentFeedback : Fragment() {
                 Log.d("FragmnetFor", "workhsop" + "true")
                 Log.d("list", "WorkshopFeedBackList" + WorkshopFeedBackList.size)
             }
-
             mFragmentList[position].arguments = bundle
-
 
             return mFragmentList[position]
         }

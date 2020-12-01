@@ -289,9 +289,6 @@ inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: Recyc
                     e.printStackTrace()
                 }
 
-
-
-
                 p0.itemView.item_sub_titleGrid.text = if (SimilarproductList[p1].ean_number != null) SimilarproductList[p1].ean_number else ""
 
             }
@@ -1265,6 +1262,7 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
     } catch (e: java.lang.Exception) {
 
     }
+
 
 
 }

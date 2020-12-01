@@ -60,7 +60,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         val buttonTitles = resources.getStringArray(R.array.Address_Type)
         if (useraddress == null) {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_address, null, false)
-            //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)
+            //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)  486,489,494,496,497,502,505,504
             setPlacePicker("")
             bindSpinner(mDialogView.spinner_AddressType, buttonTitles, "")
 
@@ -208,7 +208,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         RetrofitClient.client.deleteAddress(this@Addresslist_Activity.getBearerToken(), address_id).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
-                    showInfoDialog(getString(R.string.AddressDeletedSuccessFully), false, { getUserDetail(this, this) })
+                    showInfoDialog(getString(R.string.ContactDeletedSuccessFully), false, { getUserDetail(this, this) })
                 }
 
             }

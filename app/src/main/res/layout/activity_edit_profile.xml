@@ -87,20 +87,41 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/_30sdp"
+        android:paddingLeft="@dimen/_20sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:paddingRight="@dimen/_30sdp">
+        android:paddingRight="@dimen/_20sdp">
 
-        <EditText
-            android:id="@+id/ed_userName"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/rectangle_gray_empty"
-            android:drawableLeft="@drawable/ic_person"
-            android:drawablePadding="@dimen/_10sdp"
-            android:inputType="textEmailAddress"
-            android:padding="10dp" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:hint="Fisrt name"
+                android:layout_weight="1"
+                android:id="@+id/ed_userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/rectangle_gray_empty"
+                android:drawableLeft="@drawable/ic_person"
+                android:drawablePadding="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
+            <EditText
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:hint="Last name"
+                android:layout_weight="1"
+                android:id="@+id/ed_userlName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/rectangle_gray_empty"
+                android:drawablePadding="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
 
 
         <TextView
