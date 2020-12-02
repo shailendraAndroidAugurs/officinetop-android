@@ -135,7 +135,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         horizontal_calendar_layout.visibility = View.VISIBLE
         map_btn.visibility = View.GONE
         toolbar_title.text = getString(R.string.parts)
-
         if (isOnline()) {
             if (isBestSelling)
                 bestSellingApi()
@@ -291,7 +290,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         RetrofitClient.client.bestSeller(if (priceRangeFinal == -1) "" else priceRangeString,
                 priceSortLevel, brands = filterBrandList.joinToString(","), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 Log.d("IsBestSelling", "onResponse Best Selling Products: $body")
@@ -313,7 +311,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     }
 
     fun bindRecyclerView(jsonArray: JSONArray) {
-
         if (calendarPriceMap == null)
             calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
@@ -338,7 +335,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }
         isLoading = false
 
-
         intent.printValues(localClassName)
 
         if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
@@ -353,18 +349,15 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                     reloadPage()
                 }
-
                 override fun isLastPage(): Boolean {
                     layoutprogress.visibility = View.GONE
                     return isLastPage
                 }
-
                 override fun isLoading(): Boolean {
                     return isLoading
                 }
             })
         }
-
 
         if (hasRecyclerLoadedOnce)
             return
@@ -379,7 +372,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
             seekbarPriceFinalLimit = if (json.has("max_price") && !json.isNull("max_price") && json.getString("max_price") != "" && json.getString("max_price") != "null")
                 json.optString("max_price", "0").toFloat() else 0.0f
-
         }
 
         if (jsonArray.length() > 0) {
@@ -390,8 +382,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }
 
         Log.d("ProductOrWorkshop", "bindRecyclerView: price range = $seekbarPriceInitialLimit - $seekbarPriceFinalLimit")
-
-
     }
 
     private fun createFilterDialog(progress_bar: ProgressBar) {
@@ -444,9 +434,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             })
 
             toolbar.setOnMenuItemClickListener {
-
                 ratingString = ""
-
                 if (dialog_rating_five.isChecked)
                     ratingString += "5,"
                 if (dialog_rating_four.isChecked)
@@ -461,15 +449,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 isFavouriteChecked = dialog_favourite_check_box.isChecked
                 isOfferChecked = dialog_offers_check_box.isChecked
 
-
                 //    this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
                 if (ratingString.isNotEmpty()) {
                     if (ratingString.toCharArray()[ratingString.lastIndex] == ',')
                         ratingString = ratingString.substring(0, ratingString.lastIndex).trim()
                     //  this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
                 }
-
 
                 priceRangeInitial = tempPriceInitial
                 priceRangeFinal = tempPriceFinal
@@ -486,8 +471,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 } else {
                     reloadPage()
                 }
-
-
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
@@ -538,16 +521,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 reloadPage()
 
             }
-
             create()
         }
     }
 
-
     private fun createSortDialog() {
         sortDialog = Dialog(this@ProductListActivity, R.style.DialogSlideAnimStyle)
-
-
         with(sortDialog) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(R.layout.dialog_sorting)

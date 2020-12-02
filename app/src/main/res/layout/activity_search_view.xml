@@ -15,7 +15,6 @@
         android:background="@color/gray_light"
         android:padding="@dimen/category_margin"
         android:visibility="gone">
-
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -36,8 +35,6 @@
             android:textColor="@color/gray_dark" />
 
     </LinearLayout>
-
-
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,8 +46,6 @@
         android:textOff="@string/All_Searches"
         android:textOn="@string/All_Searches"
         android:visibility="gone" />
-
-
     <net.cachapa.expandablelayout.ExpandableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,8 +53,6 @@
         app:el_duration="300"
         app:el_expanded="true"
         app:el_parallax="0.5">
-
-
     </net.cachapa.expandablelayout.ExpandableLayout>
 
     <ScrollView
@@ -67,16 +60,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black" />
-
             <TextView
                 android:id="@+id/search_all_categories"
                 android:layout_width="match_parent"
@@ -87,16 +77,13 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="10dp"
                 android:text="@string/all_Categories" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,8 +91,6 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/Search_History" />
-
-
                 <TextView
                     android:id="@+id/clear_searches"
                     android:layout_width="wrap_content"
@@ -117,7 +102,6 @@
                     android:paddingEnd="16dp"
                     android:text="@string/clear" />
             </RelativeLayout>
-
             <com.cunoraz.tagview.TagView xmlns:tagview="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/recent_search_section"
                 android:layout_width="match_parent"
