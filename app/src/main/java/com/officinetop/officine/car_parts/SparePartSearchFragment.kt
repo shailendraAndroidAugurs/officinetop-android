@@ -76,11 +76,8 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
 
                 allSearchSection.setOnTagClickListener { tag, _ -> searchStoreQuery(tag.text) }
                 recentSearchSection.setOnTagClickListener { tag, _ -> searchStoreQuery(tag.text) }
-
             }
         }
-
-
 
         view.findViewById<TextView>(R.id.clear_searches).setOnClickListener {
             context?.getBearerToken()?.let { token ->
@@ -96,12 +93,9 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
                 }
             }
         }
-
-
     }
 
     private fun searchStoreQuery(query: String) {
-
         Executors.newSingleThreadExecutor().submit {
 
             Log.v("Save QUERY", "************* $query")
@@ -125,30 +119,19 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
     override fun SearchProduct(SearchString: String) {
         allSearchSection.removeAll()
         recentSearchSection.removeAll()
-
         if (searchKeywordData.size != 0) {
-
             searchKeywordData.forEach {
-
                 if (it.matches(Regex(SearchString)) || it.contains(SearchString)) {
                     recentSearchSection.addTag(Tag(it))
                 }
             }
-
-
         }
-
-
         if (searchKeywordHistory.size != 0) {
-
             searchKeywordHistory.forEach {
-
                 if (it.matches(Regex(SearchString)) || it.contains(SearchString)) {
                     allSearchSection.addTag(Tag(it))
                 }
             }
-
-
         }
     }
 }

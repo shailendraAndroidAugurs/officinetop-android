@@ -152,8 +152,9 @@
     <string name="choose_workshop">Scegli un\'officina</string>
     <string name="maintenance">Manutenzione</string>
     <string name="partlist">Elenco delle parti</string>
-    <string name="register_privacy_text_1">Creando un account, accetterai le nostre </string>
-    <string name="register_privacy_text_2"> le nostre politiche di privacy</string>
+    <string name="register_privacy_text_1">Registrandoti, consenti a questa app di utilizzare le tue
+informazioni in accordo alle </string>
+    <string name="register_privacy_text_2">privacy policy</string>
     <string name="other_seller">Altri venditori</string>
     <string name="name">Nome</string>
     <string name="busy">Occupato</string>
@@ -222,10 +223,10 @@
     <string name="app_info">Informazioni</string>
     <string name="readme">Apri</string>
     <string name="whoweare">Chi siamo</string>
-    <string name="privacy">Privacy e policy</string>
-    <string name="contactus">Contatti</string>
+    <string name="privacy">Privacy policy</string>
+    <string name="contactus">Info cookies</string>
     <string name="entercode">Inserisci il codice di riferimento</string>
-    <string name="condition"> Condizioni di acquisto</string>
+    <string name="condition">Termini e condizioni</string>
     <string name="checkreferral">Hai un codice di riferimento?</string>
     <string name="removereferral">Vuoi rimuovere il codice di riferimento?</string>
     <string name="offermsg_referral">Inserisci il codice di riferimento per ottenere 6 euro nel tuo portafoglio dopo la registrazione.</string>
@@ -548,7 +549,7 @@
     <string name="FAQtitle"> FAQ</string>
     <string name="please_select_maintenance">Seleziona Manutenzione!</string>
     <string name="cart_items">Carrello Articoli</string>
-    <string name="Conditions">Condizioni d uso</string>
+    <string name="Conditions">condizioni d’utilizzo</string>
     <string name="and">e</string>
     <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registrato correttamente, l link di verifica è stato inviato alla tua mail, confermala per attivare l’account</string>
     <string name="Add_address">Aggiungi indirizzo</string>

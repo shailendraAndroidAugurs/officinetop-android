@@ -190,7 +190,6 @@ class ProfileSetting : BaseActivity() {
                     if (!response?.body().toString().isNullOrEmpty()) {
                         val res = response?.body()
                         isLanguageChanged = true
-
                         //showInfoDialog("Updated Successfully", false, {})
                         storeLangLocale(lang)
                         setAppLocale()
@@ -234,7 +233,6 @@ class ProfileSetting : BaseActivity() {
 
     private fun getUpdateSettings() {
         //var ProgressDialog = getProgressDialog(true)
-
         try {
             getBearerToken()?.let {
                 RetrofitClient.client.getUpdatesettings(it).onCall { networkException, response ->
@@ -248,7 +246,6 @@ class ProfileSetting : BaseActivity() {
                                     // ProgressDialog.dismiss()
                                     val data = JSONObject(response.body()?.string())
                                     if (data.has("data") && !data.isNull("data")) {
-
                                         val fulldata = data.getJSONObject("data")
                                         if (fulldata.has("lang") && !fulldata.isNull("lang"))
                                             lang = fulldata.getString("lang")
@@ -267,15 +264,9 @@ class ProfileSetting : BaseActivity() {
                                         if (fulldata.has("How_does_it_work") && !fulldata.isNull("How_does_it_work"))
                                             How_does_it_work = fulldata.getString("How_does_it_work")
 
-
                                         if (getLangLocale() != lang) {
                                             UpdateSettings(getLangLocale())
                                         }
-
-
-
-
-
                                         switch_notification.isChecked = notification == "1"
 
                                     }
@@ -311,7 +302,8 @@ class ProfileSetting : BaseActivity() {
     }
 
 
-    //if language changed, navigate to HomeActivity to reload ProfileFragment to update ui
+    /*//if language changed, navigate to HomeActivity to reload ProfileFragment to update ui
+    */
     private fun ifLangChanged() {
         try {
             val intent = Intent(this, HomeActivity::class.java)

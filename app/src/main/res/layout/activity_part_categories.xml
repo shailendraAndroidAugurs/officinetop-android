@@ -31,7 +31,6 @@
             android:inputType="text"
             android:padding="@dimen/_7sdp"
             android:singleLine="true" />
-
         <ImageView
             android:id="@+id/iv_cross"
             android:layout_width="wrap_content"

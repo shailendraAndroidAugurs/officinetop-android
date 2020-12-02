@@ -231,7 +231,7 @@ class RegisterActivity : BaseActivity() {
         val termsAndConditions = SpannableString(text1)
         termsAndConditions.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                browse("https://officinetop.com")
+                browse("https://www.officinetop.com/condizioni-utilizzo/")
             }
 
         }, 0, text1.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -242,7 +242,7 @@ class RegisterActivity : BaseActivity() {
         val privacyPolicy = SpannableString(getString(R.string.register_privacy_text_2))
         privacyPolicy.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                browse("https://officinetop.com")
+                browse("https://www.officinetop.com/privacy-policy/")
             }
 
         }, 0, privacyPolicy.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
