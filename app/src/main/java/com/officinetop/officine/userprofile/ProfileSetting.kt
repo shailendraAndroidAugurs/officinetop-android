@@ -178,9 +178,7 @@ class ProfileSetting : BaseActivity() {
         textview_conditions.setOnClickListener(View.OnClickListener {
             Terms_and_Conditions?.let { it1 -> browse(it1) }
         })
-
         getUpdateSettings()
-
     }
 
     private fun UpdateSettings(lang: String) {

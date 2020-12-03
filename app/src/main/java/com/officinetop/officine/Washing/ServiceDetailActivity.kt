@@ -4,7 +4,9 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
@@ -14,10 +16,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
-import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.isOnline
-import com.officinetop.officine.utils.loadImage
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_service_detail.*
@@ -146,46 +145,56 @@ class ServiceDetailActivity : BaseActivity() {
 
     private fun setImageSlider(imagesArray: ArrayList<Models.ItemImages>) {
 
-        createImageSliderDialog()
+
         //set slider
+        if(imagesArray.size>1){
+            image_slideview.visibility=View.GONE
+            image_slider.visibility=View.VISIBLE
+            createImageSliderDialog()
+            image_slider.removeAllSliders()
+            for (i in 0 until imagesArray.size) {
+                val imageRes = imagesArray[i].image_url
 
+                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                image_slider.addSlider(slide)
 
-        image_slider.removeAllSliders()
-        for (i in 0 until imagesArray.size) {
-            val imageRes = imagesArray[i].image_url
+                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                        .description("Description")
+                        .image(imageRes)
+                dialogSlider.addSlider(scaledSlide)
 
-            val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
-            image_slider.addSlider(slide)
+                slide.setOnSliderClickListener {
+                    if (disableSliderTouch)
+                        return@setOnSliderClickListener
 
-            val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                    .description("Description")
-                    .image(imageRes)
-            dialogSlider.addSlider(scaledSlide)
-
-            slide.setOnSliderClickListener {
-
-                if (disableSliderTouch)
-                    return@setOnSliderClickListener
-
-                dialogSlider.currentPosition = i
-                imageDialog.show()
+                    dialogSlider.currentPosition = i
+                    imageDialog.show()
+                }
             }
+            image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+                    disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+            })
+        }else{
+            val imageRes = imagesArray[0].image_url
+            image_slideview.visibility=View.VISIBLE
+            image_slider.visibility=View.GONE
+            loadImageprofile(imageRes, image_slideview)
+            image_slideview.setOnClickListener({
+                createImageDialog(imageRes)
+                imageDialog.show()
+            })
         }
 
-
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-            }
-
-        })
     }
 
     private fun createImageSliderDialog() {
@@ -204,6 +213,22 @@ class ServiceDetailActivity : BaseActivity() {
             requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
             setContentView(slider)
 
+            window?.setGravity(android.view.Gravity.TOP)
+            window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
+            create()
+
+        }
+    }
+
+    private fun createImageDialog(imageRes: String) {
+        imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+        val slider = ImageView(this)
+        loadImageprofile(imageRes, slider)
+        slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        with(imageDialog) {
+            requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+            setContentView(slider)
             window?.setGravity(android.view.Gravity.TOP)
             window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
             window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
