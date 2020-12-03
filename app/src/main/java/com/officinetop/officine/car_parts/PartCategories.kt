@@ -103,7 +103,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                 val subCategoryDetails = subGroupCategoryArrayList.get(groupPosition)
                 val subCategoryId = subCategoryDetails?.id
                 if (subCategoryId != null)
-                    if (isOnline()) {
+                    if (isOnline()){
                         loadN3Groups(RetrofitClient.client.spareN3GroupsUpdated(subCategoryId), groupPosition)
                     }else{
                         showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
@@ -292,8 +292,6 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     //text watcher of edit text search
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-
-
             if (s.toString().isBlank()) {
                 containerFor_search.visibility = View.VISIBLE
                 layout_searchview.visibility = View.GONE
@@ -304,38 +302,25 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             }
             else {
                 if (s?.length!! >= 2) {
-
                     last_text_edit = System.currentTimeMillis();
                     handler.postDelayed(input_finish_checker, delay);
-
                 } else {
                     clearAdpater()
                     iv_cross.visibility = View.GONE
                 }
-
                 containerFor_search.visibility = View.GONE
                 layout_searchview.visibility = View.VISIBLE
                 rv_partCategory.visibility = View.GONE
-
-
             }
-
         }
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
-
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             // send search value to fragment for filter search of discovery or history
             // searchLitener.SearchProduct(s.toString())
             //You need to remove this to run only once
             handler.removeCallbacks(input_finish_checker);
-
-
-
         }
-
-
     }
 
     override fun onBackPressed() {
@@ -448,26 +433,17 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                 heightdata = layoutheight * SearchOENList.size
             }
         }
-
-
         val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
         var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
         llOEn.layoutParams = param
-
         rv_OENSearch.adapter = myadpterOEN
-
-
     }
 
     private fun PartSerachBindInView() {
-
-
         myadpterN3Part = object : RecyclerView.Adapter<Holder>() {
-
             override fun getItemCount(): Int {
                 return SearchN3PartList.size
             }
-
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 return Holder(layoutInflater.inflate(R.layout.search_preview_layout, parent, false))

@@ -481,7 +481,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar_title.text = getString(R.string.filter)
-
             setCheckedListener(dialog_layout_rating_five, dialog_rating_five)
             setCheckedListener(dialog_layout_rating_four, dialog_rating_four)
             setCheckedListener(dialog_layout_rating_three, dialog_rating_three)
@@ -494,12 +493,10 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             clear_selection.setOnClickListener {
                 dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
                 dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
-
                 priceRangeFinal = -1
                 priceRangeInitial = 0
                 tempPriceInitial = 0
                 tempPriceFinal = -1
-
                 //reset rating filter
                 dialog_rating_five.isChecked = false
                 dialog_rating_four.isChecked = false

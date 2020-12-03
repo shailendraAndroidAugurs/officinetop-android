@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,10 @@ import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.activity_product_detail.image_slider
+import kotlinx.android.synthetic.main.activity_product_detail.image_slideview
+import kotlinx.android.synthetic.main.activity_product_detail.product_recommendation_recycler_view
+import kotlinx.android.synthetic.main.activity_service_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
@@ -334,46 +339,59 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun setImageSlider(imagesArray: JSONArray) {
-        //set slider
-        createImageSliderDialog()
-        image_slider.removeAllSliders()
 
-        for (i in 0 until imagesArray.length()) {
-            //   val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
-            val imageRes = imagesArray.getJSONObject(i).getString("image_url")
-            val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
-            image_slider.addSlider(slide)
+        if(imagesArray.length()>1){
+            image_slideview.visibility=View.GONE
+            image_slider.visibility=View.VISIBLE
+            //set slider
+            createImageSliderDialog()
+            image_slider.removeAllSliders()
 
-            val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                    .description("Description")
-                    .image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside)
-                    .empty(R.drawable.no_image_placeholder)
-            dialogSlider.addSlider(scaledSlide)
+            for (i in 0 until imagesArray.length()) {
+                //   val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
+                val imageRes = imagesArray.getJSONObject(i).getString("image_url")
+                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                image_slider.addSlider(slide)
 
-            slide.setOnSliderClickListener {
+                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                        .description("Description")
+                        .image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside)
+                        .empty(R.drawable.no_image_placeholder)
+                dialogSlider.addSlider(scaledSlide)
 
-                if (disableSliderTouch)
-                    return@setOnSliderClickListener
+                slide.setOnSliderClickListener {
 
-                dialogSlider.currentPosition = i
-                imageDialog.show()
+                    if (disableSliderTouch)
+                        return@setOnSliderClickListener
+
+                    dialogSlider.currentPosition = i
+                    imageDialog.show()
+                }
             }
+            image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+                    disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+            })
+        }else{
+            val imageRes = imagesArray.getJSONObject(0).getString("image_url")
+            image_slideview.visibility=View.VISIBLE
+            image_slider.visibility=View.GONE
+            loadImageprofile(imageRes, image_slideview)
+            image_slideview.setOnClickListener({
+                createImageDialog(imageRes)
+                imageDialog.show()
+            })
         }
 
-
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-            }
-
-        })
     }
 
     private fun createImageSliderDialog() {
@@ -396,6 +414,23 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
             setContentView(slider)
 
+            window?.setGravity(android.view.Gravity.TOP)
+            window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
+            create()
+
+        }
+    }
+
+
+    private fun createImageDialog(imageRes: String) {
+        imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+        val slider = ImageView(this)
+        loadImageprofile(imageRes, slider)
+        slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        with(imageDialog) {
+            requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+            setContentView(slider)
             window?.setGravity(android.view.Gravity.TOP)
             window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
             window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
@@ -575,11 +610,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                     }
                                 }
                             }
-
-
                         })
     }
-
     private fun setProductDetailData(jsonSring: String) {
         productDetails = JSONObject(jsonSring)
 
