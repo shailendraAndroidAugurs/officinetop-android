@@ -82,19 +82,15 @@ class ServiceDetailActivity : BaseActivity() {
             if (serviceDetails.itemImages != null && serviceDetails.itemImages.size > 0) {
                 setImageSlider(serviceDetails.itemImages)
             }
-
             if (intent.extras != null && intent.hasExtra("servicesList")) {
                 val serviceListfilter: ArrayList<Models.ServiceCategory> = ArrayList()
                 serviceList = intent.getSerializableExtra("servicesList") as ArrayList<Models.ServiceCategory>
                 serviceList.forEach {
 
-
                     if (it.id != service_id)
 
                         serviceListfilter.add(it)
                 }
-
-
                 loadProductRecommendationGridList(product_recommendation_recycler_view, serviceListfilter)
             }
         }
@@ -109,7 +105,6 @@ class ServiceDetailActivity : BaseActivity() {
             val imageRes = if (i % 2 == 0) R.drawable.no_image_placeholder else R.drawable.no_image_placeholder
 
             val slide = TextSliderView(this).image(imageRes).empty(R.drawable.no_image_placeholder)
-
             image_slider.addSlider(slide)
 
             val scaledSlide = DialogTouchImageSlider(this, imageRes)
@@ -144,8 +139,6 @@ class ServiceDetailActivity : BaseActivity() {
     }
 
     private fun setImageSlider(imagesArray: ArrayList<Models.ItemImages>) {
-
-
         //set slider
         if(imagesArray.size>1){
             image_slideview.visibility=View.GONE
@@ -154,19 +147,15 @@ class ServiceDetailActivity : BaseActivity() {
             image_slider.removeAllSliders()
             for (i in 0 until imagesArray.size) {
                 val imageRes = imagesArray[i].image_url
-
                 val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
                 image_slider.addSlider(slide)
-
                 val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
                         .description("Description")
                         .image(imageRes)
                 dialogSlider.addSlider(scaledSlide)
-
                 slide.setOnSliderClickListener {
                     if (disableSliderTouch)
                         return@setOnSliderClickListener
-
                     dialogSlider.currentPosition = i
                     imageDialog.show()
                 }

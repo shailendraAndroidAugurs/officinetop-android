@@ -454,7 +454,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                         dialog.dismiss()
                         toast(getString(R.string.Failed_load_product_detail))
                     }
-
                     @SuppressLint("SetTextI18n")
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         dialog.dismiss()
@@ -464,26 +463,21 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 try {
                                     val productData = JSONObject(body)
                                     if (productData.has("data") && !productData.isNull("data")) {
-
                                         setProductDetailData(productData.getString("data"))
-
                                         val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
                                         if (!min_price.isNullOrBlank()) {
                                             if (productIsPair)
                                                 buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble().roundTo2Places() * 2).toString())})"
                                             else buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, min_price)})"
-
                                         }
                                         Log.d("Product_Detail", "min_price$min_price")
                                         if (data.has("number_of_delivery_days") && !data.getString("number_of_delivery_days").isNullOrBlank() && data.getString("number_of_delivery_days") != "null") {
-
 
                                             delivery_date.text = getDate(data.getString("number_of_delivery_days").toInt())
                                             Deliverydays = data.getString("number_of_delivery_days")
                                         } else {
                                             delivery_date.text = getDate(0)
-
                                         }
                                     } else {
                                         Log.e("data is null", "${productData}")
@@ -496,8 +490,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                             }
                         } else showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again)) { finish() }
                     }
-
-
                 })
     }
 

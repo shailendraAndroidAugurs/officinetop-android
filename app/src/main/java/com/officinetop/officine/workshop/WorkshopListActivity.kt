@@ -129,12 +129,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         sort_btn.setOnClickListener { sortDialog.show() }
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
 
-
         if (intent?.hasExtra(Constant.Path.deliveryDate)!!) {
             deliveryDate = intent?.getStringExtra(Constant.Path.deliveryDate)!!
         }
-
-
         isAssemblyService = intent?.getBooleanExtra(Constant.Key.is_assembly_service, false)
                 ?: false
         isRevisonService = intent?.getBooleanExtra(Constant.Key.is_revision, false) ?: false
@@ -150,43 +147,27 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
         isCarWash = intent?.getBooleanExtra(Constant.Key.is_car_wash, false) ?: false
         if (intent.hasExtra(Constant.Key.cartItem)) {
-
             // for assembly
             cartItem = intent.getSerializableExtra(Constant.Key.cartItem) as Models.CartItem
             Log.d("Date", "Deliverydays: WorkshopList" + cartItem?.Deliverydays)
-
-
         }
-
         if (intent.hasExtra(Constant.Path.PartID))
             partidhasMap = intent.getSerializableExtra(Constant.Path.PartID) as HashMap<String, Models.servicesCouponData>
 
         if (intent.hasExtra(Constant.Path.Motpartdata)) {
             motpartlist = intent.getSerializableExtra(Constant.Path.Motpartdata) as HashMap<String, Models.MotservicesCouponData>
         }
-
-
-
         if (isQuotes) {
             if (intent.hasExtra(Constant.Path.serviceQuotesInsertedId))
                 quotesServiceQuotesInsertedId = intent.getStringExtra(Constant.Path.serviceQuotesInsertedId)
             if (intent.hasExtra(Constant.Path.mainCategoryId))
                 quotesMainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
         }
-
-
-
-
         if (intent.hasExtra(Constant.Path.washServiceDetails)) {
             val serviceDetail = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
-
             serviceID = serviceDetail.id!!
             washing_mainCategory_id = serviceDetail.main_category_id!!
-
-
         }
-
-
         if (isAssemblyService) {
             if (intent.hasExtra(Constant.Path.productId)) {
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
@@ -200,21 +181,15 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     mainCategoryId = productdetail.mainCategoryId
                 }
             }
-
-
             if (!cartItem?.Deliverydays.isNullOrBlank() && (!cartItem?.Deliverydays.equals("0"))) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
-
                 }
-
             }
         }
-
-
         if (isRevisonService) {
             if (intent.hasExtra(Constant.Path.revisionServiceDetails)) {
                 val revisionServiceDetails = intent.getSerializableExtra(Constant.Path.revisionServiceDetails) as? RevDataSetItem
@@ -240,12 +215,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
-
-
                 }
-
             }
-
         }
 
         if (isQuotes) {
@@ -257,7 +228,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (isCarMaintenanceService) {
             if (intent.hasExtra(Constant.Path.serviceID)) {
                 multipleServiceIdOfCarMaintenance = intent.getStringExtra(Constant.Path.serviceID)
-
                 Log.e("mutlsservice", multipleServiceIdOfCarMaintenance)
             }
             if (!deliveryDate.equals("0")) {
@@ -266,15 +236,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
-
                 }
-
             }
-
-
         }
-
-
         if (isMotService) {
             if (intent.hasExtra(Constant.Path.mot_id)) {
                 motServiceID = intent.getStringExtra(Constant.Path.mot_id).toInt()
@@ -286,7 +250,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
             if (intent.hasExtra("mot_type")) {
                 mot_type = intent.getStringExtra("mot_type").toString()
-
             }
             if (!deliveryDate.equals("0")) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate?.toInt()!! + 1))
@@ -294,11 +257,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
-
                 }
-
             }
-
         }
 
         if (isSOSAppointment || isSOSServiceEmergency) {
@@ -329,7 +289,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         SelectedCalendarDateIntial = selectedFormattedDate
         createFilterDialog()
         createSortDialog()
-
         getCalendarMinPriceRange(selectedFormattedDate)
         if (isOnline()) {
             reloadPage()
@@ -346,8 +305,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         app_bar.viewTreeObserver.addOnGlobalLayoutListener {
 
         }
-
-
     }
 
     private fun getCalendarMinPriceRange(selectedFormattedDate: String) {
@@ -392,21 +349,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 progress_bar.visibility = View.GONE
                 recycler_view.visibility = View.VISIBLE
             }
-
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progress_bar.visibility = View.GONE
                 body?.let {
-
                     if (isStatusCodeValid(body)) {
                         val dataSet = getDataSetArrayFromResponse(it)
-
                         val arrayList: MutableList<Models.CalendarPrice> = ArrayList()
                         for (i in 0 until dataSet.length()) {
                             val serviceCategory = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
                             arrayList.add(serviceCategory)
                             calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
-
                         }
                         setUpCalendarPrices(arrayList)
                     } else {
@@ -415,7 +368,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     }
                     return@let
                 }
-
             }
         }
 
@@ -427,88 +379,66 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         else if (isMotService) motServiceCall.enqueue(callback)
         else if (isSOSAppointment) sosAppointmentCall.enqueue(callback)
         else if (isCarWash) nonAssemblyCall.enqueue(callback)
-
     }
 
     private fun setUpCalendarPrices(calendarDetailList: MutableList<Models.CalendarPrice>) {
 
-
         val adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-
                 val selectedView = layoutInflater.inflate(R.layout.item_dateview_selected, p0, false)
                 val unselectedView = layoutInflater.inflate(R.layout.item_dateview_unselected, p0, false)
-
                 return if (p1 == 0) object : RecyclerView.ViewHolder(selectedView) {}
                 else object : RecyclerView.ViewHolder(unselectedView) {}
-
             }
-
             override fun getItemViewType(position: Int): Int {
                 return if (position == selectedItemPosition) 0 else 1
             }
-
             override fun getItemCount(): Int = calendarDetailList.size
 
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, position: Int) {
-
                 with(p0.itemView) {
                     val dateString = calendarDetailList[position].date
-
                     setOnClickListener {
                         hasRecyclerLoadedOnce = false
                         selectedItemPosition = position
                         selectedFormattedDate = dateString
                         reloadPage()
                         notifyDataSetChanged()
-
                     }
-
                     val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
                     try {
                         val formattedDate = sdf.parse(dateString)
                         item_text_middle.text = SimpleDateFormat("d / M", getLocale()).format(formattedDate)
                         val format2 = SimpleDateFormat("E", getLocale())
                         val finalDay = format2.format(formattedDate)
-
                         item_text_top.text = finalDay
-
                     } catch (ex: Exception) {
                         Log.v("Exception", ex.localizedMessage)
                     }
                     val minimumPrice = calendarDetailList[position].minPrice.toString()
                     item_text_bottom.text = getString(R.string.prepend_euro_symbol_string, minimumPrice)
-
                 }
             }
-
         }
         horizontal_calendar_view.adapter = adapter
         horizontal_calendar_view.addItemDecoration(DividerItemDecoration(this,
                 DividerItemDecoration.HORIZONTAL))
         // horizontal_calendar_view.smoothScrollToPosition(selectedItemPosition)
-
     }
 
     private fun reloadPage() {
         if (!isSOSServiceEmergency)
             horizontal_calendar_layout.visibility = View.VISIBLE
-
            loadWorkshops()
-
         // Click for map filter
         map_btn.setOnClickListener {
-
             var workshopCategoryDetail = (convertToJson(intent.getSerializableExtra(Constant.Path.washServiceDetails)
                     ?: Any()))
-
 
             if (intent.getBooleanExtra(Constant.Key.is_tyre, false)) {
                 workshopCategoryDetail = (convertToJson(intent.getSerializableExtra(Constant.Key.productDetail)
                         ?: Any()))
             }
-
-
             startActivity(intentFor<MapFilterActivity>().putExtra("WorkshopList", dataSet.toString())
                     .putExtra("isSOSAppointment", isSOSAppointment)
                     .putExtra("isMotService", isMotService)
@@ -527,20 +457,14 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     .putExtra("cartItem", cartItem)
                     .putExtra("isCarWash", isCarWash)
                     .putExtra("mot_type", mot_type)
-
-
             )
-
-
         }
-
     }
 
     private fun loadWorkshops() {
         Log.d("workshoplist", "loadworkshop call")
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
-
         var workshopType = 1
         if (isAssemblyService)
             workshopType = 2
@@ -554,30 +478,22 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         } else {
             Log.d("reloadpage", "drawableleft")
             this@WorkshopListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
         }
-
         if (pricesFilter) {
             Log.d("filterApply", "pricesFilter")
         }
         if (misdistancefilter) {
             Log.d("filterApply", "misdistancefilter")
         }
-
         if (misclearselection) {
             Log.d("filterApply", "misclearselection")
         }
-
-
         if (!hasRecyclerLoadedOnce) {
             priceRangeString = ""
         }
-
         if (isAssemblyService) {
-
             Log.d("ProductOrWorkshopList", "loadWorkshops: productID $productID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingString " +
                     "-- priceRangeString = $priceRangeString -- priceSortLevel = $priceSortLevel  -- workshopType $workshopType -- isAssemblyService --  $isAssemblyService")
-
             RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
                     ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime)
@@ -586,20 +502,18 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             progress_bar.visibility = View.GONE
                             recycler_view.visibility = View.VISIBLE
                         }
-
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             Log.d("ProductOrWorkshopList", "loadAssemblyWorkshops: onResponse $response  -- isAssemblyService --  $isAssemblyService")
 
                             setWorkshopValues(response)
                         }
-                    })
+            })
         } else if (isRevisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
             CallRevisionApi(priceRangeString, priceSortLevel, ratingString)
         } else if (isTyreService) {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
-
             RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString(), favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
                     .onCall { networkException, response ->
                         networkException?.let { }
@@ -623,14 +537,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     rating = ratingString, priceRange = if (priceRangeFinal == -1) "" else priceRangeString,
                     priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0"
             ).onCall { _, response ->
-
                 response?.let {
                     progress_bar.visibility = View.GONE
                     if (response.isSuccessful) {
-
                         try {
                             setWorkshopValues(response)
-
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -645,10 +556,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 response?.let {
                     progress_bar.visibility = View.GONE
                     if (response.isSuccessful) {
-
                         try {
                             setWorkshopValues(response)
-
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -656,7 +565,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         } else if (isSOSAppointment) {
-
             RetrofitClient.client.getSOSWorkshopListforAppointment(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate, serviceID.toString(),
                     latitude, longitude, distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
@@ -665,11 +573,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 response?.let {
                     progress_bar.visibility = View.GONE
                     if (response.isSuccessful) {
-
                         try {
                             setWorkshopValues(response)
-
-
                         } catch (e: java.lang.Exception) {
                             e.printStackTrace()
                         }
@@ -686,10 +591,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         response?.let {
                             progress_bar.visibility = View.GONE
                             if (response.isSuccessful) {
-
                                 try {
                                     setWorkshopValues(response)
-
                                 } catch (e: java.lang.Exception) {
                                     e.printStackTrace()
                                 }
@@ -708,16 +611,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             progress_bar.visibility = View.GONE
                             recycler_view.visibility = View.VISIBLE
                         }
-
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             Log.d("ProductOrWorkshopList", "loadWorkshops: onResponse $response  -- isAssemblyService --  $isAssemblyService")
                             setWorkshopValues(response)
                         }
                     })
         }
-
     }
-
     private fun setWorkshopValues(response: Response<ResponseBody>) {
         try {
             val body = response.body()?.string()

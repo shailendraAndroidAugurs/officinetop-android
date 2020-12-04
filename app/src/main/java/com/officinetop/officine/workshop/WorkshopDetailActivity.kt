@@ -76,6 +76,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     lateinit var dialogSlider: SliderLayout
     var serviceID = ""
     private var main_category_id = ""
+    private var services_average_time =""
+    private var hourly_rate=""
+    private var temp_slot_id=""
     var disableSliderTouch = false
     var averageServiceTime = 0.0
     var categoryID = ""
@@ -865,6 +868,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.e("productQuantity==", productQuantity)
 
         }
+        if (WorkshopJson != null) {
+            services_average_time = WorkshopJson.optString("service_average_time")
+            max_appointment = WorkshopJson.optString("max_appointment")
+            hourly_rate = WorkshopJson.optString("hourly_rate")
+            temp_slot_id = WorkshopJson.optString("temp_slot_id")
+        }
 
         if (isAssembly)
             RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, averageServiceTime.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(callback)
@@ -905,7 +914,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     ?: "", quotesServicesAvarageTime).enqueue(callback)
         else if (isMotService)
             RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId).enqueue(callback)
-        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(callback)
+        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!,services_average_time,max_appointment,hourly_rate).enqueue(callback)
 
     }
 
@@ -1418,7 +1427,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter, getSelectedCar()?.carSize
                     ?: "",
                     categoryID, mainCategoryIDForCarWash, getSavedSelectedVehicleID(), workshopCouponId, getOrderId(), getSelectedCar()?.carVersionModel?.idVehicle
-                    ?: "", getBearerToken() ?: ""
+                    ?: "",temp_slot_id, getBearerToken() ?: ""
             )
             serviceBookingCarWash.enqueue(callback)
         } else {
