@@ -362,6 +362,8 @@ object Constant {
         const val language = "language"
         const val car_version_id = "car_version_id"
         const val version_id = "version_id"
+        const val max_appointment = "max_appointment"
+        const val hourly_rate = "hourly_rate"
         const val version = "version"
         const val total_price = "total_price"
         const val discount = "discount"

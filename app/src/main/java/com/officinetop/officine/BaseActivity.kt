@@ -1,15 +1,18 @@
 package com.officinetop.officine
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -77,6 +80,17 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     private fun getFusedLocation() {
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        Log.d("getFusedLocation", "Location Permission from sucess")
         mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
 
     }
@@ -126,7 +140,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 when (status.statusCode) {
                     LocationSettingsStatusCodes.SUCCESS -> {
                         getFusedLocation()
-                        Log.d("WorkshopList", "Location Permission from sucess")
+                        Log.d("WorkshopList", "Location Permission from success")
 
 
                     }

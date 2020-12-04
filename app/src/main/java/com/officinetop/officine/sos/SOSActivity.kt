@@ -95,15 +95,14 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         getLocation()
         checkpermission(storagePermissionRequestList(), {
-            if (isLocationOn)
+           /* if (isLocationOn)
                 getcurrentlocation() else
-                enableLocation()
+                enableLocation()*/
+            enableLocation()
+            getcurrentlocation()
         })
-
-
         emergency_call.setOnClickListener {
             callEmergency()
         }
@@ -111,8 +110,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
     }
-
-
     private fun callEmergency() {
         // Use format with "tel:" and phoneNumber created is
         // stored in uri.
@@ -122,15 +119,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     }
 
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-
         mMap.setOnInfoWindowClickListener {
-
             val allWrackers = it.tag as? Models.AllWrackerWorkshops
-
             allWrackers?.let { it1 ->
                 getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle)
                 if (it.isInfoWindowShown) {
@@ -141,7 +133,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     }
 
     override fun onInfoWindowClick(p0: Marker?) {
-
     }
 
     override fun onStart() {
@@ -163,12 +154,11 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                             try {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) jsonObject.getJSONArray("data_set") else JSONArray()
-
+                                Log.e("isSuccessful", data_set.toString())
                                 if (data_set.length() > 0) {
                                     allWrackerServicesWorkshopList.clear()
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
-
                                         allWrackerServicesWorkshopList.add(data)
                                         //val data = Gson().fromJson<Models.SOSWorkshop>(data_set.getJSONObject(i).toString(), Models.SOSWorkshop::class.java)
                                         //latlongList.add(data)
@@ -209,13 +199,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         allWrackerServicesWorkshopList.forEach { listData ->
             listData.let {
                 position = LatLng(listData.latitude.toString().toDouble(), listData.longitude.toString().toDouble())
-
                 locationMarker = mMap.addMarker(
                         MarkerOptions()
                                 .position(position!!)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
-                )
-
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)))
                 locationMarker.tag = listData
             }
         }
@@ -424,6 +411,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @SuppressLint("MissingPermission")
     private fun getcurrentlocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient?.lastLocation?.addOnCompleteListener(this) { task ->
@@ -472,6 +460,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun loadmapview() {
         mMap.isMyLocationEnabled = true
         if (mLatitude != null && mLongitude != null) {

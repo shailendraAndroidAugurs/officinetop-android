@@ -1751,7 +1751,14 @@ object Models {
             @SerializedName("workshop_user_days_id")
             val workshop_user_days_id: String,
             @SerializedName("product_image_url")
-            val product_image_url: String
+            val product_image_url: String,
+            @SerializedName("max_appointment")
+            val max_appointment: String,
+            @SerializedName("hourly_rate")
+            val hourly_rate: String,
+            @SerializedName("temp_slot_id")
+            val temp_slot_id: String
+
     ) : ListItemViewModel()
 
 

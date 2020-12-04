@@ -341,13 +341,17 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.getWorkshopPackageDetailNew)
-    fun getWorkshopPackageDetailNew(@Query(Constant.Path.workshopUsersId) workshopUserId: Int, @Query(Constant.Path.categoryId) categoryId: Int,
+    fun getWorkshopPackageDetailNew(@Query(Constant.Path.workshopUsersId) workshopUserId: Int,
+                                    @Query(Constant.Path.categoryId) categoryId: Int,
                                     @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
                                     @Query(Constant.Path.carSize) carSize: String? = "1",
                                     @Query(Constant.Path.userid) userid: String? = "1",
                                     @Query(Constant.Path.selectedCarId) selectedCarId: String,
                                     @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
-                                    @Query(Constant.Path.version_id) versionId: String
+                                    @Query(Constant.Path.version_id) versionId: String,
+                                    @Query(Constant.Path.service_average_time) averagetime: String,
+                                    @Query(Constant.Path.max_appointment) maxappointment: String,
+                                    @Query(Constant.Path.hourly_rate) hourlyrate: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getCarRevisionPackageDetail)
@@ -458,6 +462,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.couponId) couponId: String,
             @Field(Constant.Path.orderId) orderId: String,
             @Field("version_id") versionId: String,
+            @Field("temp_slot_id") temp_slot_id: String,
             @Header("Authorization") authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
