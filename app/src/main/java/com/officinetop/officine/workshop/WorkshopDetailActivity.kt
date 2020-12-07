@@ -1109,6 +1109,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         return workingTimeSlot
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

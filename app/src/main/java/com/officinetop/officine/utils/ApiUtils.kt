@@ -1104,89 +1104,8 @@ fun DateFormatChangeYearToMonth(date: String): String? {
     return outputString
 }
 
-fun makeTextViewResizable(tv: TextView,
-                          maxLine: Int, expandText: String, viewMore: Boolean) {
-    if (tv.tag == null) {
-        tv.tag = tv.text
-    }
-    val vto = tv.viewTreeObserver
-    vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            val obs = tv.viewTreeObserver
-            obs.removeGlobalOnLayoutListener(this)
-            if (maxLine == 0) {
-                val lineEndIndex = tv.layout.getLineEnd(0)
-                val text = tv.text.subSequence(0,
-                        lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                tv.text = text
-                tv.movementMethod = LinkMovementMethod.getInstance()
-                tv.setText(
-                        addClickablePartTextViewResizable(tv.text
-                                .toString(), tv, maxLine, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE)
-            } else if (maxLine > 0 && tv.lineCount >= maxLine) {
-                val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
-                val text = tv.text.subSequence(0,
-                        lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                tv.text = text
-                tv.movementMethod = LinkMovementMethod.getInstance()
-                tv.setText(
-                        addClickablePartTextViewResizable(tv.text
-                                .toString(), tv, maxLine, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE)
-            } else {
-                val lineEndIndex = tv.layout.getLineEnd(
-                        tv.layout.lineCount - 1)
-                val text = tv.text.subSequence(0, lineEndIndex)
-                        .toString() + " " + expandText
-                tv.text = text
-                tv.movementMethod = LinkMovementMethod.getInstance()
-                tv.setText(
-                        addClickablePartTextViewResizable(tv.text
-                                .toString(), tv, lineEndIndex, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE)
-            }
-        }
-    })
-}
-
-fun addClickablePartTextViewResizable(
-        strSpanned: String, tv: TextView, maxLine: Int,
-        spanableText: String, viewMore: Boolean): SpannableStringBuilder? {
-    val ssb = SpannableStringBuilder(strSpanned)
-    if (strSpanned.contains(spanableText)) {
-        ssb.setSpan(
-                object : ClickableSpan() {
-                    override fun onClick(widget: View?) {
-                        if (viewMore) {
-                            tv.layoutParams = tv.layoutParams
-                            tv.setText(tv.tag.toString(),
-                                    TextView.BufferType.SPANNABLE)
-                            tv.invalidate()
-                            makeTextViewResizable(tv, -4, "...Less",
-                                    false)
-                            tv.setTextColor(Color.BLACK)
-                        } else {
-                            tv.layoutParams = tv.layoutParams
-                            tv.setText(tv.tag.toString(),
-                                    TextView.BufferType.SPANNABLE)
-                            tv.invalidate()
-                            makeTextViewResizable(tv, 4, "...More",
-                                    true)
-                            tv.setTextColor(Color.BLACK)
-                        }
-                    }
-                }, strSpanned.indexOf(spanableText),
-                strSpanned.indexOf(spanableText) + spanableText.length, 0)
-    }
-    return ssb
-}
-
-
 fun Context.addReadMore(text: String, textView: TextView) {
-    val ss = SpannableString(text.substring(0, 150) + "...more")
+    val ss = SpannableString(text.substring(0, 150) + getString(R.string.morecontent))
     val clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(view: View) {
             addReadLess(text, textView)
@@ -1202,13 +1121,13 @@ fun Context.addReadMore(text: String, textView: TextView) {
             }
         }
     }
-    ss.setSpan(clickableSpan, ss.length - 7, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    ss.setSpan(clickableSpan, ss.length - getString(R.string.morecontent).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     textView.setText(ss)
     textView.setMovementMethod(LinkMovementMethod.getInstance())
 }
 
 fun Context.addReadLess(text: String, textView: TextView) {
-    val ss = SpannableString("$text  ...less")
+    val ss = SpannableString("$text " + getString(R.string.less))
     val clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(view: View) {
             addReadMore(text, textView)
@@ -1224,7 +1143,7 @@ fun Context.addReadLess(text: String, textView: TextView) {
             }
         }
     }
-    ss.setSpan(clickableSpan, ss.length - 7, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    ss.setSpan(clickableSpan, ss.length - getString(R.string.less).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     textView.setText(ss)
     textView.setMovementMethod(LinkMovementMethod.getInstance())
 }
@@ -1257,12 +1176,11 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
                         Toast.makeText(applicationContext, getString(R.string.Unspecifiederroroccurred), Toast.LENGTH_SHORT).show()
                     }
                 })
-                .onSameThread()
+             /*   .onSameThread()*/
                 .check()
     } catch (e: java.lang.Exception) {
 
     }
-
 
 
 }
@@ -1302,7 +1220,7 @@ fun storagePermissionRequestList(): ArrayList<String> {
     return permissionlist
 }
 
- fun isLocationEnabled(mContext: Context): Boolean {
+fun isLocationEnabled(mContext: Context): Boolean {
     val lm = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER)

@@ -65,7 +65,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         toolbar_title.text = getString(R.string.Product_detail)
         getLocation()
         initViews()
-        setImageSlider()
+       // setImageSlider()
 
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(

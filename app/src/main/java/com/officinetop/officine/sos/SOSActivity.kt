@@ -28,10 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getOrderId
-import com.officinetop.officine.data.getSelectedCar
+import com.officinetop.officine.data.*
 import com.officinetop.officine.databinding.MapLayoutBinding
 import com.officinetop.officine.databinding.SosEmergencyPopupWindowBinding
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -78,9 +75,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
     private var wrackersList: MutableList<Models.WrackerServices> = ArrayList()
     private var sosActivityListener: SOSActivityListener? = null
-
-    private var isLocationOn: Boolean = false
-
     private var googleApiClient: GoogleApiClient? = null
 
 
@@ -90,6 +84,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.title_activity_sos)
+        mLatitude=getLat()
+        mLongitude=getLong()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
@@ -97,12 +93,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLocation()
         checkpermission(storagePermissionRequestList(), {
-           /* if (isLocationOn)
-                getcurrentlocation() else
-                enableLocation()*/
             enableLocation()
             getcurrentlocation()
         })
+
         emergency_call.setOnClickListener {
             callEmergency()
         }

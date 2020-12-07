@@ -465,7 +465,7 @@ informazioni in accordo alle </string>
 
     <string name="AddresUpdateSuccessFully">Indirizzo Update SuccessFully</string>
     <string name="Update_SuccessFully">Aggiornamento riuscito Completamente</string>
-    <string name="AddressDeletedSuccessFully">eliminato con successo</string>
+    <string name="AddressDeletedSuccessFully">Eliminato con successo</string>
     <string name="AddressAddSuccessFully">Salvato con sucesso</string>
     <string name="Failed_pickplace">Impossibile selezionare il posto</string>
 
@@ -481,9 +481,9 @@ informazioni in accordo alle </string>
 
     <string name="productRemoved_formWishList"> Questo prodotto è stato rimosso dalla lista dei desideri</string>
     <string name="WorkshopRemovedfromfavorite">Til suo Officine Rimosso dai preferiti</string>
-    <string name="ContactAddSuccessFully">Aggiunto numero di cellulare con successo.</string>
-    <string name="ContactUpdateSuccessFully">Contatta Update SuccessFully</string>
-    <string name="ContactDeletedSuccessFully">eliminato con successo</string>
+    <string name="ContactAddSuccessFully">Aggiunto con successo</string>
+    <string name="ContactUpdateSuccessFully">Aggiornato con successo</string>
+    <string name="ContactDeletedSuccessFully">Eliminato con successo</string>
     <string name="Failed"> Impossibile!</string>
     <string name="Noapplicationcanhandlethisrequest">Nessuna applicazione può gestire questa richiesta.</string>
     <string name="PriceNotSpecified">Prezzo non specificato</string>
@@ -633,6 +633,10 @@ informazioni in accordo alle </string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
     <string name="Aboutus_link">https://www.officinetop.com/chi-siamo/</string>
     <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
+
+    <string name="less">...Mostra meno</string>
+    <string name="morecontent">...Mostra altro</string>
+
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

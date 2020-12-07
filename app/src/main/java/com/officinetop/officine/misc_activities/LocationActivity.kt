@@ -19,9 +19,9 @@ import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.UserAddressLatLong
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.isStatusCodeValid
+import com.officinetop.officine.data.storeLatLong
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_location.*
@@ -71,7 +71,7 @@ class LocationActivity : BaseActivity() {
                 isAutomaticLocationSave = true
                 getcurrentLocation()
             } else {
-               showInfoDialog("need to enable location services")
+                showInfoDialog("need to enable location services")
             }
 
 
@@ -114,21 +114,21 @@ class LocationActivity : BaseActivity() {
                                     disableTextField()
                                     logFindLocationEvent(this)
                                     if (!dataModels.latitude.isNullOrBlank() && !dataModels.longitude.isNullOrBlank()) {
-                                        UserAddressLatLong(dataModels.latitude.toDouble(), dataModels.longitude.toDouble())
+                                        storeLatLong(dataModels.latitude.toDouble(), dataModels.longitude.toDouble(), true)
 
                                     } else {
-                                        UserAddressLatLong(0.0, 0.0)
+                                        storeLatLong(0.0, 0.0)
 
                                     }
 
                                 } else {
                                     getcurrentLocation()
-                                    UserAddressLatLong(0.0, 0.0)
+                                    storeLatLong(0.0, 0.0)
                                 }
 
                             } else {
                                 getcurrentLocation()
-                                UserAddressLatLong(0.0, 0.0)
+                                storeLatLong(0.0, 0.0)
                             }
 
                         } else {
@@ -240,13 +240,10 @@ class LocationActivity : BaseActivity() {
 
 
     private fun setLocationInView(lat: Double?, long: Double?) {
-
         geoCoder = Geocoder(this, getLocale())
         addressList = geoCoder!!.getFromLocation(lat!!, long!!, 5)
-
         latitude = lat.toString()
         longitude = long.toString()
-
         Log.d("user current location: ", "${latitude} ${longitude}")
         location.text = "lat: $latitude, long:$longitude"
 
@@ -317,7 +314,7 @@ class LocationActivity : BaseActivity() {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
-                                    UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                                    storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
                                     showInfoDialog(jsonObject.optString("message")) {
                                         finish()
                                     }
@@ -325,7 +322,7 @@ class LocationActivity : BaseActivity() {
                                 }
 
                             } else if (response.code() == 401) {
-                                UserAddressLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                                storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
                                 showInfoDialog("successFully Saved") {
                                     finish()
                                 }

@@ -331,6 +331,8 @@ object Constant {
         const val service_specification = "service_specification"
         const val addressId = "address_id"
         const val latitude = "latitude"
+        const val userSavedAddress = "userSavedAddress"
+
         const val longitude = "longitude"
         const val discountPrice = "discount_price"
         const val discountType = "discount_type"

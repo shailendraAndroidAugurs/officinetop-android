@@ -39,7 +39,7 @@ class TyreCustomizationActivity : BaseActivity() {
     private var speedIndex: String = ""
     private var speedLoadIndex: String = ""
     private var tyreAlertImage: String = ""
-    private var tyreAlertDescription: String = "Refer below measurements to enter correct tyre data."
+    private var tyreAlertDescription: String = ""
     private var widthId: String = ""
     private var aspectRatioId: String = ""
     private var diameterId: String = ""
@@ -264,7 +264,6 @@ class TyreCustomizationActivity : BaseActivity() {
                         })
 
 
-
             }
 
 
@@ -272,7 +271,7 @@ class TyreCustomizationActivity : BaseActivity() {
     }
 
     private fun getTyreSpecificationApi() {
-        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), "")
+        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), "",getUserId())
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
@@ -320,7 +319,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 for (diameterobj in 0 until diameter.length()) {
                                     val diameterobjdata: JSONObject = diameter.get(diameterobj) as JSONObject
 
-                                    diameterList.add(diameterobj+1,Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
+                                    diameterList.add(diameterobj + 1, Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
                                 speedIndexList.clear()
                                 speedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
@@ -581,7 +580,6 @@ class TyreCustomizationActivity : BaseActivity() {
     private fun showDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_title_with_image)
-
         val alertImage = dialog.findViewById<ImageView>(R.id.alert_tyre_image)
         val alertDescription = dialog.findViewById<TextView>(R.id.item_sub_title)
         val alertClosePopup = dialog.findViewById<TextView>(R.id.close_popup)
