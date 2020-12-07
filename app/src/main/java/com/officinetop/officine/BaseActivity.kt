@@ -45,9 +45,9 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             storeLangLocale("it")
             setAppLanguage()
         }
-        mLocationRequest = LocationRequest()
-        mLocationRequest?.interval = 150000
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        /*    mLocationRequest = LocationRequest()
+            mLocationRequest?.interval = 150000
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)*/
 
 
     }
@@ -80,18 +80,16 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     private fun getFusedLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.d("getFusedLocation", "Location Permission from sucess")
+            mLocationRequest = LocationRequest()
+            mLocationRequest?.interval = 150000
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+            mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+
         }
-        Log.d("getFusedLocation", "Location Permission from sucess")
-        mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+
 
     }
 
@@ -122,16 +120,15 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
     }
 
     fun enableLocation() {
-
         if (googleApiClient == null) {
             googleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API)/*.addConnectionCallbacks(this)*/
+                    .addApi(LocationServices.API).addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this).build()
             googleApiClient!!.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            locationRequest.interval = 10 * 1000
-            locationRequest.fastestInterval = 2 * 1000
+            locationRequest.interval = 200 * 1000
+            locationRequest.fastestInterval = 30 * 1000
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
             val result: PendingResult<LocationSettingsResult> = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
@@ -184,7 +181,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
     fun getLocation() {
 
-        if (getLat().isNullOrBlank() || getLat().equals("0") || getLat().equals("0.0") || getLong().isNullOrBlank() || getLong().equals("0") || getLong().equals("0.0")) {
+        if (getLat().isNullOrBlank() || getLat().equals("0") || getLat().equals("0.0") || getLong().isNullOrBlank() || getLong().equals("0") || getLong().equals("0.0") || !isUserSavedAddress()) {
             checkpermission(storagePermissionRequestList(), { enableLocation() })
         }
     }

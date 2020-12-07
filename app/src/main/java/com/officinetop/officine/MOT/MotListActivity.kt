@@ -70,7 +70,14 @@ class MotListActivity : BaseActivity() {
             ed_search_km.isEnabled = true
             ed_search_km.requestFocus()
             if (btn_edit.text == getString(R.string.add_car)) {
-                motServive(ed_search_km.text.toString(), "1")
+
+                if (isOnline()) {
+                    motServive(ed_search_km.text.toString(), "1")
+                }else{
+                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                }
+
+
 
             }
             saveMotCarKM(ed_search_km.text.toString())
@@ -170,27 +177,23 @@ class MotListActivity : BaseActivity() {
                                             mMotScheduleData.add(Models.TypeSpecification(if (itemsData.service_schedule_description.isNullOrEmpty()) itemsData.id else itemsData.service_schedule_description, itemsData.id))
 
                                         }
-                                        if (mMotScheduleData.size > 1) {
-                                            Log.d("MotList", "mMotScheduleData  $mMotScheduleData")
-
-                                            ll_carcondition.visibility = View.GONE
-                                            bindSpinner()
-                                        }
 
                                         scheduleId = mMotSchedule[0].id
-                                        motServive(getMotKm()!!, "0")
-                                    } else {
-                                        motServive(getMotKm()!!, "0")
+
+
                                     }
-
-                                } else {
-                                    motServive(getMotKm()!!, "0")
-
-
                                 }
+
+                                if (isOnline()) {
+                                    motServive(getMotKm()!!, "0")
+                                }else{
+                                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                                }
+
+
+
+
                             } else
-
-
                                 showInfoDialog(response.message())
 
 
@@ -201,22 +204,6 @@ class MotListActivity : BaseActivity() {
     }
 
 
-    private fun bindSpinner() {
-        spinner_schedule.adapter = SpinnerAdapter(applicationContext, mMotScheduleData)
-        Log.d("MotList", "bindingSpinner")
-        spinner_schedule.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification
-                Log.d("selected vehi type: ", items.code)
-                scheduleId = items.code
-                motServive(getMotKm()!!, "0")
 
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
-    }
 
 }

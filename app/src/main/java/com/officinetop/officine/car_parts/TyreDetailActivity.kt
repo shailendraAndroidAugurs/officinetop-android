@@ -560,6 +560,15 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     e.printStackTrace()
                 }
             }
+        } else if (!productDetails!!.imageUrl.isNullOrBlank()) {
+            productDetails?.imageUrl?.let {
+                try {
+
+                    imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
 
 

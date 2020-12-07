@@ -140,7 +140,7 @@ class TyreListActivity : BaseActivity() {
             })
 
 
-            RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString)
+            RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString,getUserId())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 

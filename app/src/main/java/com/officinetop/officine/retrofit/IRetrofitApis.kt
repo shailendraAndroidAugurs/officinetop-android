@@ -511,7 +511,8 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.getTyreSpecification)
     fun getTyreSpecification(
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
-            @Query("search_string") search_string: String
+            @Query("search_string") search_string: String,
+            @Query(Constant.Path.userid) userId: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.bestSeller)

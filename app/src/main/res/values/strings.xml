@@ -545,8 +545,8 @@
     <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again</string>
     <string name="productRemoved_formWishList"> This product Removed from wishlist</string>
     <string name="WorkshopRemovedfromfavorite">This Workshop Removed from favorite</string>
-    <string name="ContactAddSuccessFully">Contact Add SuccessFully</string>
-    <string name="ContactUpdateSuccessFully">Contact Update SuccessFully</string>
+    <string name="ContactAddSuccessFully">Successfully Added</string>
+    <string name="ContactUpdateSuccessFully">Successfully Updated</string>
     <string name="ContactDeletedSuccessFully">Successfully deleted</string>
     <string name="Failed"> Failed!</string>
     <string name="Noapplicationcanhandlethisrequest">No application can handle this request.</string>
@@ -716,6 +716,10 @@
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
     <string name="Aboutus_link">https://www.officinetop.com/chi-siamo/</string>
     <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
+    <string name="less">...Less</string>
+    <string name="morecontent">...More</string>
+
+
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
