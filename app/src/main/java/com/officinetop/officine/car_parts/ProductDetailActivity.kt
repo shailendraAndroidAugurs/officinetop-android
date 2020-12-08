@@ -337,7 +337,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             val imageRes = imagesArray.getJSONObject(0).getString("image_url")
             image_slideview.visibility = View.VISIBLE
             image_slider.visibility = View.GONE
-            loadImageprofile(imageRes, image_slideview)
+            loadImage(imageRes, image_slideview)
             image_slideview.setOnClickListener({
                 createImageDialog(imageRes)
                 imageDialog.show()

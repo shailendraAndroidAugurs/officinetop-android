@@ -703,7 +703,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val imageRes = imagesArray.getJSONObject(0).getString("image_url")
             image_slideview_workshop.visibility = View.VISIBLE
             image_slider.visibility = View.GONE
-            loadImageprofile(imageRes, image_slideview_workshop)
+            loadImage(imageRes, image_slideview_workshop)
             image_slideview_workshop.setOnClickListener({
                 createImageDialog(imageRes)
                 imageDialog.show()
