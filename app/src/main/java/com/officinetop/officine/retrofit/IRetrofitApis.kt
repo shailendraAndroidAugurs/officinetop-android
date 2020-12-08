@@ -351,7 +351,9 @@ interface IRetrofitApis {
                                     @Query(Constant.Path.version_id) versionId: String,
                                     @Query(Constant.Path.service_average_time) averagetime: String,
                                     @Query(Constant.Path.max_appointment) maxappointment: String,
-                                    @Query(Constant.Path.hourly_rate) hourlyrate: String
+                                    @Query(Constant.Path.hourly_rate) hourlyrate: String,
+                                    @Query(Constant.Path.maker) maker: String,
+                                    @Query(Constant.Path.model) model: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getCarRevisionPackageDetail)

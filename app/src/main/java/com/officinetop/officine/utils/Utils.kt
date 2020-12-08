@@ -22,9 +22,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.annotation.IdRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -528,4 +526,21 @@ inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline o
     }
     alert.show()
     return alert
+}
+
+inline fun Context.createImageDialog(imageRes: String):Dialog {
+    val imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+    val slider = ImageView(this)
+    loadImageprofile(imageRes, slider)
+    slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+    with(imageDialog) {
+        requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        setContentView(slider)
+        window?.setGravity(android.view.Gravity.TOP)
+        window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
+        create()
+        return  imageDialog
+
+    }
 }

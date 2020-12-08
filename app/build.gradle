@@ -110,7 +110,7 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.github.sadra:AwesomeSpinner:1.5.2'
 
-    implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'com.daimajia.slider:library:1.1.5'
     implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.nineoldandroids:library:2.4.0'
 

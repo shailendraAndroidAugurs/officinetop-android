@@ -560,27 +560,31 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     e.printStackTrace()
                 }
             }
-        } else if (!productDetails!!.imageUrl.isNullOrBlank()) {
-            productDetails?.imageUrl?.let {
-                try {
+        } else {
+            if (!productDetails!!.imageUrl.isNullOrBlank()) {
+                productDetails?.imageUrl?.let {
+                    try {
 
-                    imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                        imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
-        }
 
 
-        if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
-            productDetails?.tyre_label_images?.let {
-                try {
-                    imagesArray.addAll(it)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+            if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
+                productDetails?.tyre_label_images?.let {
+                    try {
+                        imagesArray.addAll(it)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
+
         }
+
 
 
 
@@ -591,56 +595,54 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun setImageSlider(imagesArray: List<Models.TyreImage>?) {
         //set slider
-        createImageSliderDialog()
-        image_slider.removeAllSliders()
 
-        for (i in 0 until imagesArray!!.size) {
-            try {
-                if (imagesArray.get(i).image_url != null && imagesArray.get(i).image_url.toString().isNotEmpty()) {
-
-                    val imageRes = imagesArray.get(i).image_url
-                    Log.d("Images", imageRes.toString())
-                    val slide = TextSliderView(this)
-                            .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)
-                            .empty(R.drawable.no_image_placeholder)
-                            .setScaleType(BaseSliderView.ScaleType.CenterInside)
-                    image_slider.addSlider(slide)
-
-                    val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                            .description("Description")
-                            .image(imageRes.toString())
-                            .empty(R.drawable.no_image_placeholder)
-                    dialogSlider.addSlider(scaledSlide)
-
-                    slide.setOnSliderClickListener {
-
-                        if (disableSliderTouch)
-                            return@setOnSliderClickListener
-
-                        dialogSlider.currentPosition = i
-                        imageDialog.show()
-                    }
+        if (imagesArray?.size!! > 1) {
+            image_slideview.visibility = View.GONE
+            image_slider.visibility = View.VISIBLE
+            createImageSliderDialog()
+            image_slider.removeAllSliders()
+            for (i in 0 until imagesArray.size) {
+                val imageRes = imagesArray[i].image_url
+                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                image_slider.addSlider(slide)
+                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                        .description("Description")
+                        .image(imageRes)
+                dialogSlider.addSlider(scaledSlide)
+                slide.setOnSliderClickListener {
+                    if (disableSliderTouch)
+                        return@setOnSliderClickListener
+                    dialogSlider.currentPosition = i
+                    imageDialog.show()
+                }
+            }
+            image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+                    disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
                 }
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+            })
+        } else {
+            val imageRes = imagesArray[0].image_url
+            image_slideview.visibility = View.VISIBLE
+            image_slider.visibility = View.GONE
+            loadImage(imageRes, image_slideview)
+            image_slideview.setOnClickListener({
+                imageDialog= createImageDialog(imageRes!!)
+                imageDialog.show()
+            })
         }
 
 
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
-            }
-
-            override fun onPageSelected(position: Int) {
-            }
-
-        })
     }
 
     private fun createImageSliderDialog() {

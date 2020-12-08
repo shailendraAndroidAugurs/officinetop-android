@@ -51,9 +51,17 @@
                             android:clickable="false"
                             android:gravity="center"
                             app:auto_cycle="false"
+
                             app:indicator_visibility="visible"
                             app:pager_animation="Default"
                             app:pager_animation_span="1000" />
+
+                        <ImageView
+                            android:id="@+id/image_slideview"
+                            android:background="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
 
                         <ImageView
                             android:id="@+id/iv_wishList"

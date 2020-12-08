@@ -228,7 +228,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             Log.v("INTENT", "*************** " + intent.getIntExtra("fragmentID", R.id.action_menu_home))
             bindFragment(intent.getIntExtra("fragmentID", R.id.action_menu_home))
         } else {
-
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, fragmentHome, "Home")
                     .commit()
