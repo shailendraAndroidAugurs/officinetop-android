@@ -560,6 +560,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     e.printStackTrace()
                 }
             }
+
         } else {
             if (!productDetails!!.imageUrl.isNullOrBlank()) {
                 productDetails?.imageUrl?.let {
@@ -573,20 +574,20 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
 
-            if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
-                productDetails?.tyre_label_images?.let {
-                    try {
-                        imagesArray.addAll(it)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
+
 
         }
 
 
-
+        if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
+            productDetails?.tyre_label_images?.let {
+                try {
+                    imagesArray.addAll(it)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
 
         setImageSlider(imagesArray)

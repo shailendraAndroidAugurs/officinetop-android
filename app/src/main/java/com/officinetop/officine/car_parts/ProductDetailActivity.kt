@@ -338,10 +338,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slideview.visibility = View.VISIBLE
             image_slider.visibility = View.GONE
             loadImage(imageRes, image_slideview)
-            image_slideview.setOnClickListener({
+            image_slideview.setOnClickListener {
                 createImageDialog(imageRes)
                 imageDialog.show()
-            })
+            }
         }
 
     }
@@ -356,11 +356,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         slider.stopAutoCycle()
         slider.indicatorVisibility = PagerIndicator.IndicatorVisibility.Visible
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//        slider.setCustomIndicator(PagerIndicator(this).apply {
-//            setDefaultIndicatorColor(Color.BLACK, Color.GRAY)
-//            indicatorVisibility =  PagerIndicator.IndicatorVisibility.Visible
-//        })
-
         dialogSlider = slider
 
         with(imageDialog) {
@@ -437,8 +432,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         Log.e("data is null", "${productData}")
                                     }
                                 } catch (e: Exception) {
-//                                    toast("Failed to load some product detail")
-//                                finish()
                                     Log.e("ProductDetailActivity", "onResponse: onResponse", e)
                                 }
                             }
