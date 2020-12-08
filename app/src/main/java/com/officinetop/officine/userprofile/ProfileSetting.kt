@@ -259,8 +259,8 @@ class ProfileSetting : BaseActivity() {
                                             Terms_and_Conditions = fulldata.getString("Terms_and_Conditions")
                                         if (fulldata.has("Cookies_information") && !fulldata.isNull("Cookies_information"))
                                             Cookies_information = fulldata.getString("Cookies_information")
-                                        if (fulldata.has("How_does_it_work") && !fulldata.isNull("How_does_it_work"))
-                                            How_does_it_work = fulldata.getString("How_does_it_work")
+                                        if (fulldata.has("who_we_are") && !fulldata.isNull("who_we_are"))
+                                            How_does_it_work = fulldata.getString("who_we_are")
 
                                         if (getLangLocale() != lang) {
                                             UpdateSettings(getLangLocale())

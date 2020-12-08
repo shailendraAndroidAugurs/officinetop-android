@@ -1,10 +1,9 @@
-package com.officinetop.officine.utils
 
+package com.officinetop.officine.utils
 object Constant {
 
     const val GALLERY = 1
     const val CAMERA = 2
-    const val RP_STORAGE = 102
     const val REQUEST_PERMISSIONS_LOCATION = 34
     val sample_array = arrayListOf("item1", "item2", "item3")
     const val file_pref = "session"
@@ -27,7 +26,6 @@ object Constant {
     const val itemImageBaseURL = domainBaseURL + "public/storage/category/"
     const val profileBaseUrl = domainBaseURL + "public/storage/profile_image/"
 
-    const val itemProductGroupImageUrl = domainBaseURL + "storage/group_image/"
 
     ///http:\/\/127.0.0.1:8000\/storage\/group_image
 
@@ -316,15 +314,11 @@ object Constant {
         const val motservicetype = "mot_service_type"
         const val service_average_time = "service_average_time"
         const val slot_id = "temp_slot_id"
-
         const val maxAppointment = "max_appointment"
         const val slotEndTime = "slot_end_time"
         const val slotStartTime = "slot_start_time"
-
         const val specialConditionId = "special_condition_id"
-
         const val couponid = "coupon_id"
-
         const val partid = "parts"
         const val workshopWreckerId = "workshop_wrecker_id"
         const val orderId = "order_id"
@@ -332,16 +326,13 @@ object Constant {
         const val addressId = "address_id"
         const val latitude = "latitude"
         const val userSavedAddress = "userSavedAddress"
-
         const val longitude = "longitude"
         const val discountPrice = "discount_price"
         const val discountType = "discount_type"
-
         const val workshopFilterSelectedDate = "selected_date"
         const val filterRating = "rating"
         const val ratings = "ratings"
         const val filterPriceRange = "price_range"
-
         const val sortPrice = "price_level"
         const val mainCategoryId = "main_category_id"
         const val mainCategoryIdCar_wash = "mainCategoryIdCar_wash"
@@ -349,18 +340,14 @@ object Constant {
         const val price = "price"
         const val workShopType = "type"
         const val packageId = "package_id"
-
         const val productDetails = "product_details"
-
         const val productType = "product_type"
         const val orderid = "order_id"
         const val type = "type"
         const val model = "model"
         const val coupon = "coupon"
-
         const val ProductOrWorkshopName = "ProductOrWorkshopName"
         const val makerName = "maker_name"
-
         const val language = "language"
         const val car_version_id = "car_version_id"
         const val version_id = "version_id"
@@ -390,10 +377,7 @@ object Constant {
         const val ticket_type = "ticket_type"
         const val productName = "product_name"
         const val productDescription = "product_description"
-
         const val mainCategoryIdTyre = "mainCategoryIdTyre"
-
-        const val productitem = "product_item"
         const val N3Service_id = "n3_service_id"
 
         const val lang = "lang"

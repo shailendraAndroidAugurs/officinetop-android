@@ -41,7 +41,11 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
+import kotlinx.android.synthetic.main.activity_workshop_detail.Iv_favorite
+import kotlinx.android.synthetic.main.activity_workshop_detail.image_slider
+import kotlinx.android.synthetic.main.activity_workshop_detail.see_all_feedback
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.dialog_booking_calendar.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -607,7 +611,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
 
-    private fun setImageSlider(imagesArray: JSONArray) {
+   /* private fun setImageSlider1(imagesArray: JSONArray) {
         //set slider
         createImageSliderDialog()
         image_slider.removeAllSliders()
@@ -651,6 +655,61 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
         })
+    }*/
+
+    private fun setImageSlider(imagesArray: JSONArray) {
+        if (imagesArray.length() > 1) {
+            image_slideview_workshop.visibility = View.GONE
+            image_slider.visibility = View.VISIBLE
+            //set slider
+            createImageSliderDialog()
+            image_slider.removeAllSliders()
+
+            for (i in 0 until imagesArray.length()) {
+                //   val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
+                val imageRes = imagesArray.getJSONObject(i).getString("image_url")
+                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                image_slider.addSlider(slide)
+
+                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                        .description("Description")
+                        .image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside)
+                        .empty(R.drawable.no_image_placeholder)
+                dialogSlider.addSlider(scaledSlide)
+
+                slide.setOnSliderClickListener {
+
+                    if (disableSliderTouch)
+                        return@setOnSliderClickListener
+
+                    dialogSlider.currentPosition = i
+                    imageDialog.show()
+                }
+            }
+            image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+                    disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+            })
+        } else {
+            val imageRes = imagesArray.getJSONObject(0).getString("image_url")
+            image_slideview_workshop.visibility = View.VISIBLE
+            image_slider.visibility = View.GONE
+            loadImageprofile(imageRes, image_slideview_workshop)
+            image_slideview_workshop.setOnClickListener({
+                createImageDialog(imageRes)
+                imageDialog.show()
+            })
+        }
+
     }
 
     private fun loadWorkShopPackages() {
@@ -914,7 +973,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     ?: "", quotesServicesAvarageTime).enqueue(callback)
         else if (isMotService)
             RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId).enqueue(callback)
-        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!,services_average_time,max_appointment,hourly_rate).enqueue(callback)
+        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!,services_average_time,max_appointment,hourly_rate,getSelectedCar()?.carMakeModel?.brandID!!,getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
 
     }
 

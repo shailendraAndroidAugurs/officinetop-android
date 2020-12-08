@@ -29,10 +29,6 @@ import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.activity_product_detail.image_slider
-import kotlinx.android.synthetic.main.activity_product_detail.image_slideview
-import kotlinx.android.synthetic.main.activity_product_detail.product_recommendation_recycler_view
-import kotlinx.android.synthetic.main.activity_service_detail.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
@@ -65,7 +61,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         toolbar_title.text = getString(R.string.Product_detail)
         getLocation()
         initViews()
-       // setImageSlider()
+        // setImageSlider()
 
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(
@@ -89,7 +85,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (isOnline()) {
             loadProductDetailApi(productId)
             getSimilarProduct(productId)
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
     }
@@ -294,55 +290,11 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-    private fun setImageSlider() {
-        //set slider
-        image_slider.removeAllSliders()
-        createImageSliderDialog()
-        for (i in 0..1) {
-            val imageRes = if (i % 2 == 0) R.drawable.no_image_placeholder else R.drawable.no_image_placeholder
-
-            val slide = TextSliderView(this)
-                    .image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside)
-                    .empty(R.drawable.no_image_placeholder)
-
-            image_slider.addSlider(slide)
-
-            val scaledSlide = DialogTouchImageSlider(this, imageRes)
-                    .description("Description")
-                    .image(imageRes)
-            dialogSlider.addSlider(scaledSlide)
-
-            slide.setOnSliderClickListener {
-
-                if (disableSliderTouch)
-                    return@setOnSliderClickListener
-
-                dialogSlider.currentPosition = i
-                imageDialog.show()
-            }
-        }
-
-
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-            }
-
-        })
-    }
 
     private fun setImageSlider(imagesArray: JSONArray) {
-
-        if(imagesArray.length()>1){
-            image_slideview.visibility=View.GONE
-            image_slider.visibility=View.VISIBLE
+        if (imagesArray.length() > 1) {
+            image_slideview.visibility = View.GONE
+            image_slider.visibility = View.VISIBLE
             //set slider
             createImageSliderDialog()
             image_slider.removeAllSliders()
@@ -381,10 +333,10 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 }
 
             })
-        }else{
+        } else {
             val imageRes = imagesArray.getJSONObject(0).getString("image_url")
-            image_slideview.visibility=View.VISIBLE
-            image_slider.visibility=View.GONE
+            image_slideview.visibility = View.VISIBLE
+            image_slider.visibility = View.GONE
             loadImageprofile(imageRes, image_slideview)
             image_slideview.setOnClickListener({
                 createImageDialog(imageRes)
@@ -393,6 +345,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
     }
+
 
     private fun createImageSliderDialog() {
 
@@ -454,6 +407,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                         dialog.dismiss()
                         toast(getString(R.string.Failed_load_product_detail))
                     }
+
                     @SuppressLint("SetTextI18n")
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         dialog.dismiss()
@@ -604,6 +558,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                             }
                         })
     }
+
     private fun setProductDetailData(jsonSring: String) {
         productDetails = JSONObject(jsonSring)
 
@@ -638,7 +593,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             Iv_favorite.setOnClickListener {
                 if (isOnline()) {
                     add_remove_product__Wishlist()
-                }else{
+                } else {
                     showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
                 }
             }

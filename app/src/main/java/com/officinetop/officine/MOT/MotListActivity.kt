@@ -26,7 +26,6 @@ import retrofit2.Response
 import java.util.*
 
 class MotListActivity : BaseActivity() {
-
     private var mServicesList: MutableList<Models.MotServicesList> = ArrayList()
     private var mMotSchedule: MutableList<Models.MotSchedule> = ArrayList()
     private var scheduleId = ""
@@ -37,8 +36,6 @@ class MotListActivity : BaseActivity() {
         initView()
 
     }
-
-
     private fun initView() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

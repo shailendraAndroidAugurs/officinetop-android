@@ -48,6 +48,11 @@
                         app:pager_animation_span="1000" />
 
                     <ImageView
+                        android:id="@+id/image_slideview_workshop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <ImageView
                         android:id="@+id/workshop_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
