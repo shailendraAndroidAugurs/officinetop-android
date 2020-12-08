@@ -560,6 +560,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     e.printStackTrace()
                 }
             }
+
         } else {
             if (!productDetails!!.imageUrl.isNullOrBlank()) {
                 productDetails?.imageUrl?.let {
