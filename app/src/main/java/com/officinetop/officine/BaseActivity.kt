@@ -182,7 +182,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
     fun getLocation() {
 
         if (getLat().isNullOrBlank() || getLat().equals("0") || getLat().equals("0.0") || getLong().isNullOrBlank() || getLong().equals("0") || getLong().equals("0.0") || !isUserSavedAddress()) {
-            checkpermission(storagePermissionRequestList(), { enableLocation() })
+            checkpermission(storagePermissionRequestList(), { enableLocation() },true)
         }
     }
 

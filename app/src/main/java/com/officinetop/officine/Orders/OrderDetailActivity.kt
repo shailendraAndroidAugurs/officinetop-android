@@ -189,24 +189,25 @@ class OrderDetailActivity : BaseActivity() {
                  if (ServiceProductList[position].product_info != null) {
                      loadImage(ServiceProductList[position].product_info.product_imageUrl, holder.itemView.cart_assembled_product_image)
                      holder.itemView.item_assemble_title.text = ServiceProductList[position].product_info.productsName
-                     holder.itemView.item_assemble_product_subtitle.text = ServiceProductList[position].product_info.kromedaDescription
-                     holder.itemView.item_product_price.text = ServiceProductList[position].product_info.price
-                 }else{
+                     holder.itedmView.item_assemble_product_subtitle.text = ServiceProductList[position].product_info.kromedaDescription
+                     holder.itembView.item_product_price.text = ServiceProductList[position].product_info.price
+                 }else{c
                      holder.itemView.ll_productInfo.visibility=View.GONE
-                 }
+                 }c
                  if (ServiceProductList[position].Services != null) {
-
+c
                      loadImage(ServiceProductList[position].Services.ServiceImagesUrl, holder.itemView.cart_assembled_service_image)
-                     holder.itemView.tv_service_name.text = ServiceProductList[position].Services.ServiceName
-
+ cg                    holder.itemView.tv_service_name.text = ServiceProductList[position].Services.ServiceName
+f
    mot              }
-
-                 if (ServiceProductList[position].workshop_details != null) {
-                     loadImage(ServiceProductList[position].workshop_details.workShopImageUrl, holder.itemView.cart_assembled_workshop_image)
+g
+ f                if (ServiceProductList[position].workshop_details != null) {
+  gdfgsfd                   loadImage(ServiceProductList[position].workshop_details.workShopImageUrl, holder.itemView.cart_assembled_workshop_image)
                      holder.itemView.item_assemble_workshop_subtitle.text = ServiceProductList[position].workshop_details.businessName
 
                      holder.itemView.item_assemble_service_price.text = ServiceProductList[position].price
-                             holder.itemView.item_assemble_date.text = ServiceProductList[position].bookingDate
+                             holder.itemView.item_assemble_date.te
+                             xt = ServiceProductList[position].bookingDate
                              holder.itemView.item_assemble_time.text = ServiceProductList[position].startTime
                              holder.itemView.tv_workshopEndtime.text = ServiceProductList[position].endTime
                              holder.itemView.selected_car_name.text = getSelectedCar()?.carMakeName

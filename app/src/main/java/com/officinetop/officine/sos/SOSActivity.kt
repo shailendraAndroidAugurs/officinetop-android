@@ -95,7 +95,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         checkpermission(storagePermissionRequestList(), {
             enableLocation()
             getcurrentlocation()
-        })
+        },true)
 
         emergency_call.setOnClickListener {
             callEmergency()

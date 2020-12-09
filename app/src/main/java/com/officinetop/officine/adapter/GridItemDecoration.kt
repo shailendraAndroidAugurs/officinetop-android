@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 class GridItemDecoration(gridSpacingPx: Int, gridSize: Int) : RecyclerView.ItemDecoration() {
     private var mSizeGridSpacingPx: Int = gridSpacingPx
     private var mGridSize: Int = gridSize
-
     private var mNeedLeftSpacing = false
-
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val frameWidth = ((parent.width - mSizeGridSpacingPx.toFloat() * (mGridSize - 1)) / mGridSize).toInt()
         val padding = parent.width / mGridSize - frameWidth

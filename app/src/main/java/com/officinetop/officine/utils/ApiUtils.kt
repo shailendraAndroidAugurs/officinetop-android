@@ -8,19 +8,20 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -1149,7 +1150,7 @@ fun Context.addReadLess(text: String, textView: TextView) {
 }
 
 
-inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline onOkClick: (() -> Unit?)? = null) {
+inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline onOkClick: (() -> Unit?)? = null, islocationpermission: Boolean = true) {
     try {
         Dexter.withActivity(this)
                 .withPermissions(permissionlist)
@@ -1164,7 +1165,8 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
                         // check for permanent denial of any permission
                         if (report.isAnyPermissionPermanentlyDenied) {
                             // show alert dialog navigating to Settings
-                            showSettingsDialog()
+
+                            showSettingsDialog(islocationpermission)
                         }
                     }
 
@@ -1176,7 +1178,7 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
                         Toast.makeText(applicationContext, getString(R.string.Unspecifiederroroccurred), Toast.LENGTH_SHORT).show()
                     }
                 })
-             /*   .onSameThread()*/
+                /*   .onSameThread()*/
                 .check()
     } catch (e: java.lang.Exception) {
 
@@ -1185,10 +1187,16 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
 
 }
 
-fun Activity.showSettingsDialog() {
+fun Activity.showSettingsDialog(islocationpermission: Boolean) {
     val builder = AlertDialog.Builder(this)
-    builder.setTitle(getString(R.string.need_permissions))
-    builder.setMessage(getString(R.string.permission_denied))
+    if (islocationpermission) {
+        builder.setTitle(getString(R.string.unauthorized_location_title))
+        builder.setMessage(getString(R.string.unauthorized_location_message))
+    } else {
+        builder.setTitle(getString(R.string.need_permissions))
+        builder.setMessage(getString(R.string.permission_denied))
+    }
+
     builder.setPositiveButton(getString(R.string.goto_setting)) { dialogInterface, i ->
 
         dialogInterface.cancel()
