@@ -227,7 +227,7 @@
     <string name="condition">Terms &amp; Condition</string>
     <string name="checkreferral">Do you\'ve referral code?</string>
     <string name="removereferral">Do you want to remove referral code?</string>
-    <string name="offermsg_referral">Chance to get 12 euro in your wallet after registration with referral code</string>
+    <string name="offermsg_referral">Enter the referral code to get euros in your wallet after registration</string>
     <string name="close">Close</string>
     <string name="ticket">Ticket No. -</string>
     <string name="ticketType">Complain type -</string>
@@ -637,6 +637,9 @@
     <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
     <string name="less">...Less</string>
     <string name="morecontent">...More</string>
+    <string name="unauthorized_location_title">Unauthorized location</string>
+    <string name="unauthorized_location_message">Activate the localization, and you will be able to find the nearest workshops</string>
+
 
     <string-array name="home_icon_titles">
         <item>Tyre</item>

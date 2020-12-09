@@ -60,7 +60,7 @@ class LocationActivity : BaseActivity() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLocation()
 
-        checkpermission(storagePermissionRequestList(), { setPlacePicker() })
+        checkpermission(storagePermissionRequestList(), { setPlacePicker() },true)
         disableTextField()
         getSavedUserLocation()
 
@@ -290,7 +290,7 @@ class LocationActivity : BaseActivity() {
     }
 
     private fun getcurrentLocation() {
-        checkpermission(storagePermissionRequestList(), { getLastLocation() })
+        checkpermission(storagePermissionRequestList(), { getLastLocation() },true)
 
 
     }

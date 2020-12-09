@@ -55,7 +55,9 @@
                             app:pager_animation="Default"
                             app:pager_animation_span="1000" />
                         <ImageView
+                            android:src="@drawable/no_image_placeholder"
                             android:layout_marginTop="@dimen/_20sdp"
+                            android:scaleType="centerInside"
                             android:id="@+id/image_slideview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>

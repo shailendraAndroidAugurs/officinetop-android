@@ -229,7 +229,7 @@ informazioni in accordo alle </string>
     <string name="condition">Termini e condizioni</string>
     <string name="checkreferral">Hai un codice di riferimento?</string>
     <string name="removereferral">Vuoi rimuovere il codice di riferimento?</string>
-    <string name="offermsg_referral">Inserisci il codice di riferimento per ottenere 6 euro nel tuo portafoglio dopo la registrazione.</string>
+    <string name="offermsg_referral">Inserisci il codice di riferimento per ottenere euro nel tuo portafoglio dopo la registrazione.</string>
     <string name="close">Chiudi</string>
     <string name="ticket">numero del biglietto</string>
     <string name="ticketType">Tipo di reclamo -</string>
@@ -636,6 +636,9 @@ informazioni in accordo alle </string>
 
     <string name="less">...Mostra meno</string>
     <string name="morecontent">...Mostra altro</string>
+    <string name="unauthorized_location_title">Localizzazione non autorizzata</string>
+    <string name="unauthorized_location_message">Attiva la localizzazione, e potrai trovare le officine più vicine</string>
+
 
     <string-array name="home_icon_titles">
         <item>Gomme</item>

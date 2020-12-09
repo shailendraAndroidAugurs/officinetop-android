@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.item_part_detail.view.*
 import org.json.JSONArray
 
 class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartCategoryInterface) : RecyclerView.Adapter<PartCategoryAdapter.PartViewHolder>() {
-
     private var mCategoryArrayList: JSONArray
     lateinit var context: Context
     private var mView: PartCategoryInterface

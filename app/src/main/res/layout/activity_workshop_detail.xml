@@ -50,6 +50,8 @@
                     <ImageView
                         android:id="@+id/image_slideview_workshop"
                         android:layout_width="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/no_image_placeholder"
                         android:layout_height="match_parent"/>
 
                     <ImageView
