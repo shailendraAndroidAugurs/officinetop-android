@@ -177,10 +177,6 @@ class QuotesActivity : BaseActivity() {
                     selectedDate = selectedFormattedDate.toRequestBody(),
                     carSize = getSelectedCar()?.carSize.toString().toRequestBody(),
                     buttonType = btnType.toRequestBody()
-                    /*rating = "".toRequestBody(),
-                    priceRange = "".toRequestBody(),
-                    price_level = "".toRequestBody()*/
-
             )
                     .onCall { networkException, response ->
 
@@ -194,11 +190,10 @@ class QuotesActivity : BaseActivity() {
                                 try {
                                     val body = JSONObject(response.body()?.string())
 
-                                    if (body.has("message"))
-                                        showInfoDialog(body.optString("message")) //{
+                                   /* if (body.has("message"))
+                                        showInfoDialog(body.optString("message")) //{*/
 
                                     if (btnType == "2") {
-
                                         if (body.has("data") && !body.isNull("data") && body.get("data") is JSONObject) {
                                             val data = body.getJSONObject("data")
                                             if (data.has("id") && data.has("main_category_id")) {
@@ -216,7 +211,7 @@ class QuotesActivity : BaseActivity() {
                                                 }
                                             }
                                         } else {
-                                            showInfoDialog(getString(R.string.id_is_required))
+                                            showInfoDialog(getString(R.string.Unspecifiederroroccurred))
                                         }
                                     }
                                     // }

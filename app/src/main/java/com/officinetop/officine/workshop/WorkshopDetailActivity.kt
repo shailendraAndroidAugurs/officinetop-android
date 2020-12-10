@@ -115,17 +115,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     var mainCategoryIDForAssembly: String = ""
     private var mainCategoryIDForCarWash: String = ""
-
     var calendarPriceMap: HashMap<String, String> = HashMap()
     lateinit var today: LocalDate
     lateinit var bookingCalendar: CalendarView
     var previousSelectedDate: LocalDate? = null
-
     private var quotesWorkshopUsersDaysId: String = ""
     private var quotesServiceQuotesInsertedId: String = ""
     private var quotesMainCategoryId: String = ""
     private var quotesServicesAvarageTime: String = ""
-
     private var specialConditionObject: Models.SpecialCondition? = null
     private var workshopUsersId: Int = 0
     private var workshopCategoryId: String = ""//var workshopCategoryId:Int , change type to String because for car maintenance services id's
@@ -1048,8 +1045,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     val startTimeString = packageDetails.getString("start_time")
                     val endTimeString = packageDetails.getString("end_time")
-
-
                     val startHour = startTimeString.split(":")[0].trim().toInt()
                     val startMin = startTimeString.split(":")[1].trim().toInt()
                     packageTiming.text = "${startTimeString.split(":")[0]}:${startTimeString.split(":")[1]} - " + endTimeString.split(":")[0] + ":" + endTimeString.split(":")[1]

@@ -99,14 +99,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
                 if (!isLoggedIn()) {
-                    alert {
+                    /*alert {
                         message = getString(R.string.not_logged_in)
                         positiveButton(getString(R.string.login)) {
                             startActivity(intentFor<LoginActivity>().clearTop())
                             //                                finish()
                         }
                         negativeButton(getString(R.string.ok)) {}
-                    }.show()
+                    }.show()*/
+                    startActivity(intentFor<LoginActivity>().clearTop())
                 } else {
                     supportFragmentManager.beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

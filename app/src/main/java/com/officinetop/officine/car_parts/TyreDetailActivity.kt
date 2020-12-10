@@ -555,7 +555,11 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (productDetails?.images != null && productDetails?.images!!.size > 0) {
             productDetails!!.images?.let {
                 try {
-                    imagesArray.addAll(it)
+                    if (!it.isNullOrEmpty()) {
+                        imagesArray.addAll(it)
+                    }
+
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -565,15 +569,15 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (!productDetails!!.imageUrl.isNullOrBlank()) {
                 productDetails?.imageUrl?.let {
                     try {
+                        if (!it.isNullOrEmpty() && productDetails?.imageUrl != null) {
+                            imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
+                        }
 
-                        imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
             }
-
-
 
 
         }
@@ -582,7 +586,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
             productDetails?.tyre_label_images?.let {
                 try {
-                    imagesArray.addAll(it)
+                    if (!it.isNullOrEmpty() && it[0] != null && ! it[0].image_url.isNullOrBlank()) {
+                        imagesArray.addAll(it)
+                    }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -604,18 +611,22 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slider.removeAllSliders()
             for (i in 0 until imagesArray.size) {
                 val imageRes = imagesArray[i].image_url
-                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
-                image_slider.addSlider(slide)
-                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                        .description("Description")
-                        .image(imageRes)
-                dialogSlider.addSlider(scaledSlide)
-                slide.setOnSliderClickListener {
-                    if (disableSliderTouch)
-                        return@setOnSliderClickListener
-                    dialogSlider.currentPosition = i
-                    imageDialog.show()
+                if (!imageRes.isNullOrBlank()) {
+                    val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                    image_slider.addSlider(slide)
+                    val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                            .description("Description")
+                            .image(imageRes)
+                    dialogSlider.addSlider(scaledSlide)
+                    slide.setOnSliderClickListener {
+                        if (disableSliderTouch)
+                            return@setOnSliderClickListener
+                        dialogSlider.currentPosition = i
+                        imageDialog.show()
+                    }
                 }
+
+
             }
             image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
@@ -625,6 +636,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
                 }
+
 
                 override fun onPageSelected(position: Int) {
                 }
@@ -636,12 +648,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slider.visibility = View.GONE
             loadImage(imageRes, image_slideview)
             image_slideview.setOnClickListener({
-                imageDialog= createImageDialog(imageRes!!)
+                imageDialog = createImageDialog(imageRes!!)
                 imageDialog.show()
             })
         }
-
-
 
 
     }

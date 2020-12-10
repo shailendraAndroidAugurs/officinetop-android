@@ -118,17 +118,14 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
-
         setSupportActionBar(toolbar)
         search_view_layout.visibility = View.GONE
-
         toolbar_title.text = getString(R.string.Workshop)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getLocation()
         filter_btn.setOnClickListener { filterDialog.show() }
         sort_btn.setOnClickListener { sortDialog.show() }
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
-
         if (intent?.hasExtra(Constant.Path.deliveryDate)!!) {
             deliveryDate = intent?.getStringExtra(Constant.Path.deliveryDate)!!
         }
@@ -144,7 +141,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         isSOSAppointment = intent?.getBooleanExtra(Constant.Key.is_sos_service, false) ?: false
         isSOSServiceEmergency = intent?.getBooleanExtra(Constant.Key.is_sos_service_emergency, false)
                 ?: false
-
         isCarWash = intent?.getBooleanExtra(Constant.Key.is_car_wash, false) ?: false
         if (intent.hasExtra(Constant.Key.cartItem)) {
             // for assembly
@@ -199,7 +195,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         }
-
         if (isTyreService) {
             if (intent.hasExtra(Constant.Path.productId)) {
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
@@ -218,7 +213,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         }
-
         if (isQuotes) {
             if (intent.hasExtra(Constant.Path.categoryId)) {
                 serviceID = intent.getStringExtra(Constant.Path.categoryId).toInt()
@@ -292,7 +286,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         getCalendarMinPriceRange(selectedFormattedDate)
         if (isOnline()) {
             reloadPage()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
 
@@ -349,6 +343,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 progress_bar.visibility = View.GONE
                 recycler_view.visibility = View.VISIBLE
             }
+
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progress_bar.visibility = View.GONE
@@ -390,9 +385,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 return if (p1 == 0) object : RecyclerView.ViewHolder(selectedView) {}
                 else object : RecyclerView.ViewHolder(unselectedView) {}
             }
+
             override fun getItemViewType(position: Int): Int {
                 return if (position == selectedItemPosition) 0 else 1
             }
+
             override fun getItemCount(): Int = calendarDetailList.size
 
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, position: Int) {
@@ -429,7 +426,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun reloadPage() {
         if (!isSOSServiceEmergency)
             horizontal_calendar_layout.visibility = View.VISIBLE
-           loadWorkshops()
+        loadWorkshops()
         // Click for map filter
         map_btn.setOnClickListener {
             var workshopCategoryDetail = (convertToJson(intent.getSerializableExtra(Constant.Path.washServiceDetails)
@@ -502,12 +499,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             progress_bar.visibility = View.GONE
                             recycler_view.visibility = View.VISIBLE
                         }
+
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             Log.d("ProductOrWorkshopList", "loadAssemblyWorkshops: onResponse $response  -- isAssemblyService --  $isAssemblyService")
 
                             setWorkshopValues(response)
                         }
-            })
+                    })
         } else if (isRevisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
             CallRevisionApi(priceRangeString, priceSortLevel, ratingString)
@@ -611,6 +609,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             progress_bar.visibility = View.GONE
                             recycler_view.visibility = View.VISIBLE
                         }
+
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             Log.d("ProductOrWorkshopList", "loadWorkshops: onResponse $response  -- isAssemblyService --  $isAssemblyService")
                             setWorkshopValues(response)
@@ -618,6 +617,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     })
         }
     }
+
     private fun setWorkshopValues(response: Response<ResponseBody>) {
         try {
             val body = response.body()?.string()
@@ -687,20 +687,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (jsonArray.length() > 0) {
             try {
                 hasRecyclerLoadedOnce = true
-
                 filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
                 filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
-                //  filterDialog.clear_selection.callOnClick()
                 filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
                 filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
-
-
-                /*filterDialog.dialog_distance_range.setValue(0f, 25f)
-                misdistancefilter = false
-
-                filterDialog.distance_end_range.text = getString(R.string.append_km, 25)
-                filterDialog.distance_start_range.text = getString(R.string.append_km, 0)*/
-
                 pricesFilter = false
 
 
@@ -734,11 +724,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
 
-                    tempPriceInitial = leftValue.toInt()
-                    tempPriceFinal = rightValue.toInt() /*+ 1*/
+                    tempPriceInitial = leftValue.toDouble().roundTo2Places().toInt()
+                    tempPriceFinal = rightValue.toDouble().roundTo2Places().toInt() /*+ 1*/
                     //  price_start_range.text = getString(R.string.prepend_euro_symbol_string, priceInitialString)
-                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, rightValue.toString())
-                    price_start_range.text = getString(R.string.prepend_euro_symbol_string, leftValue.toString() /*seekPriceInitial.toString()*/)
+                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, rightValue.toDouble().roundTo2Places().toString())
+                    price_start_range.text = getString(R.string.prepend_euro_symbol_string, leftValue.toDouble().roundTo2Places().toString() /*seekPriceInitial.toString()*/)
                     pricesFilter = true
 
                 }
@@ -885,8 +875,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 return@setOnMenuItemClickListener true
             }
             tv_Sort_ClearSection.setOnClickListener {
-                rb_price_low.isChecked=true
-                rb_price_high.isChecked=false
+                rb_price_low.isChecked = true
+                rb_price_high.isChecked = false
             }
             create()
 
@@ -915,6 +905,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
         Log.d("Revision", "DistanceInitial$tempDistanceInitial")
         Log.d("Revision", "DistanceFinal$tempDistanceFinal")

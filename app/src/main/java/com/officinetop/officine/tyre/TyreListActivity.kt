@@ -46,7 +46,6 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 class TyreListActivity : BaseActivity() {
-
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     var tempPriceFinal: Float = -1f
@@ -56,7 +55,6 @@ class TyreListActivity : BaseActivity() {
     val filterBrandList: MutableList<String> = ArrayList()
     val filterTyreSeasonList: MutableList<Models.TypeSpecification> = ArrayList()
     val filterTyreSpeedIndexList: MutableList<Models.TypeSpecification> = ArrayList()
-
     val filterTyreSpeedLoadIndexList: MutableList<Models.TypeSpecification> = ArrayList()
     private var searchString: String = ""
     private var priceSortLevel: Int = 0
@@ -106,7 +104,6 @@ class TyreListActivity : BaseActivity() {
                     setTyreTitle()
                     searchString = "" + it.width.toInt() + it.aspectRatio.toInt() + it.diameter.toInt()
                     progress_bar.visibility = View.VISIBLE
-
                     loadTyreData()
 
 
@@ -210,7 +207,6 @@ class TyreListActivity : BaseActivity() {
 
             }
 
-            // createFilterDialog()
             createSortDialog()
 
         }
@@ -274,17 +270,6 @@ class TyreListActivity : BaseActivity() {
         } else {
             speedloadindex = tyreDetail.speed_load_index
         }
-
-        /*  if (!tyreDetail.Rating.isNullOrBlank()) {
-
-              var ratingArray = tyreDetail.Rating.split(",")
-              rating = if (ratingArray.size == 1) {
-                  "0," + ratingArray[0]
-              } else {
-                  (ratingArray[0] + "," + ratingArray[ratingArray.size - 1])
-              }
-
-          }*/
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,

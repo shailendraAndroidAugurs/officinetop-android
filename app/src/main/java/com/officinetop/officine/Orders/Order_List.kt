@@ -181,13 +181,6 @@ class Order_List : BaseActivity() {
         genericAdapter.addItems(couponsListItem)
     }
 
-
-    /*fun onCreateView(parent: View?, name: String?, context: Context?, attrs: AttributeSet?): View? {
-        val mFrame = findViewById<View>(R.id.content) as FrameLayout
-        mFrame.addView(LayoutInflater.from(context).inflate(R.layout.activity_nav_test, mFrame, true))
-        return super.onCreateView(parent, name!!, context, attrs)
-    }*/
-
     fun DownloadInvoice(orderId: String, isDownload: Boolean) {
         //progress_bar.visibility = View.VISIBLE
         RetrofitClient.client.downloadInvoice(orderId, getBearerToken() ?: "")
@@ -243,10 +236,6 @@ class Order_List : BaseActivity() {
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
                                 initview()
-
-                                // couponsListItem[postion].InvoiceStatus = "1"
-
-
                             } else {
                                 showInfoDialog(body.get("message").toString())
                             }
