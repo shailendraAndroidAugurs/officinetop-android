@@ -608,12 +608,12 @@ informazioni in accordo alle </string>
 
 
     <string name="staus">Stato:</string>
-    <string name="inProgress">In Process</string>
+    <string name="inProgress">Lavorazione in corso</string>
     <string name="dispatched">Inviato</string>
-    <string name="intransit">Intransita</string>
+    <string name="intransit">In transito</string>
     <string name="delivered">Consegnato</string>
-    <string name="workComplete">Lavoro Completato</string>
-    <string name="confirmOrder">Confirm</string>
+    <string name="workComplete">Lavoro completato</string>
+    <string name="confirmOrder">Conferma pagamento</string>
     <string name="concatDateformate">/</string>
     <string name="need_permissions">Hai bisogno di autorizzazioni</string>
     <string name="permission_denied">Questa app necessita dell\'autorizzazione per utilizzare questa funzione. Puoi concederli nelle impostazioni dell\'app.</string>
