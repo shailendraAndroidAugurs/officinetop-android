@@ -628,6 +628,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 }
 
+
                 override fun onPageSelected(position: Int) {
                 }
 
