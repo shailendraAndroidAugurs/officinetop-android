@@ -27,6 +27,16 @@ import com.officinetop.officine.utils.*
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.clear_selection
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_price_range
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_five
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_four
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_one
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_three
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_two
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.price_end_range
+import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.price_start_range
+import kotlinx.android.synthetic.main.dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -54,7 +64,7 @@ class MaintenanceActivity : BaseActivity() {
     private var tempPriceInitial: Float = 0f
     private var priceRangeInitial: Float = 0f
     private var priceRangeFinal: Float = -1f
-    private var seekbarPriceFinalLimit = 1000f
+    private var seekbarPriceFinalLimit = 1f
     private var isPriceLowToHigh = true
     private var frontRear: String = ""
     private var leftRight: String = ""
@@ -612,20 +622,12 @@ class MaintenanceActivity : BaseActivity() {
             dialog_price_range.setOnRangeChangedListener(object : OnRangeChangedListener {
                 override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
-                    tempPriceInitial = floor(leftValue)
-                    tempPriceFinal = ceil(rightValue)
+                    tempPriceInitial = leftValue.toDouble().roundTo2Places().toFloat()
+                    tempPriceFinal = rightValue.toDouble().roundTo2Places().toFloat()
+                    price_start_range.text = getString(R.string.prepend_euro_symbol_string,  leftValue.toDouble().roundTo2Places().toString())
+                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, rightValue.toDouble().roundTo2Places().toString())
 
-                    val seekPriceFinal = (ceil(rightValue) / 100) * seekbarPriceFinalLimit
-                    val seekPriceInitial = (floor(leftValue) / 100) * seekbarPriceFinalLimit
 
-                    val priceFinalString = String.format("%.2f", seekPriceFinal)
-                    val priceInitialString = String.format("%.2f", seekPriceInitial)
-
-                    tempPriceInitial = floor(seekPriceInitial)
-                    tempPriceFinal = ceil(seekPriceFinal)
-
-                    price_start_range.text = getString(R.string.prepend_euro_symbol_string, priceInitialString)
-                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, priceFinalString)
 
                 }
 

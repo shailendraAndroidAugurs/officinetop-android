@@ -20,40 +20,10 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_single_item_detail)
-        //setSupportActionBar(toolbar)
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        //toolbar_title.text = "Shopping Cart"
-
-
-        // contentView?.bindCartViews(this)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        getCartApi()
-
-
+       getCartApi()
         // set on-click listener
         proceed_to_pay.setOnClickListener {
             if (!cart_total_item_price.text.isNullOrEmpty() && !cart_total_price.text.isNullOrBlank() && !cart_total_service_price.text.isNullOrBlank()) {
-
-
                 val sharedprefrence1 = getSharedPreferences("Cart", Context.MODE_PRIVATE)
                 val userWalletPref = getSharedPreferences("UserWallet", Context.MODE_PRIVATE)
                 val totalvat = sharedprefrence1?.getString("TotalVat", "")

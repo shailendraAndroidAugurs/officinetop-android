@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.google.android.gms.common.api.ApiException
@@ -17,6 +18,7 @@ import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.Orders.Order_List
 import com.officinetop.officine.R
 import com.officinetop.officine.data.*
@@ -27,6 +29,7 @@ import com.officinetop.officine.utils.*
 import com.paypal.android.sdk.payments.*
 import kotlinx.android.synthetic.main.activity_online_payment.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.json.JSONException
 import org.json.JSONObject
@@ -828,5 +831,22 @@ class OnlinePaymentScreen : BaseActivity() {
 
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if (fromBooking) {
+            startActivity(intentFor<HomeActivity>().clearTop())
+        } else finish()
     }
 }

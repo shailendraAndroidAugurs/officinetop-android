@@ -555,7 +555,11 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (productDetails?.images != null && productDetails?.images!!.size > 0) {
             productDetails!!.images?.let {
                 try {
-                    imagesArray.addAll(it)
+                    if (!it.isNullOrEmpty()) {
+                        imagesArray.addAll(it)
+                    }
+
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -565,8 +569,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (!productDetails!!.imageUrl.isNullOrBlank()) {
                 productDetails?.imageUrl?.let {
                     try {
+                        if (!it.isNullOrEmpty() && productDetails?.imageUrl != null) {
+                            imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
+                        }
 
-                        imagesArray.add(Models.TyreImage(productDetails?.imageUrl))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -580,7 +586,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
             productDetails?.tyre_label_images?.let {
                 try {
-                    imagesArray.addAll(it)
+                    if (!it.isNullOrEmpty() && it[0] != null && ! it[0].image_url.isNullOrBlank()) {
+                        imagesArray.addAll(it)
+                    }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
