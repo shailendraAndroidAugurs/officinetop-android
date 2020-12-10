@@ -449,8 +449,6 @@ interface IRetrofitApis {
 
     @FormUrlEncoded
     @POST(Constant.UrlEndPoints.carWashServiceBooking)
-
-
     fun carWashServiceBooking(
             @Field(Constant.Path.packageId) packageID: Int,
             @Field(Constant.Path.start_time) startTime: String,

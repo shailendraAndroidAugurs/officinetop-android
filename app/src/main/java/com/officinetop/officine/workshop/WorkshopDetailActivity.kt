@@ -82,7 +82,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var main_category_id = ""
     private var services_average_time =""
     private var hourly_rate=""
-    private var temp_slot_id=""
+
     var disableSliderTouch = false
     var averageServiceTime = 0.0
     var categoryID = ""
@@ -931,7 +931,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             services_average_time = WorkshopJson.optString("service_average_time")
             max_appointment = WorkshopJson.optString("max_appointment")
             hourly_rate = WorkshopJson.optString("hourly_rate")
-            temp_slot_id = WorkshopJson.optString("temp_slot_id")
+          //  temp_slot_id = WorkshopJson.optString("temp_slot_id")
         }
 
         if (isAssembly)
@@ -1201,6 +1201,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun checkAndBookService(packageDetail: JSONObject, bookingStartTime: String) {
         var endTime = "00:00"
         var finalPrice: Double = 0.0
+        slotId = packageDetail.optString("temp_slot_id")
         //check for timeslot
         val packageID = packageDetail.getInt("id")
         if (bookServicesWithoutCoupon) {
@@ -1345,7 +1346,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 dialog.dismiss()
                 serviceSpecArray = JSONArray()
                 val body = response.body()?.string()
-                if (body.isNullOrEmpty() || response.code() == 401)
+                if (response.code() == 401)
                     showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
                 body?.let {
@@ -1487,7 +1488,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter, getSelectedCar()?.carSize
                     ?: "",
                     categoryID, mainCategoryIDForCarWash, getSavedSelectedVehicleID(), workshopCouponId, getOrderId(), getSelectedCar()?.carVersionModel?.idVehicle
-                    ?: "",temp_slot_id, getBearerToken() ?: ""
+                    ?: "",slotId, getBearerToken() ?: ""
             )
             serviceBookingCarWash.enqueue(callback)
         } else {

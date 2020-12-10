@@ -4,11 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.view_models.ListItemViewModel
 import java.io.Serializable
-
-
 object Models {
-
-
     data class AllAdvertisment(
             @SerializedName("add_location")
             val addLocation: String,
