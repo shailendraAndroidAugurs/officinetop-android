@@ -574,8 +574,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
 
-
-
         }
 
 
@@ -604,18 +602,22 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slider.removeAllSliders()
             for (i in 0 until imagesArray.size) {
                 val imageRes = imagesArray[i].image_url
-                val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
-                image_slider.addSlider(slide)
-                val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                        .description("Description")
-                        .image(imageRes)
-                dialogSlider.addSlider(scaledSlide)
-                slide.setOnSliderClickListener {
-                    if (disableSliderTouch)
-                        return@setOnSliderClickListener
-                    dialogSlider.currentPosition = i
-                    imageDialog.show()
+                if (!imageRes.isNullOrBlank()) {
+                    val slide = TextSliderView(this).image(imageRes).setScaleType(BaseSliderView.ScaleType.CenterInside).empty(R.drawable.no_image_placeholder)
+                    image_slider.addSlider(slide)
+                    val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                            .description("Description")
+                            .image(imageRes)
+                    dialogSlider.addSlider(scaledSlide)
+                    slide.setOnSliderClickListener {
+                        if (disableSliderTouch)
+                            return@setOnSliderClickListener
+                        dialogSlider.currentPosition = i
+                        imageDialog.show()
+                    }
                 }
+
+
             }
             image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
@@ -636,12 +638,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slider.visibility = View.GONE
             loadImage(imageRes, image_slideview)
             image_slideview.setOnClickListener({
-                imageDialog= createImageDialog(imageRes!!)
+                imageDialog = createImageDialog(imageRes!!)
                 imageDialog.show()
             })
         }
-
-
 
 
     }
