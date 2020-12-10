@@ -926,6 +926,7 @@ class MaintenanceActivity : BaseActivity() {
                             val datajson = JSONObject(bodyJsonObject.getString("data"))
                             if (datajson.has("totalMinWorkshopServicePrice") && !datajson.getString("totalMinWorkshopServicePrice").isNullOrBlank())
 
+
                                 selectedServicesTotalPrice = datajson.getString("totalMinWorkshopServicePrice").toDouble().roundTo2Places()
                             btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
 
