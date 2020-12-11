@@ -157,9 +157,6 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
             return mSubN3GroupArrayList.size
         }
 
-//        override fun getItem(position: Int): DataSetSubGroupCatItem?{
-//            return mSubN3GroupArrayList[position]
-//        }
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
@@ -172,57 +169,4 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
         }
     }
 
-    /* class ChildViewAdapter(subN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>, context: Context?, partCategoryInterface: PartCategoryInterface): BaseAdapter()
-    {
-        lateinit var mSubN3GroupArrayList: MutableList<DataSetSubGroupCatItem?>
-        var mContext: Context?
-        lateinit var mView: PartCategoryInterface
-
-        init {
-            mSubN3GroupArrayList = subN3GroupArrayList
-            mContext = context
-            mView = partCategoryInterface
-        }
-
-        override fun getItem(position: Int): DataSetSubGroupCatItem?{
-            return mSubN3GroupArrayList[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-        return position.toLong()
-        }
-
-        override fun getCount(): Int {
-            return mSubN3GroupArrayList.size
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var gridLayout = LayoutInflater.from(parent?.context).inflate(R.layout.item_grid_part_detail, parent, false)
-
-            var productDetails = mSubN3GroupArrayList[position]
-
-            var productContainer = gridLayout.findViewById<LinearLayout>(R.id.part_container)
-            var productImage = gridLayout.findViewById<ImageView>(R.id.part_image)
-            var productTitle = gridLayout.findViewById<TextView>(R.id.part_name)
-
-            if(productDetails != null) {
-                productTitle.text = productDetails?.item + " ${productDetails?.frontRear?:""} ${productDetails?.leftRight?:""}"
-
-                if (productDetails.images != null)
-
-                mContext?.loadImageWithName(productDetails.images[0].imageName,
-                        productImage, R.drawable.ic_battery,
-                        productDetails.images[0].imageUrl
-                )
-
-                productContainer.setOnClickListener {
-                    val id = productDetails.id
-
-                    if(id != null)
-                    mView.onGroupCategoryClicked(id)
-                }
-            }
-            return gridLayout
-        }
-    } */
 }

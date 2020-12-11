@@ -35,7 +35,6 @@ class PartsCategoryActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
-
         setSupportActionBar(toolbar)
 
         toolbar_title.text = getString(R.string.car_parts)
@@ -77,15 +76,6 @@ class PartsCategoryActivity : BaseActivity() {
                     if (isStatusCodeValid(body)) {
                         val dataset = getDataSetArrayFromResponse(it)
                         bindRecyclerView(dataset)
-//                                val titles: MutableList<String> = ArrayList()
-//                                val partIDs: MutableList<String> = ArrayList()
-//                                for (i in 0 until dataset.length()) {
-//                                    val title = JSONObject(dataset[i].toString()).getString("group_name")
-//                                    val partID = JSONObject(dataset[i].toString()).getString("group_id")
-//                                    titles.add(title)
-//                                    partIDs.add(partID)
-//                                }
-//                                bindRecyclerView(titles, partIDs)
                     } else {
                         showInfoDialog(getMessageFromJSON(it)) {
                             finish()

@@ -221,7 +221,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     isProductSellOnpair = !item.serviceAssemblyProductDescription.IsProductPair.isNullOrBlank() && item.serviceAssemblyProductDescription.IsProductPair != "0"
 
                     productPrice.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.price.takeIf { !it.isNullOrEmpty() })
-                    if (item.serviceAssemblyProductDescription.productQuantity != "0")
+                    if (!item.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && item.serviceAssemblyProductDescription.productQuantity != "0")
                         quantity = item.serviceAssemblyProductDescription.productQuantity.toInt()
                     if (item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank()) {
                         product_Vat.text = context.getString(R.string.Concat)

@@ -112,7 +112,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
         searchedKeyWord = intent?.getStringExtra(Constant.Key.searchedKeyword) ?: ""
         searchedCategoryType = intent?.getStringExtra(Constant.Key.searchedCategoryType)
-        //  bindRecyclerView(JSONArray())
         createFilterDialog(progress_bar)
         createSortDialog()
 
@@ -143,9 +142,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         }else{
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
-
-
-
         if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1 || priceRangeInitial != 0) || filterBrandList.size != 0) {
 
             this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
@@ -166,10 +162,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
         })
     }
-
-
     private fun loadProductItems() {
-
         val partID = intent.getIntExtra(Constant.Key.partItemID, 0)
         if (current_page == 0) {
             progress_bar.visibility = View.VISIBLE

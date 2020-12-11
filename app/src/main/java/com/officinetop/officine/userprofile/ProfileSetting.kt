@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.core.app.NotificationManagerCompat
 import com.google.android.material.snackbar.Snackbar
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
@@ -39,7 +40,6 @@ class ProfileSetting : BaseActivity() {
     private var Terms_and_Conditions: String? = null
     private var Cookies_information: String? = null
     private var How_does_it_work: String? = null
-
     private var isLanguageChanged = false
 
 
@@ -78,6 +78,14 @@ class ProfileSetting : BaseActivity() {
 
     private fun initView() {
         toolbar_title.text = getString(R.string.profile_setting)
+
+        if (NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+            switch_notification.isChecked = true
+        } else {
+            switch_notification.isChecked = false
+        }
+
+
         button_updatesetting.setOnClickListener(View.OnClickListener {
             UpdateSettings(lang)
         })
@@ -179,6 +187,7 @@ class ProfileSetting : BaseActivity() {
             Terms_and_Conditions?.let { it1 -> browse(it1) }
         })
         getUpdateSettings()
+
     }
 
     private fun UpdateSettings(lang: String) {
@@ -188,7 +197,6 @@ class ProfileSetting : BaseActivity() {
                     if (!response?.body().toString().isNullOrEmpty()) {
                         val res = response?.body()
                         isLanguageChanged = true
-                        //showInfoDialog("Updated Successfully", false, {})
                         storeLangLocale(lang)
                         setAppLocale()
                         settextInView()

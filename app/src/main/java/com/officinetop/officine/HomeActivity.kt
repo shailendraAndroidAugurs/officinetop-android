@@ -53,9 +53,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     lateinit var progressDialog: ProgressDialog
     private var hasSelectedCar = false
     var isConnectionError = false
-    private val TAG = "MyFirebaseToken"
     private var googleApiClient: GoogleApiClient? = null
-    private var isLocationOn: Boolean = false
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
@@ -99,14 +97,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
                 if (!isLoggedIn()) {
-                    /*alert {
-                        message = getString(R.string.not_logged_in)
-                        positiveButton(getString(R.string.login)) {
-                            startActivity(intentFor<LoginActivity>().clearTop())
-                            //                                finish()
-                        }
-                        negativeButton(getString(R.string.ok)) {}
-                    }.show()*/
                     startActivity(intentFor<LoginActivity>().clearTop())
                 } else {
                     supportFragmentManager.beginTransaction()
@@ -194,14 +184,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             if (!isLoggedIn() && !hasAddedCar) {
-                /*val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra(Constant.pref_login_from, "AddFirstVehicle")
-                if (shouldShowAddCarInfoDialog()) {
-                    showInfoDialog(getString(R.string.dialog_message_add_car), true) {
-                        startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
-                    }
-                } else
-                    startActivityForResult(intent, Constant.RC.onCarAdded)*/
                 showInfoDialog(getString(R.string.dialog_message_add_car), true) {
                     startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
                 }
@@ -259,7 +241,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!isLoggedIn())
                 setCarListFromLocal()
             else if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false)) {
-                // getCarListAPI()
                 getSelectedCarAccordingToUser()
             }
 

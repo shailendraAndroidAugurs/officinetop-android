@@ -252,7 +252,6 @@ class AddVehicleActivity : BaseActivity() {
                         Glide.with(this@AddVehicleActivity)
                                 .setDefaultRequestOptions(RequestOptions().error(R.drawable.no_image_placeholder))
                                 .load(carImageURL)
-                                //   .thumbnail(0.7f)
                                 .into(carImage)
 
                         deleteCarImage.setOnClickListener {
@@ -1402,7 +1401,6 @@ class AddVehicleActivity : BaseActivity() {
     }
 
     private fun setDatePickers(textView: TextView) {
-
         textView.setOnClickListener {
             hideKeyboard()
             val calendar = Calendar.getInstance()
@@ -1411,7 +1409,6 @@ class AddVehicleActivity : BaseActivity() {
                         var dd = (dayOfMonth).toString()
                         var mm = (month + 1).toString()
                         val yyyy = year.toString()
-
                         try {
                             val cal = Calendar.getInstance()
                             cal.set(Calendar.YEAR, year)
@@ -1458,8 +1455,6 @@ class AddVehicleActivity : BaseActivity() {
         spinner_model.isSpinnerEnable = false
         spinner_fuel.isSpinnerEnable = false
         spinner_version.isSpinnerEnable = false
-
-
     }
 
     private fun CallKromedaApi(versionId: String) {
@@ -1472,13 +1467,6 @@ class AddVehicleActivity : BaseActivity() {
                     }
 
                 })
-
-
-
-
-
-
-
         RetrofitClient.client.kromedaCall(versionId)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

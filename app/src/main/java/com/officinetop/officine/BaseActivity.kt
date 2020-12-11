@@ -45,12 +45,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
             storeLangLocale("it")
             setAppLanguage()
         }
-        /*    mLocationRequest = LocationRequest()
-            mLocationRequest?.interval = 150000
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)*/
-
-
-    }
+      }
 
     @Override
     fun getMerlinConnectionCallback() = connectionCallback

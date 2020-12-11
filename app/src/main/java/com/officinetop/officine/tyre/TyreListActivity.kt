@@ -137,7 +137,7 @@ class TyreListActivity : BaseActivity() {
             })
 
 
-            RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString,getUserId())
+            RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), searchString, getUserId())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
@@ -345,11 +345,6 @@ class TyreListActivity : BaseActivity() {
             isSwitch_Reinforced = switch_Reinforced
             isSwitch_RunFlat = switch_RunFlat
             textView_Speed_Load_Index_name = tv_Speed_load_Index_name
-
-
-
-
-
             try {
                 priceRangeSeekerBar.setRange(minPrice, maxPrice)
                 Log.d("tyre_list", "try filter minPrice$minPrice")
@@ -388,8 +383,8 @@ class TyreListActivity : BaseActivity() {
                             tempPriceInitial = floor(leftValue)
                             tempPriceFinal = ceil(rightValue)
                         } else {
-                            tempPriceInitial = /*floor*/(leftValue).toDouble().roundTo2Places().toFloat()
-                            tempPriceFinal = /*ceil*/(rightValue).toDouble().roundTo2Places().toFloat()
+                            tempPriceInitial = (leftValue).toDouble().roundTo2Places().toFloat()
+                            tempPriceFinal = (rightValue).toDouble().roundTo2Places().toFloat()
                         }
 
 
@@ -429,14 +424,12 @@ class TyreListActivity : BaseActivity() {
                 if (isFavouriteChecked || tyreDetail.onlyFav) {
                     switch_OnlyFav.isChecked = true
                 }
-
                 tv_Brand_name.text = tyreDetail.brands
                 tv_Rating_name.text = if (tyreDetail.Rating.equals("0")) "" else tyreDetail.Rating
+                tv_season_name.text = if (tyreDetail.seasonName.isNullOrBlank()) getString(R.string.All) else tyreDetail.seasonName
+                tv_Speed_Index_name.text = if (tyreDetail.speedIndexName.isNullOrBlank()) getString(R.string.All) else tyreDetail.speedIndexName
+                tv_Speed_load_Index_name.text = if(tyreDetail.speed_load_index.equals(getString(R.string.All)) || tyreDetail.speed_load_index.equals(getString(R.string.all_in_italin))) getString(R.string.All) else tyreDetail.speed_load_index
 
-
-                tv_season_name.text = tyreDetail.seasonName
-                tv_Speed_Index_name.text = tyreDetail.speedIndexName
-                tv_Speed_load_Index_name.text = tyreDetail.speed_load_index
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -464,9 +457,9 @@ class TyreListActivity : BaseActivity() {
                     filterTyreSpeedLoadIndexList.clear()
                     tv_Brand_name.text = ""
                     tv_Rating_name.text = ""
-                    tv_season_name.text = tyreDetail.cust_seasonName
-                    tv_Speed_Index_name.text = tyreDetail.cust_speed_indexName
-                    tv_Speed_load_Index_name.text = tyreDetail.cust_speedLoad_indexId
+                    tv_season_name.text = if (tyreDetail.cust_seasonName.isNullOrBlank()) getString(R.string.All) else tyreDetail.cust_seasonName
+                    tv_Speed_Index_name.text = if (tyreDetail.cust_speed_indexName.isNullOrBlank()) getString(R.string.All) else tyreDetail.cust_speed_indexName
+                    tv_Speed_load_Index_name.text = if(tyreDetail.cust_speedLoad_indexId.equals(getString(R.string.All)) || tyreDetail.cust_speedLoad_indexId.equals(getString(R.string.all_in_italin))) getString(R.string.All) else tyreDetail.cust_speedLoad_indexId
                     tyreDetail.brands = ""
                     tyreDetail.Rating = ""
 
@@ -695,7 +688,7 @@ class TyreListActivity : BaseActivity() {
 
 
             }
-            SeasonDialog.item_All_category_checkbox.isChecked = tyreDetail.seasonId == "0" || tyreDetail.seasonName == getString(R.string.all) || tyreDetail.seasonName == getString(R.string.all_in_italin)
+            SeasonDialog.item_All_category_checkbox.isChecked = tyreDetail.seasonId == "0" || tyreDetail.seasonName.isNullOrBlank() || tyreDetail.seasonName == getString(R.string.all) || tyreDetail.seasonName == getString(R.string.all_in_italin)
             SeasonTypeCheckboxBinding(SeasonDialog)
             SeasonDialog.create()
             SeasonDialog.show()
@@ -750,7 +743,7 @@ class TyreListActivity : BaseActivity() {
 
 
             }
-            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndexId == "0" || tyreDetail.speedIndexName == getString(R.string.all_in_italin) || tyreDetail.speedIndexName == getString(R.string.all)
+            SpeedIndexDialog.item_All_category_checkbox.isChecked = tyreDetail.speedIndexId == "0" || tyreDetail.speedIndexId.isNullOrBlank() || tyreDetail.speedIndexName == getString(R.string.all_in_italin) || tyreDetail.speedIndexName == getString(R.string.all)
 
 
             SpeedIndexCheckBox(SpeedIndexDialog)
