@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
 
 class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
-
-    private var service_id = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_single_item_detail)
@@ -46,26 +44,6 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
             finish()
 
         }
-
-
-/*
-        cartProducts.forEach {
-
-            Log.d("WorkshopBookingDetails", "onCreate: itemID = ${it.key}, value = $it")
-
-            val isWorkshop = it.value.toString().contains("startingTime")
-            val isCombined = it.value.toString().contains("car_makers_name") && isWorkshop
-
-
-                adapter.addProduct(product = it.value.toString(),
-                    productType = if(isCombined) Constant.type_assembled else if(!isWorkshop) Constant.type_product else Constant.type_workshop,
-                    itemID = it.key)
-
-
-//            adapter.addProduct(it.value.toString(), Constant.type_workshop)
-        }
-
-        recycler_view.adapter = adapter*/
 
     }
 

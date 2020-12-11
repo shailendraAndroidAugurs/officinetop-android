@@ -38,11 +38,9 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLocationRequest: LocationRequest? = null
     private var mGoogleMap: GoogleMap? = null
-    private var mMapMarker: Marker? = null
     private var mSupportMapFragment: SupportMapFragment? = null
     private var LOCATION_RQ = 10001
     private var WorkShopJSonArray: JSONArray? = null
-    private var latLngArray: ArrayList<LatLng> = ArrayList()
     private var isSOSAppointment = false
     private var isMotService = false
     private var isQuotes = false

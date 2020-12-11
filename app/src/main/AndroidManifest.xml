@@ -38,31 +38,11 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="m">
-        <activity android:name=".Serverconnection.ServicesActivityMainActivity">
-            <!--
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
-
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>-->
-        </activity>
-
-        <activity android:name=".Serverconnection.MainActivity">
-
-            <!--   <intent-filter>
-                   <action android:name="android.intent.action.MAIN" />
-
-                   <category android:name="android.intent.category.LAUNCHER" />
-               </intent-filter>-->
-        </activity>
-
-
-        <activity android:name=".SearchPreview"></activity>
         <activity android:name=".Online_Payment.OnlinePaymentScreen" />
         <activity android:name=".Support.Support_FAQ_Activity" />
         <activity android:name=".invite_frnds.HowItWorksActivity" />
         <activity android:name=".invite_frnds.InviteFriendsActivity" />
-        <activity android:name=".News.WebViewLoad" />
+
         <activity android:name=".MOT.PartList_Replacement" />
         <activity
             android:name=".userprofile.SyncMyContact"
@@ -172,11 +152,6 @@
             android:name=".car_parts.PartCategories"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--
- <activity
-            android:name=".car_parts.SearchActivity"
-            android:screenOrientation="portrait" />
-        -->
         <activity
             android:name=".misc_activities.LocationActivity"
             android:screenOrientation="portrait" />
@@ -215,45 +190,18 @@
             android:name=".virtual_garage.AddVehicleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
-        <!--
-<activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        -->
+
         <activity
             android:name=".authentication.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
 
         </activity>
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
         </activity>
         <activity
             android:name=".authentication.linkedin.LinkedInWebView"
@@ -279,7 +227,7 @@
 
                 <data android:scheme="fb947980622315284" />
             </intent-filter>
-        </activity> <!-- Connection callback service -->
+        </activity>
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />

@@ -94,7 +94,6 @@ class ServiceDetailActivity : BaseActivity() {
                 loadProductRecommendationGridList(product_recommendation_recycler_view, serviceListfilter)
             }
         }
-//        Log.d("ServiceDetailActivity", "loadWorkshops: service Details = $serviceDetails")
     }
 
     private fun setImageSlider() {

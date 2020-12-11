@@ -36,14 +36,6 @@ object RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(Constant.linkedInURL)
                 .build().create(IRetrofitApis::class.java)
-
-
-//    val clientWithEmptyBaseURL : IRetrofitApis
-//    get() = Retrofit.Builder()
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .baseUrl(Constant.domainBaseURL)
-//            .build().create(IRetrofitApis::class.java)
-
     abstract class networkInterceptor : Interceptor {
 
         abstract val isInternetAvailable: Boolean

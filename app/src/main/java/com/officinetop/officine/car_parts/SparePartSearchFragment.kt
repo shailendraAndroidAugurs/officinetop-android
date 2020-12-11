@@ -43,9 +43,8 @@ class SparePartSearchFragment : Fragment(), SearchFilterInterface {
         recentSearchSection = view.findViewById<TagView>(R.id.recent_search_section)
 
         view.findViewById<TextView>(R.id.search_all_categories).setOnClickListener {
-            val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
             ft.detach(this).commit()
-            // activity?.findViewById<EditText>(R.id.search_product)?.setText("")
             activity?.findViewById<FrameLayout>(R.id.containerFor_search)?.visibility = View.GONE
             parentFragmentManager.popBackStackImmediate()
         }

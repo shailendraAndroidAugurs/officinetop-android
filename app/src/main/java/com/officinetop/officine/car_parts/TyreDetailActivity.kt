@@ -1,5 +1,4 @@
 package com.officinetop.officine.car_parts
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
@@ -48,7 +47,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
 class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var tyreType: String = ""
     private lateinit var imageDialog: Dialog
@@ -68,7 +66,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var minimumServicePrices = ""
     private var Deliverydays = ""
     private var tyre_mainCategory_id = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tyre_detail)
@@ -78,16 +75,12 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         initViews()
         getLocation()
     }
-
-
     private fun initViews() {
         speedIndexMapFun()
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(Constant.Path.productId to selectedProductID.toString(),
                     Constant.Path.productType to "2", Constant.Path.sellerId to productDetails?.user_id.toString(), Constant.Path.ProductOrWorkshopName to productDetails?.manufacturer_description.takeIf { !it.isNullOrEmpty() }
-                    , Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""
-
-            ))
+                    , Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to ""))
         }
         if (intent.hasExtra(Constant.Path.productDetails))
 
@@ -119,9 +112,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         tyre_response = JSONObject(productDetails?.tyre_response)
-
         loadTyreDetails(productDetails!!.id!!, productDetails!!.user_id!!)//api call get_tyre_details
-
         price = productDetails?.seller_price?.takeIf { !it.isNullOrEmpty() }.toString()// ?: productDetails?.price.toString()
 
         tyre_label_img.visibility = View.GONE
@@ -162,13 +153,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else {
             buy_product_with_assembly.visibility = View.GONE
         }
-
-
         try {
             if (productDetails?.quantity.isNullOrBlank() || productDetails?.quantity.equals("null") || productDetails?.quantity.equals("0")) {
                 add_product_to_cart.isEnabled = false
                 buy_product_with_assembly.isEnabled = false
-
                 productTotalPrices.visibility = View.GONE
                 product_price_.text = getString(R.string.tyre_price_total, "0.0")
                 item_qty.text = "0"
@@ -201,11 +189,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             add_product_to_cart.setOnClickListener {
-                /*  if (item_qty.text.toString().toInt() >= 0) {
-                      showInfoDialog("")
-                  } else if (price.toFloat() >= 0.toFloat()) {
-                      showInfoDialog("")
-                  } else {*/
                 cartItem?.quantity = item_qty.text.toString().toInt()
                 cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
                 cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
@@ -217,7 +200,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-                //  }
 
 
             }
@@ -399,14 +381,11 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun setTotalPriceForQty(qty: Int) {
-        val t_price = /*qty * */price.toFloat() + pfuAmount
+        val t_price = price.toFloat() + pfuAmount
         oneItemAdditionalPrice = t_price
         product_price_.text = getString(R.string.tyreprice_text, price.toFloat().toDouble().roundTo2Places().toString()) /*+ "," + getString(R.string.PFU_price, pfuAmount.toDouble().roundTo2Places().toString())*/
         productTotalPrices.text = getString(R.string.tyre_price_total, (price.toFloat().toDouble().roundTo2Places() * qty.toDouble()).toDouble().roundTo2Places().toString())
-
         totalPrice = t_price * qty
-
-
     }
 
     private fun loadTyreDetails(id: Int, userId: Int) {
@@ -414,12 +393,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
             RetrofitClient.client.getTyreDetails(userId.toString(), id.toString(), selectedFormattedDate, getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), defaultDistance)
                     .onCall { _, response ->
-
                         response?.body()?.string()?.let {
                             if (isStatusCodeValid(it)) {
                                 val data = getDataFromResponse(it)
                                 data.let { it1 ->
-
                                     val tyreDetailData = Gson().fromJson<Models.TyreDetailData>(it1.toString(), Models.TyreDetailData::class.java)
                                     if (!tyreDetailData.delivery_days.isNullOrBlank()) {
                                         delivery_date.text = getDate(tyreDetailData.delivery_days.toInt())
@@ -444,8 +421,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     }
-
-
                                     if (!tyreDetailData.tyreDot.isNullOrBlank()) {
                                         ll_DOT.visibility = View.VISIBLE
                                         tv_dot.text = tyreDetailData.tyreDot
@@ -558,8 +533,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (!it.isNullOrEmpty()) {
                         imagesArray.addAll(it)
                     }
-
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -581,8 +554,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         }
-
-
         if (!productDetails?.tyre_label_images.isNullOrEmpty() && productDetails?.tyre_label_images?.size!! > 0) {
             productDetails?.tyre_label_images?.let {
                 try {
@@ -839,7 +810,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         if (tyreDetailData.wet_grip_arr != null) {
-
             if (tyreDetailData.wet_grip_arr.icon != null) {
                 loadImage(tyreDetailData.wet_grip_arr.icon, iv_wetgrip)
                 loadImage(tyreDetailData.wet_grip_arr.icon, iv_wetgripDetailImage)
@@ -870,9 +840,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             tv_wetgripValue.visibility = View.GONE
             Log.d("Detail:", "wet grip: null")
         }
-
-
-
         if (tyreDetailData.noice_db_arr != null) {
 
             if (tyreDetailData.noice_db_arr.icon != null) {
@@ -898,7 +865,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         } else {
-
             tv_NoiseDbDescriptionTitle.visibility = View.GONE
             tv_NoiseDbDescription.visibility = View.GONE
             tv_noice_dbValue.visibility = View.GONE
@@ -907,7 +873,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             Iv_noiseGraph.visibility = View.GONE
             Log.d("Detail:", "noise: null")
         }
-
         if (tyreDetailData.rolling_resistance_arr == null && tyreDetailData.noice_db_arr == null && tyreDetailData.wet_grip_arr == null) {
             tv_TyreDetailinfo.visibility = View.GONE
             Log.d("Detail:", "Allobject null: null")

@@ -32,14 +32,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initView()
-         FacebookSdk.setAutoInitEnabled(true)
+        FacebookSdk.setAutoInitEnabled(true)
         FacebookSdk.fullyInitialize()
-        // logSentFriendRequestEvent()
-         setAutoLogAppEventsEnabled(true)
-
-
+        setAutoLogAppEventsEnabled(true)
         Handler().postDelayed({
-
             if (!isLoggedIn() && isFirstRun()) {
                 setFirstRun(false)
             }
