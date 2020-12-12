@@ -154,8 +154,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
                                         allWrackerServicesWorkshopList.add(data)
-                                        //val data = Gson().fromJson<Models.SOSWorkshop>(data_set.getJSONObject(i).toString(), Models.SOSWorkshop::class.java)
-                                        //latlongList.add(data)
                                     }
                                     val data = allWrackerServicesWorkshopList.get(0)
                                     getWrackersServices(data.id.toString(), data.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle
@@ -219,13 +217,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         val data = Gson().fromJson<Models.WrackerServices>(data_set.getJSONObject(i).toString(), Models.WrackerServices::class.java)
 
                                         wrackersList.add(data)
-                                        /* if (wrackersList.size == 0) {
-                                             wrackersList.add(data)
-                                         } else {
-                                             if (!wrackersList.contains(data)) {
-                                                 wrackersList.add(data)
-                                             }
-                                         }*/
 
                                         Log.d("wrakerServicesCall", data.id.toString())
                                     }

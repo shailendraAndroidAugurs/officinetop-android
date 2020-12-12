@@ -417,7 +417,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
             quantitySpinner.setSelection(list.indexOf(quantity.toString()))
 
-
             Log.d("cartItemAdapter", "quantity1 : $quantity")
             quantitySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

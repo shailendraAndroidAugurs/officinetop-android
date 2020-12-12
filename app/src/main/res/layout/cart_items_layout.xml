@@ -106,10 +106,11 @@
 
                                 <Spinner
                                     android:id="@+id/cart_product_qty_spinner"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-
+                                    android:spinnerMode="dialog"
                                     android:gravity="center"
+                                    android:textAlignment="center"
                                     android:paddingTop="0dp"
                                     android:paddingBottom="0dp" />
 

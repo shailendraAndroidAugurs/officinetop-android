@@ -189,10 +189,6 @@ class QuotesActivity : BaseActivity() {
                             if (response.isSuccessful) {
                                 try {
                                     val body = JSONObject(response.body()?.string())
-
-                                   /* if (body.has("message"))
-                                        showInfoDialog(body.optString("message")) //{*/
-
                                     if (btnType == "2") {
                                         if (body.has("data") && !body.isNull("data") && body.get("data") is JSONObject) {
                                             val data = body.getJSONObject("data")
@@ -214,7 +210,7 @@ class QuotesActivity : BaseActivity() {
                                             showInfoDialog(getString(R.string.Unspecifiederroroccurred))
                                         }
                                     }
-                                    // }
+
 
                                     imagesList.clear()
                                     images.clear()
@@ -310,8 +306,6 @@ class QuotesActivity : BaseActivity() {
                 if (bitmap != null)
                     convertTofile(bitmap)
             }
-
-            //Log.e("QuotesActivity", "onActivityResult: Picked File path = ${file?.absolutePath}")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -343,8 +337,6 @@ class QuotesActivity : BaseActivity() {
             Log.e("file select camera=", "${attachedImage} ${attachedImagePath}")
 
             imagesList.clear()
-            //imageList.add(attachedImage?.toMultipartBodyImages("images[]"))
-
             attachedImagePath?.let {
 
                 imagesList.add(it)

@@ -147,10 +147,11 @@ inline fun Dialog.makeRound(context: Context) {
 }
 
 inline fun Spinner.setSampleSpinnerAdapter(context: Context, optionalList: List<String>? = null) {
-    this.adapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, optionalList
+
+
+    val adapter = ArrayAdapter<String>(context, R.layout.spinner_list_item, optionalList
             ?: Constant.sample_array)
-
-
+    this.adapter = adapter
 }
 
 
@@ -528,7 +529,7 @@ inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline o
     return alert
 }
 
-inline fun Context.createImageDialog(imageRes: String):Dialog {
+inline fun Context.createImageDialog(imageRes: String): Dialog {
     val imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
     val slider = ImageView(this)
     loadImageprofile(imageRes, slider)
@@ -540,7 +541,7 @@ inline fun Context.createImageDialog(imageRes: String):Dialog {
         window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
         window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
         create()
-        return  imageDialog
+        return imageDialog
 
     }
 }

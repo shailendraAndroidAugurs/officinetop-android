@@ -139,9 +139,9 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             ratingCount.text = if (!items.ratingCount.isNullOrEmpty()) items.ratingCount else ""
 
             // set tyre icons
-            tyreWetGripValue.text = items.wetGrip
-            tyreFuelValue.text = items.rollingResistance
-            tyreDbValue.text = items.noiseDb + " db"
+            tyreWetGripValue.text =if( items.wetGrip==null ) "db" else items.wetGrip
+            tyreFuelValue.text =if( items.rollingResistance==null ) "db" else items.rollingResistance
+            tyreDbValue.text = if( items.noiseDb==null ) "db" else items.noiseDb + " db"
 
             when (items.type) {
                 "s" -> {

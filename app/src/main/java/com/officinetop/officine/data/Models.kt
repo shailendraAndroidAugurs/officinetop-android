@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.view_models.ListItemViewModel
 import java.io.Serializable
+
 object Models {
     data class AllAdvertisment(
             @SerializedName("add_location")
@@ -238,7 +239,7 @@ object Models {
                         var type: String? = "",
 
                         var productDetail: ProductDetail? = null,
-                        var tyreDetail: TyreDetailItem? = null,
+                        var tyreDetail: TyreDetailData? = null,
 
                         var additionalPrice: Double = 0.00,
                         var finalPrice: Double = (price * quantity) + additionalPrice,
@@ -1841,6 +1842,56 @@ object Models {
     ) : Serializable
 
     data class TyreDetailData(
+            val brand_image: String? = "",
+            val description: String? = "",
+            val ean_number: String? = "",
+            val noiseDb: String? = "",
+            val id: Int?,
+            val imageUrl: String? = "",
+            val images: List<TyreImage>? = null,
+            val tyre_label_images: List<TyreImage>? = null,
+            val price: String? = "",
+            val manufacturer_description: String? = "",
+            val max_aspect_ratio: String? = "",
+            val max_diameter: String? = "",
+            val max_price: String? = "",
+            val max_width: String? = "",
+            @SerializedName("min_prices")
+            val min_price: String? = "",
+            val our_description: Any?,
+            val pair: String?,
+            val pr_description: String? = "",
+            val quantity: String?,
+            val rollingResistance: String? = "",
+            val seller_price: String? = "",
+            val speed_index: String? = "",
+            val type: String? = "",
+            val tyre_response: String? = "",
+            val user_id: Int?,
+            val wetGrip: String? = "",
+            val wholesalerArticleNo: String? = "",
+            val is3PMSF: String? = "",
+            val season_tyre_type: String? = "",
+            var wish_list: String? = "0",
+            @SerializedName("rating")
+            val rating: Rating?,
+            @SerializedName("rating_count")
+            val ratingCount: String,
+            @SerializedName("rating_star")
+            val ratingStar: String,
+            @SerializedName("coupon_list")
+            val couponList: List<Coupon>?,
+            @SerializedName("load_speed_index")
+            val load_speed_index: String = "",
+            @SerializedName("assemble_status")
+            val assemblestatus: String,
+            @SerializedName("tyre_season_image")
+            val tyreSeasonImageURL: String = "",
+            @SerializedName("tyre_type_image")
+            val tyreImageURL: String,
+            @SerializedName("pfu")
+            val tyrePfu: tyrePfu?,
+            var SelectedTyreCouponId: String? = "",
             val noice_db_arr: NoiceDbArr,
             val rolling_resistance_arr: RollingResistanceArr,
             val wet_grip_arr: WetGripArr,
@@ -1851,7 +1902,7 @@ object Models {
             @SerializedName("tyre_dot")
             val tyreDot: String
 
-    )
+    ): Serializable
 
 
     data class NoiceDbArr(
@@ -1861,7 +1912,7 @@ object Models {
             val graphical_image: String,
             @SerializedName("name_2")
             val title: String
-    )
+    ): Serializable
 
 
     data class RollingResistanceArr(
@@ -1872,7 +1923,7 @@ object Models {
             @SerializedName("name_2")
             val title: String
 
-    )
+    ): Serializable
 
 
     data class WetGripArr(
@@ -1882,7 +1933,7 @@ object Models {
             val graphical_image: String,
             @SerializedName("name_2")
             val title: String
-    )
+    ): Serializable
 
 
     data class FAQ_Question_Answer(
@@ -1981,29 +2032,29 @@ object Models {
 
     )
 
-data class BankPaymentInfo(
-    @SerializedName("account_number")
-    val accountNumber: String,
-    @SerializedName("bank_name")
-    val bankName: String,
-    @SerializedName("created_at")
-    val createdAt: String,
-    @SerializedName("deleted_at")
-    val deletedAt: Any?,
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("email")
-    val email: String,
-    @SerializedName("iban")
-    val iban: String,
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("instatario")
-    val instatario: String,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("updated_at")
-    val updatedAt: String
-)
+    data class BankPaymentInfo(
+            @SerializedName("account_number")
+            val accountNumber: String,
+            @SerializedName("bank_name")
+            val bankName: String,
+            @SerializedName("created_at")
+            val createdAt: String,
+            @SerializedName("deleted_at")
+            val deletedAt: Any?,
+            @SerializedName("description")
+            val description: String,
+            @SerializedName("email")
+            val email: String,
+            @SerializedName("iban")
+            val iban: String,
+            @SerializedName("id")
+            val id: String,
+            @SerializedName("instatario")
+            val instatario: String,
+            @SerializedName("title")
+            val title: String,
+            @SerializedName("updated_at")
+            val updatedAt: String
+    )
 }
 
