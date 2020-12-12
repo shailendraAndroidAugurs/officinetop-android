@@ -424,6 +424,8 @@ interface IRetrofitApis {
                        @Field(Constant.Path.selectedCarId) selectedCarId: String,
                        @Field(Constant.Path.workshopId) workshopId: Int,
                        @Field(Constant.Path.couponId) couponId: String,
+                       @Field(Constant.Path.specialConditionId) specialConditionId: String,
+
                        @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
     @FormUrlEncoded
@@ -463,6 +465,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.orderId) orderId: String,
             @Field("version_id") versionId: String,
             @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Header("Authorization") authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
@@ -791,7 +794,7 @@ interface IRetrofitApis {
 
             @Field(Constant.Path.end_time) endTime: String,
             @Field(Constant.Path.version_id) versionId: String,
-
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
 
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
@@ -837,7 +840,8 @@ interface IRetrofitApis {
             @Query("version_id") versionId: String,
             @Query(Constant.Path.userLat) user_lat: String,
             @Query(Constant.Path.userLong) user_long: String,
-            @Query(Constant.Path.distanceRange) distance_range: String
+            @Query(Constant.Path.distanceRange) distance_range: String,
+            @Query(Constant.Path.userid) userId: String
     ): Call<ResponseBody>
 
 
@@ -1070,6 +1074,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.workshopId) workshopId: String?,
             @Field(Constant.Path.motservicetype) motservicetype: String?,
             @Field(Constant.Path.partid) parts: JSONArray,
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 

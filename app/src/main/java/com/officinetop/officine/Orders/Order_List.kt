@@ -35,7 +35,6 @@ class Order_List : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.orders)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        //activity_order__list
         initview()
 
     }
@@ -103,14 +102,9 @@ class Order_List : BaseActivity() {
                     intent.putExtra("forwhich", "S")
 
                     startActivity(intent)
-                } else if (view.tag == "103") {
-                    /* val intent = Intent(this@Order_List, OrderDetailActivity::class.java)
-                     intent.putExtra("productList", couponsListItem[position].serviceProductDescription as Serializable)
-                     startActivity(intent)*/
                 } else if (view.tag == "105") {
                     try {
                         if (!couponsListItem[position].orderTracking.trackingUrl.startsWith("http://") && !couponsListItem[position].orderTracking.trackingUrl.startsWith("https://")) {
-                            // val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://" + couponsListItem[position].orderTracking.trackingUrl + "?number=" + couponsListItem[position].orderTracking.trackingId))
                             if (couponsListItem[position].orderTracking.sample_tracking_id != null && couponsListItem[position].orderTracking.trackingUrl.contains(couponsListItem[position].orderTracking.sample_tracking_id)) {
 
                                 val trackingurl = "http://" + couponsListItem[position].orderTracking.trackingUrl.replace(couponsListItem[position].orderTracking.sample_tracking_id, couponsListItem[position].orderTracking.trackingId)
@@ -155,7 +149,7 @@ class Order_List : BaseActivity() {
                     }
                 } else if (view.tag == "203") {
                     if (!couponsListItem[position].id.isNullOrBlank()){
-                        Returnpolicy(couponsListItem[position].id, position)
+                        Returnpolicy(couponsListItem[position].id)
                     }
 
                     else {
@@ -172,10 +166,6 @@ class Order_List : BaseActivity() {
             val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray.get(i).toString(), Models.CartItemList::class.java)
             couponsListItem.add(modelCartList)
         }
-
-
-        // com.officinetop.officine.binding_adapters.BindingAdaptersKt.bindDate(this.productBookingDate, listItemViewModelBookingDate);
-
 
         recycler_view.adapter = genericAdapter
         genericAdapter.addItems(couponsListItem)
@@ -206,7 +196,7 @@ class Order_List : BaseActivity() {
 
     }
 
-    fun Returnpolicy(orderId: String, potion: Int) {
+    fun Returnpolicy(orderId: String) {
         RetrofitClient.client.returnOrder(orderId, getBearerToken() ?: "")
                 .onCall { _, response ->
                     response?.let {

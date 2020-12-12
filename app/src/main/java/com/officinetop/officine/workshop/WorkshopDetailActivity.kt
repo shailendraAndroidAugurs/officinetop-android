@@ -41,11 +41,7 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
-import kotlinx.android.synthetic.main.activity_workshop_detail.Iv_favorite
-import kotlinx.android.synthetic.main.activity_workshop_detail.image_slider
-import kotlinx.android.synthetic.main.activity_workshop_detail.see_all_feedback
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.dialog_booking_calendar.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -80,8 +76,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     lateinit var dialogSlider: SliderLayout
     var serviceID = ""
     private var main_category_id = ""
-    private var services_average_time =""
-    private var hourly_rate=""
+    private var services_average_time = ""
+    private var hourly_rate = ""
 
     var disableSliderTouch = false
     var averageServiceTime = 0.0
@@ -608,51 +604,51 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
 
-   /* private fun setImageSlider1(imagesArray: JSONArray) {
-        //set slider
-        createImageSliderDialog()
-        image_slider.removeAllSliders()
+    /* private fun setImageSlider1(imagesArray: JSONArray) {
+         //set slider
+         createImageSliderDialog()
+         image_slider.removeAllSliders()
 
-        for (i in 0 until imagesArray.length()) {
-            val imageRes = imagesArray.getJSONObject(i).getString("image_url")
+         for (i in 0 until imagesArray.length()) {
+             val imageRes = imagesArray.getJSONObject(i).getString("image_url")
 
-            Log.d("workshopsliderimage", imageRes.toString())
-            val slide = TextSliderView(this@WorkshopDetailActivity)
-                    .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)
-                    .empty(R.drawable.no_image_placeholder)
-                    .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
-            image_slider.addSlider(slide)
-            val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                    .description("Description")
-                    .image(imageRes)
-                    .empty(R.drawable.no_image_placeholder)
-            dialogSlider.addSlider(scaledSlide)
+             Log.d("workshopsliderimage", imageRes.toString())
+             val slide = TextSliderView(this@WorkshopDetailActivity)
+                     .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)
+                     .empty(R.drawable.no_image_placeholder)
+                     .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
+             image_slider.addSlider(slide)
+             val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
+                     .description("Description")
+                     .image(imageRes)
+                     .empty(R.drawable.no_image_placeholder)
+             dialogSlider.addSlider(scaledSlide)
 
-            slide.setOnSliderClickListener {
+             slide.setOnSliderClickListener {
 
-                if (disableSliderTouch)
-                    return@setOnSliderClickListener
+                 if (disableSliderTouch)
+                     return@setOnSliderClickListener
 
-                dialogSlider.currentPosition = i
-                imageDialog.show()
-            }
-        }
+                 dialogSlider.currentPosition = i
+                 imageDialog.show()
+             }
+         }
 
 
-        image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-            }
+         image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
+             override fun onPageScrollStateChanged(state: Int) {
+                 disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
+             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
-            }
+             }
 
-            override fun onPageSelected(position: Int) {
-            }
+             override fun onPageSelected(position: Int) {
+             }
 
-        })
-    }*/
+         })
+     }*/
 
     private fun setImageSlider(imagesArray: JSONArray) {
         if (imagesArray.length() > 1) {
@@ -928,7 +924,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             services_average_time = WorkshopJson.optString("service_average_time")
             max_appointment = WorkshopJson.optString("max_appointment")
             hourly_rate = WorkshopJson.optString("hourly_rate")
-          //  temp_slot_id = WorkshopJson.optString("temp_slot_id")
+            //  temp_slot_id = WorkshopJson.optString("temp_slot_id")
         }
 
         if (isAssembly)
@@ -970,10 +966,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     ?: "", quotesServicesAvarageTime).enqueue(callback)
         else if (isMotService)
             RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId).enqueue(callback)
-        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!,services_average_time,max_appointment,hourly_rate,getSelectedCar()?.carMakeModel?.brandID!!,getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
+        else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!, services_average_time, max_appointment, hourly_rate, getSelectedCar()?.carMakeModel?.brandID!!, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
 
     }
-
 
 
     private fun callWorkShop() {
@@ -1197,15 +1192,17 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         var endTime = "00:00"
         var finalPrice: Double = 0.0
         slotId = packageDetail.optString("temp_slot_id")
+
+
+        SpecialConditionId = if (packageDetail.has("special_condition_id")) packageDetail.optString("special_condition_id", "0.0") else ""
+        DiscountType = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0.0") else ""
+        DiscountPrices = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
         //check for timeslot
         val packageID = packageDetail.getInt("id")
         if (bookServicesWithoutCoupon) {
             workshopCouponId = ""
         }
         if (isRevision) {
-            SpecialConditionId = packageDetail.optString("special_condition_id", "0.0")
-            DiscountType = packageDetail.optString("discount_price")
-            DiscountPrices = packageDetail.optString("discount_type")
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             Log.d("Revision", "averageServiceTime$averageServiceTime")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
@@ -1337,6 +1334,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 dialog.dismiss()
                 serviceSpecArray = JSONArray()
             }
+
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 dialog.dismiss()
                 serviceSpecArray = JSONArray()
@@ -1372,7 +1370,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         productID, packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter,
                         mainCategoryIDForAssembly,
                         getBearerToken() ?: "",
-                        if (specialConditionObject == null) "" else specialConditionObject?.id.toString(),
+                        SpecialConditionId,
                         getSelectedCar()?.carVersionModel?.idVehicle
 
                                 ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
@@ -1450,8 +1448,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val serviceQuotesBooking = RetrofitClient.client.serviceQuotesBooking(
                     workshopCategoryId, selectedDateFilter, quotesServiceQuotesInsertedId, quotesMainCategoryId, getSavedSelectedVehicleID(),
                     workshopUsersId.toString(), bookingStartTime, packageID.toString(), getOrderId(), getBearerToken()
-                    ?: "", workshopCouponId, endTime, getSelectedCar()?.carVersionModel?.idVehicle!!
-            )
+                    ?: "", workshopCouponId, endTime, getSelectedCar()?.carVersionModel?.idVehicle!!,
+                    SpecialConditionId)
             serviceQuotesBooking.enqueue(callback)
         } else if (isMotService) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
@@ -1475,7 +1473,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("mot bookingStartTime", bookingStartTime)
             Log.d("mot endTime", endTime)
             val serviceMotBooking = RetrofitClient.client.serviceMotBooking(packageID.toString(), bookingStartTime, endTime, selectedDateFilter,
-                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, getBearerToken()
+                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, getBearerToken()
                     ?: "")
             serviceMotBooking.enqueue(callback)
         } else if (isCarWash) {
@@ -1483,7 +1481,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter, getSelectedCar()?.carSize
                     ?: "",
                     categoryID, mainCategoryIDForCarWash, getSavedSelectedVehicleID(), workshopCouponId, getOrderId(), getSelectedCar()?.carVersionModel?.idVehicle
-                    ?: "",slotId, getBearerToken() ?: ""
+                    ?: "", slotId, SpecialConditionId, getBearerToken() ?: ""
             )
             serviceBookingCarWash.enqueue(callback)
         } else {
@@ -1492,7 +1490,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getSelectedCar()?.carSize ?: "", selectedDateFilter,
                     getSelectedCar()?.carVersionModel?.idVehicle ?: "",
                     getOrderId(), getBearerToken()
-                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId)
+                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId)
             serviceBookingCall.enqueue(callback)
         }
     }
@@ -1537,6 +1535,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         }
                     }
                 }
+
                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
                     return ViewHolder(layoutInflater.inflate(R.layout.dialog_offer_coupons_layout, parent, false))
                 }
@@ -1547,6 +1546,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         dialog.show()
     }
+
     private fun createDialogforInvalidCoupon(packageDetail: JSONObject, bookingStartTime: String) {
         val builder = AlertDialog.Builder(this@WorkshopDetailActivity)
         //set title for alert dialog
@@ -1571,6 +1571,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
         bindFeedbackList(list, this)
     }
+
     private fun getSpecialCondition(workshopCategoryId: String, workshopUsersId: Int) {
 
         RetrofitClient.client.getSpecialCondition(workshopCategoryId, workshopUsersId)

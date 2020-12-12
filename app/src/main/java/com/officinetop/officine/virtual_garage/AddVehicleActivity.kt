@@ -1,4 +1,4 @@
-package com.officinetop.officine.virtual_garage
+ package com.officinetop.officine.virtual_garage
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -168,7 +168,7 @@ class AddVehicleActivity : BaseActivity() {
             }
             if (isOnline()) {
                 loadCarManufacturer()
-            }else{
+            } else {
                 showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
 
