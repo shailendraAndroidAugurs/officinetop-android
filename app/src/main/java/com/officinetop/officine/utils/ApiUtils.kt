@@ -1002,7 +1002,7 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(context) })
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList)) { movetologinPage(context) }
 
 
             if (response?.isSuccessful!!) {
@@ -1042,8 +1042,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(context) }
-
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforRemoveWishList)) { movetologinPage(context) }
             if (response?.isSuccessful!!) {
                 val body = JSONObject(body)
                 if (body.has("message")) {

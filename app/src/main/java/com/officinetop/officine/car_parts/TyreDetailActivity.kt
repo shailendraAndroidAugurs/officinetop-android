@@ -309,7 +309,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(this) })
 
 
                         if (response?.isSuccessful!!) {
@@ -338,7 +338,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showConfirmDialog(getString(R.string.PleaselogintocontinueforRemoveWishList), { movetologinPage(this) })
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

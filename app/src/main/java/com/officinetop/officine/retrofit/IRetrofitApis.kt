@@ -426,6 +426,8 @@ interface IRetrofitApis {
                        @Field(Constant.Path.couponId) couponId: String,
                        @Field(Constant.Path.specialConditionId) specialConditionId: String,
 
+                       @Field("temp_slot_id") temp_slot_id: String,
+                       @Field(Constant.Path.discountType) discountType: String,
                        @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
     @FormUrlEncoded
@@ -446,6 +448,7 @@ interface IRetrofitApis {
                                @Field(Constant.Path.end_time) endTime: String,
                                @Field(Constant.Path.discountPrice) discountPrice: String,
                                @Field(Constant.Path.discountType) discountType: String,
+                               @Field("temp_slot_id") temp_slot_id: String,
                                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -466,6 +469,11 @@ interface IRetrofitApis {
             @Field("version_id") versionId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
+            @Field(Constant.Path.workshopId) workshopId: String,
+            @Field(Constant.Path.discountType) discountType: String,
+
+
+
             @Header("Authorization") authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
@@ -493,6 +501,10 @@ interface IRetrofitApis {
                                @Field("product_price") productPrice: String,
                                @Field("seller_id") seller_id: String,
                                @Field("products_coupon_id") products_coupon_id: String,
+                               @Field(Constant.Path.specialConditionId) specialConditionId: String,
+                               @Field("temp_slot_id") temp_slot_id: String,
+                               @Field(Constant.Path.workshopId) workshopId: String,
+                               @Field(Constant.Path.discountType) discountType: String,
                                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -711,7 +723,7 @@ interface IRetrofitApis {
             @Field("price") price: String,
             @Field("category_id") categoryId: String,
             @Header(Constant.Fields.authorization) authToken: String,
-            @Field("special_id") specialId: String? = "",
+
             @Field("version_id") versionId: String,
             @Field(Constant.Path.selectedCarId) selectedCarId: String,
             @Field(Constant.Path.couponId) couponId: String,
@@ -755,6 +767,9 @@ interface IRetrofitApis {
             @Field(Constant.Path.orderId) orderId: String,
             @Header(Constant.Fields.authorization) authToken: String,
             @Field(Constant.Path.couponId) couponId: String,
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
+            @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.discountType) discountType: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -774,6 +789,9 @@ interface IRetrofitApis {
             @Field(Constant.Path.selectedCarId) selectedCarId: String?,
             @Header(Constant.Fields.authorization) authToken: String,
             @Field(Constant.Path.couponId) couponId: String,
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
+            @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.discountType) discountType: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
     @FormUrlEncoded
@@ -796,6 +814,8 @@ interface IRetrofitApis {
             @Field(Constant.Path.version_id) versionId: String,
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
 
+            @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.discountType) discountType: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -815,6 +835,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.addressId) addressId: String,
             @Field(Constant.Path.serviceID) serviceId: String,
             @Field(Constant.Path.orderId) orderId: String,
+
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
 
@@ -1075,6 +1096,9 @@ interface IRetrofitApis {
             @Field(Constant.Path.motservicetype) motservicetype: String?,
             @Field(Constant.Path.partid) parts: JSONArray,
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
+
+            @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.discountType) discountType: String,
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 

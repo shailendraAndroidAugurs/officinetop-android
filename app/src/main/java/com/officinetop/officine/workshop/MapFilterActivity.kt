@@ -70,7 +70,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
                 var currentLatLong = LatLng(0.0, 0.0)
-                val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+                val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
                 if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
@@ -221,13 +221,10 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onMapReady(googleMap: GoogleMap?) {
         if (googleMap != null) {
             mGoogleMap = googleMap
-
             // create location request
             mLocationRequest = LocationRequest()
             mLocationRequest?.interval = 150000
-
             checkRequestLocationPermission()
-
             for (n in 0 until WorkShopJSonArray!!.length()) {
                 val jsondata: JSONObject = (WorkShopJSonArray?.get(n)) as JSONObject
                 if (jsondata != null) {
@@ -273,16 +270,8 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             workshop_description.text = jsonObject.optString("registered_office")
             loadImageWithName(jsonObject.optString("profile_image"), item_image, R.drawable.no_image_placeholder, baseURL = Constant.profileBaseUrl)
 
-            // loadImage(jsonObject.optString("profile_image_url"), item_image)
             if (!jsonObject.optString("services_price").isNullOrEmpty())
                 item_price.text = getString(R.string.prepend_euro_symbol_with_da_string, jsonObject.optString("services_price"))
-
-
-            /*  if (!jsonObject.optString("rating_star").isNullOrEmpty() && !jsonObject.optString("rating_star").equals("null")) {
-                  item_rating.rating = jsonObject.optString("rating_star").toFloat()
-              } else
-                  item_rating.rating = 0f*/
-
 
 
             if (jsonObject.has("rating")) {
@@ -293,11 +282,6 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     item_rating.rating = 0f
 
             }
-
-
-
-
-
             if (!jsonObject.optString("rating_count").isNullOrEmpty() && jsonObject.optString("rating_count") != "null") {
                 item_rating_count.text = jsonObject.optString("rating_count")
             } else
@@ -427,27 +411,5 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         return bitmap
     }
 
-
-    /*   public @NonNull static Bitmap createBitmapFromView(@NonNull View view, int width, int height) {
-          if (width > 0 && height > 0) {
-              view.measure(View.MeasureSpec.makeMeasureSpec(DynamicUnitUtils
-                              .convertDpToPixels(width), View.MeasureSpec.EXACTLY),
-                      View.MeasureSpec.makeMeasureSpec(DynamicUnitUtils
-                              .convertDpToPixels(height), View.MeasureSpec.EXACTLY));
-          }
-          view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-
-          Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
-                  view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-          Canvas canvas = new Canvas(bitmap);
-          Drawable background = view.getBackground();
-
-          if (background != null) {
-              background.draw(canvas);
-          }
-          view.draw(canvas);
-
-          return bitmap;
-      }*/
 
 }

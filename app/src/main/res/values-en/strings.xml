@@ -639,7 +639,7 @@
     <string name="morecontent">...More</string>
     <string name="unauthorized_location_title">Unauthorized location</string>
     <string name="unauthorized_location_message">Activate the localization, and you will be able to find the nearest workshops</string>
-
+    <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
 
     <string-array name="home_icon_titles">
         <item>Tyre</item>

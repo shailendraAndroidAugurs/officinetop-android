@@ -11,7 +11,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -22,7 +24,6 @@ import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.daimajia.slider.library.Tricks.ViewPagerEx
-import com.google.gson.Gson
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -64,9 +65,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
 
 class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var bookServicesWithoutCoupon = false
@@ -78,7 +77,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var main_category_id = ""
     private var services_average_time = ""
     private var hourly_rate = ""
-
     var disableSliderTouch = false
     var averageServiceTime = 0.0
     var categoryID = ""
@@ -92,7 +90,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     var selectedDateFilter = ""
     var calendar_selectedDateFilter = ""
     var currentWorkshopDetail = ""
-
     private var isSparePartAssembly = false
     var isRevision = false
     var isAssembly = false
@@ -119,7 +116,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var quotesServiceQuotesInsertedId: String = ""
     private var quotesMainCategoryId: String = ""
     private var quotesServicesAvarageTime: String = ""
-    private var specialConditionObject: Models.SpecialCondition? = null
+
     private var workshopUsersId: Int = 0
     private var workshopCategoryId: String = ""//var workshopCategoryId:Int , change type to String because for car maintenance services id's
 
@@ -160,7 +157,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         createImageSliderDialog()
         //  setImageSlider()
         AndroidThreeTen.init(this)
-
 
         intent.printValues(localClassName)
 
@@ -484,12 +480,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         textView.text = day.date.dayOfMonth.toString()
 
                         if ((day.date == today || day.date.isAfter(today)) && day.date.isBefore(today.plusDays(30))) {
-//                            textView.setTextColorRes(if (selectedDate == day.date) R.color.white else R.color.black)
-//                            bookingMinPrice.setTextColorRes(if (selectedDate == day.date) R.color.white else R.color.grey_light)
-//
-//                            //if (selectedDate == today) R.drawable.calendar_selected_today_bg else
-//                            layout.setBackgroundResource(if(selectedDate == day.date) R.drawable.calendar_selected_day_bg else if(today == day.date) R.drawable.calendar_selected_today_bg else 0)
-
                             when (day.date) {
                                 previousSelectedDate -> {
                                     textView.setTextColorRes(R.color.white)
@@ -603,53 +593,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         super.onResume()
     }
 
-
-    /* private fun setImageSlider1(imagesArray: JSONArray) {
-         //set slider
-         createImageSliderDialog()
-         image_slider.removeAllSliders()
-
-         for (i in 0 until imagesArray.length()) {
-             val imageRes = imagesArray.getJSONObject(i).getString("image_url")
-
-             Log.d("workshopsliderimage", imageRes.toString())
-             val slide = TextSliderView(this@WorkshopDetailActivity)
-                     .image(imageRes.toString()).setScaleType(BaseSliderView.ScaleType.CenterInside)
-                     .empty(R.drawable.no_image_placeholder)
-                     .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
-             image_slider.addSlider(slide)
-             val scaledSlide = DialogTouchImageSlider(this, R.drawable.no_image_placeholder)
-                     .description("Description")
-                     .image(imageRes)
-                     .empty(R.drawable.no_image_placeholder)
-             dialogSlider.addSlider(scaledSlide)
-
-             slide.setOnSliderClickListener {
-
-                 if (disableSliderTouch)
-                     return@setOnSliderClickListener
-
-                 dialogSlider.currentPosition = i
-                 imageDialog.show()
-             }
-         }
-
-
-         image_slider.addOnPageChangeListener(object : ViewPagerEx.OnPageChangeListener {
-             override fun onPageScrollStateChanged(state: Int) {
-                 disableSliderTouch = state != ViewPagerEx.SCROLL_STATE_IDLE
-             }
-
-             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-             }
-
-             override fun onPageSelected(position: Int) {
-             }
-
-         })
-     }*/
-
     private fun setImageSlider(imagesArray: JSONArray) {
         if (imagesArray.length() > 1) {
             image_slideview_workshop.visibility = View.GONE
@@ -697,10 +640,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             image_slideview_workshop.visibility = View.VISIBLE
             image_slider.visibility = View.GONE
             loadImage(imageRes, image_slideview_workshop)
-            image_slideview_workshop.setOnClickListener({
+            image_slideview_workshop.setOnClickListener {
                 createImageDialog(imageRes)
                 imageDialog.show()
-            })
+            }
         }
 
     }
@@ -1171,7 +1114,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun createImageSliderDialog() {
-
         imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
         val slider = SliderLayout(this)
         slider.stopAutoCycle()
@@ -1192,11 +1134,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         var endTime = "00:00"
         var finalPrice: Double = 0.0
         slotId = packageDetail.optString("temp_slot_id")
+        SpecialConditionId = if (packageDetail.has("special_condition_id")) packageDetail.optString("special_condition_id", "0") else "0"
+        DiscountPrices = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0") else "0"
+        DiscountType   = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
+        max_appointment = if (packageDetail.has("max_appointment")) packageDetail.optString("max_appointment", "0") else "0"
 
 
-        SpecialConditionId = if (packageDetail.has("special_condition_id")) packageDetail.optString("special_condition_id", "0.0") else ""
-        DiscountType = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0.0") else ""
-        DiscountPrices = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
         //check for timeslot
         val packageID = packageDetail.getInt("id")
         if (bookServicesWithoutCoupon) {
@@ -1206,7 +1149,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             Log.d("Revision", "averageServiceTime$averageServiceTime")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
@@ -1267,13 +1209,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
         } else if (isTyre) {
-            SpecialConditionId = packageDetail.optString("special_condition_id", "0.0")
-            DiscountType = packageDetail.optString("discount_price")
-            DiscountPrices = packageDetail.optString("discount_type")
-            max_appointment = packageDetail.optString("max_appointment")
             slotStartTime = packageDetail.optString("start_time")
             slotEndTime = packageDetail.optString("end_time")
-            slotId = packageDetail.optString("temp_slot_id")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
             Log.d("averageServiceTime tyre", averageServiceTime.toString())
@@ -1372,9 +1309,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         getBearerToken() ?: "",
                         SpecialConditionId,
                         getSelectedCar()?.carVersionModel?.idVehicle
-
                                 ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
-                        , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "")
+                        , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "", SpecialConditionId, slotId,workshopUsersId.toString(),DiscountType)
             }
             serviceAssemblyBookingCall?.enqueue(callback)
         } else if (isRevision) {
@@ -1386,7 +1322,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     finalPrice.toString(), main_category_id, getBearerToken() ?: "",
                     SpecialConditionId,
                     getSelectedCar()?.carVersionModel?.idVehicle
-                            ?: "", workshopUsersId, getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), endTime, DiscountPrices, DiscountType)
+                            ?: "", workshopUsersId, getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), endTime, DiscountPrices, DiscountType, slotId)
 
             serviceRevisionBookingCall.enqueue(callback)
         } else if (isTyre) {
@@ -1400,7 +1336,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val productCoupon = if (cartItem?.tyreDetail?.SelectedTyreCouponId != null) cartItem?.tyreDetail?.SelectedTyreCouponId else ""
             val serviceTyreBookingCall = RetrofitClient.client.tyreServiceBooking(productID, productQuantity, packageID, bookingStartTime, endTime, selectedDateFilter,
                     finalPrice.toString(), categoryID, getBearerToken() ?: "",
-                    if (specialConditionObject == null) "" else specialConditionObject?.id.toString(),
                     getSelectedCar()?.carVersionModel?.idVehicle
                             ?: "", getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), "0.0", cartItem!!.pfu_tax, cartItem!!.tyretotalPrice, cartItem!!.price.toString(), cartItem!!.name, cartItem!!.description!!, workshopCategoryId, productCoupon!!, cartItem?.tyreDetail?.user_id.toString(), maincategoryId,
                     specialConditionId = SpecialConditionId,
@@ -1418,7 +1353,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packageID.toString(),
                     workshopUsersId.toString(), bookingStartTime, endTime, selectedDateFilter, sosUserLatitude, sosUserLongitude,
                     getSelectedCar()?.id?.toInt(), finalPrice.toString(), addressId, sosServiceId,
-                    workshopWreckerId, getOrderId(), getBearerToken() ?: "", workshopCouponId
+                    workshopWreckerId, getOrderId(), getBearerToken()
+                    ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType
             )
             serviceSOSBookingCall.enqueue(callback)
         } else if (isSosEmergency) {
@@ -1430,17 +1366,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             )
             serviceSOSBookingCallEmergency.enqueue(callback)
         } else if (isCarMaintenanceService) {
-
-            Log.d("WorkshopDetail", "Maintenance :bookingStartTime$bookingStartTime")
-            Log.d("WorkshopDetail", "Maintenance :endTime$endTime")
-            Log.d("WorkshopDetail", "Maintenance :selectedDateFilter$selectedDateFilter")
-            Log.d("WorkshopDetail", "Maintenance :carMaintenanceServicePrice$carMaintenanceServicePrice")
-            Log.d("WorkshopDetail", "Maintenance :packageID$packageID")
             val serviceCarMaintenanceBooking = RetrofitClient.client.serviceBookingCarMaintenance(
                     bookingStartTime, endTime, selectedDateFilter, carMaintenanceServicePrice, getSelectedCar()?.carVersionModel?.idVehicle!!,
                     carMaintenanceServiceId, workshopUsersId, packageID, getOrderId()
                     , serviceSpecification, getSavedSelectedVehicleID(),
-                    getBearerToken() ?: "", workshopCouponId
+                    getBearerToken() ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType
             )
             Log.e("MOTPART", serviceSpecification.toString())
             serviceCarMaintenanceBooking.enqueue(callback)
@@ -1449,7 +1379,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopCategoryId, selectedDateFilter, quotesServiceQuotesInsertedId, quotesMainCategoryId, getSavedSelectedVehicleID(),
                     workshopUsersId.toString(), bookingStartTime, packageID.toString(), getOrderId(), getBearerToken()
                     ?: "", workshopCouponId, endTime, getSelectedCar()?.carVersionModel?.idVehicle!!,
-                    SpecialConditionId)
+                    SpecialConditionId, slotId, DiscountType)
             serviceQuotesBooking.enqueue(callback)
         } else if (isMotService) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
@@ -1474,14 +1404,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("mot endTime", endTime)
             val serviceMotBooking = RetrofitClient.client.serviceMotBooking(packageID.toString(), bookingStartTime, endTime, selectedDateFilter,
                     motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, getBearerToken()
-                    ?: "")
+                    ?: "", SpecialConditionId, slotId, DiscountType)
             serviceMotBooking.enqueue(callback)
         } else if (isCarWash) {
             val serviceBookingCarWash = RetrofitClient.client.carWashServiceBooking(
                     packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter, getSelectedCar()?.carSize
                     ?: "",
                     categoryID, mainCategoryIDForCarWash, getSavedSelectedVehicleID(), workshopCouponId, getOrderId(), getSelectedCar()?.carVersionModel?.idVehicle
-                    ?: "", slotId, SpecialConditionId, getBearerToken() ?: ""
+                    ?: "", slotId, SpecialConditionId, workshopUsersId.toString(), DiscountType, getBearerToken()
+                    ?: ""
             )
             serviceBookingCarWash.enqueue(callback)
         } else {
@@ -1490,7 +1421,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getSelectedCar()?.carSize ?: "", selectedDateFilter,
                     getSelectedCar()?.carVersionModel?.idVehicle ?: "",
                     getOrderId(), getBearerToken()
-                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId)
+                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId, slotId,DiscountType)
             serviceBookingCall.enqueue(callback)
         }
     }
@@ -1503,7 +1434,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.setContentView(dialogView)
         val window: Window = dialog.window!!
         window.setDimAmount(0f)
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, /*1200*/LinearLayout.LayoutParams.MATCH_PARENT)//height shoud be fixed
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)//height shoud be fixed
         val title = dialog.findViewById(R.id.title) as TextView
 
         title.text = getString(R.string.coupon_list)
@@ -1572,70 +1503,5 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         bindFeedbackList(list, this)
     }
 
-    private fun getSpecialCondition(workshopCategoryId: String, workshopUsersId: Int) {
 
-        RetrofitClient.client.getSpecialCondition(workshopCategoryId, workshopUsersId)
-                .onCall { networkException, response ->
-
-                    response?.let {
-
-                        if (response.isSuccessful) {
-                            try {
-                                val body = JSONObject(response.body()?.string())
-                                if (body.has("data_set") && body.get("data_set") != null) {
-                                    if (body.get("data_set") is JSONArray) {
-                                        val data = body.getJSONArray("data_set")
-                                        ll_special_cond.visibility = View.VISIBLE
-                                        val listSpecialCondition: MutableList<Models.SpecialCondition> = ArrayList()
-                                        val listCheckbox: MutableList<CheckBox> = ArrayList()
-                                        special_condition.removeAllViews()
-                                        for (i in 0 until data.length()) {
-                                            val specialCondObj = Gson().fromJson<Models.SpecialCondition>(data.get(i).toString(), Models.SpecialCondition::class.java)
-                                            listSpecialCondition.add(specialCondObj)
-                                            val rlayout = RelativeLayout(this)
-                                            val text = TextView(this)
-                                            val checkbox = CheckBox(this)
-                                            text.text = if (!specialCondObj.item.isNullOrEmpty()) specialCondObj.item else "none"
-                                            text.id = specialCondObj.id.toInt()
-                                            checkbox.id = specialCondObj.id.toInt()
-                                            checkbox.gravity = Gravity.END
-                                            text.gravity = Gravity.START
-                                            text.setTextColor(resources.getColor(R.color.black))
-                                            rlayout.id = i
-                                            val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-                                            rlayout.layoutParams = lp
-                                            text.layoutParams = lp
-                                            val chkParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-                                            checkbox.layoutParams = chkParams
-                                            chkParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-                                            rlayout.addView(text)
-                                            rlayout.addView(checkbox)
-                                            special_condition.addView(rlayout)
-                                            listCheckbox.add(checkbox)
-                                            checkbox.setOnCheckedChangeListener { compoundButton, isChecked ->
-                                                if (isChecked) {
-                                                    for (k in 0 until listCheckbox.size) {
-                                                        if (checkbox.id == listCheckbox.get(k).id) {
-                                                            if (checkbox.id.equals(listSpecialCondition.get(k).id)) {
-                                                                // Log.e("checkedObjectITem=", listSpecialCondition.get(k).toString())
-                                                                specialConditionObject = listSpecialCondition.get(k)
-                                                            }
-                                                        } else {
-                                                            listCheckbox.get(k).isChecked = false
-                                                        }
-                                                    }
-                                                } else {
-                                                    specialConditionObject = null
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } catch (e: java.lang.Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                }
-    }
 }
