@@ -638,7 +638,7 @@ informazioni in accordo alle </string>
     <string name="morecontent">...Mostra altro</string>
     <string name="unauthorized_location_title">Localizzazione non autorizzata</string>
     <string name="unauthorized_location_message">Attiva la localizzazione, e potrai trovare le officine più vicine</string>
-
+    <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
 
     <string-array name="home_icon_titles">
         <item>Gomme</item>
