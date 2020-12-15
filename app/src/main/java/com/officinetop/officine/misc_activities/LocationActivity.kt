@@ -108,8 +108,8 @@ class LocationActivity : BaseActivity() {
                                     complete_address.visibility = View.VISIBLE
                                     complete_address.text = completeAddress
 
-                                    latitude = dataModels.latitude
-                                    longitude = dataModels.longitude
+                                    latitude =if(dataModels.latitude.isNullOrBlank() && dataModels.latitude.equals("null") ) "0" else dataModels.latitude
+                                    longitude = if(dataModels.longitude.isNullOrBlank() && dataModels.longitude.equals("null")) "0" else dataModels.longitude
                                     zipCode = dataModels.zipCode ?: ""
                                     disableTextField()
                                     logFindLocationEvent(this)
