@@ -822,7 +822,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         }
 
                         if (averageServiceTime != 0.0) {
-                            if (averageServiceTime.toString().split(".")[1]!=null && averageServiceTime.toString().split(".")[1].toInt() != 0) {
+                            if (averageServiceTime.toString().split(".")[1] != null && averageServiceTime.toString().split(".")[1].toInt() != 0) {
                                 averageServiceTime = (averageServiceTime.toInt() + 1).toDouble()
                             }
                         }
@@ -1254,11 +1254,16 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
-            var hourlyRate = 0.0
-            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
-                hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
-            finalPrice = (hourlyRate / 60) * bookingDuration
-            finalPrice = finalPrice.roundTo2Places()
+            /*var hourlyRate = 0.0
+               if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
+                   hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
+               finalPrice = (hourlyRate / 60) * bookingDuration
+               finalPrice = finalPrice.roundTo2Places()*/
+            if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
+                finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
+            }
+
+
         } else {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             val additionalDelay = (20 * 60 * 1000)
