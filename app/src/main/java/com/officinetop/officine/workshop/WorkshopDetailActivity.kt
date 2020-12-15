@@ -806,12 +806,25 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         if (isRevision) {
                             categoryID = json.optString("service_id", "")
                             averageServiceTime = json.optDouble("service_average_time", 0.0) * 60
+
+
                         } else if (isQuotesService) {
                             averageServiceTime = json.optDouble("service_average_time_in_hour", 0.0) * 60
                         } else {
+
+
                             categoryID = json.optString("category_id", "")
                             averageServiceTime = json.optDouble("service_average_time", 0.0) * 60
+
+
+
                             Log.d("mot avarageTime", json.optDouble("service_average_time").toString())
+                        }
+
+                        if (averageServiceTime != 0.0) {
+                            if (averageServiceTime.toString().split(".")[1]!=null && averageServiceTime.toString().split(".")[1].toInt() != 0) {
+                                averageServiceTime = (averageServiceTime.toInt() + 1).toDouble()
+                            }
                         }
 
 
@@ -934,7 +947,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         working_slot_list.adapter = object : RecyclerView.Adapter<ViewHolder>() {
-
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
                 val view: View = layoutInflater.inflate(R.layout.item_intervention_setting, p0, false)
                 return ViewHolder(view)
@@ -1136,7 +1148,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         slotId = packageDetail.optString("temp_slot_id")
         SpecialConditionId = if (packageDetail.has("special_condition_id")) packageDetail.optString("special_condition_id", "0") else "0"
         DiscountPrices = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0") else "0"
-        DiscountType   = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
+        DiscountType = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
         max_appointment = if (packageDetail.has("max_appointment")) packageDetail.optString("max_appointment", "0") else "0"
 
 
@@ -1310,7 +1322,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         SpecialConditionId,
                         getSelectedCar()?.carVersionModel?.idVehicle
                                 ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
-                        , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "", SpecialConditionId, slotId,workshopUsersId.toString(),DiscountType)
+                        , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "", SpecialConditionId, slotId, workshopUsersId.toString(), DiscountType)
             }
             serviceAssemblyBookingCall?.enqueue(callback)
         } else if (isRevision) {
@@ -1370,7 +1382,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     bookingStartTime, endTime, selectedDateFilter, carMaintenanceServicePrice, getSelectedCar()?.carVersionModel?.idVehicle!!,
                     carMaintenanceServiceId, workshopUsersId, packageID, getOrderId()
                     , serviceSpecification, getSavedSelectedVehicleID(),
-                    getBearerToken() ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType
+                    getBearerToken()
+                            ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType
             )
             Log.e("MOTPART", serviceSpecification.toString())
             serviceCarMaintenanceBooking.enqueue(callback)
@@ -1421,7 +1434,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getSelectedCar()?.carSize ?: "", selectedDateFilter,
                     getSelectedCar()?.carVersionModel?.idVehicle ?: "",
                     getOrderId(), getBearerToken()
-                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId, slotId,DiscountType)
+                    ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId, slotId, DiscountType)
             serviceBookingCall.enqueue(callback)
         }
     }
