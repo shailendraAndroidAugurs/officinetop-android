@@ -56,7 +56,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     private lateinit var myadpterN3Part: RecyclerView.Adapter<Holder>
     private var searchText = ""
 
-    var delay: Long = 1000 // 1 seconds after user stops typing
+    var delay: Long = 500 // 1 seconds after user stops typing
 
     var last_text_edit: Long = 0
     var handler: Handler = Handler()
@@ -557,7 +557,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
         ProductSerachBindInView()
     }
     private val input_finish_checker = Runnable {
-        if (System.currentTimeMillis() > last_text_edit + delay - 500) {
+        if (System.currentTimeMillis() > last_text_edit + delay - 250) {
             searchText = search_product.text.toString()
             iv_cross.visibility = View.VISIBLE
             getDataforSerachaccordingTokeyword(search_product.text.toString())

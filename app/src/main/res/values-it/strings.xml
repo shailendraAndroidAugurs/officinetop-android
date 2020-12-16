@@ -558,7 +558,7 @@ informazioni in accordo alle </string>
     <string name="news">NOTIZIA</string>
     <string name="videos">VIDEO</string>
     <string name="guides">GUIDE</string>
-    <string name="DatanotFound">"Data not found "</string>
+    <string name="DatanotFound">"Dati non trovati"</string>
     <string name="Apply_Coupon_Note">"Riceverai questo coupon una volta completato il servizio o il prodotto è stato consegnato se è stato acquistato solo prodotto senza servizio. Il bonus sarà caricato automaticamente nel tuo account e potrai usarlo per prossimi ordini"</string>
     <string name="Note">"Note : "</string>
     <string name="there_is_noBrowser">Non esiste un browser</string>
@@ -572,7 +572,7 @@ informazioni in accordo alle </string>
     <string name="itemnumber">Articolo: %s</string>
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
-    <string name="add_feedback">Add Feedback</string>
+    <string name="add_feedback">Aggiungi feedback</string>
     <string name="write_a_review">Scriviuna recensione</string>
     <string name="customer_rating">valutazione clienti</string>
     <string name="speed_load_index">Indice di carico</string>
@@ -580,7 +580,7 @@ informazioni in accordo alle </string>
     <string name="all_in_italin">All</string>
     <string name="car_conditions">Condizioni auto</string>
     <string name="criteria">Criteria</string>
-    <string name="select_car_criteria">Select Car Criteria</string>
+    <string name="select_car_criteria">Seleziona Criteri auto</string>
     <string name="prepend_euro_symbol_without_string"> A partire da: €: </string>
     <string name="Pleaselogintocontinuewithsforating">Accedi per continuare con Aggiungi valutazione</string>
     <string name="whatsapp">whatsapp</string>
@@ -595,7 +595,7 @@ informazioni in accordo alle </string>
     <string name="in_terms_of_faq_pages_the_more_the_merrier_is_actually_a_fallacy_too_much_text_can_end_up_being_too_confusing_causing_readers_to_have_to_search_for_the_answer_they_need_rather_than_writing_long_and_eloquent_paragraphs_it_s_best_to_be_straightforward_and_brief_when_providing_answers">In terms of FAQ pages, the more the merrier is actually a fallacy. Too much text can end up being too confusing, causing readers to have to search for the answer they need. Rather than writing long and eloquent paragraphs, it\'s best to be straightforward and brief when providing answers.</string>
     <string name="_25">25 Km</string>
     <string name="_0">0 Km</string>
-    <string name="update_contact_number">Update Contact Number</string>
+    <string name="update_contact_number">Aggiorna numero di contatto</string>
     <string name="deliveryPrices">Prezzi di consegna</string>
     <string name="petrol">Benzina</string>
     <string name="Products_not_available_at_the_moment">Prodotti non disponibili al momento !!!</string>
@@ -638,7 +638,7 @@ informazioni in accordo alle </string>
     <string name="morecontent">...Mostra altro</string>
     <string name="unauthorized_location_title">Localizzazione non autorizzata</string>
     <string name="unauthorized_location_message">Attiva la localizzazione, e potrai trovare le officine più vicine</string>
-    <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
+    <string name="PleaselogintocontinueforRemoveWishList">Effettua il login per continuare per rimuovere il prodotto dalla wishlist</string>
 
     <string-array name="home_icon_titles">
         <item>Gomme</item>

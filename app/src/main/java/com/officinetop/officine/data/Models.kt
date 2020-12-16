@@ -1902,7 +1902,7 @@ object Models {
             @SerializedName("tyre_dot")
             val tyreDot: String
 
-    ): Serializable
+    ) : Serializable
 
 
     data class NoiceDbArr(
@@ -1912,7 +1912,7 @@ object Models {
             val graphical_image: String,
             @SerializedName("name_2")
             val title: String
-    ): Serializable
+    ) : Serializable
 
 
     data class RollingResistanceArr(
@@ -1923,7 +1923,7 @@ object Models {
             @SerializedName("name_2")
             val title: String
 
-    ): Serializable
+    ) : Serializable
 
 
     data class WetGripArr(
@@ -1933,7 +1933,7 @@ object Models {
             val graphical_image: String,
             @SerializedName("name_2")
             val title: String
-    ): Serializable
+    ) : Serializable
 
 
     data class FAQ_Question_Answer(
@@ -2056,5 +2056,6 @@ object Models {
             @SerializedName("updated_at")
             val updatedAt: String
     )
+
 }
 
