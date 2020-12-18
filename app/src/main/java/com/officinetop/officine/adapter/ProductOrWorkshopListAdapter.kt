@@ -60,10 +60,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var quotesMainCategoryId = ""
     private var workshopCouponId: String = ""
 
-
     private var quotesWorkshopUserDaysId: String = ""
-
-
     private var workshopCategoryDetail = ""
     private var calendarPriceMap: HashMap<String, String> = HashMap()
     private var mPartIdMap: HashMap<String, Models.servicesCouponData> = HashMap()
