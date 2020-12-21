@@ -28,7 +28,7 @@
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:padding="@dimen/_5sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:weightSum="8">
 
                 <ImageView
@@ -71,7 +71,7 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_delete_white_24dp"
                             android:tint="@color/gray_dark"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
                     </RelativeLayout>
 
 
@@ -83,7 +83,7 @@
                         android:gravity="left"
                         android:padding="0dp"
                         android:textColor="@color/gray_dark"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
 
                     <RelativeLayout
@@ -308,7 +308,7 @@
                 android:background="@drawable/rounded_white_background"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <LinearLayout
@@ -380,7 +380,7 @@
                         android:textAlignment="textEnd"
                         android:textColor="@color/lite_blue"
                         android:textStyle="bold"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                     </TextView>
                 </LinearLayout>
@@ -471,7 +471,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="@string/Discount"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                             </TextView>
 
@@ -507,7 +507,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/zero"
                                 android:textColor="@color/theme_orange"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                             </TextView>
 

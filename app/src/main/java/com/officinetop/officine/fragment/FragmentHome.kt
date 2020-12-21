@@ -30,6 +30,7 @@ import com.officinetop.officine.car_parts.ProductListActivity
 import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackDetailActivity
+import com.officinetop.officine.invite_frnds.InviteFriendsActivity
 import com.officinetop.officine.misc_activities.MaintenanceActivity
 import com.officinetop.officine.misc_activities.RevisionActivity
 import com.officinetop.officine.quotes.QuotesActivity
@@ -226,18 +227,25 @@ class FragmentHome : Fragment() {
 
             if (AdvertisementImagearray.size != 0) {
                 for (i in 0 until AdvertisementImagearray.size) {
-                    rootView.image_slider.addSlider(TextSliderView(context).image(AdvertisementImagearray[i].imageUrl).setScaleType(BaseSliderView.ScaleType.CenterInside)/*.description(AdvertisementImagearray[i].image)*/.setOnSliderClickListener(BaseSliderView.OnSliderClickListener {
-                        if (!AdvertisementImagearray[i].MainCatId.isNullOrBlank())
-                            MoveSliderToWorkshop(AdvertisementImagearray[i].MainCatId?.toInt(), context)
-                    }))
+                    rootView.image_slider.addSlider(TextSliderView(context).image(AdvertisementImagearray[i].imageUrl).setScaleType(BaseSliderView.ScaleType.CenterInside)
+
+                         /*   .setOnSliderClickListener(BaseSliderView.OnSliderClickListener {
+                                if (!AdvertisementImagearray[i].MainCatId.isNullOrBlank())
+                                    MoveSliderToWorkshop(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
+                            })*/)
                     rootView.image_slider.setOnClickListener {
+
 
                     }
                 }
-            } else {
-                for (i in 0..2) {
-                    rootView.image_slider.addSlider(TextSliderView(context).image(R.drawable.banner))
+
+                rootView.tv_banner_buynow.setOnClickListener {
+                    MoveSliderToWorkshop(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
                 }
+            } else {
+
+                rootView.image_slider.addSlider(TextSliderView(context).image(R.drawable.no_image_placeholder))
+
             }
 
 
@@ -268,6 +276,7 @@ class FragmentHome : Fragment() {
             1 -> startActivity(intentFor<CarServiceListActivity>())
             13 -> startActivity(intentFor<SOSActivity>())
             25 -> startActivity(intentFor<QuotesActivity>())
+            27 -> startActivity(intentFor<InviteFriendsActivity>())
         }
 
     }

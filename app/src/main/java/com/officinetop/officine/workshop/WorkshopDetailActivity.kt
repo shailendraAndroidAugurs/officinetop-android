@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.dialog_booking_calendar.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_calendar_day.view.*
+import kotlinx.android.synthetic.main.item_dateview_selected.view.*
 import kotlinx.android.synthetic.main.item_intervention_setting.view.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import okhttp3.ResponseBody
@@ -172,7 +173,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         // get calendar minimum price list for workshop calendar
         if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
-            calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
+             calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
 
         // Intent for revision workshop
         if (intent.hasExtra(Constant.Key.is_revision))
@@ -396,7 +397,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         Log.e("workshopCouponId", (workshopCouponId))
 
-    }
+      }
 
 
     internal fun TextView.setTextColorRes(@ColorRes color: Int) = setTextColor(context.getColorCompat(color))
@@ -454,6 +455,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             //Set up calendar date
             val currentMonth = org.threeten.bp.YearMonth.now()
+
             val startMonth = currentMonth
             val endMonth = currentMonth.plusMonths(1)
 //        val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
@@ -652,7 +654,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
 
         if (intent.hasExtra(Constant.Path.categoryId))
-            workshopCategoryId = intent.getStringExtra(Constant.Path.categoryId)
+             workshopCategoryId = intent.getStringExtra(Constant.Path.categoryId)
 
         if (intent.hasExtra(Constant.Path.workshopUserDaysId))
             quotesWorkshopUsersDaysId = intent.getStringExtra(Constant.Path.workshopUserDaysId)
@@ -684,7 +686,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 val body = response.body()?.string()
 
 
-                body?.let {
+                   body?.let {
 
                     if (isStatusCodeValid(body)) {
                         val dataJson = JSONObject(body)

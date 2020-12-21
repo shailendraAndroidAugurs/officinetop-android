@@ -378,7 +378,7 @@
 
 
     <string name="Total_order">Total Order</string>
-    <string name="Total_order_inciva22">Total Order (incl.IVA %s</string>
+    <string name="Total_order_inciva22">Total Order (incl.IVA %s </string>
     <string name="product_Description">Product Description</string>
     <string name="Manufacturer">Manufacturer</string>
     <string name="Wheel_size">Wheel size</string>
@@ -597,7 +597,7 @@
     <string name="_25">25 Km</string>
     <string name="_0">0 Km</string>
     <string name="update_contact_number">Update Contact Number</string>
-    <string name="deliveryPrices">Delivery Prices</string>
+    <string name="deliveryPrices">Shipping cost</string>
     <string name="petrol">Petrol</string>
     <string name="Products_not_available_at_the_moment">Products not available at the moment !!!</string>
     <!-- <string name="whatsapp_not_install_message">WhatsApp app is not install in your Phone</string>-->

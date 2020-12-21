@@ -32,7 +32,7 @@
                     android:layout_height="@dimen/image_height"
                     android:layout_marginStart="@dimen/service_detail_container_margin"
                     android:layout_marginEnd="@dimen/service_detail_container_margin"
-                    app:cardBackgroundColor="@color/black"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="1dp">
 
@@ -57,7 +57,6 @@
                         <ImageView
                             android:src="@drawable/no_image_placeholder"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:scaleType="centerInside"
                             android:id="@+id/image_slideview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
