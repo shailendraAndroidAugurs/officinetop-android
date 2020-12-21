@@ -14,10 +14,7 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.isOnline
-import com.officinetop.officine.utils.loadImage
-import com.officinetop.officine.utils.onCall
-import com.officinetop.officine.utils.showInfoDialog
+import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_invite_friends.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.jetbrains.anko.intentFor
@@ -56,13 +53,14 @@ class InviteFriendsActivity : BaseActivity() {
         }
         if (isOnline()) {
             getApi()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
     }
 
 
     private fun getApi() {
+        val dialog = getProgressDialog(true)
 
         getBearerToken()?.let {
             RetrofitClient.client.getInviteFrndsSummaryAPI(it).onCall { networkException, response ->
@@ -71,6 +69,7 @@ class InviteFriendsActivity : BaseActivity() {
                 }
 
                 response?.let {
+                    dialog.dismiss()
                     if (response.isSuccessful) {
                         val data = JSONObject(response.body()?.string())
                         if (data.has("data") && !data.isNull("data") && data.get("data") is JSONObject) {

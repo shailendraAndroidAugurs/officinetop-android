@@ -418,6 +418,8 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
         }
 
+
+
     }
 }
 
@@ -892,9 +894,10 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                                             view.bindCartitemViews(onCartListCallback, context, true, cartData)
                                             saveOrderId(cartData.id)
                                             saveIsAvailableDataInCart(true)
-                                            Log.d("WalletAount", cartData.userWallet.amount)
+
                                             if (cartData.userWallet != null && cartData.userWallet.amount != null)
                                                 SaveUserWallet(cartData.userWallet.amount)
+
                                             else {
                                                 SaveUserWallet("0")
                                                 Log.d("WalletAount", "0")

@@ -4,7 +4,7 @@
     <dimen name="service_detail_container_margin_small">5dp</dimen>
     <dimen name="service_detail_container_margin">10dp</dimen>
     <dimen name="service_detail_container_margin_large">15dp</dimen>
-    <dimen name="image_height">160dp</dimen>
+    <dimen name="image_height">228dp</dimen>
 
     <dimen name="image_best_selling">100dp</dimen>
 

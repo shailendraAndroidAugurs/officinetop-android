@@ -11,6 +11,7 @@ import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant.defaultDistance
 import com.officinetop.officine.utils.genericAPICall
+import com.officinetop.officine.utils.getProgressDialog
 import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_revision.*
@@ -42,8 +43,10 @@ class RevisionActivity : BaseActivity() {
     }
 
     private fun getRevisionServices() {
+        val dialog = getProgressDialog(true)
         RetrofitClient.client.getRevisionServices("2", getSelectedCar()?.carVersionModel?.idVehicle!!, getLat(), getLong(), defaultDistance).genericAPICall { _, response ->
             response?.let {
+                dialog.dismiss()
                 val revisionServices = it.body()
 
                 revisionServiceList?.let {
