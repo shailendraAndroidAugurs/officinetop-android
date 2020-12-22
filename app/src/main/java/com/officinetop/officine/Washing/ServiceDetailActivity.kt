@@ -176,7 +176,7 @@ class ServiceDetailActivity : BaseActivity() {
             val imageRes = imagesArray[0].image_url
             image_slideview.visibility=View.VISIBLE
             image_slider.visibility=View.GONE
-            loadImageprofile(imageRes, image_slideview)
+            loadImage(imageRes, image_slideview)
             image_slideview.setOnClickListener({
                 createImageDialog(imageRes)
                 imageDialog.show()
@@ -212,7 +212,7 @@ class ServiceDetailActivity : BaseActivity() {
     private fun createImageDialog(imageRes: String) {
         imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
         val slider = ImageView(this)
-        loadImageprofile(imageRes, slider)
+        loadImage(imageRes, slider)
         slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         with(imageDialog) {
             requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)

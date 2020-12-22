@@ -13,6 +13,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.isLoggedIn
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_invite_friends.*
@@ -43,8 +44,13 @@ class InviteFriendsActivity : BaseActivity() {
 
         invite_friends.setOnClickListener {
             inviteCode = intent?.getStringExtra("inviteCode") ?: ""
-            if (!inviteCode.isNullOrEmpty())
+            if (!inviteCode.isNullOrEmpty()) {
                 shareCode()
+            } else if (!isLoggedIn()) {
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforInviteFriends),  { movetologinPage(this@InviteFriendsActivity) })
+
+            }
+
         }
 
         how_it_works.setOnClickListener {
@@ -62,39 +68,39 @@ class InviteFriendsActivity : BaseActivity() {
     private fun getApi() {
         val dialog = getProgressDialog(true)
 
-        getBearerToken()?.let {
-            RetrofitClient.client.getInviteFrndsSummaryAPI(it).onCall { networkException, response ->
 
-                networkException?.let {
-                }
+        RetrofitClient.client.getInviteFrndsSummaryAPI().onCall { networkException, response ->
 
-                response?.let {
-                    dialog.dismiss()
-                    if (response.isSuccessful) {
-                        val data = JSONObject(response.body()?.string())
-                        if (data.has("data") && !data.isNull("data") && data.get("data") is JSONObject) {
-                            if (data.getJSONObject("data").has("for_registration") && !data.getJSONObject("data").isNull("for_registration")) {
-                                first_invite.text = data.getJSONObject("data").getString("for_registration") + "€"
-                            }
-                            if (data.getJSONObject("data").has("two_level_amount") && !data.getJSONObject("data").isNull("two_level_amount")) {
-                                two_invite.text = data.getJSONObject("data").getString("two_level_amount") + "€"
-                            }
-                            if (data.getJSONObject("data").has("three_level_amount") && !data.getJSONObject("data").isNull("three_level_amount")) {
-                                three_invite.text = data.getJSONObject("data").getString("three_level_amount") + "€xN"
-                            }
-                            if (data.getJSONObject("data").has("image_url") && !data.getJSONObject("data").isNull("image_url")) {
-                                // loadImageBitmap(data.getJSONObject("data").getString("image_url"))
-                                loadImage(data.getJSONObject("data").getString("image_url"), banner_image)
+            networkException?.let {
+            }
 
-                                Log.d("image_url", data.getJSONObject("data").getString("image_url"))
-                            }
+            response?.let {
+                dialog.dismiss()
+                if (response.isSuccessful) {
+                    val data = JSONObject(response.body()?.string())
+                    if (data.has("data") && !data.isNull("data") && data.get("data") is JSONObject) {
+                        if (data.getJSONObject("data").has("for_registration") && !data.getJSONObject("data").isNull("for_registration")) {
+                            first_invite.text = data.getJSONObject("data").getString("for_registration") + "€"
                         }
-                    } else {
+                        if (data.getJSONObject("data").has("two_level_amount") && !data.getJSONObject("data").isNull("two_level_amount")) {
+                            two_invite.text = data.getJSONObject("data").getString("two_level_amount") + "€"
+                        }
+                        if (data.getJSONObject("data").has("three_level_amount") && !data.getJSONObject("data").isNull("three_level_amount")) {
+                            three_invite.text = data.getJSONObject("data").getString("three_level_amount") + "€xN"
+                        }
+                        if (data.getJSONObject("data").has("image_url") && !data.getJSONObject("data").isNull("image_url")) {
+                            // loadImageBitmap(data.getJSONObject("data").getString("image_url"))
+                            loadImage(data.getJSONObject("data").getString("image_url"), banner_image)
 
+                            Log.d("image_url", data.getJSONObject("data").getString("image_url"))
+                        }
                     }
+                } else {
+
                 }
             }
         }
+
     }
 
     private fun shareCode() {

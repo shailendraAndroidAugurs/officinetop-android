@@ -28,7 +28,7 @@
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:padding="@dimen/_5sdp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:weightSum="8">
 
                 <ImageView
@@ -70,8 +70,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_delete_white_24dp"
-                            android:tint="@color/gray_dark"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </RelativeLayout>
 
 
@@ -83,7 +82,7 @@
                         android:gravity="left"
                         android:padding="0dp"
                         android:textColor="@color/gray_dark"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
 
                     <RelativeLayout
@@ -99,20 +98,18 @@
                             android:weightSum="5">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="100dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:background="@drawable/shape_rectangle_gray">
 
                                 <Spinner
                                     android:id="@+id/cart_product_qty_spinner"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
-                                    android:spinnerMode="dialog"
+                                    android:spinnerMode="dropdown"
                                     android:gravity="center"
-                                    android:textAlignment="center"
-                                    android:paddingTop="0dp"
-                                    android:paddingBottom="0dp" />
+                                    android:textAlignment="center"/>
 
                             </LinearLayout>
 
@@ -132,18 +129,18 @@
                                     android:weightSum="2">
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                      android:layout_marginRight="20dp"
                                         android:text="@string/price">
 
                                     </TextView>
 
                                     <TextView
                                         android:id="@+id/cart_item_product_price"
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+
                                         android:gravity="center"
                                         android:text="@string/ZeroValue"
                                         android:textColor="@color/theme_orange">
@@ -158,18 +155,17 @@
                                     android:weightSum="2">
 
                                     <TextView
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:layout_marginRight="20dp"
                                         android:text="@string/total">
 
                                     </TextView>
 
                                     <TextView
                                         android:id="@+id/tv_ProductTotal"
-                                        android:layout_width="0dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
                                         android:gravity="center"
                                         android:text="@string/ZeroValue"
                                         android:textColor="@color/theme_orange">
@@ -180,16 +176,6 @@
 
                             </LinearLayout>
                         </LinearLayout>
-                        <!--<TextView
-                            android:id="@+id/cart_item_product_price"
-                            style="@style/TextViewHeadingWhite"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:padding="0dp"
-                            android:textColor="@color/theme_orange"
-                            android:textSize="12sp" />-->
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -232,14 +218,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2">
 
-                        <!--<TextView
-                            android:id="@+id/tv_Pfu_label"
-                            android:text="@string/PFU_Description"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content">
-
-                        </TextView>-->
                         <TextView
                             android:id="@+id/tv_pfutext"
                             android:layout_width="0dp"
@@ -308,7 +286,7 @@
                 android:background="@drawable/rounded_white_background"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <LinearLayout
@@ -380,7 +358,7 @@
                         android:textAlignment="textEnd"
                         android:textColor="@color/lite_blue"
                         android:textStyle="bold"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                     </TextView>
                 </LinearLayout>
@@ -471,7 +449,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="@string/Discount"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                             </TextView>
 
@@ -507,7 +485,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/zero"
                                 android:textColor="@color/theme_orange"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                             </TextView>
 
@@ -642,12 +620,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:src="@drawable/ic_delete_white_24dp"
-                android:tint="@color/gray_dark" />
+                android:src="@drawable/ic_delete_white_24dp" />
         </LinearLayout>
 
 
     </FrameLayout>
 
 </LinearLayout>
-

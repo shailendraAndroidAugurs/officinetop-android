@@ -360,11 +360,12 @@ interface IRetrofitApis {
     fun getCarRevisionPackageDetail(
             @Query(Constant.Path.workshopUsersId) workshop_id: Int,
             @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
-
             @Query(Constant.Path.version_id) version_id: String,
             @Query(Constant.Path.serviceID) service_id: String,
             @Query(Constant.Path.mainCategoryId) main_category_id: String,
             @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.service_average_time) service_average_time: String,
+
             @Header(Constant.Fields.authorization) authToken: String
 
 
@@ -471,7 +472,6 @@ interface IRetrofitApis {
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Field(Constant.Path.workshopId) workshopId: String,
             @Field(Constant.Path.discountType) discountType: String,
-
 
 
             @Header("Authorization") authToken: String,
@@ -1390,7 +1390,7 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.get_bonus_detail)
-    fun getInviteFrndsSummaryAPI(@Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
+    fun getInviteFrndsSummaryAPI(): Call<ResponseBody>
 
 
     @GET(Constant.UrlEndPoints.loadKromedaParts)
@@ -1580,4 +1580,23 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.getbank_paymentInformation)
     fun getBankPaymentInformation(
             @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
+
+
+    //  https://services.officinetop.com/api/workshopCalendarPrice?users_id=490&category_id=188&hourly_rate=2&service_average_time=0.29&selected_date=2020-12-21
+
+
+    @GET(Constant.UrlEndPoints.getSelectedWorkshopCalendarPrice)
+    fun getSelectedWorkshopCalendarPrice(
+            @Query(Constant.Path.workshopUsersId) workshop_id: String,
+            @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.categoryId) categoryId: String,
+            @Query(Constant.Path.hourly_rate) hourly_rate: String,
+            @Query(Constant.Path.service_average_time) serviceAverageTime: String,
+            @Query(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
+            @Query(Constant.Path.mainCategoryId) main_category_id: String
+
+
+    ): Call<ResponseBody>
+
+
 }
