@@ -27,7 +27,6 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
     private var type: String = ""//type for product type, type for tyre is 2, type for spare parts for 1 and type for rim 3
     private var productorWorkshopName: String = ""
     private var sellerId: String = ""
-
     private var productType: String = ""//type for product type, type for tyre is 2, type for spare parts for 1 and type for rim 3
     private var mainCategoryId: String = ""
     private var serviceID: String = ""

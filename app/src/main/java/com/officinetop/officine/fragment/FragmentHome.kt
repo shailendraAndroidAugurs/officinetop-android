@@ -157,7 +157,7 @@ class FragmentHome : Fragment() {
 
     private fun allAdvertisementApi() {
         AdvertisementImagearray.clear()
-        RetrofitClient.client.getAllAdvertising(context!!.getBearerToken() ?: "")
+        RetrofitClient.client.getAllAdvertising(activity?.getBearerToken() ?: "")
                 .onCall { networkException, response ->
 
                     response?.let {
@@ -227,20 +227,21 @@ class FragmentHome : Fragment() {
 
             if (AdvertisementImagearray.size != 0) {
                 for (i in 0 until AdvertisementImagearray.size) {
-                    rootView.image_slider.addSlider(TextSliderView(context).image(AdvertisementImagearray[i].imageUrl).setScaleType(BaseSliderView.ScaleType.CenterInside)
-
-                         /*   .setOnSliderClickListener(BaseSliderView.OnSliderClickListener {
-                                if (!AdvertisementImagearray[i].MainCatId.isNullOrBlank())
-                                    MoveSliderToWorkshop(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
-                            })*/)
-                    rootView.image_slider.setOnClickListener {
+                    rootView.image_slider.addSlider(TextSliderView(context).image(AdvertisementImagearray[i].imageUrl).setScaleType(BaseSliderView.ScaleType.CenterInside))
 
 
-                    }
                 }
 
                 rootView.tv_banner_buynow.setOnClickListener {
-                    MoveSliderToWorkshop(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
+                    if (AdvertisementImagearray[image_slider.currentPosition].MainCatId?.equals("27")!!) {
+                        MoveBannerToDetail(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
+                    } else if (!(context as HomeActivity).checkForSelectedCar()) {
+                        return@setOnClickListener
+                    } else {
+                        MoveBannerToDetail(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
+                    }
+
+
                 }
             } else {
 
@@ -251,14 +252,16 @@ class FragmentHome : Fragment() {
 
             val scroller = ViewPager::class.java.getDeclaredField("mScroller")
             scroller.isAccessible = true
-            scroller.set(rootView.slider_viewpager, FixedSpeedScroller(context!!, AccelerateInterpolator()))
+            scroller.set(rootView.slider_viewpager, FixedSpeedScroller(activity, AccelerateInterpolator()))
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
 
-    private fun MoveSliderToWorkshop(n: Int?, context: Context?) {
+    private fun MoveBannerToDetail(n: Int?, context: Context?) {
+
+
         when (n) {
             23 -> {
                 if (!TextUtils.isEmpty(context?.getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)?.getString("tyre_detail", ""))) {
@@ -323,7 +326,7 @@ class FragmentHome : Fragment() {
     private fun getHighRatingProductData(productFeedbackList: ArrayList<Models.HighRatingfeedback>) {
 
         if (rootView != null && rootView.home_grid_product_feedback_recycler_view != null) {
-            rootView.home_grid_product_feedback_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+            rootView.home_grid_product_feedback_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
 
             rootView.home_grid_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -466,7 +469,7 @@ class FragmentHome : Fragment() {
 
 
         if (rootView != null && rootView.home_grid_workshop_feedback_recycler_view != null) {
-            rootView.home_grid_workshop_feedback_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+            rootView.home_grid_workshop_feedback_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
 
             //workshop feedback
@@ -590,7 +593,7 @@ class FragmentHome : Fragment() {
 
 
         if (rootView != null && rootView.home_grid_product_recycler_view != null) {
-            rootView.home_grid_product_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+            rootView.home_grid_product_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
 
             //best selling Product

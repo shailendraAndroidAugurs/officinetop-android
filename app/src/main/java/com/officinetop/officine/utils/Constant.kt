@@ -1,5 +1,5 @@
-
 package com.officinetop.officine.utils
+
 object Constant {
 
     const val GALLERY = 1
@@ -197,6 +197,8 @@ object Constant {
         const val minPriceForMotServices = "minPriceForMotServices"
         const val minPricesForMaintenanceServices = "carMaintennaceMinWorkshopPrice"
         const val getbank_paymentInformation = "payment_management"
+
+        const val getSelectedWorkshopCalendarPrice = "workshopCalendarPrice"
 
     }
 

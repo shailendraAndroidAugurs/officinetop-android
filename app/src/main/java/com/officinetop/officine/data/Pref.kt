@@ -518,7 +518,7 @@ inline fun Context.getLat(): String {
 
 inline fun Context.isUserSavedAddress(): Boolean {
     val sharedPreferences = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    return sharedPreferences.getBoolean(Constant.Path.userSavedAddress, false)?:false
+    return sharedPreferences.getBoolean(Constant.Path.userSavedAddress, false) ?: false
 }
 
 inline fun Context.getLong(): String {

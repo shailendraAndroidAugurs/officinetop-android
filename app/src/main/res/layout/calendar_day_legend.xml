@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal"
-    tools:ignore="HardcodedText">
+    android:orientation="horizontal">
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="SUN"
+        android:text="@string/sun"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="MON"
+        android:text="@string/mon"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -30,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="TUE"
+        android:text="@string/tue"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -39,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="WED"
+        android:text="@string/wed"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -48,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="THU"
+        android:text="@string/thu"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -57,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="FRI"
+        android:text="@string/fri"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="SAT"
+        android:text="@string/sat"
         android:textColor="@color/black"
         android:textSize="14sp" />
 

@@ -532,7 +532,7 @@ inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline o
 inline fun Context.createImageDialog(imageRes: String): Dialog {
     val imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
     val slider = ImageView(this)
-    loadImageprofile(imageRes, slider)
+    loadImage(imageRes, slider)
     slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
     with(imageDialog) {
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)

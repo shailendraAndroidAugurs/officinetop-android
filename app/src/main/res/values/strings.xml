@@ -723,12 +723,19 @@
     <string name="unauthorized_location_title">Unauthorized location</string>
     <string name="unauthorized_location_message">Activate the localization, and you will be able to find the nearest workshops</string>
     <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
-
+    <string name="PleaselogintocontinueforInviteFriends">Please login to continue for Invite Friends</string>
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
         <item>Revision</item>
-        <item>Washing</item>0
+        <item>Washing</item>
         <item>Parts</item>
         <item>MOT</item>
         <item>SOS</item>
