@@ -1286,7 +1286,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 serviceSpecArray = JSONArray()
                 val body = response.body()?.string()
                 if (response.code() == 401)
-                    showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true, { movetologinPage(this@WorkshopDetailActivity) })
+                    showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { movetologinPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
                 body?.let {
                     if (isStatusCodeValid(body)) {
@@ -1343,7 +1343,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("endTime tyre", finalPrice.toString())
             Log.d("finalPrice tyre", finalPrice.toString())
             val productCoupon = if (cartItem?.tyreDetail?.SelectedTyreCouponId != null) cartItem?.tyreDetail?.SelectedTyreCouponId else ""
-            val serviceTyreBookingCall = RetrofitClient.client.tyreServiceBooking(productID, productQuantity, packageID, bookingStartTime, endTime, selectedDateFilter,
+            val serviceTyreBookingCall  = RetrofitClient.client.tyreServiceBooking(productID, productQuantity, packageID, bookingStartTime, endTime, selectedDateFilter,
                     finalPrice.toString(), categoryID, getBearerToken() ?: "",
                     getSelectedCar()?.carVersionModel?.idVehicle
                             ?: "", getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), "0.0", cartItem!!.pfu_tax, cartItem!!.tyretotalPrice, cartItem!!.price.toString(), cartItem!!.name, cartItem!!.description!!, workshopCategoryId, productCoupon!!, cartItem?.tyreDetail?.user_id.toString(), maincategoryId,
