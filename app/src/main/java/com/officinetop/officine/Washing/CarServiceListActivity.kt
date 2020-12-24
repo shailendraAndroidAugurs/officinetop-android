@@ -21,7 +21,6 @@ import org.jetbrains.anko.intentFor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class CarServiceListActivity : BaseActivity() {
     var arrayList: MutableList<Models.ServiceCategory> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +29,7 @@ class CarServiceListActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         toolbar_title.text = resources.getString(R.string.washing_type)
-
         getLocation()
         loadData()
     }

@@ -238,11 +238,10 @@ interface IRetrofitApis {
 
                             @Query("user_lat") user_lat: String,
                             @Query("user_long") user_long: String,
-                            @Query("distance_range") distance_range: String
-                            ,
-
+                            @Query("distance_range") distance_range: String,
                             @Query(Constant.Path.favorite) favorite: String,
-                            @Query(Constant.Path.couponFilter) couponfilter: String
+                            @Query(Constant.Path.couponFilter) couponfilter: String,
+                            @Query(Constant.Path.mainCategoryId) mainCategoryId: String
     ): Call<ResponseBody>
 
 
