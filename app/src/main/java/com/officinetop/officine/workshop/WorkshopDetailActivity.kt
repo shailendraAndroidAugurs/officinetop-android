@@ -185,6 +185,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         if (WorkshopJson != null) {
             services_average_time = WorkshopJson.optString("service_average_time")
+            Log.d("service_average_time1: ",WorkshopJson.optString("service_average_time"))
             max_appointment = WorkshopJson.optString("max_appointment")
             hourly_rate = WorkshopJson.optString("hourly_rate")
             main_category_id = WorkshopJson.optString("main_category_id")
@@ -377,7 +378,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if(isCarWash){
+        if(isCarWash!! || isRevision){
             getCalendarPrices()
         }else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -1514,6 +1515,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun getCalendarPrices() {
+        Log.d("service_average_time1....: ",WorkshopJson.optString("service_average_time"))
         RetrofitClient.client.getSelectedWorkshopCalendarPrice(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter,main_category_id).onCall { networkException, response ->
             if (response!!.isSuccessful) {
 

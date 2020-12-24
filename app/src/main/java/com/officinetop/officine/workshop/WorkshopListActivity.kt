@@ -909,7 +909,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
         Log.d("Revision", "DistanceInitial$tempDistanceInitial")
         Log.d("Revision", "DistanceFinal$tempDistanceFinal")
-        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0")
+        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0",mainCategoryId=revisionMain_categoryId)
                 .onCall { networkException, response ->
                     networkException?.let {
                     }

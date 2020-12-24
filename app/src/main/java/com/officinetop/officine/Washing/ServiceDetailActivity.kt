@@ -25,9 +25,7 @@ import kotlinx.android.synthetic.main.item_grid_home_square.view.*
 import org.jetbrains.anko.intentFor
 
 class ServiceDetailActivity : BaseActivity() {
-
     var service_id = 0
-
     private lateinit var imageDialog: Dialog
     private lateinit var dialogSlider: SliderLayout
     var disableSliderTouch = false
