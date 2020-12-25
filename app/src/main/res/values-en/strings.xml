@@ -227,7 +227,7 @@
     <string name="condition">Terms &amp; Condition</string>
     <string name="checkreferral">Do you\'ve referral code?</string>
     <string name="removereferral">Do you want to remove referral code?</string>
-    <string name="offermsg_referral">Enter the referral code to get euros in your wallet after registration</string>
+    <string name="offermsg_referral">Enter the referral code to get euros in your Credit after registration</string>
     <string name="close">Close</string>
     <string name="ticket">Ticket No. -</string>
     <string name="ticketType">Complain type -</string>
@@ -288,8 +288,8 @@
     <string name="SeeFeedback">View Feedback</string>
     <string name="AppliedCoupon"><!--Bonus:-->""</string>
     <string name="updateCoupon"> Change Coupon</string>
-    <string name="Wallet">Wallet:  €</string>
-    <string name="WalletInfo"> Wallet Information </string>
+    <string name="Wallet">Credit:  €</string>
+    <string name="WalletInfo"> Credit Information </string>
     <string name="inviteFriends">Invite Friends</string>
     <string name="how_works">How It Works</string>
     <string name="href_how_works">How it Works >></string>
@@ -460,11 +460,11 @@
     <string name="Delete_car_from_virtual_garage">Delete this car from virtual garage?</string>
     <string name="Login_session_expired">Login session expired. Please login again to continue</string>
     <string name="onResponseCode500">onResponse: error on 500 code -</string>
-    <string name="Successfully_addedProduct_to_wishlist"> Successfully added this Product to wishlist</string>
-    <string name="SuccessfullyaddedthisWorkshopfavorite">Successfully added this Workshop to favorite</string>
+    <string name="Successfully_addedProduct_to_wishlist"> Product successfully added to favorites</string>
+    <string name="SuccessfullyaddedthisWorkshopfavorite">Workshop successfully added to favorites</string>
 
 
-    <string name="AddresUpdateSuccessFully">Address Update SuccessFully</string>
+    <string name="AddresUpdateSuccessFully">Address updated successfully</string>
     <string name="AddressDeletedSuccessFully"> successfully deleted</string>
     <string name="AddressAddSuccessFully">Saved successfully</string>
     <string name="Failed_pickplace">Failed to pick place</string>
@@ -479,8 +479,8 @@
     <string name="Connection_Error">Connection Error</string>
     <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again</string>
 
-    <string name="productRemoved_formWishList"> This product Removed from wishlist</string>
-    <string name="WorkshopRemovedfromfavorite">This Workshop Removed from favorite</string>
+    <string name="productRemoved_formWishList">Product successfully removed from favorites</string>
+    <string name="WorkshopRemovedfromfavorite">Workshop successfully removed from favorites</string>
     <string name="ContactAddSuccessFully">Successfully Added</string>
     <string name="ContactUpdateSuccessFully">Successfully Updated</string>
     <string name="ContactDeletedSuccessFully">Successfully deleted</string>
@@ -553,7 +553,7 @@
     <string name="and"> and</string>
     <string name="Add_address">Add address</string>
     <string name="Add_mobile_number">Add mobile number</string>
-    <string name="useofficine_and_Get_cashback_in_your_wallet_Use_my_Code">"Use Officine and Get cashback in your wallet. Use my Code:- "</string>
+    <string name="useofficine_and_Get_cashback_in_your_wallet_Use_my_Code">"Use Officine and Get cashback in your Credit. Use my Code:- "</string>
     <string name="news">NEWS</string>
     <string name="videos">VIDEOS</string>
     <string name="guides">GUIDES</string>

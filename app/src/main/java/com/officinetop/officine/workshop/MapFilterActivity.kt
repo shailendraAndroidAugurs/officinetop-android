@@ -32,7 +32,6 @@ import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.Serializable
-
 class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -97,7 +96,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar_title.text = getString(R.string.Filter_Workshops)
+        toolbar_title.text = getString(R.string.Workshop)
 
 
         if (!intent.extras!!.getString("WorkshopList").isNullOrBlank()) {
