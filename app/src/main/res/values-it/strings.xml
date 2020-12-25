@@ -289,8 +289,8 @@ informazioni in accordo alle </string>
     <string name="AppliedCoupon"><!--Bonus:-->""</string>
     <string name="updateCoupon">Cambia coupon</string>
     <string name="inviteFriends">Invita gli amici</string>
-    <string name="Wallet">Wallet:  €</string>
-    <string name="WalletInfo"> Wallet Information </string>
+    <string name="Wallet">Credito:  €</string>
+    <string name="WalletInfo"> Credito Information </string>
     <string name="how_works">Come funziona</string>
     <string name="href_how_works">Come funziona >></string>
     <string name="pieces">pezzi</string>
@@ -459,11 +459,11 @@ informazioni in accordo alle </string>
     <string name="Delete_car_from_virtual_garage">Eliminare questa macchina dal garage virtuale?</string>
     <string name="Login_session_expired">Sessione di accesso scaduta. Effettua nuovamente l accesso per continuare</string>
     <string name="onResponseCode500">onResponse: errore nel codice 500 -</string>
-    <string name="Successfully_addedProduct_to_wishlist"> Aggiunto con successo questo prodotto alla lista dei desideri</string>
-    <string name="SuccessfullyaddedthisWorkshopfavorite">Aggiunto con successo questo seminario ai preferiti</string>
+    <string name="Successfully_addedProduct_to_wishlist"> Prodotto aggiunto con successo ai preferiti</string>
+    <string name="SuccessfullyaddedthisWorkshopfavorite">Officina aggiunta ai preferiti con successo</string>
 
 
-    <string name="AddresUpdateSuccessFully">Indirizzo Update SuccessFully</string>
+    <string name="AddresUpdateSuccessFully">Indirizzo aggiornato con successo</string>
     <string name="Update_SuccessFully">Aggiornamento riuscito Completamente</string>
     <string name="AddressDeletedSuccessFully">Eliminato con successo</string>
     <string name="AddressAddSuccessFully">Salvato con sucesso</string>
@@ -479,8 +479,8 @@ informazioni in accordo alle </string>
     <string name="Connection_Error">Errore di connessione</string>
     <string name="Something_went_wrong_Please_try_again">Qualcosa è andato storto. Per favore riprova</string>
 
-    <string name="productRemoved_formWishList"> Questo prodotto è stato rimosso dalla lista dei desideri</string>
-    <string name="WorkshopRemovedfromfavorite">Til suo Officine Rimosso dai preferiti</string>
+    <string name="productRemoved_formWishList">Product successfully removed from favorites</string>
+    <string name="WorkshopRemovedfromfavorite">Officina rimossa dai preferiti con successo</string>
     <string name="ContactAddSuccessFully">Aggiunto con successo</string>
     <string name="ContactUpdateSuccessFully">Aggiornato con successo</string>
     <string name="ContactDeletedSuccessFully">Eliminato con successo</string>
