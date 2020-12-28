@@ -57,6 +57,10 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var isMotService = false
     private val search_view: androidx.appcompat.widget.SearchView = search_view
     private var quotesServiceQuotesInsertedId = ""
+
+    private var qutoesUserDescription = ""
+
+    private var qutoesUserImage = ""
     private var quotesMainCategoryId = ""
     private var workshopCouponId: String = ""
 
@@ -85,9 +89,11 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     }
 
     fun getQuotesIds(quotesServiceQuotesInsertedId: String,
-                     quotesMainCategoryId: String) {
+                     quotesMainCategoryId: String, qutoesUserDescription: String, qutoesUserImage: String) {
         this.quotesServiceQuotesInsertedId = quotesServiceQuotesInsertedId
         this.quotesMainCategoryId = quotesMainCategoryId
+        this.qutoesUserDescription = qutoesUserDescription
+        this.qutoesUserImage = qutoesUserImage
     }
 
     fun setAssembledProduct(assembledProduct: String) {
@@ -372,6 +378,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             , Constant.Key.mot_type to mot_type
                             , "WorkshopJson" to json.toString()
                             , "QutoesServiceAverageTime" to if (json.has("service_average_time") && json.optString("service_average_time") != null && json.optString("service_average_time") != "null") json.optString("service_average_time") else ""
+                            , Constant.Path.qutoesUserDescription to qutoesUserDescription
+                            , Constant.Path.qutoesUserAttachImage to qutoesUserImage
+
 
                     ).putExtras(bundle)
 

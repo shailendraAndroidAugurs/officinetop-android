@@ -114,7 +114,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var servicesAverageTime = ""
     private var mainCategoryId = ""
     private var deliveryDate = "0"
-
+    var qutoesUserDescription = ""
+    var qutoesUserImage = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -217,6 +218,14 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra(Constant.Path.categoryId)) {
                 serviceID = intent.getStringExtra(Constant.Path.categoryId).toInt()
             }
+
+            if (intent.hasExtra(Constant.Path.qutoesUserDescription)) {
+                qutoesUserDescription = intent.getStringExtra(Constant.Path.qutoesUserDescription)
+            }
+            if (intent.hasExtra(Constant.Path.qutoesUserAttachImage)) {
+                qutoesUserImage = intent.getStringExtra(Constant.Path.qutoesUserAttachImage)
+            }
+
         }
 
         if (isCarMaintenanceService) {
@@ -647,8 +656,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
-        listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId)
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type, qutoesUserDescription, qutoesUserImage)
+        listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId,qutoesUserDescription,qutoesUserImage)
         if (intent.hasExtra(Constant.Key.cartItem))
             listAdapter.getCartItem(cartItem!!)
 
@@ -909,7 +918,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
         Log.d("Revision", "DistanceInitial$tempDistanceInitial")
         Log.d("Revision", "DistanceFinal$tempDistanceFinal")
-        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0",mainCategoryId=revisionMain_categoryId)
+        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId)
                 .onCall { networkException, response ->
                     networkException?.let {
                     }

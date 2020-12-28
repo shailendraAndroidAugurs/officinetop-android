@@ -640,6 +640,7 @@ informazioni in accordo alle </string>
     <string name="unauthorized_location_message">Attiva la localizzazione, e potrai trovare le officine più vicine</string>
     <string name="PleaselogintocontinueforRemoveWishList">Effettua il login per continuare per rimuovere il prodotto dalla wishlist</string>
     <string name="PleaselogintocontinueforInviteFriends">Accedi per continuare per Invita amici</string>
+    <string name="PleaselogintocontinueforQutoesRequestSend">Effettua il login per continuare per l\'invio della richiesta di qutoes</string>
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
     <string name="tue">MAR</string>

@@ -14,22 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GridItemDecoration
 import com.officinetop.officine.adapter.QuotesGridAdapter
-import com.officinetop.officine.data.Models
-import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getSelectedCar
-import com.officinetop.officine.data.getUserId
+import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.workshop.WorkshopListActivity
@@ -49,15 +40,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class QuotesActivity : BaseActivity() {
-
     private var attachedImage: File? = null
     private var attachedImagePath: String? = null
     private var imagesList: MutableList<String> = ArrayList()//to bind in adapter view
     private var imagesAdapter: QuotesGridAdapter? = null
-    private var mianCategoryID: String? = ""
+    private var servicesId: String? = ""
+    private var mainCategoryId: String? = ""
     private var images: MutableList<String> = ArrayList()//to send with api
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quotes)
@@ -71,7 +60,7 @@ class QuotesActivity : BaseActivity() {
             var permissionlist = ArrayList<String>()
             permissionlist.add(Manifest.permission.CAMERA)
 
-            checkpermission(permissionlist, {showSelectImageDialog() })
+            checkpermission(permissionlist, { showSelectImageDialog() })
         }
 
         quotes_recycler_view.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
@@ -106,7 +95,7 @@ class QuotesActivity : BaseActivity() {
 
         if (isOnline()) {
             getQuotesCategory()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {
                 finish()
             }
@@ -115,11 +104,29 @@ class QuotesActivity : BaseActivity() {
 
         confirm_online_request_only.setOnClickListener {
             if (!isEditTextValid(this@QuotesActivity, edt_describe_request)) return@setOnClickListener
-            quotesApiCall("1")
+            if (isLoggedIn()) {
+                quotesApiCall("1")
+            } else {
+                showConfirmDialog(getString(R.string.PleaselogintocontinueforQutoesRequestSend), { movetologinPage(this@QuotesActivity) })
+            }
+
+
         }
         appointment_for_control.setOnClickListener {
             if (!isEditTextValid(this@QuotesActivity, edt_describe_request)) return@setOnClickListener
-            quotesApiCall("2")
+            //quotesApiCall("2")
+
+
+
+
+            startActivity(intentFor<WorkshopListActivity>(
+                    Constant.Key.is_quotes to true,
+                    Constant.Path.categoryId to servicesId,
+                    Constant.Path.serviceQuotesInsertedId to "",
+                    Constant.Path.qutoesUserDescription to edt_describe_request.toString(),
+                    Constant.Path.qutoesUserAttachImage to Gson().toJson(images),
+                    Constant.Path.mainCategoryId to mainCategoryId))
+            finish()
         }
     }
 
@@ -165,13 +172,17 @@ class QuotesActivity : BaseActivity() {
                 imageList.add(file.toMultipartBody("images[]"))
             }
 
+
+
             progress_bar.visibility = View.VISIBLE
 
             val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
+            Log.d("ServicesQutoesParameter", "user_id=" + getUserId() + "&categoryType=" + mainCategoryId!! + "&description=" + edt_describe_request.text.toString() + "&images=" + "" + "&selectedDate=" + selectedFormattedDate + "&carSize=" + getSelectedCar()?.carSize.toString() + "&buttonType=" + btnType)
+
             RetrofitClient.client.serviceQuotes(
                     authToken = getBearerToken() ?: "",
                     user_id = getUserId().toRequestBody(),
-                    categoryType = mianCategoryID!!.toRequestBody(),
+                    categoryType = mainCategoryId!!.toRequestBody(),
                     description = edt_describe_request.text.toString().toRequestBody(),
                     images = imageList,
                     selectedDate = selectedFormattedDate.toRequestBody(),
@@ -198,7 +209,7 @@ class QuotesActivity : BaseActivity() {
                                                     val mainCatId = data.opt("main_category_id").toString()
                                                     startActivity(intentFor<WorkshopListActivity>(
                                                             Constant.Key.is_quotes to true,
-                                                            Constant.Path.categoryId to mianCategoryID,
+                                                            Constant.Path.categoryId to mainCategoryId,
                                                             Constant.Path.serviceQuotesInsertedId to id,
                                                             Constant.Path.mainCategoryId to mainCatId))
                                                     finish()
@@ -269,7 +280,8 @@ class QuotesActivity : BaseActivity() {
                                     spinner_categories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                         override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                                             val items: Models.MainCategory = p0?.getItemAtPosition(p2) as Models.MainCategory
-                                            mianCategoryID = items.id.toString()
+                                            servicesId = items.serviceId.toString()
+                                            mainCategoryId = items.Qutoes_mainCategoryId.toString()
                                         }
 
                                         override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -283,9 +295,6 @@ class QuotesActivity : BaseActivity() {
         }
 
     }
-
-
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -351,8 +360,6 @@ class QuotesActivity : BaseActivity() {
         }
         return file
     }
-
-
 
 
 }
