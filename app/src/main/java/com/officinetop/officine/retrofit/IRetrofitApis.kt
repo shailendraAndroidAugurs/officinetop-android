@@ -695,17 +695,19 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.getQuotesPackageDetail)
     fun getServiceQuotesPackageDetail(
-            @Query(Constant.Path.categoryType) categoryType: String,
+            @Query("service_id") categoryType: String,
             @Query(Constant.Path.workshopUserDaysId) workshopUserDaysId: String,
             @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
             @Query(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: String,
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
-            @Query(Constant.Path.workshopUserId) workshopUsersId: String,
+            @Query(Constant.Path.workshopId) workshopUsersId: String,
             @Query(Constant.Path.couponId) couponId: String,
             @Query(Constant.Path.userid) userid: String,
             @Query(Constant.Path.version_id) versionId: String,
-            @Query(Constant.Path.service_average_time) ServicesAvarageTime: String
+            @Query(Constant.Path.service_average_time) ServicesAvarageTime: String,
+            @Query(Constant.Path.maxAppointment) maxAppointment: String
+
 
     ): Call<ResponseBody>
 
@@ -793,28 +795,27 @@ interface IRetrofitApis {
             @Field(Constant.Path.discountType) discountType: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Constant.UrlEndPoints.service_booking_request_quotes)
     fun serviceQuotesBooking(
-            @Field(Constant.Path.categoryType) categoryType: String,
-            @Field(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
-            @Field(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: String,
-            @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
-            @Field(Constant.Path.selectedCarId) selectedCarId: String?,
-            @Field(Constant.Path.workshopId) workshopId: String?,
-            @Field(Constant.Path.start_time) startTime: String,
-            @Field(Constant.Path.packageId) packageId: String,
-            @Field(Constant.Path.orderId) orderId: String,
+            @Part(Constant.Path.categoryType) categoryType: RequestBody,
+            @Part(Constant.Path.workshopFilterSelectedDate) selectedDate: RequestBody,
+            @Part(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: RequestBody,
+            @Part(Constant.Path.mainCategoryId) mainCategoryId: RequestBody,
+            @Part(Constant.Path.selectedCarId) selectedCarId: RequestBody?,
+            @Part(Constant.Path.workshopId) workshopId: RequestBody?,
+            @Part(Constant.Path.start_time) startTime: RequestBody,
+            @Part(Constant.Path.packageId) packageId: RequestBody,
+            @Part(Constant.Path.orderId) orderId: RequestBody,
             @Header(Constant.Fields.authorization) authToken: String,
-            @Field(Constant.Path.couponId) couponId: String,
-
-
-            @Field(Constant.Path.end_time) endTime: String,
-            @Field(Constant.Path.version_id) versionId: String,
-            @Field(Constant.Path.specialConditionId) specialConditionId: String,
-
-            @Field("temp_slot_id") temp_slot_id: String,
-            @Field(Constant.Path.discountType) discountType: String,
+            @Part(Constant.Path.couponId) couponId: RequestBody,
+            @Part(Constant.Path.end_time) endTime: RequestBody,
+            @Part(Constant.Path.version_id) versionId: RequestBody,
+            @Part(Constant.Path.specialConditionId) specialConditionId: RequestBody,
+            @Part("temp_slot_id") temp_slot_id: RequestBody,
+            @Part(Constant.Path.discountType) discountType: RequestBody,
+            @Part("description") description: RequestBody,
+            @Part images: List<MultipartBody.Part?>,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -997,7 +998,7 @@ interface IRetrofitApis {
     fun getQuotesWorkshops(
             @Header(Constant.Fields.authorization) authToken: String,
 
-            @Query(Constant.Path.categoryType) categoryType: Int,
+            @Query("service_id") categoryType: Int,
             @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
             @Query(Constant.Path.filterRating) rating: String,
             @Query(Constant.Path.filterPriceRange) priceRange: String,

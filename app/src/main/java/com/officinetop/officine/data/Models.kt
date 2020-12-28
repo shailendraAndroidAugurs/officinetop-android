@@ -444,10 +444,12 @@ object Models {
 
     /*quotes main category*/
     data class MainCategory(
-            @SerializedName("id")
-            val id: String = "",
+            @SerializedName("service_id")
+            val serviceId: String = "",
             @SerializedName("main_cat_name")
-            val mainCatName: String = ""
+            val mainCatName: String = "",
+            @SerializedName("main_category_id")
+            val Qutoes_mainCategoryId: String = ""
 
     ) : ListItemViewModel()
 

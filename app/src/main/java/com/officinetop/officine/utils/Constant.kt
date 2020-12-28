@@ -405,6 +405,8 @@ object Constant {
         const val keyword = "keyword"
         const val maker = "maker"
         const val bankDetailId = "payment_managements_id"
+        const val qutoesUserDescription = "qutoesUserDescription"
+        const val qutoesUserAttachImage = "qutoesUserAttachImage"
 
 
     }
