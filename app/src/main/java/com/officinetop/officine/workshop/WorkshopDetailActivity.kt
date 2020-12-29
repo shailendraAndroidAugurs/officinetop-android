@@ -68,6 +68,7 @@ import retrofit2.Response
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
@@ -238,10 +239,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         if (intent.hasExtra(Constant.Path.qutoesUserDescription))
-            qutoesUserDescription = intent?.getStringExtra(Constant.Key.is_quotes) ?: ""
+            qutoesUserDescription = intent?.getStringExtra(Constant.Path.qutoesUserDescription) ?: ""
 
         if (intent.hasExtra(Constant.Path.qutoesUserAttachImage))
-            qutoesUserImage = intent?.getStringExtra(Constant.Key.is_quotes) ?: ""
+            qutoesUserImage = intent?.getStringExtra(Constant.Path.qutoesUserAttachImage) ?: ""
 
 
 
@@ -1404,11 +1405,17 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isQuotesService) {
 
             val imageList: MutableList<MultipartBody.Part?> = ArrayList()
-          /*  for (i in 0 until images.size) {
+            val images = Gson().fromJson(qutoesUserImage, Array<String>::class.java).asList()
+
+            for (i in 0 until images.size) {
                 val file = File(images.get(i))
                 imageList.add(file.toMultipartBody("images[]"))
-            }*/
+            }
 
+            Log.d("QutoesBooking", "service_id=" + workshopCategoryId + "&selected_date=" +selectedDateFilter+
+                    "&main_category_id=" +quotesMainCategoryId+ "&selected_car_id="+getSavedSelectedVehicleID() + "&workshop_id=" +workshopUsersId+ "&start_time="+bookingStartTime +
+                    "&package_id=" +packageID.toString()+ "&order_id=" +getOrderId()+ "&coupon_id="+workshopCouponId + "&end_time=" +endTime+ "&version_id="+getSelectedCar()?.carVersionModel?.idVehicle!! +
+                    "&special_condition_id=" +SpecialConditionId+ "&temp_slot_id="+slotId + "&text="+qutoesUserDescription +"&images="+ images)
 
             val serviceQuotesBooking = RetrofitClient.client.serviceQuotesBooking(
                     workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), quotesMainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
@@ -1563,3 +1570,5 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 }
+
+

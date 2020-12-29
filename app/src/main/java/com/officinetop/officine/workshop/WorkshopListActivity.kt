@@ -656,7 +656,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type, qutoesUserDescription, qutoesUserImage)
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
         listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId,qutoesUserDescription,qutoesUserImage)
         if (intent.hasExtra(Constant.Key.cartItem))
             listAdapter.getCartItem(cartItem!!)
