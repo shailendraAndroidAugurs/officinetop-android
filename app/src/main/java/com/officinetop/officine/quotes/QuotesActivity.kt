@@ -123,10 +123,10 @@ class QuotesActivity : BaseActivity() {
                     Constant.Key.is_quotes to true,
                     Constant.Path.categoryId to servicesId,
                     Constant.Path.serviceQuotesInsertedId to "",
-                    Constant.Path.qutoesUserDescription to edt_describe_request.toString(),
+                    Constant.Path.qutoesUserDescription to edt_describe_request.text.toString(),
                     Constant.Path.qutoesUserAttachImage to Gson().toJson(images),
                     Constant.Path.mainCategoryId to mainCategoryId))
-            finish()
+
         }
     }
 

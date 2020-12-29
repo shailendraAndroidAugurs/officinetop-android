@@ -798,7 +798,7 @@ interface IRetrofitApis {
     @Multipart
     @POST(Constant.UrlEndPoints.service_booking_request_quotes)
     fun serviceQuotesBooking(
-            @Part(Constant.Path.categoryType) categoryType: RequestBody,
+            @Part("service_id") categoryType: RequestBody,
             @Part(Constant.Path.workshopFilterSelectedDate) selectedDate: RequestBody,
             @Part(Constant.Path.serviceQuotesInsertedId) serviceQuotesInsertedId: RequestBody,
             @Part(Constant.Path.mainCategoryId) mainCategoryId: RequestBody,
@@ -814,7 +814,7 @@ interface IRetrofitApis {
             @Part(Constant.Path.specialConditionId) specialConditionId: RequestBody,
             @Part("temp_slot_id") temp_slot_id: RequestBody,
             @Part(Constant.Path.discountType) discountType: RequestBody,
-            @Part("description") description: RequestBody,
+            @Part("text") description: RequestBody,
             @Part images: List<MultipartBody.Part?>,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 

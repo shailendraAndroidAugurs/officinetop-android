@@ -57,15 +57,11 @@ object Constant {
         const val sparePartGroup = "get_spare_group"
         const val sparePartSubGroup = "get_spare_sub_group"
         const val spareN3Groups = "get_spare_n3_groups"
-
         const val assembleServiceWorkshop = "assembleServiceWorkshop"
-
-
         const val deleteCar = "deleteCar"
         const val uploadCarImage = "upload_car_pic"
         const val deleteCarImage = "garage/remove_car_image"
         const val getCategory = "get_car_wash_category/{${Path.categoryNumber}}/{${Path.carSize}}/{${Path.userLat}}/{${Path.userLong}}/{${Path.distanceRange}}"
-
         const val getQuotesWorkshop = "request_quotes_workshop"
         const val getWorkshop = "get_workshop"
         const val getTyreWorkshop = "get_tyre_workshop"
@@ -96,25 +92,18 @@ object Constant {
         const val sosServiceBooking = "sos_service_booking"
         const val serviceBookingForCarMaintenance = "service_booking_for_car_maintenance"
         const val service_booking_request_quotes = "service_booking_request_quotes"
-
         const val productBrandList = "get_product_brand_list"
         const val getUserDetails = "get_user_profile"
 
         // search product list
         const val getSearchKeywords = "search_key/"
-
         const val getAllAdvertising = "get_all_advertising"
         const val bestSeller = "best_seller_product"
         const val bestSelleingProduct_home = "best_selling_product_for_home"
-
-
         const val getTyreSpecification = "get_tyre_specification"
-
         const val saveUserTyreDetails = "save_user_tyre_details"
         const val getUserTyreDetails = "get_user_tyre_details"
-
         const val revisionServices = "get_revision_services"
-
         const val emergencySOServiceBooking = "emergency_sos_service_booking"
         const val wrackerServices = "get_wrackerservices"
         const val allWrackerServices = "get_all_wracker_workshop_services"
@@ -143,28 +132,21 @@ object Constant {
         const val updatenotification = "add_notification_detail"
         const val deleteaccountforcustomer = "delete_account_for_customer"
         const val getPartForMotReplacement = "load_mot_spare_parts_for_replace"
-
         const val addUserAddress = "add_user_address_list"
         const val updateAddress = "update_coustmer_address"
-
         const val deleteContact = "delete_user_contact_list"
-
         const val deleteAddress = "delete_user_address"
-
         const val getCartList = "get_cart_list"
         const val sosWorkshopListForAppontment = "sos_workshop_list_for_appontment"
         const val sosWorkshopListForEmergency = "sos_workshop_list_for_emergency"
         const val SimilarPartProduct = "similar_for_parts"
         const val highRatingFeedback = "feedback_list_for_workshop_product"
-
-
         const val updateProductQuantity = "update_product_quantity"
         const val deleteCartItem = "delete_user_add_item"
         const val addToCart = "add_to_cart"
         const val updatePaymentStatus = "update_payment_status"
         const val addToFavorite = "add_user_wish_list"
         const val removeFromFavorite = "delete_user_wish_list"
-
         const val generatesupportticket = "generate_support_ticket"
         const val userWishList = "get_user_wish_list"
         const val getnotificationdetail = "get_notification_detail"
@@ -181,25 +163,19 @@ object Constant {
         const val motServiceSchedule = "mot_service_schedule"
         const val carMaintenanceCriteria = "car_maintenance_criteria"
         const val carMaintenanceParts = "car_maintenance_parts"
-
-
         const val carSpareKromedaCall = "save_spare_kromeda_call"
         const val carMOTKromedaCall = "save_mot_kromeda_call"
-
         const val addCarByPlateNumber = "addCarByPlateNumber"
         const val editTyreMeasurementdetails = "edit_user_tyre_details"
         const val searchPartAutocomplete = "searchPartsAutocomplete"
         const val selectedCar = "selectedCar"
         const val getSparePartDetail = "spare_part_detail"
-
         const val getSearchSparePartsBykeywords = "searchSparePartsBykeywords"
         const val getCarMakerslogo = "getCarMakersImage"
         const val minPriceForMotServices = "minPriceForMotServices"
         const val minPricesForMaintenanceServices = "carMaintennaceMinWorkshopPrice"
         const val getbank_paymentInformation = "payment_management"
-
         const val getSelectedWorkshopCalendarPrice = "workshopCalendarPrice"
-
     }
 
     object Key {
@@ -224,7 +200,6 @@ object Constant {
         const val saved_car_json = "saved_car_json"
         const val show_add_car_dialog = "show_add_car_dialog"
         const val is_quotes = "is_quotes"
-
         const val is_workshop = "is_workshop"
         const val is_revision = "is_revision"
         const val is_tyre = "is_tyre"
@@ -234,25 +209,18 @@ object Constant {
         const val is_sos_service = "is_sos_service"
         const val is_sos_service_emergency = "is_sos_service_emergency"
         const val is_car_maintenance_service = "is_car_maintenance_service"
-
         const val productDetail = "productDetail"
         const val workshopCategoryDetail = "workshopCategoryDetail"
         const val workshopAssembledDetail = "workshopAssembledDetail"
-
         const val workshopCalendarPrice = "workshopCalendarPrice"
-
         const val PartIdMap = "partIdmap"
         const val MotPartIdMap = "motpartIdmap"
-
         const val cartItem = "carItem"
         const val mot_type = "mot_type"
-
         const val is_sub_group = "is_sub_group"
         const val is_sub_n3_group = "is_n3_group"
         const val is_motService = "is_motService"
-
         const val address = "address"
-
         const val zip_code = "zip_code"
         const val lat = "lat"
         const val log = "log"
@@ -284,15 +252,12 @@ object Constant {
 
     object Path {
         const val serviceID = "service_id"
-
         const val PartID = "part_id"
         const val Motpartdata = "Motpart_data"
-
         const val categoryNumber = "categoryNumber"
         const val washServiceDetails = "washServiceDetails"
         const val revisionServiceDetails = "revisionServiceDetails"
         const val workshopUsersId = "workshop_id"
-        const val workshopUserId = "workshop_user_id"
         const val serviceid = "service_id"
         const val categoryId = "category_id"
         const val categoryType = "category_type"
@@ -381,7 +346,6 @@ object Constant {
         const val productDescription = "product_description"
         const val mainCategoryIdTyre = "mainCategoryIdTyre"
         const val N3Service_id = "n3_service_id"
-
         const val lang = "lang"
         const val notification_setting = "notification_setting"
         const val notification_for_offer = "notification_for_offer"
@@ -407,8 +371,6 @@ object Constant {
         const val bankDetailId = "payment_managements_id"
         const val qutoesUserDescription = "qutoesUserDescription"
         const val qutoesUserAttachImage = "qutoesUserAttachImage"
-
-
     }
 
     object RC {
