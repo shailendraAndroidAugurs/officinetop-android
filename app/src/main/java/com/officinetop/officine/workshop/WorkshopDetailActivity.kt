@@ -395,7 +395,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash!! || isRevision) {
+        if (isCarWash!! || isRevision|| isTyre) {
             getCalendarPrices()
         } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -1361,10 +1361,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("endTime tyre", finalPrice.toString())
             Log.d("finalPrice tyre", finalPrice.toString())
             val productCoupon = if (cartItem?.tyreDetail?.SelectedTyreCouponId != null) cartItem?.tyreDetail?.SelectedTyreCouponId else ""
-            val serviceTyreBookingCall = RetrofitClient.client.tyreServiceBooking(productID, productQuantity, packageID, bookingStartTime, endTime, selectedDateFilter,
+            val serviceTyreBookingCall = RetrofitClient.client.tyreServiceBooking(
+                    productID, productQuantity, packageID, bookingStartTime, endTime, selectedDateFilter,
                     finalPrice.toString(), categoryID, getBearerToken() ?: "",
                     getSelectedCar()?.carVersionModel?.idVehicle
-                            ?: "", getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), "0.0", cartItem!!.pfu_tax, cartItem!!.tyretotalPrice, cartItem!!.price.toString(), cartItem!!.name, cartItem!!.description!!, workshopCategoryId, productCoupon!!, cartItem?.tyreDetail?.user_id.toString(), maincategoryId,
+                            ?: "", getSelectedCar()?.id.toString(), workshopCouponId, getOrderId(), "0.0",
+                    cartItem!!.pfu_tax, cartItem!!.tyretotalPrice, cartItem!!.price.toString(),
+                    cartItem!!.name, cartItem!!.description!!, workshopCategoryId, productCoupon!!,
+                    cartItem?.tyreDetail?.user_id.toString(), maincategoryId,
                     specialConditionId = SpecialConditionId,
                     slotStartTime = slotStartTime,
                     slotEndTime = slotEndTime,

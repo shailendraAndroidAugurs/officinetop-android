@@ -237,18 +237,18 @@ object Models {
                         var quantity: Int = 1,
                         var data: String? = "",
                         var type: String? = "",
-
                         var productDetail: ProductDetail? = null,
                         var tyreDetail: TyreDetailData? = null,
-
                         var additionalPrice: Double = 0.00,
                         var finalPrice: Double = (price * quantity) + additionalPrice,
                         val addedOn: Long = System.currentTimeMillis(),
                         val reverseTimeStamp: Long = addedOn * -1,
-
                         var pfu_tax: String = "",
                         var tyretotalPrice: String = "",
-                        var Deliverydays: String = ""
+                        var Deliverydays: String = "",
+                        var servicesAverageTime: String = "",
+                        var serviceId: String = "",
+                        var mainCategoryId: String = ""
     ) : Serializable
 
     data class TyreDetail(var id: String = "",
@@ -1902,7 +1902,12 @@ object Models {
             @SerializedName("main_category_id")
             val tyre_mainCategory_id: String,
             @SerializedName("tyre_dot")
-            val tyreDot: String
+            val tyreDot: String,
+            @SerializedName("service_id")
+            val serviceId: String,
+            @SerializedName("service_average_time")
+            val servicesAverageTime: String
+
 
     ) : Serializable
 
