@@ -621,8 +621,6 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                     Log.d("ProductOrWorkshopList", "createFilterDialog: brands = $filterBrandList")
 
                 }
-
-
                 if (!isFromClearSelection) {
                     if (holder.itemView.item_checkbox.isChecked) {
                         if (!filterBrandList.contains(brandName)) {

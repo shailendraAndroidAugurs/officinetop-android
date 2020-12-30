@@ -255,6 +255,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     cartItem?.tyretotalPrice = ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places().toString()
                     cartItem?.price = price.toDouble()
                     cartItem?.Deliverydays = Deliverydays
+                    cartItem?.servicesAverageTime = productDetails?.servicesAverageTime!!
+                    cartItem?.serviceId = productDetails?.serviceId!!
+                    cartItem?.mainCategoryId = productDetails?.tyre_mainCategory_id!!
+
                     Log.d("Date", "Deliverydays: tyreDetail" + cartItem?.Deliverydays)
                     val myIntent = intentFor<WorkshopListActivity>(
                             Constant.Key.is_workshop to false,

@@ -285,7 +285,10 @@ interface IRetrofitApis {
                         @Query("user_lat") user_lat: String,
                         @Query("user_long") user_long: String,
                         @Query("distance_range") distance_range: String,
-                        @Query("main_category_id") mainCategoryId: String
+                        @Query("main_category_id") mainCategoryId: String,
+                        @Query(Constant.Path.service_average_time) service_average_time: String,
+                        @Query(Constant.Path.serviceID) serviceID: String
+
 
     ): Call<ResponseBody>
 
@@ -611,16 +614,18 @@ interface IRetrofitApis {
                          @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
                          @Query(Constant.Path.filterRating) rating: String,
                          @Query(Constant.Path.filterPriceRange) priceRange: String,
-                         @Query(Constant.Path.sortPrice) priceSortLevel: Int, @Query("user_id") user_id: String,
+                         @Query(Constant.Path.sortPrice) priceSortLevel: Int,
+                         @Query("user_id") user_id: String,
                          @Query(Constant.Path.version_id) versionId: String,
                          @Query("user_lat") user_lat: String,
                          @Query("user_long") user_long: String,
                          @Query("distance_range") distance_range: String,
                          @Query(Constant.Path.productqty) productqty: String,
-
                          @Query(Constant.Path.favorite) favorite: String,
-                         @Query(Constant.Path.couponFilter) couponfilter: String
-
+                         @Query(Constant.Path.couponFilter) couponfilter: String,
+                         @Query(Constant.Path.service_average_time) service_average_time: String,
+                         @Query(Constant.Path.serviceID) serviceID: String,
+                         @Query(Constant.Path.mainCategoryId) mainCategoryId: String
 
     ): Call<ResponseBody>
 
@@ -724,7 +729,6 @@ interface IRetrofitApis {
             @Field("price") price: String,
             @Field("category_id") categoryId: String,
             @Header(Constant.Fields.authorization) authToken: String,
-
             @Field("version_id") versionId: String,
             @Field(Constant.Path.selectedCarId) selectedCarId: String,
             @Field(Constant.Path.couponId) couponId: String,
