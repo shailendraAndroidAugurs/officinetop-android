@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.dialog_wheel_timepicker.*
 
 @SuppressLint("SetTextI18n")
 class TimeWheelPicker {
-
     class Builder(context: Context, private var is12Hour: Boolean = false) {
         private val dialog = BottomSheetDialog(context)
         private var confirmBtn: TextView
@@ -64,18 +63,6 @@ class TimeWheelPicker {
                 }
             }
 
-            /* for (i in startHour..endHour)
-                 hourList.add(addFormatter(i) + i.toString())
-
-             for (i in startMin..endMin)
-                 minuteList.add(addFormatter(i) + i.toString())
-
-
-
-             initialMinuteList.addAll(minuteList)
-
-             wheelViewMinute.setItems(minuteList)
-             wheelViewHour.setItems(hourList)*/
 
             cancelBtn.setOnClickListener { this.dialog.dismiss() }
 
@@ -132,7 +119,7 @@ class TimeWheelPicker {
 
                 hourList[position].toInt() == endHour -> {
 
-                    Log.d("start_end_time", "endHour:                  " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
+                    Log.d("start_end_time", "endHour: " + "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
 
                     minuteList.clear()
 

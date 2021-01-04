@@ -5,10 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.RelativeLayout
@@ -75,8 +72,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
     private fun removeCartItem(cartItem: Models.CartDataList) {
-        var carttype: String = ""
-        var CartTotalPrice: String = "0.0"
+        var carttype = ""
+        var CartTotalPrice = "0.0"
         if (cartItem.CartType == "SP") {
             carttype = "2"
             if (cartItem.serviceAssemblyProductDescription != null) {
@@ -91,7 +88,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             CartTotalPrice = cartItem.totalPrice.takeIf { !it.isNullOrEmpty() }?.toDouble().toString()
         }
         context.showConfirmDialog(context.getString(R.string.DeleteFromCart)) {
-            DeleteCartItem(cartItem, carttype, CartTotalPrice)
+            deleteCartItem(cartItem, carttype, CartTotalPrice)
         }
     }
 
@@ -116,7 +113,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             if (item.CartType == "T" || item.CartType == "S") {
                 if (item.CartType == "T") {
                     ProductPFU.visibility = View.VISIBLE
-
                 } else {
                     pfutextLabel.visibility = View.GONE
                     ProductPFU.visibility = View.GONE
@@ -311,20 +307,21 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 } else {
                     partInfo.visibility = View.GONE
                 }
-
-
                 partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
 
-
-
-
-
                 if (item.serviceDetail != null) {
-                    serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
-                    context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
+                    if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
+                        serviceName.text = "Qutoes " + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        cartItemServiceImage.visibility = View.GONE
+                        serviceName.gravity= Gravity.CENTER
+                        tvPlus.gravity= Gravity.CENTER
+                        servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
+                    } else {
+                        serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
+                        servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
+                    }
 
-
-                    servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
 
                 }
                 if (item.workshopDetail != null) {
@@ -360,7 +357,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     } else {
                         isServicesAvailable.text = context.getString(R.string.WorkshopNotProvideServices)
                         ProceedToPay?.isEnabled = false
-                        // ProceedToPay?.let { Snackbar.make(it, "Please Delete ", Snackbar.LENGTH_SHORT).show() }
                     }
 
                 }
@@ -465,21 +461,18 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val isProduct_Available = itemView.tv_IsStockavailable_Product
         val isServicesAvailable = itemView.tv_IsStockavailable
         val partInfo = itemView.tv_partInfo
-
-
         val product_Vat = itemView.tv_product_Vat
         val ProductDiscount = itemView.tv_ProductDiscount
         val ProductPFU = itemView.tv_ProductPFU
         val ProductTotal = itemView.tv_ProductTotal
         val pfutextLabel = itemView.tv_pfutext
         val tv_labeldiscount = itemView.tv_labeldiscount
-
-
         val servicesVat = itemView.tv_servicesVat
         val ServicesTotalPrices = itemView.tv_services_TotalPrices
         val tv_discount = itemView.tv_discount
         val tv_couponDetailProduct = itemView.tv_coupon_cart
         val tv_coupon_cart_services = itemView.tv_coupon_cart_services
+        val tvPlus = itemView.tv_plus
 
 
     }
@@ -532,7 +525,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
     }
 
 
-    private fun DeleteCartItem(item: Models.CartDataList, type: String, CartTotalPrice: String) {
+    private fun deleteCartItem(item: Models.CartDataList, type: String, CartTotalPrice: String) {
 
 
         RetrofitClient.client.deleteCartItem(context.getBearerToken(), item.id, CartTotalPrice, type).onCall { networkException, response ->

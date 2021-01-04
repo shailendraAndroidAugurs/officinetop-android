@@ -70,7 +70,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-
 class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var bookServicesWithoutCoupon = false
     private var PHONE_CALL_RC = 50001
@@ -239,7 +238,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         if (intent.hasExtra(Constant.Path.qutoesUserDescription))
-            qutoesUserDescription = intent?.getStringExtra(Constant.Path.qutoesUserDescription) ?: ""
+            qutoesUserDescription = intent?.getStringExtra(Constant.Path.qutoesUserDescription)
+                    ?: ""
 
         if (intent.hasExtra(Constant.Path.qutoesUserAttachImage))
             qutoesUserImage = intent?.getStringExtra(Constant.Path.qutoesUserAttachImage) ?: ""
@@ -395,7 +395,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash!! || isRevision|| isTyre) {
+        if (isCarWash!! || isRevision || isTyre) {
             getCalendarPrices()
         } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -413,8 +413,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             initCalendar(dialogView)
         }
-
-
 
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(Constant.Path.workshopId to workshopUsersId.toString()
@@ -1181,7 +1179,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             Log.d("finalPrice 1", finalPrice.toString())
         } else if (isCarMaintenanceService) {
             for (i in 0 until serviceSpecArray.length()) {
@@ -1196,7 +1194,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
                 parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
                 val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-                endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+                endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
                 Log.e("ENDTIME", "$bookingDuration/////$endTime///$aver_time")
 
                 var calculate_price = (hourly_rate.toDouble().roundTo2Places() / 60) * bookingDuration
@@ -1224,7 +1222,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isMotService) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
@@ -1234,7 +1232,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isTyre) {
             slotStartTime = packageDetail.optString("start_time")
             slotEndTime = packageDetail.optString("end_time")
@@ -1246,7 +1244,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             var hourlyRate = 0.0
             if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
                 hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
@@ -1259,7 +1257,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isCarWash) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
@@ -1268,7 +1266,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
                 finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
             }
@@ -1282,7 +1280,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             var hourlyRate = 0.0
             if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
                 hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
@@ -1310,7 +1308,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (isStatusCodeValid(body)) {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
-                            createDialogforInvalidCoupon(packageDetail, bookingStartTime)
+                            dialogForInvalidCoupon(packageDetail, bookingStartTime)
                         } else {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
                             finishAffinity()
@@ -1318,7 +1316,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     } else {
                         val bookingResponse = JSONObject(body)
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
-                            createDialogforInvalidCoupon(packageDetail, bookingStartTime)
+                            dialogForInvalidCoupon(packageDetail, bookingStartTime)
                         } else {
                             showInfoDialog(getMessageFromJSON(it), true)
                         }
@@ -1416,10 +1414,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 imageList.add(file.toMultipartBody("images[]"))
             }
 
-            Log.d("QutoesBooking", "service_id=" + workshopCategoryId + "&selected_date=" +selectedDateFilter+
-                    "&main_category_id=" +quotesMainCategoryId+ "&selected_car_id="+getSavedSelectedVehicleID() + "&workshop_id=" +workshopUsersId+ "&start_time="+bookingStartTime +
-                    "&package_id=" +packageID.toString()+ "&order_id=" +getOrderId()+ "&coupon_id="+workshopCouponId + "&end_time=" +endTime+ "&version_id="+getSelectedCar()?.carVersionModel?.idVehicle!! +
-                    "&special_condition_id=" +SpecialConditionId+ "&temp_slot_id="+slotId + "&text="+qutoesUserDescription +"&images="+ images)
+            Log.d("QutoesBooking", "service_id=" + workshopCategoryId + "&selected_date=" + selectedDateFilter +
+                    "&main_category_id=" + quotesMainCategoryId + "&selected_car_id=" + getSavedSelectedVehicleID() + "&workshop_id=" + workshopUsersId + "&start_time=" + bookingStartTime +
+                    "&package_id=" + packageID.toString() + "&order_id=" + getOrderId() + "&coupon_id=" + workshopCouponId + "&end_time=" + endTime + "&version_id=" + getSelectedCar()?.carVersionModel?.idVehicle!! +
+                    "&special_condition_id=" + SpecialConditionId + "&temp_slot_id=" + slotId + "&text=" + qutoesUserDescription + "&images=" + images)
 
             val serviceQuotesBooking = RetrofitClient.client.serviceQuotesBooking(
                     workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), quotesMainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
@@ -1524,7 +1522,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         dialog.show()
     }
 
-    private fun createDialogforInvalidCoupon(packageDetail: JSONObject, bookingStartTime: String) {
+    private fun dialogForInvalidCoupon(packageDetail: JSONObject, bookingStartTime: String) {
         val builder = AlertDialog.Builder(this@WorkshopDetailActivity)
         //set title for alert dialog
         builder.setTitle(getString(R.string.coupon_is_invalid))

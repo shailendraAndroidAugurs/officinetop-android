@@ -61,12 +61,6 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     var last_text_edit: Long = 0
     var handler: Handler = Handler()
 
-
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_categories)
@@ -91,6 +85,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
         subGroupCategoryArrayList = ArrayList()
         subCategoryAdapter = SubPartCategoryAdapter(subGroupCategoryArrayList, subN3GroupCategoryArrayList, this@PartCategories)
+
         sub_category_list.setAdapter(subCategoryAdapter)
 
         sub_category_list.setOnGroupClickListener { parent, v, groupPosition, id ->
@@ -227,7 +222,6 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
                 if (response.body() != null && response.body()?.statusCode == 1) {
                     val dataSetList: MutableList<DataSetSubGroupCatItem?>? = response.body()?.dataSetSubGroupCat
-
                     if (dataSetList != null) {
                         subN3GroupCategoryArrayList.clear()
                         subN3GroupCategoryArrayList.addAll(dataSetList)

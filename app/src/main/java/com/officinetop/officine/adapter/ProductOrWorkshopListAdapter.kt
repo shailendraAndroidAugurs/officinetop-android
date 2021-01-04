@@ -157,9 +157,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         with(p0) {
             // tv_count.text=(p1+1).toString()
             val product_workshopList = productOrWorkshopList[p1]
-            if (isQuotesServices) {
-                llayoutSpecialCoupons.visibility = View.GONE
-            }
+
 
             if (isCarWash || isWorkshop || isTyre || isRevision || isCarMaintenanceServices || isQuotesServices ||
                     isMotService || isSOSAppointment || isSosEmergency) {
@@ -230,6 +228,12 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                         CouponLabel.visibility = View.GONE
                         offerBadge.visibility = View.GONE
                     }
+                }
+
+                if (isQuotesServices) {
+                    AppliedCouponName.visibility = View.GONE
+                    CouponLabel.visibility = View.GONE
+                    offerBadge.visibility = View.GONE
                 }
 
 
@@ -349,7 +353,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             Constant.Path.workshopUsersId to json.optInt("users_id")
                             , Constant.Path.categoryId to id.toString()
                             , Constant.Path.workshopUserDaysId to quotesWorkshopUserDaysId
-                            , Constant.Path.serviceQuotesInsertedId to quotesServiceQuotesInsertedId
                             , Constant.Path.mainCategoryId to quotesMainCategoryId
                             , Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
                             , Constant.Key.workshopCategoryDetail to workshopCategoryDetail
