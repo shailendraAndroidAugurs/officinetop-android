@@ -12,7 +12,6 @@ data class DataSetItem(
 
         @field:SerializedName("images")
         val images: ArrayList<CategoryImageResponse> = ArrayList(),
-
         @field:SerializedName("group_name")
         val groupName: String? = null,
 

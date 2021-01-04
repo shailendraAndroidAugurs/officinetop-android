@@ -106,7 +106,6 @@ class TyreCustomizationActivity : BaseActivity() {
                     spinner_aspect_ratio.selectedItem.toString() + spinner_speed_limit.selectedItem.toString()
             Log.d("tryeSpecification: ", "${specification}")
 
-
             val tyre = Models.TyreDetail(
                     id = IsSavedInlocal,
                     vehicleType = vehicleType,

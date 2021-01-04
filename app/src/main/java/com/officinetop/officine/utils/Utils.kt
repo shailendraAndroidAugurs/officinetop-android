@@ -187,7 +187,7 @@ inline fun getCurrentTime(): String {
 
 inline fun parseTimeHHmmssInCalendar(timeString: String): Calendar {
     return try {
-        val date = SimpleDateFormat("HH:mm:SS", Locale.getDefault()).parse(timeString)
+        val date = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(timeString)
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar

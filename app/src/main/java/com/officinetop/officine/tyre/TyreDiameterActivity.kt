@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_tyre_diameter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivityForResult
 
 class TyreDiameterActivity : BaseActivity() {
     private var selectedTyreDetail: String = ""
@@ -46,8 +47,9 @@ class TyreDiameterActivity : BaseActivity() {
 
         customize_measure_btn.setOnClickListener {
             if (!selectedTyreDetail.isNullOrBlank()) {
-                startActivity(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail))
-                finish()
+              //  startActivityForResult<intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail),103>()
+                startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail), 130)
+
             } else {
                 startActivity(intentFor<TyreCustomizationActivity>())
                 finish()

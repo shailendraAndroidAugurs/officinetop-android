@@ -208,7 +208,6 @@
                         android:id="@+id/offer_badge"
                         style="@style/TextViewSubHeadingBlack"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_dotted_orange"
                         android:padding="5dp"

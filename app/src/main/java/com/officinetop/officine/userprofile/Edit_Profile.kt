@@ -67,7 +67,6 @@ class Edit_Profile : BaseActivity() {
             val user_picurl = intent?.getStringExtra("Pic_url") ?: ""
             val userName = intent?.getStringExtra("user_name") ?: ""
             val userlName = intent?.getStringExtra("user_lname") ?: ""
-
             edittext_mobile.text = user_mobile
             edittext_email.text = user_email
             ed_userName.setText(userName)
