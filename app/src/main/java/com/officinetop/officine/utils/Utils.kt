@@ -95,6 +95,17 @@ inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: 
     return alert
 }
 
+inline fun Context.showConfirmDialogForLogin(dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        message = dialogMessage
+        positiveButton(getString(R.string.login)) { onOkClick?.let { it1 -> it1() } }
+        negativeButton(getString(R.string.cancel)) { }
+    }
+    alert.show()
+    return alert
+}
+
+
 inline fun Context.showConnectionFailedDialog(noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = Constant.connection_failed_dialog
@@ -519,11 +530,14 @@ fun logSearchEvent(context: Context, contentType: String, contentData: String, c
 }
 
 
-inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline onOkClick: (() -> Unit?)?, noinline onNoClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline onOkClick: (() -> Unit?)?, noinline onNoClick: (() -> Unit?)?, cancelable: Boolean = true): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
         positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
-        negativeButton(getString(R.string.no)) { onNoClick?.let { noclick -> noclick() } }
+        negativeButton(getString(R.string.no)) {
+            onNoClick?.let { noclick -> noclick() }
+            isCancelable = cancelable
+        }
     }
     alert.show()
     return alert

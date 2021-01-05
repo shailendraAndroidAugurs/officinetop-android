@@ -599,7 +599,7 @@ informazioni in accordo alle </string>
     <string name="deliveryPrices">Costi di spedizione</string>
     <string name="petrol">Benzina</string>
     <string name="Products_not_available_at_the_moment">Prodotti non disponibili al momento !!!</string>
-    <string name="PleaselogintocontinueforAddtocart">Effettua il login per continuare per Aggiungi al carrello</string>
+    <string name="PleaselogintocontinueforAddtocart">Accedi per continuare con l\'acquisto</string>
     <string name="workshopWithSparepart">Ricambi: €%s + Scegli un\'officina da: €%s</string>
     <string name="select">Seleziona</string>
     <string name="please_select_width"> Seleziona la larghezza</string>
@@ -640,7 +640,8 @@ informazioni in accordo alle </string>
     <string name="unauthorized_location_message">Attiva la localizzazione, e potrai trovare le officine più vicine</string>
     <string name="PleaselogintocontinueforRemoveWishList">Effettua il login per continuare per rimuovere il prodotto dalla wishlist</string>
     <string name="PleaselogintocontinueforInviteFriends">Accedi per continuare per Invita amici</string>
-    <string name="PleaselogintocontinueforQutoesRequestSend">Effettua il login per continuare per l\'invio della richiesta di qutoes</string>
+    <string name="PleaselogintocontinueforQutoesRequestSend">Accedi per proseguire con l\'invio della richiesta</string>
+
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
     <string name="tue">MAR</string>

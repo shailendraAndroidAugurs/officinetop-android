@@ -29,8 +29,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
-
 class TyreCustomizationActivity : BaseActivity() {
     private var vehicleType: String = ""
     private var vehicleTypeName: String = ""
@@ -80,8 +78,6 @@ class TyreCustomizationActivity : BaseActivity() {
             IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
 
         }
-
-
 
         getTyreSpecificationApi()
 

@@ -100,7 +100,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                        showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(this) })
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
                             if (body.has("message")) {
@@ -626,19 +626,22 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
             add_product_to_cart.setOnClickListener {
-                Log.e("Sparepart Add to cart", "onClickCall:yes")
-                cartItem.quantity = item_qty.text.toString().toInt()
+                if (!isLoggedIn()) {
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@ProductDetailActivity) })
+                } else {
+                    cartItem.quantity = item_qty.text.toString().toInt()
 
-                cartItem.finalPrice = cartItem.price * cartItem.quantity
-                try {
-                    addToCartProducts(this, selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
-                            if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
+                    cartItem.finalPrice = cartItem.price * cartItem.quantity
+                    try {
+                        addToCartProducts(this, selectedProductID.toString(), cartItem.quantity.toString(), "0.0",
+                                if (detail?.selectedProductCouponId != null && !detail?.selectedProductCouponId.equals("null")) detail?.selectedProductCouponId else "", price!!, cartItem.finalPrice.toString(), "0.0", "1", detail!!.usersId, if (cartItem.name != null) cartItem.name else "",
 
-                            cartItem.description!!, detail!!.usersId)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                                cartItem.description!!, detail!!.usersId)
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
-
             }
 
             buy_product_with_assembly.setOnClickListener {
@@ -648,6 +651,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     cartItem.finalPrice = cartItem.price * cartItem.quantity
                     cartItem.Deliverydays = Deliverydays
+                    cartItem.serviceId = if (detail != null && !detail?.serviceId.isNullOrBlank()) detail?.serviceId!! else "0"
                     Log.e("assembly", cartItem.finalPrice.toString())
 
                     val myIntent = intentFor<WorkshopListActivity>(

@@ -224,7 +224,10 @@ object Models {
             @SerializedName("service_average_time")
             val serviceAverageTime: String,
             @SerializedName("main_category_id")
-            val mainCategoryId: String
+            val mainCategoryId: String,
+            @SerializedName("service_id")
+            val serviceId: String
+
 
 
     ) : Serializable

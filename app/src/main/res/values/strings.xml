@@ -678,7 +678,7 @@
     <string name="petrol">Petrol</string>
     <string name="Products_not_available_at_the_moment">Products not available at the moment !!!</string>
 
-    <string name="PleaselogintocontinueforAddtocart">Please login to continue for Add to cart</string>
+    <string name="PleaselogintocontinueforAddtocart">Log in to continue with the purchase</string>
     <string name="workshopWithSparepart">Spare parts: € %s + Choose a workshop from: € %s</string>
     <string name="select">Select</string>
     <string name="please_select_width">  Select width</string>
@@ -724,8 +724,8 @@
     <string name="unauthorized_location_message">Activate the localization, and you will be able to find the nearest workshops</string>
     <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
     <string name="PleaselogintocontinueforInviteFriends">Please login to continue for Invite Friends</string>
-    <string name="PleaselogintocontinueforQutoesRequestSend">Please login to continue for qutoes request send</string>
-
+    <string name="PleaselogintocontinueforQutoesRequestSend">Log in to continue with the  request send</string>
+    purchase
 
     <string name="sun">SUN</string>
     <string name="mon">MON</string>
