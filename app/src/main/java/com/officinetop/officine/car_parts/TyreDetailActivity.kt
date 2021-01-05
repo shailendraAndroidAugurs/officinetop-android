@@ -82,7 +82,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun callDetailApi() {
         if (intent.hasExtra(Constant.Path.productDetails))
             selectedProduct = intent.getSerializableExtra(Constant.Path.productDetails) as Models.TyreDetailItem
-
         loadTyreDetails(selectedProduct!!.id!!, selectedProduct!!.user_id!!)//api call get_tyre_details
     }
 
@@ -164,8 +163,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         getSimilarProduct(productDetails!!.id?.toString()!!)
         if (price.isEmpty())
             return
-
-
         if (productDetails?.brand_image.isNullOrBlank()) {
             item_brand_image.visibility = View.GONE
         } else {
@@ -230,16 +227,20 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             add_product_to_cart.setOnClickListener {
-                cartItem?.quantity = item_qty.text.toString().toInt()
-                cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
-                cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
-                try {
-                    addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
-                            if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else "",
-                            price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
+                if (!isLoggedIn()) {
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@TyreDetailActivity) })
+                } else {
+                    cartItem?.quantity = item_qty.text.toString().toInt()
+                    cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
+                    cartItem?.finalPrice = ((price.toFloat() + pfuAmount.toFloat()).toInt() * cartItem?.quantity.toString().toInt()).toDouble().roundTo2Places()
+                    try {
+                        addToCartProducts(this, selectedProductID.toString(), cartItem?.quantity.toString(), (pfuAmount + tyreTypeAmount).toString(),
+                                if (productDetails?.SelectedTyreCouponId != null && !productDetails?.SelectedTyreCouponId.equals("null")) productDetails?.SelectedTyreCouponId else "",
+                                price, ((price.toFloat() + pfuAmount).toInt() * cartItem?.quantity.toString().toInt()).toString(), "0.0", "2", productDetails!!.user_id.toString(), cartItem!!.name, cartItem!!.description!!, productDetails!!.user_id.toString())
 
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
 

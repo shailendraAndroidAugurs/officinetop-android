@@ -965,7 +965,7 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(context) })
+                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(context) })
             if (response.isSuccessful) {
                 try {
                     val responseData = JSONObject(body)

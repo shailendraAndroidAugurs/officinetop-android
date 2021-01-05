@@ -70,6 +70,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+
 class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var bookServicesWithoutCoupon = false
     private var PHONE_CALL_RC = 50001
@@ -1052,53 +1053,59 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             showInfoDialog(getString(R.string.Invalidinterventiontime) + "($startHour:$startMin - $endHour:$endMin)")
                             return@setOnClickListener
                         } else {
+                            if (isLoggedIn()) {
 
-                            val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
-                            sdf.isLenient = true
-                            val date = sdf.parse(selectedDateFilter)
+                                val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
+                                sdf.isLenient = true
+                                val date = sdf.parse(selectedDateFilter)
 
-                            val formattedDate = SimpleDateFormat("dd/M (E)", getLocale()).format(date)
-                            var car1 = 0
-                            if (!cartItem?.Deliverydays.isNullOrBlank()) {
-                                car1 = cartItem?.Deliverydays?.toInt()?.plus(1)!!
+                                val formattedDate = SimpleDateFormat("dd/M (E)", getLocale()).format(date)
+                                var car1 = 0
+                                if (!cartItem?.Deliverydays.isNullOrBlank()) {
+                                    car1 = cartItem?.Deliverydays?.toInt()?.plus(1)!!
 
-                            }
-                            Log.d("Date", "DeliveryDates " + cartItem?.Deliverydays)
-                            val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(car1))
-                            Log.d("Date", "DeliveryDate" + getDateFor(car1))
-                            val currentDate = SimpleDateFormat("yyy-MM-dd").parse(selectedDateFilter)
-                            Log.d("Date", "selectedDateforBooking$selectedDateFilter")
-
-                            if (isSosEmergency || isSOSService) {
-                                startTimeBooking = startTimeString
-                                endTimeBooking = endTimeString
-                                showConfirmDialog(getString(R.string.are_you_sure_to_book_this_slot)) {
-                                    checkAndBookService(packageDetails, startTimeString)
                                 }
-                            } else if ((isTyre || isAssembly) && cartItem != null && (currentDate < DeleviryDate)) {
-                                showInfoDialog(getString(R.string.Invalidinterventiontime))
-                                return@setOnClickListener
-                            } else {
-                                Log.d("start_end_time", "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
-                                TimeWheelPicker.Builder(this@WorkshopDetailActivity)
-                                        .setStartEndTime(startHour, endHour, startMin, endMin)
-                                        .setTitle(formattedDate)
-                                        .setOnTimePickedListener(object : TimeWheelPicker.OnTimePicked {
-                                            override fun onPicked(hourOfDay: Int, minute: Int) {
-                                                val time = "${if (hourOfDay < 10) "0" else ""}$hourOfDay:${if (minute < 10) "0" else ""}$minute:00"
-                                                Log.d("WorkshopDetailActivity", "Time: $time")
+                                Log.d("Date", "DeliveryDates " + cartItem?.Deliverydays)
+                                val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(car1))
+                                Log.d("Date", "DeliveryDate" + getDateFor(car1))
+                                val currentDate = SimpleDateFormat("yyy-MM-dd").parse(selectedDateFilter)
+                                Log.d("Date", "selectedDateforBooking$selectedDateFilter")
 
-                                                if (!isQuotesService)
-                                                    if (packagePrice.text.isEmpty()) {
-                                                        toast(getString(R.string.PriceNotSpecified))
-                                                        return
-                                                    }
-                                                checkAndBookService(packageDetails, time)
+                                if (isSosEmergency || isSOSService) {
+                                    startTimeBooking = startTimeString
+                                    endTimeBooking = endTimeString
+                                    showConfirmDialog(getString(R.string.are_you_sure_to_book_this_slot)) {
+                                        checkAndBookService(packageDetails, startTimeString)
+                                    }
+                                } else if ((isTyre || isAssembly) && cartItem != null && (currentDate < DeleviryDate)) {
+                                    showInfoDialog(getString(R.string.Invalidinterventiontime))
+                                    return@setOnClickListener
+                                } else {
+                                    Log.d("start_end_time", "startHour: " + startHour + " startMin: " + startMin + " endHour:" + endHour + " endMin: " + endMin)
+                                    TimeWheelPicker.Builder(this@WorkshopDetailActivity)
+                                            .setStartEndTime(startHour, endHour, startMin, endMin)
+                                            .setTitle(formattedDate)
+                                            .setOnTimePickedListener(object : TimeWheelPicker.OnTimePicked {
+                                                override fun onPicked(hourOfDay: Int, minute: Int) {
+                                                    val time = "${if (hourOfDay < 10) "0" else ""}$hourOfDay:${if (minute < 10) "0" else ""}$minute:00"
+                                                    Log.d("WorkshopDetailActivity", "Time: $time")
+
+                                                    if (!isQuotesService)
+                                                        if (packagePrice.text.isEmpty()) {
+                                                            toast(getString(R.string.PriceNotSpecified))
+                                                            return
+                                                        }
+                                                    checkAndBookService(packageDetails, time)
+                                                }
                                             }
-                                        }
-                                        ).build()
-                                        .show()
+                                            ).build()
+                                            .show()
+                                }
+                            } else {
+                                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@WorkshopDetailActivity) })
+
                             }
+
                         }
                     }
                 }
@@ -1302,7 +1309,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 serviceSpecArray = JSONArray()
                 val body = response.body()?.string()
                 if (response.code() == 401)
-                    showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { movetologinPage(this@WorkshopDetailActivity) })
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
                 body?.let {
                     if (isStatusCodeValid(body)) {
