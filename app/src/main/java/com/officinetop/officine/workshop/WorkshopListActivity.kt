@@ -48,7 +48,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     var isAssemblyService = false
-    private var isRevisonService = false
+    private var revisonService = false
     private var isWorkshop = false
     private var isTyreService = false
     private var isQuotes = false
@@ -132,7 +132,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         }
         isAssemblyService = intent?.getBooleanExtra(Constant.Key.is_assembly_service, false)
                 ?: false
-        isRevisonService = intent?.getBooleanExtra(Constant.Key.is_revision, false) ?: false
+        revisonService = intent?.getBooleanExtra(Constant.Key.is_revision, false) ?: false
         isTyreService = intent?.getBooleanExtra(Constant.Key.is_tyre, false) ?: false
         isWorkshop = intent?.getBooleanExtra(Constant.Key.is_workshop, false) ?: false
         isQuotes = intent?.getBooleanExtra(Constant.Key.is_quotes, false) ?: false
@@ -187,7 +187,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         }
-        if (isRevisonService) {
+        if (revisonService) {
             if (intent.hasExtra(Constant.Path.revisionServiceDetails)) {
                 val revisionServiceDetails = intent.getSerializableExtra(Constant.Path.revisionServiceDetails) as? RevDataSetItem
                 if (revisionServiceDetails != null) {
@@ -234,7 +234,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 Log.e("mutlsservice", multipleServiceIdOfCarMaintenance)
             }
             if (!deliveryDate.equals("0")) {
-                val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate?.toInt()!! + 1))
+                val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate.toInt() + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
@@ -255,7 +255,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 mot_type = intent.getStringExtra("mot_type").toString()
             }
             if (!deliveryDate.equals("0")) {
-                val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate?.toInt()!! + 1))
+                val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate.toInt() + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
@@ -376,7 +376,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         }
 
         if (isAssemblyService) assemblyCall.enqueue(callback)
-        else if (isRevisonService) revisionServiceCall.enqueue(callback)
+        else if (revisonService) revisionServiceCall.enqueue(callback)
         else if (isTyreService) tyreServiceCall.enqueue(callback)
         else if (isQuotes) quotesCalendarCall.enqueue(callback)
         else if (isCarMaintenanceService) carMaintenanceCalendarCall.enqueue(callback)
@@ -451,7 +451,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     .putExtra("isQuotes", isQuotes)
                     .putExtra("isCarMaintenanceServices", isCarMaintenanceService)
                     .putExtra("mIsWorkshop", isWorkshop)
-                    .putExtra("mIsRevision", isRevisonService)
+                    .putExtra("mIsRevision", revisonService)
                     .putExtra("mIsTyre", isTyreService)
                     .putExtra("motservicesTime", motservices_time)
                     .putExtra("calendarPriceMap", calendarPriceMap)
@@ -515,7 +515,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             setWorkshopValues(response)
                         }
                     })
-        } else if (isRevisonService) {
+        } else if (revisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
             CallRevisionApi(priceRangeString, priceSortLevel, ratingString)
         } else if (isTyreService) {
@@ -657,7 +657,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         calendarPriceMap = HashMap()
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, isRevisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
+        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
         listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId, qutoesUserDescription, qutoesUserImage)
         if (intent.hasExtra(Constant.Key.cartItem))
             listAdapter.getCartItem(cartItem!!)

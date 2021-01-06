@@ -13,13 +13,13 @@ import kotlinx.android.synthetic.main.fragment_guide.view.*
 class VideoFragment : Fragment() {
 
 
-    lateinit var rootview: View
+    lateinit var parentview: View
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        rootview = inflater.inflate(R.layout.fragment_guide, container, false)
-        with(rootview) {
+        parentview = inflater.inflate(R.layout.fragment_guide, container, false)
+        with(parentview) {
             val webSettings = webview!!.settings
             webview!!.loadUrl("https://www.officinetop.com/video/"/*, headers*/)
             webview.requestFocus()
@@ -36,17 +36,9 @@ class VideoFragment : Fragment() {
 
 
 
-        return rootview
+        return parentview
     }
 
-
-    /* override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-         if (keyCode == KeyEvent.KEYCODE_BACK && this.webView!!.canGoBack()) {
-             this.webView?.goBack()
-             return true
-         }
-         return super.onKeyDown(keyCode, event)
-     }*/
 
 
 }

@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_tyre_diameter.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
 
 class TyreDiameterActivity : BaseActivity() {
     private var selectedTyreDetail: String = ""
@@ -47,19 +46,19 @@ class TyreDiameterActivity : BaseActivity() {
 
         customize_measure_btn.setOnClickListener {
             if (!selectedTyreDetail.isNullOrBlank()) {
-              //  startActivityForResult<intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail),103>()
+                //  startActivityForResult<intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail),103>()
                 startActivityForResult(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", selectedTyreDetail), 130)
 
             } else {
                 startActivity(intentFor<TyreCustomizationActivity>())
-                finish()
+                // finish()
             }
 
 
         }
         if (isOnline()) {
             getUserTyreDetailsApi()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
 
@@ -157,7 +156,6 @@ class TyreDiameterActivity : BaseActivity() {
                         reinforced = if (it.reinforced == null) false else !(it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0")
                         val speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
 
-
                         val tyre =
                                 Models.TyreDetail(
                                         id = it.id.toString(),
@@ -234,7 +232,11 @@ class TyreDiameterActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 130) {
-            getUserTyreDetailsApi()
+            if (data!=null &&!data.getStringExtra("result").isNullOrBlank()&& data.getStringExtra("result").equals("edit")) {
+                finish()
+            }else{
+                getUserTyreDetailsApi()
+            }
         }
 
 

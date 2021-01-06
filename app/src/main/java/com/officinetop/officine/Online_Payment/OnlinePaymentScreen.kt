@@ -210,7 +210,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_COD.isChecked = false
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = true
-                if (this::bankpaymentobject.isInitialized && bankpaymentobject != null) {
+                if (this::bankpaymentobject.isInitialized) {
                     showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), {
                         updatePaymentStatusForCOD_BankTransfer(bankpaymentobject.id, "4")
 
@@ -663,7 +663,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 getBearerToken()
                         ?: "", id, "1", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, ""
 
-        ).onCall { networkException, response ->
+        ).onCall { _, response ->
             response?.let {
                 if (response.isSuccessful) {
 
@@ -752,7 +752,7 @@ class OnlinePaymentScreen : BaseActivity() {
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
                         ?: "", "", paymentMode, getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, bankDetailId
-        ).onCall { networkException, response ->
+        ).onCall { _, response ->
 
 
             response?.let {
@@ -779,7 +779,7 @@ class OnlinePaymentScreen : BaseActivity() {
         RetrofitClient.client.updatePaymentStatus(
                 getBearerToken()
                         ?: "", "", "3", getOrderId(), TotalAmount, totalPrices, TotalDiscount, totalVat, totalPfu, payableAmount, usedWalletAmount, ""
-        ).onCall { eeeseeewwenetworkException, response ->
+        ).onCall { _, response ->
             response?.let {
                 if (response.isSuccessful) {
 
@@ -802,23 +802,23 @@ class OnlinePaymentScreen : BaseActivity() {
     }
 
     private fun uncheckedAllPaymentmethod() {
-        radioButton_googlepay?.isChecked = false
-        radioButton_bankTransfer?.isChecked = false
-        radioButton_COD?.isChecked = false
+        radioButton_googlepay.isChecked = false
+        radioButton_bankTransfer.isChecked = false
+        radioButton_COD.isChecked = false
     }
 
     private fun bindBankdetailInView() {
-        if (this::bankpaymentobject.isInitialized && bankpaymentobject != null) {
-            tv_emailAddress.text = bankpaymentobject?.email.let { it }
-            tv_bank_holdername.text = bankpaymentobject?.instatario.let { it }
-            tv_iban.text = bankpaymentobject?.iban.let { it }
+        if (this::bankpaymentobject.isInitialized) {
+            tv_emailAddress.text = bankpaymentobject.email.let { it }
+            tv_bank_holdername.text = bankpaymentobject.instatario.let { it }
+            tv_iban.text = bankpaymentobject.iban.let { it }
         }
     }
 
     private fun getBankTransferPaymentInfo() {
 
         getBearerToken()?.let {
-            RetrofitClient.client.getBankPaymentInformation(it).onCall { networkException, response ->
+            RetrofitClient.client.getBankPaymentInformation(it).onCall { _, response ->
 
                 val responseDataBank = JSONObject(response?.body()?.string())
                 responseDataBank.let {

@@ -303,7 +303,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                         val fcs = BackgroundColorSpan(mcontext.resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = titleString.indexOf(searchText, index + 1, true)
-                        title.setText(sb)
+                        title.text = sb
                     }
 
                 }
@@ -453,7 +453,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 if (jsonArray.length() != productOrWorkshopList.size) {
                     val listString: String = Gson().toJson(
                             productOrWorkshopList,
-                            object : TypeToken<ArrayList<Models.ProductOrWorkshopList?>?>() {}.getType())
+                            object : TypeToken<ArrayList<Models.ProductOrWorkshopList?>?>() {}.type)
                     jsonArray = JSONArray()
                     jsonArray = JSONArray(listString)
                 }
