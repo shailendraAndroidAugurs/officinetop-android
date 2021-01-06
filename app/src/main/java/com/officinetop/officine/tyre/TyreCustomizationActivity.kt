@@ -1,6 +1,5 @@
 package com.officinetop.officine.tyre
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -294,7 +293,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                 widthList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
                                 for (widthobj in 0 until width.length()) {
                                     val widthobjdata: JSONObject = width.get(widthobj) as JSONObject
-
                                     widthList.add(widthobj + 1, Models.TypeSpecification(widthobjdata.optString("value"), widthobjdata.optString("id")))
                                 }
                                 aspectRatioList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
@@ -307,15 +305,13 @@ class TyreCustomizationActivity : BaseActivity() {
                                 diameterList.add(0, Models.TypeSpecification(getString(R.string.select), "0"))
                                 for (diameterobj in 0 until diameter.length()) {
                                     val diameterobjdata: JSONObject = diameter.get(diameterobj) as JSONObject
-
                                     diameterList.add(diameterobj + 1, Models.TypeSpecification(diameterobjdata.optString("value"), diameterobjdata.optString("id")))
                                 }
                                 speedIndexList.clear()
                                 speedIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
                                 for (speedindex in 0 until speed_index.length()) {
                                     val speedindexObj: JSONObject = speed_index.get(speedindex) as JSONObject
-
-                                    speedIndexList.add(speedindex + 1, Models.TypeSpecification(speedindexObj.optString("name"), speedindexObj.optString("id")))
+                                    speedIndexList.add(speedindex + 1, Models.TypeSpecification(speedindexObj.optString("description"), speedindexObj.optString("id")))
                                 }
 
 
@@ -342,7 +338,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                     val seasonObj: JSONObject = season_tyre_type.get(season) as JSONObject
                                     tyreSeasonList.add(season + 1, Models.TypeSpecificationForSeason(seasonObj.optString("name"), seasonObj.optString("id"), seasonObj.optString("code2")))
                                 }
-
 
                                 spinner_width.adapter = SpinnerAdapter(applicationContext, widthList.distinct())
                                 spinner_diameter.adapter = SpinnerAdapter(applicationContext, diameterList.distinct())

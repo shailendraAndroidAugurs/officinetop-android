@@ -166,7 +166,7 @@ class TyreListActivity : BaseActivity() {
                                         for (speedIndex in 0 until speedIndexJsonArray.length()) {
                                             val speedIndexObject: JSONObject = speedIndexJsonArray.get(speedIndex) as JSONObject
 
-                                            filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("name"), speedIndexObject.optString("id")))
+                                            filterTyreSpeedIndexList.add(Models.TypeSpecification(speedIndexObject.optString("description"), speedIndexObject.optString("id")))
                                         }
                                         filterTyreSpeedLoadIndexList.add(0, Models.TypeSpecification(getString(R.string.all), "0"))
                                         for (speedLoadIndexObj in 0 until speedLoadIndexJsonArray.length()) {
@@ -796,7 +796,7 @@ class TyreListActivity : BaseActivity() {
 
     private fun speedIndexSelectedUnselectedCheckbox(SpeedIndexDialog: Dialog) {
          SpeedIndexDialog.rv_subcategory.setJSONArrayAdapter(this@TyreListActivity, speedIndexJsonArray, R.layout.item_checkbox) { itemView, _, jsonObject ->
-            val tyreSpeedIndexName = jsonObject.optString("name")
+            val tyreSpeedIndexName = jsonObject.optString("description")
             val tyreSpeedIndexCode = jsonObject.optString("id")
             itemView.item_checkbox_text.text = tyreSpeedIndexName
             val speedIndexlist = tyreDetail.speedIndexName.split(",")

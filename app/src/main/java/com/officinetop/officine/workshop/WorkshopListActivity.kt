@@ -113,7 +113,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     private var servicesAverageTime = ""
     private var mainCategoryId = ""
-    private var deliveryDate = "0"
+    private var deliveryDate = ""
     var qutoesUserDescription = ""
     var qutoesUserImage = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,7 +178,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     mainCategoryId = productdetail.mainCategoryId
                 }
             }
-            if (!cartItem?.Deliverydays.isNullOrBlank() && (!cartItem?.Deliverydays.equals("0"))) {
+            if (!cartItem?.Deliverydays.isNullOrBlank()) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(cartItem?.Deliverydays?.toInt()!! + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
@@ -233,7 +233,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 multipleServiceIdOfCarMaintenance = intent.getStringExtra(Constant.Path.serviceID)
                 Log.e("mutlsservice", multipleServiceIdOfCarMaintenance)
             }
-            if (!deliveryDate.equals("0")) {
+            if (!deliveryDate.isNullOrBlank()) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate.toInt() + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
@@ -254,7 +254,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra("mot_type")) {
                 mot_type = intent.getStringExtra("mot_type").toString()
             }
-            if (!deliveryDate.equals("0")) {
+            if (!deliveryDate.isNullOrBlank()) {
                 val DeleviryDate: Date = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(deliveryDate.toInt() + 1))
                 val SelectedWorkShopDate = SimpleDateFormat("yyy-MM-dd").parse(selectedFormattedDate)
                 if (DeleviryDate > SelectedWorkShopDate) {
