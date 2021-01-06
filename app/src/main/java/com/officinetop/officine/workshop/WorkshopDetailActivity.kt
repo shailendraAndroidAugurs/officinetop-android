@@ -396,7 +396,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash || isRevision || isTyre|| isAssembly) {
+        if (isCarWash || isRevision || isTyre || isAssembly) {
             getCalendarPrices()
         } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -901,7 +901,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         if (isAssembly)
-            RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, services_average_time.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!,main_category_id).enqueue(callback)
+            RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, services_average_time.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!, main_category_id).enqueue(callback)
         else if (isRevision) {
             if (WorkshopJson != null) {
                 serviceID = WorkshopJson.optString("service_id")
@@ -1343,6 +1343,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         getSelectedCar()?.carVersionModel?.idVehicle
                                 ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
                         , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "", SpecialConditionId, slotId, workshopUsersId.toString(), DiscountType)
+
             }
             serviceAssemblyBookingCall?.enqueue(callback)
         } else if (isRevision) {
