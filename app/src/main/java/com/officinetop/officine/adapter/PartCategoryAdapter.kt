@@ -51,10 +51,10 @@ class PartCategoryAdapter(categoryArray: JSONArray, partCategoryInterface: PartC
         }
 
         if (row_index == position) {
-            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.theme_orange));
+            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.theme_orange))
 
         } else {
-            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.white));
+            holder.partContainer.setBackgroundColor(context.resources.getColor(R.color.white))
 
         }
 

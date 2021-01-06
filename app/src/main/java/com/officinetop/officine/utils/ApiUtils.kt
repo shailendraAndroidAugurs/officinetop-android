@@ -1015,11 +1015,11 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 
                     if (item != null) {
                         item.wish_list = "1"
-                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price?.toDouble()!! else 0.0)
+                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price.toDouble() else 0.0)
 
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject.wish_list = "1"
-                        logAddToWishlistEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice?.toDouble()!! else 0.0)
+                        logAddToWishlistEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice.toDouble() else 0.0)
 
                     }
 
@@ -1116,17 +1116,17 @@ fun Context.addReadMore(text: String, textView: TextView) {
 
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
-            ds.setUnderlineText(false)
+            ds.isUnderlineText = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ds.setColor(getResources().getColor(R.color.com_facebook_blue, getTheme()))
+                ds.color = resources.getColor(R.color.com_facebook_blue, theme)
             } else {
-                ds.setColor(getResources().getColor(R.color.com_facebook_blue))
+                ds.color = resources.getColor(R.color.com_facebook_blue)
             }
         }
     }
     ss.setSpan(clickableSpan, ss.length - getString(R.string.morecontent).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    textView.setText(ss)
-    textView.setMovementMethod(LinkMovementMethod.getInstance())
+    textView.text = ss
+    textView.movementMethod = LinkMovementMethod.getInstance()
 }
 
 fun Context.addReadLess(text: String, textView: TextView) {
@@ -1138,17 +1138,17 @@ fun Context.addReadLess(text: String, textView: TextView) {
 
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
-            ds.setUnderlineText(false)
+            ds.isUnderlineText = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ds.setColor(getResources().getColor(R.color.red, getTheme()))
+                ds.color = resources.getColor(R.color.red, theme)
             } else {
-                ds.setColor(getResources().getColor(R.color.red))
+                ds.color = resources.getColor(R.color.red)
             }
         }
     }
     ss.setSpan(clickableSpan, ss.length - getString(R.string.less).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    textView.setText(ss)
-    textView.setMovementMethod(LinkMovementMethod.getInstance())
+    textView.text = ss
+    textView.movementMethod = LinkMovementMethod.getInstance()
 }
 
 

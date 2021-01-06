@@ -295,8 +295,8 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             }
             else {
                 if (s?.length!! >= 2) {
-                    last_text_edit = System.currentTimeMillis();
-                    handler.postDelayed(input_finish_checker, delay);
+                    last_text_edit = System.currentTimeMillis()
+                    handler.postDelayed(input_finish_checker, delay)
                 } else {
                     clearAdpater()
                     iv_cross.visibility = View.GONE
@@ -312,7 +312,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             // send search value to fragment for filter search of discovery or history
             // searchLitener.SearchProduct(s.toString())
             //You need to remove this to run only once
-            handler.removeCallbacks(input_finish_checker);
+            handler.removeCallbacks(input_finish_checker)
         }
     }
 
@@ -401,7 +401,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchOENList[position].name.indexOf(searchText, index + 1, true)
-                        holder.itemView.tv_search_item.setText(sb)
+                        holder.itemView.tv_search_item.text = sb
                     }
 
                 }
@@ -452,7 +452,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchN3PartList[position].name.indexOf(searchText, index + 1, true)
-                        holder.itemView.tv_search_item.setText(sb)
+                        holder.itemView.tv_search_item.text = sb
                     }
                 }
 
@@ -507,7 +507,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                         val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
                         sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                         index = SearchProductList[position].name.indexOf(searchText, index + 1, true)
-                        holder.itemView.tv_search_item.setText(sb)
+                        holder.itemView.tv_search_item.text = sb
                     }
 
                 }

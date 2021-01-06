@@ -79,11 +79,7 @@ class ProfileSetting : BaseActivity() {
     private fun initView() {
         toolbar_title.text = getString(R.string.profile_setting)
 
-        if (NotificationManagerCompat.from(this).areNotificationsEnabled()) {
-            switch_notification.isChecked = true
-        } else {
-            switch_notification.isChecked = false
-        }
+        switch_notification.isChecked = NotificationManagerCompat.from(this).areNotificationsEnabled()
 
 
         button_updatesetting.setOnClickListener(View.OnClickListener {

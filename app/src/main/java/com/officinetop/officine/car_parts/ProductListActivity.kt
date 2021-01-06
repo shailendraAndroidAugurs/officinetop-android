@@ -314,17 +314,17 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             recycler_view.layoutManager = linearLayoutManager
             recycler_view.adapter = listAdapter
         } else
-            listAdapter?.addItems(productOrWorkshopList)
+            listAdapter.addItems(productOrWorkshopList)
 
         Log.d("currentPageList", current_page.toString() + " : " + productOrWorkshopList.size.toString())
 
-        if (current_page != PAGE_START) listAdapter?.removeLoading()
+        if (current_page != PAGE_START) listAdapter.removeLoading()
         //check if last page or not
         if (current_page < totalPage) {
-            listAdapter?.addLoading()
+            listAdapter.addLoading()
         } else {
             isLastPage = true
-            listAdapter?.removeLoading()
+            listAdapter.removeLoading()
         }
         isLoading = false
 
@@ -456,7 +456,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 distanceRangeFinal = tempDistanceFinal
 
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
-                listAdapter!!.clear()
+                listAdapter.clear()
 
                 isfilterApply = true
                 if (!isLoggedIn() && isFavouriteChecked) {
@@ -505,7 +505,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 filterBrandList.clear()
                 bindBrandData(true)
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
-                listAdapter!!.clear()
+                listAdapter.clear()
 
                 isfilterApply = false
                 reloadPage()
@@ -539,7 +539,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 isPriceLowToHigh = priceIndex == 0
                 isDistanceLowToHigh = distanceIndex == 0
                 current_page = PAGE_START//for every filter click we set limit to its initial and clear recycler adapter
-                listAdapter!!.clear()
+                listAdapter.clear()
                 isfilterApply = true
                 reloadPage()
                 dismiss()

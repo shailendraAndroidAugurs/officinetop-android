@@ -29,6 +29,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 class TyreCustomizationActivity : BaseActivity() {
     private var vehicleType: String = ""
     private var vehicleTypeName: String = ""
@@ -181,13 +182,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                         if (!IsSavedInlocal.isNullOrBlank()) {
                                             setTyreDetail(tyre)
                                         }
-                                        Handler().postDelayed({
-                                            val returnIntent = Intent()
-                                            returnIntent.putExtra("result", "update")
-                                            setResult(Activity.RESULT_OK, returnIntent)
-                                            finish()
-
-                                        }, 500)
+                                        finish()
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
@@ -239,8 +234,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                                 /*  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                                   intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                                                intent.putExtra("TyreCustomization", true)
-
+                                                intent.putExtra("result", "edit")
                                                 setResult(RESULT_OK, intent)
                                                 //  onNewIntent(intent)
 
@@ -266,7 +260,7 @@ class TyreCustomizationActivity : BaseActivity() {
     }
 
     private fun getTyreSpecificationApi() {
-        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), "",getUserId())
+        RetrofitClient.client.getTyreSpecification(getSavedSelectedVehicleID(), "", getUserId())
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 

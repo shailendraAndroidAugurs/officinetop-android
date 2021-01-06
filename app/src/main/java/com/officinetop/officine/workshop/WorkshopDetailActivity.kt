@@ -396,7 +396,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash!! || isRevision || isTyre) {
+        if (isCarWash || isRevision || isTyre|| isAssembly) {
             getCalendarPrices()
         } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -901,7 +901,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
         if (isAssembly)
-            RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, services_average_time.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(callback)
+            RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, services_average_time.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!,main_category_id).enqueue(callback)
         else if (isRevision) {
             if (WorkshopJson != null) {
                 serviceID = WorkshopJson.optString("service_id")

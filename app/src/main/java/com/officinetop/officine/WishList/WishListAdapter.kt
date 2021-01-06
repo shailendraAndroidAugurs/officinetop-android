@@ -128,9 +128,9 @@ class WishListAdapter(var context: Context, private var wishListIterator: ArrayL
 
 
         // set tyre icons
-        view.wishList_tyre_wet_grip_value.text =if( wishList.tyreProductDetail?.wetGrip==null) "" else wishList.tyreProductDetail?.wetGrip
-        view.wishList_tyre_fuel_value.text = if( wishList.tyreProductDetail?.rollingResistance==null) "" else wishList.tyreProductDetail?.rollingResistance.toString()
-        view.wishList_tyre_db_value.text =if( wishList.tyreProductDetail?.extRollingNoiseDb==null) " db" else wishList.tyreProductDetail?.extRollingNoiseDb.toString() + " db"
+        view.wishList_tyre_wet_grip_value.text =if( wishList.tyreProductDetail?.wetGrip==null) "" else wishList.tyreProductDetail.wetGrip
+        view.wishList_tyre_fuel_value.text = if( wishList.tyreProductDetail?.rollingResistance==null) "" else wishList.tyreProductDetail.rollingResistance.toString()
+        view.wishList_tyre_db_value.text =if( wishList.tyreProductDetail?.extRollingNoiseDb==null) " db" else wishList.tyreProductDetail.extRollingNoiseDb.toString() + " db"
 
         when (wishList.tyreProductDetail?.type) {
             "s" -> {

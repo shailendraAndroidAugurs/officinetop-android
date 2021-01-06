@@ -338,7 +338,7 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.distanceRange) distance_range: String,
                                  @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
                                  @Query(Constant.Path.servicesAverageTime) servicesAverageTime: String,
-            @Query(Constant.Path.serviceid) serviceId: String
+                                 @Query(Constant.Path.serviceid) serviceId: String
 
 
     ): Call<ResponseBody>
@@ -384,7 +384,9 @@ interface IRetrofitApis {
                                          @Query(Constant.Path.userid) userid: String,
                                          @Query(Constant.Path.serviceid) categoryId: String,
                                          @Query(Constant.Path.service_average_time) service_average_time: String,
-                                         @Query(Constant.Path.version_id) version_id: String
+                                         @Query(Constant.Path.version_id) version_id: String,
+                                         @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+
 
     ): Call<ResponseBody>
 

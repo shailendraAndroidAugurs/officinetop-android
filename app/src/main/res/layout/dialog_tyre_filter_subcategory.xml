@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
-
     <include layout="@layout/include_toolbar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -53,22 +51,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
                     android:checked="false" />
-
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
             </FrameLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_subcategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
 
-            </androidx.recyclerview.widget.RecyclerView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_subcategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
 
             <ProgressBar
                 android:id="@+id/progressbar"
@@ -79,5 +79,5 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
