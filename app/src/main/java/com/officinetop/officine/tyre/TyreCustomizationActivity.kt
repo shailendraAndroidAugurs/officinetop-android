@@ -35,7 +35,9 @@ class TyreCustomizationActivity : BaseActivity() {
     private var seasonType: String = ""
     private var seasonTypeName: String = ""
     private var speedIndex: String = ""
-    private var speedLoadIndex: String = ""
+    private var speedLoadIndexDesc: String = ""
+    private var speedLoadIndexName: String = ""
+
     private var tyreAlertImage: String = ""
     private var tyreAlertDescription: String = ""
     private var widthId: String = ""
@@ -116,14 +118,16 @@ class TyreCustomizationActivity : BaseActivity() {
                     vehicleTypeName = vehicleTypeName,
                     speedIndexId = speedIndex,
                     seasonId = seasonType,
-                    speed_load_index = speedLoadIndex,
+                    speed_load_index = speedLoadIndexName,
+                    speed_load_indexDesc = speedLoadIndexDesc,
                     cust_speedIndexId = speedIndex,
                     cust_seasonId = seasonType,
-                    cust_speedLoad_indexId = speedLoadIndex,
+                    cust_speedLoad_indexName = speedLoadIndexName,
                     cust_runflat = checkbox_run_flat.isChecked,
                     cust_reinforced = checkbox_reinforced.isChecked,
                     cust_seasonName = seasonTypeName,
-                    cust_speed_indexName = speedIndexName
+                    cust_speed_indexName = speedIndexName,
+                    cust_speedLoad_indexDesc = speedLoadIndexDesc
             )
 
 
@@ -137,8 +141,8 @@ class TyreCustomizationActivity : BaseActivity() {
                 speedIndex = ""
             }
 
-            if (!speedLoadIndex.isNullOrBlank() && speedLoadIndex == "0") {
-                speedLoadIndex = ""
+            if (!speedLoadIndexDesc.isNullOrBlank() && speedLoadIndexDesc == "0") {
+                speedLoadIndexDesc = ""
             }
             if (getUserId().isNullOrBlank()) {
                 setTyreDetail(tyre)//save tyre details to local(shared preferences)
@@ -164,7 +168,7 @@ class TyreCustomizationActivity : BaseActivity() {
                         aspectRatioName,
                         diameterName,
                         getSelectedCar()?.carVersionModel?.idVehicle
-                                ?: "", speedLoadIndex, IsMeaurementEditId)
+                                ?: "", speedLoadIndexName, IsMeaurementEditId)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progressDialog.dismiss()
@@ -203,7 +207,7 @@ class TyreCustomizationActivity : BaseActivity() {
                         1,
                         aspectRatioName,
                         diameterName,
-                        getSelectedCar()?.carVersionModel?.idVehicle ?: "", speedLoadIndex)
+                        getSelectedCar()?.carVersionModel?.idVehicle ?: "", speedLoadIndexName)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progressDialog.dismiss()
@@ -274,7 +278,6 @@ class TyreCustomizationActivity : BaseActivity() {
                                 val tyreSeasonList: ArrayList<Models.TypeSpecificationForSeason> = ArrayList<Models.TypeSpecificationForSeason>()
                                 val speedIndexList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
                                 val speedLoadIndexList: ArrayList<Models.TypeSpecification> = ArrayList<Models.TypeSpecification>()
-
                                 val data = jsonObject.getJSONObject("data") as JSONObject
                                 val width = data.getJSONArray("width") as JSONArray
                                 val aspect_ratio = data.getJSONArray("aspect_ratio") as JSONArray
@@ -320,7 +323,7 @@ class TyreCustomizationActivity : BaseActivity() {
                                 for (loadindex in 0 until speed_load_index.length()) {
                                     val speedindexObj: JSONObject = speed_load_index.get(loadindex) as JSONObject
                                     if (speedindexObj != null)
-                                        speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("load_speed_index"), ""))
+                                        speedLoadIndexList.add(loadindex + 1, Models.TypeSpecification(speedindexObj.optString("description"), speedindexObj.optString("load_speed_index")))
                                 }
 
                                 for (tyretype in 0 until tyre_type.length()) {
@@ -429,8 +432,8 @@ class TyreCustomizationActivity : BaseActivity() {
                                             }
 
                                         }
-                                        if (!selectedTyreDetail.cust_speedLoad_indexId.isNullOrBlank()) {
-                                            val tyreSpeedloadIndex = speedLoadIndexList.find { it.name == selectedTyreDetail.cust_speedLoad_indexId.toString() }
+                                        if (!selectedTyreDetail.cust_speedLoad_indexName.isNullOrBlank()) {
+                                            val tyreSpeedloadIndex = speedLoadIndexList.find { it.code == selectedTyreDetail.cust_speedLoad_indexName.toString() }
                                             if (tyreSpeedloadIndex != null) {
                                                 val selectedSpeedloadIndex = speedLoadIndexList.indexOf(tyreSpeedloadIndex)
                                                 spinner_speed_load_index.setSelection(selectedSpeedloadIndex)
@@ -535,7 +538,8 @@ class TyreCustomizationActivity : BaseActivity() {
                                 spinner_speed_load_index.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                                         val items: Models.TypeSpecification = p0?.getItemAtPosition(p2) as Models.TypeSpecification
-                                        speedLoadIndex = items.name
+                                        speedLoadIndexDesc = items.name
+                                        speedLoadIndexName = items.code
                                     }
 
                                     override fun onNothingSelected(p0: AdapterView<*>?) {

@@ -229,7 +229,6 @@ object Models {
             val serviceId: String
 
 
-
     ) : Serializable
 
 
@@ -266,7 +265,6 @@ object Models {
                           val addedOn: Long = System.currentTimeMillis(),
                           val reverseTimeStamp: Long = addedOn * -1,
                           var vehicleTypeName: String = "",
-
                           var priceLevel: String = "0",
                           var priceRange: String = "",
                           var brands: String = "",
@@ -280,13 +278,15 @@ object Models {
                           var seasonName: String = "",
                           var speedIndexName: String = "",
                           var speed_load_index: String = "",
+                          var speed_load_indexDesc: String = "",
                           var cust_speedIndexId: String = "",
                           var cust_seasonId: String = "",
-                          var cust_speedLoad_indexId: String = "",
+                          var cust_speedLoad_indexName: String = "",
                           var cust_seasonName: String = "",
                           var cust_speed_indexName: String = "",
                           var cust_runflat: Boolean = false,
-                          var cust_reinforced: Boolean = false
+                          var cust_reinforced: Boolean = false,
+                          var cust_speedLoad_indexDesc: String = ""
 
     )
 
@@ -432,7 +432,12 @@ object Models {
             val tyreImageURL: String,
             @SerializedName("pfu")
             val tyrePfu: tyrePfu?,
-            var SelectedTyreCouponId: String? = ""
+            var SelectedTyreCouponId: String? = "",
+            @SerializedName("season_desc")
+            val seasonName: String?,
+
+            @SerializedName("type_status")
+            val typeStatus: String?
 
     ) : Serializable
 

@@ -130,6 +130,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         // products list
         reloadPage()
     }
+
     private fun reloadPage() {
         horizontal_calendar_layout.visibility = View.VISIBLE
         map_btn.visibility = View.GONE
@@ -139,7 +140,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 bestSellingApi()
             else
                 loadProductItems()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
         if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1 || priceRangeInitial != 0) || filterBrandList.size != 0) {
@@ -152,16 +153,21 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(searchQuery: String?): Boolean {
                 //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
+                if (this@ProductListActivity::listAdapter.isInitialized)
                 listAdapter.filter.filter(searchQuery)
                 return true
             }
 
             override fun onQueryTextChange(searchQuery: String?): Boolean {
-                listAdapter.filter.filter(searchQuery)
+                if (this@ProductListActivity::listAdapter.isInitialized)
+                    listAdapter.filter.filter(searchQuery)
+
+
                 return true
             }
         })
     }
+
     private fun loadProductItems() {
         val partID = intent.getIntExtra(Constant.Key.partItemID, 0)
         if (current_page == 0) {
@@ -342,10 +348,12 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
                     reloadPage()
                 }
+
                 override fun isLastPage(): Boolean {
                     layoutprogress.visibility = View.GONE
                     return isLastPage
                 }
+
                 override fun isLoading(): Boolean {
                     return isLoading
                 }

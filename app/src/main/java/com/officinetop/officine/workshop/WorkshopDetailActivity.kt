@@ -104,17 +104,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     var couponList: List<Models.Coupon>? = null
     var isCarMaintenanceService = false
     var isQuotesService = false
-
-
     private var qutoesUserDescription = ""
     private var qutoesUserImage = ""
-
     private var isMotService = false
-
     private var productID = ""
     var productQuantity = ""
     private var motservicesaveragetime = ""
-
     var mainCategoryIDForAssembly: String = ""
     private var mainCategoryIDForCarWash: String = ""
     var calendarPriceMap: HashMap<String, String> = HashMap()
@@ -436,10 +431,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-
     internal fun TextView.setTextColorRes(@ColorRes color: Int) = setTextColor(context.getColorCompat(color))
     private fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
-
     private fun daysOfWeekFromLocale(): Array<DayOfWeek> {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
         var daysOfWeek = DayOfWeek.values()
@@ -940,7 +933,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     }
 
-
     private fun callWorkShop() {
         if (workshopPhoneNumber != null && workshopPhoneNumber.trim().isNotEmpty()) {
             // Call intent
@@ -1133,7 +1125,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         return workingTimeSlot
     }
 
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -1253,7 +1244,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             var hourlyRate = 0.0
-            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
+            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price") && !packageDetail.getString("hourly_price").equals(""))
                 hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
             finalPrice = (hourlyRate / 60) * bookingDuration
             finalPrice = finalPrice.roundTo2Places()
@@ -1281,15 +1272,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         } else {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            val additionalDelay = (20 * 60 * 1000)
-            var bookingDuration = (averageServiceTime * 60 * 1000) + additionalDelay // add 20 min
+            //  val additionalDelay = (20 * 60 * 1000)
+            var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
             var hourlyRate = 0.0
-            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price"))
+            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price") && !packageDetail.getString("hourly_price").equals(""))
                 hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
             finalPrice = (hourlyRate / 60) * bookingDuration
             finalPrice = finalPrice.roundTo2Places()
@@ -1336,13 +1327,33 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (isAssembly) {
             val serviceAssemblyBookingCall = cartItem?.productDetail?.usersId?.let {
                 RetrofitClient.client.serviceAssemblyBooking(
-                        productID, packageID, bookingStartTime, endTime, finalPrice.toString(), selectedDateFilter,
-                        mainCategoryIDForAssembly,
+                        productID,
+                        packageID,
+                        bookingStartTime,
+                        endTime,
+                        finalPrice.toString(),
+                        selectedDateFilter,
+                        main_category_id,
                         getBearerToken() ?: "",
                         SpecialConditionId,
-                        getSelectedCar()?.carVersionModel?.idVehicle
-                                ?: "", getSelectedCar()?.id.toString(), workshopCouponId, productQuantity, getOrderId()
-                        , if (cartItem?.name != null) cartItem?.name!! else "", if (cartItem?.description != null) cartItem?.description!! else "", "0.0", cartItem!!.pfu_tax, cartItem!!.finalPrice.toString(), cartItem!!.price.toString(), it, if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "", SpecialConditionId, slotId, workshopUsersId.toString(), DiscountType)
+                        getSelectedCar()?.carVersionModel?.idVehicle ?: "",
+                        getSelectedCar()?.id.toString(),
+                        workshopCouponId,
+                        productQuantity,
+                        getOrderId(),
+                        if (cartItem?.name != null) cartItem?.name!! else "",
+                        if (cartItem?.description != null) cartItem?.description!! else "",
+                        "0.0",
+                        cartItem!!.pfu_tax,
+                        cartItem!!.finalPrice.toString(),
+                        cartItem!!.price.toString(),
+                        it,
+                        if (cartItem?.productDetail?.selectedProductCouponId != null) cartItem?.productDetail?.selectedProductCouponId!! else "",
+                        SpecialConditionId,
+                        slotId,
+                        workshopUsersId.toString(),
+                        DiscountType,
+                        workshopCategoryId)
 
             }
             serviceAssemblyBookingCall?.enqueue(callback)

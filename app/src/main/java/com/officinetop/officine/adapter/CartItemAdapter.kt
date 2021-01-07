@@ -335,7 +335,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     (item.bookingDate).takeIf { !it.isNullOrEmpty() }
                 }
                 time.text = "${item.startTime.takeIf { !it.isNullOrEmpty() }?.removeSuffix(":00")}  -  ${if (!item.endTime.isNullOrBlank() && item.endTime != "null") item.endTime.removeSuffix(":00") else "--"}"
-                selectedCar.text = context.getSelectedCar()?.carMakeName
+                //selectedCar.text = context.getSelectedCar()?.carMakeName
                 item.endTime.takeIf { !it.isNullOrEmpty() && it != "null" }?.removeSuffix(":00")
 
 
