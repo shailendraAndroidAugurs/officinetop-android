@@ -60,7 +60,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 "", "", "", "", "0", "0", "0", "", "", "",
                 "", "", "", "", "", "", 0, "", "", "",
                 "", "", null, "", "", null, "0", "Y", "", "", null
-                , ""))
+                , "", "", ""))
 
     }
 
@@ -139,9 +139,9 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             ratingCount.text = if (!items.ratingCount.isNullOrEmpty()) items.ratingCount else ""
 
             // set tyre icons
-            tyreWetGripValue.text =if( items.wetGrip==null ) "db" else items.wetGrip
-            tyreFuelValue.text =if( items.rollingResistance==null ) "db" else items.rollingResistance
-            tyreDbValue.text = if( items.noiseDb==null ) "db" else items.noiseDb + " db"
+            tyreWetGripValue.text = if (items.wetGrip == null) "db" else items.wetGrip
+            tyreFuelValue.text = if (items.rollingResistance == null) "db" else items.rollingResistance
+            tyreDbValue.text = if (items.noiseDb == null) "db" else items.noiseDb + " db"
 
             when (items.type) {
                 "s" -> {
@@ -223,7 +223,11 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 val endIndex = getSubString(items.description, 6)
                 val description = items.description.substring(startIndex, endIndex)
                 //Log.e("index of values=", "=startindex="+startIndex+"=endindesx="+endIndex+"=descr="+description)
-                title.text = "${items.manufacturer_description} ${tyreType} ${items.pr_description}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
+
+                if (!items.typeStatus.isNullOrBlank() && items.typeStatus.equals("2"))
+                    title.text = "${items.manufacturer_description} ${items.seasonName} ${items.pr_description}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
+                else
+                    title.text = "${items.manufacturer_description} ${tyreType} ${items.pr_description}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
 
             } catch (e: Exception) {
                 e.printStackTrace()

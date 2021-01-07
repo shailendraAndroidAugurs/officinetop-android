@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/clearselection"
+                android:id="@+id/clearSelection"
                 style="@style/TextViewSubHeadingBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

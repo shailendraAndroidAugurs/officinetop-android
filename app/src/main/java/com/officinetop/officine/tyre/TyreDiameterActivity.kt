@@ -154,8 +154,8 @@ class TyreDiameterActivity : BaseActivity() {
                         diameter = if (it.rimDiameter == null) " 0 " else if (it.rimDiameter.toString().isEmpty() || it.rimDiameter.toString() == "null") "0" else it.rimDiameter.toString()
                         runFlat = if (it.runFlat == null) false else !(it.runFlat.toString().isNullOrBlank() || it.runFlat.toString() == "null" || it.runFlat.toString() == "0")
                         reinforced = if (it.reinforced == null) false else !(it.reinforced.toString().isNullOrBlank() || it.reinforced.toString() == "null" || it.reinforced.toString() == "0")
-                        val speed_load_index = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
-
+                        val speedLoadIndexName = if (it.speed_load_index == null) " " else if (it.speed_load_index.toString().isEmpty() || it.speed_load_index.toString() == "null") "" else it.speed_load_index.toString()
+                        val speedLoadIndexDesc = if (it.speedLoadIndexDesc == null) " " else if (it.speedLoadIndexDesc.toString().isEmpty() || it.speedLoadIndexDesc.toString() == "null") "" else it.speedLoadIndexDesc.toString()
                         val tyre =
                                 Models.TyreDetail(
                                         id = it.id.toString(),
@@ -168,16 +168,18 @@ class TyreDiameterActivity : BaseActivity() {
                                         seasonName = if (it.seasonStatus == null) "" else it.seasonStatus,
                                         seasonId = season,
                                         speedIndexId = speed_index,
-                                        speedIndexName = if (it.speedindexStatus == null) "" else it.speedindexStatus,
+                                        speedIndexName = if (it.speedIndexDesc == null) "" else it.speedIndexDesc,
                                         runFlat = runFlat,
                                         reinforced = reinforced,
-                                        speed_load_index = speed_load_index,
+                                        speed_load_index = speedLoadIndexName,
+                                        speed_load_indexDesc = speedLoadIndexDesc,
                                         cust_speedIndexId = speed_index,
                                         cust_seasonId = season,
-                                        cust_speedLoad_indexId = speed_load_index,
+                                        cust_speedLoad_indexName = speedLoadIndexName,
                                         cust_runflat = runFlat,
-                                        cust_reinforced = reinforced
-
+                                        cust_reinforced = reinforced,
+                                        cust_speedLoad_indexDesc = speedLoadIndexDesc,
+                                        cust_speed_indexName = if (it.speedIndexDesc == null) "" else it.speedIndexDesc
                                 )
                         if (!IsEdit) {
                             setTyreDetail(tyre)
@@ -232,9 +234,9 @@ class TyreDiameterActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 130) {
-            if (data!=null &&!data.getStringExtra("result").isNullOrBlank()&& data.getStringExtra("result").equals("edit")) {
+            if (data != null && !data.getStringExtra("result").isNullOrBlank() && data.getStringExtra("result").equals("edit")) {
                 finish()
-            }else{
+            } else {
                 getUserTyreDetailsApi()
             }
         }

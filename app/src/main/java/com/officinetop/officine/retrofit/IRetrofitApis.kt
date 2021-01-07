@@ -511,9 +511,9 @@ interface IRetrofitApis {
                                @Field("temp_slot_id") temp_slot_id: String,
                                @Field(Constant.Path.workshopId) workshopId: String,
                                @Field(Constant.Path.discountType) discountType: String,
+                               @Field(Constant.Path.serviceid) serviceid: String,
                                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
-
-
+    
     @GET("selected_car/{selected_car_id}")
     fun selectCar(@Path("selected_car_id") car_id: String,
                   @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>

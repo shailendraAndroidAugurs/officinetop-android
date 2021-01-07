@@ -138,7 +138,13 @@ data class MeasurementDataSetItem(
         @SerializedName("vehicle_type_status")
         val vehicleTypeStatus: String,
         @SerializedName("load_index")
-        val speed_load_index: String
+        val speed_load_index: String,
+        @SerializedName("load_index_description")
+        val speedLoadIndexDesc: String,
+        @SerializedName("speedindex_desc")
+        val speedIndexDesc: String
+
+
 )
 
 
