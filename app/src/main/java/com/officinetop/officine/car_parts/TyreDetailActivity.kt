@@ -528,7 +528,16 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         selectedProductID = detail.id!!
 
-        product_name.text = "${detail.manufacturer_description} ${tyreType} ${detail.pr_description}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}"
+        if (!detail.typeStatus.isNullOrBlank() && detail.typeStatus.equals("2")){
+            product_name.text = "${if(detail.manufacturer_description!=null) detail.manufacturer_description else ""} ${if(detail.seasonName!=null )detail.seasonName else  ""} ${if(detail.pr_description!=null )detail.pr_description else ""}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}   ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"//
+
+        } else
+            product_name.text = "${detail.manufacturer_description} ${tyreType} ${detail.pr_description}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}"
+
+
+
+
+
 
         if (TextUtils.isEmpty(detail.seller_price) && detail.seller_price == null) productPrice = detail.price!!
         else productPrice = detail.seller_price.toString()

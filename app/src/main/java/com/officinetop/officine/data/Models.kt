@@ -1914,10 +1914,13 @@ object Models {
             @SerializedName("service_id")
             val serviceId: String,
             @SerializedName("service_average_time")
-            val servicesAverageTime: String
+            val servicesAverageTime: String,
+            @SerializedName("type_status")
+            val typeStatus: String?,
+            @SerializedName("season_desc")
+            val seasonName: String?
 
-
-    ) : Serializable
+            ) : Serializable
 
 
     data class NoiceDbArr(
