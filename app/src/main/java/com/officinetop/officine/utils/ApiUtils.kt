@@ -316,6 +316,8 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     var ServicesPricewithVat_Discount = 0.0
     var deliveryDatePridicted = ""
     var IsServicesAvailable = false
+
+    var isProductServicesAvailable = false
     var Totalvat = 0.0
     var TotalDiscount = 0.0
     var TotalPFU = 0.0
@@ -332,7 +334,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
 
             if (cartData.serviceAssemblyProductDescription != null) {
-
+                isProductServicesAvailable = true
 
                 if (!cartData.serviceAssemblyProductDescription.totalPrice.isNullOrBlank() && cartData.serviceAssemblyProductDescription.totalPrice != "null")
                     productPrice += cartData.serviceAssemblyProductDescription.totalPrice.toDouble()
@@ -404,20 +406,19 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString())
     context?.let {
 
-
         view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
         Log.d("CartList", "DeliveryPrices : " + cartData.deliveryPrice)
-        if (!cartData.deliveryPrice.isNullOrEmpty()) {
+
+        if (!cartData.deliveryPrice.isNullOrEmpty()  && (!isProductServicesAvailable || !IsServicesAvailable)) {
+            view.rv_delivery_prices.visibility = View.VISIBLE
             view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, cartData.deliveryPrice)
             view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
 
         } else {
-            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, "0")
-
+            view.rv_delivery_prices.visibility = View.GONE
         }
-
 
 
     }
@@ -897,7 +898,6 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
 
                                             if (cartData.userWallet != null && cartData.userWallet.amount != null)
                                                 SaveUserWallet(cartData.userWallet.amount)
-
                                             else {
                                                 SaveUserWallet("0")
                                                 Log.d("WalletAount", "0")

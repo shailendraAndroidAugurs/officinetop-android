@@ -2,6 +2,7 @@ package com.officinetop.officine.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import org.jetbrains.anko.support.v4.intentFor
 class FragmentCart : Fragment(), OnCartListCallback {
 
     lateinit var rootView: View
-
+    var isProductOrServiceOrProductServices = "" // 0 for only product, 1 for product or services , 2 only for services
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -45,12 +46,25 @@ class FragmentCart : Fragment(), OnCartListCallback {
                 val totalDiscount = sharedprefrence1?.getString("TotalDiscount", "")
                 val totalPfu = sharedprefrence1?.getString("TotalPFU", "")
                 val userWalletAmount = userWalletPref?.getString(Constant.Path.user_WalletAmount, "0")
+                isProductOrServiceOrProductServices = if (Rl_deliveryDatePridicted.visibility == View.VISIBLE) {
+                    "0"
+                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.GONE) {
+                    "2"
+                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.VISIBLE) {
+                    "3"
+                } else "2"
+
+                Log.d("servicesData",isProductOrServiceOrProductServices)
+
+
+
                 startActivity(intentFor<OnlinePaymentScreen>(
                         Constant.Path.totalAmount to cart_total_price.text.split(" ")[1].toString(),
                         Constant.Path.totalPfu to totalPfu,
                         Constant.Path.totalItemAmount to (cart_total_item_price.text.split(" ")[1].toDouble() + cart_total_service_price.text.split(" ")[1].toDouble()).toString(),
                         Constant.Path.totalDiscount to totalDiscount,
                         Constant.Path.totalVat to totalvat,
+                        Constant.Path.user_WalletAmount to userWalletAmount,
                         Constant.Path.user_WalletAmount to userWalletAmount
 
                 ))
@@ -62,7 +76,7 @@ class FragmentCart : Fragment(), OnCartListCallback {
 
         if (context?.isOnline()!!) {
             getCartApi()
-        }else{
+        } else {
             context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
 

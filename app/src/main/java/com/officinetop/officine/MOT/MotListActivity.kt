@@ -2,14 +2,11 @@ package com.officinetop.officine.MOT
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
-import com.officinetop.officine.adapter.SpinnerAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.isOnline

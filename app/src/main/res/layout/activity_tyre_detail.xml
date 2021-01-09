@@ -546,7 +546,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_tyre_grip"
+                        android:id="@+id/ll_tyre_load_index"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -567,7 +567,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="@string/tyre_Grip"
+                                android:text="@string/speed_load_index"
                                 android:textColor="@color/black" />
 
                             <View
@@ -586,7 +586,7 @@
                                     android:layout_height="match_parent">
 
                                     <TextView
-                                        android:id="@+id/tyre_grip"
+                                        android:id="@+id/tyre_speed_load_index"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="@dimen/_5sdp"

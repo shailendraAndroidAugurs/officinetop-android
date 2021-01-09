@@ -184,7 +184,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             if (!isLoggedIn() && !hasAddedCar) {
-                showInfoDialog(getString(R.string.dialog_message_add_car), true) {
+                showInfoDialog(getString(R.string.dialog_message_add_car),true) {
                     startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
                 }
                 return@setOnClickListener

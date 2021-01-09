@@ -187,7 +187,7 @@
                         android:padding="@dimen/_5sdp"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_10sdp"
-                        app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/Concat }"
+                        app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/zero }"
                         app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/Concat }"
                         app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/Concat }" />
                 </LinearLayout>

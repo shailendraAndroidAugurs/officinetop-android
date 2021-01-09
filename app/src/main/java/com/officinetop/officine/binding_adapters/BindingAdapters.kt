@@ -75,7 +75,7 @@ fun bindhtmlText(date: TextView, dateText: String) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @BindingAdapter("dateformateText")
-fun bindDateformate(date: TextView, dateText: String) {
+fun bindDateFormate(date: TextView, dateText: String) {
 
     if (!dateText.isNullOrEmpty()) {
         try {
@@ -94,30 +94,8 @@ fun setVisibility(text: TextView, flag: Boolean) {
     else text.visibility = View.VISIBLE
 }
 
-@BindingAdapter("time")
-fun settime(textview: TextView, startTime: String) {
-    if (startTime != null) {
-        val starttime = startTime.split("-")[0]
-        val endtime = startTime.split("-")[1]
-        if (starttime == "null" && endtime == "") {
-            textview.text = ""
-
-        } else {
-            if (starttime != "null" && endtime != "null") {
-                textview.text = "${starttime.removeSuffix(":00")}  -  ${endtime.removeSuffix(":00")}"
-            } else if (starttime == "null" && endtime != "null") {
-                textview.text = "${endtime.removeSuffix(":00")}"
-            } else if (starttime != "null" && endtime == "null") {
-                textview.text = "${starttime.removeSuffix(":00")}"
-            }
-        }
-    }
-
-
-}
-
 @BindingAdapter("carModelName")
-fun CarModelName(textview: TextView, startTime: String) {
+fun carModelName(textview: TextView, startTime: String) {
 
     if (startTime != null)
         textview.text = textview.context.getSelectedCar()?.carMakeName
@@ -141,7 +119,7 @@ fun price(textView: TextView, price: String) {
 
 
 @BindingAdapter("tyre_Order_price", "tyrePfu", "tyreQuantity")
-fun settyreOrderprice(textView: TextView, price: String, tyrePfu: String, tyreQuantity: String) {
+fun setTyreOrderPrice(textView: TextView, price: String, tyrePfu: String, tyreQuantity: String) {
     var amount = 0.0
     if (!price.isNullOrBlank()) {
         amount = price.toDouble()
@@ -204,16 +182,10 @@ fun payment(textView: TextView, status: String) {
     } else {
         textView.text = textView.context.getString(R.string.Pending)
     }
-    /* var amount = price.toDouble() ?: 0.0
-     if (price.contains(".")) {
-         amount = price.toDouble().roundTo2Places()
-     }
-     textView.text = textView.context.getString(R.string.prepend_euro_symbol_string, amount.toString().takeIf { !it.isNullOrEmpty() })
-     textView.visibility = if (!amount.toString().isNullOrEmpty()) View.VISIBLE else View.GONE*/
 }
 
 @BindingAdapter("CarKM")
-fun CarKM(textView: TextView, CarKM: String) {
+fun carKM(textView: TextView, CarKM: String) {
     textView.text = textView.context.getString(R.string.carKM) + CarKM
 
 }
@@ -253,33 +225,6 @@ fun orderReturn(textview: TextView, status: String) {
 
 }
 
-@BindingAdapter("InvoiceRequest")
-fun InvoiceRequest(textview: TextView, status: String) {
-    textview.visibility = View.VISIBLE
-    if (status.isNullOrBlank() || status == "-" || status == "p") {
-        textview.text = R.string.request_invoice.toString()
-        textview.setTextColor(Color.parseColor("#2E7D32"))
-    } else if (status == "c") {
-        textview.setTextColor(Color.parseColor("#2E7D32"))
-        textview.text = R.string.invoice_Request_inProcess.toString()
-    }
-
-
-}
-
-
-@BindingAdapter("orderReturnbutton")
-fun orderReturnbutton(textview: TextView, status: String) {
-
-    if (!status.isNullOrBlank() && status != "null") {
-        textview.visibility = View.GONE
-    } else if (status == null)
-        textview.visibility = View.VISIBLE
-    else
-        textview.visibility = View.GONE
-
-}
-
 
 @BindingAdapter("orderProgress")
 fun orderProgress(linearLayout: LinearLayout, status: String) {
@@ -292,26 +237,16 @@ fun orderProgress(linearLayout: LinearLayout, status: String) {
 }
 
 @BindingAdapter("feedbackvisibility", "feedbackStatus")
-fun feedbackvisibility(linearLayout: LinearLayout, status: String, feedbackStatus: String) {
+fun feedbackVisibility(linearLayout: LinearLayout, status: String, feedbackStatus: String) {
     if (feedbackStatus == "0" && (status == "F" || status == "WC"))
         linearLayout.visibility = View.VISIBLE
     else
         linearLayout.visibility = View.GONE
-    /*if (!status.isNullOrBlank() && !status.equals("null") && !status.equals("-") && status.equals("F"))
-        //if(feedstatus.equals("0")){
-           linearLayout.visibility = View.VISIBLE
-        *//*}else{
-            linearLayout.visibility = View.GONE
-        }*//*
-
-    else
-        linearLayout.visibility = View.GONE*/
-
 
 }
 
 @BindingAdapter("layoutvisibility")
-fun layoutvisibility(linearLayout: LinearLayout, status: String) {
+fun layoutVisibility(linearLayout: LinearLayout, status: String) {
     if (status == "1")
         linearLayout.visibility = View.VISIBLE
     else
@@ -320,15 +255,9 @@ fun layoutvisibility(linearLayout: LinearLayout, status: String) {
 
 }
 
-@BindingAdapter("CouponFirstIndex")
-fun CouponFirstIndex(textview: TextView, status: List<Models.Coupon1>) {
-    if (status != null && status.size != 0)
-
-        textview.text = status[0].couponTitle
-}
 
 @BindingAdapter("Order_Quantity", "Ispair")
-fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
+fun setQuantityForOrder(text: TextView, quantity: String, ispair: String) {
 
     if (!quantity.isNullOrEmpty()) {
         try {
@@ -350,12 +279,12 @@ fun setQuantity_for_Order(text: TextView, quantity: String, ispair: String) {
 }
 
 @BindingAdapter("coupontitle", "coupontype", "couponPrices")
-fun setcouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
+fun setCouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
     text.text = "$coupontitle : €$couponPrices"
 }
 
 @BindingAdapter("wishlist")
-fun setWishlist(Iv_favorite: ImageView, wish_list: String) {
+fun setWishList(Iv_favorite: ImageView, wish_list: String) {
 
     if (wish_list == "1")
         Iv_favorite.setImageResource(R.drawable.ic_heart)

@@ -12,7 +12,6 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
-import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.isLoggedIn
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*

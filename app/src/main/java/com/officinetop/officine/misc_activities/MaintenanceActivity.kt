@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialo
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.dialog_rating_two
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.price_end_range
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.price_start_range
-import kotlinx.android.synthetic.main.dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -51,8 +50,6 @@ import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.ceil
-import kotlin.math.floor
 
 class MaintenanceActivity : BaseActivity() {
     private var carMaintenanceServiceList: ArrayList<Models.CarMaintenanceServices> = ArrayList()

@@ -16,7 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
-import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
@@ -311,10 +310,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
-                        serviceName.text = "Qutoes " + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        serviceName.text = context.getString(R.string.cart_qutoes) + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         cartItemServiceImage.visibility = View.GONE
-                        serviceName.gravity= Gravity.CENTER
-                        tvPlus.gravity= Gravity.CENTER
+                        serviceName.gravity = Gravity.CENTER
+                        tvPlus.gravity = Gravity.CENTER
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     } else {
                         serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
