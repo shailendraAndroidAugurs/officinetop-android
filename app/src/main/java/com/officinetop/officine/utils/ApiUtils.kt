@@ -411,7 +411,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
         Log.d("CartList", "DeliveryPrices : " + cartData.deliveryPrice)
 
-        if (!cartData.deliveryPrice.isNullOrEmpty()  && (!isProductServicesAvailable || !IsServicesAvailable)) {
+        if (!cartData.deliveryPrice.isNullOrEmpty()  && !isProductServicesAvailable && !IsServicesAvailable) {
             view.rv_delivery_prices.visibility = View.VISIBLE
             view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, cartData.deliveryPrice)
             view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
