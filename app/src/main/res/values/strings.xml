@@ -725,8 +725,8 @@
     <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
     <string name="PleaselogintocontinueforInviteFriends">Please login to continue for Invite Friends</string>
     <string name="PleaselogintocontinueforQutoesRequestSend">Log in to continue with the  request send</string>
-    purchase
-
+    <string name="cart_qutoes">Quotation request</string>
+    <string name="qutoes_request_send_sucessfully">The request has been sent successfully</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>
     <string name="tue">TUE</string>

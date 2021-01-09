@@ -96,24 +96,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <!--   <LinearLayout
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_alignParentStart="true"
-                           android:background="@drawable/shape_rectangle_gray">
-
-                           <Spinner
-                               android:id="@+id/product_qty_spinner"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:gravity="center"
-                               android:paddingLeft="30dp"
-                               android:paddingTop="0dp"
-                               android:paddingRight="50dp"
-                               android:paddingBottom="0dp"
-                               android:visibility="gone" />
-
-                       </LinearLayout>-->
                     <LinearLayout
 
                         android:layout_width="wrap_content"
@@ -190,7 +172,7 @@
                         android:padding="@dimen/_5sdp"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_10sdp"
-                        app:couponPrices="@{listItemViewModel.serviceAssemblyProductDescription.couponPrices!=null ? listItemViewModel.serviceAssemblyProductDescription.couponPrices: @string/Concat }"
+                        app:couponPrices="@{listItemViewModel.serviceAssemblyProductDescription.couponPrices!=null ? listItemViewModel.serviceAssemblyProductDescription.couponPrices: @string/zero }"
                         app:coupontitle="@{listItemViewModel.serviceAssemblyProductDescription.couponTitle!=null ? listItemViewModel.serviceAssemblyProductDescription.couponTitle: @string/Concat }"
 
                         app:coupontype="@{listItemViewModel.serviceAssemblyProductDescription.couponType!=null ? listItemViewModel.serviceAssemblyProductDescription.couponType: @string/Concat }" />

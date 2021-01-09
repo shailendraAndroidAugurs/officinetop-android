@@ -3,6 +3,8 @@ package com.officinetop.officine.workshop
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.Online_Payment.OnlinePaymentScreen
@@ -15,6 +17,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
 
 class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
+    var isProductOrServiceOrProductServices = "" // 0 for only product, 1 for product or services , 2 only for services
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_single_item_detail)
@@ -28,6 +31,16 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
                 val totalDiscount = sharedprefrence1?.getString("TotalDiscount", "")
                 val totalPfu = sharedprefrence1?.getString("TotalPFU", "")
                 val userWalletAmount = userWalletPref?.getString(Constant.Path.user_WalletAmount, "0")
+                isProductOrServiceOrProductServices = if (Rl_deliveryDatePridicted.visibility == View.VISIBLE) {
+                    "0"
+                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.GONE) {
+                    "2"
+                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.VISIBLE) {
+                    "1"
+                } else "3"
+
+                Log.d("servicesData",isProductOrServiceOrProductServices)
+
                 startActivity(intentFor<OnlinePaymentScreen>(
                         Constant.Path.totalAmount to cart_total_price.text.split(" ")[1].toString(),
                         Constant.Path.totalPfu to totalPfu,

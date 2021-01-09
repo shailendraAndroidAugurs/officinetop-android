@@ -50,7 +50,6 @@ class QuotesActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quotes)
-
         setSupportActionBar(toolbar)
         toolbar_title.text = resources.getString(R.string.quotes)
 
@@ -115,8 +114,6 @@ class QuotesActivity : BaseActivity() {
         appointment_for_control.setOnClickListener {
             if (!isEditTextValid(this@QuotesActivity, edt_describe_request)) return@setOnClickListener
             //quotesApiCall("2")
-
-
 
 
             startActivity(intentFor<WorkshopListActivity>(
@@ -199,36 +196,7 @@ class QuotesActivity : BaseActivity() {
                             progress_bar.visibility = View.GONE
                             if (response.isSuccessful) {
                                 try {
-                                    val body = JSONObject(response.body()?.string())
-                                    if (btnType == "2") {
-                                        if (body.has("data") && !body.isNull("data") && body.get("data") is JSONObject) {
-                                            val data = body.getJSONObject("data")
-                                            if (data.has("id") && data.has("main_category_id")) {
-                                                try {
-                                                    val id = data.opt("id").toString()
-                                                    val mainCatId = data.opt("main_category_id").toString()
-                                                    startActivity(intentFor<WorkshopListActivity>(
-                                                            Constant.Key.is_quotes to true,
-                                                            Constant.Path.categoryId to mainCategoryId,
-                                                            Constant.Path.serviceQuotesInsertedId to id,
-                                                            Constant.Path.mainCategoryId to mainCatId))
-                                                    finish()
-                                                } catch (e: Exception) {
-                                                    e.message
-                                                }
-                                            }
-                                        } else {
-                                            showInfoDialog(getString(R.string.Unspecifiederroroccurred))
-                                        }
-                                    }
-
-
-                                    imagesList.clear()
-                                    images.clear()
-                                    edt_describe_request.setText("")
-                                    attachedImagePath = null
-                                    attachedImage = null
-                                    imagesAdapter?.removeAll()
+                                    showInfoDialog(getString(R.string.qutoes_request_send_sucessfully),false) { resetView() }
 
 
                                 } catch (e: Exception) {
@@ -361,5 +329,13 @@ class QuotesActivity : BaseActivity() {
         return file
     }
 
+    private fun resetView() {
+        imagesList.clear()
+        images.clear()
+        edt_describe_request.setText("")
+        attachedImagePath = null
+        attachedImage = null
+        imagesAdapter?.removeAll()
+    }
 
 }

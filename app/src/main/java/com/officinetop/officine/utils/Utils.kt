@@ -74,7 +74,7 @@ inline fun Context.hideKeyboard() {
 inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
 
 
-inline fun Context.showInfoDialog(dialogMessage: String, cancelable: Boolean = true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
+inline fun Context.showInfoDialog(dialogMessage: String, cancelable:Boolean= true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
         okButton { onOkClick?.let { it1 -> it1() } }

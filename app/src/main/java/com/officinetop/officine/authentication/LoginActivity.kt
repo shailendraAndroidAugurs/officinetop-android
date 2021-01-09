@@ -38,7 +38,6 @@ import com.officinetop.officine.virtual_garage.AddVehicleActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.emailEditText
 import kotlinx.android.synthetic.main.activity_login.passwordEditText
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.bottom_sheet_referral.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody

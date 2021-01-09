@@ -1918,9 +1918,12 @@ object Models {
             @SerializedName("type_status")
             val typeStatus: String?,
             @SerializedName("season_desc")
-            val seasonName: String?
-
-            ) : Serializable
+            val seasonName: String?,
+            @SerializedName("load_speed_index_desc")
+            val loadIndexDesc: String?,
+            @SerializedName("speed_index_desc")
+            val speedIndexDesc: String?
+    ) : Serializable
 
 
     data class NoiceDbArr(

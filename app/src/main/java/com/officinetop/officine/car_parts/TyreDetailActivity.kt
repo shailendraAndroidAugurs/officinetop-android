@@ -490,8 +490,8 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         ll_manufacturer.visibility = if (!detail.manufacturer_description.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_wheel_size.visibility = if (!detail.max_width.isNullOrEmpty() && !detail.max_aspect_ratio.isNullOrEmpty() && !detail.max_diameter.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_seson_type.visibility = if (!detail.type.isNullOrEmpty()) View.VISIBLE else View.GONE
-        ll_speed_index.visibility = if (!detail.speed_index.isNullOrEmpty()) View.VISIBLE else View.GONE
-        ll_tyre_grip.visibility = if (!detail.wetGrip.isNullOrEmpty()) View.VISIBLE else View.GONE
+        ll_speed_index.visibility = if (!detail.speedIndexDesc.isNullOrEmpty()) View.VISIBLE else View.GONE
+        ll_tyre_load_index.visibility = if (!detail.loadIndexDesc.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_ean_no.visibility = if (!detail.ean_number.isNullOrEmpty()) View.VISIBLE else View.GONE
         ll_three_peak_mountain_snowflake.visibility = if (detail.type.equals("w")) View.VISIBLE else View.GONE
 
@@ -517,19 +517,15 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         }
 
-        for ((k, v) in speedIndexMap) {
-            if (!detail.speed_index.isNullOrBlank() && k.contains(detail.speed_index!!)) {
-                speed_index.text = "${detail.speed_index}: " + getString(R.string.speed_index_value, v)
-            }
-        }
-        tyre_grip.text = detail.wetGrip
+        speed_index.text = "${detail.speedIndexDesc}"
+        tyre_speed_load_index.text = detail.loadIndexDesc
         ean_no.text = detail.ean_number
 
 
         selectedProductID = detail.id!!
 
-        if (!detail.typeStatus.isNullOrBlank() && detail.typeStatus.equals("2")){
-            product_name.text = "${if(detail.manufacturer_description!=null) detail.manufacturer_description else ""} ${if(detail.seasonName!=null )detail.seasonName else  ""} ${if(detail.pr_description!=null )detail.pr_description else ""}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}   ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"//
+        if (!detail.typeStatus.isNullOrBlank() && detail.typeStatus.equals("2")) {
+            product_name.text = "${if (detail.manufacturer_description != null) detail.manufacturer_description else ""} ${if (detail.seasonName != null) detail.seasonName else ""} ${if (detail.pr_description != null) detail.pr_description else ""}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}   ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"//
 
         } else
             product_name.text = "${detail.manufacturer_description} ${tyreType} ${detail.pr_description}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}"
