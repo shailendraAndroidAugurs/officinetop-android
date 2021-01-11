@@ -310,7 +310,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
-                        serviceName.text = context.getString(R.string.cart_qutoes) + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        serviceName.text = context.getString(R.string.cart_qutoes) +" "+ item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         cartItemServiceImage.visibility = View.GONE
                         serviceName.gravity = Gravity.CENTER
                         tvPlus.gravity = Gravity.CENTER
