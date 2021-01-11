@@ -643,6 +643,15 @@ informazioni in accordo alle </string>
     <string name="PleaselogintocontinueforQutoesRequestSend">Accedi per proseguire con l\'invio della richiesta</string>
     <string name="cart_qutoes">Richiesta Preventivo</string>
     <string name="qutoes_request_send_sucessfully">La richiesta è stata inviata con successo</string>
+    <string name="confirm_order_with_multipal_workshop">Non è possibile confermare un ordine con multi officine</string>
+    <string name="product_services_address_note">I prodotti saranno consegnati all’officina scelta ed il montaggio sarà eseguito nella data prenotata</string>
+    <string name="services_address_note">I servizi saranno eseguiti nell’officina scelta alla data prenotata</string>
+
+    <string name="oen">Codice OE</string>
+    <string name="part">Ricambi</string>
+    <string name="product">Prodotti</string>
+
+
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
     <string name="tue">MAR</string>

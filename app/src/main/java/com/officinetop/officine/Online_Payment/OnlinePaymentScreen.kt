@@ -71,6 +71,7 @@ class OnlinePaymentScreen : BaseActivity() {
     private var HaveBrowser = true
     private var fromBooking = false
     private lateinit var bankpaymentobject: Models.BankPaymentInfo
+    private var cartItemType = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_online_payment)
@@ -119,6 +120,21 @@ class OnlinePaymentScreen : BaseActivity() {
             totalPfu = intent.getStringExtra(Constant.Path.totalPfu)
         if (intent.hasExtra(Constant.Path.user_WalletAmount) && !intent.getStringExtra(Constant.Path.user_WalletAmount).isNullOrEmpty())
             user_WalletAmount = intent.getStringExtra(Constant.Path.user_WalletAmount)
+
+        if (intent.hasExtra(Constant.Path.cartItemType) && !intent.getStringExtra(Constant.Path.cartItemType).isNullOrEmpty())
+            cartItemType = intent.getStringExtra(Constant.Path.cartItemType)
+
+        // 0 only for product, 1 only for services , 2 only for services with product ,3 mix item
+        if (cartItemType.equals("1")) {
+            tv_notes.visibility = View.VISIBLE
+            tv_notes.text = getString(R.string.services_address_note)
+            layout_addcontact.visibility = View.GONE
+        } else if (cartItemType.equals("2") || cartItemType.equals("3")) {
+            tv_notes.visibility = View.VISIBLE
+            tv_notes.text = getString(R.string.product_services_address_note)
+            layout_addcontact.visibility = View.GONE
+        }
+
 
 
         tv_userWallet.text = getString(R.string.Wallet) + user_WalletAmount.toDouble().roundTo2Places().toString()
@@ -685,18 +701,17 @@ class OnlinePaymentScreen : BaseActivity() {
     }
 
     private fun isaddress_ContactSelect(): Boolean {
-        if (Address.isNullOrBlank() && AddressId.isNullOrBlank()) {
-            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectAddress), Snackbar.LENGTH_SHORT).show()
 
+        if (cartItemType.equals("0") && Address.isNullOrBlank() && AddressId.isNullOrBlank()) {
+            Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectAddress), Snackbar.LENGTH_SHORT).show()
             return false
         } else if (contactNo.isNullOrBlank()) {
 
             Snackbar.make(ll_container_payment, getString(R.string.PleaseSelectContactNo), Snackbar.LENGTH_SHORT).show()
 
             return false
-
-
         }
+
         return true
 
     }

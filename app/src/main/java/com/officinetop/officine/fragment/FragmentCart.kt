@@ -21,7 +21,7 @@ import org.jetbrains.anko.support.v4.intentFor
 class FragmentCart : Fragment(), OnCartListCallback {
 
     lateinit var rootView: View
-    var isProductOrServiceOrProductServices = "" // 0 for only product, 1 for product or services , 2 only for services
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -46,16 +46,14 @@ class FragmentCart : Fragment(), OnCartListCallback {
                 val totalDiscount = sharedprefrence1?.getString("TotalDiscount", "")
                 val totalPfu = sharedprefrence1?.getString("TotalPFU", "")
                 val userWalletAmount = userWalletPref?.getString(Constant.Path.user_WalletAmount, "0")
-                isProductOrServiceOrProductServices = if (Rl_deliveryDatePridicted.visibility == View.VISIBLE) {
-                    "0"
-                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.GONE) {
-                    "2"
-                } else if (Rl_deliveryDatePridicted.visibility == View.GONE && rv_delivery_prices.visibility == View.VISIBLE) {
-                    "3"
-                } else "2"
+                val cartItemType = sharedprefrence1?.getString(Constant.Path.cartItemType, "3")
+                val isMultipleServicesAvailable = sharedprefrence1?.getBoolean("isMultipleServicesAvailable", false)
+                if (isMultipleServicesAvailable!!) {
+                    context?.showInfoDialog(getString(R.string.confirm_order_with_multipal_workshop), false)
+                    return@setOnClickListener
+                }
 
-                Log.d("servicesData",isProductOrServiceOrProductServices)
-
+                Log.d("servicesData", cartItemType)
 
 
                 startActivity(intentFor<OnlinePaymentScreen>(
@@ -65,7 +63,7 @@ class FragmentCart : Fragment(), OnCartListCallback {
                         Constant.Path.totalDiscount to totalDiscount,
                         Constant.Path.totalVat to totalvat,
                         Constant.Path.user_WalletAmount to userWalletAmount,
-                        Constant.Path.user_WalletAmount to userWalletAmount
+                        Constant.Path.cartItemType to cartItemType
 
                 ))
             }

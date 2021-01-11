@@ -57,25 +57,24 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
     fun addLoading() {
         isLoadingVisible = true
-        listItems.add(Models.TyreDetailItem("", "", "", "", 0, "", null, null,
+      /*  listItems.add(Models.TyreDetailItem("", "", "", "", 0, "", null, null,
                 "", "", "", "", "0", "0", "0", "", "", "",
                 "", "", "", "", "", "", 0, "", "", "",
                 "", "", null, "", "", null, "0", "Y", "", "", null
-                , "", "", ""))
+                , "", "", ""))*/
 
     }
 
     fun removeLoading() {
-
         isLoadingVisible = false
-        val position = listItems.size - 1
+    /*    val position = listItems.size - 1
         if (position >= 0) {
             val item: Models.TyreDetailItem = getItem(position)
             if (item != null) {
                 listItems.removeAt(position)
                 notifyItemRemoved(position)
             }
-        }
+        }*/
     }
 
 

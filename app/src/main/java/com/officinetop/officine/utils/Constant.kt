@@ -371,7 +371,7 @@ object Constant {
         const val bankDetailId = "payment_managements_id"
         const val qutoesUserDescription = "qutoesUserDescription"
         const val qutoesUserAttachImage = "qutoesUserAttachImage"
-
+        const val cartItemType = "cartItemType"
     }
 
     object RC {

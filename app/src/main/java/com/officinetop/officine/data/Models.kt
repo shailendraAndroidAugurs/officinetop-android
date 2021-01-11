@@ -1027,7 +1027,7 @@ object Models {
             val businessName: String,
 
             @SerializedName("id")
-            val id: Int,
+            val id: String,
 
             @SerializedName("langitude")
             val langitude: Double,

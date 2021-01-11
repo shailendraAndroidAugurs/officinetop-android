@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/gray_light"
             android:padding="@dimen/_10sdp"
-            android:text="OEN"
+            android:text="@string/oen"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:background="@color/gray_light"
             android:padding="@dimen/_10sdp"
 
-            android:text="Part"
+            android:text="@string/part"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
@@ -68,7 +68,7 @@
             android:background="@color/gray_light"
             android:padding="@dimen/_10sdp"
 
-            android:text="Product"
+            android:text="@string/product"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
