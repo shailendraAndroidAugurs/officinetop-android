@@ -329,31 +329,6 @@ class FeedbackAddActivity : BaseActivity() {
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             stream.close()
 
             attachedImage = file

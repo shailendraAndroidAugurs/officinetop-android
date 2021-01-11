@@ -475,12 +475,14 @@ inline fun Context.saveServicesType(servicestype: String) {
 }
 
 
-inline fun Context.saveCartPricesData(TotalVat: String, TotalDiscount: String, TotalPFU: String) {
+inline fun Context.saveCartPricesData(TotalVat: String, TotalDiscount: String, TotalPFU: String, cartItemType: String = "3", isMultipleServicesAvailable: Boolean = false) {
     val cartData = getSharedPreferences("Cart", Context.MODE_PRIVATE)
     val editor = cartData.edit()
     editor.putString("TotalVat", TotalVat)
     editor.putString("TotalDiscount", TotalDiscount)
     editor.putString("TotalPFU", TotalPFU)
+    editor.putString(Constant.Path.cartItemType, cartItemType)
+    editor.putBoolean("isMultipleServicesAvailable", isMultipleServicesAvailable)
     editor.apply()
 
 }

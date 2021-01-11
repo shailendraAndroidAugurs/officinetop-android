@@ -194,8 +194,6 @@ inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView
 
                 }
 
-
-
                 if (SimilarproductList[p1].images != null && SimilarproductList[p1].images?.size != 0)
                     loadImage(SimilarproductList[p1].images?.get(0)?.imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
                 else if (!SimilarproductList[p1].profileImage.isNullOrBlank()) {
@@ -241,10 +239,6 @@ inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: Recyc
                     finish()
 
                 }
-
-
-
-
                 if (SimilarproductList[p1].images != null && SimilarproductList[p1].images?.size != 0)
                     loadImage(SimilarproductList[p1].imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
                 else
@@ -316,13 +310,15 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     var ServicesPricewithVat_Discount = 0.0
     var deliveryDatePridicted = ""
     var IsServicesAvailable = false
-
     var isProductServicesAvailable = false
+    var isProductAvailable = false
     var Totalvat = 0.0
     var TotalDiscount = 0.0
     var TotalPFU = 0.0
     val cartDataList = cartData.CartDataList
-
+    var isMultipleWorkshopAvailable = false
+    var workshopId: String = ""
+    var cartItemType = "3"// 0 only for product, 1 only for services , 2 only for services with product ,3 mix item
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
         if (cartData.CartType == "SP") {
@@ -361,9 +357,18 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
             if (!cartData.serviceVat.isNullOrBlank() && cartData.serviceVat != "null")
                 Totalvat += cartData.serviceVat.toDouble()
 
+            if (cartData.workshopDetail != null && !cartData.workshopDetail.id.isNullOrBlank()) {
+                if (i == 0) {
+                    workshopId = cartData.workshopDetail.id
+                } else if (!cartData.workshopDetail.id.equals(workshopId)) {
+                    isMultipleWorkshopAvailable = true
+                }
+
+            }
+
 
         } else if (cartData.CartType == "T" || cartData.CartType == "S") {
-
+             isProductAvailable = true
             val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() else 0))
             if (deliveryDatePridicted.isNullOrBlank()) {
                 val dateFormat = SimpleDateFormat("yyy-MM-dd")
@@ -403,7 +408,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     } else {
         view.Rl_deliveryDatePridicted.visibility = View.GONE
     }
-    context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString())
+
     context?.let {
 
         view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
@@ -411,17 +416,28 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
         Log.d("CartList", "DeliveryPrices : " + cartData.deliveryPrice)
 
-        if (!cartData.deliveryPrice.isNullOrEmpty()  && !isProductServicesAvailable && !IsServicesAvailable) {
+        if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
+            view.rv_delivery_prices.visibility = View.GONE
+
+        } else if (!cartData.deliveryPrice.isNullOrEmpty()) {
             view.rv_delivery_prices.visibility = View.VISIBLE
             view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, cartData.deliveryPrice)
             view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
 
-        } else {
-            view.rv_delivery_prices.visibility = View.GONE
         }
 
 
+        if (IsServicesAvailable && isProductServicesAvailable)
+            cartItemType = "2" // only services+ product
+        else if (!IsServicesAvailable && isProductAvailable) {
+            cartItemType = "0" // only product
+        } else if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
+            cartItemType = "1" // only services
+        } else "3"// mixed item in cart
+
+
     }
+    context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString(), cartItemType,isMultipleWorkshopAvailable)
 }
 
 
@@ -884,6 +900,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
 
                                         for (n in 0 until modelCartList.serviceProductDescription.size) {
                                             insertInCartList(modelCartList.serviceProductDescription[n], "SP", cartData)
+
                                         }
 
 
