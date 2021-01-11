@@ -128,11 +128,11 @@ class OnlinePaymentScreen : BaseActivity() {
         if (cartItemType.equals("1")) {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.services_address_note)
-            layout_addcontact.visibility = View.GONE
+            layout_address.visibility = View.GONE
         } else if (cartItemType.equals("2") || cartItemType.equals("3")) {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.product_services_address_note)
-            layout_addcontact.visibility = View.GONE
+            layout_address.visibility = View.GONE
         }
 
 
