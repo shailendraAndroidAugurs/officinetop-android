@@ -308,6 +308,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     var productPrice = 0.0
     var productPricewithVat_Discount = 0.0
     var ServicesPricewithVat_Discount = 0.0
+    var delivery_fees = 0.0
     var deliveryDatePridicted = ""
     var IsServicesAvailable = false
     var isProductServicesAvailable = false
@@ -360,7 +361,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
             if (cartData.workshopDetail != null && !cartData.workshopDetail.id.isNullOrBlank()) {
                 if (i == 0) {
                     workshopId = cartData.workshopDetail.id
-                } else if (!cartData.workshopDetail.id.equals(workshopId)) {
+                } else if (!workshopId.isNullOrBlank() &&!cartData.workshopDetail.id.equals(workshopId)) {
                     isMultipleWorkshopAvailable = true
                 }
 
@@ -414,18 +415,21 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
-        Log.d("CartList", "DeliveryPrices : " + cartData.deliveryPrice)
-
-        if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
-            view.rv_delivery_prices.visibility = View.GONE
-
-        } else if (!cartData.deliveryPrice.isNullOrEmpty()) {
+        if (!cartData.deliveryPrice.isNullOrEmpty()) {
             view.rv_delivery_prices.visibility = View.VISIBLE
-            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, cartData.deliveryPrice)
-            view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
+            view.tv_delivery_prices.visibility = View.VISIBLE
+            delivery_fees = cartData.deliveryPrice.toDouble()
+            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string,delivery_fees.roundTo2Places().toString())
+            //if someone booked only service in the cart so we will be not add delivery fee inside total amount.
+            if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
+                   view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
+               }
+            else{
+                   view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
+
+               }
 
         }
-
 
         if (IsServicesAvailable && isProductServicesAvailable)
             cartItemType = "2" // only services+ product

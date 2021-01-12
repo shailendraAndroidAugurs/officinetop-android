@@ -634,7 +634,10 @@ object Models {
             val type: Int,
 
             @SerializedName("min_price")
-            val min_price: String?
+            val min_price: String,
+
+            @SerializedName("main_category_id")
+            val main_category_id: Int
     ) : ListItemViewModel()
 
 

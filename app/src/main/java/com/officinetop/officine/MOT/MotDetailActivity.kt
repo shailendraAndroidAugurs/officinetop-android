@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
@@ -44,6 +45,7 @@ class MotDetailActivity : BaseActivity() {
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     var workshopPrices = 0.0
     var sparePartPrices = 0.0
+    var main_category_id : Int = 0
 
     var deliveryDate = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,7 @@ class MotDetailActivity : BaseActivity() {
             motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
             tv_title.text = motServiceObject.serviceName
             tv_description.text = motServiceObject.intervalDescriptionForKms
+            main_category_id = motServiceObject.main_category_id;
             if (isOnline()) {
                 motDetailService(motServiceObject.id.toString(), motServiceObject.type)
             }else{
@@ -149,7 +152,7 @@ class MotDetailActivity : BaseActivity() {
     private fun getminPriceForMotServicesl(mot_id: String, type: Int, serviceaveragetime: String) {
         val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
-        RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong())
+        RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong(),mainCategoryId = main_category_id.toString())
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
