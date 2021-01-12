@@ -928,7 +928,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getSavedSelectedVehicleID(), quotesMainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
                     ?: "", quotesServicesAvarageTime, maxAppointment = max_appointment).enqueue(callback)
         else if (isMotService)
-            RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId).enqueue(callback)
+            RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId,main_category_id).enqueue(callback)
         else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!, services_average_time, max_appointment, hourly_rate, getSelectedCar()?.carMakeModel?.brandID!!, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
 
     }
@@ -1451,7 +1451,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm", getLocale()).format(Date(endLimit.toLong()))
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
 
             val motdata = motpartlist.get(motServiceId.toString())
             for (i in 0 until motdata!!.service_partID.size) {
@@ -1466,8 +1466,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("mot bookingStartTime", bookingStartTime)
             Log.d("mot endTime", endTime)
             val serviceMotBooking = RetrofitClient.client.serviceMotBooking(packageID.toString(), bookingStartTime, endTime, selectedDateFilter,
-                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, getBearerToken()
-                    ?: "", SpecialConditionId, slotId, DiscountType)
+                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, main_category_id,  slotId, DiscountType,getBearerToken() ?: "")
             serviceMotBooking.enqueue(callback)
         } else if (isCarWash) {
             val serviceBookingCarWash = RetrofitClient.client.carWashServiceBooking(

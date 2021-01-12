@@ -55,10 +55,10 @@ class OnlinePaymentScreen : BaseActivity() {
     private val UPI_PAYMENT = 0
     private var payableAmount: String = ""
     private var TotalAmount: String = ""
-    private var contactNo: String? = null
-    private var contactId: String? = null
-    var Address: String? = null
-    private var AddressId: String? = null
+    private var contactNo: String? = ""
+    private var contactId: String? = ""
+    var Address: String? = ""
+    private var AddressId: String? = ""
     private var IsCheckAvailablity: Boolean = false
     private lateinit var progressBar: ProgressBar
     private var TotalDiscount: String = "0"
@@ -129,10 +129,13 @@ class OnlinePaymentScreen : BaseActivity() {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.services_address_note)
             layout_address.visibility = View.GONE
+            tv_delivery_address_txt.visibility = View.GONE
         } else if (cartItemType.equals("2") || cartItemType.equals("3")) {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.product_services_address_note)
             layout_address.visibility = View.GONE
+            tv_delivery_address_txt.visibility = View.GONE
+
         }
 
 
@@ -353,10 +356,10 @@ class OnlinePaymentScreen : BaseActivity() {
 
 
         val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
-        contactNo = sharedPref.getString("contactNo", null)
-        Address = sharedPref.getString("Address", null)
-        AddressId = sharedPref.getString("AddressId", null)
-        contactId = sharedPref.getString("contactId", null)
+        contactNo = sharedPref.getString("contactNo", "")
+        Address = sharedPref.getString("Address", "")
+        AddressId = sharedPref.getString("AddressId", "")
+        contactId = sharedPref.getString("contactId", "")
         if (contactNo != null) {
             text_contactnumber.text = contactNo
         }

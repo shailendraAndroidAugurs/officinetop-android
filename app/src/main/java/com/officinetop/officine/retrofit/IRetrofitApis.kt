@@ -1084,7 +1084,8 @@ interface IRetrofitApis {
                                    @Query(Constant.Path.selectedCarId) selectedCarId: String,
                                    @Query(Constant.Path.userid) userid: String,
                                    @Query(Constant.Path.service_average_time) averagetime: String,
-                                   @Query(Constant.Path.couponid) couponid: String
+                                   @Query(Constant.Path.couponid) couponid: String,
+                                   @Query(Constant.Path.mainCategoryId) mainCategoryId: String
     ): Call<ResponseBody>
 
 
@@ -1098,13 +1099,13 @@ interface IRetrofitApis {
             @Field(Constant.Path.serviceID) categoryType: String,
             @Field(Constant.Path.price) selectedDate: String,
             @Field(Constant.Path.orderId) serviceQuotesInsertedId: String,
-            @Field(Constant.Path.selectedCarId) mainCategoryId: String,
-            @Field(Constant.Path.couponId) selectedCarId: String?,
+            @Field(Constant.Path.selectedCarId) selectedCarId: String,
+            @Field(Constant.Path.couponId) couponId: String?,
             @Field(Constant.Path.workshopId) workshopId: String?,
             @Field(Constant.Path.motservicetype) motservicetype: String?,
             @Field(Constant.Path.partid) parts: JSONArray,
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
-
+            @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.discountType) discountType: String,
             @Header(Constant.Fields.authorization) authToken: String,
@@ -1566,8 +1567,8 @@ interface IRetrofitApis {
             @Query(Constant.Path.distanceRange) distanceRange: String,
             @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
             @Query(Constant.Path.userLat) userLat: String,
-            @Query(Constant.Path.userLong) userLong: String
-
+            @Query(Constant.Path.userLong) userLong: String,
+            @Query(Constant.Path.mainCategoryId) mainCategoryId: String
     ): Call<ResponseBody>
 
     @FormUrlEncoded
