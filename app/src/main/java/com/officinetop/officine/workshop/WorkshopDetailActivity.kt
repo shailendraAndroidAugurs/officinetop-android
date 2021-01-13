@@ -391,7 +391,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash || isRevision || isTyre || isAssembly) {
+        if (isCarWash || isRevision || isTyre || isAssembly||isMotService) {
             getCalendarPrices()
         } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
@@ -703,6 +703,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         val dataJson = JSONObject(body)
                         val json = dataJson.getJSONObject("data")
 
+                        Log.d("checkjsonresponse",""+json);
+
                         currentWorkshopDetail = json.toString()
 
                         mainCategoryIDForAssembly = json.optString("main_category_id", "")
@@ -833,7 +835,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
 
-                            Log.d("mot avarageTime", json.optDouble("service_average_time").toString())
+                            Log.d("motavarageTime", json.optDouble("service_average_time").toString()+"    "+averageServiceTime)
                         }
 
                         if (averageServiceTime != 0.0) {
@@ -1224,13 +1226,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isMotService) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            val additionalDelay = (20 * 60 * 1000)
-            var bookingDuration = (averageServiceTime * 60) + additionalDelay
+          //  val additionalDelay = (20 * 60 * 1000)
+            Log.d("avragetime",""+averageServiceTime)
+            var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
+            Log.d("endtimebecome","end_time: "+endTime)
         } else if (isTyre) {
             slotStartTime = packageDetail.optString("start_time")
             slotEndTime = packageDetail.optString("end_time")
@@ -1445,21 +1449,13 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     SpecialConditionId.toRequestBody(), slotId.toRequestBody(), DiscountType.toRequestBody(), qutoesUserDescription.toRequestBody(), imageList)
             serviceQuotesBooking.enqueue(callback)
         } else if (isMotService) {
-            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-
-            val bookingDuration = (averageServiceTime * 60)
-            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
-            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
-            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-
-            val motdata = motpartlist.get(motServiceId.toString())
-            for (i in 0 until motdata!!.service_partID.size) {
+            val motPart = motpartlist.get(motServiceId.toString())
+            for (i in 0 until motPart!!.service_partID.size) {
                 val jsonObjpart = JSONObject()
-                jsonObjpart.put("part_id", motdata.service_partID[i])
+                jsonObjpart.put("part_id", motPart.service_partID[i])
                 jsonObjpart.put("quantity", "1")
-                jsonObjpart.put("part_coupon_id", motdata.service_partcouponID[i])
-                jsonObjpart.put("seller_id", motdata.seller_ID[i])
+                jsonObjpart.put("part_coupon_id", motPart.service_partcouponID[i])
+                jsonObjpart.put("seller_id", motPart.seller_ID[i])
                 motserviceSpecArray.put(jsonObjpart)
             }
             Log.d("mot avragetime", averageServiceTime.toString())
