@@ -97,8 +97,8 @@ class MotDetailActivity : BaseActivity() {
                         Constant.Path.mot_id to motServiceObject.id.toString(),
                         "mot_type" to motServiceObject.type.toString(),
                         Constant.Path.deliveryDate to deliveryDate.toString(),
-                        Constant.Path.motservices_time to itemsData.data.serviceaveragetime).putExtras(bundle))
-
+                        Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
+                        Constant.Path.mainCategoryId to  motServiceObject.main_category_id.toString()).putExtras(bundle))
             } else {
                 showInfoDialog(getString(R.string.partNotFound))
             }
