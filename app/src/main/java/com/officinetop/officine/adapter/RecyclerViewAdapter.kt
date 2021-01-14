@@ -223,10 +223,10 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 val endIndex = getSubString(items.description, 6)
                 val description = items.description.substring(startIndex, endIndex)
                 //Log.e("index of values=", "=startindex="+startIndex+"=endindesx="+endIndex+"=descr="+description)
-                      Log.d("checkstatusdata",""+items.typeStatus+"  "+items.imageUrl);
+                      Log.d("checkstatusdata",""+items.id+"  "+items.imageUrl);
                 if (!items.typeStatus.isNullOrBlank() && items.typeStatus.equals("2")){
                     title.text = "${if(items.manufacturer_description!=null) items.manufacturer_description else ""} ${if(items.seasonName!=null )items.seasonName else  ""} ${if(items.pr_description!=null )items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
-                Log.d("tyreType", "${items.manufacturer_description} ${items.seasonName} ${items.pr_description}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}");
+                Log.d("tyreType", "  ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}");
                 } else
                 title.text = "${if(items.manufacturer_description!=null) items.manufacturer_description else ""} ${tyreType} ${if(items.pr_description!=null )items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
 
