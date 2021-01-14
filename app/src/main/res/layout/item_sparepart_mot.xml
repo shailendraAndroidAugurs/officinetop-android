@@ -78,7 +78,7 @@
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:padding="@dimen/_5sdp"
                     android:tag="102"
-                    android:text="@string/updateCoupon"
+                    android:text="@string/update_Coupon"
                     android:textColor="@color/black"
                     android:visibility="@{listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"

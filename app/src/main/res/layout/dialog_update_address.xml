@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/Zip_Code"
+                    android:text="@string/zip_code"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="@string/Address_type"
+                    android:text="@string/address_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 

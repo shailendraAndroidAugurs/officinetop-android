@@ -70,7 +70,7 @@ class ResetPasswordActivity : BaseActivity() {
                                     // snackbar(reset_password, getMessageFromJSON(body))
                                     alert {
                                         message = getMessageFromJSON(body)
-                                        positiveButton(getString(R.string.opengmail)) {
+                                        positiveButton(getString(R.string.open_gmail)) {
                                             startActivity(Intent(packageManager.getLaunchIntentForPackage("com.google.android.gm")))
                                             finish()
                                         }

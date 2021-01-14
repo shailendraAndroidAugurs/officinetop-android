@@ -2,7 +2,6 @@ package com.officinetop.officine.MOT
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
@@ -10,7 +9,6 @@ import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
@@ -105,7 +103,7 @@ class MotListActivity : BaseActivity() {
                                         mServicesList.add(itemsData)
                                     }
                                     ed_search_km.isEnabled = false
-                                    btn_edit.text = getString(R.string.Edit)
+                                    btn_edit.text = getString(R.string.edit)
                                     saveMotCarKM(ed_search_km.text.toString())
 
                                     //getSelectedCar()!!.km_of_cars = ed_search_km.text.toString()

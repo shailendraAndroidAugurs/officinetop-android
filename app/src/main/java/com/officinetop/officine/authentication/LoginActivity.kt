@@ -371,7 +371,7 @@ class LoginActivity : BaseActivity() {
     private fun AlertReferralcode() {
 
         alert {
-            message = getString(R.string.checkreferral)
+            message = getString(R.string.check_referral)
             positiveButton(getString(R.string.yes)) {
                 setBottomSheet()
             }
@@ -406,7 +406,7 @@ class LoginActivity : BaseActivity() {
                 }
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, getString(R.string.enterreferralcode), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.enter_referral_code), Toast.LENGTH_LONG).show()
             }
         }
         bottomSheet.dialogclose.setOnClickListener(View.OnClickListener {
@@ -525,7 +525,7 @@ class LoginActivity : BaseActivity() {
     }*/
 
     private fun setSpannableText() {
-        val textMain = getString(R.string.termCondition_policy_login)
+        val textMain = getString(R.string.term_condition_policy_login)
         val text1 = getString(R.string.Conditions)
         val termsAndConditions = SpannableString(text1)
         termsAndConditions.setSpan(object : ClickableSpan() {

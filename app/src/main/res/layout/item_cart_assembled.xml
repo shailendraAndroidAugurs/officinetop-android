@@ -159,7 +159,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="left"
                         android:padding="0dp"
-                        android:text="@string/AppliedCoupon"
+                        android:text="@string/applied_coupon"
                         android:textColor="@color/green" />
 
                     <TextView
@@ -173,9 +173,9 @@
                         android:textColor="@color/green"
                         android:textSize="@dimen/_10sdp"
                         app:couponPrices="@{listItemViewModel.serviceAssemblyProductDescription.couponPrices!=null ? listItemViewModel.serviceAssemblyProductDescription.couponPrices: @string/zero }"
-                        app:coupontitle="@{listItemViewModel.serviceAssemblyProductDescription.couponTitle!=null ? listItemViewModel.serviceAssemblyProductDescription.couponTitle: @string/Concat }"
+                        app:coupontitle="@{listItemViewModel.serviceAssemblyProductDescription.couponTitle!=null ? listItemViewModel.serviceAssemblyProductDescription.couponTitle: @string/concat }"
 
-                        app:coupontype="@{listItemViewModel.serviceAssemblyProductDescription.couponType!=null ? listItemViewModel.serviceAssemblyProductDescription.couponType: @string/Concat }" />
+                        app:coupontype="@{listItemViewModel.serviceAssemblyProductDescription.couponType!=null ? listItemViewModel.serviceAssemblyProductDescription.couponType: @string/concat }" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -212,7 +212,7 @@
                     android:gravity="center"
                     android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
                     android:tag="100"
-                    android:text="@string/AddFeedback"
+                    android:text="@string/add_feedback"
                     android:textColor="@color/lite_blue"
                     android:tint="@color/gray_dark"
                     android:visibility="visible" />
@@ -234,7 +234,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_5sdp"
                 android:visibility="gone"
-                app:layoutvisibility="@{listItemViewModel.ServiceAssemblyProductDescription!=null &amp;&amp; listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus!=null ?listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus :@string/Concat}">
+                app:layoutvisibility="@{listItemViewModel.ServiceAssemblyProductDescription!=null &amp;&amp; listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus!=null ?listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus :@string/concat}">
 
                 <View
                     android:layout_width="match_parent"
@@ -253,7 +253,7 @@
                     android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:src="@drawable/ic_cart_menu"
                     android:tag="101"
-                    android:text="@string/SeeFeedback"
+                    android:text="@string/see_feedback"
                     android:textColor="@color/lite_blue"
                     android:tint="@color/gray_dark" />
 
@@ -329,7 +329,7 @@
                             android:layout_alignParentStart="true"
                             android:gravity="left"
                             android:padding="0dp"
-                            android:text="@{listItemViewModel.serviceDetail.serviceName!=null ? listItemViewModel.serviceDetail.serviceName:@string/Concat}"
+                            android:text="@{listItemViewModel.serviceDetail.serviceName!=null ? listItemViewModel.serviceDetail.serviceName:@string/concat}"
                             android:textColor="@color/black" />
 
 
@@ -385,7 +385,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="left"
                         android:padding="0dp"
-                        android:text="@{listItemViewModel.workshopDetails.companyName!=null ? listItemViewModel.workshopDetails.companyName:@string/Concat}"
+                        android:text="@{listItemViewModel.workshopDetails.companyName!=null ? listItemViewModel.workshopDetails.companyName:@string/concat}"
                         android:textColor="@color/black" />
 
                     <LinearLayout
@@ -399,7 +399,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:text="@{listItemViewModel.workshopDetails.registeredOffice!=null? listItemViewModel.workshopDetails.registeredOffice:@string/Concat}"
+                            android:text="@{listItemViewModel.workshopDetails.registeredOffice!=null? listItemViewModel.workshopDetails.registeredOffice:@string/concat}"
                             android:textColor="@color/gray_dark" />
 
                         <TextView
@@ -441,7 +441,7 @@
                             android:gravity="end"
                             android:padding="0dp"
                             android:textColor="@color/black"
-                            app:date="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/Concat}" />
+                            app:date="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/concat}" />
 
                     </RelativeLayout>
 
@@ -472,7 +472,7 @@
                                 android:layout_centerVertical="true"
 
                                 android:padding="0dp"
-                                android:text="@{listItemViewModel.startTime!=null ? listItemViewModel.startTime :@string/ZeroValue}"
+                                android:text="@{listItemViewModel.startTime!=null ? listItemViewModel.startTime :@string/zero_value}"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -484,7 +484,7 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="end"
                                 android:padding="0dp"
-                                android:text="@string/Concat"
+                                android:text="@string/concat"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -496,7 +496,7 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="end"
                                 android:padding="0dp"
-                                android:text="@{listItemViewModel.endTime!=null ? listItemViewModel.endTime :@string/ZeroValue}"
+                                android:text="@{listItemViewModel.endTime!=null ? listItemViewModel.endTime :@string/zero_value}"
                                 android:textColor="@color/black" />
                         </LinearLayout>
                     </LinearLayout>
@@ -515,7 +515,7 @@
                             android:layout_centerVertical="true"
                             android:gravity="left"
                             android:padding="0dp"
-                            android:text="@string/AppliedCoupon"
+                            android:text="@string/applied_coupon"
                             android:textColor="@color/green" />
 
                         <TextView
@@ -527,9 +527,9 @@
                             android:padding="@dimen/_5sdp"
                             android:textColor="@color/green"
                             android:textSize="@dimen/_10sdp"
-                            app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/Concat }"
-                            app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/Concat }"
-                            app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/Concat }" />
+                            app:couponPrices="@{listItemViewModel.couponPrices!=null ? listItemViewModel.couponPrices: @string/concat }"
+                            app:coupontitle="@{listItemViewModel.couponTitle!=null ? listItemViewModel.couponTitle: @string/concat }"
+                            app:coupontype="@{listItemViewModel.couponType!=null ? listItemViewModel.couponType: @string/concat }" />
                     </LinearLayout>
 
                     <TextView
@@ -543,7 +543,7 @@
                         android:paddingBottom="0dp"
                         android:visibility="gone"
                         android:textColor="@color/black"
-                        app:carModelName="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/Concat }" />
+                        app:carModelName="@{listItemViewModel.bookingDate!=null? listItemViewModel.bookingDate:@string/concat }" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -568,7 +568,7 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="2"
                 android:padding="@dimen/_5sdp"
-                app:feedbackStatus="@{listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.feedbackstatus!=null ? listItemViewModel.serviceDetail.feedbackstatus : @string/Concat }"
+                app:feedbackStatus="@{listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.feedbackstatus!=null ? listItemViewModel.serviceDetail.feedbackstatus : @string/concat }"
                 app:feedbackvisibility="@{listItemViewModel.status}">
 
                 <TextView
@@ -578,7 +578,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
-                    android:text="@string/AddFeedback"
+                    android:text="@string/add_feedback"
                     android:textColor="@color/lite_blue"
                     android:tint="@color/gray_dark"
                     android:visibility="visible" />
@@ -603,7 +603,7 @@
                     android:gravity="center"
                     android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:src="@drawable/ic_cart_menu"
-                    android:text="@string/SeeFeedback"
+                    android:text="@string/see_feedback"
                     android:textColor="@color/lite_blue"
                     android:tint="@color/gray_dark" />
 

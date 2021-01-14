@@ -605,7 +605,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
                 if (getIsAvailableDataInCart()) {
                     Log.d("HomeActivity", "Delete Call")
-                    showConfirmDialog(getString(R.string.CartDataRemoved)) { DeleteCartData(car) }
+                    showConfirmDialog(getString(R.string.cart_data_removed)) { DeleteCartData(car) }
                 } else {
                     DeleteCartData(car)
                 }

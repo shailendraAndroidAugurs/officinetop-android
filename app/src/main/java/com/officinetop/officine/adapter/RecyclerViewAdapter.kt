@@ -11,6 +11,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.car_parts.TyreDetailActivity
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.utils.*
+import kotlinx.android.synthetic.main.activity_tyre_detail.*
 import kotlinx.android.synthetic.main.item_tyre.view.*
 import org.jetbrains.anko.intentFor
 
@@ -57,24 +58,24 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
     fun addLoading() {
         isLoadingVisible = true
-      /*  listItems.add(Models.TyreDetailItem("", "", "", "", 0, "", null, null,
-                "", "", "", "", "0", "0", "0", "", "", "",
-                "", "", "", "", "", "", 0, "", "", "",
-                "", "", null, "", "", null, "0", "Y", "", "", null
-                , "", "", ""))*/
+        /*  listItems.add(Models.TyreDetailItem("", "", "", "", 0, "", null, null,
+                  "", "", "", "", "0", "0", "0", "", "", "",
+                  "", "", "", "", "", "", 0, "", "", "",
+                  "", "", null, "", "", null, "0", "Y", "", "", null
+                  , "", "", ""))*/
 
     }
 
     fun removeLoading() {
         isLoadingVisible = false
-    /*    val position = listItems.size - 1
-        if (position >= 0) {
-            val item: Models.TyreDetailItem = getItem(position)
-            if (item != null) {
-                listItems.removeAt(position)
-                notifyItemRemoved(position)
-            }
-        }*/
+        /*    val position = listItems.size - 1
+            if (position >= 0) {
+                val item: Models.TyreDetailItem = getItem(position)
+                if (item != null) {
+                    listItems.removeAt(position)
+                    notifyItemRemoved(position)
+                }
+            }*/
     }
 
 
@@ -182,25 +183,27 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             }
 
 
-            when (items.type) {
+            when (items.season_tyre_type) {
                 "s" -> {
-
                     context.loadImageFromDrawable(R.drawable.summer, season_icon)
-                    tyreSeason = "Summer"
+                    tyreSeason = context.getString(R.string.Summer)
 
                 }
                 "w" -> {
 
                     context.loadImageFromDrawable(R.drawable.winter, season_icon)
-                    tyreSeason = "Winter"
+                    tyreSeason =context.getString(R.string.Winter)
                 }
                 "g" -> {
 
                     context.loadImageFromDrawable(R.drawable.all_seasons_tyre, season_icon)
-                    tyreSeason = "All-Season"
+                    tyreSeason = context.getString(R.string.All_Season)
                 }
 
             }
+
+
+
             if (!items.tyreSeasonImageURL.isNullOrBlank()) {
                 context.loadImage(items.tyreSeasonImageURL, season_icon)
             }
@@ -219,17 +222,11 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             }
 
             try {
-                val startIndex = getSubString(items.description!!, 2)
-                val endIndex = getSubString(items.description, 6)
-                val description = items.description.substring(startIndex, endIndex)
-                //Log.e("index of values=", "=startindex="+startIndex+"=endindesx="+endIndex+"=descr="+description)
-                      Log.d("checkstatusdata",""+items.id+"  "+items.imageUrl);
-                if (!items.typeStatus.isNullOrBlank() && items.typeStatus.equals("2")){
-                    title.text = "${if(items.manufacturer_description!=null) items.manufacturer_description else ""} ${if(items.seasonName!=null )items.seasonName else  ""} ${if(items.pr_description!=null )items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
-                Log.d("tyreType", "  ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}");
+                if (!items.typeStatus.isNullOrBlank() && items.typeStatus.equals("2")) {
+                    title.text = "${if (items.manufacturer_description != null) items.manufacturer_description else ""} ${if (tyreSeason != null) tyreSeason else ""} ${if (items.pr_description != null) items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
+                    Log.d("tyreType", "  ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}");
                 } else
-                title.text = "${if(items.manufacturer_description!=null) items.manufacturer_description else ""} ${tyreType} ${if(items.pr_description!=null )items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
-
+                    title.text = "${if (items.manufacturer_description != null) items.manufacturer_description else ""} ${if (tyreSeason != null) tyreSeason else ""} ${if (items.pr_description != null) items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -282,5 +279,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
         }
     }
+
+
 
 }

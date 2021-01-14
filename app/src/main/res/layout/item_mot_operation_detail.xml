@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:padding="@dimen/_5sdp"
             android:paddingLeft="8dp"
-            android:text="@{listItemViewModel.groupName!=null ? listItemViewModel.groupName:@string/Concat}"
+            android:text="@{listItemViewModel.groupName!=null ? listItemViewModel.groupName:@string/concat}"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_Description"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
             android:paddingLeft="@dimen/_25sdp"
-            android:text="@{listItemViewModel.operationDescription !=null ? listItemViewModel.operationDescription:@string/Concat}"
+            android:text="@{listItemViewModel.operationDescription !=null ? listItemViewModel.operationDescription:@string/concat}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_Title" />
 

@@ -142,7 +142,7 @@
                                         android:layout_height="wrap_content"
 
                                         android:gravity="center"
-                                        android:text="@string/ZeroValue"
+                                        android:text="@string/zero_value"
                                         android:textColor="@color/theme_orange">
 
                                     </TextView>
@@ -167,7 +167,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="@string/ZeroValue"
+                                        android:text="@string/zero_value"
                                         android:textColor="@color/theme_orange">
 
                                     </TextView>
@@ -355,7 +355,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="@dimen/_20sdp"
-                        android:text="@string/partinfo"
+                        android:text="@string/part_info"
                         android:textAlignment="textEnd"
                         android:textColor="@color/lite_blue"
                         android:textStyle="bold"

@@ -309,7 +309,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/AppliedCoupon"
+                                android:text="@string/applied_coupon"
                                 android:textColor="@color/green"
                                 android:textSize="@dimen/_10sdp"
                                 android:visibility="visible">
@@ -519,7 +519,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/AppliedCoupon"
+                                android:text="@string/applied_coupon"
                                 android:textColor="@color/green"
                                 android:textSize="@dimen/_10sdp"
                                 android:visibility="visible">
@@ -602,7 +602,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/RemovewishList"
+                    android:text="@string/remove_wish_list"
                     android:textAllCaps="true"
                     android:tint="@color/gray_dark"
                     android:visibility="visible" />

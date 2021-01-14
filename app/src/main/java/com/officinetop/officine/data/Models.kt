@@ -519,7 +519,11 @@ object Models {
             @SerializedName("rating_count")
             var rating_count: String = "",
             @SerializedName("wish_list")
-            var wishlist: String = ""
+            var wishlist: String = "",
+            @SerializedName("main_category_id")
+            var mainCategoryId: String = ""
+
+
     ) : ListItemViewModel()
 
     data class Part(

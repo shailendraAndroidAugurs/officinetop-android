@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/changepassword"
+                android:text="@string/change_password"
                 android:textColor="@color/gradient_orange_dark"
                 android:textSize="@dimen/_18sdp" />
 
@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/oldpasword"
+                    android:text="@string/old_password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/newpasword"
+                    android:text="@string/new_password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/retypepasword"
+                    android:text="@string/re_type_password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 

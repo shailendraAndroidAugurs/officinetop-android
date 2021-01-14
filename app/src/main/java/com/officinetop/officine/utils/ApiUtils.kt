@@ -361,7 +361,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
             if (cartData.workshopDetail != null && !cartData.workshopDetail.id.isNullOrBlank()) {
                 if (i == 0) {
                     workshopId = cartData.workshopDetail.id
-                } else if (!workshopId.isNullOrBlank() &&!cartData.workshopDetail.id.equals(workshopId)) {
+                } else if (!workshopId.isNullOrBlank() && !cartData.workshopDetail.id.equals(workshopId)) {
                     isMultipleWorkshopAvailable = true
                 }
 
@@ -369,7 +369,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
 
         } else if (cartData.CartType == "T" || cartData.CartType == "S") {
-             isProductAvailable = true
+            isProductAvailable = true
             val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() else 0))
             if (deliveryDatePridicted.isNullOrBlank()) {
                 val dateFormat = SimpleDateFormat("yyy-MM-dd")
@@ -419,15 +419,16 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
             view.rv_delivery_prices.visibility = View.VISIBLE
             view.tv_delivery_prices.visibility = View.VISIBLE
             delivery_fees = cartData.deliveryPrice.toDouble()
-            view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string,delivery_fees.roundTo2Places().toString())
+
             //if someone booked only service in the cart so we will be not add delivery fee inside total amount.
             if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
-                   view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
-               }
-            else{
-                   view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
+                view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, "0")
+                view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
+            } else {
+                view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, delivery_fees.roundTo2Places().toString())
+                view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
 
-               }
+            }
 
         }
 
@@ -441,7 +442,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
 
     }
-    context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString(), cartItemType,isMultipleWorkshopAvailable)
+    context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString(), cartItemType, isMultipleWorkshopAvailable)
 }
 
 
@@ -675,7 +676,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
                 } else {
-                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
+                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.concat)
                 }
                 if (!list[p1].profile_image.isNullOrBlank()) {
                     context?.loadImage(list[p1].profile_image, p0.itemView.Iv_UserImage)
@@ -695,7 +696,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                 } else if (list[p1].fName.isNullOrBlank() && !list[p1].lName.isNullOrBlank()) {
                     p0.itemView.tv_userName.text = list[p1].lName.toString()
                 } else {
-                    p0.itemView.tv_userName.text = getString(R.string.Concat)
+                    p0.itemView.tv_userName.text = getString(R.string.concat)
                 }
                 if (list[p1].workshopId != null) {
                     p0.itemView.tv_product_type.text = getString(R.string.Workshop)
@@ -711,12 +712,12 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                 if (!list[p1].createdAt.isNullOrBlank()) {
                     p0.itemView.tv_date.text = DateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
                 } else {
-                    p0.itemView.tv_date.text = getString(R.string.Concat)
+                    p0.itemView.tv_date.text = getString(R.string.concat)
                 }
                 if (!list[p1].comments.isNullOrBlank()) {
                     p0.itemView.tv_userComment.text = list[p1].comments
                 } else {
-                    p0.itemView.tv_userComment.text = getString(R.string.Concat)
+                    p0.itemView.tv_userComment.text = getString(R.string.concat)
                 }
 
                 if (list[p1].images != null && list[p1].images.size != 0) {
@@ -1026,7 +1027,7 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList)) { movetologinPage(context) }
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list)) { movetologinPage(context) }
 
 
             if (response?.isSuccessful!!) {
@@ -1066,7 +1067,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.PleaselogintocontinueforRemoveWishList)) { movetologinPage(context) }
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list)) { movetologinPage(context) }
             if (response?.isSuccessful!!) {
                 val body = JSONObject(body)
                 if (body.has("message")) {
@@ -1129,7 +1130,7 @@ fun DateFormatChangeYearToMonth(date: String): String? {
 }
 
 fun Context.addReadMore(text: String, textView: TextView) {
-    val ss = SpannableString(text.substring(0, 150) + getString(R.string.morecontent))
+    val ss = SpannableString(text.substring(0, 150) + getString(R.string.more_content))
     val clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(view: View) {
             addReadLess(text, textView)
@@ -1145,7 +1146,7 @@ fun Context.addReadMore(text: String, textView: TextView) {
             }
         }
     }
-    ss.setSpan(clickableSpan, ss.length - getString(R.string.morecontent).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    ss.setSpan(clickableSpan, ss.length - getString(R.string.more_content).length, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     textView.text = ss
     textView.movementMethod = LinkMovementMethod.getInstance()
 }

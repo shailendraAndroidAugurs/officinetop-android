@@ -75,7 +75,7 @@ class Support_Activity : BaseActivity() {
             } else {
                 Toast.makeText(
                         applicationContext,
-                        getString(R.string.entermessage), Toast.LENGTH_LONG).show()
+                        getString(R.string.enter_message), Toast.LENGTH_LONG).show()
             }
         })
     }

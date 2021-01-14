@@ -106,7 +106,7 @@ class QuotesActivity : BaseActivity() {
             if (isLoggedIn()) {
                 quotesApiCall("1")
             } else {
-                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforQutoesRequestSend), { movetologinPage(this@QuotesActivity) })
+                showConfirmDialogForLogin(getString(R.string.please_login_to_continue_for_qutoes_request_send), { movetologinPage(this@QuotesActivity) })
             }
 
 
@@ -196,7 +196,7 @@ class QuotesActivity : BaseActivity() {
                             progress_bar.visibility = View.GONE
                             if (response.isSuccessful) {
                                 try {
-                                    showInfoDialog(getString(R.string.qutoes_request_send_sucessfully),false) { resetView() }
+                                    showInfoDialog(getString(R.string.quotes_request_send_successfully),false) { resetView() }
 
 
                                 } catch (e: Exception) {

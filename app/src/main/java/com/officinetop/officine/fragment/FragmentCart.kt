@@ -49,7 +49,7 @@ class FragmentCart : Fragment(), OnCartListCallback {
                 val cartItemType = sharedprefrence1?.getString(Constant.Path.cartItemType, "3")
                 val isMultipleServicesAvailable = sharedprefrence1?.getBoolean("isMultipleServicesAvailable", false)
                 if (isMultipleServicesAvailable!!) {
-                    context?.showInfoDialog(getString(R.string.confirm_order_with_multipal_workshop), false)
+                    context?.showInfoDialog(getString(R.string.confirm_order_with_multiple_workshop), false)
                     return@setOnClickListener
                 }
 

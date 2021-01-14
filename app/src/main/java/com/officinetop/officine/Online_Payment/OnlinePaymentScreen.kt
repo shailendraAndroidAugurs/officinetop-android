@@ -76,7 +76,7 @@ class OnlinePaymentScreen : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_online_payment)
         setSupportActionBar(toolbar)
-        toolbar_title.text = getString(R.string.paymet_name)
+        toolbar_title.text = getString(R.string.payment_name)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initviewsId()
         initviews()
@@ -140,11 +140,11 @@ class OnlinePaymentScreen : BaseActivity() {
 
 
 
-        tv_userWallet.text = getString(R.string.Wallet) + user_WalletAmount.toDouble().roundTo2Places().toString()
+        tv_userWallet.text = getString(R.string.wallet) + user_WalletAmount.toDouble().roundTo2Places().toString()
 
         if (user_WalletAmount == "0" || user_WalletAmount == "") {
             tv_TotalAmount.visibility = View.GONE
-            tv_userWallet.text = getString(R.string.Wallet) + "0"
+            tv_userWallet.text = getString(R.string.wallet) + "0"
             tv_payable_amount.text = getString(R.string.payable_amount, TotalAmount)
             payableAmount = TotalAmount
             usedWalletAmount = "0"

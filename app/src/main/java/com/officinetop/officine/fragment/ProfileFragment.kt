@@ -250,17 +250,17 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             //dismiss dialog
             //mAlertDialog?.dismiss()
             if (oldpaswrdEditText.text.isEmpty()) {
-                Toast.makeText(context, getString(R.string.oldpasword), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.old_password), Toast.LENGTH_LONG).show()
             } else if (newpaswrdEditText.text.isEmpty()) {
-                Toast.makeText(context, getString(R.string.newpasword), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.new_password), Toast.LENGTH_LONG).show()
             } else if (retypepaswrdEditText.text.isEmpty()) {
-                Toast.makeText(context, getString(R.string.retypepasword), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.re_type_password), Toast.LENGTH_LONG).show()
             } else {
                 if (newpaswrdEditText.text.toString() == retypepaswrdEditText.text.toString()) {
                     mAlertDialog?.dismiss()
                     Changepassword(oldpaswrdEditText.text.toString(), newpaswrdEditText.text.toString(), retypepaswrdEditText.text.toString(), context?.getBearerToken()!!)
                 } else {
-                    Toast.makeText(context, getString(R.string.password_notmatched), Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.password_not_matched), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -370,7 +370,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         text_address.text = address
         txt_referralcode.text = if (!referralcode.isNullOrBlank()) referralcode.toUpperCase() else ""
         //text_landmark.text = getString(R.string.Landmark) + landmark
-        text_zipcode.text = getString(R.string.zipcode) + zipCode
+        text_zipcode.text = getString(R.string.zip_code) + zipCode
         text_contactnumber.text = mobileno
         context?.loadImageprofile(imageurl, profileimage)
     }

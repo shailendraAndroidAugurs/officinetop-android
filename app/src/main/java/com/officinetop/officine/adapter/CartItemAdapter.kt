@@ -122,7 +122,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
                 Log.d("cartItemAdapter", "quantity:Sp : $quantity")
                 if (item.pfuDesc.isNullOrBlank()) {
-                    product_Vat.text = context.getString(R.string.Concat)
+                    product_Vat.text = context.getString(R.string.concat)
                 } else {
                     product_Vat.text = item.pfuDesc
                 }
@@ -155,7 +155,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 if (!item.avilability.isNullOrBlank() && item.avilability.equals("0")) {
                     isProduct_Available.visibility = View.VISIBLE
                     if (!item.maxProductQuantity.isNullOrBlank() && item.maxProductQuantity.toInt() >= 0) {
-                        isProduct_Available.text = context.getString(R.string.OutOfStock)
+                        isProduct_Available.text = context.getString(R.string.out_of_stock)
                         quantitySpinner.visibility = View.GONE
                         ProceedToPay?.isEnabled = false
                         ProceedToPay?.let { Snackbar.make(it, context.getString(R.string.PleaseDeleteOutOfStockProduct), Snackbar.LENGTH_SHORT).show() }
@@ -165,7 +165,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         quantity = item.maxProductQuantity.toInt()
 
                         updateCartQuantity(quantity, item, item.id)
-                        isProduct_Available.text = context.getString(R.string.ReMainingItem, item.maxProductQuantity)
+                        isProduct_Available.text = context.getString(R.string.re_maining_item, item.maxProductQuantity)
                     }
 
                 }
@@ -219,7 +219,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     if (!item.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && item.serviceAssemblyProductDescription.productQuantity != "0")
                         quantity = item.serviceAssemblyProductDescription.productQuantity.toInt()
                     if (item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank()) {
-                        product_Vat.text = context.getString(R.string.Concat)
+                        product_Vat.text = context.getString(R.string.concat)
                         product_Vat.visibility = View.GONE
 
                     } else {
@@ -310,7 +310,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
-                        serviceName.text = context.getString(R.string.cart_qutoes) +" "+ item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        serviceName.text = context.getString(R.string.cart_quotes) +" "+ item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         cartItemServiceImage.visibility = View.GONE
                         serviceName.gravity = Gravity.CENTER
                         tvPlus.gravity = Gravity.CENTER
@@ -341,7 +341,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 if (!item.avilability.isNullOrBlank() && item.avilability.equals("0")) {
                     isProduct_Available.visibility = View.VISIBLE
                     if (!item.maxProductQuantity.isNullOrBlank() && item.maxProductQuantity.toInt() >= 0) {
-                        isServicesAvailable.text = context.getString(R.string.OutOfStock)
+                        isServicesAvailable.text = context.getString(R.string.out_of_stock)
                         quantitySpinner.visibility = View.GONE
                         ProceedToPay?.isEnabled = false
                         ProceedToPay?.let { Snackbar.make(it, context.getString(R.string.PleaseDeleteOutOfStockProduct), Snackbar.LENGTH_SHORT).show() }
@@ -352,9 +352,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                             updateCartQuantity(quantity, item, item.serviceAssemblyProductDescription.id)
                         }
 
-                        isServicesAvailable.text = context.getString(R.string.ReMainingItem, item.maxProductQuantity)
+                        isServicesAvailable.text = context.getString(R.string.re_maining_item, item.maxProductQuantity)
                     } else {
-                        isServicesAvailable.text = context.getString(R.string.WorkshopNotProvideServices)
+                        isServicesAvailable.text = context.getString(R.string.workshop_not_provide_services)
                         ProceedToPay?.isEnabled = false
                     }
 

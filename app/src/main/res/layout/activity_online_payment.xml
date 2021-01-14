@@ -46,7 +46,7 @@
                     android:drawableLeft="@drawable/ic_wallet"
                     android:drawablePadding="15dp"
                     android:gravity="end"
-                    android:text="@string/Wallet"
+                    android:text="@string/wallet"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/Deliveryaddress"
+                    android:text="@string/delivery_address"
                     android:textColor="@color/black_de"
                     android:textSize="@dimen/_15sdp" />
 
@@ -114,7 +114,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/Address"
+                                android:text="@string/address"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -233,7 +233,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/WalletInfo"
+                        android:text="@string/wallet_Info"
                         android:visibility="gone" />
 
                     <Button
@@ -273,7 +273,7 @@
                         <RadioButton
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Paypal" />
+                            android:text="@string/pay_pal" />
 
                         <ImageView
                             android:layout_width="match_parent"

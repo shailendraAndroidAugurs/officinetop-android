@@ -226,7 +226,7 @@
                         android:id="@+id/tv_who_we_are"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/whoweare" />
+                        android:text="@string/who_we_are" />
 
                 </LinearLayout>
 
@@ -306,7 +306,7 @@
                         android:id="@+id/tv_Contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/contactus" />
+                        android:text="@string/contact_us" />
 
                 </LinearLayout>
 

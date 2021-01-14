@@ -100,7 +100,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { movetologinPage(this) })
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
                             if (body.has("message")) {
@@ -128,7 +128,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.PleaselogintocontinueforRemoveWishList), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), true) { movetologinPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -235,7 +235,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--" + productPrice + "--" +
                     intent.hasExtra(Constant.Path.productType) + "--" + intent.getStringExtra(Constant.Path.productType).equals("tyre", true))
 
-            product_price.text = getString(R.string.tyreprice_text, productPrice.toString())
+            product_price.text = getString(R.string.tyre_price_text, productPrice.toString())
             if (productIsPair) {
                 if (productPrice != null) {
                     productTotalPrices.text = getString(R.string.tyre_price_total, (productPrice * 2).toString())

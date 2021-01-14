@@ -314,7 +314,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.PleaselogintocontinueforAddWishList), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { movetologinPage(this) })
 
 
                         if (response?.isSuccessful!!) {
@@ -343,7 +343,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.PleaselogintocontinueforRemoveWishList), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), { movetologinPage(this) })
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -429,7 +429,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     private fun setTotalPriceForQty(qty: Int) {
         val t_price = price.toFloat() + pfuAmount
         oneItemAdditionalPrice = t_price
-        product_price_.text = getString(R.string.tyreprice_text, price.toFloat().toDouble().roundTo2Places().toString()) /*+ "," + getString(R.string.PFU_price, pfuAmount.toDouble().roundTo2Places().toString())*/
+        product_price_.text = getString(R.string.tyre_price_text, price.toFloat().toDouble().roundTo2Places().toString()) /*+ "," + getString(R.string.PFU_price, pfuAmount.toDouble().roundTo2Places().toString())*/
         productTotalPrices.text = getString(R.string.tyre_price_total, (price.toFloat().toDouble().roundTo2Places() * qty.toDouble()).toDouble().roundTo2Places().toString())
         totalPrice = t_price * qty
     }
@@ -525,11 +525,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
         selectedProductID = detail.id!!
 
         if (!detail.typeStatus.isNullOrBlank() && detail.typeStatus.equals("2")) {
-            product_name.text = "${if (detail.manufacturer_description != null) detail.manufacturer_description else ""} ${if (detail.seasonName != null) detail.seasonName else ""} ${if (detail.pr_description != null) detail.pr_description else ""}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}   ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"//
+            product_name.text = "${if (detail.manufacturer_description != null) detail.manufacturer_description else ""} ${if (tyreType != null) tyreType else ""} ${if (detail.pr_description != null) detail.pr_description else ""}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}   ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"//
 
         } else
-            product_name.text = "${detail.manufacturer_description} ${tyreType} ${detail.pr_description}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter}"
-
+            product_name.text = "${if (detail.manufacturer_description != null) detail.manufacturer_description else ""} ${if (tyreType != null) tyreType else ""} ${detail.pr_description}\n${detail.max_width}/${detail.max_aspect_ratio} R${detail.max_diameter} ${if (detail.load_speed_index != null) detail.load_speed_index else ""} ${if (detail.speed_index != null) detail.speed_index else ""}"
 
 
 
@@ -909,4 +908,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("Detail:", "Allobject null: null")
         }
     }
+
+
 }

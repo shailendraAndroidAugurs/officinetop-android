@@ -98,7 +98,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             if (Address.isNullOrEmpty() && latitude.isNullOrEmpty() && latitude.isNullOrEmpty()) {
                 Toast.makeText(this, getString(R.string.Please_Select_Address), Toast.LENGTH_LONG).show()
             } else if (!mDialogView.spinner_AddressType.isSelected) {
-                Toast.makeText(this, getString(R.string.selectAddressType), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.select_address_type), Toast.LENGTH_LONG).show()
             } else if (edt_entered_ZipCode.text.isNullOrEmpty()) {
                 Toast.makeText(this, getString(R.string.enterZipCode), Toast.LENGTH_LONG).show()
             } else {

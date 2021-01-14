@@ -15,7 +15,7 @@
         style="@style/TextViewWhite.VerySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Concat" />
+        android:text="@string/concat" />
 
     <TextView
         android:id="@+id/item_text_middle"
@@ -27,7 +27,7 @@
         android:background="@drawable/rounded_white_background"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/concatDateformate"
+        android:text="@string/concat_date_formate"
         android:textColor="@color/colorAccent" />
 
     <TextView
@@ -35,7 +35,7 @@
         style="@style/TextViewWhite.VerySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Concat" />
+        android:text="@string/concat" />
 
 
 </LinearLayout>

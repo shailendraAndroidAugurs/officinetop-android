@@ -62,7 +62,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
             //dismiss dialog
             //mAlertDialog?.dismiss()
             if (edt_entered_mobile.text.isEmpty()) {
-                Toast.makeText(this, getString(R.string.entercontact_number), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.enter_contact_number), Toast.LENGTH_LONG).show()
 
             } else {
 
@@ -196,10 +196,10 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
             //dismiss dialog
             //mAlertDialog?.dismiss()
             if (edt_entered_mobile.text.isEmpty()) {
-                Toast.makeText(this, getString(R.string.entercontact_number), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.enter_contact_number), Toast.LENGTH_LONG).show()
 
             } else if (mobileNo == edt_entered_mobile.text.toString()) {
-                Toast.makeText(this, getString(R.string.UpdateContact), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.update_contact), Toast.LENGTH_LONG).show()
             } else {
 
                 UpdateContactFromServer(edt_entered_mobile.text.toString(), contactId)

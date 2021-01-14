@@ -65,9 +65,9 @@ class ProfileSetting : BaseActivity() {
         tv_carWashingOffer.setText(R.string.notification_workshop)
         tv_notify_me_about_my_car_revision.setText(R.string.notification_revision)
         tv_information.setText(R.string.app_info)
-        tv_who_we_are.setText(R.string.whoweare)
+        tv_who_we_are.setText(R.string.who_we_are)
         tv_privacy.setText(R.string.privacy)
-        tv_Contact.setText(R.string.contactus)
+        tv_Contact.setText(R.string.contact_us)
         tv_condition_purchage.setText(R.string.condition)
         textview_whowe_are.setText(R.string.readme)
         textview_privacy.setText(R.string.readme)
@@ -87,7 +87,7 @@ class ProfileSetting : BaseActivity() {
         })
         textview_deleteaccount.setOnClickListener(View.OnClickListener {
             alert {
-                message = getString(R.string.deleteaccount)
+                message = getString(R.string.delete_account)
                 positiveButton(getString(R.string.yes)) {
                     deleteAccount()
                 }
