@@ -106,7 +106,7 @@
                     android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
                     android:padding="@dimen/_5sdp"
                     android:tag="102"
-                    android:text="@string/updateCoupon"
+                    android:text="@string/update_Coupon"
                     android:textColor="@color/black"
                     android:visibility="@{listItemViewModel.parts!=null  &amp;&amp; listItemViewModel.couponList!=null &amp;&amp; listItemViewModel.couponList.size()!=0?View.VISIBLE:View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -248,7 +248,7 @@
             android:onClick="@{(v)-> listItemViewModel.onListItemViewClickListener.onItemClick(v,listItemViewModel.adapterPostion)}"
             android:padding="@dimen/_2sdp"
             android:tag="200"
-            android:text="@string/partinfo"
+            android:text="@string/part_info"
             android:textColor="@color/md_blue_700"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintTop_toBottomOf="@+id/maintenance_ourdescription" />

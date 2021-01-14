@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="@string/Alphabetical" />
+            android:text="@string/alphabetical" />
 
         <RadioGroup
             android:id="@+id/radio_grp_Alphabetical"
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:checked="true"
-                android:text="@string/Ascending" />
+                android:text="@string/ascending" />
 
 
             <View
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:text="@string/Descending" />
+                android:text="@string/descending" />
 
         </RadioGroup>
 

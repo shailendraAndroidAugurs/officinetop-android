@@ -62,7 +62,7 @@ class RegisterActivity : BaseActivity() {
             } else {
 
                 alert {
-                    message = getString(R.string.removereferral)
+                    message = getString(R.string.remove_referral)
                     positiveButton(getString(R.string.no)) {
 
                     }
@@ -208,7 +208,7 @@ class RegisterActivity : BaseActivity() {
             if (referralCode.length > 1) {
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, getString(R.string.enterreferralcode), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.enter_referral_code), Toast.LENGTH_LONG).show()
             }
         }
         bottomSheet.dialogclose.setOnClickListener(View.OnClickListener {

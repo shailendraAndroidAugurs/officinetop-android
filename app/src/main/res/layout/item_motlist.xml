@@ -67,7 +67,7 @@
             android:gravity="end"
             android:paddingRight="@dimen/_5sdp"
             android:textColor="@color/black"
-            app:CarKM="@{listItemViewModel.serviceKms!=null ?listItemViewModel.serviceKms:@string/ZeroValue}"
+            app:CarKM="@{listItemViewModel.serviceKms!=null ?listItemViewModel.serviceKms:@string/zero_value}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_Description"

@@ -50,7 +50,7 @@ class PartList_Replacement : BaseActivity() {
         setContentView(R.layout.activity_part_list__replacement)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar_title.text = getString(R.string.partlist)
+        toolbar_title.text = getString(R.string.part_list)
         partID = intent?.getStringExtra("ID") ?: ""
         n3_services_id = intent?.getStringExtra("n3_services_Id") ?: ""
         versionId = intent?.getStringExtra("version_id") ?: ""

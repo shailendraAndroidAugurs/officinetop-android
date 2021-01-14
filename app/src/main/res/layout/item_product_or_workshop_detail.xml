@@ -241,7 +241,7 @@
                     android:id="@+id/tv_couponLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/AppliedCoupon"
+                    android:text="@string/applied_coupon"
                     android:textColor="@color/green"
 
                     android:textSize="@dimen/_10sdp">

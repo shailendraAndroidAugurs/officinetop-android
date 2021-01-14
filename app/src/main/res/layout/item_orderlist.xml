@@ -45,7 +45,7 @@
                         android:layout_toStartOf="@+id/tv_orderDate"
                         android:layout_toEndOf="@+id/tv_orderid"
                         android:layout_weight="1"
-                        android:text="@{listItemViewModel.orderId!=null  ? listItemViewModel.orderId : @string/Concat}"
+                        android:text="@{listItemViewModel.orderId!=null  ? listItemViewModel.orderId : @string/concat}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
 
@@ -59,7 +59,7 @@
                         android:gravity="end"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
-                        app:date="@{listItemViewModel.orderDate!=null  ? listItemViewModel.orderDate : @string/Concat}" />
+                        app:date="@{listItemViewModel.orderDate!=null  ? listItemViewModel.orderDate : @string/concat}" />
 
                 </RelativeLayout>
 
@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/_5sdp"
-                    app:orderProgress="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId!=null? listItemViewModel.status:@string/Concat}">
+                    app:orderProgress="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId!=null? listItemViewModel.status:@string/concat}">
 
 
                     <LinearLayout
@@ -326,7 +326,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.tracking_by !=null ? listItemViewModel.orderTracking.tracking_by : @string/Concat}"
+                            android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.tracking_by !=null ? listItemViewModel.orderTracking.tracking_by : @string/concat}"
                             android:textSize="@dimen/_12sdp"
                             android:visibility="visible" />
                     </LinearLayout>
@@ -357,7 +357,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_5sdp"
-                                android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId !=null ? listItemViewModel.orderTracking.trackingId : @string/Concat}"
+                                android:text="@{listItemViewModel.orderTracking!=null &amp;&amp; listItemViewModel.orderTracking.trackingId !=null ? listItemViewModel.orderTracking.trackingId : @string/concat}"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp"
                                 android:visibility="visible" />
@@ -384,7 +384,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/expectedtime"
+                            android:text="@string/expected_time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp"
                             android:visibility="visible" />
@@ -479,7 +479,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/Invoice"
+                                android:text="@string/invoice"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
                         </LinearLayout>

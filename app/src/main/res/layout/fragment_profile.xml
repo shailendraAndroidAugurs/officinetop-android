@@ -280,7 +280,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/wishlist"
+                            android:text="@string/wish_list"
                             android:textColor="@color/white" />
 
                     </LinearLayout>
@@ -302,7 +302,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/profilesettings"
+                            android:text="@string/profile_settings"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
@@ -381,7 +381,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/Address"
+                                android:text="@string/address"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -444,14 +444,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/invitefirend"
+                            android:text="@string/invite_friend"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/invitefirendoffers" />
+                            android:text="@string/invite_friend_offers" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -508,7 +508,7 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
                     android:background="@drawable/shape_button_rounded_orange"
-                    android:text="@string/changepassword" />
+                    android:text="@string/change_password" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

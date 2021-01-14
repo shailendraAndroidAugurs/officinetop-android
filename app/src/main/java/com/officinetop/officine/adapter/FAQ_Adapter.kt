@@ -32,7 +32,7 @@ class FAQ_Adapter(private val context: Context, private val faqList: List<Models
                     holder.question.text = Html.fromHtml(faqList[position].title)
                 }
             } else {
-                holder.question.text = context.getString(R.string.Concat)
+                holder.question.text = context.getString(R.string.concat)
             }
 
 
@@ -43,7 +43,7 @@ class FAQ_Adapter(private val context: Context, private val faqList: List<Models
                     holder.answers.text = Html.fromHtml(faqList[position].terms_conditions_detail)
                 }
             } else {
-                holder.answers.text = context.getString(R.string.Concat)
+                holder.answers.text = context.getString(R.string.concat)
             }
 
         }

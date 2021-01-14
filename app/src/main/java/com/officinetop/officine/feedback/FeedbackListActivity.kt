@@ -118,7 +118,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     if (!list[p1].ProductOrWorkshopName.isNullOrBlank()) {
                         p0.itemView.tv_NameofProductorWorkshop.text = list[p1].ProductOrWorkshopName
                     } else {
-                        p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
+                        p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.concat)
                     }
                     if (!list[p1].profile_image.isNullOrBlank()) {
                         loadImage(list[p1].profile_image, p0.itemView.Iv_UserImage)
@@ -138,7 +138,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     } else if (list[p1].fName.isNullOrBlank() && !list[p1].lName.isNullOrBlank()) {
                         p0.itemView.tv_userName.text = list[p1].lName.toString()
                     } else {
-                        p0.itemView.tv_userName.text = getString(R.string.Concat)
+                        p0.itemView.tv_userName.text = getString(R.string.concat)
                     }
                     if (list[p1].workshopId != null) {
                         p0.itemView.tv_product_type.text = getString(R.string.Workshop)
@@ -158,12 +158,12 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
                     if (!list[p1].createdAt.isNullOrBlank()) {
                         p0.itemView.tv_date.text = DateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
                     } else {
-                        p0.itemView.tv_date.text = getString(R.string.Concat)
+                        p0.itemView.tv_date.text = getString(R.string.concat)
                     }
                     if (!list[p1].comments.isNullOrBlank()) {
                         p0.itemView.tv_userComment.text = list[p1].comments
                     } else {
-                        p0.itemView.tv_userComment.text = getString(R.string.Concat)
+                        p0.itemView.tv_userComment.text = getString(R.string.concat)
                     }
 
                     if (list[p1].images != null && list[p1].images.size != 0) {

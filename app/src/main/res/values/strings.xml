@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">OfficineTop</string>
-
     <string name="tab_home">Home</string>
     <string name="tab_feedback">Feedback</string>
     <string name="tab_profile">Profile</string>
@@ -91,8 +90,8 @@
     <string name="yes">Yes</string>
     <string name="ok">OK</string>
     <string name="logout">Logout</string>
-    <string name="opengmail">Go to Mail</string>
-    <string name="technical_characterictic">Technical Features</string>
+    <string name="open_gmail">Go to Mail</string>
+    <string name="technical_feature">Technical Features</string>
     <!--Product detail-->
     <string name="address">Address</string>
     <string name="intervention_setting">Intervention Settings</string>
@@ -102,10 +101,10 @@
     <string name="all">All</string>
     <string name="price_range">Price Range</string>
     <string name="clear_selection">Clear Selection</string>
-    <string name="Paypal">Add Debit/Credit/ATM Card</string>
+    <string name="pay_pal">Add Debit/Credit/ATM Card</string>
     <!--Online Payment-->
     <string name="paymet_type">Select a payment method</string>
-    <string name="paymet_name">Payment</string>
+    <string name="payment_name">Payment</string>
     <string name="support">Support</string>
     <string name="support_services">Select Complain Type</string>
     <string name="google_pay">UPI</string>
@@ -118,15 +117,14 @@
     <string name="ReferralCode">Referral Code</string>
     <string name="type_here">Type here</string>
     <string name="may_help">Hello, may i help you ?</string>
-    <string name="entermessage">Enter message</string>
+    <string name="enter_message">Enter message</string>
     <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
     <string name="euro_symbol">€</string>
     <string name="prepend_euro_symbol_with_da">€ %d</string>
     <string name="prepend_euro_symbol_with_da_string"> € %s</string>
     <string name="prepend_euro_symbol_string">€ %s</string>
     <string name="tyre_detail">Tyre Detail</string>
-    <!-- singola -->
-    <!-- singola -->
+
     <string name="tyre_price_total">Total: € %s </string>
     <string name="append_km">%d Km</string>
     <string name="distance">Distance</string>
@@ -180,7 +178,7 @@
     <string name="revision_detail">General safety Regulation Revision\nFree Vehicle Inspection</string>
     <string name="choose_workshop">Choose workshop</string>
     <string name="maintenance">Maintenance</string>
-    <string name="partlist">Part List</string>
+    <string name="part_list">Part List</string>
     <string name="register_privacy_text_1">By creating an account, you agree to Officine\'s  </string>
     <string name="register_privacy_text_2">  Privacy Policy</string>
     <string name="other_seller">Other Seller</string>
@@ -201,34 +199,34 @@
     <string name="quotes">Quotes</string>
     <string name="letichettatura">L\'etichettatura dei pneumatici UE, conformemente al regolamento(n. 1222/2009), viene applicata in tutti gli Stati membri dell\'UE. ll regolamento si applica a tutti i pneumatici di autovetture, autocarri leggeri e pesanti prodotti dopo il 01.07.2012 Con questa etichettatura tutti i pneumatici nell \'UE sono classificati in base a 3 criteri .</string>
     <string name="current_km">Current KM</string>
-    <string name="changepassword">Change Password</string>
+    <string name="change_password">Change Password</string>
 
     <!-- ////User Profile///////-->
-    <string name="oldpasword">Enter Old Password</string>
-    <string name="enterreferralcode">Enter Referral Code</string>
-    <string name="newpasword">Enter New Password</string>
-    <string name="retypepasword">Re-Type Password</string>
-    <string name="deleteaccount">Are you sure, want to delete account? Remove all saved information about vehicle.</string>
-    <string name="password_notmatched">Re-Type password not matched</string>
+    <string name="old_password">Enter Old Password</string>
+    <string name="enter_referral_code">Enter Referral Code</string>
+    <string name="new_password">Enter New Password</string>
+    <string name="re_type_password">Re-Type Password</string>
+    <string name="delete_account">Are you sure, want to delete account? Remove all saved information about vehicle.</string>
+    <string name="password_not_matched">Re-Type password not matched</string>
     <string name="submit">Submit</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="update_pic">Change Picture</string>
     <string name="update_profile">Update Profile</string>
     <string name="update">Update</string>
-    <string name="Address">Address</string>
+
     <string name="Return">Order Return</string>
     <string name="contact_number">Contact Number</string>
-    <string name="entercontact_number">Enter Contact Number</string>
-    <string name="zipcode">Zip Code -</string>
+    <string name="enter_contact_number">Enter Contact Number</string>
+    <string name="zip_code">Zip Code -</string>
     <string name="street">Street and number,P.O.box</string>
     <string name="apartment">Apartment,suit,building,floor etc.</string>
     <string name="city">City</string>
     <string name="state">State/Province/Region</string>
     <string name="blank">0</string>
-    <string name="partinfo">Parts Info</string>
+    <string name="part_info">Parts Info</string>
     <string name="retry">Retry</string>
-    <string name="emailblank">Enter email</string>
-    <string name="mobileblank">Enter mobile</string>
+    <string name="email_blank">Enter email</string>
+    <string name="mobile_blank">Enter mobile</string>
 
     <string name="User_Contact">Contact List</string>
     <string name="User_address">Address List</string>
@@ -236,11 +234,11 @@
     <string name="enter_contact">Enter mobile number</string>
     <string name="add_address">Add New Address</string>
     <string name="invite">Invite &amp; Earn</string>
-    <string name="invitefirend">Share with your friends</string>
-    <string name="invitefirendoffers">Get Gift(Reward Points) after each friend\'s first order</string>
+    <string name="invite_friend">Share with your friends</string>
+    <string name="invite_friend_offers">Get Gift(Reward Points) after each friend\'s first order</string>
     <string name="orders">Orders</string>
-    <string name="wishlist">WishList</string>
-    <string name="profilesettings">Settings</string>
+    <string name="wish_list">WishList</string>
+    <string name="profile_settings">Settings</string>
     <string name="notification">Notification</string>
     <string name="wishList">Wish List</string>
     <string name="language">Preferred Language</string>
@@ -255,14 +253,14 @@
     <string name="contact_list">Contact List</string>
     <string name="app_info">Information</string>
     <string name="readme">Read</string>
-    <string name="whoweare">Who we are</string>
+    <string name="who_we_are">Who we are</string>
     <string name="privacy">Privacy</string>
-    <string name="contactus">Contacts</string>
-    <string name="entercode">Enter Code</string>
+    <string name="contact_us">Contacts</string>
+    <string name="enter_code">Enter Code</string>
     <string name="condition">Terms &amp; Condition</string>
-    <string name="checkreferral">Do you\'ve referral code?</string>
-    <string name="removereferral">Do you want to remove referral code?</string>
-    <string name="offermsg_referral">Enter the referral code to get euros in your Credit after registration</string>
+    <string name="check_referral">Do you\'ve referral code?</string>
+    <string name="remove_referral">Do you want to remove referral code?</string>
+    <string name="offer_msg_referral">Enter the referral code to get euros in your Credit after registration</string>
     <string name="close">Close</string>
     <string name="ticket">Ticket No. -</string>
 
@@ -283,7 +281,7 @@
     <string name="paid_amount">Total Payment</string>
     <string name="product_detail">Ordered Product</string>
     <string name="shipment_tracking">Shipment Tracking</string>
-    <string name="expectedtime">Expected delivery :</string>
+    <string name="expected_time">Expected delivery :</string>
 
     <string name="courier">Courier :</string>
     <string name="tracking_id">Tracking Id :</string>
@@ -291,16 +289,16 @@
     <string name="car_services">Car Services</string>
     <string name="spare_part">Spare Parts</string>
     <string name="car_rim">Wheel Rim</string>
-    <string name="Invoice">Download Invoice</string>
+    <string name="invoice">Download Invoice</string>
     <string name="SENDER_ID"><!--850442644528-->976463692726</string>
 
     <!-- //FCM Notification//-->
     <string name="notifications_admin_channel_name">officinetop</string>
     <string name="notifications_admin_channel_description">officinetop Firebase PushNotification</string>
-    <string name="notificationslist">Notification</string>
+    <string name="notifications_list">Notification</string>
     <string name="update_address">Update Address</string>
     <string name="new_address">Address</string>
-    <string name="UpdateContact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
+    <string name="update_contact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
     <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
     <!--   <string name="google_places_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
     <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
@@ -310,41 +308,38 @@
     <string name="Please_Select_Address">Please Select Address</string>
 
     <string name="enterZipCode">Enter Zip Code</string>
-    <string name="Zip_Code">Zip Code</string>
-    <string name="Address_type">Address Type</string>
-    <string name="selectAddressType">Select Address Type</string>
+
+    <string name="address_type">Address Type</string>
+    <string name="select_address_type">Select Address Type</string>
     <string name="delete_AddressConfirmation"> Do you want to delete this address?</string>
     <string name="delete_ContactConfirmation">  Do you want to delete this contact?</string>
     <string name="orderDetail">Order Detail</string>
-    <string name="Concat">-</string>
-    <string name="Pending">Pending</string>
-    <string name="Paid">Paid</string>
-    <string name="ZeroValue">00.0</string>
+    <string name="concat">-</string>
+    <string name="pending">Pending</string>
+    <string name="paid">Paid</string>
+    <string name="zero_value">00.0</string>
     <string name="carKM">KM:</string>
-    <string name="RemovewishList">Remove</string>
+    <string name="remove_wish_list">Remove</string>
     <string name="moreDetail">More Details</string>
 
-    <string name="Alphabetical">Alphabetical</string>
-    <string name="Ascending">Ascending</string>
-    <string name="Descending">Descending</string>
-    <string name="Edit">Edit</string>
-    <string name="Buy_Now">Details</string>
+    <string name="alphabetical">Alphabetical</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="edit">Edit</string>
+    <string name="buy_now">Details</string>
 
-    <string name="Search">Search…</string>
-    <string name="tyreprice_text">Product price: € %s</string>
-    <string name="Deliveryaddress">Delivery Address</string>
-    <string name="OutOfStock">Out of Stock</string>
-    <string name="ReMainingItem">Only %S quantity available In stock</string>
-    <string name="WorkshopNotProvideServices">service has been expired</string>
-    <string name="CartDataRemoved">Your Cart  Data will be Deleted ?</string>
-    <string name="AddFeedback">Add Feedback</string>
+    <string name="search">Search…</string>
+    <string name="tyre_price_text">Product price: € %s</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="re_maining_item">Only %S quantity available In stock</string>
+    <string name="workshop_not_provide_services">service has been expired</string>
+    <string name="cart_data_removed">Your Cart  Data will be Deleted ?</string>
+    <string name="see_feedback">View Feedback</string>
+    <string name="applied_coupon"><!--Bonus:-->""</string>
 
-    <string name="SeeFeedback">View Feedback</string>
-    <string name="AppliedCoupon"><!--Bonus:-->""</string>
-
-    <string name="updateCoupon"> Change Coupon</string>
-    <string name="Wallet">Credit:  €</string>
-    <string name="WalletInfo"> Credit Information </string>
+    <string name="update_Coupon"> Change Coupon</string>
+    <string name="wallet">Credit:  €</string>
+    <string name="wallet_Info"> Credit Information </string>
 
     <string name="inviteFriends">Invite Friends</string>
     <string name="how_works">How It Works</string>
@@ -693,7 +688,7 @@
     <string name="delivered">Delivered</string>
     <string name="workComplete">WorkComplete</string>
     <string name="confirmOrder">Confirm</string>
-    <string name="concatDateformate">/</string>
+    <string name="concat_date_formate">/</string>
     <string name="need_permissions">Need Permissions</string>
     <string name="permission_denied">This app needs permission to use this feature. You can grant them in app settings.</string>
 
@@ -708,26 +703,26 @@
     <string name="backTransfer_note2">the order will be valid only after receiving the credit on our account.</string>
 
     <string name="bank_transfer_proceed">Do you want to proceed Bank Transfer ?</string>
-    <string name="PleaselogintocontinueforAddWishList">Please login to continue for Add to WishList</string>
+    <string name="please_login_to_continue_for_add_wish_list">Please login to continue for Add to WishList</string>
 
 
-    <string name="termCondition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
+    <string name="term_condition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
-    <string name="Aboutus_link">https://www.officinetop.com/chi-siamo/</string>
+    <string name="about_us_link">https://www.officinetop.com/chi-siamo/</string>
     <string name="Info_cookies_link"> link: "https://www.officinetop.com/cookies/</string>
     <string name="less">...Less</string>
-    <string name="morecontent">...More</string>
+    <string name="more_content">...More</string>
 
 
     <string name="unauthorized_location_title">Unauthorized location</string>
     <string name="unauthorized_location_message">Activate the localization, and you will be able to find the nearest workshops</string>
-    <string name="PleaselogintocontinueforRemoveWishList">Please login to continue for remove product from wishList</string>
-    <string name="PleaselogintocontinueforInviteFriends">Please login to continue for Invite Friends</string>
-    <string name="PleaselogintocontinueforQutoesRequestSend">Log in to continue with the  request send</string>
-    <string name="cart_qutoes">Quotation request</string>
-    <string name="qutoes_request_send_sucessfully">The request has been sent successfully</string>
-    <string name="confirm_order_with_multipal_workshop">it is not possible to confirm an order with multi workshop</string>
+    <string name="please_login_to_continue_for_remove_wish_list">Please login to continue for remove product from wishList</string>
+    <string name="please_login_to_continue_for_invite_friends">Please login to continue for Invite Friends</string>
+    <string name="please_login_to_continue_for_qutoes_request_send">Log in to continue with the  request send</string>
+    <string name="cart_quotes">Quotation request</string>
+    <string name="quotes_request_send_successfully">The request has been sent successfully</string>
+    <string name="confirm_order_with_multiple_workshop">it is not possible to confirm an order with multi workshop</string>
     <string name="product_services_address_note">The products will be delivered to the chosen workshop and assembly will be performed on the booked date</string>
 
     <string name="services_address_note">The services will be performed in the chosen workshop on the booked date</string>

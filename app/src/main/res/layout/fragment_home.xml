@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:id="@+id/tv_banner_buynow"
-                    android:text="@string/Buy_Now" />
+                    android:text="@string/buy_now" />
 
             </LinearLayout>
 

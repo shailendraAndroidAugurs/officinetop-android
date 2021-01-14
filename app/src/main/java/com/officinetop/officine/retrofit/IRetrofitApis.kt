@@ -987,7 +987,8 @@ interface IRetrofitApis {
             @Field(Constant.Path.type) type: Int,
             @Field("user_lat") user_lat: String,
             @Field("user_long") user_long: String,
-            @Field("distance_range") distance_range: String
+            @Field("distance_range") distance_range: String,
+            @Field(Constant.Path.mainCategoryId) mainCategoryId: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getSOSAppointmentCalendarPrice)
@@ -1036,7 +1037,8 @@ interface IRetrofitApis {
                                   @Field("user_long") user_long: String,
                                   @Field("distance_range") distance_range: String,
                                   @Field(Constant.Path.favorite) favorite: String,
-                                  @Field(Constant.Path.couponFilter) couponfilter: String
+                                  @Field(Constant.Path.couponFilter) couponfilter: String,
+                                  @Field(Constant.Path.mainCategoryId) mainCategoryId: String
 
     ): Call<ResponseBody>
 

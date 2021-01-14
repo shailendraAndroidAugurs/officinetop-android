@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.officinetop.officine.R
-import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.utils.*
 
@@ -178,9 +177,9 @@ fun setQuantity(text: TextView, status: String, pairText: String) {
 fun payment(textView: TextView, status: String) {
 
     if (status == "C") {
-        textView.text = textView.context.getString(R.string.Paid)
+        textView.text = textView.context.getString(R.string.paid)
     } else {
-        textView.text = textView.context.getString(R.string.Pending)
+        textView.text = textView.context.getString(R.string.pending)
     }
 }
 
@@ -301,7 +300,7 @@ fun orderStatus(tv_ordersatatus: TextView, status: String) {
         "D" -> tv_ordersatatus.context.getString(R.string.dispatched)
         "IN" -> tv_ordersatatus.context.getString(R.string.intransit)
         "F" -> tv_ordersatatus.context.getString(R.string.delivered)
-        "P" -> tv_ordersatatus.context.getString(R.string.Pending)
+        "P" -> tv_ordersatatus.context.getString(R.string.pending)
         "C" -> tv_ordersatatus.context.getString(R.string.confirmOrder)
         "WC" -> tv_ordersatatus.context.getString(R.string.workComplete)
         else -> ""

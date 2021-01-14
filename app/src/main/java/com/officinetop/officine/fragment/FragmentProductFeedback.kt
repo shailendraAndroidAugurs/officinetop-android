@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -82,7 +81,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                     p0.itemView.tv_NameofProductorWorkshop.text = productFeedbackList[p1].ProductFeedbackDetail.product_name
                     Log.d("productname", productFeedbackList[p1].ProductFeedbackDetail.product_name)
                 } else {
-                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
+                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.concat)
                 }
                 if (!productFeedbackList[p1].profile_image.isNullOrBlank()) {
                     context?.loadImage(productFeedbackList[p1].profile_image, p0.itemView.Iv_UserImage)
@@ -102,7 +101,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                 } else if (productFeedbackList[p1].first_name.isNullOrBlank() && !productFeedbackList[p1].last_name.isNullOrBlank()) {
                     p0.itemView.tv_userName.text = productFeedbackList[p1].last_name.toString()
                 } else {
-                    p0.itemView.tv_userName.text = getString(R.string.Concat)
+                    p0.itemView.tv_userName.text = getString(R.string.concat)
                 }
 
 
@@ -115,17 +114,17 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                     }
 
                 } else {
-                    p0.itemView.tv_product_type.text = getString(R.string.Concat)
+                    p0.itemView.tv_product_type.text = getString(R.string.concat)
                 }
                 if (!productFeedbackList[p1].created_at.isBlank()) {
                     p0.itemView.tv_date.text = DateFormatChangeYearToMonth(productFeedbackList[p1].created_at.split(" ")[0])
                 } else {
-                    p0.itemView.tv_date.text = getString(R.string.Concat)
+                    p0.itemView.tv_date.text = getString(R.string.concat)
                 }
                 if (!productFeedbackList[p1].comments.isBlank()) {
                     p0.itemView.tv_userComment.text = productFeedbackList[p1].comments
                 } else {
-                    p0.itemView.tv_userComment.text = getString(R.string.Concat)
+                    p0.itemView.tv_userComment.text = getString(R.string.concat)
                 }
                 if (productFeedbackList[p1].feedback_image != null && productFeedbackList[p1].feedback_image.size != 0) {
                     p0.itemView.rv_feedbackImage.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)

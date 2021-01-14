@@ -24,7 +24,7 @@ class NotificationList : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_list)
         setSupportActionBar(toolbar)
-        toolbar_title.text = getString(R.string.notificationslist)
+        toolbar_title.text = getString(R.string.notifications_list)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initview()

@@ -15,7 +15,6 @@ import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_shopping_cart_single_item_detail.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.support.v4.intentFor
 
 class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
     var isProductOrServiceOrProductServices = "" // 0 for only product, 1 for product or services , 2 only for services
@@ -38,7 +37,7 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
                 val cartItemType = sharedprefrence1?.getString(Constant.Path.cartItemType, "3")
                 val isMultipleServicesAvailable = sharedprefrence1?.getBoolean("isMultipleServicesAvailable", false)
                 if (isMultipleServicesAvailable!!) {
-                    showInfoDialog(getString(R.string.confirm_order_with_multipal_workshop), false)
+                    showInfoDialog(getString(R.string.confirm_order_with_multiple_workshop), false)
                     return@setOnClickListener
                 }
 

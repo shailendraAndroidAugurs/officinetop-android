@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.R
-import com.officinetop.officine.car_parts.PartCategories
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackDetailActivity
@@ -76,7 +75,7 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
                 if (WorshopFeedbackList[p1].workshop_details != null && !WorshopFeedbackList[p1].workshop_details.company_name.isNullOrBlank()) {
                     p0.itemView.tv_NameofProductorWorkshop.text = WorshopFeedbackList[p1].workshop_details.company_name
                 } else {
-                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.Concat)
+                    p0.itemView.tv_NameofProductorWorkshop.text = getString(R.string.concat)
                 }
                 if (!WorshopFeedbackList[p1].profile_image.isNullOrBlank()) {
                     context?.loadImage(WorshopFeedbackList[p1].profile_image, p0.itemView.Iv_UserImage)
@@ -92,7 +91,7 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
                 if (!WorshopFeedbackList[p1].last_name.isNullOrBlank() && !WorshopFeedbackList[p1].first_name.isNullOrBlank()) {
                     p0.itemView.tv_userName.text = WorshopFeedbackList[p1].first_name + " " + WorshopFeedbackList[p1].last_name
                 } else {
-                    p0.itemView.tv_userName.text = getString(R.string.Concat)
+                    p0.itemView.tv_userName.text = getString(R.string.concat)
                 }
 
 
@@ -104,18 +103,18 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
                 } else if (WorshopFeedbackList[p1].first_name.isNullOrBlank() && !WorshopFeedbackList[p1].last_name.isNullOrBlank()) {
                     p0.itemView.tv_userName.text = WorshopFeedbackList[p1].last_name.toString()
                 } else {
-                    p0.itemView.tv_userName.text = getString(R.string.Concat)
+                    p0.itemView.tv_userName.text = getString(R.string.concat)
                 }
                 p0.itemView.tv_product_type.text = getString(R.string.Workshop)
                 if (!WorshopFeedbackList[p1].created_at.isNullOrBlank()) {
                     p0.itemView.tv_date.text = DateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
                 } else {
-                    p0.itemView.tv_date.text = getString(R.string.Concat)
+                    p0.itemView.tv_date.text = getString(R.string.concat)
                 }
                 if (!WorshopFeedbackList[p1].comments.isNullOrBlank()) {
                     p0.itemView.tv_userComment.text = WorshopFeedbackList[p1].comments
                 } else {
-                    p0.itemView.tv_userComment.text = getString(R.string.Concat)
+                    p0.itemView.tv_userComment.text = getString(R.string.concat)
                 }
                 if (WorshopFeedbackList[p1].feedback_image != null && WorshopFeedbackList[p1].feedback_image.size != 0) {
                     p0.itemView.rv_feedbackImage.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {

@@ -23,7 +23,7 @@
                 android:layout_gravity="end"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@color/theme_orange"
-                android:text="@string/Edit"
+                android:text="@string/edit"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />

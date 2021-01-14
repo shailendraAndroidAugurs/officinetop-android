@@ -86,9 +86,9 @@ class Edit_Profile : BaseActivity() {
         button_updateprofile.setOnClickListener(View.OnClickListener {
 
             if (edittext_mobile.text.isEmpty()) {
-                Toast.makeText(this@Edit_Profile, getString(R.string.mobileblank), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@Edit_Profile, getString(R.string.mobile_blank), Toast.LENGTH_LONG).show()
             } else if (edittext_email.text.isEmpty()) {
-                Toast.makeText(this@Edit_Profile, getString(R.string.emailblank), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@Edit_Profile, getString(R.string.email_blank), Toast.LENGTH_LONG).show()
             }else {
                 val imagedata = attachedImage?.toMultipartBody("profile_pic")
                 val emailid = edittext_email.text.toString()

@@ -23,10 +23,10 @@
                 android:layout_margin="1dp"
                 android:background="@color/white"
                 android:focusable="false"
-                android:queryHint="@string/Search"
-                app:defaultQueryHint="@string/Search"
+                android:queryHint="@string/search"
+                app:defaultQueryHint="@string/search"
                 app:iconifiedByDefault="false"
-                app:queryHint="@string/Search" />
+                app:queryHint="@string/search" />
 
             <FrameLayout
                 android:id="@+id/item_checkbox_container"

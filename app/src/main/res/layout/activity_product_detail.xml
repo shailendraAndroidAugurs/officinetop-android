@@ -128,7 +128,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/AppliedCoupon"
+                        android:text="@string/applied_coupon"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_10sdp">
 
@@ -153,7 +153,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape_dotted_orange"
                         android:padding="5dp"
-                        android:text="@string/updateCoupon"
+                        android:text="@string/update_Coupon"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
@@ -363,7 +363,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/technical_characterictic"
+                    android:text="@string/technical_feature"
                     android:textColor="@color/black"
                     android:visibility="gone" />
 
