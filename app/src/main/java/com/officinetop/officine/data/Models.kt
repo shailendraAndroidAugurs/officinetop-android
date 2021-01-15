@@ -917,7 +917,8 @@ object Models {
             @SerializedName("service_detail")
             val serviceDetail: ServiceDetail,
 
-
+            @SerializedName("part_details")
+            val partDetails: List<Part>,
             @SerializedName("start_time")
             val startTime: String,
             @SerializedName("order_status")
