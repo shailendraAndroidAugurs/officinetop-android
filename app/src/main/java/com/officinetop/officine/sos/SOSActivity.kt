@@ -413,8 +413,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
-                    mLatitude = /*location.latitude.toString()*/"44.1571507"
-                    mLongitude = /*location.longitude.toString()*/"12.2142107"
+                    mLatitude = location.latitude.toString()//"44.1571507"
+                    mLongitude = location.longitude.toString()//"12.2142107"
                 }
                 loadmapview()
             }
