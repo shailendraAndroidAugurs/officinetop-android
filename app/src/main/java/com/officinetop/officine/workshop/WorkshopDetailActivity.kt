@@ -1024,7 +1024,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     var endHour = endTime.split(":")[0].toInt()
                     var endMin = endTime.split(":")[1].toInt()
-
+                    var service_day = 0;
                     if (isAvailable == "1") {
                         bookPackage.text = getString(R.string.book)
                         bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.theme_orange))
