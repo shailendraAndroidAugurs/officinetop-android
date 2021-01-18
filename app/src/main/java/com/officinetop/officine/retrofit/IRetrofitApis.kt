@@ -359,7 +359,7 @@ interface IRetrofitApis {
                                     @Query(Constant.Path.model) model: String
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getCarRevisionPackageDetail)
+    @POST(Constant.UrlEndPoints.getCarRevisionPackageDetail)
     fun getCarRevisionPackageDetail(
             @Query(Constant.Path.workshopUsersId) workshop_id: Int,
             @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
