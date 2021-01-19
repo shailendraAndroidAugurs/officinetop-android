@@ -103,7 +103,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var isSosEmergency: Boolean = false
     var couponList: List<Models.Coupon>? = null
     var isCarMaintenanceService = false
-    var isQuotesService = false
+    var isQuotesService =   false
     private var qutoesUserDescription = ""
     private var qutoesUserImage = ""
     private var isMotService = false
@@ -1035,6 +1035,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         bookPackage.text = getString(R.string.not_applicable)
                         bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.red))
                     }
+                    else if (isAvailable == "3") {
+                        bookPackage.text = getString(R.string.not_available)
+                        bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.red))
+                    }
 
                     bookPackage.setOnClickListener {
                         if (isAvailable == "0") {
@@ -1043,7 +1047,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         } else if (isAvailable == "2") {
                             showInfoDialog(getString(R.string.Thisslotnotapplicable))
                             return@setOnClickListener
-                        } else if (startHour > endHour) {
+                        }
+                        else if (isAvailable == "3") {
+                            showInfoDialog(getString(R.string.this_slot_not_available))
+                            return@setOnClickListener
+                        }
+                        else if (startHour > endHour) {
                             showInfoDialog(getString(R.string.Invalidinterventiontime) + "($startHour:$startMin - $endHour:$endMin)")
                             return@setOnClickListener
                         } else {

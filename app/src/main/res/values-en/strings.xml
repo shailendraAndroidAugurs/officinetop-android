@@ -652,6 +652,8 @@
     <string name="oen">OEN</string>
     <string name="part">Part</string>
     <string name="product">Product</string>
+    <string name="not_available">Not Available</string>
+    <string name="this_slot_not_available">This slot is not available on this date</string>
 
 
 
