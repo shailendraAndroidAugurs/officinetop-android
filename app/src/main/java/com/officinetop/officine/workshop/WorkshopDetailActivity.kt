@@ -103,7 +103,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var isSosEmergency: Boolean = false
     var couponList: List<Models.Coupon>? = null
     var isCarMaintenanceService = false
-    var isQuotesService = false
+    var isQuotesService =   false
     private var qutoesUserDescription = ""
     private var qutoesUserImage = ""
     private var isMotService = false
