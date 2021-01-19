@@ -187,6 +187,7 @@
     <string name="not_applicable">Not Applicable</string>
     <string name="diameter">Diameter</string>
     <string name="title_activity_sos">SOS</string>
+    <string name="not_available">Not Available</string>
 
 
     <string name="no_location_detected">No location detected. Make sure location is enabled on the device.</string>
@@ -596,6 +597,7 @@
     <string name="Update_SuccessFully">Update SuccessFully</string>
     <string name="id_is_required">id is required!!</string>
     <string name="are_you_sure_to_book_this_slot">Are you sure to book this slot ?</string>
+    <string name="this_slot_not_available">This slot is not available for this date</string>
 
 
     <string name="call_phone">Call Phone</string>
