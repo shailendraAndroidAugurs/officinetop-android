@@ -87,8 +87,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
 
 
     }
-
-
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
             val locationList = locationResult?.locations
