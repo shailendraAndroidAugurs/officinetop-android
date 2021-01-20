@@ -47,7 +47,6 @@ class ProfileSetting : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile__setting)
         setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initView()
 

@@ -193,7 +193,6 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/shape_button_rounded_orange"
-                android:padding="@dimen/_8sdp"
                 android:text="@string/update"
                 android:textColor="@color/white" />
             <View
