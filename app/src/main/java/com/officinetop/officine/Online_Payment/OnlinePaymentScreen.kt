@@ -366,7 +366,7 @@ class OnlinePaymentScreen : BaseActivity() {
         if (Address != null) {
             text_address.text = Address
         }
-        if (contactId != null && AddressId != null) {
+        if (contactId != null || AddressId != null) {
             CheckCartItemAvailability()
         }
 
@@ -590,7 +590,7 @@ class OnlinePaymentScreen : BaseActivity() {
             if (contactNo != null) {
                 text_contactnumber.text = contactNo
                 saveContact_ContactForShipping(contactNo!!, contactId!!)
-                if (contactId != null && AddressId != null) {
+                if (contactId != null || AddressId != null) {
                     CheckCartItemAvailability()
                 }
             }
@@ -600,7 +600,7 @@ class OnlinePaymentScreen : BaseActivity() {
             if (Address != null) {
                 text_address.text = Address
                 saveAddress_ContactForShipping(Address!!, AddressId!!)
-                if (contactId != null && AddressId != null) {
+                if (contactId != null || AddressId != null) {
                     CheckCartItemAvailability()
                 }
             }
