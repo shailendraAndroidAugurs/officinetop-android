@@ -646,7 +646,7 @@ informazioni in accordo alle </string>
     <string name="confirm_order_with_multiple_workshop">Non è possibile confermare un ordine con multi officine</string>
     <string name="product_services_address_note">I prodotti saranno consegnati all’officina scelta ed il montaggio sarà eseguito nella data prenotata</string>
     <string name="services_address_note">I servizi saranno eseguiti nell’officina scelta alla data prenotata</string>
-    <string name="not_available">Occupato</string>
+    <string name="not_available">Occupato </string>
     <string name="this_slot_not_available">Questo slot non è disponibile in questa data</string>
 
     <string name="oen">Codice OE</string>
