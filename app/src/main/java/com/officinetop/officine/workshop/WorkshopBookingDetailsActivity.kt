@@ -51,9 +51,7 @@ class WorkshopBookingDetailsActivity : AppCompatActivity(), OnCartListCallback {
                         Constant.Path.totalDiscount to totalDiscount,
                         Constant.Path.totalVat to totalvat,
                         Constant.Path.user_WalletAmount to userWalletAmount,
-                        Constant.Path.cartItemType to cartItemType
-
-                ))
+                        Constant.Path.cartItemType to cartItemType))
             }
             val sharedprefrence2 = getSharedPreferences("Cart", Context.MODE_PRIVATE)
             sharedprefrence2?.edit()?.clear()

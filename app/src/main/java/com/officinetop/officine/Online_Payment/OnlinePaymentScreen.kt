@@ -95,6 +95,31 @@ class OnlinePaymentScreen : BaseActivity() {
         tv_iban = findViewById<TextView>(R.id.tv_iban)
     }
 
+    override fun onResume() {
+         val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
+        contactNo = sharedPref.getString("contactNo", "")
+        Address = sharedPref.getString("Address", "")
+        AddressId = sharedPref.getString("AddressId", "")
+        contactId = sharedPref.getString("contactId", "")
+        if (contactNo != null) {
+            text_contactnumber.text = contactNo
+        }
+        if (Address != null) {
+            text_address.text = Address
+        }
+        if (cartItemType.equals("1")||cartItemType.equals("2") || cartItemType.equals("3")) {
+                    if (!contactId.isNullOrEmpty()) {
+                        CheckCartItemAvailability()
+            }
+        }
+        else{
+            if (!contactId.isNullOrEmpty() && AddressId.isNullOrEmpty()) {
+                CheckCartItemAvailability()
+            }
+        }
+        super.onResume()
+    }
+
     private fun initviews() {
         if (getLangLocale() != "") {
             setAppLanguage()
@@ -366,9 +391,19 @@ class OnlinePaymentScreen : BaseActivity() {
         if (Address != null) {
             text_address.text = Address
         }
-        if (contactId != null || AddressId != null) {
-            CheckCartItemAvailability()
+        Log.d("checkcart_type","a:"+cartItemType+"  b:"+contactId+"   c:"+AddressId)
+        if (cartItemType.equals("1")||cartItemType.equals("2") || cartItemType.equals("3")) {
+            if (!contactId.isNullOrEmpty()) {
+                CheckCartItemAvailability()
+            }
         }
+        else{
+            if (!contactId.isNullOrEmpty() && !AddressId.isNullOrEmpty()) {
+                CheckCartItemAvailability()
+            }
+        }
+
+
 
         tv_emailAddress.setOnClickListener {
             try {
@@ -590,8 +625,15 @@ class OnlinePaymentScreen : BaseActivity() {
             if (contactNo != null) {
                 text_contactnumber.text = contactNo
                 saveContact_ContactForShipping(contactNo!!, contactId!!)
-                if (contactId != null || AddressId != null) {
-                    CheckCartItemAvailability()
+                if (cartItemType.equals("1")||cartItemType.equals("2") || cartItemType.equals("3")) {
+                    if (!contactId.isNullOrEmpty()) {
+                        CheckCartItemAvailability()
+                    }
+                }
+                else{
+                    if (!contactId.isNullOrEmpty() && !AddressId.isNullOrEmpty()) {
+                        CheckCartItemAvailability()
+                    }
                 }
             }
         } else if (requestCode == 101) {
@@ -600,8 +642,15 @@ class OnlinePaymentScreen : BaseActivity() {
             if (Address != null) {
                 text_address.text = Address
                 saveAddress_ContactForShipping(Address!!, AddressId!!)
-                if (contactId != null || AddressId != null) {
-                    CheckCartItemAvailability()
+                if (cartItemType.equals("1")||cartItemType.equals("2") || cartItemType.equals("3")) {
+                    if (!contactId.isNullOrEmpty()) {
+                        CheckCartItemAvailability()
+                    }
+                }
+                else{
+                    if (!contactId.isNullOrEmpty() && !AddressId.isNullOrEmpty()) {
+                        CheckCartItemAvailability()
+                    }
                 }
             }
         } else if (requestCode == AmazonPayRequestCode) {

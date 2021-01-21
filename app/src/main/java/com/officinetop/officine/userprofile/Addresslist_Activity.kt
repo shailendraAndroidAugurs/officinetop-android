@@ -1,5 +1,6 @@
 package com.officinetop.officine.userprofile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,8 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.saveAddress_ContactForShipping
+import com.officinetop.officine.data.saveContact_ContactForShipping
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_addresslist.*
@@ -209,6 +212,11 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactDeletedSuccessFully), false, { getUserDetail(this, this) })
+                    val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
+                    val addressid = sharedPref.getString("AddressId", "")
+                    if(address_id.equals(addressid))
+                        saveAddress_ContactForShipping("","");
+
                 }
 
             }

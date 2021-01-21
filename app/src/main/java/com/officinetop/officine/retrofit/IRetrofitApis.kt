@@ -693,7 +693,7 @@ interface IRetrofitApis {
                                      @Query(Constant.Path.userid) userid: String
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getCarMaintenancePackageDetail + "/{workshop_id}/{multiple_service_id}/{selected_date}/{selected_car_id}/{user_id}")
+    @GET(Constant.UrlEndPoints.getCarMaintenancePackageDetail)
     fun getCarMaintenacePackageDetail(
             @Path(Constant.Path.workshopId) workshop_id: Int,
             @Path("multiple_service_id") multiple_service_id: String,

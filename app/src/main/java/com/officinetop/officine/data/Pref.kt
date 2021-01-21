@@ -277,7 +277,7 @@ inline fun Context.removeUserDetail() {
     removeSelectedCar()
     shouldShowAddCarInfoDialog(true)
     removeUserId()
-    saveIsAvailableDataInCart(false)
+   saveIsAvailableDataInCart(false)
 }
 
 inline fun Context.setFirstRun(status: Boolean) {
