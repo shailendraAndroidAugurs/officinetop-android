@@ -594,6 +594,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
             Log.d("HomeActivity", "setToolbarValues: $json")
 
+
             //call select car API
             if (car != null) {
                 if (!car.id.isNullOrBlank()) {
