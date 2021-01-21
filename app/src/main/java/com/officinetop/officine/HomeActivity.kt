@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.BaseAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
@@ -606,9 +607,14 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 if (getIsAvailableDataInCart()) {
                     Log.d("HomeActivity", "Delete Call")
                     showConfirmDialog(getString(R.string.cart_data_removed)) { DeleteCartData(car) }
-                } else {
+                }
+                /*else {
+                    Log.d("HomeActivity", "Delete Call2")
+                    Toast.makeText(this,"delete request sent",Toast.LENGTH_LONG).show()
                     DeleteCartData(car)
                 }
+                */
+
 
             }
 

@@ -283,7 +283,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     tv_discount.visibility = View.GONE
                     servicesVat.text = context.getString(R.string.prepend_euro_symbol_string, item.discount.takeIf { !it.isNullOrEmpty() })
                 }
-                if (item.serviceDetail.mainCategoryId.equals("2")) {
+
+
+                if (item.serviceDetail!=null&&item.serviceDetail.mainCategoryId!=null&&item.serviceDetail.mainCategoryId.equals("2")) {
                     if (item.afterDiscountPrice.isNullOrBlank()) {
                         if (item.price != null && item.discount != null) {
                             ServicesTotalPrices.text = context.getString(R.string.prepend_euro_symbol_string, (item.price.toInt() - item.discount.toInt()).toString())

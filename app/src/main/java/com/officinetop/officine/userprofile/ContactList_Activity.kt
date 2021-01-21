@@ -1,5 +1,6 @@
 package com.officinetop.officine.userprofile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
+import com.officinetop.officine.data.saveContact_ContactForShipping
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_contactlist.*
@@ -160,13 +162,14 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
     private fun deleteContact(ContactId: String) {
-
         RetrofitClient.client.deleteContact(this@ContactList_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactDeletedSuccessFully), true, { getUserDetail(this, this) })
-
-
+                    val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
+                    val contactId = sharedPref.getString("contactId", "")
+                    if(ContactId.equals(contactId))
+                    saveContact_ContactForShipping("","");
                 }
 
             }

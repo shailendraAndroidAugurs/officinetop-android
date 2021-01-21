@@ -1019,7 +1019,7 @@ object Models {
             @SerializedName("service_name")
             val serviceName: String,
             @SerializedName("main_category_id")
-            val mainCategoryId: String?,
+            var mainCategoryId: String?,
             @SerializedName("service_id")
             val serviceId: String,
             @SerializedName("feedback_status")
