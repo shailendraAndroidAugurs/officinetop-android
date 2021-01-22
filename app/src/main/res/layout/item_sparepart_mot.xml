@@ -108,7 +108,6 @@
                     android:padding="@dimen/_5sdp"
                     android:text="@{listItemViewModel.productName}"
                     android:textColor="@color/black"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_for_pair" />
 
@@ -130,7 +129,6 @@
 
                 <TextView
                     android:id="@+id/item_rating_count"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"

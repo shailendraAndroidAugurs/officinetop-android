@@ -693,13 +693,14 @@ interface IRetrofitApis {
                                      @Query(Constant.Path.userid) userid: String
     ): Call<ResponseBody>
 
-    @GET(Constant.UrlEndPoints.getCarMaintenancePackageDetail)
+    @POST(Constant.UrlEndPoints.getCarMaintenancePackageDetail)
     fun getCarMaintenacePackageDetail(
-            @Path(Constant.Path.workshopId) workshop_id: Int,
-            @Path("multiple_service_id") multiple_service_id: String,
-            @Path("selected_date") selected_date: String,
-            @Path("selected_car_id") selectedCarId: String,
-            @Path("user_id") userid: String
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
+            @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Query(Constant.Path.workshopId) workshopUsersId: String,
+            @Query("services") services: JSONArray
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getQuotesPackageDetail)
