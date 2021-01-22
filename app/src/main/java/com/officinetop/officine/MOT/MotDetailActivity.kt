@@ -215,7 +215,6 @@ class MotDetailActivity : BaseActivity() {
             override fun onClick(view: View, position: Int) {
 
             }
-
             override fun onItemClick(view: View, position: Int) {
 
             }

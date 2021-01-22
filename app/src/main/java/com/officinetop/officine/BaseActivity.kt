@@ -97,9 +97,9 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 // add marker
 
 
-         currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+      currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
                 //currentLatLong = LatLng(44.186516, 12.1662333)
-               // currentLatLong = LatLng(44.1571507, 12.2142107)
+            //   currentLatLong = LatLng(44.1571507, 12.2142107)
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
@@ -135,8 +135,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                     LocationSettingsStatusCodes.SUCCESS -> {
                         getFusedLocation()
                         Log.d("WorkshopList", "Location Permission from success")
-
-
                     }
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
                         try {

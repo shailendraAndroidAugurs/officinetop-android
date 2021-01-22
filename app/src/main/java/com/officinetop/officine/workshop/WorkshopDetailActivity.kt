@@ -146,6 +146,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var WorkshopJson: JSONObject = JSONObject()
     private var feedbackMain_categoryId = ""
     private var feedbackServices_id = ""
+    var maintenceServiceJson:JSONArray = JSONArray()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workshop_detail)
@@ -183,6 +184,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (intent.hasExtra("WorkshopJson")) {
             val JsonString = intent.getStringExtra("WorkshopJson")
             WorkshopJson = JSONObject(JsonString)
+            maintenceServiceJson  =  if(WorkshopJson.has("services") && WorkshopJson.getJSONArray("services")!=null)WorkshopJson.getJSONArray("services") else JSONArray()
+
+
+
         }
 
 
@@ -924,7 +929,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
                     addressId, getCurrentTime(), getUserId()).enqueue(callback)
         } else if (isCarMaintenanceService)
-            RetrofitClient.client.getCarMaintenacePackageDetail(workshopUsersId, workshopCategoryId, selectedDateFilter, getSavedSelectedVehicleID(), getUserId()).enqueue(callback)
+            RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(),selected_date = selectedDateFilter,userid =  getUserId(), mainCategoryId =  main_category_id,workshopUsersId =  workshopUsersId.toString(), services = maintenceServiceJson).enqueue(callback)
         else if (isQuotesService)
             RetrofitClient.client.getServiceQuotesPackageDetail(workshopCategoryId, quotesWorkshopUsersDaysId, selectedDateFilter, quotesServiceQuotesInsertedId,
                     getSavedSelectedVehicleID(), quotesMainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
@@ -1061,7 +1066,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 val sdf = SimpleDateFormat("yyyy-MM-dd", getLocale())
                                 sdf.isLenient = true
                                 val date = sdf.parse(selectedDateFilter)
-
                                 val formattedDate = SimpleDateFormat("dd/M (E)", getLocale()).format(date)
                                 var car1 = 0
                                 if (!cartItem?.Deliverydays.isNullOrBlank()) {

@@ -649,8 +649,6 @@ class TyreListActivity : BaseActivity() {
                     tyreDetail.seasonId = ""
                     tyreDetail.seasonName = ""
                 }
-
-
             }
             seasonDialog.item_All_category_checkbox.isChecked = tyreDetail.seasonId == "0" || tyreDetail.seasonName.isNullOrBlank() || tyreDetail.seasonName == getString(R.string.all) || tyreDetail.seasonName == getString(R.string.all_in_italin)
             seasonTypeCheckBoxBinding(seasonDialog)
