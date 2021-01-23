@@ -1096,7 +1096,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                                 override fun onPicked(hourOfDay: Int, minute: Int) {
                                                     val time = "${if (hourOfDay < 10) "0" else ""}$hourOfDay:${if (minute < 10) "0" else ""}$minute:00"
                                                     Log.d("WorkshopDetailActivity", "Time: $time")
-
                                                     if (!isQuotesService)
                                                         if (packagePrice.text.isEmpty()) {
                                                             toast(getString(R.string.PriceNotSpecified))
@@ -1274,6 +1273,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isCarWash) {
+            Log.d("avragetime",""+averageServiceTime)
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min

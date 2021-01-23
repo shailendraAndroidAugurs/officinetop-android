@@ -146,7 +146,6 @@ class MaintenanceActivity : BaseActivity() {
                                     //bind recyclerview
                                     setAdapter()
                                 } else {
-
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
 
                                         showInfoDialog(body.getString("message"))
