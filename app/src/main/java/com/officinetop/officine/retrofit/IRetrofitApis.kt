@@ -700,7 +700,9 @@ interface IRetrofitApis {
             @Query(Constant.Path.userid) userid: String,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Query(Constant.Path.workshopId) workshopUsersId: String,
-            @Query("services") services: JSONArray
+            @Query(Constant.Path.services) services: JSONArray,
+            @Query(Constant.Path.servicesPrice) services_price: String,
+            @Query(Constant.Path.service_average_time) service_average_time: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getQuotesPackageDetail)
@@ -802,6 +804,8 @@ interface IRetrofitApis {
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.discountType) discountType: String,
+            @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Field(Constant.Path.services) services: JSONArray,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
     @Multipart
@@ -1606,8 +1610,6 @@ interface IRetrofitApis {
             @Query(Constant.Path.service_average_time) serviceAverageTime: String,
             @Query(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
             @Query(Constant.Path.mainCategoryId) main_category_id: String
-
-
     ): Call<ResponseBody>
 
 

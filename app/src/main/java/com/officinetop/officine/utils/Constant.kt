@@ -372,6 +372,8 @@ object Constant {
         const val qutoesUserDescription = "qutoesUserDescription"
         const val qutoesUserAttachImage = "qutoesUserAttachImage"
         const val cartItemType = "cartItemType"
+        const val servicesPrice = "services_price"
+        const val services = "services"
     }
 
     object RC {

@@ -134,7 +134,6 @@ class MaintenanceActivity : BaseActivity() {
                         response?.let {
                             val body = JSONObject(response.body()?.string())
                             if (response.isSuccessful) {
-
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                                     carMaintenanceServiceList.clear()//during reload page.
                                     for (i in 0 until body.getJSONArray("data_set").length()) {
@@ -206,7 +205,7 @@ class MaintenanceActivity : BaseActivity() {
 
                     if (carMaintenanceServiceList[i].parts[0].brandImageURL != null) {
                         carMaintenanceServiceList[i].brandImageURL = carMaintenanceServiceList[i].parts[0].brandImageURL
-                    } else {
+                    }else {
                         carMaintenanceServiceList[i].brandImageURL = ""
                     }
                     carMaintenanceServiceList[i].productName = carMaintenanceServiceList[i].parts[0].productName
@@ -221,6 +220,7 @@ class MaintenanceActivity : BaseActivity() {
             Log.d("Maintenance", "part info$e")
             e.printStackTrace()
         }
+
         genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
@@ -840,9 +840,6 @@ class MaintenanceActivity : BaseActivity() {
         if (selectedCarMaintenanceServices.size != 0) {
             calculateselectedservicesorPart()
             for (item in selectedCarMaintenanceServices) {
-                /*  if (!item.seller_price.isNullOrBlank()) {
-                      selectedServicesTotalPrice = (selectedServicesTotalPrice + item.price.toDouble()).roundTo2Places()
-                  }*/
                 if (item.parts.isNotEmpty() && item.parts[0] != null && !item.parts[0].sellerPrice.isNullOrBlank()) {
                     if (!item.parts[0].forPair.isNullOrBlank() && item.parts[0].forPair.equals("1")) {
                         selectedServicesProductTotalPrices = (selectedServicesProductTotalPrices + (item.parts[0].sellerPrice.toDouble()) * 2).roundTo2Places()
@@ -910,23 +907,18 @@ class MaintenanceActivity : BaseActivity() {
         RetrofitClient.client.getminPriceForMaintenanceServices(serviceID, getSelectedCar()?.carVersionModel?.idVehicle!!, getUserId(), "eng", Constant.defaultDistance, getDateFor(deliveryDate)!!, getLat(), getLong()).onCall { networkException, response ->
             if (response?.isSuccessful!!) {
                 response.let {
-
                     val bodyJsonObject = JSONObject(response.body()?.string())
                     if (response.isSuccessful) {
-
-                        if (bodyJsonObject.has("data") && bodyJsonObject.get("data") != null) {
+                        if (bodyJsonObject.has("data") &&
+                                bodyJsonObject.get("data") != null) {
                             val datajson = JSONObject(bodyJsonObject.getString("data"))
                             if (datajson.has("totalMinWorkshopServicePrice") && !datajson.getString("totalMinWorkshopServicePrice").isNullOrBlank())
                                 selectedServicesTotalPrice = datajson.getString("totalMinWorkshopServicePrice").toDouble().roundTo2Places()
                             btn_choose_workshop.text = getString(R.string.workshopWithSparepart, selectedServicesProductTotalPrices.toString(), selectedServicesTotalPrice.toString())
-
                         }
                     }
-
                 }
             }
-
-
         }
     }
 

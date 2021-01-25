@@ -336,9 +336,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     bundle.putSerializable(Constant.Key.workshopCalendarPrice, calendarPriceMap as Serializable)
                     bundle.putSerializable(Constant.Key.PartIdMap, mPartIdMap as Serializable)
                     bundle.putSerializable(Constant.Key.MotPartIdMap, motPartIdMap as Serializable)
-
                     val id: Any
-
                     if (json.has("category_id")) {
                         id = json.optInt("category_id")
                     } else {
@@ -348,7 +346,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             id = json.optInt("service_id")
                         }
                     } //id is of string type for car maintenance service because for multiple service id's
-
                     val intent = mcontext.intentFor<WorkshopDetailActivity>(
                             Constant.Path.workshopUsersId to json.optInt("users_id")
                             , Constant.Path.categoryId to id.toString()
