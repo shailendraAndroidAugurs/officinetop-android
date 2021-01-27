@@ -399,9 +399,12 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash || isRevision || isTyre || isAssembly||isMotService||isCarMaintenanceService) {
+        if (isCarWash || isRevision || isTyre || isAssembly||isMotService) {
             getCalendarPrices()
-        } else {
+        }else if (isCarMaintenanceService){
+            getCalendarMaintenance()
+        }
+        else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
                 calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
 
@@ -1596,6 +1599,28 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         RetrofitClient.client.getSelectedWorkshopCalendarPrice(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id).onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
+                Log.d("calender_maintenance_list ", bodyResponse)
+                if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
+                    val bodyJsonObject = JSONObject(bodyResponse)
+                    if (bodyResponse != null && bodyJsonObject.has("data_set") && bodyJsonObject.opt("data_set") != null) {
+                        val dataSet = getDataSetArrayFromResponse(bodyResponse)
+                        calendarPriceMap.clear()
+                        for (i in 0 until dataSet.length()) {
+                            val calendarDatePricesObject = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
+                            calendarPriceMap[calendarDatePricesObject.date] = calendarDatePricesObject.minPrice.toString()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCalendarMaintenance() {
+        RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id,version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(),services = maintenceServiceJson,services_price = services_price).onCall { networkException, response ->
+            if (response!!.isSuccessful) {
+                val bodyResponse = response.body()?.string()
+                Log.d("calender_maintenance_list ", bodyResponse)
+
                 if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
                     val bodyJsonObject = JSONObject(bodyResponse)
                     if (bodyResponse != null && bodyJsonObject.has("data_set") && bodyJsonObject.opt("data_set") != null) {
