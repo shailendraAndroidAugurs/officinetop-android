@@ -176,6 +176,7 @@ object Constant {
         const val minPricesForMaintenanceServices = "carMaintennaceMinWorkshopPrice"
         const val getbank_paymentInformation = "payment_management"
         const val getSelectedWorkshopCalendarPrice = "workshopCalendarPrice"
+        const val getworkshopCalendarPriceMaintenance = "maintenanceMinCalendarPrice"
     }
 
     object Key {

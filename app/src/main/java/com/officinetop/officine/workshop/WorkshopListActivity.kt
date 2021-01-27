@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -647,6 +648,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     Log.d("ProductOrWorkshopList", "setWorkshopValues: dataSet $dataSet  -- isAssemblyService --  $isAssemblyService")
                     bindRecyclerView(dataSet)
                 } else {
+
                     bindRecyclerView(JSONArray())
                     showInfoDialog(getMessageFromJSON(it)) {
                     }
@@ -660,61 +662,72 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     private fun bindRecyclerView(jsonArray: JSONArray) {
         calendarPriceMap = HashMap()
-        val gson = GsonBuilder().create()
-        val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
-        productOrWorkshopList.get(0).service_id
-        listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
-        listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId, qutoesUserDescription, qutoesUserImage)
-        if (intent.hasExtra(Constant.Key.cartItem))
-            listAdapter.getCartItem(cartItem!!)
+        var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> =ArrayList<Models.ProductOrWorkshopList>()
+        if(jsonArray.length()==0){
+            productOrWorkshopList.clear()
+            listAdapter.notifyDataSetChanged();
+         //   Toast.makeText(this,"If is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
+        } else {
+          //  Toast.makeText(this,"else is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
+            val gson = GsonBuilder().create()
+            productOrWorkshopList = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
+            productOrWorkshopList.get(0).service_id
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
+            listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId, qutoesUserDescription, qutoesUserImage)
+            if (intent.hasExtra(Constant.Key.cartItem))
+                listAdapter.getCartItem(cartItem!!)
 
-        if (isSOSAppointment || isSOSServiceEmergency) {
+            if (isSOSAppointment || isSOSServiceEmergency) {
 
-            listAdapter.userLocationSOS(isSOSServiceEmergency, latitude, longitude, serviceID, workshopUserId, addressId, workshopWreckerId)
-        }
-        listAdapter.setWorkshopCategory(convertToJson(intent.getSerializableExtra(Constant.Path.washServiceDetails)
-                ?: Any()))
-
-        intent.printValues(localClassName)
-
-        if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
-            isAssembly = true
-            listAdapter.setAssembledProduct(assembledProductDetail)
-        }
-        if (intent.getBooleanExtra(Constant.Key.is_tyre, false)) {
-            listAdapter.setWorkshopCategory(convertToJson(intent.getSerializableExtra(Constant.Key.productDetail)
+                listAdapter.userLocationSOS(isSOSServiceEmergency, latitude, longitude, serviceID, workshopUserId, addressId, workshopWreckerId)
+            }
+            listAdapter.setWorkshopCategory(convertToJson(intent.getSerializableExtra(Constant.Path.washServiceDetails)
                     ?: Any()))
-        }
 
-        recycler_view.adapter = listAdapter
+            intent.printValues(localClassName)
 
-        if (hasRecyclerLoadedOnce)
-            return
+            if (intent.getBooleanExtra(Constant.Key.is_assembly_service, false)) {
+                isAssembly = true
+                listAdapter.setAssembledProduct(assembledProductDetail)
+            }
+            if (intent.getBooleanExtra(Constant.Key.is_tyre, false)) {
+                listAdapter.setWorkshopCategory(convertToJson(intent.getSerializableExtra(Constant.Key.productDetail)
+                        ?: Any()))
+            }
 
-        val list: MutableList<Float> = ArrayList()
-        for (i in 0 until jsonArray.length()) {
-            val json = JSONObject(jsonArray[i].toString())
-            val priceString = if (!json.isNull("services_price")) json.optString("services_price") else ""
-            list.add(if (priceString.isEmpty()) 0f else priceString.replace(",", "").trim().toFloat())
-            seekbarPriceInitialLimit = if (!json.isNull("min_price")) json.optString("min_price", "0").toFloat() else 0f
-            seekbarPriceFinalLimit = if (!json.isNull("max_price")) json.optString("max_price", "0").toFloat() else 0f
-            Log.d("WorkshopList", "max prices" + seekbarPriceFinalLimit.toString() + jsonArray.length().toString())
-        }
-        if (jsonArray.length() > 0) {
-            try {
-                hasRecyclerLoadedOnce = true
-                filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
-                filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
-                filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
-                filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
-                pricesFilter = false
+            recycler_view.adapter = listAdapter
 
+            if (hasRecyclerLoadedOnce)
+                return
 
-                Log.d("WorkshopList", "max prices$seekbarPriceFinalLimit")
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
+            val list: MutableList<Float> = ArrayList()
+            for (i in 0 until jsonArray.length()) {
+                val json = JSONObject(jsonArray[i].toString())
+                val priceString = if (!json.isNull("services_price")) json.optString("services_price") else ""
+                list.add(if (priceString.isEmpty()) 0f else priceString.replace(",", "").trim().toFloat())
+                seekbarPriceInitialLimit = if (!json.isNull("min_price")) json.optString("min_price", "0").toFloat() else 0f
+                seekbarPriceFinalLimit = if (!json.isNull("max_price")) json.optString("max_price", "0").toFloat() else 0f
+                Log.d("WorkshopList", "max prices" + seekbarPriceFinalLimit.toString() + jsonArray.length().toString())
+            }
+            if (jsonArray.length() > 0) {
+                try {
+                    hasRecyclerLoadedOnce = true
+                    filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
+                    filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
+                    filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
+                    filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, "0")
+                    pricesFilter = false
+                    Log.d("WorkshopList", "max prices$seekbarPriceFinalLimit")
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
             }
         }
+
+
+
+
+
         Log.d("ProductOrWorkshop", "bindRecyclerView: price range = $seekbarPriceInitialLimit - $seekbarPriceFinalLimit")
     }
 

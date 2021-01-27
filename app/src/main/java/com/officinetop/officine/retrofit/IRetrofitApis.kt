@@ -1612,5 +1612,19 @@ interface IRetrofitApis {
             @Query(Constant.Path.mainCategoryId) main_category_id: String
     ): Call<ResponseBody>
 
+ @POST(Constant.UrlEndPoints.getworkshopCalendarPriceMaintenance)
+    fun getSelectedWorkshopCalendarPriceMaintence(
+            @Query(Constant.Path.workshopUsersId) workshop_id: String,
+            @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.categoryId) categoryId: String,
+            @Query(Constant.Path.hourly_rate) hourly_rate: String,
+            @Query(Constant.Path.service_average_time) serviceAverageTime: String,
+            @Query(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
+            @Query(Constant.Path.mainCategoryId) main_category_id: String,
+            @Query(Constant.Path.version_id) version_id: String,
+            @Query(Constant.Path.services) services: JSONArray,
+            @Query(Constant.Path.servicesPrice) services_price: String): Call<ResponseBody>
+
+
 
 }
