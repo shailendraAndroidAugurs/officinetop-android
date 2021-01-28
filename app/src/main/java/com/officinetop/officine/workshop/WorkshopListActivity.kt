@@ -665,7 +665,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> =ArrayList<Models.ProductOrWorkshopList>()
         if(jsonArray.length()==0){
             productOrWorkshopList.clear()
-            listAdapter.notifyDataSetChanged();
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
+            recycler_view.adapter = listAdapter
          //   Toast.makeText(this,"If is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
         } else {
           //  Toast.makeText(this,"else is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
@@ -770,7 +771,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
                     tempDistanceInitial = leftValue.toInt()
                     tempDistanceFinal = rightValue.toInt() /*+ 1*/
-
                     distance_end_range.text = getString(R.string.append_km, tempDistanceFinal)
                     distance_start_range.text = getString(R.string.append_km, tempDistanceInitial)
                     misdistancefilter = true

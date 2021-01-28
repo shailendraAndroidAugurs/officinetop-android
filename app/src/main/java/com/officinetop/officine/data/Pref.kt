@@ -99,7 +99,6 @@ inline fun getStatusCode(bodyString: String): String {
 
 inline fun isStatusCodeValid(bodyString: String?): Boolean {
     return try {
-
         bodyString?.let {
             getStatusCode(it)
         } == "1"

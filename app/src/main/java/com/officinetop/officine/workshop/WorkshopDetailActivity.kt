@@ -407,7 +407,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
                 calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
-
         }
 
         // open calendar for booking date
@@ -519,7 +518,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     val calendarDate = day.date.year.toString() + "-" + String.format("%02d", day.date.month.value, getLocale()) + "-" + String.format("%02d", day.date.dayOfMonth, getLocale())
                     if (day.owner == DayOwner.THIS_MONTH) {
                         textView.text = day.date.dayOfMonth.toString()
-
                         if ((day.date == today || day.date.isAfter(today)) && day.date.isBefore(today.plusDays(30))) {
                             when (day.date) {
                                 previousSelectedDate -> {
@@ -1041,28 +1039,20 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     if (isAvailable == "1") {
                         bookPackage.text = getString(R.string.book)
                         bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.theme_orange))
-                    } else if (isAvailable == "0") {
+                    } else {
                         bookPackage.text = getString(R.string.busy)
                         bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.red))
-                    } else if (isAvailable == "2") {
-                        bookPackage.text = getString(R.string.not_applicable)
-                        bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.red))
                     }
-                    else if (isAvailable == "3") {
-                        bookPackage.text = getString(R.string.not_available)
-                        bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.red))
-                    }
-
                     bookPackage.setOnClickListener {
                         if (isAvailable == "0") {
-                            showInfoDialog(getString(R.string.Thisslotisbusy))
+                         //   showInfoDialog(getString(R.string.Thisslotisbusy))
                             return@setOnClickListener
                         } else if (isAvailable == "2") {
-                            showInfoDialog(getString(R.string.Thisslotnotapplicable))
+                           // showInfoDialog(getString(R.string.Thisslotnotapplicable))
                             return@setOnClickListener
                         }
                         else if (isAvailable == "3") {
-                            showInfoDialog(getString(R.string.this_slot_not_available))
+                           // showInfoDialog(getString(R.string.this_slot_not_available))
                             return@setOnClickListener
                         }
                         else if (startHour > endHour) {
