@@ -212,6 +212,7 @@
                         android:background="@drawable/shape_dotted_orange"
                         android:padding="5dp"
                         android:text="@string/special20"
+                        android:layout_gravity="right"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_8sdp" />
@@ -222,7 +223,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="@string/Not_Availabale"
+                        android:layout_gravity="right"
+                        android:text="@string/busy"
                         android:textColor="@color/red"
                         android:textSize="14sp"
                         android:visibility="gone" />

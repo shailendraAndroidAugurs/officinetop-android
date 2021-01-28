@@ -414,7 +414,7 @@ informazioni in accordo alle </string>
     <string name="Scheduled_auto_inspection">Ispezione automatica programmata</string>
     <string name="Capac_Battery">Capac. Batteria (Ah)</string>
     <string name="special20">speciale 20</string>
-    <string name="Not_Availabale">Non disponibile</string>
+    <string name="Not_Availabale">Occupato</string>
     <string name="Shopping_Cart">Carrello della spesa</string>
     <string name="Smart_solution_withCar">Trova servizi tagliandi per la tua auto</string>
     <string name="Emergency_Service_Details">Dettagli del servizio di emergenza</string>
