@@ -137,7 +137,7 @@ object Constant {
         const val deleteContact = "delete_user_contact_list"
         const val deleteAddress = "delete_user_address"
         const val getCartList = "get_cart_list"
-        const val sosWorkshopListForAppontment = "sos_workshop_list_for_appontment"
+        const val sosWorkshopListForAppontment = "sos_workshop_list_for_appointment"
         const val sosWorkshopListForEmergency = "sos_workshop_list_for_emergency"
         const val SimilarPartProduct = "similar_for_parts"
         const val highRatingFeedback = "feedback_list_for_workshop_product"

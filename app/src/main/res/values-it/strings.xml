@@ -196,7 +196,7 @@ informazioni in accordo alle </string>
     <string name="retry">riprova</string>
     <string name="email_blank">Inserisci l\'email</string>
     <string name="mobile_blank">Inserisci cellulare</string>
-
+    <string name="Can_not_add_new_data">Puoi aggiungere solo 3 auto nello stesso giorno.</string>
     <string name="User_Contact">Lista dei contatti</string>
     <string name="User_address">Elenco indirizzi</string>
     <string name="add_contact">Aggiungi numero di contatto</string>
