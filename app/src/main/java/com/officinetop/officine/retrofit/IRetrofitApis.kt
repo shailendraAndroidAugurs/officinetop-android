@@ -1211,7 +1211,7 @@ interface IRetrofitApis {
     fun getCartList(@Header(Constant.Fields.authorization) authToken: String, @Query(Constant.Path.orderId) orderId: String): Call<ResponseBody>
 
 
-    @GET(Constant.UrlEndPoints.sosWorkshopListForAppontment)
+    @POST(Constant.UrlEndPoints.sosWorkshopListForAppontment)
     fun getSOSWorkshopListforAppointment(
             @Header(Constant.Fields.authorization) authToken: String,
             @Query(Constant.Path.selectedCarId) selectedCarId: String,

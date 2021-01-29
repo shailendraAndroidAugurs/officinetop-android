@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.BaseAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
@@ -42,6 +41,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, FragmentChangeListener {
@@ -51,6 +54,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private lateinit var carListAdapter: BaseAdapter
     private var lastListSize = -1
     private var hasAddedCar = false
+    var test_var = 0
     lateinit var progressDialog: ProgressDialog
     private var hasSelectedCar = false
     var isConnectionError = false
@@ -449,6 +453,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     val car = carList[position]
 //                Log.d("HomeActivity", "getView: $car")
+                    ++test_var
+
+                    Log.d("checked_created_date",car.id+"  ");
 
                     val view = layoutInflater.inflate(R.layout.item_my_cars_small, parent, false)
 
@@ -457,6 +464,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     } catch (e: Exception) {
                         view.item_sub_title_car.text = ""
                     }
+
 
                     try {
                         view.item_sub_title_car.text = ("${car.carVersionModel.version} (${car.carVersionModel.kw}/${car.carVersionModel.cv}) (${car.carVersionModel.dal})")
@@ -550,7 +558,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         negativeButton(getString(R.string.no)) {}
                     }.show()
                 } else
-                    startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
+                    checkThreeMaxcar()
                 dismiss()
             }
 
@@ -558,6 +566,31 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             create()
 
+        }
+    }
+
+    private fun checkThreeMaxcar() {
+        if(carList.size < 3){
+            startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
+        }
+        else{
+            var sameDateCarItem = 0;
+           for (carListModel in carList){
+               val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
+               val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+               val date: Date = originalFormat.parse(carListModel.created_at)
+               val createdDate: String = targetFormat.format(date) // 20120821
+               val currentDate = targetFormat.format(Date())
+                if(createdDate.equals(currentDate)){
+                    sameDateCarItem++
+                }
+           }
+            if(sameDateCarItem<3){
+                startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
+            }
+            else{
+                showInfoDialog(getString(R.string.Can_not_add_new_data))
+            }
         }
     }
 

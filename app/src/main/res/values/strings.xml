@@ -518,6 +518,7 @@
     <string name="Login_session_expired">Login session expired. Please login again to continue</string>
     <string name="onResponseCode500">onResponse: error on 500 code -</string>
     <string name="Filter_Workshops">Filter Workshops</string>
+    <string name="Can_not_add_new_data">You can only add 3 cars on same day.</string>
     <!--new String of toast , snackbar, dialog-->
 
 

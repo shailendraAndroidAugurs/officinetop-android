@@ -120,7 +120,9 @@ object Models {
             @SerializedName("selected")
             val selected: String = "0",
             @SerializedName("number_plate")
-            val numberPlate: String = ""
+            val numberPlate: String = "",
+            @SerializedName("created_at")
+            val created_at: String = ""
 
     ) : Serializable
 

@@ -618,7 +618,7 @@
     <string name="need_permissions">Need Permissions</string>
     <string name="permission_denied">This app needs permission to use this feature. You can grant them in app settings.</string>
     <string name="goto_setting">GOTO SETTINGS</string>
-
+    <string name="Can_not_add_new_data">You can only add 3 cars on same day.</string>
     <string name="bankTransfer">Bank Transfer</string>
     <string name="registered_person">Registered person: </string>
     <string name="iban">Iban:</string>
