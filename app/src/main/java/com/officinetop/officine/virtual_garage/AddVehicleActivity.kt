@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.isapanah.awesomespinner.AwesomeSpinner
 import com.officinetop.officine.BaseActivity
@@ -51,10 +52,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.Serializable
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-//AX123YY, EN301MW licience nn
+ //AX123YY, EN301MW licience nn
 class AddVehicleActivity : BaseActivity() {
     lateinit var progressDialog: ProgressDialog
     var isLoaded = false
@@ -68,12 +71,17 @@ class AddVehicleActivity : BaseActivity() {
 
     var myCar: Models.MyCarDataSet? = null
 
+     var carList: MutableList<Models.MyCarDataSet> = ArrayList()
+
+
+
     var isForEdit = false
     var isForPlateno = false
     var WRITE_EXTERNAL_STORAGE_RC = 10001
     private var carImageList = ArrayList<Models.CarImages>()
     private var carcriteriaId = ""
     private var CarConditionScheduleId = ""
+
 
     var iscompletedlater = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +104,13 @@ class AddVehicleActivity : BaseActivity() {
 
         myCar = intent.getSerializableExtra(Constant.Key.myCar) as Models.MyCarDataSet?
 
+        if(intent.hasExtra(Constant.car_list)) {
+            val CarListString = intent.getStringExtra(Constant.car_list)
+            val gson = GsonBuilder().create()
+            carList = gson.fromJson(CarListString.toString(), Array<Models.MyCarDataSet>::class.java).toCollection(java.util.ArrayList<Models.MyCarDataSet>())
+        }
+
+
         isForEdit = myCar != null
 
         Log.d("AddVehicleActivity", "onCreate: is For Edit $isForEdit")
@@ -107,7 +122,6 @@ class AddVehicleActivity : BaseActivity() {
         if (!isForEdit) {
             container_editable.visibility = View.GONE
         }
-
 
 
         progressDialog = getProgressDialog()
@@ -125,14 +139,12 @@ class AddVehicleActivity : BaseActivity() {
 
 
             if (isLoaded) {
-
                 //Do you want to complete the car details to get personalized suggestions?
-
                 if (isForEdit && isLoggedIn())
                     editCarFromFields()
-                else
-                    addCarFromFields()
-
+                else{
+                    checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
+                }
             }
         }
 
@@ -1500,6 +1512,33 @@ class AddVehicleActivity : BaseActivity() {
         }
 
     }
+
+    private fun checkThreeMaxcar(carList: java.util.ArrayList<Models.MyCarDataSet>) {
+        if(carList.size<3){
+            addCarFromFields()
+        }else{
+            var sameDateCarItem = 0;
+            for (carListModel in this.carList){
+                Log.d("check_data_date",""+carListModel.created_at)
+                val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
+                val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val date: Date = originalFormat.parse(carListModel.created_at)
+                val createdDate: String = targetFormat.format(date) // 20120821
+                val currentDate = targetFormat.format(Date())
+                if(createdDate.equals(currentDate)){
+                    sameDateCarItem++
+                }
+            }
+            if(sameDateCarItem<3){
+                addCarFromFields()
+            }
+            else{
+                showInfoDialog(getString(R.string.Can_not_add_new_data))
+            }
+        }
+
+    }
+
 }
 
 

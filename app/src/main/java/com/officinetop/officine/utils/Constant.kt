@@ -15,6 +15,7 @@ object Constant {
 
     const val baseUrl = "https://services.officinetop.com/api/"//https://officine.augurstech.com/officineTop/api/
 
+    const val car_list = "car_list"
 
     //  const val baseUrl = "http://18.223.98.226/api/"
     const val headerJSON = "Accept: application/json"
