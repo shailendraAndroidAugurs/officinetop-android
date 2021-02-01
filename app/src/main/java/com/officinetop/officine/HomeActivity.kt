@@ -22,6 +22,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.officinetop.officine.Support.Support_FAQ_Activity
 import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
@@ -61,6 +62,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private var googleApiClient: GoogleApiClient? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    var carListResponse = ""
 
 
     private val internetBroadcast = object : BroadcastReceiver() {
@@ -189,7 +191,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             if (!isLoggedIn() && !hasAddedCar) {
-                showInfoDialog(getString(R.string.dialog_message_add_car),true) {
+                showInfoDialog(getString(R.string.dialog_message_add_car), true) {
                     startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
                 }
                 return@setOnClickListener
@@ -297,7 +299,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 override fun onResponse(call: Call<Models.MyCar>, response: Response<Models.MyCar>) {
                     val responseBody = response.body()
-                    val body = responseBody?.toString()
+                    carListResponse = responseBody.toString()
                     try {
                         dialog.dialog_refresh.clearAnimation()
                     } catch (e: java.lang.Exception) {
@@ -305,7 +307,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                     progressDialog.dismiss()
 
-                    Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $body")
+                    Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $carListResponse")
 
                     isConnectionError = false
 
@@ -455,7 +457,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 //                Log.d("HomeActivity", "getView: $car")
                     ++test_var
 
-                    Log.d("checked_created_date",car.id+"  ");
+                    Log.d("checked_created_date", car.id + "  ")
 
                     val view = layoutInflater.inflate(R.layout.item_my_cars_small, parent, false)
 
@@ -557,8 +559,14 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         }
                         negativeButton(getString(R.string.no)) {}
                     }.show()
-                } else
-                    checkThreeMaxcar()
+                } else {
+
+                    val jsonString = Gson().toJson(carList)
+
+                    val intent = Intent(this@HomeActivity, AddVehicleActivity::class.java)
+                    intent.putExtra(Constant.car_list, jsonString)
+                    startActivity(intent)
+                }
                 dismiss()
             }
 
@@ -570,25 +578,23 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun checkThreeMaxcar() {
-        if(carList.size < 3){
+        if (carList.size < 3) {
             startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
-        }
-        else{
-            var sameDateCarItem = 0;
-           for (carListModel in carList){
-               val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
-               val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-               val date: Date = originalFormat.parse(carListModel.created_at)
-               val createdDate: String = targetFormat.format(date) // 20120821
-               val currentDate = targetFormat.format(Date())
-                if(createdDate.equals(currentDate)){
+        } else {
+            var sameDateCarItem = 0
+            for (carListModel in carList) {
+                val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
+                val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val date: Date = originalFormat.parse(carListModel.created_at)
+                val createdDate: String = targetFormat.format(date) // 20120821
+                val currentDate = targetFormat.format(Date())
+                if (createdDate.equals(currentDate)) {
                     sameDateCarItem++
                 }
-           }
-            if(sameDateCarItem<3){
-                startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
             }
-            else{
+            if (sameDateCarItem < 3) {
+                startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
+            } else {
                 showInfoDialog(getString(R.string.Can_not_add_new_data))
             }
         }
@@ -1075,6 +1081,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     })
         }
     }
-
 }
+
 
