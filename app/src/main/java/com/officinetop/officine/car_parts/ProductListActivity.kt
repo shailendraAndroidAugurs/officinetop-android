@@ -252,6 +252,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 if (isStatusCodeValid(body)) {
                     val dataSet = getDataSetArrayFromResponse(it)
                     bindRecyclerView(dataSet)
+                    Log.d("check_list_size",""+brandlist.size)
                     if (brandlist.size == 0) {
                         val brandJSONArray = JSONObject(body).getJSONArray("brands")
                         val gson = GsonBuilder().create()
@@ -516,7 +517,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 listAdapter.clear()
 
                 isfilterApply = false
-                reloadPage()
+if(!isfilterApply){
+    reloadPage()
+}
+
+
 
             }
             create()
