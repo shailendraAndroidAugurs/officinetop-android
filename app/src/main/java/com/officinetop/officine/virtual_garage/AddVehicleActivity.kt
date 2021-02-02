@@ -143,7 +143,10 @@ class AddVehicleActivity : BaseActivity() {
                 if (isForEdit && isLoggedIn())
                     editCarFromFields()
                 else{
-                    checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
+                    var BookStatus =  checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
+                    if(BookStatus){
+                        addCarFromFields()
+                    }
                 }
             }
         }
@@ -156,18 +159,23 @@ class AddVehicleActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            if (plate_editText.text.length != 7) {
+           else if (plate_editText.text.length != 7) {
                 showInfoDialog(getString(R.string.PleaseEnterValidLicensePlateNumber), true) {}
                 return@setOnClickListener
             }
 
-            if (!isAlphaNumeric(plate_editText.text.toString())) {
+           else if (!isAlphaNumeric(plate_editText.text.toString())) {
                 showInfoDialog(getString(R.string.PleaseEnterValidLicensePlateNumber), true) {}
                 return@setOnClickListener
             }
+            else{
+                var BookStatus =  checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
+                if(BookStatus){
+                    addFromPlate()
+                }
+            }
 
 
-            addFromPlate()
         }
 
     }
@@ -1513,9 +1521,10 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-    private fun checkThreeMaxcar(carList: java.util.ArrayList<Models.MyCarDataSet>) {
+    private  fun checkThreeMaxcar(carList: java.util.ArrayList<Models.MyCarDataSet>):Boolean {
+        var BookProcessedStatus = false
         if(carList.size<3){
-            addCarFromFields()
+            BookProcessedStatus = true
         }else{
             var sameDateCarItem = 0;
             for (carListModel in this.carList){
@@ -1530,13 +1539,16 @@ class AddVehicleActivity : BaseActivity() {
                 }
             }
             if(sameDateCarItem<3){
-                addCarFromFields()
+                BookProcessedStatus = true
+
             }
             else{
+                BookProcessedStatus = false
                 showInfoDialog(getString(R.string.Can_not_add_new_data))
             }
         }
 
+        return  BookProcessedStatus
     }
 
 }
