@@ -143,10 +143,8 @@ class AddVehicleActivity : BaseActivity() {
                 if (isForEdit && isLoggedIn())
                     editCarFromFields()
                 else{
-                    var BookStatus =  checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
-                    if(BookStatus){
-                        addCarFromFields()
-                    }
+                    addCarFromFields()
+
                 }
             }
         }
@@ -169,10 +167,7 @@ class AddVehicleActivity : BaseActivity() {
                 return@setOnClickListener
             }
             else{
-                var BookStatus =  checkThreeMaxcar(carList as java.util.ArrayList<Models.MyCarDataSet>);
-                if(BookStatus){
-                    addFromPlate()
-                }
+                addFromPlate()
             }
 
 

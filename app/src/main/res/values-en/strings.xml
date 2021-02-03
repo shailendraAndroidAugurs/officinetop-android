@@ -654,7 +654,7 @@
     <string name="product">Product</string>
     <string name="not_available">Not Available</string>
     <string name="this_slot_not_available">This slot is not available on this date</string>
-
+    <string name="quotes_alert_msg">Appointment Quotes booked successfully</string>
 
 
 
