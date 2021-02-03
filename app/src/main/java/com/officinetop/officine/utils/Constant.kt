@@ -234,6 +234,8 @@ object Constant {
         const val is_car_wash = "is_car_wash"
         const val currentLatLong = "currentLatLong"
         const val usertLatLong = "usertLatLong"
+        const val count = "count"
+        const val date = "date"
     }
 
     object Fields {
