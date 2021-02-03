@@ -733,6 +733,7 @@
     <string name="oen">OEN</string>
     <string name="part">Part</string>
     <string name="product">Product</string>
+    <string name="quotes_alert_msg">Appointment Quotes booked successfully</string>
 
 
 

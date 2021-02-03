@@ -648,7 +648,7 @@ informazioni in accordo alle </string>
     <string name="services_address_note">I servizi saranno eseguiti nell’officina scelta alla data prenotata</string>
     <string name="not_available">Occupato </string>
     <string name="this_slot_not_available">Questo slot non è disponibile in questa data</string>
-
+    <string name="quotes_alert_msg">Appuntamento Preventivi prenotati con successo</string>
     <string name="oen">Codice OE</string>
     <string name="part">Ricambi</string>
     <string name="product">Prodotti</string>
