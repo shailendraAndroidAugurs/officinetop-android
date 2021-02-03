@@ -36,10 +36,12 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import com.kizitonwose.calendarview.utils.next
 import com.kizitonwose.calendarview.utils.previous
 import com.officinetop.officine.BaseActivity
+import com.officinetop.officine.HomeActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
+import com.officinetop.officine.tyre.TyreListActivity
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
@@ -1335,8 +1337,13 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
                             dialogForInvalidCoupon(packageDetail, bookingStartTime)
                         } else {
-                            startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
-                            finishAffinity()
+                            if(!isQuotesService){
+                                startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
+                                finishAffinity()
+                            }
+                            else{
+                                showInfoDialog(getString(R.string.quotes_alert_msg),true,{ sendTohomepage()})
+                            }
                         }
                     } else {
                         val bookingResponse = JSONObject(body)
@@ -1505,6 +1512,16 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     ?: "", getSavedSelectedVehicleID(), workshopUsersId, workshopCouponId, SpecialConditionId, slotId, DiscountType)
             serviceBookingCall.enqueue(callback)
         }
+    }
+
+    private fun sendTohomepage() {
+        val intent = Intent(applicationContext, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+        finish()
+
     }
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, AppliedCouponName: TextView) {

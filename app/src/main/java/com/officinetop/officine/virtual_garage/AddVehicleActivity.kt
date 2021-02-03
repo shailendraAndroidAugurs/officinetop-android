@@ -1516,34 +1516,10 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-    private  fun checkThreeMaxcar(carList: java.util.ArrayList<Models.MyCarDataSet>):Boolean {
-        var BookProcessedStatus = false
-        if(carList.size<3){
-            BookProcessedStatus = true
-        }else{
-            var sameDateCarItem = 0;
-            for (carListModel in this.carList){
-                Log.d("check_data_date",""+carListModel.created_at)
-                val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
-                val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val date: Date = originalFormat.parse(carListModel.created_at)
-                val createdDate: String = targetFormat.format(date) // 20120821
-                val currentDate = targetFormat.format(Date())
-                if(createdDate.equals(currentDate)){
-                    sameDateCarItem++
-                }
-            }
-            if(sameDateCarItem<3){
-                BookProcessedStatus = true
-
-            }
-            else{
-                BookProcessedStatus = false
-                showInfoDialog(getString(R.string.Can_not_add_new_data))
-            }
-        }
-
-        return  BookProcessedStatus
+    private  fun getCurrentdate():String {
+        val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = targetFormat.format(Date())
+        return  currentDate
     }
 
 }
