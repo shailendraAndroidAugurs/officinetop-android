@@ -205,8 +205,34 @@ inline fun Context.saveLocalCarInJSON(json: String) {
 
     getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
             .edit()
-            .putString(Constant.Key.saved_car_json, json).apply()
+            .putString(Constant.Key.saved_car_json, json)
+            .apply()
 }
+
+inline fun Context.saveLocalCarCount(count: Int) {
+    getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
+            .edit()
+            .putInt(Constant.Key.count, count)
+            .apply()
+}
+
+inline fun Context.getLocalCarCount() : Int {
+  return  getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
+            .getInt(Constant.Key.count, 0)
+}
+
+inline fun Context.saveLocalCarDate(date: String) {
+    getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
+            .edit()
+            .putString(Constant.Key.date, date)
+            .apply()
+}
+
+inline fun Context.getLocalCarDate() : String {
+   return getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
+            .getString(Constant.Key.date, "")
+}
+
 
 inline fun Context.getVehicleDetailsLocally(key: String): String {
     return getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)

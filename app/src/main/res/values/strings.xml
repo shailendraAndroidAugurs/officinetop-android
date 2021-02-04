@@ -734,6 +734,7 @@
     <string name="part">Part</string>
     <string name="product">Product</string>
     <string name="quotes_alert_msg">Appointment Quotes booked successfully</string>
+    <string name="more_than_3_car_added">You cannot add more than 3 cars per day.</string>
 
 
 
