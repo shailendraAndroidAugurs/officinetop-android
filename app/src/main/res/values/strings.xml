@@ -261,10 +261,10 @@
     <string name="condition">Terms &amp; Condition</string>
     <string name="check_referral">Do you\'ve referral code?</string>
     <string name="remove_referral">Do you want to remove referral code?</string>
-    <string name="offer_msg_referral">Enter the referral code to get euros in your Credit after registration</string>
+    <string name="offer_msg_referral">Enter the invitation code to receive credit on your account after registration.</string>
     <string name="close">Close</string>
     <string name="ticket">Ticket No. -</string>
-
+    <string name="first_name">First name</string>
 
     <!-- Support-->
 
@@ -566,7 +566,7 @@
     <string name="Unspecifiederroroccurred"> Unspecified error occurred</string>
     <string name="Failedsendresetemail">Failed to send reset email</string>
     <string name="FailedtologinCheckyourcredential">Failed to log in, Check your credential</string>
-    <string name="PleaseSelectContactNo">Please Select ContactNo</string>
+    <string name="PleaseSelectContactNo">Select the phone number</string>
     <string name="Requesttimedout"> Request timed out</string>
     <string name="PleaseSelectAddress">Please Select Address!</string>
     <string name="AllFieldsRequired">All Fields Required</string>

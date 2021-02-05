@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:hint="Fisrt name"
+                android:hint="@string/first_name"
                 android:layout_weight="1"
                 android:id="@+id/ed_userName"
                 android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                 android:padding="10dp" />
             <EditText
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:hint="Last name"
+                android:hint="@string/last_name"
                 android:layout_weight="1"
                 android:id="@+id/ed_userlName"
                 android:layout_width="match_parent"

@@ -1155,7 +1155,9 @@ fun Context.addReadLess(text: String, textView: TextView) {
     val ss = SpannableString("$text " + getString(R.string.less))
     val clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(view: View) {
-            addReadMore(text, textView)
+            if(text.length>=150){
+                addReadMore(text, textView)
+            }
         }
 
         override fun updateDrawState(ds: TextPaint) {

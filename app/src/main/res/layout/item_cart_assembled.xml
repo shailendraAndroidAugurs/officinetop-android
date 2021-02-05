@@ -194,7 +194,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_5sdp"
                 app:feedbackStatus="@{listItemViewModel.ServiceAssemblyProductDescription!= null  &amp;&amp; listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus!=null ? listItemViewModel.ServiceAssemblyProductDescription.feedbackstatus : @string/string_not_found}"
-                app:feedbackvisibility="@{listItemViewModel.status}">
+                app:feedbackvisibility="@{listItemViewModel.status!=null ? listItemViewModel.status :@string/concat}">
 
                 <View
                     android:layout_width="match_parent"
@@ -569,7 +569,7 @@
                 android:layout_weight="2"
                 android:padding="@dimen/_5sdp"
                 app:feedbackStatus="@{listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.feedbackstatus!=null ? listItemViewModel.serviceDetail.feedbackstatus : @string/concat }"
-                app:feedbackvisibility="@{listItemViewModel.status}">
+                app:feedbackvisibility="@{listItemViewModel.status!=null ? listItemViewModel.status :@string/concat}">
 
                 <TextView
                     android:id="@+id/iv_delete"
@@ -593,7 +593,7 @@
                 android:layout_weight="2"
                 android:padding="@dimen/_5sdp"
                 android:visibility="gone"
-                app:layoutvisibility="@{listItemViewModel.serviceDetail.feedbackstatus}">
+                app:layoutvisibility="@{listItemViewModel.serviceDetail.feedbackstatus != null ?listItemViewModel.serviceDetail.feedbackstatus:@string/concat}">
 
                 <TextView
                     android:id="@+id/iv_AddtoCart"

@@ -45,8 +45,9 @@ class RevisionServiceAdapter(context: Context, revisionServiceList: MutableList<
             }
         }
 
-        mContext.addReadMore(holder.revDesc.text.toString(), holder.revDesc)
-
+        if(holder.revDesc.text.toString().length >= 150){
+            mContext.addReadMore(holder.revDesc.text.toString(), holder.revDesc)
+        }
 
     }
 
