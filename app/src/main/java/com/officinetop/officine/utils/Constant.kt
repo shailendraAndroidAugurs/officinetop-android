@@ -95,6 +95,7 @@ object Constant {
         const val service_booking_request_quotes = "service_booking_request_quotes"
         const val productBrandList = "get_product_brand_list"
         const val getUserDetails = "get_user_profile"
+        const val getsosWorkshopList = "sosWorkshopList"
 
         // search product list
         const val getSearchKeywords = "search_key/"
