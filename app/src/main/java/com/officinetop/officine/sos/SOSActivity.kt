@@ -76,6 +76,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     private var wrackersList: MutableList<Models.WrackerServices> = ArrayList()
     private var sosActivityListener: SOSActivityListener? = null
     private var googleApiClient: GoogleApiClient? = null
+    private var main_category_id = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,7 +108,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     private fun callEmergency() {
         // Use format with "tel:" and phoneNumber created is
         // stored in uri.
-        val uri: Uri = Uri.parse("tel:+0012345678998")
+        val uri: Uri = Uri.parse("tel:+393285668826")
         val intent = Intent(Intent.ACTION_DIAL, uri)
         startActivity(intent)
 
@@ -217,9 +218,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         val data = Gson().fromJson<Models.WrackerServices>(data_set.getJSONObject(i).toString(), Models.WrackerServices::class.java)
 
                                         wrackersList.add(data)
-
+                                        main_category_id = wrackersList.get(i).main_category_id
                                         Log.d("wrakerServicesCall", data.id.toString())
                                     }
+
                                     Log.d("wrakerServicesCall", "sos")
 
                                 } else {
@@ -347,7 +349,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 Constant.Path.workshopUsersId to userId.toString(),
                 Constant.Path.addressId to items.addressId,
                 Constant.Path.workshopWreckerId to items.workshopWreckerId.toString(),
-                Constant.Path.workshopFilterSelectedDate to selectedFormattedDate
+                Constant.Path.workshopFilterSelectedDate to selectedFormattedDate,
+                Constant.Path.mainCategoryId to main_category_id
         ))
     }
 
@@ -415,8 +418,11 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 } else {
                     mLatitude = location.latitude.toString()//"44.1571507"
                     mLongitude = location.longitude.toString()//"12.2142107"
+                  /*  mLatitude = "44.1571507"
+                    mLongitude = "12.2142107"*/
+
                 }
-                loadmapview()
+                loadMapView()
             }
         }
     }
@@ -441,12 +447,12 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             Log.e("latitudemLastLocation", mLastLocation.latitude.toString())
             mLatitude = mLastLocation.latitude.toString()
             mLongitude = mLastLocation.longitude.toString()
-            loadmapview()
+            loadMapView()
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun loadmapview() {
+    private fun loadMapView() {
         mMap.isMyLocationEnabled = true
         if (mLatitude != null && mLongitude != null) {
             val myLocation = LatLng(mLatitude!!.toDouble(),
@@ -455,14 +461,12 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             mMap.addMarker(MarkerOptions()
                     .position(myLocation))
         }
-        Log.e("latitudeloadmapview", mLatitude.toString() + "location")
 
         if (isOnline()) {
             getAllWrackerWorkshopAddressInfo()
         }else{
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
-
     }
 }
 
