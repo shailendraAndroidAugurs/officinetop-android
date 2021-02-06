@@ -261,7 +261,6 @@ class FragmentHome : Fragment() {
 
     private fun MoveBannerToDetail(n: Int?, context: Context?) {
 
-
         when (n) {
             23 -> {
                 if (!TextUtils.isEmpty(context?.getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)?.getString("tyre_detail", ""))) {
@@ -273,7 +272,7 @@ class FragmentHome : Fragment() {
 
 
             12 -> startActivity(intentFor<MaintenanceActivity>())
-            4 -> startActivity(intentFor<PartCategories>())//PartsCategoryActivity>())
+            34 -> startActivity(intentFor<PartCategories>())//PartsCategoryActivity>())
             3 -> startActivityForResult(intentFor<MotListActivity>(), 100)
             2 -> startActivity(intentFor<RevisionActivity>())
             1 -> startActivity(intentFor<CarServiceListActivity>())
@@ -286,7 +285,7 @@ class FragmentHome : Fragment() {
 
 
     private fun highRatingFeedback(type: String) {
-        RetrofitClient.client.getHighRatingFeedback(type)
+        RetrofitClient.client.getHighRatingFeedback(type,"0")
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 

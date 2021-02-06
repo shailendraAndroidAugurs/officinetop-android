@@ -391,7 +391,7 @@ informazioni in accordo alle </string>
     <string name="Ean">Ean</string>
     <string name="Special_Condition">Condizioni speciali</string>
     <string name="Delivery_date"> Consegna prevista</string>
-    <string name="Tipologio">Tipologio</string>
+    <string name="Tipologio">Tipo recensione</string>
 
     <string name="Comment_by_user">Commento dell utente</string>
     <string name="one_KM"> 1 Km</string>
@@ -573,7 +573,7 @@ informazioni in accordo alle </string>
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Aggiungi feedback</string>
-    <string name="write_a_review">Scriviuna recensione</string>
+    <string name="write_a_review">Scrivi recensione</string>
     <string name="customer_rating">valutazione clienti</string>
     <string name="speed_load_index">Indice di carico</string>
     <string name="license_plate">Targa :</string>

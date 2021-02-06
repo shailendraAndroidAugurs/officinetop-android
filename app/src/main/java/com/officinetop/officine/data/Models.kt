@@ -372,7 +372,10 @@ object Models {
             @SerializedName("workshop_id")
             val workshopId: Int,
             @SerializedName("workshop_wrecker_id")
-            val workshopWreckerId: Int
+            val workshopWreckerId: Int,
+            @SerializedName("main_category_id")
+            val main_category_id: String
+
     ) : ListItemViewModel()
 
     data class Image(

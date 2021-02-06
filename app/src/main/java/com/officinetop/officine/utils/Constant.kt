@@ -379,6 +379,8 @@ object Constant {
         const val cartItemType = "cartItemType"
         const val servicesPrice = "services_price"
         const val services = "services"
+        const val limit = "limit"
+        const val wrecker_service_type = "wrecker_service_type"
     }
 
     object RC {
