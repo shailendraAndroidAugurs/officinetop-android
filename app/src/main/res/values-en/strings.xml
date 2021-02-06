@@ -391,7 +391,7 @@
 
     <string name="Special_Condition">Special Condition</string>
     <string name="Delivery_date">Scheduled delivery</string>
-    <string name="Tipologio">Tipologio</string>
+    <string name="Tipologio">Review type</string>
 
     <string name="Comment_by_user">Comment by user</string>
     <string name="one_KM"> 1 Km</string>
@@ -573,7 +573,7 @@
     <string name="Prov">Prov.</string>
     <string name="Cap">Cap.</string>
     <string name="add_feedback">Add Feedback</string>
-    <string name="write_a_review">Write a review</string>
+    <string name="write_a_review">Write review</string>
     <string name="customer_rating">customer evaluation</string>
     <string name="speed_load_index">Speed load index</string>
     <string name="license_plate">License plate :</string>

@@ -294,6 +294,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra(Constant.Path.workshopWreckerId)) {
                 workshopWreckerId = intent?.getStringExtra(Constant.Path.workshopWreckerId) ?: ""
             }
+            if (intent.hasExtra(Constant.Path.mainCategoryId)){
+                mainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
+
+            }
         }
 
         SelectedCalendarDateIntial = selectedFormattedDate
@@ -583,7 +587,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforAppointment(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate, serviceID.toString(),
                     latitude, longitude, distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!).onCall { _, response ->
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type ="1" ,userid = getUserId()).onCall { _, response ->
 
                 response?.let {
                     progress_bar.visibility = View.GONE
@@ -946,5 +950,5 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         setWorkshopValues(response)
                     }
                 }
-    }
+        }
 }

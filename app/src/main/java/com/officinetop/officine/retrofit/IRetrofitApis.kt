@@ -1211,7 +1211,7 @@ interface IRetrofitApis {
     fun getCartList(@Header(Constant.Fields.authorization) authToken: String, @Query(Constant.Path.orderId) orderId: String): Call<ResponseBody>
 
 
-    @POST(Constant.UrlEndPoints.sosWorkshopListForAppontment)
+    @GET(Constant.UrlEndPoints.sosWorkshopListForAppontment)
     fun getSOSWorkshopListforAppointment(
             @Header(Constant.Fields.authorization) authToken: String,
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
@@ -1226,7 +1226,9 @@ interface IRetrofitApis {
             @Query(Constant.Path.filterPriceRange) priceRange: String,
             @Query(Constant.Path.sortPrice) priceLevel: Int,
             @Query(Constant.Path.version_id) versionId: String,
-            @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
+            @Query(Constant.Path.userid) userid: String
     ): Call<ResponseBody>
 
 
@@ -1431,7 +1433,8 @@ interface IRetrofitApis {
 
     @GET(Constant.UrlEndPoints.highRatingFeedback)
     fun getHighRatingFeedback(
-            @Query(Constant.Path.type) type: String
+            @Query(Constant.Path.type) type: String,
+            @Query(Constant.Path.limit) limit:String
     ): Call<ResponseBody>
 
 
