@@ -80,6 +80,7 @@ class MaintenanceActivity : BaseActivity() {
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
         binding.root
         initViews()
+
     }
 
     private fun initViews() {
@@ -88,7 +89,7 @@ class MaintenanceActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
         if (isOnline()) {
-            getCarMaintenance()
+            getCarMaintenance(0)
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
@@ -116,7 +117,7 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
-    private fun getCarMaintenance() {
+    private fun getCarMaintenance(limit : Int) {
         try {
             progress_bar.visibility = View.VISIBLE
             val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
@@ -126,7 +127,7 @@ class MaintenanceActivity : BaseActivity() {
 
             RetrofitClient.client.getCarMaintenanceService(getBearerToken()
                     ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
-                    priceRangeString, priceSortLevel, getUserId())
+                    priceRangeString, priceSortLevel, getUserId(),limit)
                     .onCall { networkException, response ->
                         progress_bar.visibility = View.GONE
                         networkException?.let {
@@ -135,7 +136,7 @@ class MaintenanceActivity : BaseActivity() {
                             val body = JSONObject(response.body()?.string())
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
-                                    carMaintenanceServiceList.clear()//during reload page.
+                                 //   carMaintenanceServiceList.clear()//during reload page.
                                     for (i in 0 until body.getJSONArray("data_set").length()) {
                                         val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
                                         val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
@@ -697,7 +698,7 @@ class MaintenanceActivity : BaseActivity() {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 }
-                getCarMaintenance()
+                getCarMaintenance(0)
 
                 dismiss()
 
@@ -757,7 +758,7 @@ class MaintenanceActivity : BaseActivity() {
 
                 isPriceLowToHigh = priceIndex == 0
 
-                getCarMaintenance()
+                getCarMaintenance(0)
                 dismiss()
                 return@setOnMenuItemClickListener true
             }

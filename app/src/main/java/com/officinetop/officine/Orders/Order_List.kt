@@ -18,8 +18,10 @@ import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
+import kotlinx.android.synthetic.main.activity_order__list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
+import kotlinx.android.synthetic.main.layout_recycler_view.progress_bar
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
@@ -59,7 +61,7 @@ class Order_List : BaseActivity() {
                                 progress_bar.visibility = View.GONE
                                 bindView(dataSetArray)
                             } else if (body.has("message") && !body.isNull("message")) {
-                                showInfoDialog(body.getString("message"))
+                                image_no_order.visibility = View.VISIBLE
                             }
 
                         }

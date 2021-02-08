@@ -15,10 +15,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/layout_recycler_view" />
+        <include layout="@layout/layout_recycler_view"
+            android:visibility="visible"
+            />
+
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -27,5 +30,16 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_no_order"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/order_not_found_icon"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone" />
+
+
     </RelativeLayout>
 </LinearLayout>

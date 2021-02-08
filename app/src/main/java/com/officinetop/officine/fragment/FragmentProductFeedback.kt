@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
+import com.officinetop.officine.adapter.PaginationListener
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.feedback.FeedbackReview
+import com.officinetop.officine.feedback.HomeFeedBackPositionListener
+import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.DateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
@@ -22,15 +27,28 @@ import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
+import okhttp3.ResponseBody
 import org.jetbrains.anko.support.v4.intentFor
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.OnAboutDataReceivedListener*/ {
     private lateinit var rootView: View
+    private var isLoading = false
+    private val PAGESTART = 0
+    private var currentPage = PAGESTART
+    private var isLastPage = false
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_feedback_show, container, false)
+
+
+        val feedBackHomeListioner = parentFragment as HomeFeedBackPositionListener
 
         if (arguments != null) {
             WorkshopFeedBackList = arguments!!.getSerializable("list") as ArrayList<Models.HighRatingfeedback>
@@ -58,15 +76,42 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
             Log.d("list", "WorkshopFeedBackListfragment" + WorkshopFeedBackList.size)
 
         }
+        val linearLayoutManager = LinearLayoutManager(activity)
+        rootView.rv_product_feedback_recycler_view.layoutManager = linearLayoutManager
+
+
+        rootView.rv_product_feedback_recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
+
+            override fun loadMoreItems() {
+                isLoading = true
+                currentPage += 10
+
+                    feedBackHomeListioner.getScrollFeedbackPosition("2", currentPage)
+                    val parentFrag: FragmentFeedback = this@FragmentProductFeedback.getParentFragment() as FragmentFeedback
+                    highRatingFeedback("2",currentPage)
+
+
+            }
+
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
+
+
+
+
         return rootView
     }
 
     private fun getHighRatingProductData(productFeedbackList: ArrayList<Models.HighRatingfeedback>) {
 
-
-        rootView.rv_product_feedback_recycler_view.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-
-
+        isLoading  = false;
+        isLastPage = true;
         rootView.rv_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                 val view = layoutInflater.inflate(R.layout.item_showfeedback, p0, false)
@@ -218,10 +263,41 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
         }
     }
 
-   /* override fun onResume() {
-        super.onResume()
+    /* override fun onResume() {
+         super.onResume()
 
-        Toast.makeText(activity,"Product Onresume call",Toast.LENGTH_SHORT).show()
-        (parentFragment as FragmentFeedback?)?.setActivityListener(this@FragmentProductFeedback)
-    }*/
+         Toast.makeText(activity,"Product Onresume call",Toast.LENGTH_SHORT).show()
+         (parentFragment as FragmentFeedback?)?.setActivityListener(this@FragmentProductFeedback)
+     }*/
+
+    public fun highRatingFeedback(type: String,limit : Int){
+        Toast.makeText(context,"Function is called",Toast.LENGTH_SHORT).show()
+        var HighRatingArrayList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+        RetrofitClient.client.getHighRatingFeedback(type,limit)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        if (response.isSuccessful) {
+                            try
+                            {
+                                val body = JSONObject(response.body()?.string())
+                                Log.d("highRatingfromFragment", "yes")
+                                if (body.has("data_set") && body.get("data_set") != null) {
+                                    val jsonarray = body.get("data_set") as JSONArray
+                                    val gson = GsonBuilder().create()
+                                    val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
+                                    WorkshopFeedBackList.addAll(productOrworkshopFeedback)
+                                    Log.d("check_data_of_list","chiled:- List size: "+WorkshopFeedBackList.size+"    "+currentPage)
+                                    getHighRatingProductData(WorkshopFeedBackList)
+                                    }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                        }
+
+                    }
+                })
+    }
+
 }
