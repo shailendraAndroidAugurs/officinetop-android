@@ -678,8 +678,15 @@ interface IRetrofitApis {
                             @Query(Constant.Path.selectedCarId) selectedCarId: String?,
                             @Query(Constant.Path.addressId) addressId: String?,
                             @Query(Constant.Path.workshopWreckerId) workshopWreckerId: String,
-                            @Query(Constant.Path.userid) userid: String
-    ): Call<ResponseBody>
+                            @Query(Constant.Path.userid) userid: String,
+                            @Query(Constant.Path.version_id) version_id: String,
+                            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                            @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
+                            @Query(Constant.Path.service_average_time) service_average_time: String,
+                            @Query(Constant.Path.servicesPrice) servicesPrice: String
+
+
+                            ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getSOSWorkshopPackageDetailEmergency)
     fun getSOSPackageDetailEmergency(@Query(Constant.Path.workshopId) workshopUserId: String,
@@ -961,7 +968,8 @@ interface IRetrofitApis {
             @Query("left_right") leftRight: String,
             @Query(Constant.Path.filterPriceRange) priceRange: String,
             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
-            @Query("user_id") user_id: String
+            @Query("user_id") user_id: String,
+            @Query(Constant.Path.limit) limit: Int
     ): Call<ResponseBody>
 
 
@@ -1434,7 +1442,7 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.highRatingFeedback)
     fun getHighRatingFeedback(
             @Query(Constant.Path.type) type: String,
-            @Query(Constant.Path.limit) limit:String
+            @Query(Constant.Path.limit) limit:Int
     ): Call<ResponseBody>
 
 
@@ -1629,6 +1637,16 @@ interface IRetrofitApis {
             @Query(Constant.Path.services) services: JSONArray,
             @Query(Constant.Path.servicesPrice) services_price: String): Call<ResponseBody>
 
-
+    @POST(Constant.UrlEndPoints.getSosoworkshopCalendarPrice)
+    fun getSelectedWorkshopCalendarPriceSOs(
+            @Query(Constant.Path.workshopUsersId) workshop_id: String,
+            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+            @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
+            @Query(Constant.Path.serviceid) hourly_rate: String,
+            @Query(Constant.Path.servicesPrice) services_price: String,
+            @Query(Constant.Path.service_average_time) serviceAverageTime: String,
+            @Query(Constant.Path.max_appointment) selectedDate: String,
+            @Query(Constant.Path.mainCategoryId) main_category_id: String): Call<ResponseBody>
 
 }
+

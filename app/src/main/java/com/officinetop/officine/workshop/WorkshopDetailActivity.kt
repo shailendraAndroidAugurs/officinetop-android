@@ -931,7 +931,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isSOSService) {
             RetrofitClient.client.getSOSPackageDetail(
                     workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, workshopWreckerId, getUserId()).enqueue(callback)
+                    addressId, workshopWreckerId, getUserId(),version_id =  getSelectedCar()?.carVersionModel?.idVehicle.toString(),mainCategoryId =  main_category_id,wrecker_service_type = "1",service_average_time = services_average_time,servicesPrice = services_price).enqueue(callback)
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),

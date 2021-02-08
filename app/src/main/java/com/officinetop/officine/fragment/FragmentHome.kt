@@ -285,7 +285,7 @@ class FragmentHome : Fragment() {
 
 
     private fun highRatingFeedback(type: String) {
-        RetrofitClient.client.getHighRatingFeedback(type,"0")
+        RetrofitClient.client.getHighRatingFeedback(type,0)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 

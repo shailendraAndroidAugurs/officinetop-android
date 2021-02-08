@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -18,6 +19,7 @@ import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
 import com.officinetop.officine.feedback.FeedbackReview
+import com.officinetop.officine.feedback.HomeFeedBackPositionListener
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.setAppLanguage
@@ -30,7 +32,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class FragmentFeedback : Fragment() {
+class FragmentFeedback : Fragment(), HomeFeedBackPositionListener {
 
     private lateinit var feedbackListener: FeedbackReview
     private var tabLayout: TabLayout? = null
@@ -67,7 +69,8 @@ class FragmentFeedback : Fragment() {
             return
         } else {
             if (context?.isOnline()!!) {
-                highRatingFeedback("2")
+                highRatingFeedback("2",0)
+                highRatingFeedback("1",0)
             }else{
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
@@ -148,15 +151,15 @@ class FragmentFeedback : Fragment() {
         }
     }
 
-    private fun highRatingFeedback(type: String) {
-        RetrofitClient.client.getHighRatingFeedback(type)
+     fun highRatingFeedback(type: String,limit : Int){
+        RetrofitClient.client.getHighRatingFeedback(type,limit)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
 
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
                         if (response.isSuccessful) {
-                            try {
+                            try
+                            {
                                 val body = JSONObject(response.body()?.string())
                                 Log.d("highRatingfromFragment", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
@@ -175,6 +178,7 @@ class FragmentFeedback : Fragment() {
                                     }
 
 
+
                                     setupViewPager(viewPager!!)
 
 
@@ -186,7 +190,6 @@ class FragmentFeedback : Fragment() {
                         }
                         if (type == "2") {
 
-                            highRatingFeedback("1")
 
 
                         }
@@ -197,6 +200,10 @@ class FragmentFeedback : Fragment() {
 
     fun setActivityListener(activityListener: FeedbackReview) {
         this.feedbackListener = activityListener; }
+
+    override fun getScrollFeedbackPosition(type: String?, postion: Int) {
+        highRatingFeedback("2",postion)
+    }
 
 
 }

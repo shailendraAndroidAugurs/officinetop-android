@@ -179,6 +179,7 @@ object Constant {
         const val getbank_paymentInformation = "payment_management"
         const val getSelectedWorkshopCalendarPrice = "workshopCalendarPrice"
         const val getworkshopCalendarPriceMaintenance = "maintenanceMinCalendarPrice"
+        const val getSosoworkshopCalendarPrice = "wrackerServiceMinCalendarPrice"
     }
 
     object Key {
