@@ -1,24 +1,22 @@
 package com.officinetop.officine.fragment
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
-import com.officinetop.officine.adapter.PaginationListener
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.feedback.FeedbackReview
-import com.officinetop.officine.feedback.HomeFeedBackPositionListener
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.DateFormatChangeYearToMonth
@@ -48,7 +46,6 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
         rootView = inflater.inflate(R.layout.fragment_feedback_show, container, false)
 
 
-        val feedBackHomeListioner = parentFragment as HomeFeedBackPositionListener
 
         if (arguments != null) {
             WorkshopFeedBackList = arguments!!.getSerializable("list") as ArrayList<Models.HighRatingfeedback>
@@ -80,38 +77,36 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
         rootView.rv_product_feedback_recycler_view.layoutManager = linearLayoutManager
 
 
-        rootView.rv_product_feedback_recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
-
-            override fun loadMoreItems() {
-                isLoading = true
-                currentPage += 10
-
-                    feedBackHomeListioner.getScrollFeedbackPosition("2", currentPage)
-                    val parentFrag: FragmentFeedback = this@FragmentProductFeedback.getParentFragment() as FragmentFeedback
-                    highRatingFeedback("2",currentPage)
-
-
+        val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
             }
 
-            override fun isLastPage(): Boolean {
-                return isLastPage
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = linearLayoutManager.getChildCount()
+                val totalItemCount: Int = linearLayoutManager.getItemCount()
+                val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
+                if (!isLoading && !isLastPage) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                        currentPage += 10
+                        isLoading =true;
+                        highRatingFeedback("1",currentPage)
+                        rootView.progress_bar.visibility = View.VISIBLE
+                    }
+                }
             }
+        }
 
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
-
-
-
+        rootView.rv_product_feedback_recycler_view.addOnScrollListener(recyclerViewOnScrollListener);
 
         return rootView
     }
 
     private fun getHighRatingProductData(productFeedbackList: ArrayList<Models.HighRatingfeedback>) {
 
-        isLoading  = false;
-        isLastPage = true;
+    /*    isLoading  = false;
+       */
         rootView.rv_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                 val view = layoutInflater.inflate(R.layout.item_showfeedback, p0, false)
@@ -270,29 +265,44 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
          (parentFragment as FragmentFeedback?)?.setActivityListener(this@FragmentProductFeedback)
      }*/
 
-    public fun highRatingFeedback(type: String,limit : Int){
-        Toast.makeText(context,"Function is called",Toast.LENGTH_SHORT).show()
+    private fun highRatingFeedback(type: String,limit : Int){
         var HighRatingArrayList: ArrayList<Models.HighRatingfeedback> = ArrayList()
         RetrofitClient.client.getHighRatingFeedback(type,limit)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                        isLoading = false;
                         if (response.isSuccessful) {
                             try
-                            {
-                                val body = JSONObject(response.body()?.string())
+                            {   val body = JSONObject(response.body()?.string())
                                 Log.d("highRatingfromFragment", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
                                     val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
                                     WorkshopFeedBackList.addAll(productOrworkshopFeedback)
-                                    Log.d("check_data_of_list","chiled:- List size: "+WorkshopFeedBackList.size+"    "+currentPage)
+                                    Log.d("check_data_of_list","chiled:- List size: "+WorkshopFeedBackList.size+"    "+limit)
                                     getHighRatingProductData(WorkshopFeedBackList)
+                                    if (jsonarray.length() == 0) {
+                                        isLastPage = true;
                                     }
+                                    }
+                                else{
+                                    isLastPage = true;
+                                }
+                                rootView.progress_bar.visibility = View.GONE
+
                             } catch (e: Exception) {
                                 e.printStackTrace()
+                                isLoading = false;
+                                isLastPage = true;
+                                rootView.progress_bar.visibility = View.GONE
                             }
+                        }
+                        else{
+                            isLastPage = true;
+                            rootView.progress_bar.visibility = View.GONE
 
                         }
 
