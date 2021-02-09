@@ -1,5 +1,6 @@
 package com.officinetop.officine.fragment
 
+import android.nfc.tech.MifareUltralight
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getUserId
 import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.feedback.FeedbackReview
+import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
 import com.officinetop.officine.utils.DateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
@@ -22,11 +25,23 @@ import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
+import okhttp3.ResponseBody
 import org.jetbrains.anko.support.v4.intentFor
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
     private lateinit var rootView: View
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+    private var isLoading = false
+    private val PAGESTART = 0
+    private var currentPage = PAGESTART
+    private var isLastPage = false
+    private lateinit var  adapter :  RecyclerView.Adapter<RecyclerView.ViewHolder>
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,28 +61,56 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
 
                     getHighRatingWorkshopData(WorkshopFeedBackListfilter)
 
+
                     Log.d("MyReview", "true_forProduct + list size" + WorkshopFeedBackList.size)
                 } else {
                     getHighRatingWorkshopData(WorkshopFeedBackList)
                 }
+
+
+
                 Log.d("FragmnetFor", "workshop" + "workshop list size" + WorkshopFeedBackList.size)
             }
 
             Log.d("list", "WorkshopFeedBackListfragment" + WorkshopFeedBackList.size)
+            val linearLayoutManager = LinearLayoutManager(activity)
+            rootView.rv_product_feedback_recycler_view.layoutManager = linearLayoutManager
+
+            val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+
+                                                           override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val visibleItemCount: Int = linearLayoutManager.getChildCount()
+                    val totalItemCount: Int = linearLayoutManager.getItemCount()
+                    val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
+                    if (!isLoading && !isLastPage) {
+                        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
+                            currentPage += 10
+                            isLoading =true;
+                            highRatingFeedback("2",currentPage)
+                            rootView.progress_bar.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+
+            rootView.rv_product_feedback_recycler_view.addOnScrollListener(recyclerViewOnScrollListener);
 
         }
         return rootView
     }
 
     private fun getHighRatingWorkshopData(WorshopFeedbackList: ArrayList<Models.HighRatingfeedback>) {
-        rootView.rv_product_feedback_recycler_view.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         //workshop feedback
-        rootView.rv_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                 val view = layoutInflater.inflate(R.layout.item_showfeedback, p0, false)
+
                 return object : RecyclerView.ViewHolder(view) {}
             }
-
             override fun getItemCount(): Int = WorshopFeedbackList.size
 
             override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
@@ -174,6 +217,9 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
 
             }
         }
+
+        rootView.rv_product_feedback_recycler_view.adapter = adapter
+
     }
 
     override fun myReviewshow(MyReview: Boolean) {
@@ -196,4 +242,56 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
         super.onResume()
         (parentFragment as FragmentFeedback?)?.setActivityListener(this@FragmentWorkshopFeedback)
     }
+
+    private fun highRatingFeedback(type: String,limit : Int){
+        var HighRatingArrayList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+        RetrofitClient.client.getHighRatingFeedback(type,limit)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        isLoading = false;
+                        if (response.isSuccessful) {
+                            try
+                            {   val body = JSONObject(response.body()?.string())
+                                if (body.has("data_set") && body.get("data_set") != null) {
+                                    val jsonarray = body.get("data_set") as JSONArray
+                                    val gson = GsonBuilder().create()
+                                    val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
+                                    WorkshopFeedBackList.addAll(productOrworkshopFeedback)
+                                    if (arguments!!.getBoolean("MyReview")) {
+                                        val WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+                                        WorkshopFeedBackList.addAll(WorkshopFeedBackList.filter {
+                                            it.users_id == activity?.getUserId()
+                                        })
+                                    }
+                                    if (::adapter.isInitialized){
+                                        adapter.notifyDataSetChanged()
+                                    }
+
+                                    if (jsonarray.length() == 0) {
+                                        isLastPage = true;
+                                    }
+                                }
+                                else{
+                                    isLastPage = true;
+                                }
+                                rootView.progress_bar.visibility = View.GONE
+
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                isLoading = false;
+                                isLastPage = true;
+                                rootView.progress_bar.visibility = View.GONE
+                            }
+                        }
+                        else{
+                            isLastPage = true;
+                            rootView.progress_bar.visibility = View.GONE
+
+                        }
+
+                    }
+                })
+    }
+
 }

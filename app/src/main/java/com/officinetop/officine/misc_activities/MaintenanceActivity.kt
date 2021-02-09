@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.nfc.tech.MifareUltralight
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -29,9 +30,9 @@ import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
+import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_maintenance_selection.*
-import kotlinx.android.synthetic.main.layout_recycler_view.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.view.*
 import org.jetbrains.anko.intentFor
@@ -75,12 +76,46 @@ class MaintenanceActivity : BaseActivity() {
     private var isLoading = false
     lateinit var linearLayoutManager: LinearLayoutManager
     val ReplacementPartList = ArrayList<Models.Part>()
+    private var isListLoading = false
+    private val PAGESTART = 0
+    private var currentPage = PAGESTART
+    private var isLastPageOfList = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
         binding.root
         initViews()
+        setPaginationScroll();
 
+
+    }
+
+    private fun setPaginationScroll() {
+        val linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
+        val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = linearLayoutManager.getChildCount()
+                val totalItemCount: Int = linearLayoutManager.getItemCount()
+                val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
+
+                 if (!isListLoading && !isLastPageOfList) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
+                        currentPage += 5
+                        isListLoading =true;
+                        getCarMaintenance(currentPage,true)
+                        progress_bar.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
+        recycler_view.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     private fun initViews() {
@@ -89,7 +124,7 @@ class MaintenanceActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
         if (isOnline()) {
-            getCarMaintenance(0)
+            getCarMaintenance(0,false)
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
@@ -117,7 +152,7 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
-    private fun getCarMaintenance(limit : Int) {
+    private fun getCarMaintenance(limit : Int,isPaginationRequest : Boolean) {
         try {
             progress_bar.visibility = View.VISIBLE
             val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
@@ -134,6 +169,7 @@ class MaintenanceActivity : BaseActivity() {
                         }
                         response?.let {
                             val body = JSONObject(response.body()?.string())
+                            isListLoading = false;
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                                  //   carMaintenanceServiceList.clear()//during reload page.
@@ -144,16 +180,17 @@ class MaintenanceActivity : BaseActivity() {
 
                                     }
                                     //bind recyclerview
-                                    setAdapter()
+                                    setAdapter(isPaginationRequest)
                                 } else {
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
-
+                                        isLastPageOfList = true;
                                         showInfoDialog(body.getString("message"))
                                     }
 
 
                                 }
                             } else {
+                                isLastPageOfList = true;
                                 if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
                                     showInfoDialog(body.getString("message"))
                                 }
@@ -161,11 +198,14 @@ class MaintenanceActivity : BaseActivity() {
                         }
                     }
         } catch (e: Exception) {
+            isListLoading = false;
+            isLastPageOfList = true;
+            progress_bar.visibility = View.GONE
             e.printStackTrace()
         }
     }
 
-    private fun setAdapter() {
+    private fun setAdapter(isPaginationRequest: Boolean) {
         for (i in 0 until carMaintenanceServiceList.size) {
             if (maxPrice < carMaintenanceServiceList.get(i).price.toFloat()) {
                 maxPrice = carMaintenanceServiceList.get(i).price.toFloat()
@@ -222,6 +262,7 @@ class MaintenanceActivity : BaseActivity() {
             e.printStackTrace()
         }
 
+
         genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
@@ -274,8 +315,10 @@ class MaintenanceActivity : BaseActivity() {
                 }
             }
         })
-        recycler_view.adapter = genericAdapter
-        genericAdapter!!.addItems(carMaintenanceServiceList)
+
+            recycler_view.adapter = genericAdapter
+             genericAdapter!!.addItems(carMaintenanceServiceList)
+
     }
 
     private fun bindReplacementPartOption(position: Int) {
@@ -698,7 +741,7 @@ class MaintenanceActivity : BaseActivity() {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 }
-                getCarMaintenance(0)
+                getCarMaintenance(0,false)
 
                 dismiss()
 
@@ -758,7 +801,7 @@ class MaintenanceActivity : BaseActivity() {
 
                 isPriceLowToHigh = priceIndex == 0
 
-                getCarMaintenance(0)
+                getCarMaintenance(0,false)
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
