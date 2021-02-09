@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -19,7 +18,6 @@ import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getLangLocale
 import com.officinetop.officine.data.storeLangLocale
 import com.officinetop.officine.feedback.FeedbackReview
-import com.officinetop.officine.feedback.HomeFeedBackPositionListener
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.isOnline
 import com.officinetop.officine.utils.setAppLanguage
@@ -32,7 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class FragmentFeedback : Fragment(), HomeFeedBackPositionListener {
+class FragmentFeedback : Fragment(){
 
     private lateinit var feedbackListener: FeedbackReview
     private var tabLayout: TabLayout? = null
@@ -43,7 +41,6 @@ class FragmentFeedback : Fragment(), HomeFeedBackPositionListener {
     private var ProductFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_feedback, container, false)
-
         view.bindViews()
         return view
     }
@@ -201,9 +198,7 @@ class FragmentFeedback : Fragment(), HomeFeedBackPositionListener {
     fun setActivityListener(activityListener: FeedbackReview) {
         this.feedbackListener = activityListener; }
 
-    override fun getScrollFeedbackPosition(type: String?, postion: Int) {
-        highRatingFeedback("2",postion)
-    }
+
 
 
 }
