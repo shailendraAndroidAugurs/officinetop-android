@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,10 @@ import com.officinetop.officine.utils.DateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
+import kotlinx.android.synthetic.main.fragment_feedback_show.view.progress_bar
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
+import kotlinx.android.synthetic.main.layout_recycler_view.view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.support.v4.intentFor
 import org.json.JSONArray
@@ -41,19 +44,15 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
     private var currentPage = PAGESTART
     private var isLastPage = false
     private var WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+   private lateinit var  adapter :  RecyclerView.Adapter<RecyclerView.ViewHolder>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_feedback_show, container, false)
-
-
-
         if (arguments != null) {
             WorkshopFeedBackList = arguments!!.getSerializable("list") as ArrayList<Models.HighRatingfeedback>
             if (arguments!!.getBoolean("product")) {
                 if (arguments!!.getBoolean("MyReview")) {
-
                     val WorkshopFeedBackListfilter: ArrayList<Models.HighRatingfeedback> = ArrayList()
-
                     WorkshopFeedBackListfilter.addAll(WorkshopFeedBackList.filter {
                         Log.d("MyReview", "userid:" + it.users_id)
                         it.users_id == activity?.getUserId()
@@ -107,7 +106,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
 
     /*    isLoading  = false;
        */
-        rootView.rv_product_feedback_recycler_view.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                 val view = layoutInflater.inflate(R.layout.item_showfeedback, p0, false)
 
@@ -239,6 +238,8 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                 }
             }
         }
+
+        rootView.rv_product_feedback_recycler_view.adapter=adapter
     }
 
 
@@ -271,19 +272,25 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
                         isLoading = false;
                         if (response.isSuccessful) {
                             try
                             {   val body = JSONObject(response.body()?.string())
-                                Log.d("highRatingfromFragment", "yes")
                                 if (body.has("data_set") && body.get("data_set") != null) {
                                     val jsonarray = body.get("data_set") as JSONArray
                                     val gson = GsonBuilder().create()
                                     val productOrworkshopFeedback = gson.fromJson(jsonarray.toString(), Array<Models.HighRatingfeedback>::class.java).toCollection(java.util.ArrayList<Models.HighRatingfeedback>())
                                     WorkshopFeedBackList.addAll(productOrworkshopFeedback)
-                                    Log.d("check_data_of_list","chiled:- List size: "+WorkshopFeedBackList.size+"    "+limit)
-                                    getHighRatingProductData(WorkshopFeedBackList)
+                                    if (arguments!!.getBoolean("MyReview")) {
+                                        val WorkshopFeedBackList: ArrayList<Models.HighRatingfeedback> = ArrayList()
+                                        WorkshopFeedBackList.addAll(WorkshopFeedBackList.filter {
+                                            it.users_id == activity?.getUserId()
+                                        })
+                                    }
+                                    if (::adapter.isInitialized){
+                                        adapter.notifyDataSetChanged()
+                                    }
+
                                     if (jsonarray.length() == 0) {
                                         isLastPage = true;
                                     }
