@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
-import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_maintenance_selection.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.*
@@ -45,6 +44,7 @@ import kotlin.collections.ArrayList
 
 class MaintenanceActivity : BaseActivity() {
     private var carMaintenanceServiceList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
+    private var carMaintenanceServiceListforPagination: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
@@ -85,7 +85,7 @@ class MaintenanceActivity : BaseActivity() {
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
         binding.root
         initViews()
-        setPaginationScroll();
+        setPaginationScroll()
 
 
     }
@@ -94,28 +94,25 @@ class MaintenanceActivity : BaseActivity() {
         val linearLayoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = linearLayoutManager
         val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount: Int = linearLayoutManager.getChildCount()
-                val totalItemCount: Int = linearLayoutManager.getItemCount()
+                val visibleItemCount: Int = linearLayoutManager.childCount
+                val totalItemCount: Int = linearLayoutManager.itemCount
                 val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
 
-                 if (!isListLoading && !isLastPageOfList) {
+                if (!isListLoading && !isLastPageOfList) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
                         currentPage += 5
-                        isListLoading =true;
-                        getCarMaintenance(currentPage,true)
-                        progress_bar.visibility = View.VISIBLE
+                        isListLoading = true
+                        getCarMaintenance(currentPage, true)
+                        progress_bar_bottom.visibility = View.VISIBLE
                     }
                 }
             }
         }
 
-        recycler_view.addOnScrollListener(recyclerViewOnScrollListener);
+        recycler_view.addOnScrollListener(recyclerViewOnScrollListener)
     }
 
     private fun initViews() {
@@ -124,7 +121,7 @@ class MaintenanceActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
         if (isOnline()) {
-            getCarMaintenance(0,false)
+            getCarMaintenance(0, false)
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
@@ -152,8 +149,9 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
-    private fun getCarMaintenance(limit : Int,isPaginationRequest : Boolean) {
+    private fun getCarMaintenance(limit: Int, isPaginationRequest: Boolean) {
         try {
+            if(!isPaginationRequest)
             progress_bar.visibility = View.VISIBLE
             val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
             val priceSortLevel = if (isPriceLowToHigh) 1 else 2
@@ -162,35 +160,35 @@ class MaintenanceActivity : BaseActivity() {
 
             RetrofitClient.client.getCarMaintenanceService(getBearerToken()
                     ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
-                    priceRangeString, priceSortLevel, getUserId(),limit)
+                    priceRangeString, priceSortLevel, getUserId(), limit)
                     .onCall { networkException, response ->
                         progress_bar.visibility = View.GONE
+                        progress_bar_bottom.visibility = View.GONE
                         networkException?.let {
                         }
                         response?.let {
                             val body = JSONObject(response.body()?.string())
-                            isListLoading = false;
+                            isListLoading = false
+                            carMaintenanceServiceListforPagination.clear()
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
-                                 //   carMaintenanceServiceList.clear()//during reload page.
+                                    //   carMaintenanceServiceList.clear()//during reload page.
                                     for (i in 0 until body.getJSONArray("data_set").length()) {
                                         val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
                                         val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
                                         carMaintenanceServiceList.add(carMaintenance)
-
+                                        carMaintenanceServiceListforPagination.add(carMaintenance)
                                     }
                                     //bind recyclerview
-                                    setAdapter(isPaginationRequest)
+                                    setAdapter(isPaginationRequest,carMaintenanceServiceListforPagination)
                                 } else {
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
-                                        isLastPageOfList = true;
+                                        isLastPageOfList = true
                                         showInfoDialog(body.getString("message"))
                                     }
-
-
                                 }
                             } else {
-                                isLastPageOfList = true;
+                                isLastPageOfList = true
                                 if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
                                     showInfoDialog(body.getString("message"))
                                 }
@@ -198,14 +196,15 @@ class MaintenanceActivity : BaseActivity() {
                         }
                     }
         } catch (e: Exception) {
-            isListLoading = false;
-            isLastPageOfList = true;
+            isListLoading = false
+            isLastPageOfList = true
             progress_bar.visibility = View.GONE
+            progress_bar_bottom.visibility = View.GONE
             e.printStackTrace()
         }
     }
 
-    private fun setAdapter(isPaginationRequest: Boolean) {
+    private fun setAdapter(isPaginationRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
         for (i in 0 until carMaintenanceServiceList.size) {
             if (maxPrice < carMaintenanceServiceList.get(i).price.toFloat()) {
                 maxPrice = carMaintenanceServiceList.get(i).price.toFloat()
@@ -246,7 +245,7 @@ class MaintenanceActivity : BaseActivity() {
 
                     if (carMaintenanceServiceList[i].parts[0].brandImageURL != null) {
                         carMaintenanceServiceList[i].brandImageURL = carMaintenanceServiceList[i].parts[0].brandImageURL
-                    }else {
+                    } else {
                         carMaintenanceServiceList[i].brandImageURL = ""
                     }
                     carMaintenanceServiceList[i].productName = carMaintenanceServiceList[i].parts[0].productName
@@ -263,61 +262,67 @@ class MaintenanceActivity : BaseActivity() {
         }
 
 
-        genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
-        genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
-            override fun onClick(view: View, position: Int) {
-                if (!carMaintenanceServiceList[position].ourDescription.isNullOrEmpty() && carMaintenanceServiceList[position].ourDescription != "null") {
 
-                    val message = carMaintenanceServiceList[position].ourDescription
-                    showInfoDialog(message)
+
+        if (!isPaginationRequest) {
+            genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
+            genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+                override fun onClick(view: View, position: Int) {
+                    if (!carMaintenanceServiceList[position].ourDescription.isNullOrEmpty() && carMaintenanceServiceList[position].ourDescription != "null") {
+
+                        val message = carMaintenanceServiceList[position].ourDescription
+                        showInfoDialog(message)
+                    }
                 }
-            }
 
-            override fun onItemClick(view: View, position: Int) {
-                if (isOnline()) {
-                    if (view.tag == "100") {
-                        checkBox = view.findViewById(R.id.maintenance_item_chk) as CheckBox
-                        if (carMaintenanceServiceList[position].productId != null || carMaintenanceServiceList[position].type == "2") {
-                            if (checkBox.isChecked) {
+                override fun onItemClick(view: View, position: Int) {
+                    if (isOnline()) {
+                        if (view.tag == "100") {
+                            checkBox = view.findViewById(R.id.maintenance_item_chk) as CheckBox
+                            if (carMaintenanceServiceList[position].productId != null || carMaintenanceServiceList[position].type == "2") {
+                                if (checkBox.isChecked) {
 
-                                carMaintenanceServiceList[position].isChecked = true//for checkbox during recycler view scroll not to change view state.
-                                selectedCarMaintenanceServices.add(carMaintenanceServiceList[position])
-                                CalculateWorkshopPricesAndSparepartPrices()
-                            } else {
-                                carMaintenanceServiceList[position].isChecked = false
-                                if (selectedCarMaintenanceServices.contains(carMaintenanceServiceList[position])) {
-                                    Log.e("carMaintenance_Id::", carMaintenanceServiceList[position].id)
-                                    selectedCarMaintenanceServices.remove(carMaintenanceServiceList[position])
+                                    carMaintenanceServiceList[position].isChecked = true//for checkbox during recycler view scroll not to change view state.
+                                    selectedCarMaintenanceServices.add(carMaintenanceServiceList[position])
                                     CalculateWorkshopPricesAndSparepartPrices()
+                                } else {
+                                    carMaintenanceServiceList[position].isChecked = false
+                                    if (selectedCarMaintenanceServices.contains(carMaintenanceServiceList[position])) {
+                                        Log.e("carMaintenance_Id::", carMaintenanceServiceList[position].id)
+                                        selectedCarMaintenanceServices.remove(carMaintenanceServiceList[position])
+                                        CalculateWorkshopPricesAndSparepartPrices()
+                                    }
                                 }
+                            } else {
+                                checkBox.isChecked = false
+                                Snackbar.make(btn_choose_workshop, getString(R.string.partNotAvailable), Snackbar.LENGTH_SHORT).show()
+                                // return@setOnClickListener
                             }
-                        } else {
-                            checkBox.isChecked = false
-                            Snackbar.make(btn_choose_workshop, getString(R.string.partNotAvailable), Snackbar.LENGTH_SHORT).show()
-                            // return@setOnClickListener
-                        }
-                    } else if (view.tag == "102") {
-                        if (carMaintenanceServiceList[position].couponList != null) {
-                            displayCoupons(carMaintenanceServiceList[position].couponList, "workshop_coupon", tv_CouponTitle, carMaintenanceServiceList[position])
-                        }
-                    } else if (view.tag == "103") {
-                        add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), carMaintenanceServiceList[position].productId, 0, position, false)
+                        } else if (view.tag == "102") {
+                            if (carMaintenanceServiceList[position].couponList != null) {
+                                displayCoupons(carMaintenanceServiceList[position].couponList, "workshop_coupon", tv_CouponTitle, carMaintenanceServiceList[position])
+                            }
+                        } else if (view.tag == "103") {
+                            add_remove_product__Wishlist(carMaintenanceServiceList[position].wishlist, view.findViewById(R.id.Iv_favorite_mainPart), carMaintenanceServiceList[position].productId, 0, position, false)
 
+                        } else {
+                            ReplacementPartList.clear()
+                            current_page = PAGE_START
+                            bindReplacementPartOption(position)
+                        }
                     } else {
-                        ReplacementPartList.clear()
-                        current_page = PAGE_START
-                        bindReplacementPartOption(position)
-                    }
-                } else {
-                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {
-                        finish()
+                        showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {
+                            finish()
+                        }
                     }
                 }
-            }
-        })
-
+            })
             recycler_view.adapter = genericAdapter
-             genericAdapter!!.addItems(carMaintenanceServiceList)
+            genericAdapter!!.addItems(carMaintenanceServiceList)
+        } else {
+            genericAdapter!!.addItemAfterScroll(carMaintenanceServiceListAferScroll)
+        }
+
 
     }
 
@@ -336,7 +341,7 @@ class MaintenanceActivity : BaseActivity() {
             selectservice_position = position
 
         } else {
-            progress_bar.visibility = View.VISIBLE
+            progress_bar_bottom.visibility = View.VISIBLE
             if (isOnline()) {
                 getAllParts(carMaintenanceServiceList[position].id, position)
             } else {
@@ -352,7 +357,10 @@ class MaintenanceActivity : BaseActivity() {
                     ?: "", serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
 
-                        networkException?.let { progress_bar.visibility = View.GONE }
+                        networkException?.let { progress_bar.visibility = View.GONE
+                            progress_bar.visibility = View.GONE
+
+                        }
                         response?.let {
                             progress_bar.visibility = View.GONE
                             if (response.isSuccessful) {
@@ -393,7 +401,9 @@ class MaintenanceActivity : BaseActivity() {
     }
 
     private fun getAllPartsMaintaince(serviceId: String, position: Int) {
+/*
         progress_bar.visibility = View.VISIBLE
+*/
         try {
             RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!, serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
@@ -741,7 +751,7 @@ class MaintenanceActivity : BaseActivity() {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 }
-                getCarMaintenance(0,false)
+                getCarMaintenance(0, false)
 
                 dismiss()
 
@@ -801,7 +811,7 @@ class MaintenanceActivity : BaseActivity() {
 
                 isPriceLowToHigh = priceIndex == 0
 
-                getCarMaintenance(0,false)
+                getCarMaintenance(0, false)
                 dismiss()
                 return@setOnMenuItemClickListener true
             }

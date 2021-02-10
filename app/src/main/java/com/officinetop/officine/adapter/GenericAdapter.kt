@@ -27,6 +27,13 @@ class GenericAdapter<T : ListItemViewModel>(val context: Context, @LayoutRes val
     }
 
 
+    fun addItemAfterScroll(items: List<T>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+
+
     fun getItem(position: Int): T {
         return items.get(position)
     }
