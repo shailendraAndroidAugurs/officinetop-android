@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.dialog_tyre_filter_category.*
 import kotlinx.android.synthetic.main.dialog_tyre_filter_subcategory.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_checkbox.view.*
-import kotlinx.android.synthetic.main.layout_recycler_view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
