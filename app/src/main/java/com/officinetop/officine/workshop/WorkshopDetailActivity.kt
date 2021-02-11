@@ -852,7 +852,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         }
 
                         if (averageServiceTime != 0.0) {
-                            if (averageServiceTime.toString().split(".")[1] != null && averageServiceTime.toString().split(".")[1].toInt() != 0) {
+                            if (averageServiceTime.toString().split(".")[1] != null && averageServiceTime.toString().split(".")[1].toLong() != 0L) {
                                 averageServiceTime = (averageServiceTime.toInt() + 1).toDouble()
                             }
                         }
