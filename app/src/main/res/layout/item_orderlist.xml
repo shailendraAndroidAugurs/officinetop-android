@@ -80,7 +80,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/delivery_address"
+                            android:text="@{listItemViewModel.serviceProductDescription!=null &amp;&amp; listItemViewModel.serviceProductDescription.size()!=0 ? @string/WorkshopName :@string/delivery_address}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
@@ -88,8 +88,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/_5sdp"
-                            android:text="@{listItemViewModel.address.address_1 !=null ? listItemViewModel.address.address_1 : @string/string_not_found}"
+                            android:text="@{listItemViewModel.serviceProductDescription!=null &amp;&amp; listItemViewModel.serviceProductDescription.size()!=0 ? listItemViewModel.serviceProductDescription.get(0).workshopDetails!=null ? listItemViewModel.serviceProductDescription.get(0).workshopDetails.registeredOffice!=null ?listItemViewModel.serviceProductDescription.get(0).workshopDetails.registeredOffice :@string/sample  :@string/sample  :listItemViewModel.address!=null ?  listItemViewModel.address.address_1!=null ?  listItemViewModel.address.address_1 : @string/sample :@string/sample}"
                             android:textSize="@dimen/_11sdp" />
+                       <!-- android:text="@{(listItemViewModel.spareProductDescription!=null &amp;&amp; listItemViewModel.spareProductDescription.size()!=0 ) || (listItemViewModel.tyreProductDescription!=null &amp;&amp; listItemViewModel.tyreProductDescription.size()!=0 ) &amp;&amp;(listItemViewModel.serviceProductDescription==null || listItemViewModel.serviceProductDescription.size()==0 ) ?listItemViewModel.address.address_1 !=null ? listItemViewModel.address.address_1 :  listItemViewModel.serviceProductDescription!=null &amp;&amp; listItemViewModel.spareProductDescription.size()!=0 ? listItemViewModel.serviceProductDescription.get(0).workshopDetails!=null ? listItemViewModel.serviceProductDescription.get(0).workshopDetails.registeredOffice!=null ? listItemViewModel.serviceProductDescription.get(0).workshopDetails.registeredOffice :@string/sample   :@string/sample:listItemViewModel.address.address_1 !=null ? listItemViewModel.address.address_1 :@string/sample: @string/sample}"-->
                         <!-- <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

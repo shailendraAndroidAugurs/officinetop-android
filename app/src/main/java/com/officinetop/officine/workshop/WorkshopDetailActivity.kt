@@ -733,7 +733,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             carMaintenanceServiceId = json.optString("service_id")
                         }
 
-                       Log.d("checkjsondatamagbdgbxcgvbhcvbdfb",""+json);
 
                         if (json.has("service_specification") && !json.isNull("service_specification")) {
                             try {
@@ -935,7 +934,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, getCurrentTime(), getUserId()).enqueue(callback)
+                    addressId, getCurrentTime(), getUserId(),"2").enqueue(callback)
         } else if (isCarMaintenanceService)
            RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(),selected_date = selectedDateFilter,userid =  getUserId(), mainCategoryId =  main_category_id,workshopUsersId =  workshopUsersId.toString(), services = maintenceServiceJson,services_price = services_price,service_average_time = service_averagetime).enqueue(callback)
         else if (isQuotesService)
@@ -982,6 +981,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                 // Update for revision services booking
                 with(p0) {
+
 
                     val packageDetails = workingSlotList[position] as JSONObject
                     packageTiming.text = getFormattedTime(packageDetails.getString("start_time"), packageDetails.getString("end_time"))
@@ -1606,7 +1606,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         RetrofitClient.client.getSelectedWorkshopCalendarPrice(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id).onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
-                Log.d("calender_maintenance_list ", bodyResponse)
                 if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
                     val bodyJsonObject = JSONObject(bodyResponse)
                     if (bodyResponse != null && bodyJsonObject.has("data_set") && bodyJsonObject.opt("data_set") != null) {
@@ -1626,7 +1625,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id,version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(),services = maintenceServiceJson,services_price = services_price).onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
-                Log.d("calender_maintenance_list ", bodyResponse)
 
                 if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
                     val bodyJsonObject = JSONObject(bodyResponse)

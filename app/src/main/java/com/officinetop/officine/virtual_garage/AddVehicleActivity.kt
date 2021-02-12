@@ -1107,7 +1107,7 @@ class AddVehicleActivity : BaseActivity() {
         }
 
 
-        if (isForPlateno) {
+        if (isForPlateno||isForEdit) {
             Log.d("isForPlateno :  ", isForPlateno.toString())
             setNotEditable_SearchFromPlatno()
         }

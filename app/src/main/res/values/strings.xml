@@ -11,6 +11,7 @@
     <string name="sample_title">""</string>
     <string name="sample_product">""</string>
     <string name="sample_workshop">Officina Cesena Workshop</string>
+    <string name="edit_photo">Edit Photo</string>
 
     <string name="sample_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea

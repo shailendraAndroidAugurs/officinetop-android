@@ -697,7 +697,8 @@ interface IRetrofitApis {
                                      @Query(Constant.Path.selectedCarId) selectedCarId: String?,
                                      @Query(Constant.Path.addressId) addressId: String,
                                      @Query(Constant.Path.start_time) startTime: String,
-                                     @Query(Constant.Path.userid) userid: String
+                                     @Query(Constant.Path.userid) userid: String,
+                                     @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String
     ): Call<ResponseBody>
 
     @POST(Constant.UrlEndPoints.getCarMaintenancePackageDetail)
