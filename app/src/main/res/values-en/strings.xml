@@ -320,7 +320,7 @@
     <string name="Comment">Comment:</string>
     <string name="Media">Media</string>
     <string name="WorkshopName">Workshop Name</string>
-
+    <string name="edit_photo">Edit Photo</string>
     <!--// New String Added From hardcoded to String file-->
     <string name="ServiceName">Services Name</string>
     <string name="Failed_to_load_data">Failed to load data</string>

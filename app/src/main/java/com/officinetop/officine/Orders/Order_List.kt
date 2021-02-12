@@ -59,6 +59,7 @@ class Order_List : BaseActivity() {
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
+
                                 bindView(dataSetArray)
                             } else if (body.has("message") && !body.isNull("message")) {
                                 image_no_order.visibility = View.VISIBLE
@@ -132,29 +133,23 @@ class Order_List : BaseActivity() {
                     }
 
                 } else if (view.tag == "200") {
-                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()){
+                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()) {
 
                         DownloadInvoice(couponsListItem[position].orderTracking.id, true)
-                    }
-
-                    else {
+                    } else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
                 } else if (view.tag == "201") {
-                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()){
+                    if (couponsListItem[position].orderTracking != null && !couponsListItem[position].orderTracking.id.isNullOrBlank()) {
                         DownloadInvoice(couponsListItem[position].orderTracking.id, false)
 
-                    }
-
-                    else {
+                    } else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
                 } else if (view.tag == "203") {
-                    if (!couponsListItem[position].id.isNullOrBlank()){
+                    if (!couponsListItem[position].id.isNullOrBlank()) {
                         Returnpolicy(couponsListItem[position].id)
-                    }
-
-                    else {
+                    } else {
                         Toast.makeText(this@Order_List, getString(R.string.TrackingIdnotFound), Toast.LENGTH_SHORT).show()
                     }
                 } else if (view.tag == "500") {
@@ -255,4 +250,14 @@ class Order_List : BaseActivity() {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
 }

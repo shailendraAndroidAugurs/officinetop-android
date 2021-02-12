@@ -22,6 +22,7 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -41,7 +42,7 @@ import java.io.IOException
 import java.util.*
 
 class Edit_Profile : BaseActivity() {
-    private lateinit var profile_imagefull: ImageView
+    private lateinit var profile_imagefull: CircleImageView
     private lateinit var edittext_mobile: TextView
     private lateinit var edittext_email: TextView
     private lateinit var textview_changepic: TextView
