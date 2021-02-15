@@ -74,7 +74,9 @@ class TyreCustomizationActivity : BaseActivity() {
         }
         if (intent.extras != null && intent.hasExtra("editId")) {
             IsMeaurementEditId = intent.extras.getString("editId")
+/*
             submit.text = getString(R.string.update)
+*/
         }
         if (intent.extras != null && intent.hasExtra("IsSavedInlocal")) {
             IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
