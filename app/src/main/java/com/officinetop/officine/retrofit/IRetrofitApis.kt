@@ -683,7 +683,8 @@ interface IRetrofitApis {
                             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
                             @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
                             @Query(Constant.Path.service_average_time) service_average_time: String,
-                            @Query(Constant.Path.servicesPrice) servicesPrice: String
+                            @Query(Constant.Path.servicesPrice) servicesPrice: String,
+                            @Query(Constant.Path.max_appointment) max_appointment: String
 
 
                             ): Call<ResponseBody>
@@ -1014,7 +1015,9 @@ interface IRetrofitApis {
             @Query(Constant.Path.serviceID) serviceID: String,
             @Query(Constant.Path.selectedCarId) selectedCarId: String,
             @Query("distance_range") distance_range: String,
-            @Query(Constant.Path.version_id) version_id: String
+            @Query(Constant.Path.version_id) version_id: String,
+            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getQuotesWorkshop)

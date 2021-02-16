@@ -359,7 +359,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
                 Totalvat += cartData.serviceVat.toDouble()
 
             if (cartData.workshopDetail != null && !cartData.workshopDetail.id.isNullOrBlank()) {
-                if (i == 0) {
+                if (workshopId.isNullOrBlank()) {
                     workshopId = cartData.workshopDetail.id
                 } else if (!workshopId.isNullOrBlank() && !cartData.workshopDetail.id.equals(workshopId)) {
                     isMultipleWorkshopAvailable = true

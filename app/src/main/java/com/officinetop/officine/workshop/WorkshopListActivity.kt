@@ -356,7 +356,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val motServiceCall = RetrofitClient.client.getMotCalendar(motServiceID, selectedFormattedDate, mot_type, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, userId = getUserId(), service_average_time = motservices_time, mainCategoryId = mainCategoryId)
 
         val sosAppointmentCall = RetrofitClient.client.getSosAppointmentCalendar(workshopUserId, selectedFormattedDate,
-                latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!)
+                latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type = "1")
 
         val callback = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
