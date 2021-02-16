@@ -930,7 +930,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isSOSService) {
             RetrofitClient.client.getSOSPackageDetail(
                     workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, workshopWreckerId, getUserId(),version_id =  getSelectedCar()?.carVersionModel?.idVehicle.toString(),mainCategoryId =  main_category_id,wrecker_service_type = "1",service_average_time = services_average_time,servicesPrice = services_price).enqueue(callback)
+                    addressId, workshopWreckerId, getUserId(),version_id =  getSelectedCar()?.carVersionModel?.idVehicle.toString(),mainCategoryId =  main_category_id,wrecker_service_type = "1",service_average_time = services_average_time,servicesPrice = services_price,max_appointment = max_appointment).enqueue(callback)
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
@@ -1466,7 +1466,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 val file = File(images.get(i))
                 imageList.add(file.toMultipartBody("images[]"))
             }
-
             Log.d("QutoesBooking", "service_id=" + workshopCategoryId + "&selected_date=" + selectedDateFilter +
                     "&main_category_id=" + quotesMainCategoryId + "&selected_car_id=" + getSavedSelectedVehicleID() + "&workshop_id=" + workshopUsersId + "&start_time=" + bookingStartTime +
                     "&package_id=" + packageID.toString() + "&order_id=" + getOrderId() + "&coupon_id=" + workshopCouponId + "&end_time=" + endTime + "&version_id=" + getSelectedCar()?.carVersionModel?.idVehicle!! +
@@ -1476,7 +1475,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), quotesMainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
                     workshopUsersId.toString().toRequestBody(), bookingStartTime.toRequestBody(), packageID.toString().toRequestBody(), getOrderId().toRequestBody(), getBearerToken()
                     ?: "", workshopCouponId.toRequestBody(), endTime.toRequestBody(), getSelectedCar()?.carVersionModel?.idVehicle!!.toRequestBody(),
-                    SpecialConditionId.toRequestBody(), slotId.toRequestBody(), DiscountType.toRequestBody(), qutoesUserDescription.toRequestBody(), imageList)
+                    SpecialConditionId.toRequestBody(), slotId.toRequestBody(), DiscountType.toRequestBody(), qutoesUserDescription.toRequestBody(),images= imageList)
             serviceQuotesBooking.enqueue(callback)
         } else if (isMotService) {
             val motPart = motpartlist.get(motServiceId.toString())
