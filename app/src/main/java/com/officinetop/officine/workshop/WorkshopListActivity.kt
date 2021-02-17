@@ -605,7 +605,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforEmergency(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate,
                     serviceID.toString(), latitude, longitude, getCurrentTime(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!)
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type = "2",userid = getUserId())
                     .onCall { _, response ->
                         response?.let {
                             progress_bar.visibility = View.GONE
