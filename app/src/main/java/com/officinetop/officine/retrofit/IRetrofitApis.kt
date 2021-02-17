@@ -1266,7 +1266,10 @@ interface IRetrofitApis {
             @Query(Constant.Path.filterRating) rating: String,
             @Query(Constant.Path.filterPriceRange) priceRange: String,
             @Query(Constant.Path.sortPrice) priceLevel: Int,
-            @Query(Constant.Path.version_id) versionId: String
+            @Query(Constant.Path.version_id) versionId: String,
+            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
+            @Query(Constant.Path.userid) userid: String
     ): Call<ResponseBody>
 
 
