@@ -1023,6 +1023,8 @@ object Models {
             val price: String?,
             @SerializedName("service_name")
             val serviceName: String,
+            @SerializedName("service_Description")
+            val serviceDescription: String,
             @SerializedName("main_category_id")
             var mainCategoryId: String?,
             @SerializedName("service_id")

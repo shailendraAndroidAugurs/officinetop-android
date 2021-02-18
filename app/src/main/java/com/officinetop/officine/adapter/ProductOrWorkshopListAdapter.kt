@@ -211,7 +211,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
 
                 //available_status
-                if (!product_workshopList.availableStatus.isNullOrEmpty() && product_workshopList.availableStatus == "0") {
+                Log.d("check_status_avilable",""+product_workshopList.availableStatus)
+                if (!product_workshopList.availableStatus.isNullOrEmpty() && product_workshopList.availableStatus != "1") {
                     workshopAvailability.visibility = View.VISIBLE
                     AppliedCouponName.visibility = View.GONE
                     CouponLabel.visibility = View.GONE

@@ -512,7 +512,7 @@ interface IRetrofitApis {
                                @Field(Constant.Path.discountType) discountType: String,
                                @Field(Constant.Path.serviceid) serviceid: String,
                                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
-    
+
     @GET("selected_car/{selected_car_id}")
     fun selectCar(@Path("selected_car_id") car_id: String,
                   @Header(Constant.Fields.authorization) authToken: String): Call<ResponseBody>
@@ -684,10 +684,10 @@ interface IRetrofitApis {
                             @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
                             @Query(Constant.Path.service_average_time) service_average_time: String,
                             @Query(Constant.Path.servicesPrice) servicesPrice: String,
-                            @Query(Constant.Path.max_appointment) max_appointment: String
+                            @Query(Constant.Path.max_appointment) max_appointment: String,
 
-
-                            ): Call<ResponseBody>
+            @Query(Constant.Path.hourly_rate) hourlyrate: String
+    ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getSOSWorkshopPackageDetailEmergency)
     fun getSOSPackageDetailEmergency(@Query(Constant.Path.workshopId) workshopUserId: String,
@@ -791,6 +791,8 @@ interface IRetrofitApis {
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.discountType) discountType: String,
+            @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Field(Constant.Path.version_id) versionId: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -1449,7 +1451,7 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.highRatingFeedback)
     fun getHighRatingFeedback(
             @Query(Constant.Path.type) type: String,
-            @Query(Constant.Path.limit) limit:Int
+            @Query(Constant.Path.limit) limit: Int
     ): Call<ResponseBody>
 
 
@@ -1631,7 +1633,7 @@ interface IRetrofitApis {
             @Query(Constant.Path.mainCategoryId) main_category_id: String
     ): Call<ResponseBody>
 
- @POST(Constant.UrlEndPoints.getworkshopCalendarPriceMaintenance)
+    @POST(Constant.UrlEndPoints.getworkshopCalendarPriceMaintenance)
     fun getSelectedWorkshopCalendarPriceMaintence(
             @Query(Constant.Path.workshopUsersId) workshop_id: String,
             @Query(Constant.Path.userid) userid: String,

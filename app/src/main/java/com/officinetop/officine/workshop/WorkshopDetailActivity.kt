@@ -41,7 +41,6 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.feedback.FeedbackListActivity
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.tyre.TyreListActivity
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
@@ -105,7 +104,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var isSosEmergency: Boolean = false
     var couponList: List<Models.Coupon>? = null
     var isCarMaintenanceService = false
-    var isQuotesService =   false
+    var isQuotesService = false
     private var qutoesUserDescription = ""
     private var qutoesUserImage = ""
     private var isMotService = false
@@ -148,9 +147,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var WorkshopJson: JSONObject = JSONObject()
     private var feedbackMain_categoryId = ""
     private var feedbackServices_id = ""
-    var maintenceServiceJson:JSONArray = JSONArray()
+    var maintenceServiceJson: JSONArray = JSONArray()
     var services_price = ""
-    var service_averagetime:String = ""
+    var service_averagetime: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workshop_detail)
@@ -188,10 +187,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (intent.hasExtra("WorkshopJson")) {
             val JsonString = intent.getStringExtra("WorkshopJson")
             WorkshopJson = JSONObject(JsonString)
-            service_averagetime = if(WorkshopJson.has("service_average_time") && WorkshopJson.getString("service_average_time") != null)WorkshopJson.getString("service_average_time") else ""
-            services_price = if(WorkshopJson.has("services_price") && WorkshopJson.getString("services_price") != null)WorkshopJson.getString("services_price") else ""
-            maintenceServiceJson  =  if(WorkshopJson.has("services") && WorkshopJson.getJSONArray("services")!=null)WorkshopJson.getJSONArray("services") else JSONArray()
-            Log.d("servicejson",""+maintenceServiceJson)
+            service_averagetime = if (WorkshopJson.has("service_average_time") && WorkshopJson.getString("service_average_time") != null) WorkshopJson.getString("service_average_time") else ""
+            services_price = if (WorkshopJson.has("services_price") && WorkshopJson.getString("services_price") != null) WorkshopJson.getString("services_price") else ""
+            maintenceServiceJson = if (WorkshopJson.has("services") && WorkshopJson.getJSONArray("services") != null) WorkshopJson.getJSONArray("services") else JSONArray()
+            Log.d("servicejson", "" + maintenceServiceJson)
         }
 
 
@@ -401,12 +400,13 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         //set selected date from workshop calendar screen calendar
         booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
         calendar_selectedDateFilter = selectedDateFilter
-        if (isCarWash || isRevision || isTyre || isAssembly||isMotService) {
+        if (isCarWash || isRevision || isTyre || isAssembly || isMotService) {
             getCalendarPrices()
-        }else if (isCarMaintenanceService){
+        } else if (isSOSService) {
+            //getCalendarMaintenance()
+        } else if (isCarMaintenanceService) {
             getCalendarMaintenance()
-        }
-        else {
+        } else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
                 calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
         }
@@ -714,7 +714,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         val dataJson = JSONObject(body)
                         val json = dataJson.getJSONObject("data")
 
-                        Log.d("checkjsonresponse",""+json);
+                        Log.d("checkjsonresponse", "" + json)
 
                         currentWorkshopDetail = json.toString()
 
@@ -847,7 +847,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
 
-                            Log.d("motavarageTime", json.optDouble("service_average_time").toString()+"    "+averageServiceTime)
+                            Log.d("motavarageTime", json.optDouble("service_average_time").toString() + "    " + averageServiceTime)
                         }
 
                         if (averageServiceTime != 0.0) {
@@ -930,19 +930,19 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isSOSService) {
             RetrofitClient.client.getSOSPackageDetail(
                     workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, workshopWreckerId, getUserId(),version_id =  getSelectedCar()?.carVersionModel?.idVehicle.toString(),mainCategoryId =  main_category_id,wrecker_service_type = "1",service_average_time = services_average_time,servicesPrice = services_price,max_appointment = max_appointment).enqueue(callback)
+                    addressId, workshopWreckerId, getUserId(), version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), mainCategoryId = main_category_id, wrecker_service_type = "1", service_average_time = services_average_time, servicesPrice = services_price, max_appointment = max_appointment, hourlyrate = hourly_rate).enqueue(callback)
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, getCurrentTime(), getUserId(),"2").enqueue(callback)
+                    addressId, getCurrentTime(), getUserId(), "2").enqueue(callback)
         } else if (isCarMaintenanceService)
-           RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(),selected_date = selectedDateFilter,userid =  getUserId(), mainCategoryId =  main_category_id,workshopUsersId =  workshopUsersId.toString(), services = maintenceServiceJson,services_price = services_price,service_average_time = service_averagetime).enqueue(callback)
+            RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(), selected_date = selectedDateFilter, userid = getUserId(), mainCategoryId = main_category_id, workshopUsersId = workshopUsersId.toString(), services = maintenceServiceJson, services_price = services_price, service_average_time = service_averagetime).enqueue(callback)
         else if (isQuotesService)
             RetrofitClient.client.getServiceQuotesPackageDetail(workshopCategoryId, quotesWorkshopUsersDaysId, selectedDateFilter, quotesServiceQuotesInsertedId,
                     getSavedSelectedVehicleID(), quotesMainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
                     ?: "", quotesServicesAvarageTime, maxAppointment = max_appointment).enqueue(callback)
         else if (isMotService)
-            RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId,main_category_id).enqueue(callback)
+            RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), mot_type, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId, main_category_id).enqueue(callback)
         else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!, services_average_time, max_appointment, hourly_rate, getSelectedCar()?.carMakeModel?.brandID!!, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
 
     }
@@ -1037,7 +1037,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                     var endHour = endTime.split(":")[0].toInt()
                     var endMin = endTime.split(":")[1].toInt()
-                    var service_day = 0;
+                    var service_day = 0
+                    Log.d("check_status_avilable", "" + isAvailable)
+
                     if (isAvailable == "1") {
                         bookPackage.text = getString(R.string.book)
                         bookPackage.setBackgroundColor(ContextCompat.getColor(this@WorkshopDetailActivity, R.color.theme_orange))
@@ -1047,17 +1049,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     }
                     bookPackage.setOnClickListener {
                         if (isAvailable == "0") {
-                         //   showInfoDialog(getString(R.string.Thisslotisbusy))
+                            //   showInfoDialog(getString(R.string.Thisslotisbusy))
                             return@setOnClickListener
                         } else if (isAvailable == "2") {
-                           // showInfoDialog(getString(R.string.Thisslotnotapplicable))
+                            // showInfoDialog(getString(R.string.Thisslotnotapplicable))
                             return@setOnClickListener
-                        }
-                        else if (isAvailable == "3") {
-                           // showInfoDialog(getString(R.string.this_slot_not_available))
+                        } else if (isAvailable == "3") {
+                            // showInfoDialog(getString(R.string.this_slot_not_available))
                             return@setOnClickListener
-                        }
-                        else if (startHour > endHour) {
+                        } else if (startHour > endHour) {
                             showInfoDialog(getString(R.string.Invalidinterventiontime) + "($startHour:$startMin - $endHour:$endMin)")
                             return@setOnClickListener
                         } else {
@@ -1204,43 +1204,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
 
-/*
-            for (i in 0 until serviceSpecArray.length()) {
-                val data = serviceSpecArray.get(i) as JSONObject
-                val aver_time = if (data.has("average_time") && !data.isNull("average_time")) data.optString("average_time") else ""
-                val service_id = if (data.has("service_id") && !data.isNull("service_id")) data.optString("service_id") else ""
-                val price = if (data.has("price") && !data.isNull("price")) data.optString("price") else ""
-                val hourly_rate = if (data.has("hourly_rate") && !data.isNull("hourly_rate")) data.optString("hourly_rate") else ""
-                val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-                val bookingDuration = (aver_time.toDouble().roundTo2Places() * 60) // add 20 min
-                //bookingDuration /= 60000
-                parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
-                parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
-                val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-                endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-                Log.e("ENDTIME", "$bookingDuration/////$endTime///$aver_time")
 
-                var calculate_price = (hourly_rate.toDouble().roundTo2Places() / 60) * bookingDuration
-                val jsonObj = JSONObject()
-                val jsonObjpart = JSONObject()
-                val jsonArray = JSONArray()
-                val partdata = partidMap.get(service_id)
-                jsonObj.put("service_id", partdata?.servicesid)
-                jsonObj.put("price", price)
-                jsonObj.put("hourly_rate", hourly_rate)
-                jsonObj.put("average_time", aver_time)
-                jsonObjpart.put("part_id", partdata!!.service_partID)
-                jsonObjpart.put("quantity", partdata.partQty)
-                jsonObjpart.put("part_coupon_id", partdata.service_partcouponID)
-                jsonObjpart.put("seller_id", partdata.seller_ID)
-                jsonObj.put("parts", jsonArray.put(jsonObjpart))
-                serviceSpecification.put(jsonObj)
-            }
-*/
         } else if (isSosEmergency || isSOSService) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
@@ -1250,15 +1217,15 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         } else if (isMotService) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-          //  val additionalDelay = (20 * 60 * 1000)
-            Log.d("avragetime",""+averageServiceTime)
+            //  val additionalDelay = (20 * 60 * 1000)
+            Log.d("avragetime", "" + averageServiceTime)
             var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-            Log.d("endtimebecome","end_time: "+endTime)
+            Log.d("endtimebecome", "end_time: " + endTime)
         } else if (isTyre) {
             slotStartTime = packageDetail.optString("start_time")
             slotEndTime = packageDetail.optString("end_time")
@@ -1285,7 +1252,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isCarWash) {
-            Log.d("avragetime",""+averageServiceTime)
+            Log.d("avragetime", "" + averageServiceTime)
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
@@ -1337,12 +1304,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         if (bookingResponse.has("coupon_status") && bookingResponse.getString("coupon_status") == "1") {
                             dialogForInvalidCoupon(packageDetail, bookingStartTime)
                         } else {
-                            if(!isQuotesService){
+                            if (!isQuotesService) {
                                 startActivity(intentFor<WorkshopBookingDetailsActivity>().forwardResults())
                                 finishAffinity()
-                            }
-                            else{
-                                showInfoDialog(getString(R.string.quotes_alert_msg),true,{ sendTohomepage()})
+                            } else {
+                                showInfoDialog(getString(R.string.quotes_alert_msg), true, { sendTohomepage() })
                             }
                         }
                     } else {
@@ -1436,7 +1402,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopUsersId.toString(), bookingStartTime, endTime, selectedDateFilter, sosUserLatitude, sosUserLongitude,
                     getSelectedCar()?.id?.toInt(), finalPrice.toString(), addressId, sosServiceId,
                     workshopWreckerId, getOrderId(), getBearerToken()
-                    ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType
+                    ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType, main_category_id, getSavedSelectedVehicleID()
             )
             serviceSOSBookingCall.enqueue(callback)
         } else if (isSosEmergency) {
@@ -1453,8 +1419,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     carMaintenanceServiceId, workshopUsersId, packageID, getOrderId()
                     , serviceSpecification, getSavedSelectedVehicleID(),
                     getBearerToken()
-                            ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType,main_category_id
-            ,maintenceServiceJson)
+                            ?: "", workshopCouponId, SpecialConditionId, slotId, DiscountType, main_category_id
+                    , maintenceServiceJson)
             Log.e("MOTPART", serviceSpecification.toString())
             serviceCarMaintenanceBooking.enqueue(callback)
         } else if (isQuotesService) {
@@ -1475,7 +1441,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), quotesMainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
                     workshopUsersId.toString().toRequestBody(), bookingStartTime.toRequestBody(), packageID.toString().toRequestBody(), getOrderId().toRequestBody(), getBearerToken()
                     ?: "", workshopCouponId.toRequestBody(), endTime.toRequestBody(), getSelectedCar()?.carVersionModel?.idVehicle!!.toRequestBody(),
-                    SpecialConditionId.toRequestBody(), slotId.toRequestBody(), DiscountType.toRequestBody(), qutoesUserDescription.toRequestBody(),images= imageList)
+                    SpecialConditionId.toRequestBody(), slotId.toRequestBody(), DiscountType.toRequestBody(), qutoesUserDescription.toRequestBody(), images = imageList)
             serviceQuotesBooking.enqueue(callback)
         } else if (isMotService) {
             val motPart = motpartlist.get(motServiceId.toString())
@@ -1491,7 +1457,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             Log.d("mot bookingStartTime", bookingStartTime)
             Log.d("mot endTime", endTime)
             val serviceMotBooking = RetrofitClient.client.serviceMotBooking(packageID.toString(), bookingStartTime, endTime, selectedDateFilter,
-                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, main_category_id,  slotId, DiscountType,getBearerToken() ?: "")
+                    motServiceId.toString(), finalPrice.toString(), getOrderId(), getSavedSelectedVehicleID(), workshopCouponId, workshopUsersId.toString(), getServicesType(), motserviceSpecArray, SpecialConditionId, main_category_id, slotId, DiscountType, getBearerToken()
+                    ?: "")
             serviceMotBooking.enqueue(callback)
         } else if (isCarWash) {
             val serviceBookingCarWash = RetrofitClient.client.carWashServiceBooking(
@@ -1621,7 +1588,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun getCalendarMaintenance() {
-        RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id,version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(),services = maintenceServiceJson,services_price = services_price).onCall { networkException, response ->
+        RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id, version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), services = maintenceServiceJson, services_price = services_price).onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
 
@@ -1639,6 +1606,27 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
         }
     }
+
+    private fun getCalendarSOS() {
+        RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id, version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), services = maintenceServiceJson, services_price = services_price).onCall { networkException, response ->
+            if (response!!.isSuccessful) {
+                val bodyResponse = response.body()?.string()
+
+                if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
+                    val bodyJsonObject = JSONObject(bodyResponse)
+                    if (bodyResponse != null && bodyJsonObject.has("data_set") && bodyJsonObject.opt("data_set") != null) {
+                        val dataSet = getDataSetArrayFromResponse(bodyResponse)
+                        calendarPriceMap.clear()
+                        for (i in 0 until dataSet.length()) {
+                            val calendarDatePricesObject = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
+                            calendarPriceMap[calendarDatePricesObject.date] = calendarDatePricesObject.minPrice.toString()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 

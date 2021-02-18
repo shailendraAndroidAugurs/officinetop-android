@@ -285,7 +285,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-                if (item.serviceDetail!=null&&item.serviceDetail.mainCategoryId!=null&&item.serviceDetail.mainCategoryId.equals("2")) {
+                if (item.serviceDetail != null && item.serviceDetail.mainCategoryId != null && item.serviceDetail.mainCategoryId.equals("2")) {
                     if (item.afterDiscountPrice.isNullOrBlank()) {
                         if (item.price != null && item.discount != null) {
                             ServicesTotalPrices.text = context.getString(R.string.prepend_euro_symbol_string, (item.price.toInt() - item.discount.toInt()).toString())
@@ -303,27 +303,70 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     }
                 }
 
-                if (item.partDetails != null) {
-                    partInfo.visibility = View.VISIBLE
-                } else {
-                    partInfo.visibility = View.GONE
-                }
+
+                  if (item.partDetails != null) {
+                      partInfo.visibility = View.VISIBLE
+                  } else {
+                      partInfo.visibility = View.GONE
+                  }
                 partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
-                        serviceName.text = context.getString(R.string.cart_quotes) +" "+ item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        serviceName.text = context.getString(R.string.cart_quotes) + " " + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         cartItemServiceImage.visibility = View.GONE
                         serviceName.gravity = Gravity.CENTER
                         tvPlus.gravity = Gravity.CENTER
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     } else {
                         serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
+                        if (item.serviceDetail.serviceDescription.isNullOrBlank()) {
+                            tvCartServiceDescription.text = item.serviceDetail.serviceDescription
+                        } else tvCartServiceDescription.visibility = View.GONE
+
                         context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     }
 
+                    if (item.partDetails != null && !item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("12")) {
+                        layout_maintenance.visibility = View.VISIBLE
+                        partInfo.visibility = View.GONE
+                        if (!item.partDetails[0].productName.isNullOrBlank()) {
+                            tvServicesProductTitle.text = item.partDetails[0].productName
+                        }
+                       /* if (!item.partDetails[0].Productdescription.isNullOrBlank()) {
+                            tvServicesProductDescription.text = item.partDetails[0].Productdescription
+                        }*/
+                        if (item.partDetails[0].couponList != null && item.partDetails[0].couponList.size != 0 && item.partDetails[0].couponList[0] != null) {
+                            tvServicesProductAppliedCoupon.text = item.partDetails[0].couponList[0].couponTitle
+                        } else tvServicesProductAppliedCoupon.visibility = View.GONE
 
+                        if (!item.partDetails[0].sellerPrice.isNullOrBlank()) {
+                            tvServicesProductPrices.text = context.getString(R.string.euro_symbol) + " " + item.partDetails[0].sellerPrice
+                        } else tvServicesProductPrices.text = context.getString(R.string.euro_symbol) + " " + "0"
+                        if (!item.partDetails[0].partimage.isNullOrBlank()) {
+                            context.loadImage(item.partDetails[0].partimage, ivServicesProductImage)
+                        }
+                        if (!item.partDetails[0].brandImageURL.isNullOrBlank()) {
+                            context.loadImage(item.partDetails[0].brandImageURL, ivServicesProductPricesBrandImage)
+
+                        }
+                        if (!item.partDetails[0].forPair.isNullOrBlank() && !item.partDetails[0].forPair.equals("0")) {
+                            tvServicesProductPair.text = "2 " + context.getString(R.string.pieces)
+                        } else tvServicesProductPair.visibility = View.GONE
+
+                        if (!item.partDetails[0].rating_star.isNullOrBlank()) {
+                            crServicesProductRating.rating = item.partDetails[0].rating_star.toFloat()
+                        } else crServicesProductRating.rating = 0f
+
+                        if (!item.partDetails[0].rating_count.isNullOrBlank()) {
+                            tvServicesProductCount.text = item.partDetails[0].rating_count
+                        } else tvServicesProductCount.text = "0"
+
+
+                    } else {
+                        layout_maintenance.visibility = View.GONE
+                    }
                 }
                 if (item.workshopDetail != null) {
                     workshopName.text = item.workshopDetail.companyName.takeIf { !it.isNullOrEmpty() }
@@ -474,7 +517,18 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val tv_couponDetailProduct = itemView.tv_coupon_cart
         val tv_coupon_cart_services = itemView.tv_coupon_cart_services
         val tvPlus = itemView.tv_plus
+        val layout_maintenance = itemView.layout_maintenance
+        val tvServicesProductPair = itemView.tv_services_product_pair
+        val tvServicesProductTitle = itemView.tv_services_product_title
+        val tvServicesProductDescription = itemView.tv_services_product_description
+        val tvServicesProductAppliedCoupon = itemView.tv_services_product_appliedCouponName
+        val tvServicesProductPrices = itemView.tv_services_product_prices
 
+        val ivServicesProductImage = itemView.iv_services_product_image
+        val ivServicesProductPricesBrandImage = itemView.iv_services_product_brand_image
+        val tvCartServiceDescription = itemView.cart_service_description
+        val crServicesProductRating = itemView.cr_services_product_rating
+        val tvServicesProductCount = itemView.tv_services_product_rating_count
 
     }
 

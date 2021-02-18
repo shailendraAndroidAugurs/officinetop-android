@@ -346,6 +346,13 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
                 if (!cartData.serviceAssemblyProductDescription.product_vat.isNullOrBlank() && cartData.serviceAssemblyProductDescription.product_vat != "null")
                     Totalvat += cartData.serviceAssemblyProductDescription.product_vat.toDouble()
+
+
+            }
+
+            if (cartData.serviceDetail != null && cartData.serviceDetail.mainCategoryId != null && cartData.serviceDetail.mainCategoryId.equals("12") &&
+                    cartData.partDetails != null && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
+                productPrice += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
             }
             if (!cartData.afterDiscountPrice.isNullOrBlank() && cartData.afterDiscountPrice != "null")
                 ServicesPricewithVat_Discount += cartData.afterDiscountPrice.toDouble()
@@ -1155,7 +1162,7 @@ fun Context.addReadLess(text: String, textView: TextView) {
     val ss = SpannableString("$text " + getString(R.string.less))
     val clickableSpan: ClickableSpan = object : ClickableSpan() {
         override fun onClick(view: View) {
-            if(text.length>=150){
+            if (text.length >= 150) {
                 addReadMore(text, textView)
             }
         }
