@@ -294,6 +294,7 @@ class MaintenanceActivity : BaseActivity() {
                                     }
                                 }
                             } else {
+
                                 checkBox.isChecked = false
                                 Snackbar.make(btn_choose_workshop, getString(R.string.partNotAvailable), Snackbar.LENGTH_SHORT).show()
                                 // return@setOnClickListener
@@ -341,7 +342,7 @@ class MaintenanceActivity : BaseActivity() {
             selectservice_position = position
 
         } else {
-            progress_bar_bottom.visibility = View.VISIBLE
+          //  progress_bar_bottom.visibility = View.VISIBLE
             if (isOnline()) {
                 getAllParts(carMaintenanceServiceList[position].id, position)
             } else {
@@ -401,9 +402,9 @@ class MaintenanceActivity : BaseActivity() {
     }
 
     private fun getAllPartsMaintaince(serviceId: String, position: Int) {
-/*
-        progress_bar.visibility = View.VISIBLE
-*/
+        val progressDialog = this.getProgressDialog()
+        progressDialog.show()
+        progressDialog.setCanceledOnTouchOutside(false)
         try {
             RetrofitClient.client.getCarMaintenancePart(getSelectedCar()?.carVersionModel?.idVehicle!!, serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
@@ -433,6 +434,8 @@ class MaintenanceActivity : BaseActivity() {
                                         } else {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
+                                        progressDialog.dismiss()
+
                                         /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
 
                                              binddataofselectedReplacementPart(0)

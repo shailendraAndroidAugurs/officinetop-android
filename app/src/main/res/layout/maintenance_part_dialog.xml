@@ -30,7 +30,7 @@
                     android:layout_above="@id/item_brand_image"
                     android:layout_gravity="center"
                     android:layout_weight=".6"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerInside"
                     android:src="@drawable/no_image_placeholder"
                     app:imageResource="@{listItemViewModel.partimage!=null ? listItemViewModel.partimage : listItemViewModel.product_image_url !=null? listItemViewModel.product_image_url: @string/url_not_found }" />
 

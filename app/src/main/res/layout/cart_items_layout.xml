@@ -335,7 +335,7 @@
                             android:gravity="left"
                             android:padding="0dp"
                             android:textColor="@color/black"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                         <TextView
                             android:id="@+id/tv_plus"

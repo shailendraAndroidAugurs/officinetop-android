@@ -403,7 +403,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (isCarWash || isRevision || isTyre || isAssembly || isMotService) {
             getCalendarPrices()
         } else if (isSOSService) {
-            //getCalendarMaintenance()
+        getCalendarSOS()
         } else if (isCarMaintenanceService) {
             getCalendarMaintenance()
         } else {
@@ -934,7 +934,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, getCurrentTime(), getUserId(), "2").enqueue(callback)
+                    addressId, getCurrentTime(), getUserId(), "2",version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(),service_average_time = services_average_time,mainCategoryId = main_category_id).enqueue(callback)
         } else if (isCarMaintenanceService)
             RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(), selected_date = selectedDateFilter, userid = getUserId(), mainCategoryId = main_category_id, workshopUsersId = workshopUsersId.toString(), services = maintenceServiceJson, services_price = services_price, service_average_time = service_averagetime).enqueue(callback)
         else if (isQuotesService)
@@ -1608,7 +1608,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun getCalendarSOS() {
-        RetrofitClient.client.getSelectedWorkshopCalendarPriceMaintence(workshopUsersId.toString(), getUserId(), workshopCategoryId, hourly_rate, services_average_time, calendar_selectedDateFilter, main_category_id, version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), services = maintenceServiceJson, services_price = services_price).onCall { networkException, response ->
+        RetrofitClient.client.getSelectedWorkshopCalendarPriceSOs(workshopUsersId.toString(), calendar_selectedDateFilter, "1", sosServiceId, services_price, services_average_time, max_appointment,main_category_id).onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
 

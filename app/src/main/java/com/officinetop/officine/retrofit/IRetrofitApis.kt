@@ -699,7 +699,12 @@ interface IRetrofitApis {
                                      @Query(Constant.Path.addressId) addressId: String,
                                      @Query(Constant.Path.start_time) startTime: String,
                                      @Query(Constant.Path.userid) userid: String,
-                                     @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String
+                                     @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
+                                     @Query(Constant.Path.version_id) version_id: String,
+                                     @Query(Constant.Path.service_average_time) service_average_time: String,
+                                     @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+
+
     ): Call<ResponseBody>
 
     @POST(Constant.UrlEndPoints.getCarMaintenancePackageDetail)
@@ -1646,7 +1651,7 @@ interface IRetrofitApis {
             @Query(Constant.Path.services) services: JSONArray,
             @Query(Constant.Path.servicesPrice) services_price: String): Call<ResponseBody>
 
-    @POST(Constant.UrlEndPoints.getSosoworkshopCalendarPrice)
+    @GET(Constant.UrlEndPoints.getSosoworkshopCalendarPrice)
     fun getSelectedWorkshopCalendarPriceSOs(
             @Query(Constant.Path.workshopUsersId) workshop_id: String,
             @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
