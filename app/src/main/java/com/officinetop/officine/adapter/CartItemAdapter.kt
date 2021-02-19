@@ -320,7 +320,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     } else {
                         serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
-                        if (item.serviceDetail.serviceDescription.isNullOrBlank()) {
+                        if (!item.serviceDetail.serviceDescription.isNullOrBlank()) {
                             tvCartServiceDescription.text = item.serviceDetail.serviceDescription
                         } else tvCartServiceDescription.visibility = View.GONE
 
@@ -334,6 +334,12 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         if (!item.partDetails[0].productName.isNullOrBlank()) {
                             tvServicesProductTitle.text = item.partDetails[0].productName
                         }
+
+
+                      Log.d("check_service_details",item.serviceDetail.serviceDescription)
+
+
+
                        /* if (!item.partDetails[0].Productdescription.isNullOrBlank()) {
                             tvServicesProductDescription.text = item.partDetails[0].Productdescription
                         }*/
@@ -344,8 +350,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         if (!item.partDetails[0].sellerPrice.isNullOrBlank()) {
                             tvServicesProductPrices.text = context.getString(R.string.euro_symbol) + " " + item.partDetails[0].sellerPrice
                         } else tvServicesProductPrices.text = context.getString(R.string.euro_symbol) + " " + "0"
-                        if (!item.partDetails[0].partimage.isNullOrBlank()) {
-                            context.loadImage(item.partDetails[0].partimage, ivServicesProductImage)
+                        if (!item.partDetails[0].product_image_url.isNullOrBlank()) {
+                            context.loadImage(item.partDetails[0].product_image_url, ivServicesProductImage)
                         }
                         if (!item.partDetails[0].brandImageURL.isNullOrBlank()) {
                             context.loadImage(item.partDetails[0].brandImageURL, ivServicesProductPricesBrandImage)
