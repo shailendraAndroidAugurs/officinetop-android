@@ -90,19 +90,19 @@ class LoginActivity : BaseActivity() {
         linkedinSignIn.setOnClickListener {
             socialmediaflag = 2
 
-            AlertReferralcode()
+            alertReferralcode()
         }
 
         googleSignIn.setOnClickListener {
             socialmediaflag = 1
-            AlertReferralcode()
+            alertReferralcode()
 
         }
 
 
         facebookSignIn.setOnClickListener {
             socialmediaflag = 0
-            AlertReferralcode()
+            alertReferralcode()
 
 
         }
@@ -143,7 +143,6 @@ class LoginActivity : BaseActivity() {
 
         lastAccount?.let {
             googleSignInClient.signOut().addOnCompleteListener {
-                //toast("Logged out from ${lastAccount.email}")
             }
         }
 
@@ -212,7 +211,6 @@ class LoginActivity : BaseActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
         Log.d("LoginActivity", requestCode.toString() + "///" + resultCode + "//" + Activity.RESULT_OK + "//" + data)
         val googleSignedAccount = GoogleSignIn.getSignedInAccountFromIntent(data)
         Log.d("GogleSign=ActivityRslt", googleSignedAccount.toString())
@@ -230,7 +228,6 @@ class LoginActivity : BaseActivity() {
                     val name = result?.displayName
                     val email = result?.email
                     Log.d("LoginActivity", "onActivityResult: account =  ${result?.account}")
-//                  toast("$id , $email , $name")
                     var firstName = name
                     var lastName = name
 
@@ -289,11 +286,6 @@ class LoginActivity : BaseActivity() {
         val retrofitClientInterface = RetrofitClient.client
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val ipAddress = Formatter.formatIpAddress(wifiManager.connectionInfo.ipAddress)
-        Log.d("LoginActivity", "initRetrofitSigning: IP = $ipAddress")
-
-
-//        emailEditText.setText("singh.abhishek+1@augurs.in")
-//        passwordEditText.setText( "123456" )
 
         val loginCallBack = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -332,7 +324,6 @@ class LoginActivity : BaseActivity() {
                             startActivity(intentFor<HomeActivity>().putExtra("login_success", true).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)//.clearTask().clearTop()
 
                             )
-                            // getUserAppSettings()
                             finishAffinity()
                         }
                     }
@@ -368,7 +359,7 @@ class LoginActivity : BaseActivity() {
     }
 
 
-    private fun AlertReferralcode() {
+    private fun alertReferralcode() {
 
         alert {
             message = getString(R.string.check_referral)
@@ -379,12 +370,12 @@ class LoginActivity : BaseActivity() {
                 referralCode = ""
                 if (socialmediaflag == 0) {
 
-                    Facebooklogin()
+                    facebooklogin()
 
                 } else if (socialmediaflag == 1) {
-                    Googlelogin()
+                    googlelogin()
                 } else {
-                    Linkedlogin()
+                    linkedlogin()
                 }
             }
         }.show()
@@ -398,11 +389,11 @@ class LoginActivity : BaseActivity() {
             referralCode = bottomSheet.edt_referralcode.text.toString()
             if (!referralCode.isNullOrBlank()) {
                 if (socialmediaflag == 0) {
-                    Facebooklogin()
+                    facebooklogin()
                 } else if (socialmediaflag == 1) {
-                    Googlelogin()
+                    googlelogin()
                 } else {
-                    Linkedlogin()
+                    linkedlogin()
                 }
                 dialog.dismiss()
             } else {
@@ -419,11 +410,11 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    private fun Googlelogin() {
+    private fun googlelogin() {
         startActivityForResult(googleSignInClient.signInIntent, RC_GOOGLE)
     }
 
-    private fun Linkedlogin() {
+    private fun linkedlogin() {
         startActivityForResult(intentFor<LinkedInWebView>(), RC_LINKEDIN)
     }
 
@@ -434,7 +425,7 @@ class LoginActivity : BaseActivity() {
         GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback { LoginManager.getInstance().logOut() }).executeAsync()
     }
 
-    private fun Facebooklogin() {
+    private fun facebooklogin() {
         LoginManager.getInstance().logInWithReadPermissions(this,
                 arrayListOf("email", "public_profile", "user_friends"))
 
@@ -505,24 +496,7 @@ class LoginActivity : BaseActivity() {
                 })
     }
 
-    /*fun loginHandle() {
-        LISessionManager.getInstance(applicationContext).init(this@LoginActivity, buildScope(), object : AuthListener {
-            override fun onAuthSuccess() {
-                // Authentication was successful.  You can now do other calls with the SDK.
-             *//*   val intent = Intent(this@LoginActivity, ProfileActivity::class.java)
-                startActivity(intent)*//*
-            }
 
-            override fun onAuthError(error: LIAuthError) {
-                // Handle authentication errors
-                Toast.makeText(applicationContext, "Login Error " + error.toString(), Toast.LENGTH_LONG).show()
-            }
-        }, true)
-    }
-
-    private fun buildScope(): Scope? {
-        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS)
-    }*/
 
     private fun setSpannableText() {
         val textMain = getString(R.string.term_condition_policy_login)
@@ -535,8 +509,6 @@ class LoginActivity : BaseActivity() {
 
         }, 0, text1.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        // text.indexOf(getString(R.string.Conditions)), text.indexOf(getString(R.string.and)), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
-
         val privacyPolicy = SpannableString(getString(R.string.register_privacy_text_2))
         privacyPolicy.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
@@ -545,7 +517,7 @@ class LoginActivity : BaseActivity() {
 
         }, 0, privacyPolicy.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        termCondition_policy_login.text = TextUtils.concat(textMain, " ", termsAndConditions, " ", getString(R.string.and), " ", privacyPolicy)
+        termCondition_policy_login.text = TextUtils.concat(textMain, " ", termsAndConditions, " ", getString(R.string.and), " ", privacyPolicy,"\"")
         termCondition_policy_login.movementMethod = LinkMovementMethod.getInstance()
         termCondition_policy_login.highlightColor = Color.TRANSPARENT
     }

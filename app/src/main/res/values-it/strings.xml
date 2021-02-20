@@ -22,7 +22,7 @@
     <string name="continue_without_login">Continua senza effettuare l\'accesso</string>
     <string name="no_account">Non hai un account?</string>
     <string name="register">Registrati</string>
-    <string name="reset_password">Ha dimenticato la password?</string>
+    <string name="reset_password">Hai dimenticato la password?</string>
     <string name="last_name">Cognome</string>
     <string name="mob_no">Numero di cellulare</string>
     <string name="confirm_pass">conferma password</string>
@@ -152,9 +152,9 @@
     <string name="choose_workshop">Scegli un\'officina</string>
     <string name="maintenance">Manutenzione</string>
     <string name="part_list">Elenco delle parti</string>
-    <string name="register_privacy_text_1">Registrandoti, consenti a questa app di utilizzare le tue
+    <string name="register_privacy_text_1">"Registrandoti, consenti a questa app di utilizzare le tue
 informazioni in accordo alle </string>
-    <string name="register_privacy_text_2">privacy policy</string>
+    <string name="register_privacy_text_2"> privacy policy</string>
     <string name="other_seller">Altri venditori</string>
     <string name="name">Nome</string>
     <string name="busy">Occupato</string>
@@ -256,7 +256,8 @@ informazioni in accordo alle </string>
     <string name="update_address">Indirizzo di aggiornamento</string>
     <string name="new_address">Indirizzo</string>
     <string name="update_contact">Il numero di cellulare e il numero di cellulare aggiornato sono uguali. Inserisci un altro numero</string>
-    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
+    <string name="google_places_key">AIzaSyC2UUrVSzQ_Sby9mT4R2s3fTYJISpCWMMQ</string>
+
     <string name="Please_Select_Address">Si prega di selezionare l\'indirizzo</string>
     <string name="enterZipCode">Inserisci il codice postale</string>
 
@@ -549,7 +550,7 @@ informazioni in accordo alle </string>
     <string name="FAQtitle"> FAQ</string>
     <string name="please_select_maintenance">Seleziona Manutenzione!</string>
     <string name="cart_items">Carrello Articoli</string>
-    <string name="Conditions">condizioni d’utilizzo</string>
+    <string name="Conditions">condizioni d\'utilizzo</string>
     <string name="and">e</string>
     <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registrato correttamente, l link di verifica è stato inviato alla tua mail, confermala per attivare l’account</string>
     <string name="Add_address">Aggiungi indirizzo</string>
@@ -628,7 +629,7 @@ informazioni in accordo alle </string>
 
     <string name="bank_transfer_proceed">Vuoi procedere con Bonifico Bancario ?</string>
     <string name="please_login_to_continue_for_add_wish_list">Effettua il login per continuare per Aggiungi alla lista dei desideri</string>
-    <string name="term_condition_policy_login">Continuando, consenti a questa app di utilizzare le tue informazioni in conformità con la </string>
+    <string name="term_condition_policy_login">\"Continuando, consenti a questa app di utilizzare le tue informazioni in accordo alle</string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
     <string name="about_us_link">https://www.officinetop.com/chi-siamo/</string>
@@ -654,7 +655,7 @@ informazioni in accordo alle </string>
     <string name="product">Prodotti</string>
     <string name="more_than_3_car_added">Non puoi aggiungere più di 3 auto al giorno.</string>
     <string name="edit_photo">Modifica foto</string>
-
+    <string name="go">Vai</string>
 
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
@@ -663,6 +664,7 @@ informazioni in accordo alle </string>
     <string name="thu">GIO</string>
     <string name="fri">VEN</string>
     <string name="sat">SAB</string>
+    <string name="email_not_valid">Email not valid</string>
 
 
     <string-array name="home_icon_titles">

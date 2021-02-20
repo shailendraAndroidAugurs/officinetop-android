@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
-import com.officinetop.officine.Orders.Order_List
+import com.officinetop.officine.Orders.OrderListActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -655,7 +655,7 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         } else if (requestCode == AmazonPayRequestCode) {
             if (HaveBrowser) {
-                startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
+                startActivity(intentFor<OrderListActivity>().putExtra("fromBooking", fromBooking.toString()))
                 finish()
                 saveIsAvailableDataInCart(true)
                 logAddPaymentInfoEvent(this, true)
@@ -738,7 +738,7 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
+                            startActivity(intentFor<OrderListActivity>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
                             logAddPaymentInfoEvent(this, true)
@@ -828,7 +828,7 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
+                            startActivity(intentFor<OrderListActivity>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
                             logAddPaymentInfoEvent(this, true)
@@ -853,7 +853,7 @@ class OnlinePaymentScreen : BaseActivity() {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("message") && !responseData.isNull("message")) {
                         showInfoDialog(responseData.get("message").toString()) {
-                            startActivity(intentFor<Order_List>().putExtra("fromBooking", fromBooking.toString()))
+                            startActivity(intentFor<OrderListActivity>().putExtra("fromBooking", fromBooking.toString()))
                             finish()
                             saveIsAvailableDataInCart(false)
                             logAddPaymentInfoEvent(this, true)

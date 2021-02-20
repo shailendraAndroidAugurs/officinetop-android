@@ -22,7 +22,7 @@
     <string name="continue_without_login">Continue without login</string>
     <string name="no_account">Don\'t have account?</string>
     <string name="register">Register</string>
-    <string name="reset_password">Forgot Password?</string>
+    <string name="reset_password">Did you forget your password?</string>
     <string name="last_name">Last Name</string>
     <string name="mob_no">Mobile Number</string>
     <string name="confirm_pass">Confirm Password</string>
@@ -151,7 +151,7 @@
     <string name="maintenance">Maintenance</string>
     <string name="part_list">Part List</string>
     <string name="register_privacy_text_1">By creating an account, you agree to Officine\'s </string>
-    <string name="register_privacy_text_2">  Privacy Policy</string>
+    <string name="register_privacy_text_2">   privacy policy</string>
     <string name="other_seller">Other Seller</string>
     <string name="name">Name</string>
     <string name="busy">Busy</string>
@@ -255,8 +255,8 @@
     <string name="new_address">Address</string>
     <string name="update_contact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
     <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
-
-    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
+    <string name="google_places_key">AIzaSyC2UUrVSzQ_Sby9mT4R2s3fTYJISpCWMMQ</string>
+<!--    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>-->
     <string name="Please_Select_Address">Please Select Address</string>
     <string name="enterZipCode">Enter Zip Code</string>
     <string name="Zip_Code">Zip Code</string>
@@ -548,7 +548,7 @@
     <string name="FAQtitle"> FAQ</string>
     <string name="please_select_maintenance">Please Select Maintenance!</string>
     <string name="cart_items">Cart Items</string>
-    <string name="Conditions">Conditions of Use</string>
+    <string name="Conditions">terms of use</string>
     <string name="registered_successfully_verification_link_sent_on_your_registered_mail">Registered Successfully, Verification link sent on your registered mail.Verify the same to activate your account.</string>
     <string name="and"> and</string>
     <string name="Add_address">Add address</string>
@@ -628,7 +628,7 @@
     <string name="bank_transfer_proceed">Do you want to proceed Bank Transfer ?</string>
     <string name="please_login_to_continue_for_add_wish_list">Please login to continue for Add to WishList</string>
 
-    <string name="term_condition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
+    <string name="term_condition_policy_login">\"By continuing, you allow this app to use your information in accordance with the </string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
 
@@ -657,7 +657,7 @@
     <string name="quotes_alert_msg">Appointment Quotes booked successfully</string>
     <string name="more_than_3_car_added">You cannot add more than 3 cars per day.</string>
     <string name="first_name">First name</string>
-
+    <string name="go">Go</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>
     <string name="tue">TUE</string>
@@ -665,6 +665,7 @@
     <string name="thu">THU</string>
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
+    <string name="email_not_valid">Email not valid</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
