@@ -56,7 +56,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FragmentHome : Fragment() {
-
     private var AdvertisementImagearray: ArrayList<Models.AdvertisingImages> = ArrayList<Models.AdvertisingImages>()
 
     private lateinit var rootView: View
@@ -319,7 +318,7 @@ class FragmentHome : Fragment() {
 
 
                     }
-                })
+                })Sos
     }
 
     private fun getHighRatingProductData(productFeedbackList: ArrayList<Models.HighRatingfeedback>) {
