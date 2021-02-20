@@ -75,7 +75,7 @@ class TyreListActivity : BaseActivity() {
     private lateinit var switchOfferCoupon: Switch
     private lateinit var switchOnlyFav: Switch
     private lateinit var switchReinforced: Switch
-    private lateinit var switchRunflat: Switch
+    private lateinit var switchRunFlat: Switch
     private lateinit var priceRangeSeekerBar: RangeSeekBar
     private var brandFilterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     var seasonTypeJsonArray: JSONArray = JSONArray()
@@ -240,7 +240,7 @@ class TyreListActivity : BaseActivity() {
         } else {
             speedloadindex = tyreDetail.speed_load_index
         }
-
+        progress_bar.visibility = View.VISIBLE
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -282,7 +282,6 @@ class TyreListActivity : BaseActivity() {
                                     recyclerViewAdapter?.removeLoading()
                                     val jsonObject = JSONObject(body)
                                     progress_bar.visibility = View.GONE
-                                    Toast.makeText(applicationContext, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                 }
@@ -314,12 +313,10 @@ class TyreListActivity : BaseActivity() {
             switchOfferCoupon = switch_OfferCoupon
             switchOnlyFav = switch_OnlyFav
             switchReinforced = switch_Reinforced
-            switchRunflat = switch_RunFlat
+            switchRunFlat = switch_RunFlat
             tvSpeedLoadIndexName = tv_Speed_load_Index_name
             try {
                 priceRangeSeekerBar.setRange(minPrice, maxPrice)
-                Log.d("tyre_list", "try filter minPrice$minPrice")
-                Log.d("tyre_list", "try filter maxPrice$maxPrice")
                 if (!tyreDetail.priceRange.isNullOrBlank()) {
                     var minPrice1 = tyreDetail.priceRange.split(",")[0].toFloat()
                     val maxPrice1 = tyreDetail.priceRange.split(",")[1].toFloat()
@@ -327,8 +324,6 @@ class TyreListActivity : BaseActivity() {
                     if (minPrice >= minPrice1) {
                         minPrice1 = minPrice
                     }
-                    Log.d("tyre_list", "minPrice1 if $minPrice1")
-                    Log.d("tyre_list", "maxPrice1 if $maxPrice1")
                     priceRangeSeekerBar.setValue(minPrice1, maxPrice1)
                     tv_price_start_range.text = getString(R.string.prepend_euro_symbol_string, minPrice1.toString())
                     tv_price_end_range.text = getString(R.string.prepend_euro_symbol_string, maxPrice1.toString())
@@ -1032,7 +1027,7 @@ class TyreListActivity : BaseActivity() {
         if (!isSort) {
             tyreDetail.onlyFav = switchOnlyFav.isChecked
             tyreDetail.offerOrCoupon = switchOfferCoupon.isChecked
-            tyreDetail.runFlat = switchRunflat.isChecked
+            tyreDetail.runFlat = switchRunFlat.isChecked
             tyreDetail.reinforced = switchReinforced.isChecked
 
         }
@@ -1056,7 +1051,6 @@ class TyreListActivity : BaseActivity() {
                         val tyreDetailItem = Gson().fromJson<Models.TyreDetailItem>(tyreObject.toString(), Models.TyreDetailItem::class.java)
                         minPrice = if (!tyreDetailItem.min_price.isNullOrBlank()) tyreDetailItem.min_price.toFloat() else 0f
                         maxPrice = if (!tyreDetailItem.max_price.isNullOrBlank()) tyreDetailItem.max_price.toFloat() else 1f
-
                         tyreListItems.add(tyreDetailItem)
                     }
                     if (minPrice == maxPrice) {

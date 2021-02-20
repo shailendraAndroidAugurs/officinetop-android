@@ -12,7 +12,7 @@ import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.officinetop.officine.BaseActivity
-import com.officinetop.officine.Orders.Order_List
+import com.officinetop.officine.Orders.OrderListActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GridItemDecoration
 import com.officinetop.officine.adapter.QuotesGridAdapter
@@ -245,7 +245,7 @@ class FeedbackAddActivity : BaseActivity() {
                             if (data.has("message") && !data.isNull("message")) {
                                 showInfoDialog(data.get("message").toString())
                                 if (withoutPurchase.isNullOrBlank()) {
-                                    startActivity(intentFor<Order_List>().clearTask().clearTop())
+                                    startActivity(intentFor<OrderListActivity>().clearTask().clearTop())
                                 }
 
 

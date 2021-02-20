@@ -12,7 +12,7 @@
     <string name="sample_product">""</string>
     <string name="sample_workshop">Officina Cesena Workshop</string>
     <string name="edit_photo">Edit Photo</string>
-
+    <string name="go">Go</string>
     <string name="sample_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -29,7 +29,7 @@
     <string name="continue_without_login">Continue without login</string>
     <string name="no_account">Don\'t have account?</string>
     <string name="register">Register</string>
-    <string name="reset_password">Forgot Password?</string>
+    <string name="reset_password">Did you forget your password?</string>
     <string name="last_name">Last Name</string>
     <string name="mob_no">Mobile Number</string>
     <string name="confirm_pass">Confirm Password</string>
@@ -181,7 +181,7 @@
     <string name="maintenance">Maintenance</string>
     <string name="part_list">Part List</string>
     <string name="register_privacy_text_1">By creating an account, you agree to Officine\'s  </string>
-    <string name="register_privacy_text_2">  Privacy Policy</string>
+    <string name="register_privacy_text_2">  privacy policy</string>
     <string name="other_seller">Other Seller</string>
     <string name="name">Name</string>
     <string name="busy">Busy</string>
@@ -303,7 +303,8 @@
     <string name="update_contact">Mobile Number and Updated Mobile Number is Same. Please Enter Other Number</string>
     <!-- <string name="google_map_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
     <!--   <string name="google_places_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
-    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>
+<!--    <string name="google_places_key">AIzaSyBuCIAfY1ODCoVTvJyBtkZe-irKy0ljPXY</string>-->
+    <string name="google_places_key">AIzaSyC2UUrVSzQ_Sby9mT4R2s3fTYJISpCWMMQ</string>
 
     <!-- <string name="google_places_key">AIzaSyByXbeJr0AR1PyxSeddVLNBtFdi1s88Vw8</string>-->
     <!-- <string name="google_places_key">AIzaSyDINiRwiYc3b4LCuarw8OWmJSo15oUHqxs</string>-->
@@ -618,7 +619,7 @@
 
     <string name="please_select_maintenance">Please Select Maintenance!</string>
     <string name="cart_items">Cart Items</string>
-    <string name="Conditions">Conditions of Use</string>
+    <string name="Conditions">terms of use</string>
     <string name="and">and</string>
     <string name="Add_address">Add address</string>
     <string name="Add_mobile_number">Add mobile number</string>
@@ -710,7 +711,7 @@
     <string name="please_login_to_continue_for_add_wish_list">Please login to continue for Add to WishList</string>
 
 
-    <string name="term_condition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
+    <string name="term_condition_policy_login">\"By continuing, you allow this app to use your information in accordance with the </string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>
     <string name="about_us_link">https://www.officinetop.com/chi-siamo/</string>
@@ -746,6 +747,7 @@
     <string name="thu">THU</string>
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
+    <string name="email_not_valid">Email not valid</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

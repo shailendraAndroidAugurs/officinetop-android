@@ -111,28 +111,28 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
             if (item.CartType == "T" || item.CartType == "S") {
                 if (item.CartType == "T") {
-                    ProductPFU.visibility = View.VISIBLE
+                    productPFU.visibility = View.VISIBLE
                 } else {
                     pfutextLabel.visibility = View.GONE
-                    ProductPFU.visibility = View.GONE
-                    product_Vat.visibility = View.GONE
+                    productPFU.visibility = View.GONE
+                    productVat.visibility = View.GONE
 
                 }
                 isProductSellOnpair = !item.IsProductPair.isNullOrBlank() && item.IsProductPair != "0"
                 Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
                 Log.d("cartItemAdapter", "quantity:Sp : $quantity")
                 if (item.pfuDesc.isNullOrBlank()) {
-                    product_Vat.text = context.getString(R.string.concat)
+                    productVat.text = context.getString(R.string.concat)
                 } else {
-                    product_Vat.text = item.pfuDesc
+                    productVat.text = item.pfuDesc
                 }
                 if (item.discount.isNullOrBlank() || item.discount == "0" || item.discount == "0.0") {
-                    ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
-                    ProductDiscount.visibility = View.GONE
+                    productDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
+                    productDiscount.visibility = View.GONE
                     tv_labeldiscount.visibility = View.GONE
                 } else {
-                    ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, item.discount)
-                    ProductDiscount.visibility = View.VISIBLE
+                    productDiscount.text = context.getString(R.string.prepend_euro_symbol_string, item.discount)
+                    productDiscount.visibility = View.VISIBLE
                     tv_labeldiscount.visibility = View.VISIBLE
                 }
 
@@ -173,20 +173,19 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 if (quantitySpinner.isVisible) {
                     if (item.pfuTax.isNullOrBlank() || item.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
-                        ProductPFU.visibility = View.GONE
-                        product_Vat.visibility = View.GONE
+                        productPFU.visibility = View.GONE
+                        productVat.visibility = View.GONE
                     } else {
 
                         pfutextLabel.visibility = View.VISIBLE
-                        ProductPFU.visibility = View.VISIBLE
-                        product_Vat.visibility = View.VISIBLE
-
-                        ProductPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.pfuTax.toDouble().roundTo2Places()).roundTo2Places().toString())
+                        productPFU.visibility = View.VISIBLE
+                        productVat.visibility = View.VISIBLE
+                        productPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.pfuTax.toDouble().roundTo2Places()).roundTo2Places().toString())
                     }
                 } else {
                     pfutextLabel.visibility = View.GONE
-                    ProductPFU.visibility = View.GONE
-                    product_Vat.visibility = View.GONE
+                    productPFU.visibility = View.GONE
+                    productVat.visibility = View.GONE
 
                 }
 
@@ -219,33 +218,33 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     if (!item.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && item.serviceAssemblyProductDescription.productQuantity != "0")
                         quantity = item.serviceAssemblyProductDescription.productQuantity.toInt()
                     if (item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank()) {
-                        product_Vat.text = context.getString(R.string.concat)
-                        product_Vat.visibility = View.GONE
+                        productVat.text = context.getString(R.string.concat)
+                        productVat.visibility = View.GONE
 
                     } else {
-                        product_Vat.visibility = View.VISIBLE
-                        product_Vat.text = item.serviceAssemblyProductDescription.pfuDesc
+                        productVat.visibility = View.VISIBLE
+                        productVat.text = item.serviceAssemblyProductDescription.pfuDesc
                     }
 
                     Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
                     Log.d("cartItemAdapter", "quantity:Sp : $quantity")
                     if (item.serviceAssemblyProductDescription.discount.isNullOrBlank() || item.serviceAssemblyProductDescription.discount == "0" || item.serviceAssemblyProductDescription.discount == "0.0") {
-                        ProductDiscount.visibility = View.GONE
+                        productDiscount.visibility = View.GONE
                         tv_labeldiscount.visibility = View.GONE
-                        ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
+                        productDiscount.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
                     } else {
-                        ProductDiscount.visibility = View.VISIBLE
+                        productDiscount.visibility = View.VISIBLE
                         tv_labeldiscount.visibility = View.VISIBLE
-                        ProductDiscount.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.discount)
+                        productDiscount.text = context.getString(R.string.prepend_euro_symbol_string, item.serviceAssemblyProductDescription.discount)
                     }
                     if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
-                        ProductPFU.visibility = View.GONE
-                        product_Vat.visibility = View.GONE
+                        productPFU.visibility = View.GONE
+                        productVat.visibility = View.GONE
 
-                        ProductPFU.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
+                        productPFU.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
                     } else {
-                        ProductPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.serviceAssemblyProductDescription.pfuTax.toDouble().roundTo2Places()).roundTo2Places().toString())
+                        productPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.serviceAssemblyProductDescription.pfuTax.toDouble().roundTo2Places()).roundTo2Places().toString())
                     }
                     if (item.serviceAssemblyProductDescription.finalOrderPrice.isNullOrBlank()) {
                         ProductTotal.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
@@ -304,11 +303,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-                  if (item.partDetails != null) {
-                      partInfo.visibility = View.VISIBLE
-                  } else {
-                      partInfo.visibility = View.GONE
-                  }
+                if (item.partDetails != null) {
+                    partInfo.visibility = View.VISIBLE
+                } else {
+                    partInfo.visibility = View.GONE
+                }
                 partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
 
                 if (item.serviceDetail != null) {
@@ -336,13 +335,11 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         }
 
 
-                      Log.d("check_service_details",item.serviceDetail.serviceDescription)
+                        Log.d("check_service_details", item.serviceDetail.serviceDescription)
 
-
-
-                       /* if (!item.partDetails[0].Productdescription.isNullOrBlank()) {
-                            tvServicesProductDescription.text = item.partDetails[0].Productdescription
-                        }*/
+                        /* if (!item.partDetails[0].Productdescription.isNullOrBlank()) {
+                             tvServicesProductDescription.text = item.partDetails[0].Productdescription
+                         }*/
                         if (item.partDetails[0].couponList != null && item.partDetails[0].couponList.size != 0 && item.partDetails[0].couponList[0] != null) {
                             tvServicesProductAppliedCoupon.text = item.partDetails[0].couponList[0].couponTitle
                         } else tvServicesProductAppliedCoupon.visibility = View.GONE
@@ -385,7 +382,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     (item.bookingDate).takeIf { !it.isNullOrEmpty() }
                 }
                 time.text = "${item.startTime.takeIf { !it.isNullOrEmpty() }?.removeSuffix(":00")}  -  ${if (!item.endTime.isNullOrBlank() && item.endTime != "null") item.endTime.removeSuffix(":00") else "--"}"
-                //selectedCar.text = context.getSelectedCar()?.carMakeName
                 item.endTime.takeIf { !it.isNullOrEmpty() && it != "null" }?.removeSuffix(":00")
 
 
@@ -413,18 +409,18 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 if (item.serviceAssemblyProductDescription != null) {
                     if (item.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() || item.serviceAssemblyProductDescription.pfuTax == "0") {
                         pfutextLabel.visibility = View.GONE
-                        ProductPFU.visibility = View.GONE
-                        product_Vat.visibility = View.GONE
+                        productPFU.visibility = View.GONE
+                        productVat.visibility = View.GONE
 
-                        ProductPFU.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
+                        productPFU.text = context.getString(R.string.prepend_euro_symbol_string, "0.0")
                     } else {
-                        ProductPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.serviceAssemblyProductDescription.pfuTax.toFloat()).toString())
+                        productPFU.text = context.getString(R.string.prepend_euro_symbol_string, (quantity * item.serviceAssemblyProductDescription.pfuTax.toFloat()).toString())
                     }
                 }
             }
 
 
-            product_Vat.setOnClickListener {
+            productVat.setOnClickListener {
                 if (item.CartType == "SP" && item.serviceAssemblyProductDescription != null && !item.serviceAssemblyProductDescription.pfuDesc.isNullOrBlank() && item.serviceAssemblyProductDescription.pfuDesc != "-") {
                     context.showInfoDialog(item.serviceAssemblyProductDescription.pfuDesc)
                 } else if (!item.pfuDesc.isNullOrBlank() && item.pfuDesc != "-") {
@@ -498,7 +494,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val workshopName = itemView.cart_item_workshop_name
         val time = itemView.cart_item_booking_selected_time
         val date = itemView.cart_item_workshop_booking_date
-        val selectedCar = itemView.cart_selected_car_name
         val servicePrice = itemView.cart_item_assemble_service_price
         val quantitySpinner = itemView.cart_product_qty_spinner
         val serviceName = itemView.cart_service_name
@@ -511,9 +506,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val isProduct_Available = itemView.tv_IsStockavailable_Product
         val isServicesAvailable = itemView.tv_IsStockavailable
         val partInfo = itemView.tv_partInfo
-        val product_Vat = itemView.tv_product_Vat
-        val ProductDiscount = itemView.tv_ProductDiscount
-        val ProductPFU = itemView.tv_ProductPFU
+        val productVat = itemView.tv_product_Vat
+        val productDiscount = itemView.tv_ProductDiscount
+         val productPFU = itemView.tv_ProductPFU
         val ProductTotal = itemView.tv_ProductTotal
         val pfutextLabel = itemView.tv_pfutext
         val tv_labeldiscount = itemView.tv_labeldiscount
@@ -526,7 +521,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val layout_maintenance = itemView.layout_maintenance
         val tvServicesProductPair = itemView.tv_services_product_pair
         val tvServicesProductTitle = itemView.tv_services_product_title
-        val tvServicesProductDescription = itemView.tv_services_product_description
+        private val tvServicesProductDescription = itemView.tv_services_product_description
         val tvServicesProductAppliedCoupon = itemView.tv_services_product_appliedCouponName
         val tvServicesProductPrices = itemView.tv_services_product_prices
 

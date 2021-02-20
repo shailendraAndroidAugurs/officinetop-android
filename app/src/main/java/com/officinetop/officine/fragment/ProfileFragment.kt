@@ -15,7 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.officinetop.officine.Orders.Order_List
+import com.officinetop.officine.Orders.OrderListActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.WishList.WishListActivity
 import com.officinetop.officine.authentication.LoginActivity
@@ -195,7 +195,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         })
         layout_orders.setOnClickListener(View.OnClickListener {
             if (context?.isOnline()!!) {
-                val intent = Intent(context, Order_List::class.java)
+                val intent = Intent(context, OrderListActivity::class.java)
                 startActivity(intent)
             }else{
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}

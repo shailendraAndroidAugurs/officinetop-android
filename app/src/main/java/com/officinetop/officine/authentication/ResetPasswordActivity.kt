@@ -45,7 +45,8 @@ class ResetPasswordActivity : BaseActivity() {
 
             if (TextUtils.isEmpty(emailEditText.text) ||
                     !Patterns.EMAIL_ADDRESS.matcher(emailEditText.text).matches()) {
-                emailEditText.error = "Email not valid"
+                emailEditText.error = getString(R.string.email_not_valid)
+                emailEditText.requestFocus()
                 return@setOnClickListener
             }
 
@@ -66,8 +67,6 @@ class ResetPasswordActivity : BaseActivity() {
 
                             when (response.code()) {
                                 200 -> {
-
-                                    // snackbar(reset_password, getMessageFromJSON(body))
                                     alert {
                                         message = getMessageFromJSON(body)
                                         positiveButton(getString(R.string.open_gmail)) {
@@ -89,8 +88,4 @@ class ResetPasswordActivity : BaseActivity() {
         }
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//        if(item?.itemId == android.R.id.home) finish()
-//        return super.onOptionsItemSelected(item)
-//    }
 }

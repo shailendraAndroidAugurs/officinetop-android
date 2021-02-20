@@ -71,7 +71,7 @@
             android:parentActivityName=".HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Orders.Order_List"
+            android:name=".Orders.OrderListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".userprofile.ContactList_Activity"
