@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.alertdialog_feedback.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
-
 class OrderDetailActivity : BaseActivity() {
     private lateinit var forWhich: String
     lateinit var orderid: String
@@ -38,7 +37,6 @@ class OrderDetailActivity : BaseActivity() {
                 bindViewForSpareProduct()
 
             } else if (forWhich == "T") {
-
                 TyreProductList = intent.getSerializableExtra("OrderDetailList") as ArrayList<Models.TyreProductDescription>
                 bindViewForTyre()
             } else if (forWhich == "SP") {
