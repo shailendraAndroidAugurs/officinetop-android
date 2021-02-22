@@ -73,7 +73,6 @@ class FragmentHome : Fragment() {
 
         return rootView
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         clicks()
@@ -318,7 +317,7 @@ class FragmentHome : Fragment() {
 
 
                     }
-                })Sos
+                })
     }
 
     private fun getHighRatingProductData(productFeedbackList: ArrayList<Models.HighRatingfeedback>) {

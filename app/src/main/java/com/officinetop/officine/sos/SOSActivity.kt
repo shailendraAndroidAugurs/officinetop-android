@@ -45,8 +45,6 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
-
 class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener {
 
@@ -61,7 +59,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     override fun onConnectionFailed(p0: ConnectionResult) {
         container.snack("Failed")
     }
-
     private lateinit var mMap: GoogleMap
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLatitude: String? = null
