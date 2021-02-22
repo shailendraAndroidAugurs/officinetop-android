@@ -146,7 +146,12 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 productDescription.text = item.productDescription.takeIf { !it.isNullOrEmpty() }
                 cartItemProductLayout.visibility = View.VISIBLE
                 cartItemServiceLayout.visibility = View.GONE
-                context.loadImage(item.productImageUrl, cartItemProductImage)
+
+                if(!item.productImageUrl.isNullOrBlank()){
+                    context.loadImage(item.productImageUrl, cartItemProductImage)
+                }else{
+                    cartItemProductImage.visibility=View.GONE
+                }
                 productPrice.text = context.getString(R.string.prepend_euro_symbol_string, item.price.takeIf { !it.isNullOrEmpty() })
                 if (item.productQuantity != "0")
                     quantity = item.productQuantity.toInt()
@@ -211,6 +216,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     cartItemProductLayout.visibility = View.VISIBLE
                     cartItemServiceLayout.visibility = View.VISIBLE
                     context.loadImage(item.serviceAssemblyProductDescription.productImageUrl, cartItemProductImage)
+
                     productID = item.serviceAssemblyProductDescription.id
                     isProductSellOnpair = !item.serviceAssemblyProductDescription.IsProductPair.isNullOrBlank() && item.serviceAssemblyProductDescription.IsProductPair != "0"
 
@@ -324,6 +330,13 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         } else tvCartServiceDescription.visibility = View.GONE
 
                         context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
+
+                        if(!item.serviceDetail.catImageUrl.isNullOrBlank()){
+                            context.loadImage(item.serviceDetail.catImageUrl, cartItemServiceImage)
+                        }else{
+                            cartItemServiceImage.visibility=View.GONE
+                        }
+
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     }
 
