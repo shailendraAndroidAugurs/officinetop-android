@@ -21,6 +21,13 @@ fun bindImages(imageView: ImageView, imageUrl: String) {
         imageView.context.loadImage(imageUrl, imageView)
 }
 
+@BindingAdapter("imageLoad")
+fun imageLoad(imageView: ImageView, imageUrl: String) {
+    if (!imageUrl.isNullOrBlank() && imageUrl.contains("http"))
+        imageView.context.loadImage(imageUrl, imageView)
+    else imageView.visibility=View.GONE
+}
+
 @BindingAdapter("amount", "value")
 fun bindPrice(textView: TextView, price: String, value: String) {
     if (!price.isNullOrBlank()) {

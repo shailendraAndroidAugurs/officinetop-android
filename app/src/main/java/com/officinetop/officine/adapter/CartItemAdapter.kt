@@ -327,6 +327,13 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         if (!item.serviceDetail.serviceDescription.isNullOrBlank()) {
                             tvCartServiceDescription.text = item.serviceDetail.serviceDescription
+
+
+                           /* if(item.serviceDetail.serviceDescription.toString().length >= 150){
+                                addReadMore(holder.revDesc.text.toString(), holder.revDesc)
+                            }*/
+
+
                         } else tvCartServiceDescription.visibility = View.GONE
 
                         context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)

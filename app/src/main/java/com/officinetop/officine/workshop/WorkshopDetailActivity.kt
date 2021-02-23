@@ -1153,8 +1153,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         discountPrices = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0") else "0"
         discountType = if (packageDetail.has("discount_type")) packageDetail.optString("discount_type", "0.0") else ""
         maxAppointment = if (packageDetail.has("max_appointment")) packageDetail.optString("max_appointment", "0") else "0"
-
-
         //check for timeslot
         val packageID = packageDetail.getInt("id")
         if (bookServicesWithoutCoupon) {
@@ -1162,66 +1160,61 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
         if (isRevision) {
             finalPrice = packageDetail.optString("price", "0.0").toDouble()
-            Log.d("Revision", "averageServiceTime$averageServiceTime")
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
-            bookingDuration /= 60000
-            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
-            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
-            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-            Log.d("finalPrice 1", finalPrice.toString())
-        } else if (isCarMaintenanceService) {
-            finalPrice = packageDetail.optString("price", "0.0").toDouble()
-            Log.d("Revision", "averageServiceTime$averageServiceTime")
-            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
-            bookingDuration /= 60000
-            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
-            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
-            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-
-
-        } else if (isSosEmergency || isSOSService) {
-            finalPrice = packageDetail.optString("price", "0.0").toDouble()
-            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
-            bookingDuration /= 60000
-            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
-            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
-            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
-            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-        } else if (isMotService) {
-            finalPrice = packageDetail.optString("price", "0.0").toDouble()
-            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            //  val additionalDelay = (20 * 60 * 1000)
-            Log.d("avragetime", "" + averageServiceTime)
             var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-            Log.d("endtimebecome", "end_time: " + endTime)
-        } else if (isTyre) {
-            slotStartTime = packageDetail.optString("start_time")
-            slotEndTime = packageDetail.optString("end_time")
+        } else if (isCarMaintenanceService) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            // val additionalDelay = (20 * 60 * 1000)
-            Log.d("averageServiceTime tyre", averageServiceTime.toString())
-            var bookingDuration = (averageServiceTime * 60 * 1000) // add 20 min
+            var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-            var hourlyRate = 0.0
-            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price") && !packageDetail.getString("hourly_price").equals(""))
-                hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
-         /*   finalPrice = (hourlyRate / 60) * bookingDuration
-            finalPrice = finalPrice.roundTo2Places()*/
-            finalPrice = packageDetail.optString("price", "0.0").toDouble()
+
+        } else if (isSosEmergency || isSOSService) {
+
+            if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
+                finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
+            }
+
+            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
+            var bookingDuration = (averageServiceTime * 60 * 1000)
+            bookingDuration /= 60000
+            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
+            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
+            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
+        } else if (isMotService) {
+            if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
+                finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
+            }
+            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
+            var bookingDuration = (averageServiceTime * 60 * 1000)
+            bookingDuration /= 60000
+            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
+            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
+            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
+        } else if (isTyre) {
+            slotStartTime = packageDetail.optString("start_time")
+            slotEndTime = packageDetail.optString("end_time")
+            val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
+            var bookingDuration = (averageServiceTime * 60 * 1000)
+            bookingDuration /= 60000
+            parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
+            parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
+            val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
+            endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
+            if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
+                finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
+            }
+
+
         } else if (isQuotesService) {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
             var bookingDuration = (averageServiceTime * 60 * 1000)
@@ -1231,9 +1224,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
         } else if (isCarWash) {
-            Log.d("avragetime", "" + averageServiceTime)
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            // val additionalDelay = (20 * 60 * 1000)
             var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
@@ -1247,20 +1238,16 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         } else {
             val parsedEndTimeCalendar = parseTimeHHmmssInCalendar(bookingStartTime)
-            //  val additionalDelay = (20 * 60 * 1000)
-            var bookingDuration = (averageServiceTime * 60 * 1000) /*+ additionalDelay*/ // add 20 min
+            var bookingDuration = (averageServiceTime * 60 * 1000)
             bookingDuration /= 60000
             parsedEndTimeCalendar.add(Calendar.HOUR_OF_DAY, (bookingDuration / 60).toInt())
             parsedEndTimeCalendar.add(Calendar.MINUTE, (bookingDuration % 60).toInt())
             val endLimit = parsedEndTimeCalendar.time.time + bookingDuration
             endTime = SimpleDateFormat("HH:mm:ss", getLocale()).format(Date(endLimit.toLong()))
-            var hourlyRate = 0.0
-            if (packageDetail.has("hourly_price") && !packageDetail.isNull("hourly_price") && !packageDetail.getString("hourly_price").equals(""))
-                hourlyRate = packageDetail.optString("hourly_price", "0.0").takeIf { !it.isNullOrEmpty() }.toString().toDouble()
-          /*  finalPrice = (hourlyRate / 60) * bookingDuration
-            finalPrice = finalPrice.roundTo2Places()*/
 
-            finalPrice = packageDetail.optString("price", "0.0").toDouble()
+            if (packageDetail.has("price") && !packageDetail.isNull("price") && !packageDetail.getString("price").equals("")) {
+                finalPrice = packageDetail.getString("price").toDouble().roundTo2Places()
+            }
         }
 
         val dialog = getProgressDialog(true)
@@ -1380,7 +1367,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     workshopUsersId.toString(), bookingStartTime, endTime, selectedDateFilter, sosUserLatitude, sosUserLongitude,
                     getSelectedCar()?.id?.toInt(), finalPrice.toString(), addressId, sosServiceId,
                     workshopWreckerId, getOrderId(), getBearerToken()
-                    ?: "", workshopCouponId, specialConditionId, slotId, discountType, mainCategoryId, getSavedSelectedVehicleID()
+                    ?: "", workshopCouponId, specialConditionId, slotId, discountType, mainCategoryId, getSavedSelectedVehicleID(),servicesAverageTime
             )
             serviceSOSBookingCall.enqueue(callback)
         } else if (isSosEmergency) {
@@ -1388,7 +1375,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     getBearerToken() ?: "",
                     packageID.toString(), workshopUsersId.toString(), startTimeBooking, endTimeBooking, selectedDateFilter, sosUserLatitude, sosUserLongitude,
                     getSavedSelectedVehicleID(), finalPrice.toString(), addressId, sosServiceId,
-                    getOrderId()
+                    getOrderId(),specialConditionId, slotId,mainCategoryId,servicesAverageTime
             )
             serviceSOSBookingCallEmergency.enqueue(callback)
         } else if (isCarMaintenanceService) {

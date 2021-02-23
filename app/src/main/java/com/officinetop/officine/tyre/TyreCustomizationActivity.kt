@@ -74,9 +74,6 @@ class TyreCustomizationActivity : BaseActivity() {
         }
         if (intent.extras != null && intent.hasExtra("editId")) {
             IsMeaurementEditId = intent.extras.getString("editId")
-/*
-            submit.text = getString(R.string.update)
-*/
         }
         if (intent.extras != null && intent.hasExtra("IsSavedInlocal")) {
             IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
@@ -104,7 +101,6 @@ class TyreCustomizationActivity : BaseActivity() {
 
             val specification: String = spinner_vehicle_type.selectedItem.toString() + spinner_width.selectedItem.toString() +
                     spinner_aspect_ratio.selectedItem.toString() + spinner_speed_limit.selectedItem.toString()
-            Log.d("tryeSpecification: ", "${specification}")
 
             val tyre = Models.TyreDetail(
                     id = IsSavedInlocal,
@@ -184,9 +180,9 @@ class TyreCustomizationActivity : BaseActivity() {
                                     try {
                                         val jsonObject = JSONObject(body)
                                         Toast.makeText(this@TyreCustomizationActivity, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
-                                        if (!IsSavedInlocal.isNullOrBlank()) {
-                                            setTyreDetail(tyre)
-                                        }
+                                        setTyreDetail(tyre)
+                                        val intent = Intent(this@TyreCustomizationActivity, TyreListActivity::class.java)
+                                        startActivity(intent)
                                         finish()
                                     } catch (e: Exception) {
                                         e.printStackTrace()
@@ -236,8 +232,6 @@ class TyreCustomizationActivity : BaseActivity() {
 
                                             val intent = Intent(this@TyreCustomizationActivity, TyreListActivity::class.java)
                                             if (isPreviousSelectedMeasurement) {
-                                                /*  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                                                 intent.putExtra("result", "edit")
                                                 setResult(RESULT_OK, intent)
