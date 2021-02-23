@@ -798,6 +798,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.discountType) discountType: String,
             @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Field(Constant.Path.version_id) versionId: String,
+            @Field(Constant.Path.service_average_time) service_average_time: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 
@@ -864,7 +865,10 @@ interface IRetrofitApis {
             @Field(Constant.Path.addressId) addressId: String,
             @Field(Constant.Path.serviceID) serviceId: String,
             @Field(Constant.Path.orderId) orderId: String,
-
+            @Field(Constant.Path.specialConditionId) specialConditionId: String,
+            @Field("temp_slot_id") temp_slot_id: String,
+            @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
+            @Field(Constant.Path.service_average_time) service_average_time: String,
             @Header("accept") accept: String = "application/json"
     ): Call<ResponseBody>
 
