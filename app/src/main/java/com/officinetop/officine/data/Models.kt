@@ -921,7 +921,6 @@ object Models {
             val serviceAssemblyProductDescription: ServiceAssemblyProductDescription,
             @SerializedName("service_detail")
             val serviceDetail: ServiceDetail,
-
             @SerializedName("part_details")
             val partDetails: List<Part>,
             @SerializedName("start_time")
