@@ -306,6 +306,7 @@ inline fun convertToJson(model: Any): String {
 fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartData) {
     var servicePrice = 0.0
     var productPrice = 0.0
+    var productPriceMaintenance = 0.0
     var productPricewithVat_Discount = 0.0
     var ServicesPricewithVat_Discount = 0.0
     var delivery_fees = 0.0
@@ -353,11 +354,12 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
                     cartData.partDetails != null && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
 
               if(cartData.partDetails[0].forPair!=null && cartData.partDetails[0].forPair.equals("")&&cartData.partDetails[0].forPair.equals("0") ){
-                  productPrice += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
+                  productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
+                  productPrice+=cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
               }else{
-                  productPrice += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
+                  productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
+                  productPrice+=cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
               }
-
 
             }
             if (!cartData.afterDiscountPrice.isNullOrBlank() && cartData.afterDiscountPrice != "null")
@@ -424,8 +426,11 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     }
 
     context?.let {
+        Log.d("productPrices 12",productPrice.toString())
 
-        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU) - TotalDiscount).roundTo2Places().toString())
+
+        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU+productPriceMaintenance) - TotalDiscount).roundTo2Places().toString())
+
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
         if (!cartData.deliveryPrice.isNullOrEmpty()) {

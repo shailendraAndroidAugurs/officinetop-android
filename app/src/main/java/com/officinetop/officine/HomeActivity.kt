@@ -247,7 +247,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             if (!isLoggedIn())
                 setCarListFromLocal()
-            else /*if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false))*/ {
+            else if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false)) {
                 getSelectedCarAccordingToUser()
             }
 
@@ -763,6 +763,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
                         Log.d("HomeActivity", "onActivityResult: $lastCar")
                         setToolbarValues(lastCar)
+                        getSelectedCarAccordingToUser()
                    //     selectCar(lastCar.id)
                     }
 

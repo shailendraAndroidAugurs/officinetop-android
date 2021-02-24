@@ -353,7 +353,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         if (!item.partDetails[0].productName.isNullOrBlank()) {
                             tvServicesProductTitle.text = item.partDetails[0].productName
                         }
-
+                        tvPlus.gravity = Gravity.CENTER
 
                         Log.d("check_service_details", item.serviceDetail.serviceDescription)
 

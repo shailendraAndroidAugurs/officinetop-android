@@ -540,7 +540,7 @@ inline fun Context.UserAddressLatLong(Lat: Double, Long: Double) {
 
 inline fun Context.getLat(): String {
     val sharedPreferences = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    return sharedPreferences.getString(Constant.Path.latitude, "0.0") ?: "0.0"
+    return sharedPreferences.getString(Constant.Path.latitude, "0.0") ?: "0.0" //"0.0"
 }
 
 inline fun Context.isUserSavedAddress(): Boolean {
@@ -550,7 +550,7 @@ inline fun Context.isUserSavedAddress(): Boolean {
 
 inline fun Context.getLong(): String {
     val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    return langCode.getString(Constant.Path.longitude, "0.0") ?: "0.0"
+    return langCode.getString(Constant.Path.longitude, "0.0") ?:"0.0" //"0.0"
 }
 
 inline fun Context.clearStoreLatLong() {

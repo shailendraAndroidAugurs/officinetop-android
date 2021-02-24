@@ -129,9 +129,13 @@ class MotListActivity : BaseActivity() {
         val genericAdapter = GenericAdapter<Models.MotServicesList>(this@MotListActivity, R.layout.item_motlist)
         genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MotListActivity, MotDetailActivity::class.java)
-                intent.putExtra("motObject", Gson().toJson(mServicesList[position]))
-                startActivity(intent)
+
+                if(mServicesList!=null && mServicesList.size!=0){
+                    val intent = Intent(this@MotListActivity, MotDetailActivity::class.java)
+                    intent.putExtra("motObject", Gson().toJson(mServicesList[position]))
+                    startActivity(intent)
+                }
+
 
             }
 
