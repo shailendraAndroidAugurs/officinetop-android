@@ -247,7 +247,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 "",
                 items.addressId,
                 items.id.toString(),
-                getOrderId()
+                getOrderId(),"","","",""
         )
                 .onCall { _, response ->
 
