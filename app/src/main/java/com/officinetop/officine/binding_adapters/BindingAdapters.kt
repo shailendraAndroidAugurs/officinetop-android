@@ -286,7 +286,13 @@ fun setQuantityForOrder(text: TextView, quantity: String, ispair: String) {
 
 @BindingAdapter("coupontitle", "coupontype", "couponPrices")
 fun setCouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
-    text.text = "$coupontitle : €$couponPrices"
+
+    if(!coupontitle.isNullOrBlank() && !couponPrices.isNullOrBlank()){
+        text.text = "$coupontitle : €$couponPrices"
+    }else {
+        text.text = ""
+    }
+
 }
 
 @BindingAdapter("wishlist")
@@ -315,3 +321,18 @@ fun orderStatus(tv_ordersatatus: TextView, status: String) {
     tv_ordersatatus.text = order
 
 }
+@BindingAdapter( "pairVisiblity", "pairText")
+fun pairVisiblity(text: TextView, pairVisiblity: String, pairText: String) {
+
+    if (!pairVisiblity.isNullOrEmpty() && !pairVisiblity.equals("0")) {
+        try {
+            text.visibility=View.VISIBLE
+            text.text="2 $pairText"
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }else text.visibility=View.GONE
+}
+
+
+
