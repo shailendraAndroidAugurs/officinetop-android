@@ -401,7 +401,7 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:src="@drawable/no_image_placeholder"
-                    app:imageResource="@{listItemViewModel.serviceDetail!=null &amp; listItemViewModel.serviceDetail.catImageUrl!=null ?listItemViewModel.serviceDetail.catImageUrl:@string/url_not_found}" />
+                    app:imageLoad="@{listItemViewModel.serviceDetail!=null &amp; listItemViewModel.serviceDetail.catImageUrl!=null ?listItemViewModel.serviceDetail.catImageUrl:@string/url_not_found}" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -410,11 +410,6 @@
                     android:orientation="vertical"
                     android:paddingStart="10dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/TextViewHeading"
@@ -423,16 +418,22 @@
                             android:layout_alignParentStart="true"
                             android:gravity="left"
                             android:padding="0dp"
-                            android:text="@{listItemViewModel.serviceDetail.serviceName!=null ? listItemViewModel.serviceDetail.serviceName:@string/concat}"
+                            android:text="@{listItemViewModel.serviceDetail.serviceName!=null ? listItemViewModel.serviceDetail.serviceName:@string/sample}"
                             android:textColor="@color/black" />
 
-
-                    </RelativeLayout>
-
+                        <TextView
+                            style="@style/TextViewHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:gravity="left"
+                            android:padding="0dp"
+                            android:text="@{listItemViewModel.serviceDetail.serviceDescription!=null ? listItemViewModel.serviceDetail.serviceDescription:@string/sample}"
+                            android:textColor="@color/black" />
 
                     <TextView
                         style="@style/TextViewHeading"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/service_detail_container_margin_large"
                         android:gravity="center"
@@ -446,6 +447,70 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
+            <LinearLayout
+                android:visibility="@{listItemViewModel.partDetails!=null  &amp;&amp; listItemViewModel.partDetails[0]!=null ? View.VISIBLE : View.GONE}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/service_detail_container_margin_large"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/service_detail_container_margin_small"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/no_image_placeholder"
+                    app:imageResource="@{listItemViewModel.serviceDetail!=null &amp; listItemViewModel.serviceDetail.catImageUrl!=null ?listItemViewModel.serviceDetail.catImageUrl:@string/url_not_found}" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp">
+                    <TextView
+                        style="@style/TextViewHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:gravity="left"
+                        android:padding="0dp"
+                         app:pairVisiblity="@{listItemViewModel.partDetails!=null &amp;&amp; listItemViewModel.partDetails.get(0).forPair!=null ?listItemViewModel.partDetails.get(0).forPair :@string/zero}"
+                        app:pairText="@{@string/pieces}" />
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        style="@style/TextViewHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:gravity="left"
+                        android:padding="0dp"
+                        android:text="@{listItemViewModel.partDetails!=null &amp;&amp; listItemViewModel.partDetails.get(0).productName!=null?listItemViewModel.partDetails.get(0).productName  :@string/sample}"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tv_services_product_appliedCouponName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:visibility="@{listItemViewModel.partDetails.get(0).couponList!=null  &amp;&amp;  listItemViewModel.partDetails.get(0).couponList.get(0)!=null ? View.VISIBLE : View.GONE}"
+                        android:text="@{listItemViewModel.partDetails.get(0).couponList!=null  &amp;&amp;  listItemViewModel.partDetails.get(0).couponList.get(0)!=null  &amp;&amp;  listItemViewModel.partDetails.get(0).couponList.get(0).couponTitle!=null ? listItemViewModel.partDetails.get(0).couponList.get(0).couponTitle :@string/sample}"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_8sdp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -599,13 +664,13 @@
                         android:id="@+id/ll_couponWorkshop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:visibility="@{listItemViewModel.couponTitle!=null ? View.VISIBLE : View.GONE}">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:visibility="@{listItemViewModel.couponTitle!=null ? View.VISIBLE : View.GONE}"
                             android:layout_centerVertical="true"
                             android:gravity="left"
                             android:padding="0dp"
@@ -615,7 +680,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:layout_centerVertical="true"
                             android:gravity="right"
                             android:padding="@dimen/_5sdp"

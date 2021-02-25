@@ -116,7 +116,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mMap.setOnInfoWindowClickListener {
             val allWrackers = it.tag as? Models.AllWrackerWorkshops
             allWrackers?.let { it1 ->
-                getWrackersServices(it1.id.toString(), it1.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle)
+                getWrackersServices(it1.id.toString(), it1.usersId.toString(), getSelectedCar()?.carVersionModel?.idVehicle)
                 if (it.isInfoWindowShown) {
                     it.hideInfoWindow()
                 }
@@ -135,6 +135,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     }
 
     private fun getAllWrackerWorkshopAddressInfo() {
+
         val selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
         RetrofitClient.client.getAllWrackerServices(latitude = mLatitude!!, longitude = mLongitude!!, selectedDate = selectedFormattedDate, type = "1")
                 .onCall { networkException, response ->
@@ -154,8 +155,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         allWrackerServicesWorkshopList.add(data)
                                     }
                                     val data = allWrackerServicesWorkshopList.get(0)
-                                    getWrackersServices(data.id.toString(), data.usersId.toInt(), getSelectedCar()?.carVersionModel?.idVehicle
-                                            ?: "")
+                                    getWrackersServices(data.id.toString(), data.usersId.toString(), getSelectedCar()?.carVersionModel?.idVehicle
+                                            ?: "",true)
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
@@ -198,13 +199,22 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
     }
 
-    private fun getWrackersServices(id: String, userId: Int, selectedCarId: String?) {
-        RetrofitClient.client.getWrackerServices(id, userId, selectedCarId!!.toInt())
+    private fun getWrackersServices(id: String, userId: String, selectedCarId: String?,showAllServices: Boolean=false) {
+      var  workshopId=""
+        if(!showAllServices){
+            workshopId=userId
+        }
+
+        val progressDialog=getProgressDialog(true)
+
+        RetrofitClient.client.getWrackerServices(id, workshopId, selectedCarId!!.toInt())
                 .onCall { networkException, response ->
                     networkException?.let {
                         Log.d("networkException", it.localizedMessage)
+                        progressDialog.dismiss()
                     }
                     response?.let {
+                        progressDialog.dismiss()
                         if (response.isSuccessful) {
                             try {
                                 val jsonObject = JSONObject(response.body()?.string())
@@ -228,7 +238,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
-                            bindWrackerServices(userId)
+                            bindWrackerServices(userId.toInt())
                         }
                     }
                 }
@@ -413,9 +423,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
-                    mLatitude = location.latitude.toString()//"44.1571507"
-                    mLongitude = location.longitude.toString()//"12.2142107"
-                    /*mLatitude = "44.1571507"
+                 mLatitude = location.latitude.toString()//"44.1571507"
+                  mLongitude = location.longitude.toString()//"12.2142107"
+                   /* mLatitude = "44.1571507"
                     mLongitude = "12.2142107"*/
 
                 }

@@ -532,7 +532,6 @@ object Models {
     )                                          : ListItemViewModel()
 
     data class Part(
-
             @SerializedName("p_name")
             var productName: String,
             @SerializedName("p_description")
@@ -589,16 +588,12 @@ object Models {
 
             @SerializedName("number_of_delivery_days")
             val numberOfDeliveryDays: String = "",
-
-
             @SerializedName("n3_service_id")
             val n3_service_id: String = "",
             @SerializedName("wish_list")
             var wishlist: String = "",
             var couponTitle: String = "",
             var couponId: String = ""
-
-
     ) : ListItemViewModel()
 
 

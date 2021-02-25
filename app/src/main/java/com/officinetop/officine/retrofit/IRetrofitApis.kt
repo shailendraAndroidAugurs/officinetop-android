@@ -875,7 +875,7 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.wrackerServices)
     fun getWrackerServices(
             @Query("address_id") id: String,
-            @Query("workshop_id") workshopUserId: Int,
+            @Query("workshop_id") workshopUserId: String,
             @Query("selected_car_id") selectedCarId: Int?): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.allWrackerServices)
