@@ -287,7 +287,7 @@ fun setQuantityForOrder(text: TextView, quantity: String, ispair: String) {
 @BindingAdapter("coupontitle", "coupontype", "couponPrices")
 fun setCouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
 
-    if(!coupontitle.isNullOrBlank() && !couponPrices.isNullOrBlank()){
+    if(!coupontitle.isNullOrBlank() && !couponPrices.isNullOrBlank()&& !couponPrices.equals("-")){
         text.text = "$coupontitle : €$couponPrices"
     }else {
         text.text = ""

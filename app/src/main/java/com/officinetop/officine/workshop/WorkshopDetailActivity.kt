@@ -641,6 +641,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         return@setOnSliderClickListener
 
                     dialogSlider.currentPosition = i
+                    if(imageDialog!=null)
                     imageDialog.show()
                 }
             }
@@ -658,7 +659,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             })
         } else {
-            val imageRes = imagesArray.getJSONObject(0).getString("image_url")
+
+            if(imagesArray!=null && imagesArray.length() !=0&&imagesArray?.getJSONObject(0) != null &&  imagesArray?.getJSONObject(0)?.getString("image_url")!=null ){
+                  val imageRes = imagesArray.getJSONObject(0).getString("image_url")
             image_slideview_workshop.visibility = View.VISIBLE
             image_slider.visibility = View.GONE
             loadImage(imageRes, image_slideview_workshop)
@@ -666,6 +669,8 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 imageDialog = createImageDialog(imageRes)
                 imageDialog.show()
             }
+            }
+
         }
 
     }

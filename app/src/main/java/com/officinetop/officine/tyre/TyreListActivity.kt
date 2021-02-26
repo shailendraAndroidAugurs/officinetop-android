@@ -51,9 +51,10 @@ class TyreListActivity : BaseActivity() {
     val filterBrandList: MutableList<String> = ArrayList()
     val filterTyreSeasonList: MutableList<Models.TypeSpecification> = ArrayList()
     val filterTyreSpeedIndexList: MutableList<Models.TypeSpecification> = ArrayList()
+
     val filterTyreSpeedLoadIndexList: MutableList<Models.TypeSpecification> = ArrayList()
     private var searchString: String = ""
-    private var priceSortLevel: Int = 0
+    private var priceSortLevel: Int = 1
     private var priceRange: String = ""
     private var recyclerViewAdapter: RecyclerViewAdapter? = null
     private val PAGESTART = 0
@@ -72,7 +73,7 @@ class TyreListActivity : BaseActivity() {
     private lateinit var seasonName: TextView
     private lateinit var tvSpeedIndexName: TextView
     private lateinit var tvSpeedLoadIndexName: TextView
-    private lateinit var switchOfferCoupon: Switch
+    private lateinit var switchOfferCoupon: SwitchBase
     private lateinit var switchOnlyFav: Switch
     private lateinit var switchReinforced: Switch
     private lateinit var switchRunFlat: Switch
@@ -241,6 +242,7 @@ class TyreListActivity : BaseActivity() {
             speedloadindex = tyreDetail.speed_load_index
         }
         progress_bar.visibility = View.VISIBLE
+        Log.d("PricesLevel",priceSortLevel.toString())
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -491,6 +493,7 @@ class TyreListActivity : BaseActivity() {
                 val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
                 val radio_grp_Alphabetical = radio_grp_Alphabetical.indexOfChild(radio_grp_Alphabetical.findViewById(radio_grp_Alphabetical.checkedRadioButtonId))
                 tyreDetail.priceLevel = priceIndex.toString()
+                Log.d("PricesLevel",priceIndex.toString())
                 tyreDetail.AlphabeticalOrder = radio_grp_Alphabetical.toString()
                 finalApplyFilter(true)
                 dismiss()
