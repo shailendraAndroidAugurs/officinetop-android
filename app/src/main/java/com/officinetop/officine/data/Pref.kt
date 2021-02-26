@@ -446,15 +446,6 @@ inline fun Context.getSelectedTyre(): MeasurementDataSetItem? {
 
 inline fun Context.getStoredTyres(): MutableMap<String, *> = getSharedPreferences(Constant.file_tyre, Context.MODE_PRIVATE).all
 
-/*
-inline fun Context.setSelectedCar(): Models.MyCarDataSet? {
-    val data = getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
-            .getString(Constant.Key.selectedCar, "") ?: ""
-    if (data.isNotEmpty()) {
-        return Gson().fromJson(data, Models.MyCarDataSet::class.java)
-    }
-    return null
-}*/
 inline fun Context.saveMotCarKM(MotCarKm: String) {
     val MotCarKM = getSharedPreferences("MotCarKM", Context.MODE_PRIVATE)
     MotCarKM.edit().putString("MotCarKM", MotCarKm).apply()
