@@ -216,8 +216,7 @@ class MaintenanceActivity : BaseActivity() {
         try {
             for (i in 0 until carMaintenanceServiceList.size) {
                 if (carMaintenanceServiceList[i].parts != null && carMaintenanceServiceList[i].parts.size != 0) {
-                    // Log.d("Maintenance", "part info" + carMaintenanceServiceList[i].parts[0].listino)
-                    carMaintenanceServiceList[i].listino = carMaintenanceServiceList[i].parts[0].listino
+                    carMaintenanceServiceList[i].listino = if(carMaintenanceServiceList[i].parts[0].listino!=null )carMaintenanceServiceList[i].parts[0].listino else ""
                     carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].Productdescription != null) carMaintenanceServiceList[i].parts[0].Productdescription else ""
                     carMaintenanceServiceList[i].productId = carMaintenanceServiceList[i].parts[0].id
                     carMaintenanceServiceList[i].couponList = carMaintenanceServiceList[i].parts[0].couponList
@@ -239,7 +238,7 @@ class MaintenanceActivity : BaseActivity() {
                     if (carMaintenanceServiceList[i].parts[0].product_image_url != null) {
                         carMaintenanceServiceList[i].product_image_url = carMaintenanceServiceList[i].parts[0].product_image_url
                     } else {
-                        carMaintenanceServiceList[i].product_image_url = "null"
+                        carMaintenanceServiceList[i].product_image_url = ""
                     }
 
 
@@ -256,8 +255,6 @@ class MaintenanceActivity : BaseActivity() {
                 }
             }
         } catch (e: Exception) {
-            Log.e("Exception::", "${e}")
-            Log.d("Maintenance", "part info$e")
             e.printStackTrace()
         }
 
@@ -297,7 +294,6 @@ class MaintenanceActivity : BaseActivity() {
 
                                 checkBox.isChecked = false
                                 Snackbar.make(btn_choose_workshop, getString(R.string.partNotAvailable), Snackbar.LENGTH_SHORT).show()
-                                // return@setOnClickListener
                             }
                         } else if (view.tag == "102") {
                             if (carMaintenanceServiceList[position].couponList != null) {
@@ -335,7 +331,7 @@ class MaintenanceActivity : BaseActivity() {
 
             }*/
             if (isOnline()) {
-                getAllPartsMaintaince(carMaintenanceServiceList[position].id, position)
+                getAllPartsMaintenance(carMaintenanceServiceList[position].id, position)
             } else {
                 showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
@@ -401,7 +397,7 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    private fun getAllPartsMaintaince(serviceId: String, position: Int) {
+    private fun getAllPartsMaintenance(serviceId: String, position: Int) {
         val progressDialog = this.getProgressDialog()
         progressDialog.show()
         progressDialog.setCanceledOnTouchOutside(false)
@@ -527,7 +523,7 @@ class MaintenanceActivity : BaseActivity() {
             if (ReplacementPartList.size != 0 && ReplacementPartList[position] != null) {
                 carMaintenanceServiceList[selectservice_position].parts.clear()
                 carMaintenanceServiceList[selectservice_position].parts.add(0, ReplacementPartList[position])
-                carMaintenanceServiceList[selectservice_position].listino = ReplacementPartList[position].listino
+                carMaintenanceServiceList[selectservice_position].listino = if(ReplacementPartList[position].listino!=null ) ReplacementPartList[position].listino else ""
                 carMaintenanceServiceList[selectservice_position].descrizione = if (ReplacementPartList[position].Productdescription != null) ReplacementPartList[position].Productdescription else ""
                 carMaintenanceServiceList[selectservice_position].productId = ReplacementPartList[position].id
                 carMaintenanceServiceList[selectservice_position].usersId = ReplacementPartList[position].usersId
@@ -583,7 +579,7 @@ class MaintenanceActivity : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -592,10 +588,10 @@ class MaintenanceActivity : BaseActivity() {
 
                                 if (frompart) {
                                     ReplacementPartList[position].wishlist = "1"
-                                    logAddToWishlistEvent(this, ReplacementPartList[position].productName, ProductId, "1", "USD", if (!ReplacementPartList[position].sellerPrice.isNullOrBlank()) ReplacementPartList[position].sellerPrice.toDouble() else 0.0)
+                                    logAddToWishListEvent(this, ReplacementPartList[position].productName, ProductId, "1", "USD", if (!ReplacementPartList[position].sellerPrice.isNullOrBlank()) ReplacementPartList[position].sellerPrice.toDouble() else 0.0)
                                 } else {
                                     carMaintenanceServiceList[selectservice_position].parts[0].wishlist = "1"
-                                    logAddToWishlistEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
+                                    logAddToWishListEvent(this, carMaintenanceServiceList[selectservice_position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].seller_price.isNullOrBlank()) carMaintenanceServiceList[selectservice_position].seller_price.toDouble() else 0.0)
                                     carMaintenanceServiceList[selectservice_position].wishlist = "1"
                                 }
 
@@ -617,7 +613,7 @@ class MaintenanceActivity : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

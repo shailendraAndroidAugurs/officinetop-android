@@ -375,7 +375,7 @@ class FragmentHome : Fragment() {
                         p0.itemView.tv_product_type.text = getString(R.string.concat)
                     }
                     if (!productFeedbackList[p1].created_at.isBlank()) {
-                        p0.itemView.tv_date.text = DateFormatChangeYearToMonth(productFeedbackList[p1].created_at.split(" ")[0])
+                        p0.itemView.tv_date.text = dateFormatChangeYearToMonth(productFeedbackList[p1].created_at.split(" ")[0])
                     } else {
                         p0.itemView.tv_date.text = getString(R.string.concat)
                     }
@@ -511,7 +511,7 @@ class FragmentHome : Fragment() {
                     p0.itemView.tv_product_type.text = getString(R.string.Workshop)
 
                     if (!WorshopFeedbackList[p1].created_at.isNullOrBlank()) {
-                        p0.itemView.tv_date.text = DateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
+                        p0.itemView.tv_date.text = dateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
                     } else {
                         p0.itemView.tv_date.text = getString(R.string.concat)
                     }

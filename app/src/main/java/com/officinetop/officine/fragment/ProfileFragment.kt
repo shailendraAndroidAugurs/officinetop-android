@@ -372,7 +372,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         //text_landmark.text = getString(R.string.Landmark) + landmark
         text_zipcode.text = getString(R.string.zip_code) + zipCode
         text_contactnumber.text = mobileno
-        context?.loadImageprofile(imageurl, profileimage)
+        context?.loadImageProfile(imageurl, profileimage)
     }
 
 

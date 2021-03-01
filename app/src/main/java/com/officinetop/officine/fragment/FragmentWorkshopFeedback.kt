@@ -19,7 +19,7 @@ import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.feedback.FeedbackReview
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.DateFormatChangeYearToMonth
+import com.officinetop.officine.utils.dateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
@@ -150,7 +150,7 @@ class FragmentWorkshopFeedback : Fragment() ,FeedbackReview{
                 }
                 p0.itemView.tv_product_type.text = getString(R.string.Workshop)
                 if (!WorshopFeedbackList[p1].created_at.isNullOrBlank()) {
-                    p0.itemView.tv_date.text = DateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
+                    p0.itemView.tv_date.text = dateFormatChangeYearToMonth(WorshopFeedbackList[p1].created_at.split(" ")[0])
                 } else {
                     p0.itemView.tv_date.text = getString(R.string.concat)
                 }

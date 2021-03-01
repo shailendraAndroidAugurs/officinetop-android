@@ -13,7 +13,6 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
@@ -358,7 +357,7 @@ class MotDetailActivity : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -367,7 +366,7 @@ class MotDetailActivity : BaseActivity() {
 
                                 mKPartServicesList[position].wishlist = "1"
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this, mKPartServicesList[position].productName, ProductId, "1", "USD", if (!mKPartServicesList[position].sellerPrice.isNullOrBlank()) mKPartServicesList[position].sellerPrice.toDouble() else 0.0)
+                                logAddToWishListEvent(this, mKPartServicesList[position].productName, ProductId, "1", "USD", if (!mKPartServicesList[position].sellerPrice.isNullOrBlank()) mKPartServicesList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }
@@ -385,7 +384,7 @@ class MotDetailActivity : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

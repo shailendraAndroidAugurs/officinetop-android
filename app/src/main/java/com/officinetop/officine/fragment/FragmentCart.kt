@@ -26,7 +26,7 @@ class FragmentCart : Fragment(), OnCartListCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.activity_shopping_cart_single_item_detail, container, false)
-        val btn_click_me = view.findViewById(R.id.proceed_to_pay) as Button
+        val btnClickMe = view.findViewById(R.id.proceed_to_pay) as Button
         activity?.title = getString(R.string.cart_items)
         if (context?.getLangLocale() != null && !context?.getLangLocale().equals("")) {
             context?.setAppLanguage()
@@ -35,14 +35,14 @@ class FragmentCart : Fragment(), OnCartListCallback {
             context?.setAppLanguage()
         }
 
-        btn_click_me.setOnClickListener {
+        btnClickMe.setOnClickListener {
             if (!cart_total_item_price.text.isNullOrEmpty() && !cart_total_price.text.isNullOrBlank() && !cart_total_service_price.text.isNullOrBlank()) {
 
 
                 val sharedprefrence1 = context?.getSharedPreferences("Cart", Context.MODE_PRIVATE)
                 val userWalletPref = context?.getSharedPreferences("UserWallet", Context.MODE_PRIVATE)
 
-                val totalvat = sharedprefrence1?.getString("TotalVat", "")
+                val totalVat = sharedprefrence1?.getString("TotalVat", "")
                 val totalDiscount = sharedprefrence1?.getString("TotalDiscount", "")
                 val totalPfu = sharedprefrence1?.getString("TotalPFU", "")
                 val userWalletAmount = userWalletPref?.getString(Constant.Path.user_WalletAmount, "0")
@@ -52,34 +52,32 @@ class FragmentCart : Fragment(), OnCartListCallback {
                     context?.showInfoDialog(getString(R.string.confirm_order_with_multiple_workshop), false)
                     return@setOnClickListener
                 }
-
-                Log.d("servicesData", cartItemType)
-
-
                 startActivity(intentFor<OnlinePaymentScreen>(
                         Constant.Path.totalAmount to cart_total_price.text.split(" ")[1].toString(),
                         Constant.Path.totalPfu to totalPfu,
                         Constant.Path.totalItemAmount to (cart_total_item_price.text.split(" ")[1].toDouble() + cart_total_service_price.text.split(" ")[1].toDouble()).toString(),
                         Constant.Path.totalDiscount to totalDiscount,
-                        Constant.Path.totalVat to totalvat,
+                        Constant.Path.totalVat to totalVat,
                         Constant.Path.user_WalletAmount to userWalletAmount,
                         Constant.Path.cartItemType to cartItemType
 
                 ))
             }
-            val sharedprefrence2 = context?.getSharedPreferences("Cart", Context.MODE_PRIVATE)
-            sharedprefrence2?.edit()?.clear()
+            val preferences = context?.getSharedPreferences("Cart", Context.MODE_PRIVATE)
+            preferences?.edit()?.clear()
         }
         rootView = view
 
-        if (context?.isOnline()!!) {
-            getCartApi()
-        } else {
-            context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+        when {
+            context?.isOnline()!! -> {
+                getCartApi()
+            }
+            else -> {
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true)
+
+
+            }
         }
-
-
-        // view.bindCartViews(context)
 
 
         return view
@@ -90,13 +88,16 @@ class FragmentCart : Fragment(), OnCartListCallback {
     }
 
     private fun getCartApi() {
-        if (!isAdded) {
-            return
-        } else {
-            rootView.recycler_view.removeAllViews()
-            context!!.getCartItemsList(let {
-                context
-            }, this, rootView)
+        when {
+            !isAdded -> {
+                return
+            }
+            else -> {
+                rootView.recycler_view.removeAllViews()
+                activity?.getCartItemsList(let {
+                    context
+                }, this, rootView)
+            }
         }
 
 

@@ -147,10 +147,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 cartItemProductLayout.visibility = View.VISIBLE
                 cartItemServiceLayout.visibility = View.GONE
 
-                if(!item.productImageUrl.isNullOrBlank()){
+                if (!item.productImageUrl.isNullOrBlank()) {
                     context.loadImage(item.productImageUrl, cartItemProductImage)
-                }else{
-                    cartItemProductImage.visibility=View.GONE
+                } else {
+                    cartItemProductImage.visibility = View.GONE
                 }
                 productPrice.text = context.getString(R.string.prepend_euro_symbol_string, item.price.takeIf { !it.isNullOrEmpty() })
                 if (item.productQuantity != "0")
@@ -309,8 +309,9 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-                if (item.partDetails != null) {
+                if (item.partDetails != null && item.partDetails.size != 0) {
                     partInfo.visibility = View.VISIBLE
+
                 } else {
                     partInfo.visibility = View.GONE
                 }
@@ -321,7 +322,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         serviceName.text = context.getString(R.string.cart_quotes) + " " + item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
                         cartItemServiceImage.visibility = View.GONE
                         serviceName.gravity = Gravity.CENTER
-                        tvPlus.gravity = Gravity.CENTER
+
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     } else {
                         serviceName.text = item.serviceDetail.serviceName.takeIf { !it.isNullOrEmpty() }
@@ -329,37 +330,32 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                             tvCartServiceDescription.text = item.serviceDetail.serviceDescription
 
 
-                           /* if(item.serviceDetail.serviceDescription.toString().length >= 150){
-                                addReadMore(holder.revDesc.text.toString(), holder.revDesc)
-                            }*/
+                            /* if(item.serviceDetail.serviceDescription.toString().length >= 150){
+                                 addReadMore(holder.revDesc.text.toString(), holder.revDesc)
+                             }*/
 
 
                         } else tvCartServiceDescription.visibility = View.GONE
 
                         context.loadImage(item.serviceDetail.catImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemServiceImage)
 
-                        if(!item.serviceDetail.catImageUrl.isNullOrBlank()){
+                        if (!item.serviceDetail.catImageUrl.isNullOrBlank()) {
                             context.loadImage(item.serviceDetail.catImageUrl, cartItemServiceImage)
-                        }else{
-                            cartItemServiceImage.visibility=View.GONE
+                        } else {
+                            serviceName.gravity = Gravity.CENTER
+                            cartItemServiceImage.visibility = View.GONE
                         }
 
                         servicePrice.text = if (!item.price.isNullOrEmpty() && item.price != "null") context.getString(R.string.prepend_euro_symbol_string, item.price) else context.getString(R.string.prepend_euro_symbol_string, "0")
                     }
 
-                    if (item.partDetails != null && !item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("12")) {
+                    if (item.partDetails != null && item.partDetails.size != 0 && !item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("12")) {
                         layout_maintenance.visibility = View.VISIBLE
                         partInfo.visibility = View.GONE
                         if (!item.partDetails[0].productName.isNullOrBlank()) {
                             tvServicesProductTitle.text = item.partDetails[0].productName
                         }
-                        tvPlus.gravity = Gravity.CENTER
 
-                        Log.d("check_service_details", item.serviceDetail.serviceDescription)
-
-                        /* if (!item.partDetails[0].Productdescription.isNullOrBlank()) {
-                             tvServicesProductDescription.text = item.partDetails[0].Productdescription
-                         }*/
                         if (item.partDetails[0].couponList != null && item.partDetails[0].couponList.size != 0 && item.partDetails[0].couponList[0] != null) {
                             tvServicesProductAppliedCoupon.text = item.partDetails[0].couponList[0].couponTitle
                         } else tvServicesProductAppliedCoupon.visibility = View.GONE
@@ -397,7 +393,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     context.loadImage(item.workshopDetail.workShopImageUrl.takeIf { !it.isNullOrEmpty() }, cartItemWorkshopImage)
                 }
                 date.text = if (!item.bookingDate.isNullOrBlank()) {
-                    DateFormatChangeYearToMonth(item.bookingDate)
+                    dateFormatChangeYearToMonth(item.bookingDate)
                 } else {
                     (item.bookingDate).takeIf { !it.isNullOrEmpty() }
                 }
@@ -528,7 +524,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val partInfo = itemView.tv_partInfo
         val productVat = itemView.tv_product_Vat
         val productDiscount = itemView.tv_ProductDiscount
-         val productPFU = itemView.tv_ProductPFU
+        val productPFU = itemView.tv_ProductPFU
         val ProductTotal = itemView.tv_ProductTotal
         val pfutextLabel = itemView.tv_pfutext
         val tv_labeldiscount = itemView.tv_labeldiscount

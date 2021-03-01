@@ -230,10 +230,10 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 try {
                     if (items.wish_list == "0") {
 
-                        context.AddToFavoritesendRquest(context, items.id.toString(), "2", ivFavorite, items)
+                        context.addToFavoriteSendRequest(context, items.id.toString(), "2", ivFavorite, items)
                         notifyDataSetChanged()
                     } else {
-                        context.RemoveFromFavoritesendRquest(context, items.id.toString(), ivFavorite, items, "", null, "2")
+                        context.removeFromFavoriteSendRquest(context, items.id.toString(), ivFavorite, items, "", null, "2")
                         notifyDataSetChanged()
                     }
 

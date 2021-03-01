@@ -67,7 +67,6 @@ inline fun Context.hideKeyboard() {
     val windowToken = activity.window.decorView.rootView.windowToken
     val inputService = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputService.hideSoftInputFromWindow(windowToken, 0)
-    Log.d("hidekeyboardcall", "yes")
 
 }
 
@@ -146,7 +145,6 @@ inline fun Context.isOnline(): Boolean {
 
 inline fun isAlphaNumeric(string: String): Boolean {
     val pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{7,}$"
-    //"^[a-zA-Z0-9]*$"
     return Pattern.matches(pattern, string)
 }
 
@@ -235,7 +233,6 @@ inline fun getIntegerStringList(offlimit: Int, isProductSellOnpair: Boolean = fa
     if (isProductSellOnpair) {
         for (i in 1..offlimit / 2) {
             list.add((i * 2).toString())
-            // Log.d("cartItemAdapter","IntegerStringList : isProductSellOnpair: "+list.toString())
         }
 
     } else {
@@ -289,16 +286,15 @@ inline fun Any.convertToJsonString(): String {
     return try {
         Gson().toJson(this) ?: ""
     } catch (e: Exception) {
-        e.printStackTrace()
-        Log.e("Extensions", "convertToJsonString: ${e.message}")
-        "{}"
+        e.printStackTrace().toString()
+
     }
 }
 
 fun getSubString(str: String, index: Int): Int {
-    var position: Int = 0
-    var indexValue: Int = 0
-    for (i in 0 until str.length) {
+    var position = 0
+    var indexValue = 0
+    for (i in str.indices) {
         val ch: Char = str[i]
         if (ch == ' ') {
             position += 1
@@ -315,18 +311,6 @@ fun getSubString(str: String, index: Int): Int {
     return indexValue
 }
 
-
-fun Context?.hasArgs(): Boolean {
-
-    return try {
-        val data = this?.getSharedPreferences("file", Context.MODE_PRIVATE)?.getString("res", "{}")
-                ?: "{}"
-        JSONObject(data).optBoolean("com.officinetop.officine", false)
-    } catch (e: Exception) {
-        false
-    }
-
-}
 
 fun Bundle?.printValues() {
 
@@ -355,12 +339,11 @@ fun FragmentManager?.setPlacePicker(
 
         fragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(p0: Place) {
-                Log.e("EditProfileFragment", "onPlaceSelected: $p0")
                 onSelected(p0, null)
             }
 
             override fun onError(p0: Status) {
-                Log.e("EditProfileerrFragment", "onError: $p0")
+
                 onSelected(null, p0)
             }
 
@@ -406,7 +389,7 @@ fun Context?.createImageSliderDialog(imageUrl: String) {
 }
 
 
-fun Context.movetologinPage(context: Context?) {
+fun Context.moveToLoginPage(context: Context?) {
     startActivity(intentFor<com.officinetop.officine.authentication.LoginActivity>().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
     var activity = context as Activity
     activity.finishAffinity()
@@ -443,7 +426,7 @@ fun logAddPaymentInfoEvent(context: Context, success: Boolean) {
  * This function assumes logger is an instance of AppEventsLogger and has been
  * created using AppEventsLogger.newLogger() call.
  */
-fun logAddToWishlistEvent(context: Context, contentData: String, contentId: String, contentType: String, currency: String, price: Double) {
+fun logAddToWishListEvent(context: Context, contentData: String, contentId: String, contentType: String, currency: String, price: Double) {
     var params = Bundle()
     params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, contentData)
     params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId)
@@ -493,7 +476,7 @@ fun logFindLocationEvent(context: Context) {
  * parameters is Bundle.
  */
 
-fun logPurchageEvent(context: Context, purchaseAmount: BigDecimal, currency: Currency, parameters: Bundle) {
+fun logPurchaseEvent(context: Context, purchaseAmount: BigDecimal, currency: Currency, parameters: Bundle) {
     var logger = AppEventsLogger.newLogger(context)
     logger.logPurchase(purchaseAmount, currency, parameters)
 
@@ -530,7 +513,7 @@ fun logSearchEvent(context: Context, contentType: String, contentData: String, c
 }
 
 
-inline fun Context.showConfirmDialogforPayment(dialogMessage: String, noinline onOkClick: (() -> Unit?)?, noinline onNoClick: (() -> Unit?)?, cancelable: Boolean = true): AlertBuilder<DialogInterface> {
+inline fun Context.showConfirmDialogForPayment(dialogMessage: String, noinline onOkClick: (() -> Unit?)?, noinline onNoClick: (() -> Unit?)?, cancelable: Boolean = true): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
         positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }

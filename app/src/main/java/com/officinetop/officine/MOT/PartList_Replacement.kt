@@ -232,7 +232,7 @@ class PartList_Replacement : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -243,7 +243,7 @@ class PartList_Replacement : BaseActivity() {
                                 carMaintenanceServiceList[position].wishlist = "1"
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
-                                logAddToWishlistEvent(this, carMaintenanceServiceList[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[position].sellerPrice.toDouble() else 0.0)
+                                logAddToWishListEvent(this, carMaintenanceServiceList[position].productName, ProductId, "1", "USD", if (!carMaintenanceServiceList[position].sellerPrice.isNullOrBlank()) carMaintenanceServiceList[position].sellerPrice.toDouble() else 0.0)
 
 
                             }
@@ -261,7 +261,7 @@ class PartList_Replacement : BaseActivity() {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

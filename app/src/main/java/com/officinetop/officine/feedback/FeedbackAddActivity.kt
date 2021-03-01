@@ -238,7 +238,7 @@ class FeedbackAddActivity : BaseActivity() {
                         val body = response.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
 
-                            showConfirmDialog(getString(R.string.Pleaselogintocontinuewithsforating), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.Pleaselogintocontinuewithsforating), { moveToLoginPage(this) })
                         if (response.isSuccessful) {
 
                             val data = JSONObject(body)

@@ -309,7 +309,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             val body = response?.body()?.string()
                             if (body.isNullOrEmpty() || response.code() == 401)
 
-                                showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { movetologinPage(this) })
+                                showConfirmDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), { moveToLoginPage(this) })
 
 
                             if (response?.isSuccessful!!) {
@@ -321,7 +321,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
                                     showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
-                                    logAddToWishlistEvent(this, workshop_name.text.toString(), workshopUsersId.toString(), "workshop", "USD", 0.0)
+                                    logAddToWishListEvent(this, workshop_name.text.toString(), workshopUsersId.toString(), "workshop", "USD", 0.0)
 
 
                                 }
@@ -339,7 +339,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                         response.let {
                             val body = response?.body()?.string()
                             if (body.isNullOrEmpty() || response.code() == 401)
-                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { movetologinPage(this) }
+                                showInfoDialog(getString(R.string.Pleaselogintocontinuewithslotbooking), true) { moveToLoginPage(this) }
 
                             if (response?.isSuccessful!!) {
                                 val body = JSONObject(body)
@@ -391,7 +391,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
         }
         //set selected date from workshop calendar screen calendar
-        booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
+        booking_date.text = dateFormatChangeYearToMonth(selectedDateFilter)
         calendarSelectedDateFilter = selectedDateFilter
         if (isCarWash || isRevision || isTyre || isAssembly || isMotService) {
             getCalendarPrices()
@@ -407,7 +407,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         // open calendar for booking date
         booking_date.setOnClickListener {
             val formatter = org.threeten.bp.format.DateTimeFormatter.ofPattern("dd/MM/yyyy", getLocale())
-            val localDate = LocalDate.parse(DateFormatChangeYearToMonth(calendarSelectedDateFilter), formatter)
+            val localDate = LocalDate.parse(dateFormatChangeYearToMonth(calendarSelectedDateFilter), formatter)
             today = localDate
             val dialogView = Dialog(this, R.style.DialogSlideAnimStyle)
             dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -611,7 +611,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     override fun onResume() {
         loadWorkShopPackages()
-        getFeedbacks(this, workshopUsersId.toString(), "", "2", "")
+        getFeedback(this, workshopUsersId.toString(), "", "2", "")
         super.onResume()
     }
 
@@ -677,7 +677,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun loadWorkShopPackages() {
 
-        booking_date.text = DateFormatChangeYearToMonth(selectedDateFilter)
+        booking_date.text = dateFormatChangeYearToMonth(selectedDateFilter)
 
         Log.d("ProductOrWorkshopList", "loadWorkshops: service id = $workshopUsersId -- workshopCategoryId = $workshopCategoryId  -- selectedDateFilter = $selectedDateFilter")
 
@@ -1091,7 +1091,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                                             .show()
                                 }
                             } else {
-                                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@WorkshopDetailActivity) })
+                                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this@WorkshopDetailActivity) })
 
                             }
 
@@ -1269,7 +1269,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                 serviceSpecArray = JSONArray()
                 val body = response.body()?.string()
                 if (response.code() == 401)
-                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@WorkshopDetailActivity) })
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this@WorkshopDetailActivity) })
                 Log.d("WorkshopDetailActivity", "onResponse: $response, $body RC " + response.code())
                 body?.let {
                     if (isStatusCodeValid(body)) {
