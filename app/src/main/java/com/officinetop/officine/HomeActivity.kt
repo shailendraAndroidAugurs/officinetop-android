@@ -248,6 +248,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!isLoggedIn())
                 setCarListFromLocal()
             else if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false)) {
+                Log.d("newCarAdded","yes From onResume")
                 getSelectedCarAccordingToUser()
             }
 
@@ -609,7 +610,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (car == null)
                 return
 
-
             //if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car" || !isLoggedIn()) {
 
 
@@ -648,13 +648,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     Log.d("HomeActivity", "Delete Call")
                     showConfirmDialog(getString(R.string.cart_data_removed)) { DeleteCartData(car) }
                 }
-                /*else {
-                    Log.d("HomeActivity", "Delete Call2")
-                    Toast.makeText(this,"delete request sent",Toast.LENGTH_LONG).show()
-                    DeleteCartData(car)
-                }
-                */
-
 
             }
 
@@ -758,12 +751,15 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (requestCode == Constant.RC.onCarEdited) {
                 getSelectedCarAccordingToUser()
             } else if (requestCode == Constant.RC.onCarAdded) {
+
+                Log.d("newCarAdded","yes From OnActivityResult")
                 try {
                     if (data != null && data.extras != null) {
                         val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
-                        Log.d("HomeActivity", "onActivityResult: $lastCar")
+
                         setToolbarValues(lastCar)
                         getSelectedCarAccordingToUser()
+
                    //     selectCar(lastCar.id)
                     }
 

@@ -88,11 +88,11 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         feed_back_swipe_layout.setOnRefreshListener {
-            getFeedbacks(this, workshopId, productId, type, productType)
+            getFeedback(this, workshopId, productId, type, productType)
         }
 
         try {
-            getFeedbacks(this, workshopId, productId, type, productType)
+            getFeedback(this, workshopId, productId, type, productType)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -156,7 +156,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
 
                     if (!list[p1].createdAt.isNullOrBlank()) {
-                        p0.itemView.tv_date.text = DateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
+                        p0.itemView.tv_date.text = dateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
                     } else {
                         p0.itemView.tv_date.text = getString(R.string.concat)
                     }
@@ -245,7 +245,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        getFeedbacks(this, workshopId, productId, type, productType)
+        getFeedback(this, workshopId, productId, type, productType)
     }
 }
 

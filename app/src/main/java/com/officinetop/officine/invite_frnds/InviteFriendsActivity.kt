@@ -46,7 +46,7 @@ class InviteFriendsActivity : BaseActivity() {
             if (!inviteCode.isNullOrEmpty()) {
                 shareCode()
             } else if (!isLoggedIn()) {
-                showConfirmDialog(getString(R.string.please_login_to_continue_for_invite_friends),  { movetologinPage(this@InviteFriendsActivity) })
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_invite_friends),  { moveToLoginPage(this@InviteFriendsActivity) })
 
             }
 

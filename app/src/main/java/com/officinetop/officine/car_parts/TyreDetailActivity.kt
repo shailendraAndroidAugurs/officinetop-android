@@ -228,7 +228,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             add_product_to_cart.setOnClickListener {
                 if (!isLoggedIn()) {
-                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@TyreDetailActivity) })
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this@TyreDetailActivity) })
                 } else {
                     cartItem?.quantity = item_qty.text.toString().toInt()
                     cartItem?.additionalPrice = oneItemAdditionalPrice.toDouble().roundTo2Places()
@@ -282,7 +282,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             e.printStackTrace()
         }
         try {
-            getFeedbacks(this, "", selectedProductID.toString(), "1", "2")
+            getFeedback(this, "", selectedProductID.toString(), "1", "2")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -314,7 +314,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { moveToLoginPage(this) })
 
 
                         if (response?.isSuccessful!!) {
@@ -327,7 +327,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                 showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
 
-                                logAddToWishlistEvent(this, product_name.text.toString(), productDetails?.id.toString(), "2", "USD", if (!productDetails?.seller_price.isNullOrBlank()) productDetails?.seller_price?.toDouble()!! else 0.0)
+                                logAddToWishListEvent(this, product_name.text.toString(), productDetails?.id.toString(), "2", "USD", if (!productDetails?.seller_price.isNullOrBlank()) productDetails?.seller_price?.toDouble()!! else 0.0)
                             }
 
                         }
@@ -343,7 +343,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), { moveToLoginPage(this) })
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)

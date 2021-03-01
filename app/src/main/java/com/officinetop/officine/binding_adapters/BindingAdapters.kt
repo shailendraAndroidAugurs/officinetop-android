@@ -59,7 +59,7 @@ fun bindDate(date: TextView, dateText: String) {
 
     if (!dateText.isNullOrEmpty() && dateText != "0.0" && dateText != "0" && dateText != "-") {
         try {
-            date.text = DateFormatChangeYearToMonth(dateText.split(" ")[0])
+            date.text = dateFormatChangeYearToMonth(dateText.split(" ")[0])
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -72,7 +72,7 @@ fun bindhtmlText(date: TextView, dateText: String) {
 
     if (!dateText.isNullOrEmpty()) {
         try {
-            date.text = Html.fromHtml(DateFormatChangeYearToMonth(dateText), Html.FROM_HTML_MODE_COMPACT)
+            date.text = Html.fromHtml(dateFormatChangeYearToMonth(dateText), Html.FROM_HTML_MODE_COMPACT)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -85,7 +85,7 @@ fun bindDateFormate(date: TextView, dateText: String) {
 
     if (!dateText.isNullOrEmpty()) {
         try {
-            date.text = DateFormatChangeYearToMonth(dateText)?.let { parseServerDateTime(it) }
+            date.text = dateFormatChangeYearToMonth(dateText)?.let { parseServerDateTime(it) }
         } catch (e: Exception) {
             e.printStackTrace()
         }

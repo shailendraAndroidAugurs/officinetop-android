@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.karumi.dexter.Dexter
@@ -88,7 +87,7 @@ inline fun Context.loadCarImage(defaultCarImage: String, brandID: String?, image
 }
 
 
-inline fun Context.loadImageprofile(url: String?, imageView: ImageView) {
+inline fun Context.loadImageProfile(url: String?, imageView: ImageView) {
 
 
     try {
@@ -108,7 +107,7 @@ inline fun Context.loadImageprofile(url: String?, imageView: ImageView) {
 inline fun Context.loadImage(url: String?, imageView: ImageView) {
     try {
 
-
+if(!url.isNullOrBlank())
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_image_placeholder).error(R.drawable.no_image_placeholder))
                 .load(url)
@@ -121,14 +120,13 @@ inline fun Context.loadImage(url: String?, imageView: ImageView) {
 
 inline fun Context.loadImage(url: String?, imageView: ImageView, placeholderImage: Int = R.drawable.no_image_placeholder) {
     try {
-
+        if(!url.isNullOrBlank())
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
                 .load(url)
                 .thumbnail(0.7f)
                 .into(imageView)
     } catch (e: GlideException) {
-        //Log.e("ApiUtils", "loadImage: loadImage: " + e.rootCauses.toString())
     }
 }
 
@@ -142,7 +140,7 @@ inline fun Context.loadImageWithName(name: String?, imageView: ImageView, placeh
         } else {
             imageURL = baseURL + name
         }
-
+        if(!imageURL.isNullOrBlank())
         Glide.with(this.applicationContext)
                 .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
                 .load(imageURL).centerInside()
@@ -167,7 +165,7 @@ inline fun Context.loadImageFromDrawable(drawable: Int?, imageView: ImageView, p
 }
 
 
-inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView, SimilarproductList: ArrayList<Models.ProductOrWorkshopList>) {
+inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView, similarProductList: ArrayList<Models.ProductOrWorkshopList>) {
 
     //product recycler
     recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
@@ -179,31 +177,31 @@ inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView
         }
 
         override fun getItemCount(): Int {
-            return SimilarproductList.size
+            return similarProductList.size
         }
 
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
-            if (SimilarproductList[p1] != null) {
+            if (similarProductList[p1] != null) {
 
                 p0.itemView.setOnClickListener {
 
                     startActivity(intentFor<ProductDetailActivity>(
-                            Constant.Path.productDetails to SimilarproductList[p1].id, Constant.Key.wishList to SimilarproductList[p1].wish_list).forwardResults())
+                            Constant.Path.productDetails to similarProductList[p1].id, Constant.Key.wishList to similarProductList[p1].wish_list).forwardResults())
                     finish()
 
                 }
 
-                if (SimilarproductList[p1].images != null && SimilarproductList[p1].images?.size != 0)
-                    loadImage(SimilarproductList[p1].images?.get(0)?.imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
-                else if (!SimilarproductList[p1].profileImage.isNullOrBlank()) {
-                    loadImage(Constant.profileBaseUrl + SimilarproductList[p1].profileImage, p0.itemView.item_icon, R.drawable.no_image_placeholder)
-                } else if (!SimilarproductList[p1].product_image_url.isNullOrBlank()) {
-                    loadImage(SimilarproductList[p1].product_image_url, p0.itemView.item_icon, R.drawable.no_image_placeholder)
+                if (similarProductList[p1].images != null && similarProductList[p1].images?.size != 0)
+                    loadImage(similarProductList[p1].images?.get(0)?.imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
+                else if (!similarProductList[p1].profileImage.isNullOrBlank()) {
+                    loadImage(Constant.profileBaseUrl + similarProductList[p1].profileImage, p0.itemView.item_icon, R.drawable.no_image_placeholder)
+                } else if (!similarProductList[p1].product_image_url.isNullOrBlank()) {
+                    loadImage(similarProductList[p1].product_image_url, p0.itemView.item_icon, R.drawable.no_image_placeholder)
                 } else
                     loadImageWithName("", p0.itemView.item_icon, R.drawable.no_image_placeholder)
-                p0.itemView.item_name.text = if (SimilarproductList[p1].productName != null) SimilarproductList[p1].productName else ""
-                p0.itemView.item_sub_titleGrid.text = if (SimilarproductList[p1].Productdescription != null) SimilarproductList[p1].Productdescription else ""
+                p0.itemView.item_name.text = if (similarProductList[p1].productName != null) similarProductList[p1].productName else ""
+                p0.itemView.item_sub_titleGrid.text = if (similarProductList[p1].Productdescription != null) similarProductList[p1].Productdescription else ""
             }
 
         }
@@ -213,7 +211,7 @@ inline fun Activity.loadProductRecommendationGridList(recyclerView: RecyclerView
 }
 
 
-inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: RecyclerView, SimilarproductList: ArrayList<Models.TyreDetailItem>) {
+inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: RecyclerView, similarProductList: ArrayList<Models.TyreDetailItem>) {
 
     //product recycler
     recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
@@ -225,26 +223,26 @@ inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: Recyc
         }
 
         override fun getItemCount(): Int {
-            return SimilarproductList.size
+            return similarProductList.size
         }
 
         override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
 
-            if (SimilarproductList[p1] != null) {
+            if (similarProductList[p1] != null) {
                 p0.itemView.setOnClickListener {
 
                     startActivity(intentFor<TyreDetailActivity>(
-                            Constant.Path.productDetails to SimilarproductList[p1],
+                            Constant.Path.productDetails to similarProductList[p1],
                             Constant.Path.productType to "Tyre"))
                     finish()
 
                 }
-                if (SimilarproductList[p1].images != null && SimilarproductList[p1].images?.size != 0)
-                    loadImage(SimilarproductList[p1].imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
+                if (similarProductList[p1].images != null && similarProductList[p1].images?.size != 0)
+                    loadImage(similarProductList[p1].imageUrl, p0.itemView.item_icon, R.drawable.no_image_placeholder)
                 else
                     loadImageWithName("", p0.itemView.item_icon, R.drawable.no_image_placeholder)
                 var tyreType = ""
-                when (SimilarproductList[p1].type) {
+                when (similarProductList[p1].type) {
                     "s" -> {
 
                         tyreType = getString(R.string.Car)
@@ -278,13 +276,13 @@ inline fun Activity.loadProductRecommendationGridListForTyre(recyclerView: Recyc
                 }
                 try {
 
-                    p0.itemView.item_name.text = "${SimilarproductList[p1].manufacturer_description} ${tyreType} ${SimilarproductList[p1].pr_description}\n${SimilarproductList[p1].max_width}/${SimilarproductList[p1].max_aspect_ratio} R${SimilarproductList[p1].max_diameter}   ${if (SimilarproductList[p1].load_speed_index != null) SimilarproductList[p1].load_speed_index else ""} ${if (SimilarproductList[p1].speed_index != null) SimilarproductList[p1].speed_index else ""}"//
+                    p0.itemView.item_name.text = "${similarProductList[p1].manufacturer_description} ${tyreType} ${similarProductList[p1].pr_description}\n${similarProductList[p1].max_width}/${similarProductList[p1].max_aspect_ratio} R${similarProductList[p1].max_diameter}   ${if (similarProductList[p1].load_speed_index != null) similarProductList[p1].load_speed_index else ""} ${if (similarProductList[p1].speed_index != null) similarProductList[p1].speed_index else ""}"//
 
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
 
-                p0.itemView.item_sub_titleGrid.text = if (SimilarproductList[p1].ean_number != null) SimilarproductList[p1].ean_number else ""
+                p0.itemView.item_sub_titleGrid.text = if (similarProductList[p1].ean_number != null) similarProductList[p1].ean_number else ""
 
             }
         }
@@ -307,16 +305,16 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     var servicePrice = 0.0
     var productPrice = 0.0
     var productPriceMaintenance = 0.0
-    var productPricewithVat_Discount = 0.0
-    var ServicesPricewithVat_Discount = 0.0
-    var delivery_fees = 0.0
-    var deliveryDatePridicted = ""
-    var IsServicesAvailable = false
+    var productPriceWithVatDiscount = 0.0
+    var servicesPriceWithVatDiscount = 0.0
+    var deliveryFees = 0.0
+    var deliveryDatePredicted = ""
+    var isServicesAvailable = false
     var isProductServicesAvailable = false
     var isProductAvailable = false
-    var Totalvat = 0.0
-    var TotalDiscount = 0.0
-    var TotalPFU = 0.0
+    var totalVat = 0.0
+    var totalDiscount = 0.0
+    var totalPFU = 0.0
     val cartDataList = cartData.CartDataList
     var isMultipleWorkshopAvailable = false
     var workshopId: String = ""
@@ -324,7 +322,7 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     for (i in 0 until cartDataList.size) {
         val cartData = cartDataList.get(i)
         if (cartData.CartType == "SP") {
-            IsServicesAvailable = true
+            isServicesAvailable = true
             if (cartData.afterDiscountPrice != null && cartData.afterDiscountPrice != "null" && cartData.afterDiscountPrice != "")
                 servicePrice += cartData.afterDiscountPrice.toDouble()
 
@@ -338,20 +336,20 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
                     productPrice += cartData.serviceAssemblyProductDescription.totalPrice.toDouble()
 
                 if (!cartData.serviceAssemblyProductDescription.pfuTax.isNullOrBlank() && cartData.serviceAssemblyProductDescription.pfuTax != "0" && cartData.serviceAssemblyProductDescription.pfuTax != "0.0" && !cartData.serviceAssemblyProductDescription.productQuantity.isNullOrBlank() && cartData.serviceAssemblyProductDescription.productQuantity != "0") {
-                    TotalPFU += cartData.serviceAssemblyProductDescription.pfuTax.toDouble().roundTo2Places() * cartData.serviceAssemblyProductDescription.productQuantity.toInt()
+                    totalPFU += cartData.serviceAssemblyProductDescription.pfuTax.toDouble().roundTo2Places() * cartData.serviceAssemblyProductDescription.productQuantity.toInt()
                 }
                 if (cartData.serviceAssemblyProductDescription.finalOrderPrice != null && cartData.serviceAssemblyProductDescription.finalOrderPrice != "null" && cartData.serviceAssemblyProductDescription.finalOrderPrice != "")
-                    productPricewithVat_Discount += cartData.serviceAssemblyProductDescription.finalOrderPrice.toDouble()
+                    productPriceWithVatDiscount += cartData.serviceAssemblyProductDescription.finalOrderPrice.toDouble()
                 if (!cartData.serviceAssemblyProductDescription.discount.isNullOrBlank() && cartData.serviceAssemblyProductDescription.discount != "null")
-                    TotalDiscount += cartData.serviceAssemblyProductDescription.discount.toDouble()
+                    totalDiscount += cartData.serviceAssemblyProductDescription.discount.toDouble()
 
                 if (!cartData.serviceAssemblyProductDescription.product_vat.isNullOrBlank() && cartData.serviceAssemblyProductDescription.product_vat != "null")
-                    Totalvat += cartData.serviceAssemblyProductDescription.product_vat.toDouble()
+                    totalVat += cartData.serviceAssemblyProductDescription.product_vat.toDouble()
 
             }
 
             if (cartData.serviceDetail != null && cartData.serviceDetail.mainCategoryId != null && cartData.serviceDetail.mainCategoryId.equals("12") &&
-                    cartData.partDetails != null && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
+                    cartData.partDetails != null   && cartData.partDetails.size!=0 && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
 
               if(cartData.partDetails[0].forPair!=null && cartData.partDetails[0].forPair.equals("")&&cartData.partDetails[0].forPair.equals("0") ){
                   productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
@@ -363,15 +361,15 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
 
             }
             if (!cartData.afterDiscountPrice.isNullOrBlank() && cartData.afterDiscountPrice != "null")
-                ServicesPricewithVat_Discount += cartData.afterDiscountPrice.toDouble()
+                servicesPriceWithVatDiscount += cartData.afterDiscountPrice.toDouble()
 
 
 
 
             if (!cartData.discount.isNullOrBlank() && cartData.discount != "null")
-                TotalDiscount += cartData.discount.toDouble()
+                totalDiscount += cartData.discount.toDouble()
             if (!cartData.serviceVat.isNullOrBlank() && cartData.serviceVat != "null")
-                Totalvat += cartData.serviceVat.toDouble()
+                totalVat += cartData.serviceVat.toDouble()
 
             if (cartData.workshopDetail != null && !cartData.workshopDetail.id.isNullOrBlank()) {
                 if (workshopId.isNullOrBlank()) {
@@ -386,15 +384,15 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         } else if (cartData.CartType == "T" || cartData.CartType == "S") {
             isProductAvailable = true
             val bookingDate = SimpleDateFormat("yyy-MM-dd").parse(getDateFor(if (!cartData.deliveryDays.isNullOrBlank()) cartData.deliveryDays.toInt() else 0))
-            if (deliveryDatePridicted.isNullOrBlank()) {
+            if (deliveryDatePredicted.isNullOrBlank()) {
                 val dateFormat = SimpleDateFormat("yyy-MM-dd")
-                deliveryDatePridicted = dateFormat.format(bookingDate)
+                deliveryDatePredicted = dateFormat.format(bookingDate)
             } else {
 
-                val deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePridicted)
+                val deliveryDate = SimpleDateFormat("yyy-MM-dd").parse(deliveryDatePredicted)
                 if (deliveryDate < bookingDate) {
                     val dateFormat = SimpleDateFormat("yyy-MM-dd")
-                    deliveryDatePridicted = dateFormat.format(bookingDate)
+                    deliveryDatePredicted = dateFormat.format(bookingDate)
 
                 }
             }
@@ -402,24 +400,24 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
                 productPrice += cartData.totalPrice.toDouble()
 
             if (!cartData.pfuTax.isNullOrBlank() && cartData.pfuTax != "0" && cartData.pfuTax != "0.0" && !cartData.productQuantity.isNullOrBlank() && cartData.productQuantity != "0") {
-                TotalPFU += cartData.pfuTax.toDouble().roundTo2Places() * cartData.productQuantity.toInt()
+                totalPFU += cartData.pfuTax.toDouble().roundTo2Places() * cartData.productQuantity.toInt()
             }
 
             if (cartData.finalOrderPrice != null && cartData.finalOrderPrice != "null" && cartData.finalOrderPrice != "")
-                productPricewithVat_Discount += cartData.finalOrderPrice.toDouble()
+                productPriceWithVatDiscount += cartData.finalOrderPrice.toDouble()
 
             if (!cartData.discount.isNullOrBlank() && cartData.discount != "null")
-                TotalDiscount += cartData.discount.toDouble()
+                totalDiscount += cartData.discount.toDouble()
 
             if (!cartData.ProductVat.isNullOrBlank() && cartData.ProductVat != "null")
-                Totalvat += cartData.ProductVat.toDouble()
+                totalVat += cartData.ProductVat.toDouble()
 
         }
 
     }
-    if (!IsServicesAvailable) {
+    if (!isServicesAvailable) {
         view.Rl_deliveryDatePridicted.visibility = View.VISIBLE
-        view.cart_Delivery_predictedDate.text = DateFormatChangeYearToMonth(deliveryDatePridicted)
+        view.cart_Delivery_predictedDate.text = dateFormatChangeYearToMonth(deliveryDatePredicted)
 
     } else {
         view.Rl_deliveryDatePridicted.visibility = View.GONE
@@ -429,38 +427,38 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
         Log.d("productPrices 12",productPrice.toString())
 
 
-        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPricewithVat_Discount + ServicesPricewithVat_Discount + TotalPFU+productPriceMaintenance) - TotalDiscount).roundTo2Places().toString())
+        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPriceWithVatDiscount + servicesPriceWithVatDiscount + totalPFU+productPriceMaintenance) - totalDiscount).roundTo2Places().toString())
 
-        view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + TotalPFU).roundTo2Places().toString())
+        view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + totalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
         if (!cartData.deliveryPrice.isNullOrEmpty()) {
             view.rv_delivery_prices.visibility = View.VISIBLE
             view.tv_delivery_prices.visibility = View.VISIBLE
-            delivery_fees = cartData.deliveryPrice.toDouble()
+            deliveryFees = cartData.deliveryPrice.toDouble()
 
             //if someone booked only service in the cart so we will be not add delivery fee inside total amount.
-            if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
+            if (isServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
                 view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, "0")
                 view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble()).roundTo2Places().toString()))
             } else {
-                view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, delivery_fees.roundTo2Places().toString())
+                view.tv_delivery_prices.text = context.getString(R.string.prepend_euro_symbol_string, deliveryFees.roundTo2Places().toString())
                 view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((view.cart_total_price.text.split(" ")[1].toDouble() + cartData.deliveryPrice.toDouble()).roundTo2Places().toString()))
 
             }
 
         }
 
-        if (IsServicesAvailable && isProductServicesAvailable)
+        if (isServicesAvailable && isProductServicesAvailable)
             cartItemType = "2" // only services+ product
-        else if (!IsServicesAvailable && isProductAvailable) {
+        else if (!isServicesAvailable && isProductAvailable) {
             cartItemType = "0" // only product
-        } else if (IsServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
+        } else if (isServicesAvailable && !isProductServicesAvailable && !isProductAvailable) {
             cartItemType = "1" // only services
         } else "3"// mixed item in cart
 
 
     }
-    context?.saveCartPricesData(Totalvat.toString(), TotalDiscount.toString(), TotalPFU.toString(), cartItemType, isMultipleWorkshopAvailable)
+    context?.saveCartPricesData(totalVat.toString(), totalDiscount.toString(), totalPFU.toString(), cartItemType, isMultipleWorkshopAvailable)
 }
 
 
@@ -485,8 +483,6 @@ inline fun Call<ResponseBody>.onCall(context: Context? = null, crossinline onRes
 inline fun RecyclerView.setJSONArrayAdapter(context: Context, jsonArray: JSONArray, resID: Int, crossinline onBindViewHolder:
 (itemView: View, position: Int, jsonObject: JSONObject) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    //Log.d("FragmentHomeeee", "onResponse Best Selling Products: -- context $context \n jsonArray $jsonArray \n resID $resID")
-
     val adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view = LayoutInflater.from(context).inflate(resID, parent, false)
@@ -506,27 +502,6 @@ inline fun RecyclerView.setJSONArrayAdapter(context: Context, jsonArray: JSONArr
     return adapter
 }
 
-
-//JSON Extensions
-
-inline fun JSONArray.forEach(action: (jsonObject: JSONObject) -> Unit) {
-    for (i in 0 until length()) {
-        action(getJSONObject(i))
-    }
-}
-
-
-inline fun JSONArray.forEachNames(action: (name: String) -> Unit) {
-    for (i in 0 until length()) {
-        action(getJSONObject(i).optString("name"))
-    }
-}
-
-inline fun JSONArray.forEachIndexed(action: (i: Int, jsonObject: JSONObject) -> Unit) {
-    for (i in 0 until length()) {
-        action(i, getJSONObject(i))
-    }
-}
 
 inline fun JSONArray.isEmpty() = this.length() == 0
 
@@ -609,9 +584,6 @@ suspend fun <T : Any> safeAPICall(call: suspend () -> Response<T>): T {
 
         throw IOException(responseError)
     }
-
-
-
     if (response.isSuccessful) {
         return response.body()!!
     } else {
@@ -630,7 +602,7 @@ suspend fun <T : Any> safeAPICall(call: suspend () -> Response<T>): T {
 data class ResponseError(val message: String, val errorCode: Int)
 
 
-fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, productId: String, type: String, productType: String) {
+fun Activity.getFeedback(getFeedback: OnGetFeedbacks, workshopId: String, productId: String, type: String, productType: String) {
 
     RetrofitClient.client.getfeedbackList(getBearerToken()
             ?: "", workshopId, productId, type, productType, getUserId())
@@ -655,7 +627,7 @@ fun Activity.getFeedbacks(getfedback: OnGetFeedbacks, workshopId: String, produc
 
                             /*bindFeedbackList()*/
 
-                            getfedback.getFeedbackList(feedbackList)
+                            getFeedback.getFeedbackList(feedbackList)
 
                         } else {
                             if (data.has("message") && !data.isNull("message")) {
@@ -710,9 +682,9 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                 if (!list[p1].lName.isNullOrBlank() && !list[p1].fName.isNullOrBlank()) {
                     p0.itemView.tv_userName.text = list[p1].fName + " " + list[p1].lName
                 } else if (!list[p1].fName.isNullOrBlank() && list[p1].lName.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = list[p1].fName.toString()
+                    p0.itemView.tv_userName.text = list[p1].fName
                 } else if (list[p1].fName.isNullOrBlank() && !list[p1].lName.isNullOrBlank()) {
-                    p0.itemView.tv_userName.text = list[p1].lName.toString()
+                    p0.itemView.tv_userName.text = list[p1].lName
                 } else {
                     p0.itemView.tv_userName.text = getString(R.string.concat)
                 }
@@ -728,7 +700,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
                 if (!list[p1].createdAt.isNullOrBlank()) {
-                    p0.itemView.tv_date.text = DateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
+                    p0.itemView.tv_date.text = dateFormatChangeYearToMonth(list[p1].createdAt.split(" ")[0])
                 } else {
                     p0.itemView.tv_date.text = getString(R.string.concat)
                 }
@@ -738,7 +710,7 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
                     p0.itemView.tv_userComment.text = getString(R.string.concat)
                 }
 
-                if (list[p1].images != null && list[p1].images.size != 0) {
+                if (list[p1].images != null && list[p1].images.isNotEmpty()) {
 
 
                     p0.itemView.rv_feedbackImage.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
@@ -804,15 +776,15 @@ inline fun Activity.bindFeedbackList(list: MutableList<Models.FeedbacksList>, co
 
 
 fun getUserDetail(loginUserDetail: OnGetLoginUserDetail, activity: Activity) {
-    val ProgressDialog = activity.getProgressDialog(true)
+    val progressDialog = activity.getProgressDialog(true)
     RetrofitClient.client.getUserDetails(activity.getBearerToken() ?: "")
             .onCall { networkException, response ->
                 networkException.let {
-                    ProgressDialog.dismiss()
+                    progressDialog.dismiss()
                 }
                 response?.let {
                     if (response.isSuccessful) {
-                        ProgressDialog.dismiss()
+                        progressDialog.dismiss()
                         val data = JSONObject(response.body()?.string())
                         if (data.has("data") && !data.isNull("data")) {
                             val dataSet = data.get("data") as JSONObject
@@ -851,32 +823,28 @@ inline fun showOnlineSnack(progressDialog: ProgressDialog?, view: View, context:
 }
 
 
-inline fun View.bindCartitemViews(onCartListCallback: OnCartListCallback, context: Context?, shouldHideToolbar: Boolean = false, modelCart: Models.CartData) {
+inline fun View.bindCartItemViews(onCartListCallback: OnCartListCallback, context: Context?, shouldHideToolbar: Boolean = false, modelCart: Models.CartData) {
 
     if (context == null)
         return
 
     val adapter = CartItemAdapter(context, proceed_to_pay)
     adapter.setCartListener(onCartListCallback)
-    if (shouldHideToolbar)
-    //toolbar.visibility = View.GONE
-        Log.d("bindCarts", "bindCartViews: total items = ${modelCart.CartDataList.size}")
 
     for (i in 0 until modelCart.CartDataList.size) {
         adapter.addProduct(modelCart.CartDataList[i])
         adapter.getItemAt(i)
     }
-    calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+    calculateCartItemViews(this@bindCartItemViews, context, modelCart)
 
     adapter.setOnItemChangedListener(object : CartItemAdapter.OnItemChanged {
         override fun onDeleted(position: Int) {
-            //Log.d("bindCart", "onDeleted: position = $position")
-            calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+
+            calculateCartItemViews(this@bindCartItemViews, context, modelCart)
         }
 
         override fun onQuantityChanged(cartItem: Models.CartDataList?) {
-            //Log.d("bindCart", "onQuantityChanged: item = $cartItem")
-            calculateCartItemViews(this@bindCartitemViews, context, modelCart)
+            calculateCartItemViews(this@bindCartItemViews, context, modelCart)
         }
 
     })
@@ -913,30 +881,30 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                                     val cartData = Gson().fromJson<Models.CartData>(data.get(i).toString(), Models.CartData::class.java)
                                     if (modelCartList != null) {
 
-                                        for (n in 0 until modelCartList.spareProductDescription.size) {
-                                            insertInCartList(modelCartList.spareProductDescription[n], "S", cartData)
+                                        for (element in modelCartList.spareProductDescription) {
+                                            insertInCartList(element, "S", cartData)
                                         }
 
-                                        for (n in 0 until modelCartList.tyreProductDescription.size) {
-                                            insertInCartList(modelCartList.tyreProductDescription[n], "T", cartData)
+                                        for (element in modelCartList.tyreProductDescription) {
+                                            insertInCartList(element, "T", cartData)
                                         }
 
-                                        for (n in 0 until modelCartList.serviceProductDescription.size) {
-                                            insertInCartList(modelCartList.serviceProductDescription[n], "SP", cartData)
+                                        for (element in modelCartList.serviceProductDescription) {
+                                            insertInCartList(element, "SP", cartData)
 
                                         }
 
 
                                         if (cartData.CartDataList != null && cartData.CartDataList.size > 0) {
 
-                                            cartData.CartDataList.sortedWith(compareBy({ it.createdAt }))
+                                            cartData.CartDataList.sortedWith(compareBy { it.createdAt })
                                             view.image_emptycart.visibility = View.GONE
                                             view.proceed_to_pay_container.visibility = View.VISIBLE
-                                            view.bindCartitemViews(onCartListCallback, context, true, cartData)
+                                            view.bindCartItemViews(onCartListCallback, context, true, cartData)
                                             saveOrderId(cartData.id)
                                             saveIsAvailableDataInCart(true)
 
-                                            if (cartData.userWallet != null && cartData.userWallet.amount != null)
+                                            if (cartData.userWallet?.amount != null)
                                                 SaveUserWallet(cartData.userWallet.amount)
                                             else {
                                                 SaveUserWallet("0")
@@ -950,7 +918,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                                             }
                                         } else {
                                             cartData.CartDataList = ArrayList()
-                                            view.bindCartitemViews(onCartListCallback, context, true, cartData)
+                                            view.bindCartItemViews(onCartListCallback, context, true, cartData)
                                             view.image_emptycart.visibility = View.VISIBLE
                                             view.proceed_to_pay_container.visibility = View.GONE
                                             saveIsAvailableDataInCart(false)
@@ -1005,7 +973,7 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(context) })
+                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(context) })
             if (response.isSuccessful) {
                 try {
                     val responseData = JSONObject(body)
@@ -1037,15 +1005,15 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
 }
 
 
-fun Context.AddToFavoritesendRquest(context: Context, productId: String, ProductType: String, Iv_favorite: ImageView, item: Models.TyreDetailItem? = null, workshopId: String = "", productorworkshopObject: Models.ProductOrWorkshopList? = null) {
+fun Context.addToFavoriteSendRequest(context: Context, productId: String, ProductType: String, Iv_favorite: ImageView, item: Models.TyreDetailItem? = null, workshopId: String = "", productorworkshopObject: Models.ProductOrWorkshopList? = null) {
     RetrofitClient.client.addToFavorite(context.getBearerToken()
             ?: "", productId, ProductType, workshopId, getSelectedCar()?.carVersionModel?.idVehicle
-            ?: "").onCall { networkException, response ->
+            ?: "").onCall { _, response ->
 
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list)) { movetologinPage(context) }
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list)) { moveToLoginPage(context) }
 
 
             if (response?.isSuccessful!!) {
@@ -1055,11 +1023,11 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 
                     if (item != null) {
                         item.wish_list = "1"
-                        logAddToWishlistEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price.toDouble() else 0.0)
+                        logAddToWishListEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price.toDouble() else 0.0)
 
                     } else if (productorworkshopObject != null) {
                         productorworkshopObject.wish_list = "1"
-                        logAddToWishlistEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice.toDouble() else 0.0)
+                        logAddToWishListEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice.toDouble() else 0.0)
 
                     }
 
@@ -1078,14 +1046,14 @@ fun Context.AddToFavoritesendRquest(context: Context, productId: String, Product
 }
 
 
-fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv_favorite: ImageView, item: Models.TyreDetailItem? = null, workshopId: String = "", productorworkshopObject: Models.ProductOrWorkshopList? = null, productType: String = "") {
+fun Context.removeFromFavoriteSendRquest(context: Context, productId: String, Iv_favorite: ImageView, item: Models.TyreDetailItem? = null, workshopId: String = "", productorworkshopObject: Models.ProductOrWorkshopList? = null, productType: String = "") {
     RetrofitClient.client.removeFromFavorite(context.getBearerToken()
-            ?: "", productId, workshopId, productType).onCall { networkException, response ->
+            ?: "", productId, workshopId, productType).onCall { _, response ->
 
         response.let {
             val body = response?.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
-                showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list)) { movetologinPage(context) }
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_remove_wish_list)) { moveToLoginPage(context) }
             if (response?.isSuccessful!!) {
                 val body = JSONObject(body)
                 if (body.has("message")) {
@@ -1109,21 +1077,7 @@ fun Context.RemoveFromFavoritesendRquest(context: Context, productId: String, Iv
 }
 
 
-inline fun getLastLocation(mFusedLocationClient: FusedLocationProviderClient, activity: Activity) {
 
-    mFusedLocationClient.lastLocation
-            .addOnCompleteListener(activity) { task ->
-                if (task.isSuccessful && task.result != null) {
-
-                    task.result
-
-                } else {
-                    Log.w("SOSActivity", "getLastLocation:exception", task.exception)
-
-                }
-            }
-
-}
 
 fun Context.getLocale(): Locale {
     var locale = Locale.getDefault()
@@ -1134,7 +1088,7 @@ fun Context.getLocale(): Locale {
 }
 
 
-fun DateFormatChangeYearToMonth(date: String): String? {
+fun dateFormatChangeYearToMonth(date: String): String? {
     var outputString = date
     val input = SimpleDateFormat("yyyy-MM-dd")
     val output = SimpleDateFormat("dd/MM/yyyy")
@@ -1231,9 +1185,9 @@ inline fun Activity.checkpermission(permissionlist: ArrayList<String>, noinline 
 
 }
 
-fun Activity.showSettingsDialog(islocationpermission: Boolean) {
+fun Activity.showSettingsDialog(isLocationPermission: Boolean) {
     val builder = AlertDialog.Builder(this)
-    if (islocationpermission) {
+    if (isLocationPermission) {
         builder.setTitle(getString(R.string.unauthorized_location_title))
         builder.setMessage(getString(R.string.unauthorized_location_message))
     } else {

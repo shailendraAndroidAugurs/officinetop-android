@@ -12,7 +12,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -73,7 +72,7 @@ class Edit_Profile : BaseActivity() {
             ed_userName.setText(userName)
             ed_userlName.setText(userlName)
             ed_userName.requestFocus()
-            loadImageprofile(user_picurl, profile_imagefull)
+            loadImageProfile(user_picurl, profile_imagefull)
         }
 
         textview_changepic.setOnClickListener(View.OnClickListener {

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,14 +19,13 @@ import com.officinetop.officine.feedback.FeedbackDetailActivity
 import com.officinetop.officine.feedback.FeedbackReview
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.Constant
-import com.officinetop.officine.utils.DateFormatChangeYearToMonth
+import com.officinetop.officine.utils.dateFormatChangeYearToMonth
 import com.officinetop.officine.utils.createImageSliderDialog
 import com.officinetop.officine.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.*
 import kotlinx.android.synthetic.main.fragment_feedback_show.view.progress_bar
 import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_showfeedback.view.*
-import kotlinx.android.synthetic.main.layout_recycler_view.view.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.support.v4.intentFor
 import org.json.JSONArray
@@ -156,7 +154,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                     p0.itemView.tv_product_type.text = getString(R.string.concat)
                 }
                 if (!productFeedbackList[p1].created_at.isBlank()) {
-                    p0.itemView.tv_date.text = DateFormatChangeYearToMonth(productFeedbackList[p1].created_at.split(" ")[0])
+                    p0.itemView.tv_date.text = dateFormatChangeYearToMonth(productFeedbackList[p1].created_at.split(" ")[0])
                 } else {
                     p0.itemView.tv_date.text = getString(R.string.concat)
                 }

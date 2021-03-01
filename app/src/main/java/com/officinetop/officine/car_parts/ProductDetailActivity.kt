@@ -71,7 +71,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         }
 
         try {
-            getFeedbacks(this, "", selectedProductID.toString(), "1", "1")
+            getFeedback(this, "", selectedProductID.toString(), "1", "1")
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -100,14 +100,14 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { movetologinPage(this) })
+                            showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list), { moveToLoginPage(this) })
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
                             if (body.has("message")) {
                                 Iv_favorite.setImageResource(R.drawable.ic_heart)
 
                                 wish_list = "1"
-                                logAddToWishlistEvent(this, detail?.productName!!, detail?.id.toString(), "1", "USD", if (!detail?.sellerPrice.isNullOrBlank()) detail?.sellerPrice?.toDouble()!! else 0.0)
+                                logAddToWishListEvent(this, detail?.productName!!, detail?.id.toString(), "1", "USD", if (!detail?.sellerPrice.isNullOrBlank()) detail?.sellerPrice?.toDouble()!! else 0.0)
 
 
                                 showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
@@ -128,7 +128,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                     response.let {
                         val body = response?.body()?.string()
                         if (body.isNullOrEmpty() || response.code() == 401)
-                            showInfoDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), true) { movetologinPage(this) }
+                            showInfoDialog(getString(R.string.please_login_to_continue_for_remove_wish_list), true) { moveToLoginPage(this) }
 
                         if (response?.isSuccessful!!) {
                             val body = JSONObject(body)
@@ -411,6 +411,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 try {
                                     val productData = JSONObject(body)
                                     if (productData.has("data") && !productData.isNull("data")) {
+                                        ll_productDetail.visibility=View.VISIBLE
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
@@ -514,20 +515,20 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun getSimilarProduct(productId: String) {
-        val dialog = getProgressDialog(true)
+       // val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
                 ?: "", "1", productId, getUserId())
                 .enqueue(
                         object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                dialog.dismiss()
+                                //dialog.dismiss()
                                 toast(getString(R.string.Failed_load_product_detail))
                             }
 
                             @SuppressLint("SetTextI18n")
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                dialog.dismiss()
+                              //  dialog.dismiss()
                                 if (response.isSuccessful) {
                                     val body = response.body()?.string()
                                     body?.let {
@@ -627,7 +628,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
             add_product_to_cart.setOnClickListener {
                 if (!isLoggedIn()) {
-                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { movetologinPage(this@ProductDetailActivity) })
+                    showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this@ProductDetailActivity) })
                 } else {
                     cartItem.quantity = item_qty.text.toString().toInt()
 

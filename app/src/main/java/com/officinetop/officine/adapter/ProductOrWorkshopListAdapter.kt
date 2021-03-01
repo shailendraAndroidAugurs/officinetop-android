@@ -408,10 +408,10 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     try {
                         if ((productOrWorkshopList[p1].wish_list == null || productOrWorkshopList[p1].wish_list == "") || productOrWorkshopList[p1].wish_list == "0") {
 
-                            mcontext.AddToFavoritesendRquest(mcontext, "", "", itemView.Iv_favorite, null, productOrWorkshopList[p1].usersId, productOrWorkshopList[p1])
+                            mcontext.addToFavoriteSendRequest(mcontext, "", "", itemView.Iv_favorite, null, productOrWorkshopList[p1].usersId, productOrWorkshopList[p1])
 
                         } else {
-                            mcontext.RemoveFromFavoritesendRquest(mcontext, "", itemView.Iv_favorite, null, productOrWorkshopList[p1].usersId, productOrWorkshopList[p1])
+                            mcontext.removeFromFavoriteSendRquest(mcontext, "", itemView.Iv_favorite, null, productOrWorkshopList[p1].usersId, productOrWorkshopList[p1])
 
                         }
 
@@ -425,11 +425,11 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     try {
                         if ((productOrWorkshopList[p1].wish_list == null || productOrWorkshopList[p1].wish_list == "") || productOrWorkshopList[p1].wish_list == "0") {
 
-                            mcontext.AddToFavoritesendRquest(mcontext, productOrWorkshopList[p1].id, "1", itemView.Iv_favorite, null, "", productOrWorkshopList[p1])
+                            mcontext.addToFavoriteSendRequest(mcontext, productOrWorkshopList[p1].id, "1", itemView.Iv_favorite, null, "", productOrWorkshopList[p1])
 
 
                         } else {
-                            mcontext.RemoveFromFavoritesendRquest(mcontext, productOrWorkshopList[p1].id, itemView.Iv_favorite, null, "", productOrWorkshopList[p1], "1")
+                            mcontext.removeFromFavoriteSendRquest(mcontext, productOrWorkshopList[p1].id, itemView.Iv_favorite, null, "", productOrWorkshopList[p1], "1")
 
                         }
 

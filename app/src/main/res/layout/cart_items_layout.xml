@@ -344,6 +344,7 @@
                             android:layout_marginStart="@dimen/service_detail_container_margin_large"
                             android:paddingStart="@dimen/service_detail_container_margin_large"
                             android:text="@string/plus"
+                            android:gravity="center"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_20sdp"
                             android:textStyle="bold" />

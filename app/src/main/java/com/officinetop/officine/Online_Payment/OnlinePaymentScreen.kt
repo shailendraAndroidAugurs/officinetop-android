@@ -238,7 +238,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = false
 
-                showConfirmDialogforPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD_BankTransfer("", "2") }, { uncheckedAllPaymentmethod() }, false)
+                showConfirmDialogForPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD_BankTransfer("", "2") }, { uncheckedAllPaymentmethod() }, false)
 
 
             } else {
@@ -255,7 +255,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = true
                 if (this::bankpaymentobject.isInitialized) {
-                    showConfirmDialogforPayment(getString(R.string.bank_transfer_proceed), {
+                    showConfirmDialogForPayment(getString(R.string.bank_transfer_proceed), {
                         updatePaymentStatusForCOD_BankTransfer(bankpaymentobject.id, "4")
 
                     }, { uncheckedAllPaymentmethod() }, false)

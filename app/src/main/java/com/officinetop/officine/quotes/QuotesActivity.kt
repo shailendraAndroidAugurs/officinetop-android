@@ -106,7 +106,7 @@ class QuotesActivity : BaseActivity() {
             if (isLoggedIn()) {
                 quotesApiCall("1")
             } else {
-                showConfirmDialogForLogin(getString(R.string.please_login_to_continue_for_qutoes_request_send), { movetologinPage(this@QuotesActivity) })
+                showConfirmDialogForLogin(getString(R.string.please_login_to_continue_for_qutoes_request_send), { moveToLoginPage(this@QuotesActivity) })
             }
 
 
