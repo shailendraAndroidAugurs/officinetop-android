@@ -950,10 +950,8 @@ object Models {
 
 
     data class ServiceAssemblyProductDescription(
-
             @SerializedName("discount")
             val discount: String,
-
             @SerializedName("for_order_type")
             val forOrderType: String,
             @SerializedName("id")
@@ -978,15 +976,12 @@ object Models {
             val productQuantity: String,
             @SerializedName("products_id")
             val productsId: String,
-
             @SerializedName("total_price")
             val totalPrice: String?,
-
             @SerializedName("users_id")
             val usersId: String,
             @SerializedName("seller_id")
             val sellerId: String,
-
             @SerializedName("max_products_quantity")
             val maxProductQuantity: String = "",
             @SerializedName("vat")
