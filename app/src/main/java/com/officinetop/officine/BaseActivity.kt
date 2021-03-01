@@ -93,7 +93,6 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
 
-
                 currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
                 //currentLatLong = LatLng(44.186516, c)
                // currentLatLong = LatLng(44.186516, 12.2142107)
