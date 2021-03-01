@@ -73,7 +73,7 @@ class TyreListActivity : BaseActivity() {
     private lateinit var seasonName: TextView
     private lateinit var tvSpeedIndexName: TextView
     private lateinit var tvSpeedLoadIndexName: TextView
-    private lateinit var switchOfferCoupon: SwitchBase
+    private lateinit var switchOfferCoupon: Switch
     private lateinit var switchOnlyFav: Switch
     private lateinit var switchReinforced: Switch
     private lateinit var switchRunFlat: Switch
@@ -221,6 +221,13 @@ class TyreListActivity : BaseActivity() {
 
         }
 
+        if (priceSortLevel != 1) {
+            this@TyreListActivity.tv_sort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
+        } else {
+            this@TyreListActivity.tv_sort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
+
+        }
+
 
         var seasonId: String
         var speedIndexId: String
@@ -242,7 +249,7 @@ class TyreListActivity : BaseActivity() {
             speedloadindex = tyreDetail.speed_load_index
         }
         progress_bar.visibility = View.VISIBLE
-        Log.d("PricesLevel",priceSortLevel.toString())
+        Log.d("PricesLevel", priceSortLevel.toString())
         try {
             RetrofitClient.client.tyreList(
                     tyreDetail.vehicleType,
@@ -488,12 +495,12 @@ class TyreListActivity : BaseActivity() {
             }
 
             toolbar.setOnMenuItemClickListener {
-
-
                 val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
                 val radio_grp_Alphabetical = radio_grp_Alphabetical.indexOfChild(radio_grp_Alphabetical.findViewById(radio_grp_Alphabetical.checkedRadioButtonId))
-                tyreDetail.priceLevel = priceIndex.toString()
-                Log.d("PricesLevel",priceIndex.toString())
+                if (priceIndex == 0) {
+                    tyreDetail.priceLevel = "1"
+                } else tyreDetail.priceLevel = "0"
+                Log.d("priceIndex", priceIndex.toString())
                 tyreDetail.AlphabeticalOrder = radio_grp_Alphabetical.toString()
                 finalApplyFilter(true)
                 dismiss()
@@ -1036,7 +1043,7 @@ class TyreListActivity : BaseActivity() {
         }
 
         try {
-            filterDialog.dismiss()
+            sortDialog.dismiss()
             loadSortedProducts()
         } catch (e: Exception) {
             e.printStackTrace()

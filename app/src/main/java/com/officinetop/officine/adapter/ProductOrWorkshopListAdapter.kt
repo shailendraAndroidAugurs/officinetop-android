@@ -211,7 +211,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
 
                 //available_status
-                Log.d("check_status_avilable",""+product_workshopList.availableStatus)
+                Log.d("check_status_avilable", "" + product_workshopList.availableStatus)
                 if (!product_workshopList.availableStatus.isNullOrEmpty() && product_workshopList.availableStatus != "1") {
                     workshopAvailability.visibility = View.VISIBLE
                     AppliedCouponName.visibility = View.GONE
@@ -241,8 +241,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 //load images
                 try {
                     val name = product_workshopList.profileImage
-
-                    mcontext.loadImageWithName(name, item_image_workshop, R.drawable.no_image_placeholder, baseURL = Constant.profileBaseUrl)
+                    if (!name.isNullOrBlank())
+                        mcontext.loadImageWithName(name, item_image_workshop, R.drawable.no_image_placeholder, baseURL = Constant.profileBaseUrl)
 
                 } catch (e: Exception) {
                 }
@@ -285,11 +285,12 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 }
 
                 if (productOrWorkshopList[p1].images != null && productOrWorkshopList[p1].images?.size != 0)
-                    mcontext.loadImage(productOrWorkshopList[p1].images?.get(0)?.imageUrl, icon, R.drawable.no_image_placeholder)
-                else if (!productOrWorkshopList[p1].profileImage.isNullOrBlank()) {
-                    mcontext.loadImage(Constant.profileBaseUrl + productOrWorkshopList[p1].profileImage, icon, R.drawable.no_image_placeholder)
-                } else
-                    mcontext.loadImageWithName("", icon, R.drawable.no_image_placeholder)
+                    if (!productOrWorkshopList[p1].images?.get(0)?.imageUrl.isNullOrBlank())
+
+                        mcontext.loadImage(productOrWorkshopList[p1].images?.get(0)?.imageUrl, icon, R.drawable.no_image_placeholder)
+                    else if (!productOrWorkshopList[p1].profileImage.isNullOrBlank()) {
+                        mcontext.loadImage(Constant.profileBaseUrl + productOrWorkshopList[p1].profileImage, icon, R.drawable.no_image_placeholder)
+                    }
 
                 var titleString = "${if (productOrWorkshopList[p1].productName != null) productOrWorkshopList[p1].productName else ""} "
 
