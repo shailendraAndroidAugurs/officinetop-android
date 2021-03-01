@@ -94,8 +94,8 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 // add marker
 
 
-               currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
-                 //currentLatLong = LatLng(44.186516, c)
+                currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+                //currentLatLong = LatLng(44.186516, c)
                 //currentLatLong = LatLng(44.186516, 12.2142107)
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
