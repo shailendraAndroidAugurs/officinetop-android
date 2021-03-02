@@ -214,7 +214,6 @@ class TyreListActivity : BaseActivity() {
         val drawableRight = ContextCompat.getDrawable(this@TyreListActivity, R.drawable.shape_circle_orange_8dp)
         drawableRight?.setBounds(100, 100, 100, 100)
         if (tyreDetail.onlyFav || (tyreDetail.offerOrCoupon) || (tyreDetail.runFlat != tyreDetail.cust_runflat) || (tyreDetail.reinforced != tyreDetail.cust_reinforced) || tyreDetail.brands != "" || tyreDetail.Rating != "" || (!tyreDetail.seasonId.trim().equals("") && !tyreDetail.seasonId.trim().equals("0") && tyreDetail.cust_seasonId != tyreDetail.seasonId) || (!tyreDetail.speedIndexId.trim().equals("") && !tyreDetail.speedIndexId.trim().equals("0") && tyreDetail.speedIndexId != tyreDetail.cust_speedIndexId) || ((!tyreDetail.speed_load_index.trim().equals(getString(R.string.All)) && !tyreDetail.speed_load_index.trim().equals(getString(R.string.all_in_italin))) && tyreDetail.speed_load_index != tyreDetail.cust_speedLoad_indexName) || !tyreDetail.priceRange.isNullOrBlank()) {
-
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null)
         } else {
             this@TyreListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
@@ -287,10 +286,15 @@ class TyreListActivity : BaseActivity() {
 
                             } else {
                                 try {
+                                    progress_bar.visibility = View.GONE
                                     isLastPage = true
                                     recyclerViewAdapter?.removeLoading()
                                     val jsonObject = JSONObject(body)
-                                    progress_bar.visibility = View.GONE
+
+                                    if (recyclerViewAdapter?.getLoadedItem() == 0) {
+                                        Toast.makeText(applicationContext, (jsonObject.getString("message")), Toast.LENGTH_SHORT).show()
+                                    }
+
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                 }

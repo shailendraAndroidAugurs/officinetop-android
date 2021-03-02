@@ -23,7 +23,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
-          return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_tyre, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_tyre, parent, false))
 
 
     }
@@ -39,11 +39,17 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
     }
 
 
-
     fun addItems(items: MutableList<Models.TyreDetailItem>) {
         listItems.addAll(items)
         notifyDataSetChanged()
     }
+
+    fun getLoadedItem(): Int {
+        return listItems.size
+
+    }
+
+
     fun addLoading() {
         isLoadingVisible = true
 
@@ -68,7 +74,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
         private val title = view.item_title
         private val distance = view.item_sub_title
         private val icon = view.item_image
-        private  val price = view.item_price
+        private val price = view.item_price
         private val rating = view.item_rating
         private val ratingCount = view.item_rating_count
         private val tireCellContainer = view.tire_cell
@@ -80,8 +86,8 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
         private val tyreDbValue = view.tyre_db_value
         private val seasonIcon = view.season_icon
         private val brandImage = view.item__brand_image
-        private  val ivFavorite = view.Iv_favorite
-        private  val appliedCouponName = view.tv_AppliedCoupon
+        private val ivFavorite = view.Iv_favorite
+        private val appliedCouponName = view.tv_AppliedCoupon
         private val couponLabel = view.tv_couponLabel
         private val offerBadge = view.offer_badge
         override fun clear() {
@@ -167,7 +173,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
                 "w" -> {
 
                     context.loadImageFromDrawable(R.drawable.winter, seasonIcon)
-                    tyreSeason =context.getString(R.string.Winter)
+                    tyreSeason = context.getString(R.string.Winter)
                 }
                 "g" -> {
 
@@ -199,7 +205,7 @@ class RecyclerViewAdapter(val context: Context, list: MutableList<Models.TyreDet
             try {
                 if (!items.typeStatus.isNullOrBlank() && items.typeStatus.equals("2")) {
                     title.text = "${if (items.manufacturer_description != null) items.manufacturer_description else ""} ${if (tyreSeason != null) tyreSeason else ""} ${if (items.pr_description != null) items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"//
-                    Log.d("tyreType", "  ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}");
+                    Log.d("tyreType", "  ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}")
                 } else
                     title.text = "${if (items.manufacturer_description != null) items.manufacturer_description else ""} ${if (tyreSeason != null) tyreSeason else ""} ${if (items.pr_description != null) items.pr_description else ""}\n${items.max_width}/${items.max_aspect_ratio} R${items.max_diameter}   ${if (items.load_speed_index != null) items.load_speed_index else ""} ${if (items.speed_index != null) items.speed_index else ""}"
             } catch (e: Exception) {

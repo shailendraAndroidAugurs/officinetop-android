@@ -179,10 +179,12 @@ class TyreCustomizationActivity : BaseActivity() {
                                 if (response.isSuccessful) {
                                     try {
                                         val jsonObject = JSONObject(body)
-                                        Toast.makeText(this@TyreCustomizationActivity, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
+                                        //Toast.makeText(this@TyreCustomizationActivity, jsonObject.optString("message"), Toast.LENGTH_SHORT).show()
                                         setTyreDetail(tyre)
                                         val intent = Intent(this@TyreCustomizationActivity, TyreListActivity::class.java)
-                                        startActivity(intent)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                                        intent.putExtra("result", "edit")
+                                        setResult(RESULT_OK, intent)
                                         finish()
                                     } catch (e: Exception) {
                                         e.printStackTrace()
