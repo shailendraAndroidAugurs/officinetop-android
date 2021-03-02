@@ -260,7 +260,6 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     cartItem?.serviceId = productDetails?.serviceId!!
                     cartItem?.mainCategoryId = productDetails?.tyre_mainCategory_id!!
 
-                    Log.d("Date", "Deliverydays: tyreDetail" + cartItem?.Deliverydays)
                     val myIntent = intentFor<WorkshopListActivity>(
                             Constant.Key.is_workshop to false,
                             Constant.Key.is_tyre to true,

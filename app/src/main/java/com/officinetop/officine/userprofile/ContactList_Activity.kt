@@ -169,7 +169,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
                     val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
                     val contactId = sharedPref.getString("contactId", "")
                     if(ContactId.equals(contactId))
-                    saveContact_ContactForShipping("","");
+                    saveContact_ContactForShipping("","")
                 }
 
             }

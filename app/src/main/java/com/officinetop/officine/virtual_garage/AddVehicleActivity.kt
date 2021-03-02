@@ -385,7 +385,6 @@ class AddVehicleActivity : BaseActivity() {
                                 } else {
                                     showInfoDialog(if (messageString.isEmpty()) getString(R.string.Caraddedsuccessfully) else messageString, !isStatusCodeValid(body)) {
                                         if (isStatusCodeValid(body)) {
-                                            Log.d("AddVehicleActivity", "onResponse: Detail updated")
                                             setResult(Activity.RESULT_OK, getLastCarIntent(body))
                                             finish()
                                         }
@@ -401,23 +400,23 @@ class AddVehicleActivity : BaseActivity() {
     }
 
     private fun saveLocaldataOfAddedCar(carImagelogo: String) {
-        var procced : Boolean = false;
+        var procced : Boolean = false
         Log.d("check_shared_date_local",getLocalCarDate()+"   "+ getLocalCarCount() )
         if(isForEdit || isLoggedIn()){
             procced = true
         }
         else{
             if(getLocalCarDate().equals(getCurrentdate()) && getLocalCarCount() >=3){
-                procced = false;
+                procced = false
             }
             else if(getLocalCarDate().equals("") || !getLocalCarDate().equals(getCurrentdate())){
                 saveLocalCarDate(getCurrentdate())
                 saveLocalCarCount(1)
-                procced = true;
+                procced = true
 
             }else if(getLocalCarDate().equals(getCurrentdate())){
                 var currentCount = getLocalCarCount()
-                currentCount++;
+                currentCount++
                 saveLocalCarCount(currentCount)
                 procced = true
             }
@@ -1194,7 +1193,7 @@ class AddVehicleActivity : BaseActivity() {
 
                                         }else if(getLocalCarDate().equals(getCurrentdate())){
                                             var currentCount = getLocalCarCount()
-                                            currentCount++;
+                                            currentCount++
                                             saveLocalCarCount(currentCount)
                                             saveLocalCarInJSON(last)
                                             handleAddCarResponse(body)

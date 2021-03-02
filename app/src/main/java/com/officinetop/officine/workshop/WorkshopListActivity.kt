@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -88,18 +87,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var assembledProductDetail = ""
     private var isAssembly = false
 
-    var hasRecyclerLoadedOnce = false
-    var calendarPriceMap: HashMap<String, String> = HashMap()
+    private var hasRecyclerLoadedOnce = false
+    private var calendarPriceMap: HashMap<String, String> = HashMap()
 
     private lateinit var listAdapter: ProductOrWorkshopListAdapter
-
     private var latitude: String = ""
     private var longitude: String = ""
     private var workshopUserId: String = ""
     private var addressId: String = ""
     private var workshopWreckerId: String = ""
     private var cartItem: Models.CartItem? = null
-    var dataSet: JSONArray = JSONArray()
+    private var dataSet: JSONArray = JSONArray()
     private var partidhasMap: java.util.HashMap<String, Models.servicesCouponData> = java.util.HashMap()
     private var motpartlist: java.util.HashMap<String, Models.MotservicesCouponData> = java.util.HashMap()
     private var WorkshopDistanceforDefault = defaultDistance
@@ -127,6 +125,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         getLocation()
         filter_btn.setOnClickListener { filterDialog.show() }
         sort_btn.setOnClickListener { sortDialog.show() }
+
         selectedFormattedDate = SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date())
         if (intent?.hasExtra(Constant.Path.deliveryDate)!!) {
             deliveryDate = intent?.getStringExtra(Constant.Path.deliveryDate)!!
@@ -147,26 +146,21 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (intent.hasExtra(Constant.Key.cartItem)) {
             // for assembly
             cartItem = intent.getSerializableExtra(Constant.Key.cartItem) as Models.CartItem
-            Log.d("Date", "Deliverydays: WorkshopList" + cartItem?.Deliverydays)
         }
         if (intent.hasExtra(Constant.Path.PartID))
             partidhasMap = intent.getSerializableExtra(Constant.Path.PartID) as HashMap<String, Models.servicesCouponData>
 
-        if (intent.hasExtra(Constant.Path.Motpartdata)) {
-            motpartlist = intent.getSerializableExtra(Constant.Path.Motpartdata) as HashMap<String, Models.MotservicesCouponData>
-        }
+
         if (isQuotes) {
             if (intent.hasExtra(Constant.Path.serviceQuotesInsertedId))
                 quotesServiceQuotesInsertedId = intent.getStringExtra(Constant.Path.serviceQuotesInsertedId)
             if (intent.hasExtra(Constant.Path.mainCategoryId))
                 quotesMainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
-        }
-        if (intent.hasExtra(Constant.Path.washServiceDetails)) {
+        } else if (intent.hasExtra(Constant.Path.washServiceDetails)) {
             val serviceDetail = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
             serviceID = serviceDetail.id!!
             washing_mainCategory_id = serviceDetail.main_category_id!!
-        }
-        if (isAssemblyService) {
+        } else if (isAssemblyService) {
             if (intent.hasExtra(Constant.Path.productId)) {
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
             }
@@ -187,8 +181,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
                 }
             }
-        }
-        if (revisonService) {
+        } else if (revisonService) {
             if (intent.hasExtra(Constant.Path.revisionServiceDetails)) {
                 val revisionServiceDetails = intent.getSerializableExtra(Constant.Path.revisionServiceDetails) as? RevDataSetItem
                 if (revisionServiceDetails != null) {
@@ -196,8 +189,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     revisionMain_categoryId = revisionServiceDetails.main_category
                 }
             }
-        }
-        if (isTyreService) {
+        } else if (isTyreService) {
             if (intent.hasExtra(Constant.Path.productId)) {
                 productID = intent.getIntExtra(Constant.Path.productId, 0)
                 serviceID = productID
@@ -214,8 +206,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
                 }
             }
-        }
-        if (isQuotes) {
+        } else if (isQuotes) {
             if (intent.hasExtra(Constant.Path.categoryId)) {
                 serviceID = intent.getStringExtra(Constant.Path.categoryId).toInt()
             }
@@ -227,9 +218,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 qutoesUserImage = intent.getStringExtra(Constant.Path.qutoesUserAttachImage)
             }
 
-        }
-
-        if (isCarMaintenanceService) {
+        } else if (isCarMaintenanceService) {
             if (intent.hasExtra(Constant.Path.serviceID)) {
                 multipleServiceIdOfCarMaintenance = intent.getStringExtra(Constant.Path.serviceID)
                 Log.e("mutlsservice", multipleServiceIdOfCarMaintenance)
@@ -244,15 +233,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
             if (intent.hasExtra(Constant.Path.mainCategoryId))
                 mainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
-        }
-        if (isMotService) {
+        } else if (isMotService) {
+            if (intent.hasExtra(Constant.Path.Motpartdata)) {
+                motpartlist = intent.getSerializableExtra(Constant.Path.Motpartdata) as HashMap<String, Models.MotservicesCouponData>
+            }
             if (intent.hasExtra(Constant.Path.mot_id)) {
                 motServiceID = intent.getStringExtra(Constant.Path.mot_id).toInt()
-                Log.e("mutlsservice", motServiceID.toString())
             }
             if (intent.hasExtra(Constant.Path.motservices_time)) {
                 motservices_time = intent.getStringExtra(Constant.Path.motservices_time).toString()
-                Log.e("mutlsservice", motservices_time.toString())
+
             }
             if (intent.hasExtra("mot_type")) {
                 mot_type = intent.getStringExtra("mot_type").toString()
@@ -269,9 +259,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
                 }
             }
-        }
-
-        if (isSOSAppointment || isSOSServiceEmergency) {
+        } else if (isSOSAppointment || isSOSServiceEmergency) {
             if (intent.hasExtra(Constant.Path.serviceID)) {
                 serviceID = intent?.getStringExtra(Constant.Path.serviceID)!!.toInt()
             }
@@ -294,7 +282,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             if (intent.hasExtra(Constant.Path.workshopWreckerId)) {
                 workshopWreckerId = intent?.getStringExtra(Constant.Path.workshopWreckerId) ?: ""
             }
-            if (intent.hasExtra(Constant.Path.mainCategoryId)){
+            if (intent.hasExtra(Constant.Path.mainCategoryId)) {
                 mainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
 
             }
@@ -350,13 +338,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersion!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
 
         val carMaintenanceCalendarCall = RetrofitClient.client.getCarMaintenanceCalendar(multipleServiceIdOfCarMaintenance,
-                selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, 1, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal",mainCategoryId=  mainCategoryId)
+                selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, 1, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId)
 
 
         val motServiceCall = RetrofitClient.client.getMotCalendar(motServiceID, selectedFormattedDate, mot_type, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, userId = getUserId(), service_average_time = motservices_time, mainCategoryId = mainCategoryId)
 
         val sosAppointmentCall = RetrofitClient.client.getSosAppointmentCalendar(workshopUserId, selectedFormattedDate,
-                latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type = "1")
+                latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1")
 
         val callback = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -528,7 +516,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     })
         } else if (revisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
-            CallRevisionApi(priceRangeString, priceSortLevel, ratingString)
+            callRevisionApi(priceRangeString, priceSortLevel, ratingString)
         } else if (isTyreService) {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
@@ -587,7 +575,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforAppointment(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate, serviceID.toString(),
                     latitude, longitude, distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type ="1" ,userid = getUserId()).onCall { _, response ->
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1", userid = getUserId()).onCall { _, response ->
 
                 response?.let {
                     progress_bar.visibility = View.GONE
@@ -602,11 +590,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
 
         } else if (isSOSServiceEmergency) {
-            Log.d("chek_service_id",""+serviceID.toString())
+            Log.d("chek_service_id", "" + serviceID.toString())
             RetrofitClient.client.getSOSWorkshopListforEmergency(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate,
-                   serviceID.toString(), latitude, longitude, getCurrentTime(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!,mainCategoryId = mainCategoryId,wrecker_service_type = "2",userid = getUserId())
+                    serviceID.toString(), latitude, longitude, getCurrentTime(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "2", userid = getUserId())
                     .onCall { _, response ->
                         response?.let {
                             progress_bar.visibility = View.GONE
@@ -667,14 +655,14 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
     private fun bindRecyclerView(jsonArray: JSONArray) {
         calendarPriceMap = HashMap()
-        var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> =ArrayList<Models.ProductOrWorkshopList>()
-        if(jsonArray.length()==0){
+        var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = ArrayList<Models.ProductOrWorkshopList>()
+        if (jsonArray.length() == 0) {
             productOrWorkshopList.clear()
             listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
             recycler_view.adapter = listAdapter
-         //   Toast.makeText(this,"If is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
+            //   Toast.makeText(this,"If is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
         } else {
-          //  Toast.makeText(this,"else is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this,"else is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
             val gson = GsonBuilder().create()
             productOrWorkshopList = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
             productOrWorkshopList.get(0).service_id
@@ -940,9 +928,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun CallRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
-        Log.d("Revision", "DistanceInitial$tempDistanceInitial")
-        Log.d("Revision", "DistanceFinal$tempDistanceFinal")
+    private fun callRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
         RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId)
                 .onCall { networkException, response ->
                     networkException?.let {
@@ -951,5 +937,5 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         setWorkshopValues(response)
                     }
                 }
-        }
+    }
 }

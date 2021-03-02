@@ -59,7 +59,7 @@ class MotDetailActivity : BaseActivity() {
             motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
             tv_title.text = motServiceObject.serviceName
             tv_description.text = motServiceObject.intervalDescriptionForKms
-            main_category_id = motServiceObject.main_category_id;
+            main_category_id = motServiceObject.main_category_id
             if (isOnline()) {
                 motDetailService(motServiceObject.id.toString(), motServiceObject.type)
             }else{
@@ -178,7 +178,7 @@ class MotDetailActivity : BaseActivity() {
 
 
     private fun binndDataInRecyclerview() {
-        button_proceed.visibility = View.VISIBLE
+        button_proceed.visibility = View.GONE
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
