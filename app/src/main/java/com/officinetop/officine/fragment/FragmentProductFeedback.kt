@@ -75,19 +75,16 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
 
 
         val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount: Int = linearLayoutManager.getChildCount()
-                val totalItemCount: Int = linearLayoutManager.getItemCount()
+                val visibleItemCount: Int = linearLayoutManager.childCount
+                val totalItemCount: Int = linearLayoutManager.itemCount
                 val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
                 if (!isLoading && !isLastPage) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
                         currentPage += 10
-                        isLoading =true;
+                        isLoading =true
                         highRatingFeedback("1",currentPage)
                         rootView.progress_bar.visibility = View.VISIBLE
                     }
@@ -95,7 +92,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
             }
         }
 
-        rootView.rv_product_feedback_recycler_view.addOnScrollListener(recyclerViewOnScrollListener);
+        rootView.rv_product_feedback_recycler_view.addOnScrollListener(recyclerViewOnScrollListener)
 
         return rootView
     }
@@ -270,7 +267,7 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        isLoading = false;
+                        isLoading = false
                         if (response.isSuccessful) {
                             try
                             {   val body = JSONObject(response.body()?.string())
@@ -290,23 +287,23 @@ class FragmentProductFeedback : Fragment(), FeedbackReview/*, FragmentFeedback.O
                                     }
 
                                     if (jsonarray.length() == 0) {
-                                        isLastPage = true;
+                                        isLastPage = true
                                     }
                                     }
                                 else{
-                                    isLastPage = true;
+                                    isLastPage = true
                                 }
                                 rootView.progress_bar.visibility = View.GONE
 
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                isLoading = false;
-                                isLastPage = true;
+                                isLoading = false
+                                isLastPage = true
                                 rootView.progress_bar.visibility = View.GONE
                             }
                         }
                         else{
-                            isLastPage = true;
+                            isLastPage = true
                             rootView.progress_bar.visibility = View.GONE
 
                         }

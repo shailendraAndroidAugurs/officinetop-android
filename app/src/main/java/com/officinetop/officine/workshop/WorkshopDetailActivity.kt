@@ -660,7 +660,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             })
         } else {
 
-            if(imagesArray!=null && imagesArray.length() !=0&&imagesArray?.getJSONObject(0) != null &&  imagesArray?.getJSONObject(0)?.getString("image_url")!=null ){
+            if(imagesArray!=null && imagesArray.length() !=0&& imagesArray.getJSONObject(0) != null &&  imagesArray.getJSONObject(0)?.getString("image_url")!=null ){
                   val imageRes = imagesArray.getJSONObject(0).getString("image_url")
             image_slideview_workshop.visibility = View.VISIBLE
             image_slider.visibility = View.GONE

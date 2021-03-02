@@ -44,7 +44,6 @@ import java.io.Serializable
 
 class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, FragmentChangeListener {
-
     lateinit var dialog: Dialog
     val carList: MutableList<Models.MyCarDataSet> = ArrayList()
     private lateinit var carListAdapter: BaseAdapter
@@ -57,8 +56,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
     var carListResponse = ""
-
-
     private val internetBroadcast = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
         }
@@ -390,10 +387,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             hasSelectedCar = carList.any { it.id == getSavedSelectedVehicleID() }
 
-            Log.d("HomeActivity", "setCarList: has selected = $hasSelectedCar")
-
             if (!hasSelectedCar) {
-                Log.d("HomeActivity", "setCarList: $carList")
                 setToolbarValues(carList.find { it.selected == "1" })
                 if (carList.find { it.selected == "1" } == null) {
                     setToolbarValues(carList.last())
@@ -561,7 +555,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    private fun setToolbarValues(car: Models.MyCarDataSet?) {
+    private fun setToolbarValues(car: Models.MyCarDataSet?, fromAddNewCar: Boolean = false) {
 
         try {
 
@@ -623,11 +617,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 }
 
-                Log.d("Version id", json.toString())
-
             }
 
-
+            if (fromAddNewCar) {
+                getSelectedCarAccordingToUser()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("exception", e.toString())
@@ -704,8 +698,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     if (data != null && data.extras != null) {
                         val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
 
-                        setToolbarValues(lastCar)
-                        getSelectedCarAccordingToUser()
+                        if (!getIsAvailableDataInCart()) {
+                            setToolbarValues(lastCar,true)
+                        }
+
+
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -890,10 +887,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                                     }
 
-                                    Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
-                                    val json = car?.let { it1 -> convertToJson(it1) }
-                                    Log.d("HomeActivity", "setToolbarValues: $json")
 
+                                    val json = car?.let { it1 -> convertToJson(it1) }
                                     //call select car API
                                     if (car != null) {
                                         selectCar(car.id)
@@ -902,9 +897,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     }
 
                                     if (json != null) {
-
                                         saveSelectedCar(json)
-                                        Log.d("Version id", json.toString())
 
                                     }
                                     if (supportFragmentManager.findFragmentByTag("cart") is FragmentCart) {

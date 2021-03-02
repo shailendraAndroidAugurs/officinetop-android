@@ -904,7 +904,7 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                                             saveOrderId(cartData.id)
                                             saveIsAvailableDataInCart(true)
 
-                                            if (cartData.userWallet?.amount != null)
+                                            if (cartData.userWallet.amount != null)
                                                 SaveUserWallet(cartData.userWallet.amount)
                                             else {
                                                 SaveUserWallet("0")
