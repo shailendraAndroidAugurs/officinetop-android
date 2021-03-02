@@ -186,7 +186,8 @@ class TyreDiameterActivity : BaseActivity() {
                         } else {
                             if (TyreSelectedId.equals(tyre.id)) {
                                 startActivity(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", tyre.convertToJsonString()).putExtra("editId", it.id.toString()).putExtra("IsSavedInlocal", tyre.id))
-finish() } else {
+                                finish()
+                            } else {
                                 startActivity(intentFor<TyreCustomizationActivity>().putExtra("currentlySelectedMeasurement", tyre.convertToJsonString()).putExtra("editId", it.id.toString()))
                                 finish()
                             }
