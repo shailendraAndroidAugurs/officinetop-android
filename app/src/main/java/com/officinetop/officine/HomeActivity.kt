@@ -22,7 +22,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.officinetop.officine.Support.Support_FAQ_Activity
 import com.officinetop.officine.authentication.LoginActivity
 import com.officinetop.officine.data.*
@@ -42,10 +41,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, FragmentChangeListener {
@@ -55,7 +50,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private lateinit var carListAdapter: BaseAdapter
     private var lastListSize = -1
     private var hasAddedCar = false
-    var test_var = 0
     lateinit var progressDialog: ProgressDialog
     private var hasSelectedCar = false
     var isConnectionError = false
@@ -215,7 +209,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         // load screens if navigated from options menu
         if (intent != null && intent.hasExtra("fragmentID")) {
-            Log.v("INTENT", "*************** " + intent.getIntExtra("fragmentID", R.id.action_menu_home))
             bindFragment(intent.getIntExtra("fragmentID", R.id.action_menu_home))
         } else {
             supportFragmentManager.beginTransaction()
@@ -248,7 +241,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (!isLoggedIn())
                 setCarListFromLocal()
             else if (intent.hasExtra("login_success") && intent.getBooleanExtra("login_success", false)) {
-                Log.d("newCarAdded","yes From onResume")
                 getSelectedCarAccordingToUser()
             }
 
@@ -268,11 +260,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             return
         }
-
         val rotateAnimation = getRotateAnimation()
         dialog.dialog_refresh.startAnimation(rotateAnimation)
-
-
         getCarListAPI()
     }
 
@@ -294,7 +283,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                     progressDialog.dismiss()
                     toast(t.message!!)
-                    Log.e("HomeActivity", "onFailure: onFailure = ${t.message}", t)
                     isConnectionError = true
                 }
 
@@ -308,12 +296,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                     progressDialog.dismiss()
 
-                    Log.d("HomeActivity", "my car : onResponse: code = ${response.code()}, body = $carListResponse")
-
                     isConnectionError = false
 
                     if (response.code() == 500) {
-                        Log.e("HomeActivity", getString(R.string.onResponseCode500) + { response.errorBody()?.string() })
                         isConnectionError = true
                         return
                     }
@@ -330,7 +315,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
 
                     if (responseBody == null) {
-                        Log.d("HomeActivity", "onResponse: response body is null")
                         isConnectionError = true
                         return
                     }
@@ -455,8 +439,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
                     val car = carList[position]
-//                Log.d("HomeActivity", "getView: $car")
-                    ++test_var
 
                     Log.d("checked_created_date", car.id + "  ")
 
@@ -578,40 +560,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-    private fun checkThreeMaxcar() {
-        if (carList.size < 3) {
-            startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
-        } else {
-            var sameDateCarItem = 0
-            for (carListModel in carList) {
-                val originalFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.ENGLISH)
-                val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val date: Date = originalFormat.parse(carListModel.created_at)
-                val createdDate: String = targetFormat.format(date) // 20120821
-                val currentDate = targetFormat.format(Date())
-                if (createdDate.equals(currentDate)) {
-                    sameDateCarItem++
-                }
-            }
-            if (sameDateCarItem < 3) {
-                startActivityForResult(intentFor<AddVehicleActivity>(), Constant.RC.onCarAdded)
-            } else {
-                showInfoDialog(getString(R.string.Can_not_add_new_data))
-            }
-        }
-    }
 
-
-    @SuppressLint("SetTextI18n")
     private fun setToolbarValues(car: Models.MyCarDataSet?) {
 
         try {
 
             if (car == null)
                 return
-
-            //if (toolbar_car_title.text ==/*"Add Car"*/ getString(R.string.add_car) || toolbar_car_title.text == "Add Car" || !isLoggedIn()) {
-
 
             toolbar_car_title.text = car.carMakeModel.brand
             toolbar_car_subtitle.text = "${car.carModel.model} (${car.carModel.modelYear})"
@@ -627,10 +582,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             }
 
-            Log.d("HomeActivity", "getView: setting toolbar values, value = ${car.carMakeName}, ${car.carModelName}")
-//            storeSelectedCar(car.carMakeName, car.carModelName)
-
-            val json =/* car?.let { it1 -> convertToJson(it1) }*/convertToJson(car)
+            val json = convertToJson(car)
             Log.d("HomeActivity", "setToolbarValues: $json")
 
 
@@ -645,8 +597,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }
             if (car.id != getSavedSelectedVehicleID() && isLoggedIn()) {
                 if (getIsAvailableDataInCart()) {
-                    Log.d("HomeActivity", "Delete Call")
-                    showConfirmDialog(getString(R.string.cart_data_removed)) { DeleteCartData(car) }
+                    showConfirmDialog(getString(R.string.cart_data_removed)) { deleteCartData(car) }
                 }
 
             }
@@ -675,9 +626,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 Log.d("Version id", json.toString())
 
             }
-
-
-            // }
 
 
         } catch (e: Exception) {
@@ -737,7 +685,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                             response.body()?.string()?.let { body ->
                                 if (isStatusCodeValid(body)) {
-                                    Log.d("HomeActivity", "on Car $carID Selection : ${getMessageFromJSON(body)}")
                                 }
                             }
 
@@ -752,15 +699,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 getSelectedCarAccordingToUser()
             } else if (requestCode == Constant.RC.onCarAdded) {
 
-                Log.d("newCarAdded","yes From OnActivityResult")
+                Log.d("newCarAdded", "yes From OnActivityResult")
                 try {
                     if (data != null && data.extras != null) {
                         val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
 
                         setToolbarValues(lastCar)
                         getSelectedCarAccordingToUser()
-
-                   //     selectCar(lastCar.id)
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -802,9 +747,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
                             if (response.code() == 200) {
-
-
-                                // loadMyCars()
                                 progressDialog.dismiss()
                                 setCarList(responseBody)
                             }
@@ -862,11 +804,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 })
     }
-
-
-    /** For fragment callable
-     *
-     * */
 
     fun checkForSelectedCar(): Boolean {
 
@@ -930,7 +867,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         loadNavigationItems(FragmentId)
     }
 
-    private fun DeleteCartData(car: Models.MyCarDataSet?) {
+    private fun deleteCartData(car: Models.MyCarDataSet?) {
         getBearerToken()?.let {
             RetrofitClient.client.removeCart(it)
                     .enqueue(object : Callback<ResponseBody> {
@@ -954,8 +891,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     }
 
                                     Log.d("HomeActivity", "getView: setting toolbar values, value = ${car?.carMakeName}, ${car?.carModelName}")
-//            storeSelectedCar(car.carMakeName, car.carModelName)
-
                                     val json = car?.let { it1 -> convertToJson(it1) }
                                     Log.d("HomeActivity", "setToolbarValues: $json")
 
@@ -994,9 +929,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     override fun onBackPressed() {
-        //  super.onBackPressed()
-
-        if (supportFragmentManager.findFragmentByTag("Home") is FragmentHome || iscurrentFragmentHome()) {
+        if (supportFragmentManager.findFragmentByTag("Home") is FragmentHome || isCurrentFragmentHome()) {
             finish()
 
         } else {
@@ -1017,7 +950,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
-    private fun iscurrentFragmentHome(): Boolean {
+    private fun isCurrentFragmentHome(): Boolean {
 
         val fragments = supportFragmentManager.fragments
         for (fragment in fragments) {
@@ -1063,12 +996,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     }
 
                                     if (body == null) {
-                                        Log.d("HomeActivity", "onResponse: response body is null")
                                         isConnectionError = true
                                         return
                                     }
-                                    val UserSelectedCarRespnces = Gson().fromJson<Models.MyCar>(body, Models.MyCar::class.java)
-                                    setCarList(UserSelectedCarRespnces)
+                                    val userSelectedCarRespnces = Gson().fromJson<Models.MyCar>(body, Models.MyCar::class.java)
+                                    setCarList(userSelectedCarRespnces)
                                 }
                             }
 

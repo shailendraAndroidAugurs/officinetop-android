@@ -178,7 +178,7 @@ class MotDetailActivity : BaseActivity() {
 
 
     private fun binndDataInRecyclerview() {
-        button_proceed.visibility = View.VISIBLE
+        button_proceed.visibility = View.GONE
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
