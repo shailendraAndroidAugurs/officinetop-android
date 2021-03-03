@@ -1,5 +1,6 @@
 package com.officinetop.officine.workshop
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -9,8 +10,10 @@ import android.util.Log
 import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -18,6 +21,7 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
+import com.officinetop.officine.adapter.PaginationListener
 import com.officinetop.officine.adapter.ProductOrWorkshopListAdapter
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -115,6 +119,15 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var deliveryDate = ""
     var qutoesUserDescription = ""
     var qutoesUserImage = ""
+
+    private val PAGE_START = 0
+    private var totalPage = 29
+    private var current_page = PAGE_START
+    private var isLastPage = false
+    private var isLoading = false
+    lateinit var calendarAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+    private var calendarDetailList: MutableList<Models.CalendarPrice> = ArrayList()
+    lateinit var linearLayoutManager: LinearLayoutManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -310,8 +323,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun getCalendarMinPriceRange(selectedFormattedDate: String) {
-        Log.d("workshop", "calendar api call")
-        Log.d("getCalendarMin", "getcalendarMiniPricesRange")
+
         val pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
@@ -364,7 +376,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             arrayList.add(serviceCategory)
                             calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
                         }
-                        setUpCalendarPrices(arrayList)
+                        calendarDetailList.addAll(arrayList)
+                        if (current_page == 0) {
+                            setUpCalendarPrices()
+                        } else {
+                            calendarAdapter.notifyDataSetChanged()
+                            isLoading = false
+
+
+                        }
+
+
                     } else {
                         showInfoDialog(getMessageFromJSON(it)) {
                         }
@@ -384,9 +406,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         else if (isCarWash) nonAssemblyCall.enqueue(callback)
     }
 
-    private fun setUpCalendarPrices(calendarDetailList: MutableList<Models.CalendarPrice>) {
+    @SuppressLint("WrongConstant")
+    private fun setUpCalendarPrices() {
 
-        val adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        calendarAdapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
                 val selectedView = layoutInflater.inflate(R.layout.item_dateview_selected, p0, false)
                 val unselectedView = layoutInflater.inflate(R.layout.item_dateview_unselected, p0, false)
@@ -425,10 +448,43 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         }
-        horizontal_calendar_view.adapter = adapter
+        linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation=LinearLayout.HORIZONTAL
+        horizontal_calendar_view.layoutManager = linearLayoutManager
+        horizontal_calendar_view.adapter = calendarAdapter
         horizontal_calendar_view.addItemDecoration(DividerItemDecoration(this,
                 DividerItemDecoration.HORIZONTAL))
-        // horizontal_calendar_view.smoothScrollToPosition(selectedItemPosition)
+
+        if (this::calendarAdapter.isInitialized) {
+            horizontal_calendar_view.addOnScrollListener(object : PaginationListener(linearLayoutManager, 5) {
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    current_page += 5
+                    if (current_page <= totalPage) {
+                        val dateForPagination = getDateWithDayAddInDate(current_page, SelectedCalendarDateIntial)
+                        if (!dateForPagination.isNullOrBlank()){
+                            getCalendarMinPriceRange(dateForPagination)
+                        }
+
+                    }
+
+                }
+
+                override fun isLastPage(): Boolean {
+
+                    return isLastPage
+                }
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
+        }
+
+        isLoading = false
+
+
     }
 
     private fun reloadPage() {
@@ -497,8 +553,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             priceRangeString = ""
         }
         if (isAssemblyService) {
-            Log.d("ProductOrWorkshopList", "loadWorkshops: productID $productID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingString " +
-                    "-- priceRangeString = $priceRangeString -- priceSortLevel = $priceSortLevel  -- workshopType $workshopType -- isAssemblyService --  $isAssemblyService")
             RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
                     ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime, serviceId = if (cartItem != null) cartItem?.serviceId!! else "0")
@@ -801,8 +855,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
                 reloadPage()
                 if (misdistancefilter || misclearselection) {
-                    Log.d("getCalendarMin", "misdistancefilter : " + misdistancefilter.toString() + " misclearselection : " + misclearselection.toString())
-                    Log.d("getCalendarMin", "distance filter or clear selection")
                     getCalendarMinPriceRange(SelectedCalendarDateIntial)
                 }
                 dismiss()

@@ -323,7 +323,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         } else
             listAdapter.addItems(productOrWorkshopList)
 
-        Log.d("currentPageList", current_page.toString() + " : " + productOrWorkshopList.size.toString())
+
 
         if (current_page != PAGE_START) listAdapter.removeLoading()
         //check if last page or not
