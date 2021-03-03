@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
@@ -32,21 +33,25 @@ import org.json.JSONObject
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MotDetailActivity : BaseActivity() {
     private var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
 
     private var mOPerationServicesList: ArrayList<Models.Operation> = ArrayList()
     lateinit var motServiceObject: Models.MotServicesList
+
+    lateinit var motServiceDetailObject: Models.ServiceDetail
     private lateinit var itemsData: Models.MotDetail
     var selectitem_position: Int = 0
     var genericAdapter: GenericAdapter<Models.Part>? = null
     private var hashMap: HashMap<String, Models.MotservicesCouponData> = HashMap<String, Models.MotservicesCouponData>()
     var workshopPrices = 0.0
     var sparePartPrices = 0.0
-    var main_category_id : Int = 0
-
+    var main_category_id: Int = 0
+    var partListFromCart = ArrayList<Models.Part>()
     var deliveryDate = 0
+    var isFromCart = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
@@ -55,53 +60,74 @@ class MotDetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         progress_bar.visibility = View.GONE
         getLocation()
-        if (intent.hasExtra("motObject")) {
-            motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
-            tv_title.text = motServiceObject.serviceName
-            tv_description.text = motServiceObject.intervalDescriptionForKms
-            main_category_id = motServiceObject.main_category_id
+        if (intent.hasExtra("isFromMotList")) {
+            if (intent.hasExtra("motObject")) {
+                motServiceObject = Gson().fromJson<Models.MotServicesList>(intent.extras!!.getString("motObject"), Models.MotServicesList::class.java)
+                tv_title.text = motServiceObject.serviceName
+                tv_description.text = motServiceObject.intervalDescriptionForKms
+                main_category_id = motServiceObject.main_category_id
+                if (isOnline()) {
+                    motDetailService(motServiceObject.id.toString(), motServiceObject.type)
+                } else {
+                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                }
+                saveServicesType(motServiceObject.type.toString())
+            }
+
+            button_proceed.setOnClickListener {
+                val partId: ArrayList<String> = ArrayList()
+                val couponId: ArrayList<String> = ArrayList()
+                val sellerId: ArrayList<String> = ArrayList()
+
+                if (mKPartServicesList.size != 0) {
+
+                    for (i in 0 until mKPartServicesList.size) {
+                        val product_Id = mKPartServicesList[i].id
+                        if (!mKPartServicesList[i].couponId.isNullOrBlank()) {
+                            couponId.add(mKPartServicesList[i].couponId)
+                        } else {
+                            couponId.add("")
+                        }
+                        partId.add(product_Id)
+                        sellerId.add(mKPartServicesList[i].usersId)
+                    }
+
+
+                    hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
+                    val bundle = Bundle()
+                    bundle.putSerializable(Constant.Path.Motpartdata, hashMap as Serializable)
+                    Log.e("replacePartID", partId.toString())
+                    startActivity(intentFor<WorkshopListActivity>(
+                            Constant.Key.is_motService to true,
+                            Constant.Path.mot_id to motServiceObject.id.toString(),
+                            "mot_type" to motServiceObject.type.toString(),
+                            Constant.Path.deliveryDate to deliveryDate.toString(),
+                            Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
+                            Constant.Path.mainCategoryId to motServiceObject.main_category_id.toString()).putExtras(bundle))
+                } else {
+                    showInfoDialog(getString(R.string.partNotFound))
+                }
+            }
+        } else if (intent.hasExtra("isFromCart")) {
+            isFromCart = true
+            if (intent.hasExtra("PartList")) {
+                val jsonString = intent.getStringExtra("PartList")
+                val gson = GsonBuilder().create()
+                partListFromCart = gson.fromJson(jsonString.toString(), Array<Models.Part>::class.java).toCollection(java.util.ArrayList<Models.Part>())
+            }
+            motServiceDetailObject = Gson().fromJson<Models.ServiceDetail>(intent.extras!!.getString("ServiceDetail"), Models.ServiceDetail::class.java)
+            tv_title.text = motServiceDetailObject.serviceName
+            tv_description.text = motServiceDetailObject.serviceDescription
+            main_category_id = motServiceDetailObject.mainCategoryId?.toInt()!!
             if (isOnline()) {
-                motDetailService(motServiceObject.id.toString(), motServiceObject.type)
-            }else{
+                motDetailService(motServiceDetailObject.serviceId, motServiceDetailObject.type.toInt())
+            } else {
                 showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
-            saveServicesType(motServiceObject.type.toString())
+
         }
 
-        button_proceed.setOnClickListener {
-            val partId: ArrayList<String> = ArrayList()
-            val couponId: ArrayList<String> = ArrayList()
-            val sellerId: ArrayList<String> = ArrayList()
 
-            if (mKPartServicesList.size != 0) {
-
-                for (i in 0 until mKPartServicesList.size) {
-                    val product_Id = mKPartServicesList[i].id
-                    if (!mKPartServicesList[i].couponId.isNullOrBlank()) {
-                        couponId.add(mKPartServicesList[i].couponId)
-                    } else {
-                        couponId.add("")
-                    }
-                    partId.add(product_Id)
-                    sellerId.add(mKPartServicesList[i].usersId)
-                }
-
-
-                hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
-                val bundle = Bundle()
-                bundle.putSerializable(Constant.Path.Motpartdata, hashMap as Serializable)
-                Log.e("replacePartID", partId.toString())
-                startActivity(intentFor<WorkshopListActivity>(
-                        Constant.Key.is_motService to true,
-                        Constant.Path.mot_id to motServiceObject.id.toString(),
-                        "mot_type" to motServiceObject.type.toString(),
-                        Constant.Path.deliveryDate to deliveryDate.toString(),
-                        Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
-                        Constant.Path.mainCategoryId to  motServiceObject.main_category_id.toString()).putExtras(bundle))
-            } else {
-                showInfoDialog(getString(R.string.partNotFound))
-            }
-        }
     }
 
     private fun motDetailService(mot_id: String, type: Int) {
@@ -111,7 +137,7 @@ class MotDetailActivity : BaseActivity() {
         RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID, getUserId())
                 .onCall { _, response ->
                     response?.let {
-                        progress_bar.visibility = View.GONE
+                      if(!isFromCart) { progress_bar.visibility = View.GONE}
                         if (response.isSuccessful) {
                             val body = JSONObject(response.body()?.string())
                             if (body.has("data") && !body.isNull("data")) {
@@ -127,12 +153,16 @@ class MotDetailActivity : BaseActivity() {
                                         mOPerationServicesList.add(itemsData.data.operations[i])
                                     }
                                 }
-                                for (i in 0 until itemsData.data.kPartList.size) {
-                                    if (!(itemsData.data.kPartList[i].couponList == null || itemsData.data.kPartList[i].couponList.size == 0)) {
-                                        itemsData.data.kPartList[i].couponTitle = itemsData.data.kPartList[i].couponList[0].couponTitle
-                                        itemsData.data.kPartList[i].couponId = itemsData.data.kPartList[i].couponList[0].id
+                                if (isFromCart) {
+                                    mKPartServicesList.addAll(partListFromCart)
+                                } else if (itemsData.data.kPartList != null) {
+                                    for (i in 0 until itemsData.data.kPartList.size) {
+                                        if (!(itemsData.data.kPartList[i].couponList == null || itemsData.data.kPartList[i].couponList.size == 0)) {
+                                            itemsData.data.kPartList[i].couponTitle = itemsData.data.kPartList[i].couponList[0].couponTitle
+                                            itemsData.data.kPartList[i].couponId = itemsData.data.kPartList[i].couponList[0].id
+                                        }
+                                        mKPartServicesList.add(itemsData.data.kPartList[i])
                                     }
-                                    mKPartServicesList.add(itemsData.data.kPartList[i])
                                 }
                                 binndDataInRecyclerview()
 
@@ -151,7 +181,7 @@ class MotDetailActivity : BaseActivity() {
     private fun getminPriceForMotServicesl(mot_id: String, type: Int, serviceaveragetime: String) {
         val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
         val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
-        RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong(),mainCategoryId = main_category_id.toString())
+        RetrofitClient.client.getminPriceForMotServicesl(mot_id, type.toString(), selectedVehicleVersionID, getUserId(), serviceaveragetime, Constant.defaultDistance, SimpleDateFormat(Constant.dateformat_workshop, getLocale()).format(Date()), getLat(), getLong(), mainCategoryId = main_category_id.toString())
                 .onCall { _, response ->
                     response?.let {
                         if (response.isSuccessful) {
@@ -178,7 +208,7 @@ class MotDetailActivity : BaseActivity() {
 
 
     private fun binndDataInRecyclerview() {
-        button_proceed.visibility = View.GONE
+        button_proceed.visibility = View.VISIBLE
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
@@ -214,6 +244,7 @@ class MotDetailActivity : BaseActivity() {
             override fun onClick(view: View, position: Int) {
 
             }
+
             override fun onItemClick(view: View, position: Int) {
 
             }
@@ -228,12 +259,17 @@ class MotDetailActivity : BaseActivity() {
         genericAdapter = GenericAdapter<Models.Part>(this@MotDetailActivity, R.layout.item_sparepart_mot)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MotDetailActivity, PartList_Replacement::class.java)
-                intent.putExtra("n3_services_Id", mKPartServicesList[position].n3_service_id)
-                intent.putExtra("version_id", mKPartServicesList[position].version_id)
-                intent.putExtra("Mot_type", if (mKPartServicesList[position].mot_type.isNullOrBlank()) motServiceObject.type.toString() else mKPartServicesList[position].mot_type)
-                startActivityForResult(intent, 100)
-                selectitem_position = position
+              if(!isFromCart){
+                  val intent = Intent(this@MotDetailActivity, PartList_Replacement::class.java)
+                  intent.putExtra("n3_services_Id", mKPartServicesList[position].n3_service_id)
+                  intent.putExtra("version_id", mKPartServicesList[position].version_id)
+                  intent.putExtra("Mot_type", if (mKPartServicesList[position].mot_type.isNullOrBlank()) motServiceObject.type.toString() else mKPartServicesList[position].mot_type)
+                  startActivityForResult(intent, 100)
+                  selectitem_position = position
+              }
+
+
+
 
             }
 

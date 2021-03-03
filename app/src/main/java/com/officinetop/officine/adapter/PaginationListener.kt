@@ -4,9 +4,9 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class PaginationListener(@NonNull val lManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+abstract class PaginationListener(@NonNull val lManager: LinearLayoutManager, pageSize: Int = 10) : RecyclerView.OnScrollListener() {
 
-    private val PAGE_SIZE = 10
+    private val PAGE_SIZE = pageSize
 
     override fun onScrolled(@NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)

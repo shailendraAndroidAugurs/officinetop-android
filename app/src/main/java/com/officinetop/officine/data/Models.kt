@@ -1012,6 +1012,8 @@ object Models {
             val price: String?,
             @SerializedName("service_name")
             val serviceName: String,
+            @SerializedName("type")
+            val type: String,
             @SerializedName("service_description")
             val serviceDescription: String,
             @SerializedName("main_category_id")

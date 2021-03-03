@@ -43,7 +43,6 @@ import org.jetbrains.anko.AlertBuilder
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.okButton
-import org.json.JSONObject
 import java.math.BigDecimal
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -73,7 +72,7 @@ inline fun Context.hideKeyboard() {
 inline fun Context.getRotateAnimation(): Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
 
 
-inline fun Context.showInfoDialog(dialogMessage: String, cancelable:Boolean= true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
+inline fun Context.showInfoDialog(dialogMessage: String, cancelable: Boolean = true, noinline onOkClick: (() -> Unit?)? = null): AlertBuilder<DialogInterface> {
     val alert = alert {
         message = dialogMessage
         okButton { onOkClick?.let { it1 -> it1() } }
@@ -86,6 +85,7 @@ inline fun Context.showInfoDialog(dialogMessage: String, cancelable:Boolean= tru
 
 inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
     val alert = alert {
+
         message = dialogMessage
         positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
         negativeButton(getString(R.string.no)) { }
@@ -93,6 +93,18 @@ inline fun Context.showConfirmDialog(dialogMessage: String, noinline onOkClick: 
     alert.show()
     return alert
 }
+
+inline fun Context.showConfirmDialogWithTitle(dialogTitle: String, dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
+    val alert = alert {
+        title=dialogTitle
+        message = dialogMessage
+        positiveButton(getString(R.string.yes)) { onOkClick?.let { it1 -> it1() } }
+        negativeButton(getString(R.string.no)) { }
+    }
+    alert.show()
+    return alert
+}
+
 
 inline fun Context.showConfirmDialogForLogin(dialogMessage: String, noinline onOkClick: (() -> Unit?)?): AlertBuilder<DialogInterface> {
     val alert = alert {

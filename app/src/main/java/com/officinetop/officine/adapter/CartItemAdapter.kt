@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.officinetop.officine.MOT.MotDetailActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
@@ -21,6 +23,7 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.cart_items_layout.view.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.view.*
+import org.jetbrains.anko.intentFor
 import org.json.JSONObject
 
 class CartItemAdapter(private var context: Context, view: Button) : RecyclerView.Adapter<CartItemAdapter.CartViewHolder>() {
@@ -209,7 +212,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
             } else if (item.CartType == "SP") {
-
+                llMotSparePartLayout.visibility = View.GONE
                 if (item.serviceAssemblyProductDescription != null) {
                     productName.text = item.serviceAssemblyProductDescription.productName.takeIf { !it.isNullOrEmpty() }
                     productDescription.text = item.serviceAssemblyProductDescription.productDescription.takeIf { !it.isNullOrEmpty() }
@@ -309,13 +312,14 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-                if (item.partDetails != null && item.partDetails.size != 0) {
-                    partInfo.visibility = View.VISIBLE
-
+                if (item.partDetails != null && item.partDetails.size != 0 && item.serviceDetail != null) {
+                    // partInfo.visibility = View.VISIBLE
+                    partInfo.visibility = View.GONE
                 } else {
                     partInfo.visibility = View.GONE
                 }
-                partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
+                // partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
+                  partInfo.setOnClickListener { moveToMotDetailPageFromCart(item.partDetails as ArrayList<Models.Part>, item.serviceDetail) }
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
@@ -385,6 +389,24 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
                     } else {
                         layout_maintenance.visibility = View.GONE
+
+                        if (item.partDetails != null && item.partDetails.size != 0 && !item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("3")) {
+                            llMotSparePartLayout.visibility = View.GONE
+                            var motSparePartTotalPrices = 0.0
+                            for (part in item.partDetails) {
+                                if (!part.sellerPrice.isNullOrBlank()) {
+                                    if (!part.forPair.isNullOrBlank() && !part.forPair.equals("0"))
+                                        motSparePartTotalPrices += part.sellerPrice.toDouble() * 2
+                                    else motSparePartTotalPrices += part.sellerPrice.toDouble()
+                                }
+
+
+                            }
+
+                            tvMotSpareParttotalPrices.text = context.getString(R.string.prepend_euro_symbol_string, motSparePartTotalPrices.roundTo2Places().toString())
+                        } else
+                            llMotSparePartLayout.visibility = View.GONE
+
                     }
                 }
                 if (item.workshopDetail != null) {
@@ -547,6 +569,10 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val crServicesProductRating = itemView.cr_services_product_rating
         val tvServicesProductCount = itemView.tv_services_product_rating_count
 
+
+        val llMotSparePartLayout = itemView.ll_motSparePart
+        val tvMotSpareParttotalPrices = itemView.tv_motPartPrices
+
     }
 
 
@@ -623,6 +649,17 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
             }
 
         }
+
+    }
+
+    private fun moveToMotDetailPageFromCart(parts: ArrayList<Models.Part>, servicesDetailObj: Models.ServiceDetail) {
+        if (parts != null && parts.size != 0 && servicesDetailObj != null) {
+            val jsonString = Gson().toJson(parts)
+
+            context.startActivity(context.intentFor<MotDetailActivity>().putExtra("PartList", jsonString).putExtra("isFromCart", true).putExtra("ServiceDetail", servicesDetailObj))
+
+        }
+
 
     }
 

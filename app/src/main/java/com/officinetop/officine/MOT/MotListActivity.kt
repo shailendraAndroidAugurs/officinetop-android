@@ -133,6 +133,7 @@ class MotListActivity : BaseActivity() {
                 if(mServicesList!=null && mServicesList.size!=0){
                     val intent = Intent(this@MotListActivity, MotDetailActivity::class.java)
                     intent.putExtra("motObject", Gson().toJson(mServicesList[position]))
+                    intent.putExtra("isFromMotList", true)
                     startActivity(intent)
                 }
 

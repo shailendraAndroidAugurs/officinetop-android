@@ -41,7 +41,6 @@ class PartList_Replacement : BaseActivity() {
     private val PAGE_START = 0
     private var current_page = PAGE_START
     private var isLastPage = false
-    private var totalPage = 500
     private var isLoading = false
     private var genericAdapter: GenericAdapter<Models.Part>? = null
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -145,12 +144,6 @@ class PartList_Replacement : BaseActivity() {
         recycler_view.layoutManager = linearLayoutManager
         recycler_view.adapter = genericAdapter
 
-
-        /*  if (current_page == 0) {
-              recycler_view.smoothScrollToPosition(0)
-          } else {
-              recycler_view.smoothScrollToPosition(carMaintenanceServiceList.size-1)
-          }*/
         genericAdapter?.addItems(carMaintenanceServiceList)
 
 

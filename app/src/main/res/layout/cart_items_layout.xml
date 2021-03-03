@@ -353,24 +353,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_partInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/_20sdp"
-                        android:text="@string/part_info"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/lite_blue"
-                        android:textStyle="bold"
-                        android:visibility="gone">
-
-                    </TextView>
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/ll_motSparePart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -393,6 +375,28 @@
                         android:layout_weight="1"
                         android:gravity="center" />
                 </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_partInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:text="@string/detail"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/lite_blue"
+                        android:textStyle="bold"
+                        android:visibility="gone">
+
+                    </TextView>
+                </LinearLayout>
+
+
 
 
                 <LinearLayout

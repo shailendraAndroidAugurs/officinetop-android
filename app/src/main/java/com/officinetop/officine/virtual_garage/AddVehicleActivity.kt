@@ -1,4 +1,4 @@
- package com.officinetop.officine.virtual_garage
+package com.officinetop.officine.virtual_garage
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -57,7 +57,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
- //AX123YY, EN301MW licience nn
+//AX123YY, EN301MW licience nn
 class AddVehicleActivity : BaseActivity() {
     lateinit var progressDialog: ProgressDialog
     var isLoaded = false
@@ -71,8 +71,7 @@ class AddVehicleActivity : BaseActivity() {
 
     var myCar: Models.MyCarDataSet? = null
 
-     var carList: MutableList<Models.MyCarDataSet> = ArrayList()
-
+    var carList: MutableList<Models.MyCarDataSet> = ArrayList()
 
 
     var isForEdit = false
@@ -104,7 +103,7 @@ class AddVehicleActivity : BaseActivity() {
 
         myCar = intent.getSerializableExtra(Constant.Key.myCar) as Models.MyCarDataSet?
 
-        if(intent.hasExtra(Constant.car_list)) {
+        if (intent.hasExtra(Constant.car_list)) {
             val CarListString = intent.getStringExtra(Constant.car_list)
             val gson = GsonBuilder().create()
             carList = gson.fromJson(CarListString.toString(), Array<Models.MyCarDataSet>::class.java).toCollection(java.util.ArrayList<Models.MyCarDataSet>())
@@ -142,7 +141,7 @@ class AddVehicleActivity : BaseActivity() {
                 //Do you want to complete the car details to get personalized suggestions?
                 if (isForEdit && isLoggedIn())
                     editCarFromFields()
-                else{
+                else {
                     addCarFromFields()
 
                 }
@@ -155,18 +154,13 @@ class AddVehicleActivity : BaseActivity() {
             if (!isOnline()) {
                 showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
                 return@setOnClickListener
-            }
-
-           else if (plate_editText.text.length != 7) {
+            } else if (plate_editText.text.length != 7) {
                 showInfoDialog(getString(R.string.PleaseEnterValidLicensePlateNumber), true) {}
                 return@setOnClickListener
-            }
-
-           else if (!isAlphaNumeric(plate_editText.text.toString())) {
+            } else if (!isAlphaNumeric(plate_editText.text.toString())) {
                 showInfoDialog(getString(R.string.PleaseEnterValidLicensePlateNumber), true) {}
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 addFromPlate()
             }
 
@@ -400,21 +394,19 @@ class AddVehicleActivity : BaseActivity() {
     }
 
     private fun saveLocaldataOfAddedCar(carImagelogo: String) {
-        var procced : Boolean = false
-        Log.d("check_shared_date_local",getLocalCarDate()+"   "+ getLocalCarCount() )
-        if(isForEdit || isLoggedIn()){
+        var procced: Boolean = false
+        Log.d("check_shared_date_local", getLocalCarDate() + "   " + getLocalCarCount())
+        if (isForEdit || isLoggedIn()) {
             procced = true
-        }
-        else{
-            if(getLocalCarDate().equals(getCurrentdate()) && getLocalCarCount() >=3){
+        } else {
+            if (getLocalCarDate().equals(getCurrentDate()) && getLocalCarCount() >= 3) {
                 procced = false
-            }
-            else if(getLocalCarDate().equals("") || !getLocalCarDate().equals(getCurrentdate())){
-                saveLocalCarDate(getCurrentdate())
+            } else if (getLocalCarDate().equals("") || !getLocalCarDate().equals(getCurrentDate())) {
+                saveLocalCarDate(getCurrentDate())
                 saveLocalCarCount(1)
                 procced = true
 
-            }else if(getLocalCarDate().equals(getCurrentdate())){
+            } else if (getLocalCarDate().equals(getCurrentDate())) {
                 var currentCount = getLocalCarCount()
                 currentCount++
                 saveLocalCarCount(currentCount)
@@ -422,9 +414,9 @@ class AddVehicleActivity : BaseActivity() {
             }
         }
 
-        Log.d("check_shared_date_local",getLocalCarDate()+"   "+ getLocalCarCount() )
+        Log.d("check_shared_date_local", getLocalCarDate() + "   " + getLocalCarCount())
 
-        if(procced){
+        if (procced) {
             val carDetails = JsonObject()
             val manufacturerIndex = spinner_manufacturer.selectedItemPosition
             val versionIndex = spinner_version.selectedItemPosition
@@ -516,7 +508,7 @@ class AddVehicleActivity : BaseActivity() {
             val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
             val carIntent = Intent()
             carIntent.putExtra(Constant.Key.myCar, car as Serializable)
-            CallKromedaApi(finalCarVersion[versionIndex].idVehicle)
+            callKromedaApi(finalCarVersion[versionIndex].idVehicle)
             if (isForEdit) {
                 showInfoDialog(getString(R.string.CarDetailSavedSuccessfully), false) {
                     setResult(Activity.RESULT_OK, carIntent)
@@ -541,8 +533,7 @@ class AddVehicleActivity : BaseActivity() {
             }
 
 
-        }
-        else{
+        } else {
             showInfoDialog(getString(R.string.more_than_3_car_added))
         }
 
@@ -988,11 +979,11 @@ class AddVehicleActivity : BaseActivity() {
                 if (isStatusCodeValid(body)) {
                     carVersions.clear()
                     fuelTypeList.clear()
-                    val dataset = getDataSetArrayFromResponse(body)
+                    val jsonArrayResponse = getDataSetArrayFromResponse(body)
 
-                    for (i in 0 until dataset.length()) {
+                    for (i in 0 until jsonArrayResponse.length()) {
                         Log.d("AddVehicleActivity", "onResponse: forloop")
-                        val carVersion = dataset.getJSONObject(i)
+                        val carVersion = jsonArrayResponse.getJSONObject(i)
                         val version = Gson().fromJson<Models.CarVersion>(carVersion.toString(), Models.CarVersion::class.java)
                         Log.d("AddVehicleActivity", "onResponse: forloop ${version}")
 
@@ -1106,9 +1097,9 @@ class AddVehicleActivity : BaseActivity() {
         }
 
 
-        if (isForPlateno||isForEdit) {
+        if (isForPlateno || isForEdit) {
             Log.d("isForPlateno :  ", isForPlateno.toString())
-            setNotEditable_SearchFromPlatno()
+            setNotEditableSearchFromPlatno()
         }
 
     }
@@ -1145,14 +1136,6 @@ class AddVehicleActivity : BaseActivity() {
 
         showOnlineSnack(progressDialog)
         val token = getBearerToken()
-/*
-        if (getStoredToken()?.isEmpty()!!) {
-            showInfoDialog("You have been logged out. Please login again!!!", false) {
-                startActivity(intentFor<LoginActivity>().clearTop().clearTask())
-                finish()
-            }
-            return
-        }*/
 
         if (getUserId().isNullOrBlank()) {
             if (!isOnline()) {
@@ -1177,21 +1160,19 @@ class AddVehicleActivity : BaseActivity() {
                                 val dataSet = getDataSetArrayFromResponse(body)
                                 if (!dataSet.isEmpty()) {
                                     val last = (dataSet[dataSet.length() - 1].toString())
-                                    if(isForEdit || isLoggedIn()){
+                                    if (isForEdit || isLoggedIn()) {
                                         saveLocalCarInJSON(last)
                                         handleAddCarResponse(body)
-                                    }
-                                    else{
-                                        if(getLocalCarDate().equals(getCurrentdate()) && getLocalCarCount() >=3){
+                                    } else {
+                                        if (getLocalCarDate().equals(getCurrentDate()) && getLocalCarCount() >= 3) {
                                             showInfoDialog(getString(R.string.more_than_3_car_added))
-                                        }
-                                        else if(getLocalCarDate().equals("") || !getLocalCarDate().equals(getCurrentdate())){
-                                            saveLocalCarDate(getCurrentdate())
+                                        } else if (getLocalCarDate().equals("") || !getLocalCarDate().equals(getCurrentDate())) {
+                                            saveLocalCarDate(getCurrentDate())
                                             saveLocalCarCount(1)
                                             saveLocalCarInJSON(last)
                                             handleAddCarResponse(body)
 
-                                        }else if(getLocalCarDate().equals(getCurrentdate())){
+                                        } else if (getLocalCarDate().equals(getCurrentDate())) {
                                             var currentCount = getLocalCarCount()
                                             currentCount++
                                             saveLocalCarCount(currentCount)
@@ -1200,8 +1181,7 @@ class AddVehicleActivity : BaseActivity() {
                                         }
                                     }
 
-                                }
-                                else{
+                                } else {
                                     handleAddCarResponse(body)
                                 }
 
@@ -1288,15 +1268,7 @@ class AddVehicleActivity : BaseActivity() {
                                 }
                                 isCancelable = false
                             }.show()
-
-
-
                             saveLocalCarInJSON(json)
-//                            alert {
-//                                message = "Car added successfully"
-//                                okButton { finish() }
-//                            }.show()
-
 
                         } else {
                             try {
@@ -1353,7 +1325,7 @@ class AddVehicleActivity : BaseActivity() {
             val last = (dataSet[dataSet.length() - 1].toString())
             val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
             carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
-            CallKromedaApi(lastCar.carVersionModel.idVehicle)
+            callKromedaApi(lastCar.carVersionModel.idVehicle)
         }
 
         return carIntent
@@ -1520,15 +1492,14 @@ class AddVehicleActivity : BaseActivity() {
 
     private fun getEmptyAdapter() = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOf())
 
-    private fun setNotEditable_SearchFromPlatno() {
-        Log.d("NonEditableCall", "NonEditableCall")
+    private fun setNotEditableSearchFromPlatno() {
         spinner_manufacturer.isSpinnerEnable = false
         spinner_model.isSpinnerEnable = false
         spinner_fuel.isSpinnerEnable = false
         spinner_version.isSpinnerEnable = false
     }
 
-    private fun CallKromedaApi(versionId: String) {
+    private fun callKromedaApi(versionId: String) {
         RetrofitClient.client.getCarSpareKromedaCall(versionId, "Android")
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -1572,10 +1543,10 @@ class AddVehicleActivity : BaseActivity() {
 
     }
 
-    private  fun getCurrentdate():String {
+    private fun getCurrentDate(): String {
         val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = targetFormat.format(Date())
-        return  currentDate
+        return currentDate
     }
 
 }

@@ -69,6 +69,7 @@ import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
 import java.net.SocketTimeoutException
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -107,12 +108,12 @@ inline fun Context.loadImageProfile(url: String?, imageView: ImageView) {
 inline fun Context.loadImage(url: String?, imageView: ImageView) {
     try {
 
-if(!url.isNullOrBlank())
-        Glide.with(this.applicationContext)
-                .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_image_placeholder).error(R.drawable.no_image_placeholder))
-                .load(url)
-                .thumbnail(0.7f)
-                .into(imageView)
+        if (!url.isNullOrBlank())
+            Glide.with(this.applicationContext)
+                    .setDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_image_placeholder).error(R.drawable.no_image_placeholder))
+                    .load(url)
+                    .thumbnail(0.7f)
+                    .into(imageView)
     } catch (e: Exception) {
         e.printStackTrace()
     }
@@ -120,12 +121,12 @@ if(!url.isNullOrBlank())
 
 inline fun Context.loadImage(url: String?, imageView: ImageView, placeholderImage: Int = R.drawable.no_image_placeholder) {
     try {
-        if(!url.isNullOrBlank())
-        Glide.with(this.applicationContext)
-                .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
-                .load(url)
-                .thumbnail(0.7f)
-                .into(imageView)
+        if (!url.isNullOrBlank())
+            Glide.with(this.applicationContext)
+                    .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
+                    .load(url)
+                    .thumbnail(0.7f)
+                    .into(imageView)
     } catch (e: GlideException) {
     }
 }
@@ -140,12 +141,12 @@ inline fun Context.loadImageWithName(name: String?, imageView: ImageView, placeh
         } else {
             imageURL = baseURL + name
         }
-        if(!imageURL.isNullOrBlank())
-        Glide.with(this.applicationContext)
-                .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
-                .load(imageURL).centerInside()
-                .thumbnail(0.7f)
-                .into(imageView)
+        if (!imageURL.isNullOrBlank())
+            Glide.with(this.applicationContext)
+                    .setDefaultRequestOptions(RequestOptions().placeholder(placeholderImage).error(placeholderImage))
+                    .load(imageURL).centerInside()
+                    .thumbnail(0.7f)
+                    .into(imageView)
     } catch (e: GlideException) {
 
     }
@@ -349,17 +350,38 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
             }
 
             if (cartData.serviceDetail != null && cartData.serviceDetail.mainCategoryId != null && cartData.serviceDetail.mainCategoryId.equals("12") &&
-                    cartData.partDetails != null   && cartData.partDetails.size!=0 && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
+                    cartData.partDetails != null && cartData.partDetails.size != 0 && cartData.partDetails[0] != null && !cartData.partDetails[0].sellerPrice.isNullOrBlank()) {
 
-              if(cartData.partDetails[0].forPair!=null && cartData.partDetails[0].forPair.equals("")&&cartData.partDetails[0].forPair.equals("0") ){
-                  productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
-                  productPrice+=cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() *2
-              }else{
-                  productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
-                  productPrice+=cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
-              }
+                if (cartData.partDetails[0].forPair != null && cartData.partDetails[0].forPair.equals("") && cartData.partDetails[0].forPair.equals("0")) {
+                    productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() * 2
+                    productPrice += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places() * 2
+                } else {
+                    productPriceMaintenance += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
+                    productPrice += cartData.partDetails[0].sellerPrice.toDouble().roundTo2Places()
+                }
 
+            } else if (cartData.serviceDetail != null && cartData.serviceDetail.mainCategoryId != null &&
+                    cartData.serviceDetail.mainCategoryId.equals("3") &&
+                    cartData.partDetails != null && cartData.partDetails.size != 0) {
+
+
+                for (part in cartData.partDetails) {
+                    if (!part.sellerPrice.isNullOrBlank()) {
+                        if (!part.forPair.isNullOrBlank() && !part.forPair.equals("0")) {
+                            productPriceMaintenance += part.sellerPrice.toDouble().roundTo2Places() * 2
+                            productPrice += part.sellerPrice.toDouble().roundTo2Places() * 2
+                        } else {
+                            productPriceMaintenance += part.sellerPrice.toDouble().roundTo2Places()
+                            productPrice += part.sellerPrice.toDouble().roundTo2Places()
+                        }
+                    }
+
+
+                }
             }
+
+
+
             if (!cartData.afterDiscountPrice.isNullOrBlank() && cartData.afterDiscountPrice != "null")
                 servicesPriceWithVatDiscount += cartData.afterDiscountPrice.toDouble()
 
@@ -424,10 +446,10 @@ fun calculateCartItemViews(view: View, context: Context?, cartData: Models.CartD
     }
 
     context?.let {
-        Log.d("productPrices 12",productPrice.toString())
+        Log.d("productPrices 12", productPrice.toString())
 
 
-        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPriceWithVatDiscount + servicesPriceWithVatDiscount + totalPFU+productPriceMaintenance) - totalDiscount).roundTo2Places().toString())
+        view.cart_total_price.text = context.getString(R.string.prepend_euro_symbol_string, ((productPriceWithVatDiscount + servicesPriceWithVatDiscount + totalPFU + productPriceMaintenance) - totalDiscount).roundTo2Places().toString())
 
         view.cart_total_item_price.text = context.getString(R.string.prepend_euro_symbol_string, (productPrice.roundTo2Places() + totalPFU).roundTo2Places().toString())
         view.cart_total_service_price.text = context.getString(R.string.prepend_euro_symbol_string, servicePrice.roundTo2Places().toString())
@@ -565,6 +587,20 @@ fun getDateFor(days: Int): String? {
     cal.add(Calendar.DATE, days)
     return sdf.format(cal.time)//new date
 }
+
+fun getDateWithDayAddInDate(days: Int, oldDate: String): String? {
+    val sdf = SimpleDateFormat("yyy-MM-dd")
+    val cal = Calendar.getInstance()
+
+    try {
+        cal.time = sdf.parse(oldDate)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    cal.add(Calendar.DATE, days)
+    return sdf.format(cal.time)//new date
+}
+
 
 const val unspecified_error = "Unspecified error"
 
@@ -1075,8 +1111,6 @@ fun Context.removeFromFavoriteSendRquest(context: Context, productId: String, Iv
         }
     }
 }
-
-
 
 
 fun Context.getLocale(): Locale {

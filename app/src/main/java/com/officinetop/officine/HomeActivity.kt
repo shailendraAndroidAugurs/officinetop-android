@@ -381,16 +381,38 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }.forEach {
 
                 toolbar_car_subtitle.visibility = View.VISIBLE
-                setToolbarValues(it)
+                if (it.id != getSavedSelectedVehicleID() && isLoggedIn() && getIsAvailableDataInCart()) {
+                    showConfirmDialog(getString(R.string.cart_data_removed)) { deleteCartData(it) }
+
+                } else {
+                    setToolbarValues(it)
+                }
                 hasAddedCar = true
             }
 
             hasSelectedCar = carList.any { it.id == getSavedSelectedVehicleID() }
 
             if (!hasSelectedCar) {
-                setToolbarValues(carList.find { it.selected == "1" })
+
+
+                if (carList.find { it.selected == "1" }?.id ?: 0 != getSavedSelectedVehicleID() && isLoggedIn() && getIsAvailableDataInCart()) {
+                    showConfirmDialog(getString(R.string.cart_data_removed)) { deleteCartData(carList.find { it.selected == "1" }) }
+
+                } else {
+                    setToolbarValues(carList.find { it.selected == "1" })
+                }
+
+
+
+
                 if (carList.find { it.selected == "1" } == null) {
-                    setToolbarValues(carList.last())
+                    if (carList.last().id != getSavedSelectedVehicleID() && isLoggedIn() && getIsAvailableDataInCart()) {
+                        showConfirmDialog(getString(R.string.cart_data_removed)) { deleteCartData(carList.last()) }
+
+                    } else {
+                        setToolbarValues(carList.last())
+                    }
+
                 }
             }
 
@@ -469,9 +491,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     view.item_delete_car.setOnClickListener {
 
-                        if (isLoggedIn())
-                            deleteCar(car.id)
-                        else {
+                        if (isLoggedIn()) {
+                            if (car.id.equals(getSavedSelectedVehicleID()) && getIsAvailableDataInCart()) {
+                                showConfirmDialogWithTitle(getString(R.string.cart_data_removed_title), getString(R.string.Delete_car_from_virtual_garage_home)) { deleteCartDataWithCarDeleted(car) }
+                            } else
+                                deleteCar(car.id)
+                        } else {
                             alert {
                                 message = "Delete this car from virtual garage?"
                                 yesButton {
@@ -500,8 +525,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
 
                     view.item_my_car_small_layout.setOnClickListener {
+                        if (car.id != getSavedSelectedVehicleID() && isLoggedIn() && getIsAvailableDataInCart()) {
+                            showConfirmDialog(getString(R.string.cart_data_removed)) { deleteCartData(car) }
 
-                        setToolbarValues(car)
+                        } else {
+                            setToolbarValues(car)
+                        }
+
 
                         dismiss()
 
@@ -542,7 +572,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     val intent = Intent(this@HomeActivity, AddVehicleActivity::class.java)
                     intent.putExtra(Constant.car_list, jsonString)
-                    startActivity(intent)
+                    startActivityForResult(intent, Constant.RC.onCarAdded)
                 }
                 dismiss()
             }
@@ -619,9 +649,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             }
 
-            if (fromAddNewCar) {
-                getSelectedCarAccordingToUser()
-            }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("exception", e.toString())
@@ -692,14 +719,12 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (requestCode == Constant.RC.onCarEdited) {
                 getSelectedCarAccordingToUser()
             } else if (requestCode == Constant.RC.onCarAdded) {
-
-                Log.d("newCarAdded", "yes From OnActivityResult")
                 try {
                     if (data != null && data.extras != null) {
                         val lastCar = data.extras?.getSerializable(Constant.Key.myCar)!! as Models.MyCarDataSet
 
                         if (!getIsAvailableDataInCart()) {
-                            setToolbarValues(lastCar,true)
+                            setToolbarValues(lastCar, true)
                         }
 
 
@@ -719,46 +744,52 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
 
-    fun deleteCar(carID: String) {
-
-        alert {
-            message = getString(R.string.Delete_car_from_virtual_garage)
-            positiveButton(getString(R.string.yes)) {
-                getBearerToken()?.let {
-                    val progressDialog = getProgressDialog()
-                    progressDialog.show()
-
-                    if (!showOnlineSnack(progressDialog))
-                        return@let
-                    RetrofitClient.client.deleteCar(carID, it).enqueue(object : Callback<Models.MyCar> {
-                        override fun onFailure(call: Call<Models.MyCar>, t: Throwable) {
-                            progressDialog.dismiss()
-                            toast(t.message!!)
-                        }
-
-                        override fun onResponse(call: Call<Models.MyCar>, response: Response<Models.MyCar>) {
-                            val responseBody = response.body()
-
-                            progressDialog.dismiss()
-                            Log.d("deleteCar", "onResponse: $responseBody")
-
-
-                            if (response.code() == 200) {
-                                progressDialog.dismiss()
-                                setCarList(responseBody)
-                            }
-                        }
-
-                    })
+    fun deleteCar(carID: String, shownAlert: Boolean = true) {
+        if (shownAlert) {
+            alert {
+                message = getString(R.string.Delete_car_from_virtual_garage)
+                positiveButton(getString(R.string.yes)) {
+                    carDeletedApi(carID)
                 }
+                noButton { }
             }
-            noButton { }
+                    .show()
+        } else {
+            carDeletedApi(carID)
         }
-                .show()
 
 
     }
 
+    private fun carDeletedApi(carID: String) {
+        getBearerToken()?.let {
+            val progressDialog = getProgressDialog()
+            progressDialog.show()
+
+            if (!showOnlineSnack(progressDialog))
+                return@let
+            RetrofitClient.client.deleteCar(carID, it).enqueue(object : Callback<Models.MyCar> {
+                override fun onFailure(call: Call<Models.MyCar>, t: Throwable) {
+                    progressDialog.dismiss()
+                    toast(t.message!!)
+                }
+
+                override fun onResponse(call: Call<Models.MyCar>, response: Response<Models.MyCar>) {
+                    val responseBody = response.body()
+
+                    progressDialog.dismiss()
+                    Log.d("deleteCar", "onResponse: $responseBody")
+
+
+                    if (response.code() == 200) {
+                        progressDialog.dismiss()
+                        setCarList(responseBody)
+                    }
+                }
+
+            })
+        }
+    }
 
     private fun syncLastAddedCar() {
 
@@ -920,6 +951,30 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
 
     }
+
+    private fun deleteCartDataWithCarDeleted(car: Models.MyCarDataSet?) {
+        getBearerToken()?.let {
+            RetrofitClient.client.removeCart(it)
+                    .enqueue(object : Callback<ResponseBody> {
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            response.body()?.string()?.let { body ->
+                                if (isStatusCodeValid(body)) {
+
+                                    saveIsAvailableDataInCart(false)
+                                    deleteCar(car!!.id, false)
+                                }
+
+
+                            }
+                        }
+
+
+                    })
+        }
+
+    }
+
 
     override fun onBackPressed() {
         if (supportFragmentManager.findFragmentByTag("Home") is FragmentHome || isCurrentFragmentHome()) {
