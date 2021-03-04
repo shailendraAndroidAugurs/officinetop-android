@@ -135,6 +135,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         search_view_layout.visibility = View.GONE
         toolbar_title.text = getString(R.string.Workshop)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         getLocation()
         filter_btn.setOnClickListener { filterDialog.show() }
         sort_btn.setOnClickListener { sortDialog.show() }
@@ -169,6 +170,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 quotesServiceQuotesInsertedId = intent.getStringExtra(Constant.Path.serviceQuotesInsertedId)
             if (intent.hasExtra(Constant.Path.mainCategoryId))
                 quotesMainCategoryId = intent.getStringExtra(Constant.Path.mainCategoryId)
+            if (intent.hasExtra(Constant.Path.categoryId)) {
+                serviceID = intent.getStringExtra(Constant.Path.categoryId).toInt()
+            }
+
+            if (intent.hasExtra(Constant.Path.qutoesUserDescription)) {
+                qutoesUserDescription = intent.getStringExtra(Constant.Path.qutoesUserDescription)
+            }
+            if (intent.hasExtra(Constant.Path.qutoesUserAttachImage)) {
+                qutoesUserImage = intent.getStringExtra(Constant.Path.qutoesUserAttachImage)
+            }
         } else if (intent.hasExtra(Constant.Path.washServiceDetails)) {
             val serviceDetail = intent.getSerializableExtra(Constant.Path.washServiceDetails) as Models.ServiceCategory
             serviceID = serviceDetail.id!!
@@ -219,18 +230,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     selectedFormattedDate = dateFormat.format(DeleviryDate)
                 }
             }
-        } else if (isQuotes) {
-            if (intent.hasExtra(Constant.Path.categoryId)) {
-                serviceID = intent.getStringExtra(Constant.Path.categoryId).toInt()
-            }
-
-            if (intent.hasExtra(Constant.Path.qutoesUserDescription)) {
-                qutoesUserDescription = intent.getStringExtra(Constant.Path.qutoesUserDescription)
-            }
-            if (intent.hasExtra(Constant.Path.qutoesUserAttachImage)) {
-                qutoesUserImage = intent.getStringExtra(Constant.Path.qutoesUserAttachImage)
-            }
-
         } else if (isCarMaintenanceService) {
             if (intent.hasExtra(Constant.Path.serviceID)) {
                 multipleServiceIdOfCarMaintenance = intent.getStringExtra(Constant.Path.serviceID)
@@ -302,6 +301,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         }
 
         SelectedCalendarDateIntial = selectedFormattedDate
+        defaultCalendarShow()
         createFilterDialog()
         createSortDialog()
         getCalendarMinPriceRange(selectedFormattedDate)
@@ -374,18 +374,29 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         for (i in 0 until dataSet.length()) {
                             val serviceCategory = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
                             arrayList.add(serviceCategory)
-                            calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
+
+
+                            if (calendarPriceMap.containsKey(arrayList[i].date))
+                                calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
+
+                           var calendarPrice= calendarDetailList.find { it.date.contains(arrayList[i].date)}
+                            if ( calendarPrice != null) {
+                               var index= calendarDetailList.indexOf(calendarPrice)
+                                calendarDetailList.get(index).minPrice = arrayList[i].minPrice
+                            }
                         }
-                        calendarDetailList.addAll(arrayList)
-                        if (current_page == 0) {
-                            setUpCalendarPrices()
-                        } else {
-                            calendarAdapter.notifyDataSetChanged()
-                            isLoading = false
+
+                        /* calendarDetailList.addAll(arrayList)
+                         if (current_page == 0) {
+                             setUpCalendarPrices()
+                         } else {
+                             calendarAdapter.notifyDataSetChanged()
+                             isLoading = false
 
 
-                        }
-
+                         }*/
+                        calendarAdapter.notifyDataSetChanged()
+                        isLoading = false
 
                     } else {
                         showInfoDialog(getMessageFromJSON(it)) {
@@ -449,24 +460,27 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             }
         }
         linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation=LinearLayout.HORIZONTAL
+        linearLayoutManager.orientation = LinearLayout.HORIZONTAL
         horizontal_calendar_view.layoutManager = linearLayoutManager
         horizontal_calendar_view.adapter = calendarAdapter
         horizontal_calendar_view.addItemDecoration(DividerItemDecoration(this,
                 DividerItemDecoration.HORIZONTAL))
 
         if (this::calendarAdapter.isInitialized) {
-            horizontal_calendar_view.addOnScrollListener(object : PaginationListener(linearLayoutManager, 5) {
+            horizontal_calendar_view.addOnScrollListener(object : PaginationListener(linearLayoutManager, 5, current_page + 1) {
 
                 override fun loadMoreItems() {
                     isLoading = true
                     current_page += 5
                     if (current_page <= totalPage) {
                         val dateForPagination = getDateWithDayAddInDate(current_page, SelectedCalendarDateIntial)
-                        if (!dateForPagination.isNullOrBlank()){
+                        if (!dateForPagination.isNullOrBlank()) {
                             getCalendarMinPriceRange(dateForPagination)
+
                         }
 
+                    }else{
+                        stopLoading(true)
                     }
 
                 }
@@ -518,6 +532,10 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     .putExtra("cartItem", cartItem)
                     .putExtra("isCarWash", isCarWash)
                     .putExtra("mot_type", mot_type)
+                    .putExtra(Constant.Path.qutoesUserDescription, qutoesUserDescription)
+                    .putExtra(Constant.Path.qutoesUserAttachImage, qutoesUserImage)
+
+
             )
         }
     }
@@ -989,5 +1007,19 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                         setWorkshopValues(response)
                     }
                 }
+    }
+
+    private fun defaultCalendarShow() {
+
+        val sdf = SimpleDateFormat("yyy-MM-dd")
+        for (i in 0..29) {
+            val cal = Calendar.getInstance()
+            cal.time = sdf.parse(SelectedCalendarDateIntial)
+            cal.add(Calendar.DATE, i)
+
+            calendarDetailList.add(Models.CalendarPrice(sdf.format(cal.time)))
+
+        }
+        setUpCalendarPrices()
     }
 }

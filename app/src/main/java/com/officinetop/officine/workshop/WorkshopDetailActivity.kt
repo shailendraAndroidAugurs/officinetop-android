@@ -923,7 +923,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(), selected_date = selectedDateFilter, userid = getUserId(), mainCategoryId = mainCategoryId, workshopUsersId = workshopUsersId.toString(), services = maintenanceServiceJson, services_price = servicesPrice, service_average_time = serviceAveragetime).enqueue(callback)
         else if (isQuotesService)
             RetrofitClient.client.getServiceQuotesPackageDetail(workshopCategoryId, quotesWorkshopUsersDaysId, selectedDateFilter, quotesServiceQuotesInsertedId,
-                    getSavedSelectedVehicleID(), quotesMainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
+                    getSavedSelectedVehicleID(), mainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
                     ?: "", quotesServicesAvarageTime, maxAppointment = maxAppointment).enqueue(callback)
         else if (isMotService)
             RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), motType, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId, mainCategoryId).enqueue(callback)
@@ -1407,7 +1407,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     "&special_condition_id=" + specialConditionId + "&temp_slot_id=" + slotId + "&text=" + qutoesUserDescription + "&images=" + images)
 
             val serviceQuotesBooking = RetrofitClient.client.serviceQuotesBooking(
-                    workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), quotesMainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
+                    workshopCategoryId.toRequestBody(), selectedDateFilter.toRequestBody(), quotesServiceQuotesInsertedId.toRequestBody(), mainCategoryId.toRequestBody(), getSavedSelectedVehicleID().toRequestBody(),
                     workshopUsersId.toString().toRequestBody(), bookingStartTime.toRequestBody(), packageID.toString().toRequestBody(), getOrderId().toRequestBody(), getBearerToken()
                     ?: "", workshopCouponId.toRequestBody(), endTime.toRequestBody(), getSelectedCar()?.carVersionModel?.idVehicle!!.toRequestBody(),
                     specialConditionId.toRequestBody(), slotId.toRequestBody(), discountType.toRequestBody(), qutoesUserDescription.toRequestBody(), images = imageList)

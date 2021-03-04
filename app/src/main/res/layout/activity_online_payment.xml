@@ -18,11 +18,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
             <LinearLayout
                 android:id="@+id/ll_container_payment"
                 android:layout_width="match_parent"
@@ -30,12 +36,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_20sdp">
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
+
 
 
                 <TextView
@@ -616,18 +617,7 @@
 
             </LinearLayout>
 
-            <WebView
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
-            <ProgressBar
-                android:id="@+id/progress_bar_webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:visibility="gone" />
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </LinearLayout>

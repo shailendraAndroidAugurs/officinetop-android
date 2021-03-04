@@ -8,7 +8,7 @@
         android:layout_height="wrap_content">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/_10sdp"
@@ -16,35 +16,56 @@
             android:orientation="vertical"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rv_editkm"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/theme_orange"
-                android:text="@string/edit"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
+                android:layout_below="@+id/text_car">
 
-            <EditText
-                android:id="@+id/ed_search_km"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/shape_border_gray"
-                android:imeOptions="actionSend"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLines="5"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:visibility="visible"
-                app:layout_constraintEnd_toStartOf="@+id/btn_edit"
-                app:layout_constraintStart_toEndOf="@+id/text_km"
-                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
+                <TextView
+                    android:id="@+id/text_km"
+                    style="@style/TextViewNormal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:text="@string/current_km"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <EditText
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/ed_search_km"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/shape_border_gray"
+                    android:imeOptions="actionSend"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLines="5"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_edit"
+                    app:layout_constraintStart_toEndOf="@+id/text_km" />
+
+                <Button
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@color/theme_orange"
+                    android:text="@string/edit"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <LinearLayout
@@ -98,31 +119,20 @@
                 android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/text_km"
-                style="@style/TextViewNormal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_10sdp"
-                android:text="@string/current_km"
-                android:textColor="@color/black"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_carcondition" />
 
             <TextView
                 android:id="@+id/text_car"
                 style="@style/TextViewNormal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="center"
+
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="@string/Smart_solution_withCar"
                 android:textColor="@color/black"
@@ -134,16 +144,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_mot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rv_editkm"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/gray"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_search_km" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
 
         <com.google.android.material.appbar.AppBarLayout

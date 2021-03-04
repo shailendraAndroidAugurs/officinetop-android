@@ -115,15 +115,18 @@ class MotDetailActivity : BaseActivity() {
                 val gson = GsonBuilder().create()
                 partListFromCart = gson.fromJson(jsonString.toString(), Array<Models.Part>::class.java).toCollection(java.util.ArrayList<Models.Part>())
             }
-            motServiceDetailObject = Gson().fromJson<Models.ServiceDetail>(intent.extras!!.getString("ServiceDetail"), Models.ServiceDetail::class.java)
-            tv_title.text = motServiceDetailObject.serviceName
-            tv_description.text = motServiceDetailObject.serviceDescription
-            main_category_id = motServiceDetailObject.mainCategoryId?.toInt()!!
-            if (isOnline()) {
-                motDetailService(motServiceDetailObject.serviceId, motServiceDetailObject.type.toInt())
-            } else {
-                showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            motServiceDetailObject = intent.extras!!.getSerializable("ServiceDetail") as Models.ServiceDetail
+            if (motServiceDetailObject != null) {
+                tv_title.text = motServiceDetailObject.serviceName
+                tv_description.text = motServiceDetailObject.serviceDescription
+                main_category_id = motServiceDetailObject.mainCategoryId?.toInt()!!
+                if (isOnline()) {
+                    motDetailService(motServiceDetailObject.serviceId, motServiceDetailObject.type.toInt())
+                } else {
+                    showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+                }
             }
+
 
         }
 
@@ -137,7 +140,7 @@ class MotDetailActivity : BaseActivity() {
         RetrofitClient.client.getmotserviceDetail(mot_id, type.toString(), selectedVehicleVersionID, getUserId())
                 .onCall { _, response ->
                     response?.let {
-                      if(!isFromCart) { progress_bar.visibility = View.GONE}
+                        progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
                             val body = JSONObject(response.body()?.string())
                             if (body.has("data") && !body.isNull("data")) {
@@ -208,7 +211,8 @@ class MotDetailActivity : BaseActivity() {
 
 
     private fun binndDataInRecyclerview() {
-        button_proceed.visibility = View.VISIBLE
+        if (!isFromCart)
+            button_proceed.visibility = View.VISIBLE
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
@@ -259,16 +263,14 @@ class MotDetailActivity : BaseActivity() {
         genericAdapter = GenericAdapter<Models.Part>(this@MotDetailActivity, R.layout.item_sparepart_mot)
         genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-              if(!isFromCart){
-                  val intent = Intent(this@MotDetailActivity, PartList_Replacement::class.java)
-                  intent.putExtra("n3_services_Id", mKPartServicesList[position].n3_service_id)
-                  intent.putExtra("version_id", mKPartServicesList[position].version_id)
-                  intent.putExtra("Mot_type", if (mKPartServicesList[position].mot_type.isNullOrBlank()) motServiceObject.type.toString() else mKPartServicesList[position].mot_type)
-                  startActivityForResult(intent, 100)
-                  selectitem_position = position
-              }
-
-
+                if (!isFromCart) {
+                    val intent = Intent(this@MotDetailActivity, PartList_Replacement::class.java)
+                    intent.putExtra("n3_services_Id", mKPartServicesList[position].n3_service_id)
+                    intent.putExtra("version_id", mKPartServicesList[position].version_id)
+                    intent.putExtra("Mot_type", if (mKPartServicesList[position].mot_type.isNullOrBlank()) motServiceObject.type.toString() else mKPartServicesList[position].mot_type)
+                    startActivityForResult(intent, 100)
+                    selectitem_position = position
+                }
 
 
             }

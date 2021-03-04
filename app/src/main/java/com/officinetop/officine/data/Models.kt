@@ -185,9 +185,9 @@ object Models {
     //"date":"2019-06-07","price":100
     data class CalendarPrice(
             @SerializedName("date")
-            val date: String = "",
+            var date: String = "",
             @SerializedName("price")
-            val minPrice: String = "0.0"
+            var minPrice: String = "0.0"
     ) : Serializable
 
     data class ProductDetail(
