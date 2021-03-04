@@ -313,8 +313,8 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
 
                 if (item.partDetails != null && item.partDetails.size != 0 && item.serviceDetail != null) {
-                    // partInfo.visibility = View.VISIBLE
-                    partInfo.visibility = View.GONE
+                     partInfo.visibility = View.VISIBLE
+
                 } else {
                     partInfo.visibility = View.GONE
                 }
@@ -391,7 +391,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         layout_maintenance.visibility = View.GONE
 
                         if (item.partDetails != null && item.partDetails.size != 0 && !item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("3")) {
-                            llMotSparePartLayout.visibility = View.GONE
+                            llMotSparePartLayout.visibility = View.VISIBLE
                             var motSparePartTotalPrices = 0.0
                             for (part in item.partDetails) {
                                 if (!part.sellerPrice.isNullOrBlank()) {

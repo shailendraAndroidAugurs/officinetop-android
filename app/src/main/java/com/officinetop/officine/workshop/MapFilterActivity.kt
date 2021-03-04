@@ -60,7 +60,8 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var motType = ""
     private var calendarPriceMap: HashMap<String, String> = HashMap()
     private var workshopCategoryDetail = ""
-
+    var qutoesUserDescription = ""
+    var qutoesUserImage = ""
     // set location callback
     private var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
@@ -207,6 +208,12 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
         }
+        if (intent.hasExtra(Constant.Path.qutoesUserDescription)) {
+            qutoesUserDescription = intent.getStringExtra(Constant.Path.qutoesUserDescription)
+        }
+        if (intent.hasExtra(Constant.Path.qutoesUserAttachImage)) {
+            qutoesUserImage = intent.getStringExtra(Constant.Path.qutoesUserAttachImage)
+        }
 
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -229,7 +236,7 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 if (jsondata != null) {
                     val latitude: String = jsondata.getDouble("latitude").toString()
                     val longitude: String = jsondata.getDouble("longitude").toString()
-                    var workshopPrices = jsondata.get("services_price")
+                    var workshopPrices =if(jsondata.has("services_price"))  jsondata.get("services_price") else "null"
 
                     if (workshopPrices == null || workshopPrices == "null") {
                         workshopPrices = "0.0"
@@ -353,13 +360,15 @@ class MapFilterActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                         , Constant.Path.motservices_time to motservices_time
                         , Constant.Path.couponId to ""
                         , Constant.Path.couponList to couponList
-
                         , Constant.Key.is_car_wash to isCarWash
                         , Constant.Path.mainCategoryIdTyre to json.optString("main_category_id")
                         , Constant.Path.mainCategoryIdCar_wash to json.optString("main_category_id")
                         , Constant.Key.cartItem to cartItem, Constant.Key.wishList to json.optString("wish_list")
                         , Constant.Key.mot_type to motType
                         , "WorkshopJson" to json.toString()
+                        , "QutoesServiceAverageTime" to if (json.has("service_average_time") && json.optString("service_average_time") != null && json.optString("service_average_time") != "null") json.optString("service_average_time") else ""
+                        , Constant.Path.qutoesUserDescription to qutoesUserDescription
+                        , Constant.Path.qutoesUserAttachImage to qutoesUserImage
 
 
                 ).putExtras(bundle)
