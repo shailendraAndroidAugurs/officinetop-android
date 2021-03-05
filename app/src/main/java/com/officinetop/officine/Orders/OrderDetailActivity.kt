@@ -10,10 +10,12 @@ import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.feedback.FeedbackAddActivity
 import com.officinetop.officine.utils.Constant
+import com.officinetop.officine.utils.moveToMotDetailPageFromCart
 import kotlinx.android.synthetic.main.alertdialog_feedback.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.jetbrains.anko.intentFor
+
 class OrderDetailActivity : BaseActivity() {
     private lateinit var forWhich: String
     lateinit var orderid: String
@@ -130,7 +132,10 @@ class OrderDetailActivity : BaseActivity() {
                             // Constant.Path.type to "2",Constant.Path.mainCategoryId to ServiceProductList[position].serviceDetail.mainCategoryId,Constant.Path.serviceID to ServiceProductList[position].serviceDetail.serviceId), 102)
                             Constant.Path.type to "3", Constant.Path.mainCategoryId to ServiceProductList[position].serviceDetail.mainCategoryId, Constant.Path.serviceID to ServiceProductList[position].serviceDetail.serviceId, Constant.Path.motservicetype to ServiceProductList[position].motServiceType), 102)
 
-                } else {
+                } else if (view.tag != null && view.tag.equals("102") && ServiceProductList[position].partDetails != null){
+                    moveToMotDetailPageFromCart(ServiceProductList[position].partDetails as ArrayList<Models.Part>, ServiceProductList[position].serviceDetail,context = this@OrderDetailActivity)
+                }
+                else {
 
                     startActivityForResult(intentFor<FeedbackAddActivity>(
                             Constant.Path.workshopId to ServiceProductList[position].workshopDetails.id.toString(),

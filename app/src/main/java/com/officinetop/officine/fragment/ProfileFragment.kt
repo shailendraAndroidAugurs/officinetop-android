@@ -1,4 +1,5 @@
 package com.officinetop.officine.fragment
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -42,6 +43,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
+
 class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     private lateinit var textview_mobile: TextView
     private lateinit var textview_email: TextView
@@ -73,7 +75,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         textview_walletamount = view.findViewById(R.id.textview_walletamount) as TextView
         textview_email = view.findViewById(R.id.textview_email) as TextView
         textview_name = view.findViewById(R.id.textview_name) as TextView
-        textview_lname= view.findViewById(R.id.textview_lname) as TextView
+        textview_lname = view.findViewById(R.id.textview_lname) as TextView
         text_address = view.findViewById(R.id.text_address) as TextView
         text_landmark = view.findViewById(R.id.text_landmark) as TextView
         text_zipcode = view.findViewById(R.id.text_zipcode) as TextView
@@ -93,10 +95,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         val copyreferral = view.findViewById(R.id.copyreferral) as LinearLayout
         val layout_wishlist = view.findViewById(R.id.layout_wishlist) as LinearLayout
         Log.d("HomeActivity", "Click")
-        if (context?.isOnline()!!) {
-        }else{
-            context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
-        }
+
         button_logout.setOnClickListener(View.OnClickListener {
             if (!context?.isLoggedIn()!!) {
                 alert {
@@ -120,10 +119,10 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             }
         })
 
-        change_password.setOnClickListener(View.OnClickListener {
-            alertchangepswrd()
-        })
-        layout_editprofile.setOnClickListener(View.OnClickListener {
+        change_password.setOnClickListener {
+            alertChangePasssword()
+        }
+        layout_editprofile.setOnClickListener {
             if (context?.isOnline()!!) {
                 try {
                     if (!textview_email.text.toString().isNullOrEmpty() && !textview_mobile.text.toString().isNullOrEmpty()) {
@@ -139,50 +138,50 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 } catch (e: Exception) {
 
                 }
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
 
 
-        })
+        }
 
-        layout_addcontact.setOnClickListener(View.OnClickListener {
+        layout_addcontact.setOnClickListener {
             if (context?.isOnline()!!) {
                 val intent = Intent(context, ContactList_Activity::class.java)
                 startActivityForResult(intent, 100)
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
-        })
-        layout_address.setOnClickListener(View.OnClickListener {
+        }
+        layout_address.setOnClickListener {
             if (context?.isOnline()!!) {
                 val intent = Intent(context, Addresslist_Activity::class.java)
                 startActivityForResult(intent, 100)
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
-        })
-        layout_profile_setting.setOnClickListener(View.OnClickListener {
+        }
+        layout_profile_setting.setOnClickListener {
             val intent = Intent(context, ProfileSetting::class.java)
             startActivity(intent)
-        })
-        copyreferral.setOnClickListener(View.OnClickListener {
+        }
+        copyreferral.setOnClickListener {
             myClip = ClipData.newPlainText("text", txt_referralcode.text)
             myClipboard?.primaryClip = myClip!!
-           // Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
-        })
+            // Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
+        }
 
         rootView = view
         layout_wishlist.setOnClickListener {
             if (context?.isOnline()!!) {
                 startActivity(intentFor<WishListActivity>())
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
 
         }
 
-        button_invite.setOnClickListener(View.OnClickListener {
+        button_invite.setOnClickListener {
             /*  val intent = Intent(context, SyncMyContact::class.java)
               intent.putExtra("UserMobile", textview_mobile.text.toString())
               intent.putExtra("ReferralCode", txt_referralcode.text.toString())
@@ -192,26 +191,25 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             val intent = Intent(context, InviteFriendsActivity::class.java)
             intent.putExtra("inviteCode", txt_referralcode.text.toString())
             startActivity(intent)
-        })
-        layout_orders.setOnClickListener(View.OnClickListener {
+        }
+        layout_orders.setOnClickListener {
             if (context?.isOnline()!!) {
                 val intent = Intent(context, OrderListActivity::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
 
-        })
+        }
         layout_notification.setOnClickListener(View.OnClickListener {
             if (context?.isOnline()!!) {
                 val intent = Intent(context, NotificationList::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
             }
 
         })
-        // getUserDetailsApi(context?.getBearerToken()!!)
         return view
     }
 
@@ -219,7 +217,13 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (context?.isLoggedIn()!!) {
-            activity?.let { getUserDetail(this, it) }
+            if (context?.isOnline()!!) {
+                activity?.let { getUserDetail(this, it) }
+            } else {
+                context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
+            }
+
+
         }
 
         if (context?.getLangLocale() != null && !context?.getLangLocale().equals("")) {
@@ -230,14 +234,12 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         }
     }
 
-    private fun alertchangepswrd() {
+    private fun alertChangePasssword() {
         val mDialogView = LayoutInflater.from(context).inflate(R.layout.changepswrd_dialog, null)
-        //AlertDialogBuilder
         val mBuilder = context?.let {
             AlertDialog.Builder(it)
                     .setView(mDialogView)
                     .setCancelable(false)
-            //.setTitle("Login Form")
         }
         //show dialog
         val mAlertDialog = mBuilder?.show()
@@ -247,8 +249,6 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
         //login button click of custom layout
         mDialogView.submit_change_password.setOnClickListener {
-            //dismiss dialog
-            //mAlertDialog?.dismiss()
             if (oldpaswrdEditText.text.isEmpty()) {
                 Toast.makeText(context, getString(R.string.old_password), Toast.LENGTH_LONG).show()
             } else if (newpaswrdEditText.text.isEmpty()) {
@@ -258,7 +258,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             } else {
                 if (newpaswrdEditText.text.toString() == retypepaswrdEditText.text.toString()) {
                     mAlertDialog?.dismiss()
-                    Changepassword(oldpaswrdEditText.text.toString(), newpaswrdEditText.text.toString(), retypepaswrdEditText.text.toString(), context?.getBearerToken()!!)
+                    changePassword(oldpaswrdEditText.text.toString(), newpaswrdEditText.text.toString(), retypepaswrdEditText.text.toString(), context?.getBearerToken()!!)
                 } else {
                     Toast.makeText(context, getString(R.string.password_not_matched), Toast.LENGTH_LONG).show()
                 }
@@ -266,18 +266,17 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         }
         //cancel button click of custom layout
         mDialogView.close_dialog.setOnClickListener {
-            //dismiss dialog
             mAlertDialog?.dismiss()
         }
     }
 
-    private fun Changepassword(oldpaswword: String, newpassword: String, confirmpasword: String, authToken: String) {
+    private fun changePassword(oldPaswword: String, newPassword: String, confirmPasword: String, authToken: String) {
         try {
             val progressDialog = context?.getProgressDialog()
             progressDialog?.show()
-            if (!showOnlineSnack(progressDialog, rootView, context!!))
+            if (!activity?.let { showOnlineSnack(progressDialog, rootView, it) }!!)
                 return
-            RetrofitClient.client.changepassword(authToken, old_password = oldpaswword, new_password = newpassword, confirm_password = confirmpasword)
+            RetrofitClient.client.changepassword(authToken, old_password = oldPaswword, new_password = newPassword, confirm_password = confirmPasword)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog?.dismiss()
@@ -303,7 +302,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                                         alert {
                                             message = msg
                                             positiveButton(getString(R.string.retry)) {
-                                                alertchangepswrd()
+                                                alertChangePasssword()
                                             }
                                             negativeButton(getString(R.string.ok)) {}
                                         }.show()
@@ -324,7 +323,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     private fun logout(authToken: String) {
         val progressDialog = context?.getProgressDialog()
         progressDialog?.show()
-        if (!showOnlineSnack(progressDialog, rootView, context!!))
+        if (!activity?.let { showOnlineSnack(progressDialog, rootView, it) }!!)
             return
         RetrofitClient.client.logout(authToken)
                 .enqueue(object : Callback<ResponseBody> {
@@ -356,7 +355,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     }
 
 
-    private fun uicontents(mobileNumber: String?, email: String?, fname: String?, lname: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
+    private fun uiContentsBinding(mobileNumber: String?, email: String?, fname: String?, lname: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
         if (!isAdded) return
         if (walletamount == "null")
             textview_walletamount.text = getString(R.string.euro_symbol) + " 0"
@@ -366,17 +365,16 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         textview_mobile.text = mobileNumber
         textview_email.text = email
         textview_name.text = fname?.trim()
-        textview_lname.text=lname?.trim()
+        textview_lname.text = lname?.trim()
         text_address.text = address
         txt_referralcode.text = if (!referralcode.isNullOrBlank()) referralcode.toUpperCase() else ""
-        //text_landmark.text = getString(R.string.Landmark) + landmark
         text_zipcode.text = getString(R.string.zip_code) + zipCode
         text_contactnumber.text = mobileno
         context?.loadImageProfile(imageurl, profileimage)
     }
 
 
-    private fun SetDataInView(userDetailData: Models.UserDetailData?, apiRespoinsewallet: Models.UserWallet?) {
+    private fun setDataInView(userDetailData: Models.UserDetailData?, apiRespoinsewallet: Models.UserWallet?) {
         val userContact: Models.UserContact
         val userAddress: Models.UserAddres
         if (userDetailData?.userContact != null && userDetailData.userContact.size > 0 && userDetailData.userAddress.size > 0) {
@@ -387,12 +385,12 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents("", "", "", "","", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
+                uiContentsBinding("", "", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
             }
         } else if (userDetailData?.userContact?.size!! > 0) {
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
@@ -401,10 +399,10 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userContact = userDetailData.userContact.get(0)
-                uicontents("", "", "", "","", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
+                uiContentsBinding("", "", "", "", "", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
             }
         } else if (userDetailData.userAddress.size > 0) {
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
@@ -413,10 +411,10 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userAddress = userDetailData.userAddress.get(0)
-                uicontents("", "", "", "","", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
+                uiContentsBinding("", "", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
             }
         } else {
             if (userDetailData.userDetails != null && userDetailData.userDetails.size != 0) {
@@ -424,9 +422,9 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uicontents(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "" , if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
-                uicontents("", "", "", "","", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
+                uiContentsBinding("", "", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
             }
         }
     }
@@ -441,11 +439,11 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
     override fun getUserDetailData(ApiRespoinse: Models.UserDetailData?, ApiRespoinsewallet: Models.UserWallet?) {
         if (!isAdded) return
 
-        SetDataInView(ApiRespoinse, ApiRespoinsewallet)
+        setDataInView(ApiRespoinse, ApiRespoinsewallet)
     }
 
 
-    private fun createlink(linkUri: Uri) {
+    private fun createLink(linkUri: Uri) {
         /* FirebaseDynamicLinks.getInstance().createDynamicLink()
                  .setLink(Uri.parse("https://www.example.com/"))
                  .setDomainUriPrefix("https://example.page.link")
@@ -471,8 +469,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         val shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse("https://www.example.com/"))
                 .setDomainUriPrefix("https://example.page.link")
-                // Set parameters
-                // ...
+
                 .buildShortDynamicLink()
                 .addOnSuccessListener { result ->
                     // Short link created
@@ -487,8 +484,6 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 }.addOnFailureListener {
 
                     Log.e("Exception", "")
-                    // Error
-                    // ...
                 }
     }
 

@@ -39,6 +39,7 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.officinetop.officine.MOT.MotDetailActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.CartItemAdapter
 import com.officinetop.officine.car_parts.ProductDetailActivity
@@ -1266,4 +1267,13 @@ fun isLocationEnabled(mContext: Context): Boolean {
             LocationManager.NETWORK_PROVIDER)
 }
 
+ fun moveToMotDetailPageFromCart(parts: ArrayList<Models.Part>, servicesDetailObj: Models.ServiceDetail,context: Context?) {
+    if (parts != null && parts.size != 0 && servicesDetailObj != null) {
+        val jsonString = Gson().toJson(parts)
 
+         context?.startActivity(context?.intentFor<MotDetailActivity>().putExtra("PartList", jsonString).putExtra("isFromCart", true).putExtra("ServiceDetail", servicesDetailObj))
+
+    }
+
+
+}
