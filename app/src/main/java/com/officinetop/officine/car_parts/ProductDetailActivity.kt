@@ -411,7 +411,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                 try {
                                     val productData = JSONObject(body)
                                     if (productData.has("data") && !productData.isNull("data")) {
-                                        ll_productDetail.visibility=View.VISIBLE
+                                        ll_productDetail.visibility = View.VISIBLE
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
@@ -515,7 +515,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun getSimilarProduct(productId: String) {
-       // val dialog = getProgressDialog(true)
+        // val dialog = getProgressDialog(true)
         RetrofitClient.client.getSimilarProduct(getBearerToken()
                 ?: "", getSelectedCar()?.carVersionModel?.idVehicle
                 ?: "", "1", productId, getUserId())
@@ -528,7 +528,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                             @SuppressLint("SetTextI18n")
                             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                              //  dialog.dismiss()
+                                //  dialog.dismiss()
                                 if (response.isSuccessful) {
                                     val body = response.body()?.string()
                                     body?.let {
@@ -572,16 +572,14 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 productIsPair = true
                 item_qty.text = "2"
             }
-            if (intent.hasExtra(Constant.Key.wishList) && intent.getStringExtra(Constant.Key.wishList) != null) {
-                wish_list = intent.getStringExtra(Constant.Key.wishList)
-                if (wish_list == "1")
-                    Iv_favorite.setImageResource(R.drawable.ic_heart)
-                else {
-                    Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
-                }
-            } else {
+
+            wish_list = detail?.wishlist.toString()
+            if (wish_list != null && wish_list == "1")
+                Iv_favorite.setImageResource(R.drawable.ic_heart)
+            else {
                 Iv_favorite.setImageResource(R.drawable.ic_favorite_border_black_empty_24dp)
             }
+
 
             Iv_favorite.setOnClickListener {
                 if (isOnline()) {

@@ -319,7 +319,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                     partInfo.visibility = View.GONE
                 }
                 // partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
-                  partInfo.setOnClickListener { moveToMotDetailPageFromCart(item.partDetails as ArrayList<Models.Part>, item.serviceDetail) }
+                  partInfo.setOnClickListener { moveToMotDetailPageFromCart(item.partDetails as ArrayList<Models.Part>, item.serviceDetail,context) }
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
@@ -652,16 +652,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
     }
 
-    private fun moveToMotDetailPageFromCart(parts: ArrayList<Models.Part>, servicesDetailObj: Models.ServiceDetail) {
-        if (parts != null && parts.size != 0 && servicesDetailObj != null) {
-            val jsonString = Gson().toJson(parts)
 
-            context.startActivity(context.intentFor<MotDetailActivity>().putExtra("PartList", jsonString).putExtra("isFromCart", true).putExtra("ServiceDetail", servicesDetailObj))
-
-        }
-
-
-    }
 
     private fun partsDialog(parts: ArrayList<Models.Part>, context: Context) {
 

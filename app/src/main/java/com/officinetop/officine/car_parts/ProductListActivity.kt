@@ -154,7 +154,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             override fun onQueryTextSubmit(searchQuery: String?): Boolean {
                 //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
                 if (this@ProductListActivity::listAdapter.isInitialized)
-                listAdapter.filter.filter(searchQuery)
+                    listAdapter.filter.filter(searchQuery)
                 return true
             }
 
@@ -252,7 +252,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 if (isStatusCodeValid(body)) {
                     val dataSet = getDataSetArrayFromResponse(it)
                     bindRecyclerView(dataSet)
-                    Log.d("check_list_size",""+brandlist.size)
+                    Log.d("check_list_size", "" + brandlist.size)
                     if (brandlist.size == 0) {
                         val brandJSONArray = JSONObject(body).getJSONArray("brands")
                         val gson = GsonBuilder().create()
@@ -286,9 +286,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     private fun bestSellingApi() {
         val priceRangeString = "$priceRangeInitial,${priceRangeFinal}"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
-        Log.d("IsBestSelling", "yes")
+
         RetrofitClient.client.bestSeller(if (priceRangeFinal == -1) "" else priceRangeString,
-                priceSortLevel, brands = filterBrandList.joinToString(","), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!).enqueue(object : Callback<ResponseBody> {
+                priceSortLevel, brands = filterBrandList.joinToString(","), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, userid = getUserId()).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
@@ -378,8 +378,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         if (jsonArray.length() > 0) {
             hasRecyclerLoadedOnce = true
-            filterDialog.dialog_price_range.setValue(0f, 100f)
+            filterDialog.dialog_price_range.setValue(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
             filterDialog.clear_selection.callOnClick()
+            filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceInitialLimit.toString())
             filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
         }
 
@@ -493,7 +494,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
             dialog_distance_layout.visibility = View.GONE
             clear_selection.setOnClickListener {
-                dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
+                dialog_price_range.setValue(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
                 dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
                 priceRangeFinal = -1
                 priceRangeInitial = 0
@@ -517,10 +518,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 listAdapter.clear()
 
                 isfilterApply = false
-if(!isfilterApply){
-    reloadPage()
-}
-
+                if (!isfilterApply) {
+                    reloadPage()
+                }
 
 
             }

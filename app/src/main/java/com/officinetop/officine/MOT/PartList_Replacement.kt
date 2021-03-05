@@ -44,6 +44,7 @@ class PartList_Replacement : BaseActivity() {
     private var isLoading = false
     private var genericAdapter: GenericAdapter<Models.Part>? = null
     lateinit var linearLayoutManager: LinearLayoutManager
+    var stopLoading = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_part_list__replacement)
@@ -85,6 +86,7 @@ class PartList_Replacement : BaseActivity() {
 
                         if (current_page == 0) {
                             setAdapter()
+                            isLoading = false
                         } else {
                             genericAdapter?.addItems(carMaintenanceServiceList)
                             genericAdapter?.notifyDataSetChanged()
@@ -93,10 +95,13 @@ class PartList_Replacement : BaseActivity() {
                         }
 
                     } else {
+
+
                         progressDialog.dismiss()
                         if (carMaintenanceServiceList.size == 0) {
                             showInfoDialog(body.getString("message"))
                         } else {
+                            stopLoading = true
                         }
 
 
@@ -151,10 +156,15 @@ class PartList_Replacement : BaseActivity() {
             recycler_view.addOnScrollListener(object : PaginationListener(linearLayoutManager) {
 
                 override fun loadMoreItems() {
-                    isLoading = true
-                    current_page += 10
 
-                    N3partList()
+                    if (!stopLoading){
+                        isLoading = true
+                        current_page += 10
+                        N3partList()
+                    }else{
+                        isLastPage=true
+                    }
+
                 }
 
                 override fun isLastPage(): Boolean {

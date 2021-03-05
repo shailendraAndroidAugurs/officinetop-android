@@ -505,7 +505,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/service_detail_container_margin_large"
                 android:orientation="vertical"
-                android:visibility="@{listItemViewModel.partDetails!=null  &amp;&amp; listItemViewModel.partDetails[0]!=null &amp;&amp; listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.mainCategoryId!=null &amp;&amp; listItemViewModel.serviceDetail.mainCategoryId.equals(`3`) ? View.GONE : View.GONE}">
+                android:visibility="@{listItemViewModel.partDetails!=null  &amp;&amp; listItemViewModel.partDetails[0]!=null &amp;&amp; listItemViewModel.serviceDetail!=null &amp;&amp; listItemViewModel.serviceDetail.mainCategoryId!=null &amp;&amp; listItemViewModel.serviceDetail.mainCategoryId.equals(`3`) ? View.VISIBLE : View.GONE}">
 
 
                 <LinearLayout
@@ -529,26 +529,30 @@
                     <TextView
                         style="@style/TextViewHeading"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_weight="1"
-                        android:gravity="left"
+                        android:gravity="end"
                         android:padding="0dp"
-                        app:amount="@{listItemViewModel.partDetails!=null &amp;&amp; listItemViewModel.partDetails.get(0)!=null &amp;&amp; listItemViewModel.partDetails.get(0).sellerPrice!=null? listItemViewModel.partDetails.get(0).sellerPrice: @string/blank}"
-                        app:value="@{listItemViewModel.partDetails!=null &amp;&amp; listItemViewModel.partDetails.get(0)!=null &amp;&amp; listItemViewModel.partDetails.get(0).sellerPrice!=null? String.format(@string/euro_symbol) : @string/euro_symbol}" />
+                        app:entries="@{listItemViewModel}"
+                        app:value="@{listItemViewModel.partDetails!=null ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
 
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_detailInfo"
                     style="@style/TextViewHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:padding="0dp"
-                    android:text="@string/detail" />
+                    android:onClick="@{(v) -> listItemViewModel.onListItemViewClickListener.onClick(v,listItemViewModel.adapterPostion)}"
+                    android:padding="5dp"
+                    android:tag="102"
+                    android:text="@string/detail"
+                    android:textColor="@color/lite_blue" />
             </LinearLayout>
 
             <LinearLayout

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.officinetop.officine.R
+import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.utils.*
 
@@ -25,7 +26,7 @@ fun bindImages(imageView: ImageView, imageUrl: String) {
 fun imageLoad(imageView: ImageView, imageUrl: String) {
     if (!imageUrl.isNullOrBlank() && imageUrl.contains("http"))
         imageView.context.loadImage(imageUrl, imageView)
-    else imageView.visibility=View.GONE
+    else imageView.visibility = View.GONE
 }
 
 @BindingAdapter("amount", "value")
@@ -38,6 +39,27 @@ fun bindPrice(textView: TextView, price: String, value: String) {
 
 
 }
+
+@BindingAdapter("entries", "value")
+fun bindMotSparePartPrice(textView: TextView, entries: Models.ServiceProductDescription, value: String) {
+    if (entries != null && entries.partDetails != null) {
+        var motSparePartTotalPrices = 0.0
+        for (part in entries.partDetails) {
+            if (!part.sellerPrice.isNullOrBlank()) {
+                if (!part.forPair.isNullOrBlank() && !part.forPair.equals("0"))
+                    motSparePartTotalPrices += part.sellerPrice.toDouble() * 2
+                else motSparePartTotalPrices += part.sellerPrice.toDouble()
+            }
+
+
+        }
+
+        textView.text = value + " " + motSparePartTotalPrices.roundTo2Places().toString()
+    }
+
+
+}
+
 
 @BindingAdapter("rating")
 fun bindRating(ratingBar: RatingBar, rating: String) {
@@ -287,9 +309,9 @@ fun setQuantityForOrder(text: TextView, quantity: String, ispair: String) {
 @BindingAdapter("coupontitle", "coupontype", "couponPrices")
 fun setCouponDetail(text: TextView, coupontitle: String, coupontype: String, couponPrices: String) {
 
-    if(!coupontitle.isNullOrBlank() && !couponPrices.isNullOrBlank()&& !couponPrices.equals("-")){
+    if (!coupontitle.isNullOrBlank() && !couponPrices.isNullOrBlank() && !couponPrices.equals("-")) {
         text.text = "$coupontitle : €$couponPrices"
-    }else {
+    } else {
         text.text = ""
     }
 
@@ -321,17 +343,18 @@ fun orderStatus(tv_ordersatatus: TextView, status: String) {
     tv_ordersatatus.text = order
 
 }
-@BindingAdapter( "pairVisiblity", "pairText")
+
+@BindingAdapter("pairVisiblity", "pairText")
 fun pairVisiblity(text: TextView, pairVisiblity: String, pairText: String) {
 
     if (!pairVisiblity.isNullOrEmpty() && !pairVisiblity.equals("0")) {
         try {
-            text.visibility=View.VISIBLE
-            text.text="2 $pairText"
+            text.visibility = View.VISIBLE
+            text.text = "2 $pairText"
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }else text.visibility=View.GONE
+    } else text.visibility = View.GONE
 }
 
 

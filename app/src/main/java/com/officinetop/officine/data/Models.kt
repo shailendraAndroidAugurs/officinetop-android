@@ -228,8 +228,9 @@ object Models {
             @SerializedName("main_category_id")
             val mainCategoryId: String,
             @SerializedName("service_id")
-            val serviceId: String
-
+            val serviceId: String,
+            @SerializedName("wish_list")
+            var wishlist: String = ""
 
     ) : Serializable
 
@@ -529,7 +530,7 @@ object Models {
             var mainCategoryId: String = ""
 
 
-    )                                          : ListItemViewModel()
+    ) : ListItemViewModel()
 
     data class Part(
             @SerializedName("p_name")
@@ -674,11 +675,12 @@ object Models {
     data class Operation(
             @SerializedName("group_name")
             val groupName: String,
-
             @SerializedName("id")
             val id: Int,
             @SerializedName("operation_description")
-            val operationDescription: String
+            val operationDescription: String,
+            @SerializedName("operation_action")
+            val opretionAction: String
     ) : ListItemViewModel()
 
 

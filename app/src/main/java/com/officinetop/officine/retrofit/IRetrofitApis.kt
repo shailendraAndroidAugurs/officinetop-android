@@ -539,7 +539,14 @@ interface IRetrofitApis {
     fun bestSeller(@Query(Constant.Path.filterPriceRange) priceRange: String,
                    @Query(Constant.Path.sortPrice) priceSortLevel: Int,
                    @Query(Constant.Path.version_id) version_id: String,
-                   @Query("brand") brands: String? = ""): Call<ResponseBody>
+                   @Query("brand") brands: String? = "",
+                   @Query(Constant.Path.userid) userid: String? = ""
+
+
+                   ): Call<ResponseBody>
+
+
+
 
 
     @GET(Constant.UrlEndPoints.bestSelleingProduct_home)

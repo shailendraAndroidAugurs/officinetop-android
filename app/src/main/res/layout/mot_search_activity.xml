@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -115,13 +114,7 @@
 
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:visibility="visible" />
+
 
 
             <TextView
@@ -148,14 +141,19 @@
                 android:layout_below="@+id/rv_editkm"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/gray"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
         </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
