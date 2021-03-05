@@ -23,7 +23,7 @@ class Support_Activity : BaseActivity() {
 
 
     private var selecttokenid = ""
-    private var selectcat_id = ""
+    private var selectcatId = ""
 
     private var recyclerViewAdapter: RecyclerViewAdapterChating? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class Support_Activity : BaseActivity() {
     private fun intiView() {
         val Cat_Id = intent.getStringExtra("Cat_Id")
         if (Cat_Id != null) {
-            selectcat_id = Cat_Id
+            selectcatId = Cat_Id
             selecttokenid = ""
             text_tagline.visibility = VISIBLE
         } else {
@@ -52,12 +52,12 @@ class Support_Activity : BaseActivity() {
             if (message_string != null) {
                 text_tagline.visibility = GONE
                 val messageList = Gson().fromJson<Models.TicketList>(message_string.toString(), Models.TicketList::class.java)
-                val messagemodel = messageList.messages
+                val messageModel = messageList.messages
                 selecttokenid = messageList.ticketId
-                selectcat_id = messageList.ticket_type
+                selectcatId = messageList.ticket_type
                 val linearLayoutManager = LinearLayoutManager(this)
                 recycler_view_chatlist.layoutManager = linearLayoutManager
-                recyclerViewAdapter = RecyclerViewAdapterChating(this, messagemodel as MutableList<Models.Messages>, this)
+                recyclerViewAdapter = RecyclerViewAdapterChating(this, messageModel as MutableList<Models.Messages>, this)
                 recycler_view_chatlist.adapter = recyclerViewAdapter
                 val count = recyclerViewAdapter!!.changeposition()
                 recycler_view_chatlist.scrollToPosition(count)
@@ -68,16 +68,15 @@ class Support_Activity : BaseActivity() {
 
 
 
-        layout_send_message.setOnClickListener(View.OnClickListener {
+        layout_send_message.setOnClickListener {
             if (edit_text_message.text.toString().isNotEmpty()) {
-                sendMessage(edit_text_message.text.toString(), selectcat_id, selecttokenid)
-                Log.d("sendString support", edit_text_message.text.toString())
+                sendMessage(edit_text_message.text.toString(), selectcatId, selecttokenid)
             } else {
                 Toast.makeText(
                         applicationContext,
                         getString(R.string.enter_message), Toast.LENGTH_LONG).show()
             }
-        })
+        }
     }
 
     private fun sendMessage(message: String, keytype: String, tokenid: String) {
@@ -88,10 +87,9 @@ class Support_Activity : BaseActivity() {
                 if (response.isSuccessful) {
                     val responseData = JSONObject(response.body()?.string())
                     if (responseData.has("data") && !responseData.isNull("data")) {
-                        val datalist = responseData.getJSONObject("data")
-                        // val comID=datalist.getJSONObject(0)
-                        selecttokenid = datalist.getString("support_ticket_id")
-                        getmessage()
+                        val dataList = responseData.getJSONObject("data")
+                        selecttokenid = dataList.getString("support_ticket_id")
+                        getMessage()
                         edit_text_message.text = null
                     }
                 }
@@ -99,7 +97,7 @@ class Support_Activity : BaseActivity() {
         }
     }
 
-    private fun getmessage() {
+    private fun getMessage() {
         RetrofitClient.client.getTicketlist(getBearerToken() ?: "")
                 .onCall { _, response ->
                     response?.let {
@@ -124,10 +122,10 @@ class Support_Activity : BaseActivity() {
     }
 
     private fun bindView(messageList: Models.TicketList) {
-        val messagemodel = messageList.messages
+        val messageModel = messageList.messages
         val linearLayoutManager = LinearLayoutManager(this)
         recycler_view_chatlist.layoutManager = linearLayoutManager
-        recyclerViewAdapter = RecyclerViewAdapterChating(this, messagemodel as MutableList<Models.Messages>, this)
+        recyclerViewAdapter = RecyclerViewAdapterChating(this, messageModel as MutableList<Models.Messages>, this)
         recycler_view_chatlist.adapter = recyclerViewAdapter
         val count = recyclerViewAdapter!!.changeposition()
         recycler_view_chatlist.scrollToPosition(count)

@@ -23,8 +23,8 @@ import com.officinetop.officine.Orders.OrderListActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.data.*
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.userprofile.Addresslist_Activity
-import com.officinetop.officine.userprofile.ContactList_Activity
+import com.officinetop.officine.userprofile.AddressListActivity
+import com.officinetop.officine.userprofile.ContactListActivity
 import com.officinetop.officine.utils.*
 import com.paypal.android.sdk.payments.*
 import kotlinx.android.synthetic.main.activity_online_payment.*
@@ -202,13 +202,6 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         }
 
-
-        Log.e("Totalprices", totalPrices)
-        Log.e("Totalpfu", totalPfu)
-        Log.e("TotalVat", totalVat)
-        Log.e("payableAmount", payableAmount)
-        Log.e("user_WalletAmount", user_WalletAmount)
-        Log.e("FinalPrices", TotalAmount)
         getBankTransferPaymentInfo()
 
 
@@ -224,7 +217,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = true
                 radioButton_COD.isChecked = false
                 radioButton_bankTransfer.isChecked = false
-                //startUpiPayment()
+
             } else {
                 radioButton_googlepay.isChecked = false
             }
@@ -238,7 +231,7 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_googlepay.isChecked = false
                 radioButton_bankTransfer.isChecked = false
 
-                showConfirmDialogForPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCOD_BankTransfer("", "2") }, { uncheckedAllPaymentmethod() }, false)
+                showConfirmDialogForPayment(getString(R.string.PayOnDelivery), { updatePaymentStatusForCODBankTransfer("", "2") }, { uncheckedAllPaymentMethod() }, false)
 
 
             } else {
@@ -256,11 +249,11 @@ class OnlinePaymentScreen : BaseActivity() {
                 radioButton_bankTransfer.isChecked = true
                 if (this::bankpaymentobject.isInitialized) {
                     showConfirmDialogForPayment(getString(R.string.bank_transfer_proceed), {
-                        updatePaymentStatusForCOD_BankTransfer(bankpaymentobject.id, "4")
+                        updatePaymentStatusForCODBankTransfer(bankpaymentobject.id, "4")
 
-                    }, { uncheckedAllPaymentmethod() }, false)
+                    }, { uncheckedAllPaymentMethod() }, false)
                 } else {
-                    showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again), true, { uncheckedAllPaymentmethod() })
+                    showInfoDialog(getString(R.string.Something_went_wrong_Please_try_again), true, { uncheckedAllPaymentMethod() })
                 }
 
 
@@ -367,13 +360,13 @@ class OnlinePaymentScreen : BaseActivity() {
             }
         }
         tv_contactNo.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, ContactList_Activity::class.java)
+            val intent = Intent(this, ContactListActivity::class.java)
             intent.putExtra("FromPayment", true)
             startActivityForResult(intent, 100)
 
         })
         tv_Address.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, Addresslist_Activity::class.java)
+            val intent = Intent(this, AddressListActivity::class.java)
             intent.putExtra("FromPayment", true)
             startActivityForResult(intent, 101)
 
@@ -553,9 +546,6 @@ class OnlinePaymentScreen : BaseActivity() {
                     try {
                         Log.i(TAG, confirm.toJSONObject().toString(4))
                         Log.i(TAG, confirm.payment.toJSONObject().toString(4))
-
-                        Log.e("payment===", confirm.payment.toJSONObject().toString(4))
-                        //displayResultText("PaymentConfirmation info received from PayPal")
                         showInfoDialog(getString(R.string.PaymentConfirmationinforeceivedfromPayPal)) {
                             updatePaymentStatus(confirm.toJSONObject())
                         }
@@ -813,7 +803,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun updatePaymentStatusForCOD_BankTransfer(bankDetailId: String = "", paymentMode: String) {
+    private fun updatePaymentStatusForCODBankTransfer(bankDetailId: String = "", paymentMode: String) {
         Log.e("payment mode", "COD :2")
 
         RetrofitClient.client.updatePaymentStatus(
@@ -868,7 +858,7 @@ class OnlinePaymentScreen : BaseActivity() {
 
     }
 
-    private fun uncheckedAllPaymentmethod() {
+    private fun uncheckedAllPaymentMethod() {
         radioButton_googlepay.isChecked = false
         radioButton_bankTransfer.isChecked = false
         radioButton_COD.isChecked = false

@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.dialog_add_contact.view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.item_list_contact.view.*
 
-class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
+class ContactListActivity : BaseActivity(), OnGetLoginUserDetail {
     var fromPayment = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,24 +58,22 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
         }
         //show dialog
         val mAlertDialog = mBuilder?.show()
-        val edt_entered_mobile = mDialogView.findViewById(R.id.edt_entered_mobile) as EditText
-        //login button click of custom layout
+        val edMobile = mDialogView.findViewById(R.id.edt_entered_mobile) as EditText
+
         mDialogView.submit_change_password.setOnClickListener {
-            //dismiss dialog
-            //mAlertDialog?.dismiss()
-            if (edt_entered_mobile.text.isEmpty()) {
+
+            if (edMobile.text.isEmpty()) {
                 Toast.makeText(this, getString(R.string.enter_contact_number), Toast.LENGTH_LONG).show()
 
             } else {
 
-                AddcontactToServer(edt_entered_mobile.text.toString())
+                addContactToServer(edMobile.text.toString())
                 mAlertDialog?.dismiss()
 
             }
         }
         //cancel button click of custom layout
         mDialogView.close_dialog.setOnClickListener {
-            //dismiss dialog
             mAlertDialog?.dismiss()
         }
     }
@@ -87,7 +85,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
         class Holder(view: View) : RecyclerView.ViewHolder(view)
 
-        val myadpter = object : RecyclerView.Adapter<Holder>() {
+        val myAdapter = object : RecyclerView.Adapter<Holder>() {
             var viewBinderHelper = ViewBinderHelper()
             override fun getItemCount(): Int {
                 return UserContactList.size
@@ -104,7 +102,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
                 viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString())
                 holder.itemView.item_edit_contact.setOnClickListener {
 
-                    UpdateContact(UserContactList[position].id.toString(), UserContactList[position].mobile.toString())
+                    updateContact(UserContactList[position].id.toString(), UserContactList[position].mobile.toString())
                 }
                 holder.itemView.item_delete_car.setOnClickListener {
                     showConfirmDialog(getString(R.string.delete_ContactConfirmation), { deleteContact(UserContactList[position].id.toString()) })
@@ -127,16 +125,16 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
         }
 
 
-        recycler_view_contacts.adapter = myadpter
+        recycler_view_contacts.adapter = myAdapter
     }
 
 
-    private fun AddcontactToServer(mobileNo: String) {
+    private fun addContactToServer(mobileNo: String) {
 
-        RetrofitClient.client.addUserContactList(this@ContactList_Activity.getBearerToken(), mobileNo).onCall { networkException, response ->
+        RetrofitClient.client.addUserContactList(this@ContactListActivity.getBearerToken(), mobileNo).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
-                    showInfoDialog(getString(R.string.ContactAddSuccessFully), false, { getUserDetail(this, this) })
+                    showInfoDialog(getString(R.string.ContactAddSuccessFully), false) { getUserDetail(this, this) }
                     logContactEvent(this)
                 }
 
@@ -146,12 +144,12 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     }
 
-    private fun UpdateContactFromServer(mobileNo: String, ContactId: String) {
+    private fun updateContactFromServer(mobileNo: String, ContactId: String) {
 
-        RetrofitClient.client.updateContact(this@ContactList_Activity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
+        RetrofitClient.client.updateContact(this@ContactListActivity.getBearerToken(), ContactId, mobileNo).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
-                    showInfoDialog(getString(R.string.ContactUpdateSuccessFully), false, { getUserDetail(this, this) })
+                    showInfoDialog(getString(R.string.ContactUpdateSuccessFully), false) { getUserDetail(this, this) }
                     logContactEvent(this)
                 }
 
@@ -162,10 +160,10 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
     private fun deleteContact(ContactId: String) {
-        RetrofitClient.client.deleteContact(this@ContactList_Activity.getBearerToken(), ContactId).onCall { networkException, response ->
+        RetrofitClient.client.deleteContact(this@ContactListActivity.getBearerToken(), ContactId).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
-                    showInfoDialog(getString(R.string.ContactDeletedSuccessFully), true, { getUserDetail(this, this) })
+                    showInfoDialog(getString(R.string.ContactDeletedSuccessFully), true) { getUserDetail(this, this) }
                     val sharedPref = getSharedPreferences("ShippingContact_Address", Context.MODE_PRIVATE)
                     val contactId = sharedPref.getString("contactId", "")
                     if(ContactId.equals(contactId))
@@ -179,7 +177,7 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
 
-    private fun UpdateContact(contactId: String, mobileNo: String) {
+    private fun updateContact(contactId: String, mobileNo: String) {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_contact, null)
         mDialogView.tv_ContactNoTitle.text = getString(R.string.update_contact_number)
         mDialogView.Tv_enterMobileNoTitle.visibility = View.GONE
@@ -188,33 +186,35 @@ class ContactList_Activity : BaseActivity(), OnGetLoginUserDetail {
             AlertDialog.Builder(it)
                     .setView(mDialogView)
                     .setCancelable(false)
-            //.setTitle("Login Form")
+
         }
-        //show dialog
+
         val mAlertDialog = mBuilder?.show()
         val edt_entered_mobile = mDialogView.findViewById(R.id.edt_entered_mobile) as EditText
         edt_entered_mobile.setText(mobileNo)
-        //login button click of custom layout
+
         mDialogView.submit_change_password.setOnClickListener {
-            //dismiss dialog
-            //mAlertDialog?.dismiss()
-            if (edt_entered_mobile.text.isEmpty()) {
-                Toast.makeText(this, getString(R.string.enter_contact_number), Toast.LENGTH_LONG).show()
 
-            } else if (mobileNo == edt_entered_mobile.text.toString()) {
-                Toast.makeText(this, getString(R.string.update_contact), Toast.LENGTH_LONG).show()
-            } else {
+            when {
+                edt_entered_mobile.text.isEmpty() -> {
+                    Toast.makeText(this, getString(R.string.enter_contact_number), Toast.LENGTH_LONG).show()
 
-                UpdateContactFromServer(edt_entered_mobile.text.toString(), contactId)
-                mDialogView.tv_ContactNoTitle.text = getString(R.string.add_contact)
-                mDialogView.Tv_enterMobileNoTitle.visibility = View.VISIBLE
-                mAlertDialog?.dismiss()
+                }
+                mobileNo == edt_entered_mobile.text.toString() -> {
+                    Toast.makeText(this, getString(R.string.update_contact), Toast.LENGTH_LONG).show()
+                }
+                else -> {
 
+                    updateContactFromServer(edt_entered_mobile.text.toString(), contactId)
+                    mDialogView.tv_ContactNoTitle.text = getString(R.string.add_contact)
+                    mDialogView.Tv_enterMobileNoTitle.visibility = View.VISIBLE
+                    mAlertDialog?.dismiss()
+
+                }
             }
         }
-        //cancel button click of custom layout
+
         mDialogView.close_dialog.setOnClickListener {
-            //dismiss dialog
             mDialogView.Tv_enterMobileNoTitle.visibility = View.VISIBLE
             mDialogView.tv_ContactNoTitle.text = getString(R.string.add_contact)
             mAlertDialog?.dismiss()
