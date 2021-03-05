@@ -235,8 +235,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         productVat.text = item.serviceAssemblyProductDescription.pfuDesc
                     }
 
-                    Log.d("cartItemAdapter", "isProductSellOnpair: $isProductSellOnpair")
-                    Log.d("cartItemAdapter", "quantity:Sp : $quantity")
+
                     if (item.serviceAssemblyProductDescription.discount.isNullOrBlank() || item.serviceAssemblyProductDescription.discount == "0" || item.serviceAssemblyProductDescription.discount == "0.0") {
                         productDiscount.visibility = View.GONE
                         tv_labeldiscount.visibility = View.GONE
@@ -497,7 +496,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
             quantitySpinner.setSelection(list.indexOf(quantity.toString()))
 
-            Log.d("cartItemAdapter", "quantity1 : $quantity")
             quantitySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 

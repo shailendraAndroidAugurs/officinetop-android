@@ -21,7 +21,6 @@ import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.saveAddress_ContactForShipping
-import com.officinetop.officine.data.saveContact_ContactForShipping
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import kotlinx.android.synthetic.main.activity_addresslist.*
@@ -31,7 +30,7 @@ import kotlinx.android.synthetic.main.item_list_address.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 
-class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
+class AddressListActivity : BaseActivity(), OnGetLoginUserDetail {
     var latitude = ""
     var longitude = ""
     private var postalCode = ""
@@ -42,14 +41,11 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addresslist)
-        /*  val mFrame = findViewById<View>(R.id.content) as FrameLayout
-          LayoutInflater.from(this).inflate(R.layout.activity_addresslist, mFrame, true)*/
-
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.User_address)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fab.setOnClickListener { view ->
-            add_Upadte_Address(null)
+            addUpadteAddress(null)
         }
         getUserDetail(this, this)
         if (intent.extras !== null) {
@@ -59,21 +55,16 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
 
-    private fun add_Upadte_Address(useraddress: Models.UserAddres?) {
+    private fun addUpadteAddress(useraddress: Models.UserAddres?) {
         val buttonTitles = resources.getStringArray(R.array.Address_Type)
         if (useraddress == null) {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_address, null, false)
-            //  mDialogView.spinner_AddressType.setDownArrowTintColor(Color.LTGRAY)  486,489,494,496,497,502,505,504
             setPlacePicker("")
             bindSpinner(mDialogView.spinner_AddressType, buttonTitles, "")
 
         } else {
             mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_update_address, null, false)
-
             mDialogView.edt_entered_ZipCode.setText(useraddress.zipCode)
-
-
-
             latitude = useraddress.latitude
             longitude = useraddress.longitude
             Address = useraddress.address1
@@ -90,10 +81,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         }
 
         val mAlertDialog = mBuilder?.show()
-        val edt_entered_ZipCode = mDialogView.findViewById(R.id.edt_entered_ZipCode) as EditText
-
-
-
+        val edZipCode = mDialogView.findViewById(R.id.edt_entered_ZipCode) as EditText
 
 
         mDialogView.submit_change_password.setOnClickListener {
@@ -102,10 +90,10 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 Toast.makeText(this, getString(R.string.Please_Select_Address), Toast.LENGTH_LONG).show()
             } else if (!mDialogView.spinner_AddressType.isSelected) {
                 Toast.makeText(this, getString(R.string.select_address_type), Toast.LENGTH_LONG).show()
-            } else if (edt_entered_ZipCode.text.isNullOrEmpty()) {
+            } else if (edZipCode.text.isNullOrEmpty()) {
                 Toast.makeText(this, getString(R.string.enterZipCode), Toast.LENGTH_LONG).show()
             } else {
-                DismissFragment()
+                dismissFragment()
                 mAlertDialog?.dismiss()
                 var addresType = ""
                 addresType = if (mDialogView.spinner_AddressType.selectedItemPosition == 0) {
@@ -118,10 +106,10 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 postalCode = mDialogView.edt_entered_ZipCode.text.toString()
 
                 if (useraddress == null)
-                    AddAddressToServer(addresType)
+                    addAddressToServer(addresType)
                 else
 
-                    UpdateAddressFromServer(useraddress.id.toString(), addresType)
+                    updateAddressFromServer(useraddress.id.toString(), addresType)
 
 
             }
@@ -130,7 +118,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
         mDialogView.close_dialog.setOnClickListener {
             //dismiss dialog
 
-            DismissFragment()
+            dismissFragment()
             mAlertDialog?.dismiss()
         }
 
@@ -140,7 +128,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     private var placePickerFragment: AutocompleteSupportFragment? = null
     private fun setPlacePicker(address: String?) {
 
-        placePickerFragment = supportFragmentManager.setPlacePicker(this@Addresslist_Activity) { place, error ->
+        placePickerFragment = supportFragmentManager.setPlacePicker(this@AddressListActivity) { place, error ->
             //on picked
             selectedPlace = place
             latitude = place?.latLng?.latitude.toString()
@@ -170,7 +158,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     }
 
-    private fun DismissFragment() {
+    private fun dismissFragment() {
         val fragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
         val fragmentTransaction: FragmentTransaction? = supportFragmentManager.beginTransaction()
         fragmentTransaction?.remove(fragment!!)
@@ -178,9 +166,9 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
 
-    private fun AddAddressToServer(addressType: String) {
+    private fun addAddressToServer(addressType: String) {
 
-        RetrofitClient.client.addUserAddress(this@Addresslist_Activity.getBearerToken(), Address, postalCode, latitude, longitude, addressType).onCall { networkException, response ->
+        RetrofitClient.client.addUserAddress(this@AddressListActivity.getBearerToken(), Address, postalCode, latitude, longitude, addressType).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.AddressAddSuccessFully), true, { getUserDetail(this, this) })
@@ -193,8 +181,8 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
 
     }
 
-    private fun UpdateAddressFromServer(address_id: String, addressType: String) {
-        RetrofitClient.client.updateAddress(this@Addresslist_Activity.getBearerToken(), Address, postalCode, latitude, longitude, address_id, addressType).onCall { networkException, response ->
+    private fun updateAddressFromServer(address_id: String, addressType: String) {
+        RetrofitClient.client.updateAddress(this@AddressListActivity.getBearerToken(), Address, postalCode, latitude, longitude, address_id, addressType).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.AddresUpdateSuccessFully), false, { getUserDetail(this, this) })
@@ -207,8 +195,8 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
     }
 
 
-    private fun DeleteAddress(address_id: String) {
-        RetrofitClient.client.deleteAddress(this@Addresslist_Activity.getBearerToken(), address_id).onCall { networkException, response ->
+    private fun deleteAddress(address_id: String) {
+        RetrofitClient.client.deleteAddress(this@AddressListActivity.getBearerToken(), address_id).onCall { networkException, response ->
             response.let {
                 if (!response?.body().toString().isNullOrEmpty()) {
                     showInfoDialog(getString(R.string.ContactDeletedSuccessFully), false, { getUserDetail(this, this) })
@@ -236,7 +224,7 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
             when (selectedSpinnerValue) {
                 "H" -> spinner.setSelection(0)
                 "O" -> spinner.setSelection(1)
-                // else -> spinner.setSelection(2)
+
             }
 
 
@@ -267,10 +255,10 @@ class Addresslist_Activity : BaseActivity(), OnGetLoginUserDetail {
                 viewBinderHelper.bind(holder.itemView.swipelayout, UserContactList[position].id.toString())
                 holder.itemView.item_edit.setOnClickListener {
 
-                    add_Upadte_Address(UserContactList[position])
+                    addUpadteAddress(UserContactList[position])
                 }
                 holder.itemView.item_delete.setOnClickListener {
-                    showConfirmDialog(getString(R.string.delete_AddressConfirmation), { DeleteAddress(UserContactList[position].id.toString()) })
+                    showConfirmDialog(getString(R.string.delete_AddressConfirmation), { deleteAddress(UserContactList[position].id.toString()) })
 
 
                 }

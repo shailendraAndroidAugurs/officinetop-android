@@ -24,8 +24,8 @@ import com.officinetop.officine.data.*
 import com.officinetop.officine.invite_frnds.InviteFriendsActivity
 import com.officinetop.officine.push_notification.NotificationList
 import com.officinetop.officine.retrofit.RetrofitClient
-import com.officinetop.officine.userprofile.Addresslist_Activity
-import com.officinetop.officine.userprofile.ContactList_Activity
+import com.officinetop.officine.userprofile.AddressListActivity
+import com.officinetop.officine.userprofile.ContactListActivity
 import com.officinetop.officine.userprofile.Edit_Profile
 import com.officinetop.officine.userprofile.ProfileSetting
 import com.officinetop.officine.utils.*
@@ -147,7 +147,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
         layout_addcontact.setOnClickListener {
             if (context?.isOnline()!!) {
-                val intent = Intent(context, ContactList_Activity::class.java)
+                val intent = Intent(context, ContactListActivity::class.java)
                 startActivityForResult(intent, 100)
             } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
@@ -155,7 +155,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
         }
         layout_address.setOnClickListener {
             if (context?.isOnline()!!) {
-                val intent = Intent(context, Addresslist_Activity::class.java)
+                val intent = Intent(context, AddressListActivity::class.java)
                 startActivityForResult(intent, 100)
             } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}

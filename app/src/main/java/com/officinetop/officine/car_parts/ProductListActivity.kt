@@ -57,11 +57,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
     val filterBrandList: MutableList<String> = ArrayList()
     private var selectedFormattedDate = ""
     private var ratingString = ""
-    private var priceRangeInitial = 0
-    private var priceRangeFinal = -1
+    private var priceRangeInitial = 0f
+    private var priceRangeFinal = -1f
     lateinit var linearLayoutManager: LinearLayoutManager
-    var tempPriceFinal = -1
-    var tempPriceInitial = 0
+    var tempPriceFinal = -1f
+    var tempPriceInitial = 0f
     var isfilterApply = false
     private var distanceRangeFinal = 0
     private var distanceRangeInitial = 100
@@ -143,7 +143,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
-        if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1 || priceRangeInitial != 0) || filterBrandList.size != 0) {
+        if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || (priceRangeFinal != -1f || priceRangeInitial != 0f) || filterBrandList.size != 0) {
 
             this@ProductListActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
         } else {
@@ -213,7 +213,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             searchedCategoryType?.let {
 
                 RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon, limit = current_page.toString(), favorite = favorite, user_id = getUserId()
-                        , priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel = priceSortLevel, brands = filterBrandList.joinToString(","), ratingLevel = ratingLevel, ratingRange = ratingString)
+                        , priceRange = if (priceRangeFinal == -1f) "" else priceRangeString, priceSortLevel = priceSortLevel, brands = filterBrandList.joinToString(","), ratingLevel = ratingLevel, ratingRange = ratingString)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progress_bar.visibility = View.GONE
@@ -225,7 +225,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                         })
             }
         } else {
-            RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
+            RetrofitClient.client.getSpareParts(selectedVehicleVersionID, partID, if (priceRangeFinal == -1f) "" else priceRangeString, priceSortLevel, selectedCar.carSize, brands = filterBrandList.joinToString(",")
                     , categoryType = CategoryType, productKeyword = searchedKeyWord, product_type = "1", user_id = getUserId(), ratingLevel = ratingLevel, ratingRange = ratingString, favorite = favorite, coupon = coupon, model = if (getSelectedCar()?.carModel != null) getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear!! else "", limit = current_page.toString())
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -287,7 +287,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         val priceRangeString = "$priceRangeInitial,${priceRangeFinal}"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
 
-        RetrofitClient.client.bestSeller(if (priceRangeFinal == -1) "" else priceRangeString,
+        RetrofitClient.client.bestSeller(if (priceRangeFinal == -1f) "" else priceRangeString,
                 priceSortLevel, brands = filterBrandList.joinToString(","), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, userid = getUserId()).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -378,7 +378,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         if (jsonArray.length() > 0) {
             hasRecyclerLoadedOnce = true
-            filterDialog.dialog_price_range.setValue(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
+            filterDialog.dialog_price_range.setRange(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
             filterDialog.clear_selection.callOnClick()
             filterDialog.price_start_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceInitialLimit.toString())
             filterDialog.price_end_range.text = getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
@@ -403,7 +403,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             dialog_price_range.setOnRangeChangedListener(object : OnRangeChangedListener {
                 override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {}
                 override fun onRangeChanged(view: RangeSeekBar?, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
-                    tempPriceInitial = floor(leftValue).toInt()
+                   /* tempPriceInitial = floor(leftValue).toInt()
                     tempPriceFinal = ceil(rightValue).toInt()
 
                     val seekPriceFinal = (ceil(rightValue) / 100) * seekbarPriceFinalLimit
@@ -413,10 +413,20 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                     val priceInitialString = String.format("%.2f", seekPriceInitial)
 
                     tempPriceInitial = floor(seekPriceInitial).toInt()
-                    tempPriceFinal = ceil(seekPriceFinal).toInt()
+                    tempPriceFinal = ceil(seekPriceFinal).toInt()*/
 
-                    price_start_range.text = getString(R.string.prepend_euro_symbol_string, priceInitialString)
-                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, priceFinalString)
+                    if (rightValue.toString().contains(".0")) {
+                        tempPriceInitial = floor(leftValue)
+                        tempPriceFinal = ceil(rightValue)
+                    } else {
+                        tempPriceInitial = (leftValue).toDouble().roundTo2Places().toFloat()
+                        tempPriceFinal = (rightValue).toDouble().roundTo2Places().toFloat()
+                    }
+
+
+
+                    price_start_range.text = getString(R.string.prepend_euro_symbol_string, tempPriceInitial.toString())
+                    price_end_range.text = getString(R.string.prepend_euro_symbol_string, tempPriceFinal.toString())
 
                 }
 
@@ -479,7 +489,11 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             }
             toolbar.setNavigationOnClickListener { dismiss() }
 
-            dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
+           try{
+               dialog_price_range.setValue(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
+           } catch (e :Exception){
+               e.printStackTrace()
+           }
             dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
 
             toolbar.inflateMenu(R.menu.menu_single_item)
@@ -496,10 +510,10 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             clear_selection.setOnClickListener {
                 dialog_price_range.setValue(seekbarPriceInitialLimit, seekbarPriceFinalLimit)
                 dialog_distance_range.setValue(0f, dialog_distance_range.maxProgress)
-                priceRangeFinal = -1
-                priceRangeInitial = 0
-                tempPriceInitial = 0
-                tempPriceFinal = -1
+                priceRangeFinal = -1f
+                priceRangeInitial = 0f
+                tempPriceInitial = 0f
+                tempPriceFinal = -1f
                 //reset rating filter
                 dialog_rating_five.isChecked = false
                 dialog_rating_four.isChecked = false

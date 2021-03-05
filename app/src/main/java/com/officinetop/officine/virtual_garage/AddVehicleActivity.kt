@@ -508,7 +508,7 @@ class AddVehicleActivity : BaseActivity() {
             val car = Gson().fromJson<Models.MyCarDataSet>(carDetails, Models.MyCarDataSet::class.java)
             val carIntent = Intent()
             carIntent.putExtra(Constant.Key.myCar, car as Serializable)
-            // callKromedaApi(finalCarVersion[versionIndex].idVehicle)
+             callKromedaApi(finalCarVersion[versionIndex].idVehicle)
             if (isForEdit) {
                 showInfoDialog(getString(R.string.CarDetailSavedSuccessfully), false) {
                     setResult(Activity.RESULT_OK, carIntent)
@@ -1325,7 +1325,7 @@ class AddVehicleActivity : BaseActivity() {
             val last = (dataSet[dataSet.length() - 1].toString())
             val lastCar = Gson().fromJson<Models.MyCarDataSet>(last, Models.MyCarDataSet::class.java)
             carIntent.putExtra(Constant.Key.myCar, lastCar as Serializable)
-            // callKromedaApi(lastCar.carVersionModel.idVehicle)
+             callKromedaApi(lastCar.carVersionModel.idVehicle)
         }
 
         return carIntent

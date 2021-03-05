@@ -45,8 +45,6 @@
                     android:id="@+id/dialog_price_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:rsb_max="100"
-                    app:rsb_min="0"
                     app:rsb_mode="range"
                     app:rsb_progress_color="@color/colorAccent"
                     app:rsb_range_interval="1"

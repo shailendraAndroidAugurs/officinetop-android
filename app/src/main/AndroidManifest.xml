@@ -49,10 +49,10 @@
             android:parentActivityName=".HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userprofile.ContactList_Activity"
+            android:name=".userprofile.ContactListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userprofile.Addresslist_Activity"
+            android:name=".userprofile.AddressListActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".feedback.FeedbackDetailActivity" />
         <activity android:name=".car_parts.RimActicvity" />

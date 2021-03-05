@@ -80,6 +80,7 @@ class MaintenanceActivity : BaseActivity() {
     private val PAGESTART = 0
     private var currentPage = PAGESTART
     private var isLastPageOfList = false
+    private var isFirstTimeLoading = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
@@ -151,8 +152,8 @@ class MaintenanceActivity : BaseActivity() {
 
     private fun getCarMaintenance(limit: Int, isPaginationRequest: Boolean) {
         try {
-            if(!isPaginationRequest)
-            progress_bar.visibility = View.VISIBLE
+            if (!isPaginationRequest)
+                progress_bar.visibility = View.VISIBLE
             val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
             val priceSortLevel = if (isPriceLowToHigh) 1 else 2
             val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
@@ -180,7 +181,7 @@ class MaintenanceActivity : BaseActivity() {
                                         carMaintenanceServiceListforPagination.add(carMaintenance)
                                     }
                                     //bind recyclerview
-                                    setAdapter(isPaginationRequest,carMaintenanceServiceListforPagination)
+                                    setAdapter(isPaginationRequest, carMaintenanceServiceListforPagination)
                                 } else {
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
                                         isLastPageOfList = true
@@ -204,19 +205,15 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    private fun setAdapter(isPaginationRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
-        for (i in 0 until carMaintenanceServiceList.size) {
-            if (maxPrice < carMaintenanceServiceList.get(i).price.toFloat()) {
-                maxPrice = carMaintenanceServiceList.get(i).price.toFloat()
-                seekbarPriceFinalLimit = carMaintenanceServiceList.get(i).price.toFloat()
-            }
-            filterDialog.price_end_range.text = if (priceRangeFinal != -1f) priceRangeFinal.toString()
-            else getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
+    private fun setAdapter(isPaginationRequest: Boolean, carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
+
+        if (isFirstTimeLoading) {
+            setMaxPricesInPricesSeekBar()
         }
         try {
             for (i in 0 until carMaintenanceServiceList.size) {
                 if (carMaintenanceServiceList[i].parts != null && carMaintenanceServiceList[i].parts.size != 0) {
-                    carMaintenanceServiceList[i].listino = if(carMaintenanceServiceList[i].parts[0].listino!=null )carMaintenanceServiceList[i].parts[0].listino else ""
+                    carMaintenanceServiceList[i].listino = if (carMaintenanceServiceList[i].parts[0].listino != null) carMaintenanceServiceList[i].parts[0].listino else ""
                     carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].Productdescription != null) carMaintenanceServiceList[i].parts[0].Productdescription else ""
                     carMaintenanceServiceList[i].productId = carMaintenanceServiceList[i].parts[0].id
                     carMaintenanceServiceList[i].couponList = carMaintenanceServiceList[i].parts[0].couponList
@@ -338,7 +335,7 @@ class MaintenanceActivity : BaseActivity() {
             selectservice_position = position
 
         } else {
-          //  progress_bar_bottom.visibility = View.VISIBLE
+            //  progress_bar_bottom.visibility = View.VISIBLE
             if (isOnline()) {
                 getAllParts(carMaintenanceServiceList[position].id, position)
             } else {
@@ -354,7 +351,8 @@ class MaintenanceActivity : BaseActivity() {
                     ?: "", serviceId, getUserId(), current_page.toString())
                     .onCall { networkException, response ->
 
-                        networkException?.let { progress_bar.visibility = View.GONE
+                        networkException?.let {
+                            progress_bar.visibility = View.GONE
                             progress_bar.visibility = View.GONE
 
                         }
@@ -523,7 +521,7 @@ class MaintenanceActivity : BaseActivity() {
             if (ReplacementPartList.size != 0 && ReplacementPartList[position] != null) {
                 carMaintenanceServiceList[selectservice_position].parts.clear()
                 carMaintenanceServiceList[selectservice_position].parts.add(0, ReplacementPartList[position])
-                carMaintenanceServiceList[selectservice_position].listino = if(ReplacementPartList[position].listino!=null ) ReplacementPartList[position].listino else ""
+                carMaintenanceServiceList[selectservice_position].listino = if (ReplacementPartList[position].listino != null) ReplacementPartList[position].listino else ""
                 carMaintenanceServiceList[selectservice_position].descrizione = if (ReplacementPartList[position].Productdescription != null) ReplacementPartList[position].Productdescription else ""
                 carMaintenanceServiceList[selectservice_position].productId = ReplacementPartList[position].id
                 carMaintenanceServiceList[selectservice_position].usersId = ReplacementPartList[position].usersId
@@ -744,28 +742,33 @@ class MaintenanceActivity : BaseActivity() {
                 }
                 priceRangeInitial = tempPriceInitial
                 priceRangeFinal = tempPriceFinal
-                if (!leftRight.isBlank() || !frontRear.isBlank() || !ratingString.isBlank() || priceRangeInitial.toInt() != 0 || priceRangeFinal.toInt() != -1) {
+                if (!leftRight.isBlank() || !frontRear.isBlank() || !ratingString.isBlank() || priceRangeInitial != 0f || seekbarPriceFinalLimit != maxPrice) {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, drawableRight, null)
+                    carMaintenanceServiceList.clear()
+                    carMaintenanceServiceListforPagination.clear()
+                    selectedCarMaintenanceServices.clear()
+                    getCarMaintenance(0, false)
+
                 } else {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
 
                 }
-                getCarMaintenance(0, false)
+
 
                 dismiss()
 
                 return@setOnMenuItemClickListener true
             }
 
-            dialog_price_range.setValue(0.00f, dialog_price_range.maxProgress)
-
+            dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
+//
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar_title.text = getString(R.string.filter)
 
 
 
             clear_selection.setOnClickListener {
-                dialog_price_range.setValue(0f, dialog_price_range.maxProgress)
+                dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
 
 
                 ratingString = ""
@@ -781,7 +784,10 @@ class MaintenanceActivity : BaseActivity() {
                 tempPriceInitial = 0f
                 tempPriceFinal = -1f
                 this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
-
+                carMaintenanceServiceList.clear()
+                carMaintenanceServiceListforPagination.clear()
+                selectedCarMaintenanceServices.clear()
+                getCarMaintenance(0, false)
 
             }
             create()
@@ -809,7 +815,9 @@ class MaintenanceActivity : BaseActivity() {
                 val distanceIndex = radio_grp_distance.indexOfChild(radio_grp_distance.findViewById(radio_grp_distance.checkedRadioButtonId))
 
                 isPriceLowToHigh = priceIndex == 0
-
+                carMaintenanceServiceList.clear()
+                carMaintenanceServiceListforPagination.clear()
+                selectedCarMaintenanceServices.clear()
                 getCarMaintenance(0, false)
                 dismiss()
                 return@setOnMenuItemClickListener true
@@ -975,5 +983,21 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
+    private fun setMaxPricesInPricesSeekBar() {
+        isFirstTimeLoading = false
+        for (i in 0 until carMaintenanceServiceList.size) {
+            if (maxPrice < carMaintenanceServiceList.get(i).price.toFloat()) {
+                maxPrice = carMaintenanceServiceList.get(i).price.toFloat()
+                seekbarPriceFinalLimit = carMaintenanceServiceList.get(i).price.toFloat()
+            }
+
+        }
+
+        filterDialog.price_end_range.text = if (priceRangeFinal != -1f) priceRangeFinal.toString()
+        else getString(R.string.prepend_euro_symbol_string, seekbarPriceFinalLimit.toString())
+        filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
+        filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
+        filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
+    }
 
 }
