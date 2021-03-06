@@ -45,6 +45,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener {
 
@@ -59,6 +60,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
     override fun onConnectionFailed(p0: ConnectionResult) {
         container.snack("Failed")
     }
+
     private lateinit var mMap: GoogleMap
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mLatitude: String? = null
@@ -82,8 +84,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_title.text = getString(R.string.title_activity_sos)
-        mLatitude=getLat()
-        mLongitude=getLong()
+        mLatitude = getLat()
+        mLongitude = getLong()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
@@ -93,7 +95,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         checkpermission(storagePermissionRequestList(), {
             enableLocation()
             getcurrentlocation()
-        },true)
+        }, true)
 
         emergency_call.setOnClickListener {
             callEmergency()
@@ -102,6 +104,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
     }
+
     private fun callEmergency() {
         // Use format with "tel:" and phoneNumber created is
         // stored in uri.
@@ -156,7 +159,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                     }
                                     val data = allWrackerServicesWorkshopList.get(0)
                                     getWrackersServices(data.id.toString(), data.usersId.toString(), getSelectedCar()?.carVersionModel?.idVehicle
-                                            ?: "",true)
+                                            ?: "", true)
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
@@ -199,13 +202,13 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
     }
 
-    private fun getWrackersServices(id: String, userId: String, selectedCarId: String?,showAllServices: Boolean=false) {
-      var  workshopId=""
-        if(!showAllServices){
-            workshopId=userId
+    private fun getWrackersServices(id: String, userId: String, selectedCarId: String?, showAllServices: Boolean = false) {
+        var workshopId = ""
+        if (!showAllServices) {
+            workshopId = userId
         }
 
-        val progressDialog=getProgressDialog(true)
+        val progressDialog = getProgressDialog(true)
 
         RetrofitClient.client.getWrackerServices(id, workshopId, selectedCarId!!.toInt())
                 .onCall { networkException, response ->
@@ -257,7 +260,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 "",
                 items.addressId,
                 items.id.toString(),
-                getOrderId(),"","","",""
+                getOrderId(), "", "", "", ""
         )
                 .onCall { _, response ->
 
@@ -335,6 +338,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 }
                 holder.workshopAppointment.setOnClickListener {
                     navigateToWorkshopList(items, userId, isEmergency = false, isAppointment = true)
+                }
+                holder.name.setOnClickListener {
+                    showInfoDialog(items.description)
                 }
             }
 
@@ -423,11 +429,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
-                 mLatitude = location.latitude.toString()//"44.1571507"
-                  mLongitude = location.longitude.toString()//"12.2142107"
-                   /* mLatitude = "44.1571507"
-                    mLongitude = "12.2142107"*/
-
+                    mLatitude = location.latitude.toString()//"44.1571507"
+                    mLongitude = location.longitude.toString()//"12.2142107"
+                    /*  mLatitude = "44.1571507"
+                      mLongitude = "12.2142107"*/
                 }
                 loadMapView()
             }
@@ -471,7 +476,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
 
         if (isOnline()) {
             getAllWrackerWorkshopAddressInfo()
-        }else{
+        } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
     }
