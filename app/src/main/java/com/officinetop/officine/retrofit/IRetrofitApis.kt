@@ -709,7 +709,9 @@ interface IRetrofitApis {
                                      @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
                                      @Query(Constant.Path.version_id) version_id: String,
                                      @Query(Constant.Path.service_average_time) service_average_time: String,
-                                     @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+                                     @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                                     @Query(Constant.Path.servicesPrice) servicesPrice: String
+
 
 
     ): Call<ResponseBody>

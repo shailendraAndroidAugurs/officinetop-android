@@ -420,7 +420,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             Log.e("latitudecurrentlocation", location.toString() + "location")
             if (location == null) {
                 requestNewLocationData()
-            } else {
+            }
+            else {
                 val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
@@ -431,7 +432,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 } else {
                     mLatitude = location.latitude.toString()//"44.1571507"
                     mLongitude = location.longitude.toString()//"12.2142107"
-                    /*  mLatitude = "44.1571507"
+            /*          mLatitude = "44.1571507"
                       mLongitude = "12.2142107"*/
                 }
                 loadMapView()
