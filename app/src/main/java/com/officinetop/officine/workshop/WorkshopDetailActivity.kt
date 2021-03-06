@@ -44,7 +44,9 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.views.DialogTouchImageSlider
 import com.officinetop.officine.views.TimeWheelPicker
+import kotlinx.android.synthetic.main.activity_service_detail.*
 import kotlinx.android.synthetic.main.activity_workshop_detail.*
+import kotlinx.android.synthetic.main.activity_workshop_detail.image_slider
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.dialog_booking_calendar.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -150,6 +152,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     var maintenanceServiceJson: JSONArray = JSONArray()
     var servicesPrice = ""
     var serviceAveragetime: String = ""
+    var finalPrice: Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workshop_detail)
@@ -918,9 +921,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         } else if (isSosEmergency) {
             RetrofitClient.client.getSOSPackageDetailEmergency(workshopUsersId.toString(), sosServiceId, selectedDateFilter, sosUserLatitude, sosUserLongitude, getSavedSelectedVehicleID(),
-                    addressId, getCurrentTime(), getUserId(), "2", version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), service_average_time = servicesAverageTime, mainCategoryId = mainCategoryId).enqueue(callback)
+                    addressId, getCurrentTime(), getUserId(), "2", version_id = getSelectedCar()?.carVersionModel?.idVehicle.toString(), service_average_time = servicesAverageTime, mainCategoryId = mainCategoryId,servicesPrice = finalPrice.toString()).enqueue(callback)
         } else if (isCarMaintenanceService)
-            RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(), selected_date = selectedDateFilter, userid = getUserId(), mainCategoryId = mainCategoryId, workshopUsersId = workshopUsersId.toString(), services = maintenanceServiceJson, services_price = servicesPrice, service_average_time = serviceAveragetime).enqueue(callback)
+            RetrofitClient.client.getCarMaintenacePackageDetail(versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString(), selected_date = selectedDateFilter, userid = getUserId(), mainCategoryId = mainCategoryId, workshopUsersId = workshopUsersId.toString(), services = maintenanceServiceJson, services_price = servicesPrice, service_average_time = averageServiceTime.toString()).enqueue(callback)
         else if (isQuotesService)
             RetrofitClient.client.getServiceQuotesPackageDetail(workshopCategoryId, quotesWorkshopUsersDaysId, selectedDateFilter, quotesServiceQuotesInsertedId,
                     getSavedSelectedVehicleID(), mainCategoryId, workshopUsersId.toString(), workshopCouponId, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle
@@ -1060,14 +1063,14 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
                                 val currentDate = SimpleDateFormat("yyy-MM-dd").parse(selectedDateFilter)
 
-
+/*
                                 if (isSosEmergency || isSOSService) {
                                     startTimeBooking = startTimeString
                                     endTimeBooking = endTimeString
                                     showConfirmDialog(getString(R.string.are_you_sure_to_book_this_slot)) {
                                         checkAndBookService(packageDetails, startTimeString)
                                     }
-                                } else if ((isTyre || isAssembly) && cartItem != null && (currentDate < DeleviryDate)) {
+                                } else */if ((isTyre || isAssembly) && cartItem != null && (currentDate < DeleviryDate)) {
                                     showInfoDialog(getString(R.string.Invalidinterventiontime))
                                     return@setOnClickListener
                                 } else {
@@ -1152,7 +1155,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun checkAndBookService(packageDetail: JSONObject, bookingStartTime: String) {
         var endTime = "00:00"
-        var finalPrice: Double = 0.0
         slotId = packageDetail.optString("temp_slot_id")
         specialConditionId = if (packageDetail.has("special_condition_id")) packageDetail.optString("special_condition_id", "0") else "0"
         discountPrices = if (packageDetail.has("discount_price")) packageDetail.optString("discount_price", "0") else "0"
