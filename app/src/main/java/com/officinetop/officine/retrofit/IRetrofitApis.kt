@@ -1147,6 +1147,7 @@ interface IRetrofitApis {
             @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.discountType) discountType: String,
+            @Field(Constant.Path.version_id) version_id: String,
             @Header(Constant.Fields.authorization) authToken: String,
             @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 

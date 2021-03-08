@@ -109,7 +109,7 @@
     <string name="side">Side</string>
     <string name="url_not_found">Url not found</string>
     <string name="zero">0</string>
-
+    <string name="compatible_msg">This product is compatible with the selected car</string>
     <string name="front">Front</string>
     <string name="rear">Rear</string>
     <string name="left">Left</string>

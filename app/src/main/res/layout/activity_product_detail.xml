@@ -38,6 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/image_height"
                         android:layout_marginStart="@dimen/service_detail_container_margin"
+                        android:visibility="visible"
                         android:layout_marginEnd="@dimen/service_detail_container_margin"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="10dp"
@@ -365,9 +366,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:paddingTop="0dp"
                     android:textColor="@color/gray_dark" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    >
+
+                    <TextView
+                        style="@style/TextViewHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/check"
+                        android:text="@string/compatible_msg"
+                        android:textColor="@color/green_dark"
+                        android:visibility="visible" />
+
+
+
+                </LinearLayout>
 
 
                 <TextView
