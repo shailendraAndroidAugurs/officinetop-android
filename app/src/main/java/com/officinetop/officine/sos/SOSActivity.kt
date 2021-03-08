@@ -432,7 +432,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 } else {
                     mLatitude = location.latitude.toString()//"44.1571507"
                     mLongitude = location.longitude.toString()//"12.2142107"
-            /*          mLatitude = "44.1571507"
+               /*       mLatitude = "44.1571507"
                       mLongitude = "12.2142107"*/
                 }
                 loadMapView()

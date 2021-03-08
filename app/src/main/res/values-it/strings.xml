@@ -329,6 +329,7 @@ informazioni in accordo alle </string>
 
     <string name="Rim">Rim</string>
     <!-- Seleziona il tipo di tagliando-->
+    <string name="compatible_msg"> Questo prodotto è compatibile con l’auto selezionata</string>
 
     <string name="onServices"> in servizio</string>
 

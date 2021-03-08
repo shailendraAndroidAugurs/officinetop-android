@@ -731,7 +731,7 @@
     <string name="product_services_address_note">The products will be delivered to the chosen workshop and assembly will be performed on the booked date</string>
 
     <string name="services_address_note">The services will be performed in the chosen workshop on the booked date</string>
-
+    <string name="compatible_msg">This product is compatible with the selected car</string>
     <string name="oen">OEN</string>
     <string name="part">Part</string>
     <string name="product">Product</string>

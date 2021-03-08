@@ -272,6 +272,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                 }
             }
         } else if (isSOSAppointment || isSOSServiceEmergency) {
+            if(isSOSServiceEmergency){
+                horizontal_calendar_view.visibility = View.GONE
+            }
             if (intent.hasExtra(Constant.Path.serviceID)) {
                 serviceID = intent?.getStringExtra(Constant.Path.serviceID)!!.toInt()
             }
