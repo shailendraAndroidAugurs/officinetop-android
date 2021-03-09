@@ -382,7 +382,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
             window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
             create()
-
         }
     }
 
@@ -394,7 +393,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             return
         }
         val dialog = getProgressDialog(true)
-
         RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId(), getLat(), getLong(), defaultDistance)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -415,6 +413,9 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
+                                        if(data.getString("custom_parts_compatible_status").equals("1")){
+                                            layout_compatible.visibility = View.VISIBLE
+                                        }
                                         if (!min_price.isNullOrBlank()) {
                                             if (productIsPair)
                                                 buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, (min_price.toDouble().roundTo2Places() * 2).toString())})"
@@ -647,7 +648,6 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                 Log.e("Cartassembly", productDetails.toString())
                 if (productDetails != null) {
                     cartItem.quantity = item_qty.text.toString().toInt()
-
                     cartItem.finalPrice = cartItem.price * cartItem.quantity
                     cartItem.Deliverydays = Deliverydays
                     cartItem.serviceId = if (detail != null && !detail?.serviceId.isNullOrBlank()) detail?.serviceId!! else "0"
