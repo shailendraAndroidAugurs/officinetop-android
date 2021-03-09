@@ -373,8 +373,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/layout_compatible"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone"
                     >
 
                     <TextView
