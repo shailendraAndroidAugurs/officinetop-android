@@ -625,11 +625,11 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
 
             }
+            Log.d("check_card_id",car.id+"   "+getSavedSelectedVehicleID())
 
 
 
             if (json != null) {
-                saveSelectedCar(json)
                 hasSelectedCar = true
                 hasAddedCar = true
 
@@ -637,15 +637,21 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
 
-                        supportFragmentManager.beginTransaction()
+                       /* supportFragmentManager.beginTransaction()
                                 .replace(R.id.container, FragmentHome(), "Home")
                                 .commit()
 
                         home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
+*/
+                        val fragment: FragmentHome = supportFragmentManager.findFragmentByTag("Home") as FragmentHome
+                        fragment.bestSellingApi()
+
+
                     }
 
-
                 }
+                saveSelectedCar(json)
+
 
             }
 
@@ -964,8 +970,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                     saveIsAvailableDataInCart(false)
                                     deleteCar(car!!.id, false)
                                 }
-
-
                             }
                         }
 

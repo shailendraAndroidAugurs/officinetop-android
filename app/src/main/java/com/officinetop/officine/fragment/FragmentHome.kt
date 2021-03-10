@@ -185,7 +185,7 @@ class FragmentHome : Fragment() {
     }
 
     /*best selling api call.*/
-    private fun bestSellingApi() {
+    public fun bestSellingApi() {
 
         //best selling products
         RetrofitClient.client.bestSellingProductHome("", 0, brands = "", version_id = context?.getSelectedCar()?.carVersionModel?.idVehicle!!)

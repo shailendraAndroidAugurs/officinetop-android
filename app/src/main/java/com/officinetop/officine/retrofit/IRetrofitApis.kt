@@ -223,7 +223,8 @@ interface IRetrofitApis {
 
 
                      @Query(Constant.Path.favorite) favorite: String,
-                     @Query(Constant.Path.couponFilter) couponfilter: String
+                     @Query(Constant.Path.couponFilter) couponfilter: String,
+                     @Query(Constant.Path.mainCategoryId) mainCategoryId:String
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshopRevision)
