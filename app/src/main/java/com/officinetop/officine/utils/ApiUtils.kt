@@ -1001,18 +1001,20 @@ fun insertInCartList(modelData: Any, cartType: String, modelCart: Models.CartDat
 
 fun Activity.addToCartProducts(context: Context?, productId: String, productQuantity: String, pfuAmount: String, couponId: String?, price: String, totalPrice: String,
                                discount: String, productType: String, usersID: String, productName: String, productDescription: String, sellerId: String) {
-
+    val progressDialog = getProgressDialog(true)
     RetrofitClient.client.addToCartProduct(getBearerToken() ?: "", productId, productQuantity
             , pfuAmount, couponId, price, totalPrice, discount, productType, getOrderId(), "", sellerId,
             productName, productDescription, getSavedSelectedVehicleID(), getSelectedCar()?.carVersionModel?.idVehicle
             ?: "").onCall { networkException, response ->
-
+        progressDialog.dismiss()
         response?.let {
             val body = response.body()?.string()
             if (body.isNullOrEmpty() || response.code() == 401)
                 showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(context) })
             if (response.isSuccessful) {
                 try {
+                    progressDialog.dismiss()
+
                     val responseData = JSONObject(body)
 
                     if (responseData.has("data") && !responseData.isNull("data")) {
@@ -1026,6 +1028,8 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
                     }
 
                     if (responseData.has("message") && !responseData.isNull("message")) {
+                        progressDialog.dismiss()
+
                         showInfoDialog(responseData.get("message").toString(), false) {
                             startActivity(intentFor<WorkshopBookingDetailsActivity>())
                             finish()
@@ -1033,6 +1037,8 @@ fun Activity.addToCartProducts(context: Context?, productId: String, productQuan
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
+                    progressDialog.dismiss()
+
                 }
 
             }

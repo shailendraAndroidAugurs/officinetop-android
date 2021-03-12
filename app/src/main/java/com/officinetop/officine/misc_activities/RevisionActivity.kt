@@ -40,6 +40,7 @@ class RevisionActivity : BaseActivity() {
         }else{
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
+        
     }
 
     private fun getRevisionServices() {

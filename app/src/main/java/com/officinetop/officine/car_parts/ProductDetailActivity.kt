@@ -413,7 +413,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
                                         min_price = data.getString("min_service_price")
-                                        if(data.getString("custom_parts_compatible_status").equals("1")){
+                                        if(data.getString("compatible_status").equals("1")){
                                             layout_compatible.visibility = View.VISIBLE
                                         }
                                         if (!min_price.isNullOrBlank()) {
