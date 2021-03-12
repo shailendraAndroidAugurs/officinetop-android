@@ -398,6 +398,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
 
+
         }
         btn_qty_decrement.setOnClickListener {
             if (if (productIsPair) qty_text > 2 else qty_text > 1) {
