@@ -681,7 +681,10 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     override fun getFeedbackList(list: MutableList<Models.FeedbacksList>) {
+
+
         bindFeedbackList(list, this)
+        Log.d("check_feeback_list_size",""+see_all_feedback.length())
     }
 
     private fun displayCoupons(couponsList: MutableList<Models.Coupon>, couponType: String, AppliedCouponName: TextView, productDetails: Models.TyreDetailData?) {

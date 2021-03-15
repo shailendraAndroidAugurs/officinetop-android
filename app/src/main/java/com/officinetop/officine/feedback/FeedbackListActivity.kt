@@ -44,6 +44,7 @@ class FeedbackListActivity : BaseActivity(), OnGetFeedbacks {
 
         intent.printValues(localClassName)
 
+
         if (intent.hasExtra(Constant.Path.workshopId))
             workshopId = intent?.getStringExtra(Constant.Path.workshopId) ?: ""
 
