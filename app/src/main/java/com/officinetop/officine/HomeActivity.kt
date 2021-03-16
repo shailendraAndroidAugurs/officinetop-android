@@ -642,15 +642,19 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                                 .commit()
 
                         home_bottom_navigation_view.menu.findItem(R.id.action_menu_home).isChecked = true
-*/
+*/                      saveSelectedCar(json)
                         val fragment: FragmentHome = supportFragmentManager.findFragmentByTag("Home") as FragmentHome
                         fragment.bestSellingApi()
 
 
+                    }else{
+                        saveSelectedCar(json)
                     }
 
+                }else{
+                    saveSelectedCar(json)
                 }
-                saveSelectedCar(json)
+
 
 
             }
