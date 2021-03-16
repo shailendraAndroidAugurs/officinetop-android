@@ -214,9 +214,19 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 Log.d("check_status_avilable", "" + product_workshopList.availableStatus)
                 if (!product_workshopList.availableStatus.isNullOrEmpty() && product_workshopList.availableStatus != "1") {
                     workshopAvailability.visibility = View.VISIBLE
-                    AppliedCouponName.visibility = View.GONE
-                    CouponLabel.visibility = View.GONE
+                    AppliedCouponName.visibility = View.VISIBLE
+                    CouponLabel.visibility = View.VISIBLE
                     offerBadge.visibility = View.GONE
+                    if (productOrWorkshopList[p1].couponList != null && productOrWorkshopList[p1].couponList.size != 0) {
+                        AppliedCouponName.text = (productOrWorkshopList[p1].couponList[0].couponTitle)
+                        AppliedCouponName.visibility = View.VISIBLE
+                        CouponLabel.visibility = View.VISIBLE
+                        offerBadge.visibility = View.GONE
+                    } else {
+                        AppliedCouponName.visibility = View.GONE
+                        CouponLabel.visibility = View.GONE
+                        offerBadge.visibility = View.GONE
+                    }
                 } else {
                     workshopAvailability.visibility = View.GONE
                     if (productOrWorkshopList[p1].couponList != null && productOrWorkshopList[p1].couponList.size != 0) {
