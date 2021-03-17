@@ -155,12 +155,16 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
         with(p0) {
+            if (productOrWorkshopList[p1].sellerPrice?.toDouble()?.roundTo2Places()==18.46) {
+                Log.d("image", p1.toString() + " , " + productOrWorkshopList[p1])
+            }
+
             // tv_count.text=(p1+1).toString()
             val product_workshopList = productOrWorkshopList[p1]
 
 
-            if (isCarWash || isWorkshop || isTyre || isRevision || isCarMaintenanceServices || isQuotesServices ||
-                    isMotService || isSOSAppointment || isSosEmergency) {
+            if (isCarWash || isWorkshop || isTyre || isRevision || isCarMaintenanceServices || isQuotesServices || isMotService || isSOSAppointment || isSosEmergency) {
+
                 brandImage.visibility = View.GONE
                 icon.visibility = View.GONE
                 item_image_workshop.visibility = View.VISIBLE
@@ -259,7 +263,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
             } else {
 
                 if (!product_workshopList.forPair.isNullOrBlank()) {
-
                     if (product_workshopList.forPair.equals("0")) {
                         textview_quantity.text = ""
                         textview_quantity.visibility = View.GONE
@@ -271,9 +274,6 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 price.text = if (!productOrWorkshopList[p1].sellerPrice.isNullOrBlank() && !productOrWorkshopList[p1].sellerPrice.equals("null"))
                     mcontext.getString(R.string.prepend_euro_symbol_string, productOrWorkshopList[p1].sellerPrice)
                 else mcontext.getString(R.string.prepend_euro_symbol_string, "0")
-
-
-
 
                 if (!productOrWorkshopList[p1].ratingStar.isNullOrBlank()) {
                     rating.rating = productOrWorkshopList[p1].ratingStar.toFloat()
@@ -294,13 +294,16 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                     offerBadge.visibility = View.GONE
                 }
 
-                if (productOrWorkshopList[p1].images != null && productOrWorkshopList[p1].images?.size != 0)
-                    if (!productOrWorkshopList[p1].images?.get(0)?.imageUrl.isNullOrBlank())
 
-                        mcontext.loadImage(productOrWorkshopList[p1].images?.get(0)?.imageUrl, icon, R.drawable.no_image_placeholder)
-                    else if (!productOrWorkshopList[p1].profileImage.isNullOrBlank()) {
-                        mcontext.loadImage(Constant.profileBaseUrl + productOrWorkshopList[p1].profileImage, icon, R.drawable.no_image_placeholder)
-                    }
+                if (productOrWorkshopList[p1].images != null && productOrWorkshopList[p1].images?.size != 0 && !productOrWorkshopList[p1].images?.get(0)?.imageUrl.isNullOrBlank()) {
+                    Log.d("checkImage 1", productOrWorkshopList[p1].sellerPrice + "  " + productOrWorkshopList[p1].images?.get(0)?.imageUrl)
+                    mcontext.loadImage(productOrWorkshopList[p1].images?.get(0)?.imageUrl, icon, R.drawable.no_image_placeholder)
+                } else if (!productOrWorkshopList[p1].profileImage.isNullOrBlank()) {
+                    mcontext.loadImage(Constant.profileBaseUrl + productOrWorkshopList[p1].profileImage, icon, R.drawable.no_image_placeholder)
+                    Log.d("checkImage", productOrWorkshopList[p1].sellerPrice + "  " + Constant.profileBaseUrl + productOrWorkshopList[p1].profileImage)
+                }else{
+                    icon.setImageResource(R.drawable.no_image_placeholder)
+                }
 
                 var titleString = "${if (productOrWorkshopList[p1].productName != null) productOrWorkshopList[p1].productName else ""} "
 
