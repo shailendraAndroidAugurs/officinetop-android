@@ -271,7 +271,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-
                         android:textColor="@color/color4"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -327,7 +326,6 @@
                         <TextView
                             android:id="@+id/cart_service_description"
                             style="@style/TextViewHeading"
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
@@ -428,7 +426,7 @@
                             android:layout_above="@id/item_brand_image"
                             android:layout_gravity="center"
                             android:layout_weight=".6"
-                            android:scaleType="fitXY"
+                            android:scaleType="centerInside"
                             android:src="@drawable/no_image_placeholder" />
 
                         <ImageView
