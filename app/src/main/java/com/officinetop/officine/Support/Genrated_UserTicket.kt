@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
@@ -29,8 +30,6 @@ class Genrated_UserTicket : BaseActivity() {
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.support)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
         fab_new_complaint.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, ComplaintTypeFragment::class.java)
             startActivityForResult(intent, 100)
@@ -50,9 +49,11 @@ class Genrated_UserTicket : BaseActivity() {
                                 ticketListItem.clear()
                                 bindView(dataSetArray)
                             } else {
+                                tv_no_ticket_msg.visibility = View.VISIBLE
                                 progress_bar_ticket.visibility = View.GONE
                             }
                         } else {
+                            tv_no_ticket_msg.visibility = View.VISIBLE
                             progress_bar_ticket.visibility = View.GONE
                         }
                     }

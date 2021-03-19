@@ -88,7 +88,7 @@
                 android:text="@string/findmypostion"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
+                app:layout_constraintTop_toBottomOf="@+id/location" />
 
             <TextView
                 android:id="@+id/complete_address"
