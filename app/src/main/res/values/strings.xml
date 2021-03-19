@@ -729,7 +729,7 @@
     <string name="quotes_request_send_successfully">The request has been sent successfully</string>
     <string name="confirm_order_with_multiple_workshop">it is not possible to confirm an order with multi workshop</string>
     <string name="product_services_address_note">The products will be delivered to the chosen workshop and assembly will be performed on the booked date</string>
-
+    <string name="no_ticket_message">No ticket found, at this moment</string>
     <string name="services_address_note">The services will be performed in the chosen workshop on the booked date</string>
     <string name="compatible_msg">This product is compatible with the selected car</string>
     <string name="oen">OEN</string>

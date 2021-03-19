@@ -99,7 +99,7 @@ class LocationActivity : BaseActivity() {
                                     cap.setText(dataModels.countryName ?: "")
                                     citta.setText(dataModels.cityName ?: "")
                                     via.setText(dataModels.address1)
-                                    location.text = "Lat: " + dataModels.latitude + ", Long:" + dataModels.longitude
+                                    location.text = "Lat: " + dataModels.latitude + ", Long: " + dataModels.longitude
                                     completeAddress = dataModels.address1 + " " + (dataModels.zipCode
                                             ?: "") + " " + (dataModels.cityName
                                             ?: "") + " " + (dataModels.stateName

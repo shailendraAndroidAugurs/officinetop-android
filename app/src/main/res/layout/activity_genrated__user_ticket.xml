@@ -20,14 +20,38 @@
             <include layout="@layout/include_toolbar" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ProgressBar
-            android:id="@+id/progress_bar_ticket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <include layout="@layout/layout_recycler_view" />
+            <include layout="@layout/layout_recycler_view" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_ticket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/_13sdp"
+                android:visibility="gone"
+                android:id="@+id/tv_no_ticket_msg"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/no_ticket_message"
+                />
+
+        </RelativeLayout>
+
+
+
+
 
 
     </LinearLayout>

@@ -194,7 +194,7 @@
     <string name="retry">Retry</string>
     <string name="email_blank">Enter email</string>
     <string name="mobile_blank">Enter mobile</string>
-
+    <string name="no_ticket_message">No ticket found, at this moment</string>
     <string name="User_Contact">Contact List</string>
     <string name="User_address">Address List</string>
     <string name="add_contact">Add Contact Number</string>
