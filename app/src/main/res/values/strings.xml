@@ -392,7 +392,7 @@
     <string name="findmypostion"> Find my position automatically</string>
     <string name="EnteritManually"> Enter it manually</string>
     <string name="ConfirmationOnLocation">Your location will be shown below. If you do not want or want to perform automatic positioning, you can manually modify your data</string>
-
+    <string name="language_select">eng</string>
 
     <string name="inputtextSingleline">Input text for a single line text</string>
     <string name="Zero_fifty">0/50</string>

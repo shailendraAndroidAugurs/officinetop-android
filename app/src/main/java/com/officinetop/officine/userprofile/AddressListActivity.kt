@@ -273,9 +273,14 @@ class AddressListActivity : BaseActivity(), OnGetLoginUserDetail {
 
                         setResult(101, output)
                         finish()
+                    }else{
+                        val output = Intent()
+                        output.putExtra("Address", UserContactList[position].address1 + "," + UserContactList[position].zipCode)
+                        output.putExtra("Id", UserContactList[position].id.toString())
+
+                        setResult(101, output)
+                        finish()
                     }
-
-
                 }
             }
         }
