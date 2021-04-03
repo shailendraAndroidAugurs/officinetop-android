@@ -21,30 +21,15 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:orientation="vertical"
             android:layout_marginEnd="8dp"
             android:paddingBottom="8dp">
 
-            <LinearLayout
-                android:id="@+id/ll_SearchLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/rectangle_gray_empty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <fragment
-                    android:id="@+id/autocomplete_fragment"
-                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/textLabel"
@@ -90,17 +75,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/location" />
 
+
             <TextView
                 android:id="@+id/complete_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/locationBtn" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray_dark"
+                android:layout_marginTop="@dimen/_10sdp"
+                />
 
             <TextView
                 android:id="@+id/text"
@@ -111,20 +104,48 @@
                 android:text="@string/EnteritManually"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/complete_address" />
+
+            <LinearLayout
+                android:id="@+id/ll_SearchLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rectangle_gray_empty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <fragment
+                    android:id="@+id/autocomplete_fragment"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textDes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/ConfirmationOnLocation"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingBottom="8dp">
+
 
             <TextView
                 android:id="@+id/provtext"
@@ -138,7 +159,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/cap"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDes" />
+              />
 
             <EditText
                 android:id="@+id/prov"
@@ -264,6 +285,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/via" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
             <Button
                 android:id="@+id/aggioraBtn"
                 style="@style/RoundButton"
@@ -276,7 +298,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/viavalue" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
