@@ -3,6 +3,7 @@ package com.officinetop.officine.adapter
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.*
@@ -16,13 +17,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.officinetop.officine.MOT.PartList_Replacement
 import com.officinetop.officine.R
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getBearerToken
 import com.officinetop.officine.data.isStatusCodeValid
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
+import kotlinx.android.synthetic.main.activity_mot_detail.*
 import kotlinx.android.synthetic.main.cart_items_layout.view.*
+import kotlinx.android.synthetic.main.item_sparepart_mot.*
 import kotlinx.android.synthetic.main.recycler_view_for_dialog.view.*
 import org.json.JSONObject
 
@@ -311,14 +315,14 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                 }
 
 
-                if (item.partDetails != null && item.partDetails.size != 0 && item.serviceDetail != null) {
+               /* if (item.partDetails != null && item.partDetails.size != 0 && item.serviceDetail != null) {
                      partInfo.visibility = View.VISIBLE
 
                 } else {
                     partInfo.visibility = View.GONE
                 }
                 // partInfo.setOnClickListener { partsDialog(cartItems[p1].partDetails as ArrayList<Models.Part>, context) }
-                  partInfo.setOnClickListener { moveToMotDetailPageFromCart(item.partDetails as ArrayList<Models.Part>, item.serviceDetail,context) }
+                  partInfo.setOnClickListener { moveToMotDetailPageFromCart(item.partDetails as ArrayList<Models.Part>, item.serviceDetail,context) }*/
 
                 if (item.serviceDetail != null) {
                     if (!item.serviceDetail.mainCategoryId.isNullOrBlank() && item.serviceDetail.mainCategoryId.equals("25")) {
@@ -398,20 +402,28 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                                         motSparePartTotalPrices += part.sellerPrice.toDouble() * 2
                                     else motSparePartTotalPrices += part.sellerPrice.toDouble()
                                 }
-                                var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
-                                var partListFromCart = ArrayList<Models.Part>()
-                                val jsonString = Gson().toJson(item.partDetails);
-                                val gson = GsonBuilder().create()
-                                partListFromCart = gson.fromJson(jsonString.toString(), Array<Models.Part>::class.java).toCollection(java.util.ArrayList<Models.Part>())
-                                mKPartServicesList.addAll(partListFromCart)
-                                Log.d("check_parts_list",""+mKPartServicesList.toString())
-                                val genericAdapter = GenericAdapter<Models.Part>(context, R.layout.item_sparepart_mot)
-                                holder.mot_parts_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
-                                holder.mot_parts_list.adapter = genericAdapter
-                                genericAdapter!!.addItems(mKPartServicesList)
 
                             }
+                            var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
+                            var partListFromCart = ArrayList<Models.Part>()
+                            val jsonString = Gson().toJson(item.partDetails);
+                            val gson = GsonBuilder().create()
+                            partListFromCart = gson.fromJson(jsonString.toString(), Array<Models.Part>::class.java).toCollection(java.util.ArrayList<Models.Part>())
+                            mKPartServicesList.addAll(partListFromCart)
+                            val   genericAdapter = GenericAdapter<Models.Part>(context, R.layout.item_sparepart_mot)
+                            genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+                                override fun onClick(view: View, position: Int) {
+                                }
+                                override fun onItemClick(view: View, position: Int) {
+                                }
+                            })
+                            holder.mot_parts_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+                            holder.mot_parts_list.adapter = genericAdapter
+                            genericAdapter!!.addItems(mKPartServicesList)
 
+                            holder.partInfo.visibility = View.GONE
+                            holder.tvPlus.visibility = View.GONE
+                            holder.plus_icon2.visibility = View.VISIBLE
 
                             tvMotSpareParttotalPrices.text = context.getString(R.string.prepend_euro_symbol_string, motSparePartTotalPrices.roundTo2Places().toString())
                         } else
@@ -582,6 +594,7 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val llMotSparePartLayout = itemView.ll_motSparePart
         val tvMotSpareParttotalPrices = itemView.tv_motPartPrices
         val mot_parts_list = itemView.mot_parts_list
+        val plus_icon2 = itemView.plus_icon2
 
     }
 
