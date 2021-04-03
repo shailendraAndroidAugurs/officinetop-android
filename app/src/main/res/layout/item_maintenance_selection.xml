@@ -58,7 +58,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-
                     android:src="@drawable/no_image_placeholder"
                     app:imageResource="@{listItemViewModel.product_image_url!=null ? listItemViewModel.product_image_url : @string/url_not_found}"
                     app:layout_constraintStart_toStartOf="parent"

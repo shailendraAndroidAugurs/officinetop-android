@@ -89,10 +89,10 @@ interface IRetrofitApis {
                @Field("carModelName") model: String,
                @Field("carVersion") carVersion: String,
                @Field("carBody") carBody: String,
-               @Header(Constant.Fields.authorization) authToken: String,
                @Field("lang") language: String = "ENG",
                @Field(Constant.Path.versionCriteria) versionCriteria: String,
                @Field(Constant.Path.scheduleId) scheduleId: String,
+               @Header(Constant.Fields.authorization) authToken: String,
                @Header("accept") accept: String = "application/json"): Call<ResponseBody>
 
 

@@ -358,8 +358,8 @@ class AddVehicleActivity : BaseActivity() {
                     model[spinner_model.selectedItemPosition].modelID + "/" + model[spinner_model.selectedItemPosition].modelYear,
                     idVehicle,
                     finalCarVersion[spinner_version.selectedItemPosition].body,
-                    getBearerToken()
-                            ?: "", versionCriteria = carcriteriaId, scheduleId = CarConditionScheduleId)
+                    resources.getString(R.string.language_select), versionCriteria = carcriteriaId, scheduleId = CarConditionScheduleId, authToken = getBearerToken()
+                    ?:"")
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progressDialog.dismiss()

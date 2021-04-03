@@ -83,7 +83,7 @@
                         android:gravity="left"
                         android:padding="0dp"
                         android:textColor="@color/gray_dark"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
 
                     <RelativeLayout
@@ -286,7 +286,7 @@
                 android:background="@drawable/rounded_white_background"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <LinearLayout
@@ -356,29 +356,38 @@
                     android:id="@+id/ll_motSparePart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="@dimen/_10sdp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:weightSum="2">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-
                         android:text="@string/spare_part"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
 
                     <TextView
                         android:id="@+id/tv_motPartPrices"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:textColor="@color/theme_orange"
                         android:textSize="@dimen/_14sdp"
                         android:gravity="center" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mot_parts_list"
+                        />
+
+
+
                 </LinearLayout>
 
 
@@ -395,7 +404,7 @@
                         android:textAlignment="textEnd"
                         android:textColor="@color/lite_blue"
                         android:textStyle="bold"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                     </TextView>
                 </LinearLayout>
