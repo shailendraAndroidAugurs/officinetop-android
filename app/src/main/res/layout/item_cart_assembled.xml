@@ -538,6 +538,14 @@
                         app:value="@{listItemViewModel.partDetails!=null ? String.format(@string/euro_symbol) : @string/euro_symbol}" />
 
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/spart_part_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                      >
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
                 </LinearLayout>
 
                 <TextView
@@ -553,6 +561,9 @@
                     android:tag="102"
                     android:text="@string/detail"
                     android:textColor="@color/lite_blue" />
+
+
+
             </LinearLayout>
 
             <LinearLayout

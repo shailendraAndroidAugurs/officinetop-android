@@ -3,11 +3,14 @@ package com.officinetop.officine.Orders
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.nfc.tech.MifareUltralight
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.HomeActivity
@@ -20,8 +23,8 @@ import com.officinetop.officine.utils.onCall
 import com.officinetop.officine.utils.showInfoDialog
 import kotlinx.android.synthetic.main.activity_order__list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import kotlinx.android.synthetic.main.layout_recycler_view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.progress_bar
+import kotlinx.android.synthetic.main.layout_recycler_view.recycler_view
 import org.jetbrains.anko.intentFor
 import org.json.JSONArray
 import org.json.JSONObject
@@ -30,18 +33,52 @@ import java.io.Serializable
 
 class OrderListActivity : BaseActivity() {
     private var fromBooking = false
+    private var isListLoading = false
+    private val PAGESTART = 0
+    private var currentPage = PAGESTART
+    private var isLastPageOfList = false
+    private var isFirstTimeLoading = true
     private var couponsListItem: MutableList<Models.CartItemList> = ArrayList()
+    val genericAdapter = GenericAdapter<Models.CartItemList>(this, R.layout.item_orderlist)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order__list)
         setSupportActionBar(toolbar)
         toolbar_title.text = getString(R.string.orders)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        initview()
+        progress_bar.visibility = View.VISIBLE
+        initview(currentPage,false)
+        setpagination()
 
     }
 
-    private fun initview() {
+    private fun setpagination() {
+        val linearLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = linearLayoutManager
+        val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = linearLayoutManager.childCount
+                val totalItemCount: Int = linearLayoutManager.itemCount
+                val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
+
+                if (!isListLoading && !isLastPageOfList) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
+                        currentPage += 5
+                        isListLoading = true
+                        initview(currentPage, true)
+                        progress_bar2.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
+        recycler_view.addOnScrollListener(recyclerViewOnScrollListener)
+    }
+
+    private fun initview(start : Int,isPaginationRequest: Boolean) {
 
 
         if (intent.hasExtra("fromBooking") && !intent.getStringExtra("fromBooking").isNullOrEmpty())
@@ -49,20 +86,34 @@ class OrderListActivity : BaseActivity() {
 
 
 
-        progress_bar.visibility = View.VISIBLE
-        RetrofitClient.client.getOrderlist(getBearerToken() ?: "")
+        RetrofitClient.client.getOrderlist(getBearerToken() ?: "",start)
                 .onCall { _, response ->
                     progress_bar.visibility = View.GONE
+                    progress_bar2.visibility = View.GONE
                     response?.let {
                         if (response.isSuccessful) {
+                            isListLoading = false
                             val body = JSONObject(response.body()?.string())
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
+                                if(!isPaginationRequest)
+                                bindView(dataSetArray,isPaginationRequest)
+                                else{
+                                    couponsListItem.clear()
+                                    for (i in 0 until dataSetArray!!.length()) {
+                                        val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray.get(i).toString(), Models.CartItemList::class.java)
+                                        couponsListItem.add(modelCartList)
+                                    }
 
-                                bindView(dataSetArray)
+                                    genericAdapter!!.addItemAfterScroll(couponsListItem)
+
+                                }
                             } else if (body.has("message") && !body.isNull("message")) {
+                                if(!isPaginationRequest)
                                 image_no_order.visibility = View.VISIBLE
+                                isListLoading = false
+                                isLastPageOfList = true
                             }
 
                         }
@@ -72,8 +123,7 @@ class OrderListActivity : BaseActivity() {
 
     }
 
-    private fun bindView(dataSetArray: JSONArray?) {
-        val genericAdapter = GenericAdapter<Models.CartItemList>(this, R.layout.item_orderlist)
+    private fun bindView(dataSetArray: JSONArray?, paginationRequest: Boolean) {
         genericAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 Log.e("orderClickedItems::", "${couponsListItem[position]}")
@@ -203,7 +253,7 @@ class OrderListActivity : BaseActivity() {
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
                                 //couponsListItem[potion].returnRequest="C"
-                                initview()
+                                initview(0,false)
                             } else {
                                 showInfoDialog(body.get("message").toString())
                             }
@@ -222,7 +272,7 @@ class OrderListActivity : BaseActivity() {
                             Log.e("RETURN", body.toString())
                             if (body.has("status_code") && !body.getString("status_code").isNullOrBlank() && body.getString("status_code") == "1") {
                                 showInfoDialog(body.get("message").toString())
-                                initview()
+                                initview(0,false)
                             } else {
                                 showInfoDialog(body.get("message").toString())
                             }

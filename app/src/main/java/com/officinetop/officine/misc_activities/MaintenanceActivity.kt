@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,12 @@ import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.workshop.WorkshopListActivity
 import kotlinx.android.synthetic.main.activity_maintenance.*
+import kotlinx.android.synthetic.main.activity_maintenance.filter_btn
+import kotlinx.android.synthetic.main.activity_maintenance.filter_text
+import kotlinx.android.synthetic.main.activity_maintenance.search_view
+import kotlinx.android.synthetic.main.activity_maintenance.sort_btn
+import kotlinx.android.synthetic.main.activity_maintenance.view.*
+import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
 import kotlinx.android.synthetic.main.dialog_sorting.*
@@ -44,6 +51,7 @@ import kotlin.collections.ArrayList
 
 class MaintenanceActivity : BaseActivity() {
     private var carMaintenanceServiceList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
+    private var carMaintenanceServiceListfilter: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private var carMaintenanceServiceListforPagination: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private lateinit var filterDialog: Dialog
@@ -87,7 +95,29 @@ class MaintenanceActivity : BaseActivity() {
         binding.root
         initViews()
         setPaginationScroll()
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        //searching feature
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(searchQuery: String?): Boolean {
+                //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
+              /*  if (this:.isInitialized)
+                    listAdapter.filter.filter(searchQuery)*/
+                return true
+            }
+
+            override fun onQueryTextChange(searchQuery: String?): Boolean {
+/*
+                if (this@ProductListActivity::listAdapter.isInitialized)
+*/
+                if (searchQuery != null) {
+                    filter(searchQuery)
+                }
+
+
+                return true
+            }
+        })
 
     }
 
@@ -179,9 +209,10 @@ class MaintenanceActivity : BaseActivity() {
                                         val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
                                         carMaintenanceServiceList.add(carMaintenance)
                                         carMaintenanceServiceListforPagination.add(carMaintenance)
+                                        carMaintenanceServiceListfilter.add(carMaintenance)
                                     }
                                     //bind recyclerview
-                                    setAdapter(isPaginationRequest, carMaintenanceServiceListforPagination)
+                                    setAdapter(isPaginationRequest, false,carMaintenanceServiceListforPagination)
                                 } else {
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
                                         isLastPageOfList = true
@@ -205,7 +236,7 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    private fun setAdapter(isPaginationRequest: Boolean, carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
+    private fun setAdapter(isPaginationRequest: Boolean, isSearchRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
 
         if (isFirstTimeLoading) {
             setMaxPricesInPricesSeekBar()
@@ -259,6 +290,7 @@ class MaintenanceActivity : BaseActivity() {
 
 
         if (!isPaginationRequest) {
+            if(!isSearchRequest)
             genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
             genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
@@ -311,6 +343,7 @@ class MaintenanceActivity : BaseActivity() {
                     }
                 }
             })
+            if(!isSearchRequest)
             recycler_view.adapter = genericAdapter
             genericAdapter!!.addItems(carMaintenanceServiceList)
         } else {
@@ -999,5 +1032,43 @@ class MaintenanceActivity : BaseActivity() {
         filterDialog.dialog_price_range.setRange(0f, seekbarPriceFinalLimit)
         filterDialog.dialog_price_range.setValue(0f, seekbarPriceFinalLimit)
     }
+
+
+    fun filter(text: String) {
+        var filteredList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
+        if (text.isEmpty() || text.length == 0) {
+            filteredList = carMaintenanceServiceListfilter
+        } else {
+            for (newlist in carMaintenanceServiceListfilter) {
+                if(!newlist.item.isNullOrEmpty()){
+                    if (newlist.item.toLowerCase().contains(text.toLowerCase())) {
+                        filteredList.add(newlist)
+                    } else  if(!newlist.ourDescription.isNullOrEmpty()){
+                        if (newlist.ourDescription.toLowerCase().contains(text.toLowerCase())) {
+                            filteredList.add(newlist)
+                        } else  if(!newlist.actionDescription.isNullOrEmpty()){
+                            if (newlist.actionDescription.toLowerCase().contains(text.toLowerCase())) {
+                                filteredList.add(newlist)
+                            }
+                        }
+                    }
+                    else  if(!newlist.actionDescription.isNullOrEmpty()){
+                        if (newlist.actionDescription.toLowerCase().contains(text.toLowerCase())) {
+                            filteredList.add(newlist)
+                        }}
+                }
+            }
+        }
+
+        //update recyclerview
+        updateList(filteredList)
+    }
+
+    fun updateList(filteredList: ArrayList<Models.CarMaintenanceServices>) {
+        carMaintenanceServiceList = filteredList
+        setAdapter(false,true, carMaintenanceServiceListforPagination)
+
+    }
+
 
 }
