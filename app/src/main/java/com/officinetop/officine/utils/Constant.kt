@@ -257,6 +257,7 @@ object Constant {
     }
 
     object Path {
+        const val start = "start"
         const val serviceID = "service_id"
         const val PartID = "part_id"
         const val Motpartdata = "Motpart_data"
