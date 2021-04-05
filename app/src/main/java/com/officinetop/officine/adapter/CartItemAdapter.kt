@@ -458,7 +458,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
                         if (item.serviceAssemblyProductDescription != null) {
                             updateCartQuantity(quantity, item, item.serviceAssemblyProductDescription.id)
                         }
-
                         isServicesAvailable.text = context.getString(R.string.re_maining_item, item.maxProductQuantity)
                     } else {
                         isServicesAvailable.text = context.getString(R.string.workshop_not_provide_services)
