@@ -180,6 +180,7 @@ object Constant {
         const val getSelectedWorkshopCalendarPrice = "workshopCalendarPrice"
         const val getworkshopCalendarPriceMaintenance = "maintenanceMinCalendarPrice"
         const val getSosoworkshopCalendarPrice = "wrackerServiceMinCalendarPrice"
+        const val save_n3_id = "store_oe_cross_by_n3"
     }
 
     object Key {
@@ -383,6 +384,7 @@ object Constant {
         const val services = "services"
         const val limit = "limit"
         const val wrecker_service_type = "wrecker_service_type"
+        const val n3_Id = "n3_id"
     }
 
     object RC {

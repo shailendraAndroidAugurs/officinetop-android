@@ -1,5 +1,6 @@
 package com.officinetop.officine.binding_adapters
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.text.Html
@@ -10,7 +11,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.officinetop.officine.R
+import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.utils.*
@@ -356,6 +361,30 @@ fun pairVisiblity(text: TextView, pairVisiblity: String, pairText: String) {
         }
     } else text.visibility = View.GONE
 }
+
+@BindingAdapter("entries")
+fun setRecyclerViewAdapter(recyclerView: RecyclerView, entries: Models.ServiceProductDescription) {
+    if(entries?.partDetails != null ){
+        var mKPartServicesList: ArrayList<Models.Part> = ArrayList()
+        var partListFromCart = ArrayList<Models.Part>()
+        val jsonString = Gson().toJson(entries?.partDetails);
+        val gson = GsonBuilder().create()
+        partListFromCart = gson.fromJson(jsonString.toString(), Array<Models.Part>::class.java).toCollection(java.util.ArrayList<Models.Part>())
+        mKPartServicesList.addAll(partListFromCart)
+        val   genericAdapter = GenericAdapter<Models.Part>(recyclerView.context, R.layout.item_sparepart_mot)
+        genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+            override fun onClick(view: View, position: Int) {
+            }
+            override fun onItemClick(view: View, position: Int) {
+            }
+        })
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(recyclerView.context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = genericAdapter
+        genericAdapter!!.addItems(mKPartServicesList)
+    }
+
+}
+
 
 
 

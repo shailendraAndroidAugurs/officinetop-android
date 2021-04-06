@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.officine.R
 import com.officinetop.officine.car_parts.PartCategoryInterface
@@ -147,8 +144,9 @@ class SubPartCategoryAdapter(subGroupArrayList: MutableList<DataSetItem?>, subN3
                 holder.productContainer.setOnClickListener {
                     val id = productDetails.id
 
-                    if (id != null)
+                    if (id != null){
                         mView.onGroupCategoryClicked(id)
+                    }
                 }
             }
         }
