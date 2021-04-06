@@ -576,8 +576,8 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold"
+                     android:visibility="@{listItemViewModel.partDetails!=null ?  View.VISIBLE : View.GONE}" />
 
-                    android:visibility="@{listItemViewModel.partDetails!=null ?  View.VISIBLE : View.GONE}" />
 
 
             </LinearLayout>
