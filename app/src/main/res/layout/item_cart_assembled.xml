@@ -555,6 +555,14 @@
 
                     </androidx.recyclerview.widget.RecyclerView>
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/spart_part_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                      >
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
                 </LinearLayout>
 
                 <TextView
@@ -584,8 +592,8 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold"
+                     android:visibility="@{listItemViewModel.partDetails!=null ?  View.VISIBLE : View.GONE}" />
 
-                    android:visibility="@{listItemViewModel.partDetails!=null ?  View.VISIBLE : View.GONE}" />
 
 
             </LinearLayout>
