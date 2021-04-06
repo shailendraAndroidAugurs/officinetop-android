@@ -1677,5 +1677,13 @@ interface IRetrofitApis {
             @Query(Constant.Path.max_appointment) selectedDate: String,
             @Query(Constant.Path.mainCategoryId) main_category_id: String): Call<ResponseBody>
 
+
+
+
+    @GET(Constant.UrlEndPoints.save_n3_id)
+    fun saveN3id(
+            @Query(Constant.Path.n3_Id) n3_Id: Int) : Call<ResponseBody>
+
+
 }
 
