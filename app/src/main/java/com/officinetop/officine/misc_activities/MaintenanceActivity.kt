@@ -27,6 +27,7 @@ import com.officinetop.officine.databinding.ActivityMaintenanceBinding
 import com.officinetop.officine.retrofit.RetrofitClient
 import com.officinetop.officine.utils.*
 import com.officinetop.officine.workshop.WorkshopListActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.activity_maintenance.filter_btn
 import kotlinx.android.synthetic.main.activity_maintenance.filter_text
@@ -54,6 +55,7 @@ class MaintenanceActivity : BaseActivity() {
     private var carMaintenanceServiceListfilter: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private var carMaintenanceServiceListforPagination: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
+    private val searchCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     private var ratingString = ""
@@ -89,6 +91,7 @@ class MaintenanceActivity : BaseActivity() {
     private var currentPage = PAGESTART
     private var isLastPageOfList = false
     private var isFirstTimeLoading = true
+    var search_status:Boolean = false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
@@ -98,23 +101,45 @@ class MaintenanceActivity : BaseActivity() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //searching feature
+
+/*
+        search_view.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                // SearchView is being shown
+            }
+        }*/
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(searchQuery: String?): Boolean {
                 //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
               /*  if (this:.isInitialized)
                     listAdapter.filter.filter(searchQuery)*/
+
                 return true
             }
 
             override fun onQueryTextChange(searchQuery: String?): Boolean {
+             /*   if(searchQuery?.length != 0){
+                    setAdapter(false, false,carMaintenanceServiceListforPagination)
+                }*/
 /*
                 if (this@ProductListActivity::listAdapter.isInitialized)
 */
-                if (searchQuery != null) {
+              /*  if (searchQuery != null) {
                     filter(searchQuery)
+                }*/
+
+                if (!searchQuery.isNullOrEmpty() ) {
+                    search_status = true;
+                    search_view.setInputType(0x00000000);
+                    getCarMaintenance(0, false,searchQuery)
+                }else{
+                    isListLoading = false
+                    currentPage = 0
+                    isLastPageOfList = false
+                    isFirstTimeLoading = true
+                    search_status = false;
+                    getCarMaintenance(0, false,"")
                 }
-
-
                 return true
             }
         })
@@ -131,12 +156,14 @@ class MaintenanceActivity : BaseActivity() {
                 val visibleItemCount: Int = linearLayoutManager.childCount
                 val totalItemCount: Int = linearLayoutManager.itemCount
                 val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
-
+/*
+                Toast.makeText(this@MaintenanceActivity,""+isListLoading+"   "+isLastPageOfList+"  "+search_status, Toast.LENGTH_LONG).show()
+*/
                 if (!isListLoading && !isLastPageOfList) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
                         currentPage += 5
                         isListLoading = true
-                        getCarMaintenance(currentPage, true)
+                        getCarMaintenance(currentPage, true,"")
                         progress_bar_bottom.visibility = View.VISIBLE
                     }
                 }
@@ -152,7 +179,7 @@ class MaintenanceActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
         if (isOnline()) {
-            getCarMaintenance(0, false)
+            getCarMaintenance(0, false,"")
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
         }
@@ -180,27 +207,32 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
-    private fun getCarMaintenance(limit: Int, isPaginationRequest: Boolean) {
+    private fun getCarMaintenance(limit: Int, isPaginationRequest: Boolean,searchkey :String) {
         try {
-            if (!isPaginationRequest)
-                progress_bar.visibility = View.VISIBLE
+
             val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
             val priceSortLevel = if (isPriceLowToHigh) 1 else 2
             val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
             val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
+            if (!isPaginationRequest){
+                progress_bar.visibility = View.VISIBLE
+                recycler_view.visibility = View.GONE
+            }
 
+            search_status = false;
             RetrofitClient.client.getCarMaintenanceService(getBearerToken()
                     ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
-                    priceRangeString, priceSortLevel, getUserId(), limit)
+                    priceRangeString, priceSortLevel, getUserId(), limit,searchkey)
                     .onCall { networkException, response ->
                         progress_bar.visibility = View.GONE
                         progress_bar_bottom.visibility = View.GONE
+                        progressbar_searchbar.visibility = View.GONE
                         networkException?.let {
                         }
                         response?.let {
                             val body = JSONObject(response.body()?.string())
                             isListLoading = false
-                            carMaintenanceServiceListforPagination.clear()
+                            carMaintenanceServiceList.clear()
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                                     //   carMaintenanceServiceList.clear()//during reload page.
@@ -208,11 +240,9 @@ class MaintenanceActivity : BaseActivity() {
                                         val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
                                         val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
                                         carMaintenanceServiceList.add(carMaintenance)
-                                        carMaintenanceServiceListforPagination.add(carMaintenance)
-                                        carMaintenanceServiceListfilter.add(carMaintenance)
                                     }
                                     //bind recyclerview
-                                    setAdapter(isPaginationRequest, false,carMaintenanceServiceListforPagination)
+                                    setAdapter(isPaginationRequest,carMaintenanceServiceList)
                                 } else {
                                     if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
                                         isLastPageOfList = true
@@ -236,7 +266,68 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    private fun setAdapter(isPaginationRequest: Boolean, isSearchRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
+
+  /*  private fun SearchCarMaintenance(searchKey :String, isPaginationRequest: Boolean) {
+        try {
+            if (!isPaginationRequest)
+                progress_bar.visibility = View.VISIBLE
+                search_status = true
+            val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
+            val priceSortLevel = if (isPriceLowToHigh) 1 else 2
+            val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
+            val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
+
+            RetrofitClient.client.getCarMaintenanceServiceSearch(getBearerToken()
+                    ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
+                    priceRangeString, priceSortLevel, getUserId(), 0,searchKey)
+                    .onCall { networkException, response ->
+                        progress_bar.visibility = View.GONE
+                        progress_bar_bottom.visibility = View.GONE
+                        networkException?.let {
+                        }
+                        response?.let {
+                            val body = JSONObject(response.body()?.string())
+                            isListLoading = false
+                           carMaintenanceServiceListforPagination.clear()
+                            carMaintenanceServiceList.clear()
+                            if (response.isSuccessful) {
+                                if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
+                                    //   carMaintenanceServiceList.clear()//during reload page.
+                                    for (i in 0 until body.getJSONArray("data_set").length()) {
+                                        val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
+                                        val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
+                                        carMaintenanceServiceList.add(carMaintenance)
+                                        carMaintenanceServiceListforPagination.add(carMaintenance)
+                                   *//*     carMaintenanceServiceListforPagination.add(carMaintenance)
+                                        carMaintenanceServiceListfilter.add(carMaintenance)*//*
+                                    }
+                                    //bind recyclerview
+                                    setAdapter(isPaginationRequest, false,carMaintenanceServiceList)
+                                } else {
+                                    if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
+                                        isLastPageOfList = true
+                                        showInfoDialog(body.getString("message"))
+                                    }
+                                }
+                            } else {
+                                isLastPageOfList = true
+                                if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
+                                    showInfoDialog(body.getString("message"))
+                                }
+                            }
+                        }
+                    }
+        } catch (e: Exception) {
+            isListLoading = false
+            isLastPageOfList = true
+            progress_bar.visibility = View.GONE
+            progress_bar_bottom.visibility = View.GONE
+            e.printStackTrace()
+        }
+    }*/
+
+
+    private fun setAdapter(isPaginationRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
 
         if (isFirstTimeLoading) {
             setMaxPricesInPricesSeekBar()
@@ -290,7 +381,6 @@ class MaintenanceActivity : BaseActivity() {
 
 
         if (!isPaginationRequest) {
-            if(!isSearchRequest)
             genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
             genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
@@ -343,13 +433,14 @@ class MaintenanceActivity : BaseActivity() {
                     }
                 }
             })
-            if(!isSearchRequest)
             recycler_view.adapter = genericAdapter
             genericAdapter!!.addItems(carMaintenanceServiceList)
         } else {
             genericAdapter!!.addItemAfterScroll(carMaintenanceServiceListAferScroll)
         }
 
+        recycler_view.visibility = View.VISIBLE
+        search_view.setInputType(0x00000001);
 
     }
 
@@ -780,7 +871,7 @@ class MaintenanceActivity : BaseActivity() {
                     carMaintenanceServiceList.clear()
                     carMaintenanceServiceListforPagination.clear()
                     selectedCarMaintenanceServices.clear()
-                    getCarMaintenance(0, false)
+                    getCarMaintenance(0, false,"")
 
                 } else {
                     this@MaintenanceActivity.filter_text.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableLeft, null, null, null)
@@ -820,7 +911,7 @@ class MaintenanceActivity : BaseActivity() {
                 carMaintenanceServiceList.clear()
                 carMaintenanceServiceListforPagination.clear()
                 selectedCarMaintenanceServices.clear()
-                getCarMaintenance(0, false)
+                getCarMaintenance(0, false,"")
 
             }
             create()
@@ -851,7 +942,7 @@ class MaintenanceActivity : BaseActivity() {
                 carMaintenanceServiceList.clear()
                 carMaintenanceServiceListforPagination.clear()
                 selectedCarMaintenanceServices.clear()
-                getCarMaintenance(0, false)
+                getCarMaintenance(0, false,"")
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
@@ -1034,41 +1125,6 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
-    fun filter(text: String) {
-        var filteredList: ArrayList<Models.CarMaintenanceServices> = ArrayList()
-        if (text.isEmpty() || text.length == 0) {
-            filteredList = carMaintenanceServiceListfilter
-        } else {
-            for (newlist in carMaintenanceServiceListfilter) {
-                if(!newlist.item.isNullOrEmpty()){
-                    if (newlist.item.toLowerCase().contains(text.toLowerCase())) {
-                        filteredList.add(newlist)
-                    } else  if(!newlist.ourDescription.isNullOrEmpty()){
-                        if (newlist.ourDescription.toLowerCase().contains(text.toLowerCase())) {
-                            filteredList.add(newlist)
-                        } else  if(!newlist.actionDescription.isNullOrEmpty()){
-                            if (newlist.actionDescription.toLowerCase().contains(text.toLowerCase())) {
-                                filteredList.add(newlist)
-                            }
-                        }
-                    }
-                    else  if(!newlist.actionDescription.isNullOrEmpty()){
-                        if (newlist.actionDescription.toLowerCase().contains(text.toLowerCase())) {
-                            filteredList.add(newlist)
-                        }}
-                }
-            }
-        }
-
-        //update recyclerview
-        updateList(filteredList)
-    }
-
-    fun updateList(filteredList: ArrayList<Models.CarMaintenanceServices>) {
-        carMaintenanceServiceList = filteredList
-        setAdapter(false,true, carMaintenanceServiceListforPagination)
-
-    }
 
 
 }

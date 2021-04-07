@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,8 +10,7 @@
             type="String" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,13 +29,14 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/btn_choose_workshop"
                 android:orientation="vertical">
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/search_view_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@drawable/shape_rectangle_orange"
                     android:orientation="vertical">
+
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_view"
@@ -44,13 +45,29 @@
                         android:layout_margin="1dp"
                         android:background="@color/white"
                         android:focusable="false"
+                        android:imeOptions="actionSearch"
                         android:queryHint="@string/search"
                         app:defaultQueryHint="@string/search"
                         app:iconifiedByDefault="false"
                         app:queryHint="@string/search" />
 
 
-                </FrameLayout>
+                    <ProgressBar
+                        android:id="@+id/progressbar_searchbar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="gone"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
