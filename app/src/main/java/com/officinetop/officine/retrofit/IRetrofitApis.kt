@@ -992,7 +992,22 @@ interface IRetrofitApis {
             @Query(Constant.Path.filterPriceRange) priceRange: String,
             @Query(Constant.Path.sortPrice) priceSortLevel: Int,
             @Query("user_id") user_id: String,
-            @Query(Constant.Path.limit) limit: Int
+            @Query(Constant.Path.limit) limit: Int,
+            @Query(Constant.Path.search) search: String
+    ): Call<ResponseBody>
+
+    @GET(Constant.UrlEndPoints.getCarMaintenanceServices)
+    fun getCarMaintenanceServiceSearch(
+            @Header(Constant.Fields.authorization) authToken: String,
+            @Query("version_id") versionId: String,
+            @Query("language") language: String,
+            @Query("front_rear") frontRear: String,
+            @Query("left_right") leftRight: String,
+            @Query(Constant.Path.filterPriceRange) priceRange: String,
+            @Query(Constant.Path.sortPrice) priceSortLevel: Int,
+            @Query("user_id") user_id: String,
+            @Query(Constant.Path.limit) limit: Int,
+            @Query(Constant.Path.search) search: String
     ): Call<ResponseBody>
 
 

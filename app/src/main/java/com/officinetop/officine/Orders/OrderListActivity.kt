@@ -132,8 +132,8 @@ class OrderListActivity : BaseActivity() {
             }
 
             override fun onItemClick(view: View, position: Int) {
-                Log.e("ClickedItems::", "${couponsListItem[position]}")
-                Log.e("ClickedView::", "${view.tag}")
+   /*             Log.e("ClickedItems::", "${couponsListItem[position]}")
+                Log.e("ClickedView::", "${view.tag}")*/
 
                 if (view.tag == "100") {
                     val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)
@@ -142,11 +142,12 @@ class OrderListActivity : BaseActivity() {
                     intent.putExtra("orderid", couponsListItem[position].id)
                     startActivity(intent)
                 } else if (view.tag == "101") {
-                    val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)
-                    intent.putExtra("OrderDetailList", couponsListItem[position].tyreProductDescription as Serializable)
-                    intent.putExtra("orderid", couponsListItem[position].id)
-                    intent.putExtra("forwhich", "T")
-
+                    if(couponsListItem[position].tyreProductDescription != null){
+                        val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)
+                        intent.putExtra("OrderDetailList", couponsListItem[position].tyreProductDescription  as Serializable)
+                        intent.putExtra("orderid", couponsListItem[position].id)
+                        intent.putExtra("forwhich", "T")
+                    }
                     startActivity(intent)
                 } else if (view.tag == "102") {
                     val intent = Intent(this@OrderListActivity, OrderDetailActivity::class.java)

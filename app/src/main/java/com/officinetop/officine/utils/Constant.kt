@@ -385,6 +385,7 @@ object Constant {
         const val limit = "limit"
         const val wrecker_service_type = "wrecker_service_type"
         const val n3_Id = "n3_id"
+        const val search = "search"
     }
 
     object RC {
