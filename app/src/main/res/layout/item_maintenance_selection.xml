@@ -212,7 +212,10 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/maintenance_parts"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maintenance_actiondescription" />
+            app:layout_constraintTop_toBottomOf="@+id/maintenance_actiondescription"
+            app:searchText="@{listItemViewModel.searchKey!=null?listItemViewModel.searchKey:@string/sample}"
+            app:title="@{listItemViewModel.ourDescription!=null ? listItemViewModel.ourDescription : @string/sample}"
+            />
 
         <TextView
             android:id="@+id/maintenance_item"
@@ -223,7 +226,10 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/maintenance_price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:searchText="@{listItemViewModel.searchKey!=null?listItemViewModel.searchKey:@string/sample}"
+            app:title="@{listItemViewModel.item!=null ? listItemViewModel.item :@string/sample + @string/string_space + listItemViewModel.frontRear!=null ? listItemViewModel.frontRear: @string/sample + @string/string_space + listItemViewModel.leftRight!=null ? listItemViewModel.leftRight : @string/sample}"
+            />
 
         <TextView
             android:id="@+id/maintenance_price"
@@ -262,7 +268,10 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/maintenance_parts"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maintenance_item" />
+            app:layout_constraintTop_toBottomOf="@+id/maintenance_item"
+            app:searchText="@{listItemViewModel.searchKey!=null?listItemViewModel.searchKey:@string/sample}"
+            app:title="@{listItemViewModel.actionDescription!=null ? listItemViewModel.actionDescription : @string/sample}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
