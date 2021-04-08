@@ -982,7 +982,7 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
-    @GET(Constant.UrlEndPoints.getCarMaintenanceServices)
+    @POST(Constant.UrlEndPoints.getCarMaintenanceServices)
     fun getCarMaintenanceService(
             @Header(Constant.Fields.authorization) authToken: String,
             @Query("version_id") versionId: String,

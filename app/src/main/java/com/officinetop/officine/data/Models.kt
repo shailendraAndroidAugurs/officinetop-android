@@ -529,7 +529,8 @@ object Models {
             @SerializedName("wish_list")
             var wishlist: String = "",
             @SerializedName("main_category_id")
-            var mainCategoryId: String = ""
+            var mainCategoryId: String = "",
+            var searchKey : String = ""
 
 
     ) : ListItemViewModel()

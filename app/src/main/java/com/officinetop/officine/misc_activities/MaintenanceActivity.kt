@@ -6,8 +6,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.nfc.tech.MifareUltralight
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -22,6 +26,7 @@ import com.officinetop.officine.BaseActivity
 import com.officinetop.officine.R
 import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.adapter.PaginationListener
+import com.officinetop.officine.car_parts.ProductListActivity
 import com.officinetop.officine.data.*
 import com.officinetop.officine.databinding.ActivityMaintenanceBinding
 import com.officinetop.officine.retrofit.RetrofitClient
@@ -31,9 +36,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.activity_maintenance.filter_btn
 import kotlinx.android.synthetic.main.activity_maintenance.filter_text
-import kotlinx.android.synthetic.main.activity_maintenance.search_view
+import kotlinx.android.synthetic.main.activity_maintenance.progress_bar
+import kotlinx.android.synthetic.main.activity_maintenance.search_product
 import kotlinx.android.synthetic.main.activity_maintenance.sort_btn
 import kotlinx.android.synthetic.main.activity_maintenance.view.*
+import kotlinx.android.synthetic.main.activity_part_categories.*
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.car_maintenance_dialog_layout_filter.*
 import kotlinx.android.synthetic.main.dialog_offer_coupons_layout.view.*
@@ -55,7 +62,6 @@ class MaintenanceActivity : BaseActivity() {
     private var carMaintenanceServiceListfilter: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private var carMaintenanceServiceListforPagination: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private val selectedCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
-    private val searchCarMaintenanceServices: ArrayList<Models.CarMaintenanceServices> = ArrayList()
     private lateinit var filterDialog: Dialog
     private lateinit var sortDialog: Dialog
     private var ratingString = ""
@@ -92,6 +98,10 @@ class MaintenanceActivity : BaseActivity() {
     private var isLastPageOfList = false
     private var isFirstTimeLoading = true
     var search_status:Boolean = false;
+    var last_text_edit: Long = 0
+    var handler: Handler = Handler()
+    var delay: Long = 500
+    private var searchText = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMaintenanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_maintenance)
@@ -101,48 +111,12 @@ class MaintenanceActivity : BaseActivity() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //searching feature
+   iv_cancel.setOnClickListener {
+            iv_cancel.visibility = View.GONE
+           search_product.setText("")
+        }
 
-/*
-        search_view.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                // SearchView is being shown
-            }
-        }*/
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(searchQuery: String?): Boolean {
-                //expanded_search.visibility = if(searchQuery.isNullOrEmpty()) View.VISIBLE else View.GONE
-              /*  if (this:.isInitialized)
-                    listAdapter.filter.filter(searchQuery)*/
-
-                return true
-            }
-
-            override fun onQueryTextChange(searchQuery: String?): Boolean {
-             /*   if(searchQuery?.length != 0){
-                    setAdapter(false, false,carMaintenanceServiceListforPagination)
-                }*/
-/*
-                if (this@ProductListActivity::listAdapter.isInitialized)
-*/
-              /*  if (searchQuery != null) {
-                    filter(searchQuery)
-                }*/
-
-                if (!searchQuery.isNullOrEmpty() ) {
-                    search_status = true;
-                    search_view.setInputType(0x00000000);
-                    getCarMaintenance(0, false,searchQuery)
-                }else{
-                    isListLoading = false
-                    currentPage = 0
-                    isLastPageOfList = false
-                    isFirstTimeLoading = true
-                    search_status = false;
-                    getCarMaintenance(0, false,"")
-                }
-                return true
-            }
-        })
+        search_product.addTextChangedListener(textWatcher)
 
     }
 
@@ -156,14 +130,11 @@ class MaintenanceActivity : BaseActivity() {
                 val visibleItemCount: Int = linearLayoutManager.childCount
                 val totalItemCount: Int = linearLayoutManager.itemCount
                 val firstVisibleItemPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
-/*
-                Toast.makeText(this@MaintenanceActivity,""+isListLoading+"   "+isLastPageOfList+"  "+search_status, Toast.LENGTH_LONG).show()
-*/
-                if (!isListLoading && !isLastPageOfList) {
+                   if (!isListLoading && !isLastPageOfList) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
                         currentPage += 5
                         isListLoading = true
-                        getCarMaintenance(currentPage, true,"")
+                        getCarMaintenance(currentPage, true,searchText)
                         progress_bar_bottom.visibility = View.VISIBLE
                     }
                 }
@@ -179,6 +150,7 @@ class MaintenanceActivity : BaseActivity() {
         toolbar_title.text = getString(R.string.maintenance)
         getLocation()
         if (isOnline()) {
+            progress_bar.visibility = View.VISIBLE
             getCarMaintenance(0, false,"")
         } else {
             showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
@@ -214,11 +186,6 @@ class MaintenanceActivity : BaseActivity() {
             val priceSortLevel = if (isPriceLowToHigh) 1 else 2
             val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
             val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
-            if (!isPaginationRequest){
-                progress_bar.visibility = View.VISIBLE
-                recycler_view.visibility = View.GONE
-            }
-
             search_status = false;
             RetrofitClient.client.getCarMaintenanceService(getBearerToken()
                     ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
@@ -226,13 +193,13 @@ class MaintenanceActivity : BaseActivity() {
                     .onCall { networkException, response ->
                         progress_bar.visibility = View.GONE
                         progress_bar_bottom.visibility = View.GONE
-                        progressbar_searchbar.visibility = View.GONE
+                        search_progress.visibility = View.GONE
+                   /*     progressbar_searchbar.visibility = View.GONE*/
                         networkException?.let {
                         }
                         response?.let {
                             val body = JSONObject(response.body()?.string())
                             isListLoading = false
-                            carMaintenanceServiceList.clear()
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
                                     //   carMaintenanceServiceList.clear()//during reload page.
@@ -244,15 +211,19 @@ class MaintenanceActivity : BaseActivity() {
                                     //bind recyclerview
                                     setAdapter(isPaginationRequest,carMaintenanceServiceList)
                                 } else {
-                                    if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
+                                    if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null") && carMaintenanceServiceList.size == 0) {
                                         isLastPageOfList = true
                                         showInfoDialog(body.getString("message"))
+                                        recycler_view.visibility = View.GONE
+                                        carMaintenanceServiceList.clear()
                                     }
                                 }
                             } else {
                                 isLastPageOfList = true
-                                if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
+                                if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null") &&carMaintenanceServiceList.size == 0) {
                                     showInfoDialog(body.getString("message"))
+                                    carMaintenanceServiceList.clear()
+                                    recycler_view.visibility = View.GONE
                                 }
                             }
                         }
@@ -262,69 +233,10 @@ class MaintenanceActivity : BaseActivity() {
             isLastPageOfList = true
             progress_bar.visibility = View.GONE
             progress_bar_bottom.visibility = View.GONE
+            recycler_view.visibility = View.GONE
             e.printStackTrace()
         }
     }
-
-
-  /*  private fun SearchCarMaintenance(searchKey :String, isPaginationRequest: Boolean) {
-        try {
-            if (!isPaginationRequest)
-                progress_bar.visibility = View.VISIBLE
-                search_status = true
-            val priceRangeString = if (priceRangeFinal == -1f) "" else "$priceRangeInitial,${priceRangeFinal}"
-            val priceSortLevel = if (isPriceLowToHigh) 1 else 2
-            val selectedCar = getSelectedCar() ?: Models.MyCarDataSet()
-            val selectedVehicleVersionID = selectedCar.carVersionModel.idVehicle
-
-            RetrofitClient.client.getCarMaintenanceServiceSearch(getBearerToken()
-                    ?: "", getSelectedCar()?.carVersion!!, "en", frontRear, leftRight,
-                    priceRangeString, priceSortLevel, getUserId(), 0,searchKey)
-                    .onCall { networkException, response ->
-                        progress_bar.visibility = View.GONE
-                        progress_bar_bottom.visibility = View.GONE
-                        networkException?.let {
-                        }
-                        response?.let {
-                            val body = JSONObject(response.body()?.string())
-                            isListLoading = false
-                           carMaintenanceServiceListforPagination.clear()
-                            carMaintenanceServiceList.clear()
-                            if (response.isSuccessful) {
-                                if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
-                                    //   carMaintenanceServiceList.clear()//during reload page.
-                                    for (i in 0 until body.getJSONArray("data_set").length()) {
-                                        val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
-                                        val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
-                                        carMaintenanceServiceList.add(carMaintenance)
-                                        carMaintenanceServiceListforPagination.add(carMaintenance)
-                                   *//*     carMaintenanceServiceListforPagination.add(carMaintenance)
-                                        carMaintenanceServiceListfilter.add(carMaintenance)*//*
-                                    }
-                                    //bind recyclerview
-                                    setAdapter(isPaginationRequest, false,carMaintenanceServiceList)
-                                } else {
-                                    if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
-                                        isLastPageOfList = true
-                                        showInfoDialog(body.getString("message"))
-                                    }
-                                }
-                            } else {
-                                isLastPageOfList = true
-                                if (body.has("message") && !body.getString("message").isNullOrBlank() && !body.getString("message").equals("null")) {
-                                    showInfoDialog(body.getString("message"))
-                                }
-                            }
-                        }
-                    }
-        } catch (e: Exception) {
-            isListLoading = false
-            isLastPageOfList = true
-            progress_bar.visibility = View.GONE
-            progress_bar_bottom.visibility = View.GONE
-            e.printStackTrace()
-        }
-    }*/
 
 
     private fun setAdapter(isPaginationRequest: Boolean,carMaintenanceServiceListAferScroll: ArrayList<Models.CarMaintenanceServices>) {
@@ -334,6 +246,7 @@ class MaintenanceActivity : BaseActivity() {
         }
         try {
             for (i in 0 until carMaintenanceServiceList.size) {
+                  carMaintenanceServiceList[i].searchKey  = searchText
                 if (carMaintenanceServiceList[i].parts != null && carMaintenanceServiceList[i].parts.size != 0) {
                     carMaintenanceServiceList[i].listino = if (carMaintenanceServiceList[i].parts[0].listino != null) carMaintenanceServiceList[i].parts[0].listino else ""
                     carMaintenanceServiceList[i].descrizione = if (carMaintenanceServiceList[i].parts[0].Productdescription != null) carMaintenanceServiceList[i].parts[0].Productdescription else ""
@@ -377,10 +290,8 @@ class MaintenanceActivity : BaseActivity() {
             e.printStackTrace()
         }
 
-
-
-
-        if (!isPaginationRequest) {
+/*        if (!isPaginationRequest) {*/
+          if(!isPaginationRequest)
             genericAdapter = GenericAdapter<Models.CarMaintenanceServices>(this, R.layout.item_maintenance_selection)
             genericAdapter!!.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
@@ -433,24 +344,19 @@ class MaintenanceActivity : BaseActivity() {
                     }
                 }
             })
+          if(!isPaginationRequest)
             recycler_view.adapter = genericAdapter
             genericAdapter!!.addItems(carMaintenanceServiceList)
-        } else {
+    /*    } else {
             genericAdapter!!.addItemAfterScroll(carMaintenanceServiceListAferScroll)
         }
-
+*/
         recycler_view.visibility = View.VISIBLE
-        search_view.setInputType(0x00000001);
 
     }
 
     private fun bindReplacementPartOption(position: Int) {
         if (carMaintenanceServiceList[position].parts != null && carMaintenanceServiceList[position].parts.size > 0) {
-            /* if (carMaintenanceServiceList[position].parts.size > 1) {
-                partsDialog(carMaintenanceServiceList[position].parts)
-            } else {
-
-            }*/
             if (isOnline()) {
                 getAllPartsMaintenance(carMaintenanceServiceList[position].id, position)
             } else {
@@ -503,10 +409,7 @@ class MaintenanceActivity : BaseActivity() {
                                             genericAdapterParts!!.notifyDataSetChanged()
                                         }
 
-                                        /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
-                                             binddataofselectedReplacementPart(0)
-                                         }*/
-                                        selectservice_position = position
+                                         selectservice_position = position
 
                                     }
                                 }
@@ -554,10 +457,6 @@ class MaintenanceActivity : BaseActivity() {
                                         }
                                         progressDialog.dismiss()
 
-                                        /* if (carMaintenanceServiceList[position].parts.isNullOrEmpty() || carMaintenanceServiceList[position].parts[0] == null) {
-
-                                             binddataofselectedReplacementPart(0)
-                                         }*/
                                         selectservice_position = position
 
                                     }
@@ -1125,6 +1024,58 @@ class MaintenanceActivity : BaseActivity() {
     }
 
 
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            if (s.toString().isBlank()) {
+         /*       parent_layout.visibility = View.VISIBLE
+                layout_searchview.visibility = View.GONE
+                search_progress.visibility = View.GONE
+                iv_cancel.visibility = View.GONE*/
+                   clearAdpater()
+                iv_cancel.visibility = View.GONE
+                    isListLoading = false
+                    currentPage = 0
+                    isLastPageOfList = false
+                    isFirstTimeLoading = true
+                    search_status = false;
+                   carMaintenanceServiceList.clear()
+                   searchText = ""
+                getCarMaintenance(0, false,"")
+            } else {
+                search_progress.visibility = View.VISIBLE
+                if (s?.length!! >= 1) {
+                    last_text_edit = System.currentTimeMillis()
+                    handler.postDelayed(input_finish_checker, delay)
+                } else {
+                   // clearAdpater()
+                    iv_cancel.visibility = View.GONE
+                }
+                /*parent_layout.visibility = View.GONE*/
+            }
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // send search value to fragment for filter search of discovery or history
+            // searchLitener.SearchProduct(s.toString())
+            //You need to remove this to run only once
+            handler.removeCallbacks(input_finish_checker)
+        }
+    }
 
 
+    fun clearAdpater() {
+        carMaintenanceServiceList.clear()
+        carMaintenanceServiceListfilter.clear()
+        selectedCarMaintenanceServices.clear()
+    }
+    private val input_finish_checker = Runnable {
+        if (System.currentTimeMillis() > last_text_edit + delay - 250) {
+            searchText = search_product.text.toString()
+            iv_cancel.visibility = View.VISIBLE
+            search_status = true;
+            clearAdpater()
+            getCarMaintenance(0, false,search_product.text.toString())
+        }
+    }
 }

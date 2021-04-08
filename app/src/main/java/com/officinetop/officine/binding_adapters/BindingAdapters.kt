@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.BackgroundColorSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -19,6 +22,7 @@ import com.officinetop.officine.adapter.GenericAdapter
 import com.officinetop.officine.data.Models
 import com.officinetop.officine.data.getSelectedCar
 import com.officinetop.officine.utils.*
+import kotlinx.android.synthetic.main.search_preview_layout.view.*
 
 
 @BindingAdapter("imageResource")
@@ -381,6 +385,29 @@ fun setRecyclerViewAdapter(recyclerView: RecyclerView, entries: Models.ServicePr
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(recyclerView.context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = genericAdapter
         genericAdapter!!.addItems(mKPartServicesList)
+    }
+
+
+
+
+}
+
+
+
+
+@BindingAdapter("searchText","title")
+fun textHighlighted(text: TextView, searchText: String, title: String) {
+    if (searchText.length > 0) {
+        var index: Int = title.toLowerCase().indexOf(searchText.toLowerCase())
+
+        while (index >= 0) {
+            val sb = SpannableStringBuilder(title)
+            val fcs = BackgroundColorSpan(text.context.resources.getColor(R.color.theme_orange))
+            sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            index = title.indexOf(searchText, index + 1, true)
+            text.text = sb
+        }
+
     }
 
 }
