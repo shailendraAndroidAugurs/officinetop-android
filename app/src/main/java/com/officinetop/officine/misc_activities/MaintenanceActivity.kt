@@ -202,7 +202,10 @@ class MaintenanceActivity : BaseActivity() {
                             isListLoading = false
                             if (response.isSuccessful) {
                                 if (body.has("data_set") && body.get("data_set") != null && body.get("data_set") is JSONArray) {
-                                    //   carMaintenanceServiceList.clear()//during reload page.
+                                    //  //during reload page.
+                                    if(search_status && !isPaginationRequest)
+                                        carMaintenanceServiceList.clear()
+
                                     for (i in 0 until body.getJSONArray("data_set").length()) {
                                         val servicesObj = body.getJSONArray("data_set").get(i) as JSONObject
                                         val carMaintenance = Gson().fromJson<Models.CarMaintenanceServices>(servicesObj.toString(), Models.CarMaintenanceServices::class.java)
