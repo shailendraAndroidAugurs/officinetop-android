@@ -68,6 +68,32 @@
             android:background="@color/gray_light"
             android:padding="@dimen/_10sdp"
 
+            android:text="@string/category"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/ll_catogry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_CategorySearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="@color/gray_light"
+            android:padding="@dimen/_10sdp"
+
             android:text="@string/product"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
@@ -86,7 +112,6 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
-
 
     </LinearLayout>
 
