@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -50,10 +51,12 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     private var SearchProductList: ArrayList<Models.Search_SparePart> = ArrayList()
     private var SearchN3PartList: ArrayList<Models.Search_N3response> = ArrayList()
     private var SearchOENList: ArrayList<Models.Search_OenPart> = ArrayList()
+    private var SearchcategoryList: ArrayList<Models.Search_N3response> = ArrayList()
     var layoutheight = 0
     private lateinit var myadpterOEN: RecyclerView.Adapter<Holder>
     private lateinit var myadpterSparePart: RecyclerView.Adapter<Holder>
     private lateinit var myadpterN3Part: RecyclerView.Adapter<Holder>
+    private lateinit var myadpterN3Category: RecyclerView.Adapter<Holder>
     private var searchText = ""
 
     var delay: Long = 500 // 1 seconds after user stops typing
@@ -360,13 +363,17 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                             SearchOENList.clear()
                             SearchN3PartList.clear()
                             SearchProductList.clear()
+                            SearchcategoryList.clear()
                             if (!SearchData.spareParts.isNullOrEmpty()) SearchProductList.addAll(SearchData.spareParts)
                             if (!SearchData.n3response.isNullOrEmpty()) SearchN3PartList.addAll(SearchData.n3response)
                             if (!SearchData.oeResponse.isNullOrEmpty()) SearchOENList.addAll(SearchData.oeResponse)
+                            if (!SearchData.ourn3response.isNullOrEmpty()) SearchcategoryList.addAll(SearchData.ourn3response)
                             OENSerachBindInView()
                             PartSerachBindInView()
                             ProductSerachBindInView()
-                        } else {
+                            CategorySerachBindInView()
+                            Log.d("check_size",""+SearchcategoryList.size)
+                          } else {
 
                         }
 
@@ -486,6 +493,58 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
         rv_Partearch.adapter = myadpterN3Part
     }
 
+    private fun CategorySerachBindInView() {
+        myadpterN3Category = object : RecyclerView.Adapter<Holder>() {
+            override fun getItemCount(): Int {
+                return SearchcategoryList.size
+            }
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return Holder(layoutInflater.inflate(R.layout.search_preview_layout, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: Holder, position: Int) {
+                holder.itemView.tv_search_item.text = SearchcategoryList[position].name
+                if (searchText.length > 0) {
+                    var index: Int = SearchcategoryList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
+
+                    while (index >= 0) {
+                        val sb = SpannableStringBuilder(SearchcategoryList[position].name)
+                        val fcs = BackgroundColorSpan(resources.getColor(R.color.theme_orange))
+                        sb.setSpan(fcs, index, searchText.length + index, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                        index = SearchcategoryList[position].name.indexOf(searchText, index + 1, true)
+                        holder.itemView.tv_search_item.text = sb
+                    }
+                }
+
+                holder.itemView.setOnClickListener {
+
+                    if (isLoggedIn()) {
+                        searchStoreQuery(SearchcategoryList[position].name)
+                    }
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchcategoryList[position].type, Constant.Key.searchedKeyword to SearchcategoryList[position].name))
+
+                }
+            }
+        }
+        var heightdata = 0
+        if (SearchcategoryList.size >= 5) {
+            for (i in 0 until 5) {
+                heightdata = layoutheight * 5
+            }
+        } else {
+            for (i in 0 until SearchcategoryList.size) {
+                heightdata = layoutheight * SearchN3PartList.size
+            }
+        }
+
+        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
+        var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
+        ll_part.layoutParams = param
+        rv_CategorySearch.adapter = myadpterN3Category
+    }
+
+
     private fun ProductSerachBindInView() {
 
 
@@ -549,9 +608,11 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
         SearchOENList.clear()
         SearchN3PartList.clear()
         SearchProductList.clear()
+        SearchcategoryList.clear()
         OENSerachBindInView()
         PartSerachBindInView()
         ProductSerachBindInView()
+        CategorySerachBindInView()
     }
     private val input_finish_checker = Runnable {
         if (System.currentTimeMillis() > last_text_edit + delay - 250) {

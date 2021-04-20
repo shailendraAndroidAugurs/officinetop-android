@@ -287,9 +287,7 @@ class MotDetailActivity : BaseActivity() {
             }
         })
 
-        recycler_view
-
-                .adapter = genericAdapter
+        recycler_view.adapter = genericAdapter
         genericAdapter!!.addItems(mKPartServicesList)
     }
 

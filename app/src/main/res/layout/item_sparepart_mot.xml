@@ -20,15 +20,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="111dp"
-                android:layout_gravity="center"
+                android:layout_gravity="right"
                 android:layout_weight="3"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/parts_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_65sdp"
                     android:layout_height="0dp"
                     android:layout_weight="2"
+                    android:scaleType="fitXY"
                     android:src="@drawable/no_image_placeholder"
                     app:imageResource="@{listItemViewModel.product_image_url!=null ? listItemViewModel.product_image_url : @string/url_not_found}"
                     app:layout_constraintStart_toStartOf="parent"
