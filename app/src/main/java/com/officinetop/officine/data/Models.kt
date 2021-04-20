@@ -2033,7 +2033,9 @@ object Models {
             @SerializedName("oeResponse")
             val oeResponse: ArrayList<Search_OenPart>,
             @SerializedName("spareParts")
-            val spareParts: ArrayList<Search_SparePart>
+            val spareParts: ArrayList<Search_SparePart>,
+            @SerializedName("ourn3response")
+            val ourn3response: ArrayList<Search_N3response>
     )
 
     data class Search_N3response(
@@ -2052,6 +2054,17 @@ object Models {
             val productid: String,
             @SerializedName("products_name")
             val productsName: String
+
+    )
+    data class Search_SparePart_Category(
+            @SerializedName("our_category_name")
+            val our_category_name: String,
+            @SerializedName("item")
+            val item: String,
+            @SerializedName("id")
+            val id: String,
+            @SerializedName("version_id")
+            val version_id: String
 
     )
 
