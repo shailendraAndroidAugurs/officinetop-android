@@ -826,7 +826,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                             averageServiceTime = json.optDouble("service_average_time_in_hour", 0.0) * 60
 
 
-                        } else {
+                        }
+
+                        else {
 
 
                             categoryID = json.optString("category_id", "")
@@ -975,7 +977,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packagePrice.text = try {
                         if (isCarMaintenanceService) {
                             getString(R.string.prepend_euro_symbol_string, carMaintenanceServicePrice.toDouble().roundTo2Places().toString())
-
                         } else if (isRevision) {
                             if (packageDetails.has("discount_type") && packageDetails.optString("discount_type") == "0") {
                                 getString(R.string.prepend_euro_symbol_string, packageDetails.getString("price").toDouble().roundTo2Places().toString())
@@ -1025,7 +1026,6 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     var endHour = endTime.split(":")[0].toInt()
                     var endMin = endTime.split(":")[1].toInt()
                     var service_day = 0
-                    Log.d("check_status_avilable", "" + isAvailable)
 
                     if (isAvailable == "1") {
                         bookPackage.text = getString(R.string.book)

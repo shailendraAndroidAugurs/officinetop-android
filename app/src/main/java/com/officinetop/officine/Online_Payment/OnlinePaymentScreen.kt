@@ -881,6 +881,8 @@ class OnlinePaymentScreen : BaseActivity() {
                 responseDataBank.let {
                     if (it.has("data") && !it.getString("data").isNullOrBlank()) {
                         bankpaymentobject = Gson().fromJson(it.getString("data"), Models.BankPaymentInfo::class.java)
+                        radio_button_cod.setText(""+bankpaymentobject.payment_name)
+                        tv_payment_description.setText(""+bankpaymentobject.payment_description)
                         bindBankdetailInView()
                     }
                 }
