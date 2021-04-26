@@ -2099,7 +2099,11 @@ object Models {
             @SerializedName("title")
             val title: String,
             @SerializedName("updated_at")
-            val updatedAt: String
+            val updatedAt: String,
+            @SerializedName("payment_name")
+            val payment_name: String,
+            @SerializedName("payment_description")
+            val payment_description: String
     )
 
 }
