@@ -750,6 +750,7 @@
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
     <string name="email_not_valid">Email not valid</string>
+    <string name="razorpay_button_description">and debit or credit card</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
