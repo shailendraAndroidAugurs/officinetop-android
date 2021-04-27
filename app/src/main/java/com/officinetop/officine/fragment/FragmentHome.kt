@@ -2,6 +2,7 @@ package com.officinetop.officine.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -231,13 +233,24 @@ class FragmentHome : Fragment() {
                 }
 
                 rootView.tv_banner_buynow.setOnClickListener {
-                    if (AdvertisementImagearray[image_slider.currentPosition].MainCatId?.equals("27")!!) {
+                    try {
+                        if(!AdvertisementImagearray[image_slider.currentPosition].url.toString().isNullOrEmpty()) {
+                            val loadUrl: String = AdvertisementImagearray[image_slider.currentPosition].url.toString();
+                            Log.d("PayPalRequest :", loadUrl)
+                            val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                            openURL.data = Uri.parse(loadUrl)
+                            startActivityForResult(openURL, 0)
+                        }
+                    } catch (e: Exception) {
+                       // Toast.makeText(this, getString(R.string.there_is_noBrowser), Toast.LENGTH_LONG).show()
+                    }
+                  /*  if (AdvertisementImagearray[image_slider.currentPosition].MainCatId?.equals("27")!!) {
                         MoveBannerToDetail(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
                     } else if (!(context as HomeActivity).checkForSelectedCar()) {
                         return@setOnClickListener
                     } else {
                         MoveBannerToDetail(AdvertisementImagearray[image_slider.currentPosition].MainCatId?.toInt(), context)
-                    }
+                    }*/
 
 
                 }

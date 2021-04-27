@@ -18,7 +18,9 @@ object Models {
             @SerializedName("image_url")
             val imageUrl: String?,
             @SerializedName("main_cat_id")
-            val MainCatId: String?
+            val MainCatId: String?,
+            @SerializedName("url")
+            val url: String?
     )
 
     data class Manufacturer(@SerializedName(Constant.Fields.brandID) val brandID: String = "",

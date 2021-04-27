@@ -668,6 +668,7 @@ informazioni in accordo alle </string>
     <string name="sat">SAB</string>
     <string name="email_not_valid">Email not valid</string>
     <string name="category">Categoria</string>
+    <string name="razorpay_button_description">e carta di debito or credito</string>
 
 
     <string-array name="home_icon_titles">

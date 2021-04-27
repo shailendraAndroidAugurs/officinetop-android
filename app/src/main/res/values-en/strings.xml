@@ -656,6 +656,7 @@
     <string name="quotes_alert_msg">Appointment Quotes booked successfully</string>
     <string name="more_than_3_car_added">You cannot add more than 3 cars per day.</string>
     <string name="first_name">First name</string>
+    <string name="razorpay_button_description">and debit or credit card</string>
     <string name="go">Go</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>
