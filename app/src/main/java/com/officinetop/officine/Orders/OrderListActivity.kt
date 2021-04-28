@@ -97,10 +97,10 @@ class OrderListActivity : BaseActivity() {
                             if (body.has("data_set") && !body.isNull("data_set")) {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
-                                if(!isPaginationRequest)
+//                                if(!isPaginationRequest)
                                 bindView(dataSetArray,isPaginationRequest)
-                                else{
-                                    couponsListItem.clear()
+                               /* else{
+                                  *//*  couponsListItem.clear()*//*
                                     for (i in 0 until dataSetArray!!.length()) {
                                         val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray.get(i).toString(), Models.CartItemList::class.java)
                                         couponsListItem.add(modelCartList)
@@ -108,7 +108,7 @@ class OrderListActivity : BaseActivity() {
 
                                     genericAdapter!!.addItemAfterScroll(couponsListItem)
 
-                                }
+                                }*/
                             } else if (body.has("message") && !body.isNull("message")) {
                                 if(!isPaginationRequest)
                                 image_no_order.visibility = View.VISIBLE
@@ -119,8 +119,6 @@ class OrderListActivity : BaseActivity() {
                         }
                     }
                 }
-
-
     }
 
     private fun bindView(dataSetArray: JSONArray?, paginationRequest: Boolean) {
@@ -209,12 +207,12 @@ class OrderListActivity : BaseActivity() {
                 }
             }
         })
-        couponsListItem.clear()
+
         for (i in 0 until dataSetArray!!.length()) {
             val modelCartList = Gson().fromJson<Models.CartItemList>(dataSetArray.get(i).toString(), Models.CartItemList::class.java)
             couponsListItem.add(modelCartList)
         }
-
+         if(!paginationRequest)
         recycler_view.adapter = genericAdapter
         genericAdapter.addItems(couponsListItem)
     }

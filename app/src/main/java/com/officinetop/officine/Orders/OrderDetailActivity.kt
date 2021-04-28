@@ -1,6 +1,7 @@
 package com.officinetop.officine.Orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -81,33 +82,39 @@ class OrderDetailActivity : BaseActivity() {
     }
 
     private fun bindViewForSpareProduct() {
-        val spareProductAdapter = GenericAdapter<Models.SpareProductDescription>(this, R.layout.item_spare_product)
+        try{
+            val spareProductAdapter = GenericAdapter<Models.SpareProductDescription>(this, R.layout.item_spare_product)
 
-        spareProductAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
-            override fun onClick(view: View, position: Int) {
-
-
-                startActivityForResult(intentFor<FeedbackAddActivity>(
-                        Constant.Path.workshopId to "",
-                        Constant.Path.productId to SpareProductList[position].productsId,
-                        Constant.Path.productType to "1",
-                        Constant.Path.orderid to orderid,
-                        Constant.Path.sellerId to if (!SpareProductList[position].sellerId.isNullOrBlank()) SpareProductList[position].sellerId
-                        else if (!SpareProductList[position].usersId.isNullOrBlank()) SpareProductList[position].usersId
-                        else "",
-                        Constant.Path.ProductOrWorkshopName to SpareProductList[position].productName,
-                        Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to "", Constant.Path.motservicetype to ""), 102)
-                finish()
+            spareProductAdapter.setOnListItemViewClickListener(object : GenericAdapter.OnListItemViewClickListener {
+                override fun onClick(view: View, position: Int) {
 
 
-            }
+                    startActivityForResult(intentFor<FeedbackAddActivity>(
+                            Constant.Path.workshopId to "",
+                            Constant.Path.productId to SpareProductList[position].productsId,
+                            Constant.Path.productType to "1",
+                            Constant.Path.orderid to orderid,
+                            Constant.Path.sellerId to if (!SpareProductList[position].sellerId.isNullOrBlank()) SpareProductList[position].sellerId
+                            else if (!SpareProductList[position].usersId.isNullOrBlank()) SpareProductList[position].usersId
+                            else "",
+                            Constant.Path.ProductOrWorkshopName to SpareProductList[position].productName,
+                            Constant.Path.type to "1", Constant.Path.mainCategoryId to "", Constant.Path.serviceID to "", Constant.Path.motservicetype to ""), 102)
+                    finish()
 
-            override fun onItemClick(view: View, position: Int) {
-                showrating(SpareProductList[position].feedbackdetail.comments, SpareProductList[position].feedbackdetail.rating)
-            }
-        })
-        spareProductAdapter.addItems(SpareProductList)
-        recycler_view.adapter = spareProductAdapter
+
+                }
+
+                override fun onItemClick(view: View, position: Int) {
+                    showrating(SpareProductList[position].feedbackdetail.comments, SpareProductList[position].feedbackdetail.rating)
+                }
+            })
+            spareProductAdapter.addItems(SpareProductList)
+            recycler_view.adapter = spareProductAdapter
+        }
+        catch (e: Exception){
+            Log.d("check_error",""+e.message);
+        }
+
 
 
     }
