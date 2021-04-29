@@ -484,6 +484,7 @@
     <string name="Appointment">Appointment</string>
     <string name="feedback_Workshop">Feedback Workshop</string>
     <string name="feedback_Product">Feedback Product</string>
+    <string name="confiramtion">Confirmation</string>
 
 
     <string name="request_invoice"> Request Invoice</string>
@@ -570,7 +571,7 @@
     <string name="FailedtologinCheckyourcredential">Failed to log in, Check your credential</string>
     <string name="PleaseSelectContactNo">Select the phone number</string>
     <string name="Requesttimedout"> Request timed out</string>
-    <string name="PleaseSelectAddress">Please Select Address!</string>
+    <string name="PleaseSelectAddress">Please select an address</string>
     <string name="AllFieldsRequired">All Fields Required</string>
 
     <string name="MaxImagesnotmorethanthat"> Max Images is 5! not more than that</string>
