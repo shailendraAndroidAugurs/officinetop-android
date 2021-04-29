@@ -509,14 +509,14 @@ informazioni in accordo alle </string>
     <string name="FailedtologinCheckyourcredential">Accesso non riuscito, controlla le tue credenziali</string>
     <string name="PleaseSelectContactNo">Seleziona il numero telefono</string>
     <string name="Requesttimedout"> Tempo scaduto per la richiesta</string>
-    <string name="PleaseSelectAddress">Si prega di selezionare l indirizzo!</string>
+    <string name="PleaseSelectAddress">Si prega di selezionare un indirizzo</string>
     <string name="AllFieldsRequired">Tutti i campi richiesti</string>
     <string name="MaxImagesnotmorethanthat">Max Images è 5! non di più</string>
     <string name="PleaseEnterValidLicensePlateNumber">Inserisci il numero di targa valido</string>
     <string name="Deletedefaultimageforthiscar">Elimina l immagine predefinita per questa macchina</string>
     <string name="CarDetailSavedSuccessfully">Auto salvata correttamente</string>
     <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Vuoi completare i dettagli dell auto per ottenere suggerimenti personalizzati?</string>
-
+    <string name="confiramtion">Conferma</string>
     <string name="Completelater">Completa più tardi</string>
     <string name="Failed_addcar">Impossibile aggiungere la macchina</string>
     <string name="Caraddedsuccessfully">Auto aggiunta correttamente</string>

@@ -44,14 +44,23 @@
                     android:background="@drawable/facebook"
                     android:scaleType="fitXY" />
 
-                <ImageButton
-                    android:id="@+id/googleSignIn"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/google"
-                    android:scaleType="fitXY" />
+                    android:background="@drawable/white_border_design">
+
+                    <ImageButton
+                        android:id="@+id/googleSignIn"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/google_logo"
+                        android:scaleType="fitXY" />
+
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/linkedinSignIn"

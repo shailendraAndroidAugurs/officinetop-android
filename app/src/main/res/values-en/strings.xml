@@ -507,12 +507,12 @@
     <string name="FailedtologinCheckyourcredential">Failed to log in, Check your credential</string>
     <string name="PleaseSelectContactNo">Select the phone number</string>
     <string name="Requesttimedout"> Request timed out</string>
-    <string name="PleaseSelectAddress">Please Select Address!</string>
+    <string name="PleaseSelectAddress">Please select an address</string>
     <string name="AllFieldsRequired">All Fields Required</string>
     <string name="MaxImagesnotmorethanthat"> Max Images is 5! not more than that</string>
     <string name="PleaseEnterValidLicensePlateNumber">Please Enter Valid License Plate Number</string>
     <string name="Deletedefaultimageforthiscar">Delete default image for this car</string>
-
+    <string name="confiramtion">Confirmation</string>
     <string name="CarDetailSavedSuccessfully">Car successfully saved.</string>
     <string name="Doyouwanttocompletethecardetailspersonalizedsuggestions"> Do you want to complete the car details to get personalized suggestions ?</string>
     <string name="Completelater">Complete later</string>

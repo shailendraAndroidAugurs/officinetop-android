@@ -63,7 +63,7 @@ class MotListActivity : BaseActivity() {
         btn_edit.setOnClickListener {
             ed_search_km.isEnabled = true
             ed_search_km.requestFocus()
-            if (btn_edit.text == getString(R.string.add_car)) {
+            if (btn_edit.text == getString(R.string.confirm)) {
 
                 if (isOnline()) {
                     motServive(ed_search_km.text.toString(), "1")
