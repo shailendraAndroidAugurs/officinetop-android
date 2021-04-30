@@ -242,7 +242,8 @@ interface IRetrofitApis {
                             @Query("distance_range") distance_range: String,
                             @Query(Constant.Path.favorite) favorite: String,
                             @Query(Constant.Path.couponFilter) couponfilter: String,
-                            @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+                            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                            @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
     ): Call<ResponseBody>
 
 

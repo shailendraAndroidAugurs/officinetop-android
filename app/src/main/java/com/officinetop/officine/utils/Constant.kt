@@ -386,6 +386,7 @@ object Constant {
         const val wrecker_service_type = "wrecker_service_type"
         const val n3_Id = "n3_id"
         const val search = "search"
+        const val sort_by_distance = "sort_by_distance"
     }
 
     object RC {

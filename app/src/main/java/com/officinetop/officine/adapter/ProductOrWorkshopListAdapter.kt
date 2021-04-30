@@ -171,8 +171,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                 getDistancebetweenTwoLatLong(currentLat, currentLong, product_workshopList.latitude, product_workshopList.longitude, tv_workshopKm)
                 if (isSosEmergency) {
                     llAverageTimeEmergency.visibility = View.VISIBLE
-                    if (!product_workshopList.average_time_in_min.isNullOrBlank()) {
-                        val time = product_workshopList.average_time_in_min.toDouble().roundToInt()
+                    if (!product_workshopList.service_time_list.isNullOrBlank()) {
+                        val time = product_workshopList.service_time_list.toDouble().roundToInt()
                         val hr = time / 60
                         val minute = time % 60
                         if (hr == 0)
