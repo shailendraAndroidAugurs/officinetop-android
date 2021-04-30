@@ -1777,7 +1777,10 @@ object Models {
             @SerializedName("hourly_rate")
             val hourly_rate: String,
             @SerializedName("temp_slot_id")
-            val temp_slot_id: String
+            val temp_slot_id: String,
+            @SerializedName("service_time_list")
+            val service_time_list: String
+
 
     ) : ListItemViewModel()
 

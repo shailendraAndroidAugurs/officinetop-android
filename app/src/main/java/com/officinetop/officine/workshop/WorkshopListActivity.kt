@@ -330,6 +330,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
+        val distanceSortLevel = if (isDistanceLowToHigh) 1 else 2
 
         var workshopType = 1
         if (isAssemblyService)
@@ -553,6 +554,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val pricesFinal = priceRangeFinal + 1
         var priceRangeString = "$priceRangeInitial,$pricesFinal"
         val priceSortLevel = if (isPriceLowToHigh) 1 else 2
+        val distanceSortLevel = if (isDistanceLowToHigh) 1 else 2
 
         if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || misdistancefilter || pricesFilter) {
             Log.d("WorkshopList", "FilterDot : " + "yes")
@@ -591,7 +593,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     })
         } else if (revisonService) {
             Log.d("Workshoplis", "Is Revision Yes")
-            callRevisionApi(priceRangeString, priceSortLevel, ratingString)
+            callRevisionApi(priceRangeString, priceSortLevel,distanceSortLevel, ratingString)
         } else if (isTyreService) {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
@@ -950,7 +952,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
 
             //Show distance sort option only if workshop
-            sort_distance_container.visibility = View.GONE
 
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             toolbar.setNavigationOnClickListener { dismiss() }
@@ -972,6 +973,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             tv_Sort_ClearSection.setOnClickListener {
                 rb_price_low.isChecked = true
                 rb_price_high.isChecked = false
+                rb_growing.isChecked = true
+                rb_decending.isChecked = false
             }
             create()
 
@@ -1001,8 +1004,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun callRevisionApi(priceRangeString: String, priceSortLevel: Int, ratingformate: String) {
-        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId)
+    private fun callRevisionApi(priceRangeString: String, priceSortLevel: Int,distancesort : Int, ratingformate: String) {
+        RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId,sort_by_distance = distancesort)
                 .onCall { networkException, response ->
                     networkException?.let {
                     }

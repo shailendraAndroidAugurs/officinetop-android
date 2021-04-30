@@ -666,6 +666,7 @@
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
     <string name="email_not_valid">Email not valid</string>
+    <string name="growing">Growing</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

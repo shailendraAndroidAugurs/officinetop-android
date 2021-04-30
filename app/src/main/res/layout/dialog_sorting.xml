@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 style="@style/TextViewSubHeadingBlack"
@@ -94,13 +94,13 @@
                 android:paddingBottom="5dp">
 
                 <RadioButton
-
+                    android:id="@+id/rb_growing"
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-
-                    android:text="@string/low_to_high"  />
+                    android:checked="true"
+                    android:text="@string/growing"  />
 
 
                 <View
@@ -111,12 +111,12 @@
 
 
                 <RadioButton
-
+                    android:id="@+id/rb_decending"
                     style="@style/TextViewSubHeadingBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
-                    android:text="@string/high_to_low" />
+                    android:text="@string/descending" />
 
             </RadioGroup>
 
