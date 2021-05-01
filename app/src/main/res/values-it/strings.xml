@@ -451,7 +451,7 @@ informazioni in accordo alle </string>
     <string name="MOT">Tagliandi</string>
     <string name="MOTDetail">Dettaglio tagliandi</string>
     <string name="Product_detail">Dettagli prodotto</string>
-    <string name="PayOnDelivery">Vuoi procedere con il Pagamento in Contrassegno?</string>
+    <string name="PayOnDelivery">Vuoi procedere con il pagamento in officina?</string>
     <string name="partNotAvailable">Parte non disponibile per il servizio</string>
     <string name="FiledRequired"> Campo richiesto</string>
     <string name="Summer">Estivo</string>

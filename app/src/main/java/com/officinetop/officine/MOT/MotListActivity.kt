@@ -75,7 +75,7 @@ class MotListActivity : BaseActivity() {
 
             }
             saveMotCarKM(ed_search_km.text.toString())
-            btn_edit.text = getString(R.string.add_car)
+            btn_edit.text = getString(R.string.confirm)
 
 
         }

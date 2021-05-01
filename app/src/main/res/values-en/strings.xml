@@ -450,7 +450,7 @@
     <string name="MOT">MOT</string>
     <string name="MOTDetail">MOT Details</string>
     <string name="Product_detail">Product Detail</string>
-    <string name="PayOnDelivery">Do you want to proceed Pay on Delivery ?</string>
+    <string name="PayOnDelivery">Do you want to proceed with the payment in the workshop?</string>
     <string name="partNotAvailable">Part not available for service</string>
     <string name="FiledRequired"> Field required</string>
     <string name="Summer">Summer</string>

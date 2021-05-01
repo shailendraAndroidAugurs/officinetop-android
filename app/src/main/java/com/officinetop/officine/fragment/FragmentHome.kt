@@ -232,6 +232,8 @@ class FragmentHome : Fragment() {
 
                 }
 
+                rootView.image_slider.movePrevPosition(false)
+
                 rootView.tv_banner_buynow.setOnClickListener {
                     try {
                         if(!AdvertisementImagearray[image_slider.currentPosition].url.toString().isNullOrEmpty()) {

@@ -63,6 +63,7 @@
                     android:background="@color/theme_orange"
                     android:text="@string/edit"
                     android:visibility="visible"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,8 +116,6 @@
             </LinearLayout>
 
 
-
-
             <TextView
                 android:id="@+id/text_car"
                 style="@style/TextViewNormal"
@@ -125,7 +124,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
-
                 android:paddingBottom="@dimen/_10sdp"
                 android:text="@string/Smart_solution_withCar"
                 android:textColor="@color/black"

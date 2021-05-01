@@ -7,10 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.*
-import android.widget.AdapterView
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -111,10 +108,17 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
 
         val item = cartItems[p1]
         var isProductSellOnpair = false
+
+        Toast.makeText(context,""+item.CartType,Toast.LENGTH_SHORT).show()
+
         with(holder) {
 
             var productID = ""
             var quantity = 1
+
+            if(item.CartType == "S"){
+                productDescription.visibility = View.GONE
+            }
 
             if (item.CartType == "T" || item.CartType == "S") {
                 if (item.CartType == "T") {
