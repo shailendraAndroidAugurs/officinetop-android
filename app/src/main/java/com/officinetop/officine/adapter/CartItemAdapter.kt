@@ -109,7 +109,6 @@ class CartItemAdapter(private var context: Context, view: Button) : RecyclerView
         val item = cartItems[p1]
         var isProductSellOnpair = false
 
-        Toast.makeText(context,""+item.CartType,Toast.LENGTH_SHORT).show()
 
         with(holder) {
 
