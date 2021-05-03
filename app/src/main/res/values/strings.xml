@@ -13,6 +13,8 @@
     <string name="sample_workshop">Officina Cesena Workshop</string>
     <string name="edit_photo">Edit Photo</string>
     <string name="go">Go</string>
+    <string name="price_sort">Price (lowest first)</string>
+    <string name="distance_sort">Distance (closer first)</string>
     <string name="sample_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.

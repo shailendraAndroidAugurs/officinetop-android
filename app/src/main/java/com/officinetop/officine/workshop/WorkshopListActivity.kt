@@ -78,8 +78,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var seekbarPriceFinalLimit = 0f
     private var isFavouriteChecked = false
     private var isOfferChecked = false
-    private var isPriceLowToHigh = true
-    private var isDistanceLowToHigh = true
+ /*   private var isPriceLowToHigh = true
+    private var isDistanceLowToHigh = true*/
+     private var isPriceDistance = false
     var serviceID = 0
     private var multipleServiceIdOfCarMaintenance = ""
     private var productID = 0
@@ -329,8 +330,17 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
         val pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
-        val priceSortLevel = if (isPriceLowToHigh) 1 else 2
-        val distanceSortLevel = if (isDistanceLowToHigh) 1 else 2
+        val priceSortLevel : Int
+        val distanceSortLevel : Int
+
+        if(isPriceDistance){
+            priceSortLevel = 1
+            distanceSortLevel = 0
+        }
+        else{
+            priceSortLevel = 0
+            distanceSortLevel = 1
+        }
 
         var workshopType = 1
         if (isAssemblyService)
@@ -545,7 +555,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun loadWorkshops() {
-        Log.d("workshoplist", "loadworkshop call")
+        Log.d("check_boolean_value", ""+isPriceDistance)
         progress_bar.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
         var workshopType = 1
@@ -553,8 +563,16 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             workshopType = 2
         val pricesFinal = priceRangeFinal + 1
         var priceRangeString = "$priceRangeInitial,$pricesFinal"
-        val priceSortLevel = if (isPriceLowToHigh) 1 else 2
-        val distanceSortLevel = if (isDistanceLowToHigh) 1 else 2
+        val priceSortLevel : Int
+        val distanceSortLevel  : Int
+        if(isPriceDistance){
+            priceSortLevel = 1
+            distanceSortLevel = 0
+        }
+        else{
+            priceSortLevel = 0
+            distanceSortLevel = 1
+        }
 
         if (isFavouriteChecked || isOfferChecked || !ratingString.equals("") || misdistancefilter || pricesFilter) {
             Log.d("WorkshopList", "FilterDot : " + "yes")
@@ -960,21 +978,32 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar.setOnMenuItemClickListener {
 
-                val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
+              /*  val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
                 val distanceIndex = radio_grp_distance.indexOfChild(radio_grp_distance.findViewById(radio_grp_distance.checkedRadioButtonId))
 
                 isPriceLowToHigh = priceIndex == 0
-                isDistanceLowToHigh = distanceIndex == 0
+                isDistanceLowToHigh = distanceIndex == 0*/
+
+
+             /*   val pricedistanceIndex = radio_group_price_distance.indexOfChild(radio_group_price_distance.findViewById(radio_group_price_distance.checkedRadioButtonId))
+                isPriceDistance = pricedistanceIndex == 0*/
+
+                    isPriceDistance = rb_price.isChecked
 
                 reloadPage()
                 dismiss()
                 return@setOnMenuItemClickListener true
             }
             tv_Sort_ClearSection.setOnClickListener {
-                rb_price_low.isChecked = true
+               /* rb_price_low.isChecked = true
                 rb_price_high.isChecked = false
                 rb_growing.isChecked = true
-                rb_decending.isChecked = false
+                rb_decending.isChecked = false*/
+
+                rb_price.isChecked = false
+                rb_distance.isChecked = true
+
+
             }
             create()
 
