@@ -657,6 +657,8 @@
     <string name="more_than_3_car_added">You cannot add more than 3 cars per day.</string>
     <string name="first_name">First name</string>
     <string name="razorpay_button_description">and debit or credit card</string>
+    <string name="price_sort">Price (lowest first)</string>
+    <string name="distance_sort">Distance (closer first)</string>
     <string name="go">Go</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>

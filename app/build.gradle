@@ -27,7 +27,7 @@ android {
 
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.officinetop.officine"
+        applicationId "com.officinetop"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
