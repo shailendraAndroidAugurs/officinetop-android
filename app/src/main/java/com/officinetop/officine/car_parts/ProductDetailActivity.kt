@@ -53,6 +53,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var min_price = ""
     private var Deliverydays = ""
     private var productId = ""
+    private  var item_id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
@@ -79,6 +80,9 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun initViews() {
+         if(intent.hasExtra(Constant.Key.item_id))
+             item_id = intent.getStringExtra(Constant.Key.item_id)
+
         if (intent.hasExtra(Constant.Path.productDetails))
             productId = intent.getStringExtra(Constant.Path.productDetails)
         selectedProductID = if (!productId.isNullOrBlank()) productId.toInt() else 0
@@ -393,7 +397,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             return
         }
         val dialog = getProgressDialog(true)
-        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId(), getLat(), getLong(), defaultDistance)
+        RetrofitClient.client.getSparePartDetail("ENG", id, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear, getSelectedCar()?.carVersionModel?.idVehicle!!, getSelectedCar()?.carMakeModel?.brandID!!, getUserId(), getLat(), getLong(), defaultDistance,item_id)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         dialog.dismiss()

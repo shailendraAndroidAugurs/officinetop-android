@@ -1603,6 +1603,8 @@ object Models {
     data class ProductOrWorkshopList(
             @SerializedName("main_category_id")
             val main_category_id: String,
+            @SerializedName("item_id")
+            val item_id: String,
             @SerializedName("p_name")
             val productName: String,
             @SerializedName("p_description")

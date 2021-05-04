@@ -213,18 +213,16 @@ interface IRetrofitApis {
                      @Query(Constant.Path.sortPrice) priceSortLevel: Int,
                      @Query(Constant.Path.workShopType) workShopType: Int,
                      @Query(Constant.Path.carSize) carSize: String,
-
                      @Query("user_id") user_id: String,
                      @Query(Constant.Path.version_id) version_id: String,
                      @Query(Constant.Path.selectedCarId) selectedCarId: String,
                      @Query("user_lat") user_lat: String,
                      @Query("user_long") user_long: String,
                      @Query("distance_range") distance_range: String,
-
-
                      @Query(Constant.Path.favorite) favorite: String,
                      @Query(Constant.Path.couponFilter) couponfilter: String,
-                     @Query(Constant.Path.mainCategoryId) mainCategoryId:String
+                     @Query(Constant.Path.mainCategoryId) mainCategoryId:String,
+                     @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
     ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.getWorkshopRevision)
@@ -656,7 +654,8 @@ interface IRetrofitApis {
                         @Query("distance_range") distance_range: String,
                         @Query(Constant.Path.favorite) favorite: String,
                         @Query(Constant.Path.couponFilter) couponfilter: String,
-                        @Query(Constant.Path.mainCategoryId) mainCategoryId: String
+                        @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                        @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
     ): Call<ResponseBody>
 
 
@@ -1092,7 +1091,9 @@ interface IRetrofitApis {
                                   @Field("distance_range") distance_range: String,
                                   @Field(Constant.Path.favorite) favorite: String,
                                   @Field(Constant.Path.couponFilter) couponfilter: String,
-                                  @Field(Constant.Path.mainCategoryId) mainCategoryId: String
+                                  @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
+                                  @Field(Constant.Path.sort_by_distance) sort_by_distance: Int
+
 
     ): Call<ResponseBody>
 
@@ -1591,7 +1592,8 @@ interface IRetrofitApis {
             @Query("user_id") user_id: String,
             @Query(Constant.Path.userLat) user_lat: String,
             @Query(Constant.Path.userLong) user_long: String,
-            @Query(Constant.Path.distanceRange) distance_range: String
+            @Query(Constant.Path.distanceRange) distance_range: String,
+            @Query(Constant.Path.item_id) item_id: String
 
     ): Call<ResponseBody>
 

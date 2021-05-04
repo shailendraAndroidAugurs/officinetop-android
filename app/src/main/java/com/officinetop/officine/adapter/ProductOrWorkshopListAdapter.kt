@@ -339,10 +339,9 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
 
             itemView.setOnClickListener {
 
-
                 if (!isCarWash && !isWorkshop && !isRevision && !isTyre && !isCarMaintenanceServices && !isQuotesServices && !isMotService && !isSOSAppointment && !isSosEmergency) {
                     mcontext.startActivity(mcontext.intentFor<ProductDetailActivity>(
-                            Constant.Path.productDetails to productOrWorkshopList[p1].id, Constant.Key.wishList to productOrWorkshopList[p1].wish_list).forwardResults())
+                            Constant.Path.productDetails to productOrWorkshopList[p1].id, Constant.Key.wishList to productOrWorkshopList[p1].wish_list,Constant.Key.item_id to productOrWorkshopList[p1].item_id).forwardResults())
                 } else {
 
                     val json = JSONObject(filteredJSONArray[p1].toString())

@@ -236,7 +236,10 @@ class FragmentHome : Fragment() {
 
                 rootView.tv_banner_buynow.setOnClickListener {
                     try {
-                        if(!AdvertisementImagearray[image_slider.currentPosition].url.toString().isNullOrEmpty()) {
+                        if (AdvertisementImagearray[image_slider.currentPosition].MainCatId.equals("27")){
+                            startActivity(intentFor<InviteFriendsActivity>())
+                        }
+                       else  if(!AdvertisementImagearray[image_slider.currentPosition].url.toString().isNullOrEmpty()) {
                             val loadUrl: String = AdvertisementImagearray[image_slider.currentPosition].url.toString();
                             Log.d("PayPalRequest :", loadUrl)
                             val openURL = Intent(android.content.Intent.ACTION_VIEW)
