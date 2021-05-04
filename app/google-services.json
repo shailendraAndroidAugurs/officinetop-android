@@ -8,12 +8,64 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:976463692726:android:96eea430afea47a94bf717",
+        "mobilesdk_app_id": "1:976463692726:android:1d6a78dc8a9363ac4bf717",
         "android_client_info": {
           "package_name": "com.officinetop"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "976463692726-rs5k0j62lui3m7d4f543h149dq5cuvf4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.officinetop",
+            "certificate_hash": "8a92697f44f905e6f6b1a5f25f402b4446a2232c"
+          }
+        },
+        {
+          "client_id": "976463692726-go2odmmd2agq1k2q8ju6hotc5ieqmhvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAypvXOPP763qTp1kHymRujcgXNgEzGyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976463692726-go2odmmd2agq1k2q8ju6hotc5ieqmhvj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "976463692726-1uu4m3jobhbe417kcp2kt6aq0r6in16p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.officinetop"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976463692726:android:96eea430afea47a94bf717",
+        "android_client_info": {
+          "package_name": "com.officinetop.officine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976463692726-hu6i7ijfhphuuel4de3jodpb36tfnfqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.officinetop.officine",
+            "certificate_hash": "8a92697f44f905e6f6b1a5f25f402b4446a2232c"
+          }
+        },
         {
           "client_id": "976463692726-go2odmmd2agq1k2q8ju6hotc5ieqmhvj.apps.googleusercontent.com",
           "client_type": 3
