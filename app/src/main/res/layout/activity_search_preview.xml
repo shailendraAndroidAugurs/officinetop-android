@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:background="@color/gray_light"
             android:padding="@dimen/_10sdp"
-
+            android:visibility="gone"
             android:text="@string/product"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
@@ -102,6 +102,7 @@
         <LinearLayout
             android:id="@+id/ll_product"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView

@@ -615,6 +615,7 @@ interface IRetrofitApis {
                  @Query("load_index") load_index: String
 
 
+
     ): Call<ResponseBody>
 
 
@@ -1072,7 +1073,9 @@ interface IRetrofitApis {
             @Query("user_long") user_long: String,
             @Query("distance_range") distance_range: String,
             @Query(Constant.Path.favorite) favorite: String,
-            @Query(Constant.Path.couponFilter) couponfilter: String
+            @Query(Constant.Path.couponFilter) couponfilter: String,
+            @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
+
     ): Call<ResponseBody>
 
     @FormUrlEncoded
@@ -1280,7 +1283,9 @@ interface IRetrofitApis {
             @Query(Constant.Path.version_id) versionId: String,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
-            @Query(Constant.Path.userid) userid: String
+            @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
+
     ): Call<ResponseBody>
 
 
@@ -1309,7 +1314,9 @@ interface IRetrofitApis {
             @Query(Constant.Path.version_id) versionId: String,
             @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Query(Constant.Path.wrecker_service_type) wrecker_service_type: String,
-            @Query(Constant.Path.userid) userid: String
+            @Query(Constant.Path.userid) userid: String,
+            @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
+
     ): Call<ResponseBody>
 
 
