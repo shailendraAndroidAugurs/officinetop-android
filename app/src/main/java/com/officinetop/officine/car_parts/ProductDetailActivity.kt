@@ -80,8 +80,9 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     }
 
     private fun initViews() {
-         if(intent.hasExtra(Constant.Key.item_id))
+         if(intent.hasExtra(Constant.Key.item_id)&&intent.getStringExtra(Constant.Key.item_id) != null){
              item_id = intent.getStringExtra(Constant.Key.item_id)
+         }
 
         if (intent.hasExtra(Constant.Path.productDetails))
             productId = intent.getStringExtra(Constant.Path.productDetails)

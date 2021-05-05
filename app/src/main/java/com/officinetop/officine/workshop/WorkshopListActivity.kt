@@ -637,7 +637,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                     authToken = getBearerToken()
                             ?: "", categoryType = serviceID, workshopFilterSelectedDate = selectedFormattedDate,
                     rating = ratingString, priceRange = if (priceRangeFinal == -1) "" else priceRangeString,
-                    priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0"
+                    priceSortLevel = priceSortLevel, serviceQuotesInsertedId = quotesServiceQuotesInsertedId, mainCategoryId = quotesMainCategoryId, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0",sort_by_distance = distanceSortLevel
             ).onCall { _, response ->
                 response?.let {
                     progress_bar.visibility = View.GONE
@@ -670,7 +670,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforAppointment(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate, serviceID.toString(),
                     latitude, longitude, distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1", userid = getUserId()).onCall { _, response ->
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1", userid = getUserId(),sort_by_distance = distanceSortLevel).onCall { _, response ->
 
                 response?.let {
                     progress_bar.visibility = View.GONE
@@ -689,7 +689,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             RetrofitClient.client.getSOSWorkshopListforEmergency(getBearerToken()
                     ?: "", if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), selectedFormattedDate,
                     serviceID.toString(), latitude, longitude, getCurrentTime(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", rating = ratingString,
-                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "2", userid = getUserId())
+                    priceRange = if (priceRangeFinal == -1) "" else priceRangeString, priceLevel = priceSortLevel, versionId = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "2", userid = getUserId(),sort_by_distance = distanceSortLevel)
                     .onCall { _, response ->
                         response?.let {
                             progress_bar.visibility = View.GONE
