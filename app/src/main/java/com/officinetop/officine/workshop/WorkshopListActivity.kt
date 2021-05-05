@@ -596,7 +596,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         if (isAssemblyService) {
             RetrofitClient.client.getAssemblyWorkshops(productID, selectedFormattedDate, ratingString,
                     if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, workshopType, getSelectedCar()?.carSize
-                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime, serviceId = if (cartItem != null) cartItem?.serviceId!! else "0")
+                    ?: "", getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, selectedCarId = getSavedSelectedVehicleID(), productqty = cartItem?.quantity.toString(), user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", mainCategoryId = mainCategoryId, servicesAverageTime = servicesAverageTime, serviceId = if (cartItem != null) cartItem?.serviceId!! else "0",sort_by_distance = distanceSortLevel)
                     .enqueue(object : Callback<ResponseBody> {
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             progress_bar.visibility = View.GONE
@@ -616,7 +616,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             Log.d("Date", "DeliveryDate WorkshopList$selectedFormattedDate")
             Log.d("IsTyreAvailable", "yes")
             RetrofitClient.client.getTyreWorkshops(productID, selectedFormattedDate, ratingString, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, getUserId(), getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", productqty = cartItem?.quantity.toString(), favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0",
-                    service_average_time = cartItem?.servicesAverageTime!!, serviceID = cartItem?.serviceId!!, mainCategoryId = cartItem?.mainCategoryId!!)
+                    service_average_time = cartItem?.servicesAverageTime!!, serviceID = cartItem?.serviceId!!, mainCategoryId = cartItem?.mainCategoryId!!,sort_by_distance = distanceSortLevel)
                     .onCall { networkException, response ->
                         networkException?.let { }
                         response?.let {
