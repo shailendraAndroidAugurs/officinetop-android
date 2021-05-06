@@ -553,6 +553,9 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             //Show distance sort option only if workshop
             sort_distance_container.visibility = View.GONE
 
+            radio_group_price_distance.visibility = View.GONE
+            price_sorting_layout.visibility = View.VISIBLE
+
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             toolbar.setNavigationOnClickListener { dismiss() }
 

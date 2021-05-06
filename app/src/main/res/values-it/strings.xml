@@ -671,7 +671,7 @@ informazioni in accordo alle </string>
     <string name="razorpay_button_description">e carta di debito or credito</string>
     <string name="price_sort">Prezzo (prima il più basso)</string>
     <string name="distance_sort">Distanza (prima il più vicino)</string>
-
+    <string name="mot_details_alert">non è possibile procedere, contattare i nostri uffici per i dettagli</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
