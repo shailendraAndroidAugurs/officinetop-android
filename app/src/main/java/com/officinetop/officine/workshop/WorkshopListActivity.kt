@@ -400,7 +400,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             }
                         }
 
-                        /* calendarDetailList.addAll(arrayList)
+                      /*  setUpCalendarPrices()
+*/
+                        //calendarDetailList.addAll(arrayList)
                          if (current_page == 0) {
                              setUpCalendarPrices()
                          } else {
@@ -408,9 +410,9 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                              isLoading = false
 
 
-                         }*/
-                        calendarAdapter.notifyDataSetChanged()
-                        isLoading = false
+                         }
+                       /* calendarAdapter.notifyDataSetChanged()
+                        isLoading = false*/
 
                     } else {
                         showInfoDialog(getMessageFromJSON(it)) {

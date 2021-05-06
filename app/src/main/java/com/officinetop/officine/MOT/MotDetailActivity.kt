@@ -52,6 +52,7 @@ class MotDetailActivity : BaseActivity() {
     var partListFromCart = ArrayList<Models.Part>()
     var deliveryDate = 0
     var isFromCart = false
+    var isProcced = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mot_detail)
@@ -78,35 +79,40 @@ class MotDetailActivity : BaseActivity() {
                 val partId: ArrayList<String> = ArrayList()
                 val couponId: ArrayList<String> = ArrayList()
                 val sellerId: ArrayList<String> = ArrayList()
+                 if(isProcced){
+                     if (mKPartServicesList.size != 0) {
 
-                if (mKPartServicesList.size != 0) {
-
-                    for (i in 0 until mKPartServicesList.size) {
-                        val product_Id = mKPartServicesList[i].id
-                        if (!mKPartServicesList[i].couponId.isNullOrBlank()) {
-                            couponId.add(mKPartServicesList[i].couponId)
-                        } else {
-                            couponId.add("")
-                        }
-                        partId.add(product_Id)
-                        sellerId.add(mKPartServicesList[i].usersId)
-                    }
+                         for (i in 0 until mKPartServicesList.size) {
+                             val product_Id = mKPartServicesList[i].id
+                             if (!mKPartServicesList[i].couponId.isNullOrBlank()) {
+                                 couponId.add(mKPartServicesList[i].couponId)
+                             } else {
+                                 couponId.add("")
+                             }
+                             partId.add(product_Id)
+                             sellerId.add(mKPartServicesList[i].usersId)
+                         }
 
 
-                    hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
-                    val bundle = Bundle()
-                    bundle.putSerializable(Constant.Path.Motpartdata, hashMap as Serializable)
-                    Log.e("replacePartID", partId.toString())
-                    startActivity(intentFor<WorkshopListActivity>(
-                            Constant.Key.is_motService to true,
-                            Constant.Path.mot_id to motServiceObject.id.toString(),
-                            "mot_type" to motServiceObject.type.toString(),
-                            Constant.Path.deliveryDate to deliveryDate.toString(),
-                            Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
-                            Constant.Path.mainCategoryId to motServiceObject.main_category_id.toString()).putExtras(bundle))
-                } else {
-                    showInfoDialog(getString(R.string.partNotFound))
-                }
+                         hashMap[motServiceObject.id.toString()] = Models.MotservicesCouponData(couponId, partId, sellerId)
+                         val bundle = Bundle()
+                         bundle.putSerializable(Constant.Path.Motpartdata, hashMap as Serializable)
+                         Log.e("replacePartID", partId.toString())
+                         startActivity(intentFor<WorkshopListActivity>(
+                                 Constant.Key.is_motService to true,
+                                 Constant.Path.mot_id to motServiceObject.id.toString(),
+                                 "mot_type" to motServiceObject.type.toString(),
+                                 Constant.Path.deliveryDate to deliveryDate.toString(),
+                                 Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
+                                 Constant.Path.mainCategoryId to motServiceObject.main_category_id.toString()).putExtras(bundle))
+                     } else {
+                         showInfoDialog(getString(R.string.partNotFound))
+                     }
+                 }
+                else{
+                     showInfoDialog(getString(R.string.mot_details_alert))
+                 }
+
             }
         } else if (intent.hasExtra("isFromCart")) {
             isFromCart = true
@@ -143,6 +149,9 @@ class MotDetailActivity : BaseActivity() {
                         progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
                             val body = JSONObject(response.body()?.string())
+                            if(itemsData.data.kPartList == null || itemsData.data.serviceaveragetime == null){
+                                isProcced = false
+                            }
                             if (body.has("data") && !body.isNull("data")) {
 
                                 itemsData = Gson().fromJson<Models.MotDetail>(body.toString(), Models.MotDetail::class.java)
