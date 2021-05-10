@@ -528,7 +528,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.CartItemList" />
+            type="com.officinetop.data.Models.CartItemList" />
 
     </data>
 </layout><!-- app:InvoiceRequest="@{listItemViewModel.InvoiceStatus!=null ? listItemViewModel.InvoiceStatus : @string/Concat}"-->

@@ -82,7 +82,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:weightSum="2">
 
-                    <com.officinetop.officine.utils.CustomRatingBar
+                    <com.officinetop.utils.CustomRatingBar
                         android:id="@+id/ratngbar_ratingFeedback"
                         style="@style/custom_ratingBar"
                         android:layout_width="0dp"

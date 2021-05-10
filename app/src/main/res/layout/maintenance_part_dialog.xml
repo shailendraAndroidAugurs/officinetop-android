@@ -117,7 +117,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center">
 
-                    <com.officinetop.officine.utils.CustomRatingBar
+                    <com.officinetop.utils.CustomRatingBar
                         android:id="@+id/item_rating"
                         style="@style/custom_ratingBar"
                         android:layout_width="@dimen/_70sdp"
@@ -164,6 +164,6 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.Part" />
+            type="com.officinetop.data.Models.Part" />
     </data>
 </layout>

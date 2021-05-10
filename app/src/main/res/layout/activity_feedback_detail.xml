@@ -36,7 +36,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.officinetop.officine.utils.CustomRatingBar
+                <com.officinetop.utils.CustomRatingBar
                     android:id="@+id/ratings"
                     style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_80sdp"
@@ -237,7 +237,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.FeedbacksList" />
+            type="com.officinetop.data.Models.FeedbacksList" />
     </data>
 
 </layout>

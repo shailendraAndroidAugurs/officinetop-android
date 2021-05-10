@@ -188,7 +188,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_plus" />
 
-                <com.officinetop.officine.utils.CustomRatingBar
+                <com.officinetop.utils.CustomRatingBar
                     android:id="@+id/item_rating"
                     style="@style/custom_ratingBar"
                     android:layout_width="@dimen/_70sdp"
@@ -282,7 +282,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.CarMaintenanceServices" />
+            type="com.officinetop.data.Models.CarMaintenanceServices" />
 
     </data>
 

@@ -336,7 +336,7 @@
 
                             android:gravity="center">
 
-                            <com.officinetop.officine.utils.CustomRatingBar
+                            <com.officinetop.utils.CustomRatingBar
                                 android:id="@+id/item_tyrerating"
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="@dimen/_80sdp"
@@ -544,7 +544,7 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center">
 
-                            <com.officinetop.officine.utils.CustomRatingBar
+                            <com.officinetop.utils.CustomRatingBar
 
                                 android:id="@+id/workshop_item_rating"
                                 style="@style/custom_ratingBar"

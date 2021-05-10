@@ -1,0 +1,91 @@
+package com.officinetop.views
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.AttributeSet
+import android.view.MotionEvent
+import androidx.viewpager.widget.ViewPager
+import com.officinetop.R
+
+
+class AutoViewPager : ViewPager, Runnable {
+
+    private var offset = 0f
+
+    var duration = DEFAULT_DURATION
+
+    private var indeterminate = false
+
+    private var autoScroll = false
+        set(value) {
+            field = value
+            if (value) start() else stop()
+        }
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(context, attrs)
+    }
+
+    private fun init(context: Context, attrs: AttributeSet?) {
+        attrs?.let {
+            val a = context.obtainStyledAttributes(it, R.styleable.AutoViewPager)
+            with(a) {
+                indeterminate = getBoolean(R.styleable.AutoViewPager_avp_indeterminate, false)
+                autoScroll = getBoolean(R.styleable.AutoViewPager_avp_autoScroll, false)
+                duration = getInt(R.styleable.AutoViewPager_avp_duration, DEFAULT_DURATION)
+                recycle()
+            }
+        }
+    }
+
+    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+        event?.takeIf { indeterminate || autoScroll }
+                ?.actionMasked
+                .takeIf { it == MotionEvent.ACTION_DOWN }
+                ?.run {
+                    offset = event!!.x
+                    reset()
+                }
+        return super.onInterceptTouchEvent(event)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.takeIf { indeterminate }
+                ?.actionMasked
+                .takeIf { it == MotionEvent.ACTION_UP }
+                ?.run {
+                    event?.x
+                            ?.takeIf { it < offset && currentItem == lastItem }
+                            ?.run {
+                                post { setCurrentItem(0, false) }
+                            }
+                }
+        return super.onTouchEvent(event)
+    }
+
+    override fun run() {
+        if (!isShown) return
+        currentItem = if (currentItem == lastItem) 0 else currentItem + 1
+        start()
+    }
+
+    fun start() = postDelayed(this, duration.toLong())
+
+    private fun stop() = removeCallbacks(this)
+
+    private fun reset() {
+        stop()
+        start()
+    }
+
+    companion object {
+        const val DEFAULT_DURATION = 5000
+    }
+
+
+    private val ViewPager.lastItem: Int?
+        get() = adapter?.count?.minus(1)
+}

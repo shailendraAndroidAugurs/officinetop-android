@@ -6,7 +6,7 @@
 
         <variable
             name="wrackerServices"
-            type="com.officinetop.officine.data.Models.WrackerServices" />
+            type="com.officinetop.data.Models.WrackerServices" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

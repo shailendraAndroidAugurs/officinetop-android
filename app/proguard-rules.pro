@@ -21,10 +21,10 @@
 #-renamesourcefileattribute SourceFile
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.SerializationKt
--keep,includedescriptorclasses class com.officinetop.officine.**$$serializer { *; } # <-- change package name to your app's
--keepclassmembers class com.officinetop.officine.** { # <-- change package name to your app's
+-keep,includedescriptorclasses class com.officinetop.**$$serializer { *; } # <-- change package name to your app's
+-keepclassmembers class com.officinetop.** { # <-- change package name to your app's
     *** Companion;
 }
--keepclasseswithmembers class com.officinetop.officine.** { # <-- change package name to your app's
+-keepclasseswithmembers class com.officinetop.** { # <-- change package name to your app's
     kotlinx.serialization.KSerializer serializer(...);
 }

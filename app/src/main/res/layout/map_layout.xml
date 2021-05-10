@@ -190,7 +190,7 @@
 
         <variable
             name="data"
-            type="com.officinetop.officine.data.Models.AllWrackerWorkshops" />
+            type="com.officinetop.data.Models.AllWrackerWorkshops" />
 
     </data>
 
