@@ -6,6 +6,13 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
     signingConfigs {
         config {
             storeFile file("$rootDir/OfficineTop.jks")
@@ -13,6 +20,7 @@ android {
             keyAlias = 'OfficineTop'
             keyPassword 'Augurs@9848'
         }
+
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
