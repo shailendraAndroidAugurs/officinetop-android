@@ -8,7 +8,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.SpareProductDescription" />
+            type="com.officinetop.data.Models.SpareProductDescription" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

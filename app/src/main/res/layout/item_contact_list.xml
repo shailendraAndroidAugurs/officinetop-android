@@ -5,7 +5,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.userprofile.ContactsInfo" />
+            type="com.officinetop.userprofile.ContactsInfo" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

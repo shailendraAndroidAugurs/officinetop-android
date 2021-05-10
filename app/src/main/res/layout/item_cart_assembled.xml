@@ -871,7 +871,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.ServiceProductDescription" />
+            type="com.officinetop.data.Models.ServiceProductDescription" />
 
 
     </data>

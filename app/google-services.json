@@ -8,26 +8,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:976463692726:android:c1dd784e0832fbc94bf717",
+        "mobilesdk_app_id": "1:976463692726:android:23544a1fd534f3f74bf717",
         "android_client_info": {
-          "package_name": "com.officinetop.officine"
+          "package_name": "com.officinetop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "976463692726-hu6i7ijfhphuuel4de3jodpb36tfnfqg.apps.googleusercontent.com",
+          "client_id": "976463692726-8a4ktvvjh0dk96jddnftuq1sd00ti98i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.officinetop.officine",
-            "certificate_hash": "8a92697f44f905e6f6b1a5f25f402b4446a2232c"
+            "package_name": "com.officinetop",
+            "certificate_hash": "381a7af5fa32df6eece380eaa4e2e246f2854305"
           }
         },
         {
-          "client_id": "976463692726-s6rgmkvvj4d0ac9isk0rn5m5v3rfhm37.apps.googleusercontent.com",
+          "client_id": "976463692726-rs5k0j62lui3m7d4f543h149dq5cuvf4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.officinetop.officine",
-            "certificate_hash": "381a7af5fa32df6eece380eaa4e2e246f2854305"
+            "package_name": "com.officinetop",
+            "certificate_hash": "8a92697f44f905e6f6b1a5f25f402b4446a2232c"
           }
         },
         {

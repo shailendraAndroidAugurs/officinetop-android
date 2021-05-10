@@ -9,7 +9,7 @@
 
         <variable
             name="listItemViewModel"
-            type="com.officinetop.officine.data.Models.TyreProductDescription" />
+            type="com.officinetop.data.Models.TyreProductDescription" />
     </data>
 
     <LinearLayout

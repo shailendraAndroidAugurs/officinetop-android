@@ -24,7 +24,7 @@
             tools:listitem="@layout/item_grid_home_btn" />
 
 
-        <com.officinetop.officine.views.AutoViewPager xmlns:tools="http://schemas.android.com/tools"
+        <com.officinetop.views.AutoViewPager xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/slider_viewpager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
