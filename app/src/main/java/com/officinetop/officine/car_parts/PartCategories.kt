@@ -368,11 +368,11 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                             if (!SearchData.n3response.isNullOrEmpty()) SearchN3PartList.addAll(SearchData.n3response)
                             if (!SearchData.oeResponse.isNullOrEmpty()) SearchOENList.addAll(SearchData.oeResponse)
                             if (!SearchData.ourn3response.isNullOrEmpty()) SearchcategoryList.addAll(SearchData.ourn3response)
-                            OENSerachBindInView()
                             PartSerachBindInView()
+                            OENSerachBindInView()
                             ProductSerachBindInView()
                             CategorySerachBindInView()
-                            Log.d("check_size",""+SearchcategoryList.size)
+                            Log.d("check_size_oflist",""+SearchcategoryList.size+"  "+SearchOENList.size+"  "+SearchN3PartList.size+"  "+SearchProductList.size)
                           } else {
 
                         }
@@ -453,7 +453,9 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             }
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
+                Log.d("check_data_name",""+SearchN3PartList[position].name)
                 holder.itemView.tv_search_item.text = SearchN3PartList[position].name
+                Log.d("check_data",searchText+"    "+ SearchN3PartList[position].name);
                 if (searchText.length > 0) {
                     var index: Int = SearchN3PartList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
 
@@ -540,7 +542,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
         val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
         var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
-        ll_part.layoutParams = param
+        ll_catogry.layoutParams = param
         rv_CategorySearch.adapter = myadpterN3Category
     }
 
