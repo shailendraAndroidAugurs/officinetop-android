@@ -385,7 +385,7 @@ fun Context?.setAppLanguage() {
 
 fun Context?.createImageSliderDialog(imageUrl: String) {
 
-    val imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+    val imageDialog = Dialog(this!!, R.style.DialogSlideAnimStyle)
 
     with(imageDialog) {
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)

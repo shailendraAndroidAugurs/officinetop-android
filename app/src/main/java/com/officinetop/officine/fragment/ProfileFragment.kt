@@ -171,8 +171,8 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             startActivity(intent)
         }
         copyreferral.setOnClickListener {
-            myClip = ClipData.newPlainText("text", txt_referralcode.text)
-            myClipboard?.primaryClip = myClip!!
+           myClip = ClipData.newPlainText("text", txt_referralcode.text)
+          //  myClipboard!!.primaryClip = ClipData.newPlainText("text", txt_referralcode.text)
             // Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
         }
 
