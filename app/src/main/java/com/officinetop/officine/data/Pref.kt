@@ -230,7 +230,7 @@ inline fun Context.saveLocalCarDate(date: String) {
 
 inline fun Context.getLocalCarDate() : String {
    return getSharedPreferences(Constant.file_pref, Context.MODE_PRIVATE)
-            .getString(Constant.Key.date, "")
+           .getString(Constant.Key.date, "")!!
 }
 
 

@@ -73,10 +73,10 @@ class TyreCustomizationActivity : BaseActivity() {
             isPreviousSelectedMeasurement = true
         }
         if (intent.extras != null && intent.hasExtra("editId")) {
-            IsMeaurementEditId = intent.extras.getString("editId")
+            IsMeaurementEditId = intent.getStringExtra("editId")
         }
         if (intent.extras != null && intent.hasExtra("IsSavedInlocal")) {
-            IsSavedInlocal = intent.extras.getString("IsSavedInlocal")
+            IsSavedInlocal = intent.getStringExtra("IsSavedInlocal")
 
         }
 

@@ -73,7 +73,7 @@ class Fragmentnews : Fragment() {
 
     private class UriWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val host: String = Uri.parse(url).host
+            val host: String = Uri.parse(url).host!!
             //Log.d("shouldOverrideUrlLoading", url);
             if (host == target_url_prefix) { // This is my web site, so do not override; let my WebView load
 // the page
