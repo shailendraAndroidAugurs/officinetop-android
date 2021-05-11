@@ -108,7 +108,7 @@ class MaintenanceActivity : BaseActivity() {
         binding.root
         initViews()
         setPaginationScroll()
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         //searching feature
    iv_cancel.setOnClickListener {
