@@ -47,8 +47,7 @@ class GenericAdapter<T : ListItemViewModel>(val context: Context, @LayoutRes val
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
         val layoutInflater = inflater ?: LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, layoutId, parent, false)
-
-        return GenericViewHolder(binding)
+        return GenericViewHolder(binding!!)
     }
 
     override fun getItemCount(): Int = items.size
