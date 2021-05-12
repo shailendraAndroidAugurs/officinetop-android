@@ -103,7 +103,12 @@ class MotDetailActivity : BaseActivity() {
                                  Constant.Path.mot_id to motServiceObject.id.toString(),
                                  "mot_type" to motServiceObject.type.toString(),
                                  Constant.Path.deliveryDate to deliveryDate.toString(),
-                                 Constant.Path.motservices_time to itemsData.data.serviceaveragetime,
+                                 if(this::itemsData.isInitialized){
+                                     Constant.Path.motservices_time to  itemsData.data.serviceaveragetime
+                                 }else {
+                                     Constant.Path.motservices_time to ""
+                                 },
+
                                  Constant.Path.mainCategoryId to motServiceObject.main_category_id.toString()).putExtras(bundle))
                      } else {
                          showInfoDialog(getString(R.string.partNotFound))
@@ -145,25 +150,25 @@ class MotDetailActivity : BaseActivity() {
                         progress_bar.visibility = View.GONE
                         if (response.isSuccessful) {
                             val body = JSONObject(response.body()?.string())
-                            if(itemsData.data.kPartList == null || itemsData.data.serviceaveragetime == null){
+                            if(this::itemsData.isInitialized &&itemsData.data.kPartList == null || this::itemsData.isInitialized && itemsData.data.serviceaveragetime == null){
                                 isProcced = false
                             }
                             if (body.has("data") && !body.isNull("data")) {
 
                                 itemsData = Gson().fromJson<Models.MotDetail>(body.toString(), Models.MotDetail::class.java)
 
-                                if (itemsData.data.serviceaveragetime == null) {
+                                if (this::itemsData.isInitialized &&itemsData.data.serviceaveragetime == null) {
                                     itemsData.data.serviceaveragetime = "0"
                                 }
                                 getminPriceForMotServicesl(mot_id, type, itemsData.data.serviceaveragetime)
-                                if (itemsData.data.operations != null) {
+                                if (this::itemsData.isInitialized && itemsData.data.operations != null) {
                                     for (i in 0 until itemsData.data.operations.size) {
                                         mOPerationServicesList.add(itemsData.data.operations[i])
                                     }
                                 }
                                 if (isFromCart) {
                                     mKPartServicesList.addAll(partListFromCart)
-                                } else if (itemsData.data.kPartList != null) {
+                                } else if (this::itemsData.isInitialized && itemsData.data.kPartList != null) {
                                     for (i in 0 until itemsData.data.kPartList.size) {
                                         if (!(itemsData.data.kPartList[i].couponList == null || itemsData.data.kPartList[i].couponList.size == 0)) {
                                             itemsData.data.kPartList[i].couponTitle = itemsData.data.kPartList[i].couponList[0].couponTitle

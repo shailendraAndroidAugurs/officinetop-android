@@ -41,6 +41,7 @@ class OrderListActivity : BaseActivity() {
     private var couponsListItem: MutableList<Models.CartItemList> = ArrayList()
     val genericAdapter = GenericAdapter<Models.CartItemList>(this, R.layout.item_orderlist)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order__list)
@@ -49,6 +50,7 @@ class OrderListActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         progress_bar.visibility = View.VISIBLE
         initview(currentPage,false)
+        Log.d("check_holder_data",""+genericAdapter)
         setpagination()
 
     }
@@ -98,6 +100,7 @@ class OrderListActivity : BaseActivity() {
                                 val dataSetArray = body.getJSONArray("data_set")
                                 progress_bar.visibility = View.GONE
 //                                if(!isPaginationRequest)
+                                Log.d("check_array_data",""+dataSetArray);
                                 bindView(dataSetArray,isPaginationRequest)
                                /* else{
                                   *//*  couponsListItem.clear()*//*
