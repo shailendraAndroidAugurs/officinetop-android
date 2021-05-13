@@ -195,7 +195,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="fb947980622315284" />
+                <data android:scheme="fb225885835535723" />
             </intent-filter>
         </activity>
 
@@ -239,7 +239,7 @@
         </provider>
         <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider947980622315284"
+            android:authorities="com.facebook.app.FacebookContentProvider225885835535723"
             android:exported="true" />
 
         <service
