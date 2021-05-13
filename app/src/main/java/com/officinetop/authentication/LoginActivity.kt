@@ -428,7 +428,7 @@ class LoginActivity : BaseActivity() {
 
     private fun facebooklogin() {
         LoginManager.getInstance().logInWithReadPermissions(this,
-                arrayListOf("email", "public_profile", "user_friends"))
+                arrayListOf("email", "public_profile"))
 
 
         LoginManager.getInstance().registerCallback(facebookCallbackManager,
