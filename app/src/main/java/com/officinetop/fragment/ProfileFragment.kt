@@ -364,7 +364,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
 
     private fun uiContentsBinding(mobileNumber: String?, email: String?, fname: String?, lname: String?, imageurl: String, address: String?, zipCode: String, landmark: String?, mobileno: String, referralcode: String, walletamount: String) {
         if (!isAdded) return
-        if (walletamount.isNullOrEmpty())
+        if (walletamount.isNullOrEmpty() || walletamount.equals("null"))
             textview_walletamount.text = getString(R.string.euro_symbol) + " 0"
         else
             textview_walletamount.text = getString(R.string.euro_symbol) + " " + walletamount

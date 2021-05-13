@@ -32,11 +32,11 @@ class LinkedInWebView : AppCompatActivity() {
     //This is the public api key of our application// 81nih3m4xgyr71
 
     // old Api key 81txmpo07r3ew8
-    private val API_KEY = "78b17mrjc03j5x"
+    private val API_KEY = "78vafxgevqzf9f"
 
     //This is the private api key of our application // ytP7ra2wy419xkvt
     //old Secret key mCnCDHjxDWtUB8Lv
-    private val SECRET_KEY = "69Wl5HEwf5DdGtnV"
+    private val SECRET_KEY = "w5z2gF7Ia2tnfMeB"
 
     //This is any string we want to use. This will be used for avoiding CSRF attacks. You can generate one here: http://strongpasswordgenerator.com/
     private val STATE = "xyz"
@@ -44,7 +44,7 @@ class LinkedInWebView : AppCompatActivity() {
     //E3ZYKC1T6H2yP4z
     //This is the url that LinkedIn Auth process will redirect to. We can put whatever we want that starts with http:// or https:// .
     //We use a made up url that we will intercept when redirecting. Avoid Uppercases.
-    private val REDIRECT_URI = "https://www.linkedin.com/company/officinetop/"/*Constant.domainBaseURL*/
+    private val REDIRECT_URI = "https://services.officinetop.com/officinetop/"/*Constant.domainBaseURL*/
 
     private val scope = //"scope=r_emailaddress"
             "scope=r_liteprofile%20r_emailaddress"
