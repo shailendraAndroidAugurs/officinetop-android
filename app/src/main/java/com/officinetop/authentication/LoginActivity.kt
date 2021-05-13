@@ -518,7 +518,7 @@ class LoginActivity : BaseActivity() {
 
         }, 0, privacyPolicy.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        termCondition_policy_login.text = TextUtils.concat(textMain, " ", termsAndConditions, " ", getString(R.string.and), " ", privacyPolicy,"\"")
+        termCondition_policy_login.text = TextUtils.concat(textMain, " ", termsAndConditions, " ", getString(R.string.and), " ", privacyPolicy)
         termCondition_policy_login.movementMethod = LinkMovementMethod.getInstance()
         termCondition_policy_login.highlightColor = Color.TRANSPARENT
     }
