@@ -305,7 +305,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         }
 
         SelectedCalendarDateIntial = selectedFormattedDate
-        defaultCalendarShow()
+       defaultCalendarShow()
         createFilterDialog()
         createSortDialog()
         getCalendarMinPriceRange(selectedFormattedDate)
@@ -327,6 +327,11 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun getCalendarMinPriceRange(selectedFormattedDate: String) {
+        val progressDialog= getProgressDialog(false)
+        if (current_page > 5){
+            Log.d("check_page_no","no "+current_page)
+            progressDialog.show()
+        }
 
         val pricesFinal = priceRangeFinal + 1
         val priceRangeString = "$priceRangeInitial,$pricesFinal"
@@ -376,11 +381,13 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progress_bar.visibility = View.GONE
                 recycler_view.visibility = View.VISIBLE
+                progressDialog.dismiss()
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progress_bar.visibility = View.GONE
+                progressDialog.dismiss()
                 body?.let {
                     if (isStatusCodeValid(body)) {
                         val dataSet = getDataSetArrayFromResponse(it)
@@ -393,11 +400,22 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             if (calendarPriceMap.containsKey(arrayList[i].date))
                                 calendarPriceMap[arrayList[i].date] = arrayList[i].minPrice.toString()
 
-                           var calendarPrice= calendarDetailList.find { it.date.contains(arrayList[i].date)}
+                          val containsDate=  calendarDetailList.find { it.date.contains(serviceCategory.date) }
+                            if ( containsDate != null) {
+                                var index= calendarDetailList.indexOf(containsDate)
+                                calendarDetailList.get(index).minPrice = arrayList[i].minPrice
+                            }else{
+                                calendarDetailList.add(serviceCategory)
+                            }
+
+
+
+
+                          /* var calendarPrice= calendarDetailList.find { it.date.contains(arrayList[i].date)}
                             if ( calendarPrice != null) {
                                var index= calendarDetailList.indexOf(calendarPrice)
                                 calendarDetailList.get(index).minPrice = arrayList[i].minPrice
-                            }
+                            }*/
                         }
 
                       /*  setUpCalendarPrices()
@@ -1049,7 +1067,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private fun defaultCalendarShow() {
 
         val sdf = SimpleDateFormat("yyy-MM-dd")
-        for (i in 0..29) {
+        for (i in 0..4) {
             val cal = Calendar.getInstance()
             cal.time = sdf.parse(SelectedCalendarDateIntial)
             cal.add(Calendar.DATE, i)
