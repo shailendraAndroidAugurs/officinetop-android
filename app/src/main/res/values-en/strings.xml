@@ -628,7 +628,7 @@
     <string name="backTransfer_note2">the order will be valid only after receiving the credit on our account.</string>
     <string name="bank_transfer_proceed">Do you want to proceed Bank Transfer ?</string>
     <string name="please_login_to_continue_for_add_wish_list">Please login to continue for Add to WishList</string>
-
+    <string name="select_style">Select Style</string>
     <string name="term_condition_policy_login">By continuing, you allow this app to use your information in accordance with the </string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
     <string name="policy_link">https://www.officinetop.com/privacy-policy/</string>

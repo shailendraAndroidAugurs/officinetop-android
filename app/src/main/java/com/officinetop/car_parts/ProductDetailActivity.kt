@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
@@ -54,6 +52,8 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var Deliverydays = ""
     private var productId = ""
     private  var item_id = ""
+    val style_id = ArrayList<String>()
+    var select_item_position = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
@@ -63,6 +63,23 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
         getLocation()
         initViews()
         // setImageSlider()
+
+
+        spinner_product?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if(!style_id.get(position).equals("0")&&!productId.equals(style_id.get(position))){
+                    productId = style_id.get(position)
+                    select_item_position = position
+                    loadProductDetailApi(productId)
+                    getSimilarProduct(productId)
+                }
+            }
+
+        }
 
         see_all_feedback.setOnClickListener {
             startActivity(intentFor<FeedbackListActivity>(
@@ -235,7 +252,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             if (!productDetails?.optString("seller_price").isNullOrBlank() && !productDetails?.optString("seller_price").equals("null") && !productDetails?.optString("seller_price").equals("0") && !productDetails?.optString("seller_price").equals("0.0")) {
                 productPrice = productDetails?.optString("seller_price")?.toDouble()?.roundTo2Places()
             } else {
-                productPrice = 0.0
+                productPrice = 0.00
             }
             Log.v("PRODUCT", "DETAILS **************************** $productDetails" + "\n--" + productPrice + "--" +
                     intent.hasExtra(Constant.Path.productType) + "--" + intent.getStringExtra(Constant.Path.productType).equals("tyre", true))
@@ -417,7 +434,22 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         ll_productDetail.visibility = View.VISIBLE
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
-                                        min_price = data.getString("min_service_price")
+                                        val jsonArray = data.getJSONArray("styles")
+                                        val styledata = ArrayList<String>()
+                                        styledata.add(resources.getString(R.string.select_style))
+                                        style_id.add("0")
+                                        for (i in 0 until jsonArray.length()){
+                                            val jsonobj = jsonArray.getJSONObject(i)
+                                            styledata.add(jsonobj.getString("style"))
+                                            style_id.add(jsonobj.getString("id"))
+                                        }
+                                        if(styledata.size <= 1){
+                                            spinner_product.visibility = View.GONE
+                                        }
+                                        val arrayadapter = ArrayAdapter(applicationContext,android.R.layout.simple_expandable_list_item_1,styledata)
+                                        spinner_product.adapter = arrayadapter
+                                        spinner_product.setSelection(select_item_position)
+                                         min_price = data.getString("min_service_price")
                                         if(data.getString("compatible_status").equals("1")){
                                             layout_compatible.visibility = View.VISIBLE
                                         }

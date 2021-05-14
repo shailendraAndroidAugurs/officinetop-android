@@ -757,6 +757,7 @@
     <string name="email_not_valid">Email not valid</string>
     <string name="razorpay_button_description">and debit or credit card</string>
     <string name="mot_details_alert">it is not possible to proceed, contact our office for details</string>
+    <string name="select_style">Select Style</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

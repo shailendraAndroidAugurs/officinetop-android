@@ -621,7 +621,7 @@ informazioni in accordo alle </string>
     <string name="need_permissions">Hai bisogno di autorizzazioni</string>
     <string name="permission_denied">Questa app necessita dell\'autorizzazione per utilizzare questa funzione. Puoi concederli nelle impostazioni dell\'app.</string>
     <string name="goto_setting">VAI ALLE IMPOSTAZIONI</string>
-
+    <string name="select_style">Seleziona stile</string>
     <string name="bankTransfer">Bonifico Bancario</string>
     <string name="registered_person">Instatario:</string>
     <string name="iban">Iban:</string>
