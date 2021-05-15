@@ -20,7 +20,9 @@ object Models {
             @SerializedName("main_cat_id")
             val MainCatId: String?,
             @SerializedName("url")
-            val url: String?
+            val url: String?,
+            @SerializedName("type")
+            val type: String?
     )
 
     data class Manufacturer(@SerializedName(Constant.Fields.brandID) val brandID: String = "",

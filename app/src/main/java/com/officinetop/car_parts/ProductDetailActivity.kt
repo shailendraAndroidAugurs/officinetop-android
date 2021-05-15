@@ -71,7 +71,7 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(!style_id.get(position).equals("0")&&!productId.equals(style_id.get(position))){
+                if(!productId.equals(intent.getStringExtra(Constant.Path.productDetails))){
                     productId = style_id.get(position)
                     select_item_position = position
                     loadProductDetailApi(productId)
@@ -436,15 +436,12 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         val data = JSONObject(productData.getString("data"))
                                         val jsonArray = data.getJSONArray("styles")
                                         val styledata = ArrayList<String>()
-                                        styledata.add(resources.getString(R.string.select_style))
-                                        style_id.add("0")
+                                  /*      styledata.add(data.getString("style"))
+                                        style_id.add(intent.getStringExtra(Constant.Path.productDetails))*/
                                         for (i in 0 until jsonArray.length()){
                                             val jsonobj = jsonArray.getJSONObject(i)
                                             styledata.add(jsonobj.getString("style"))
                                             style_id.add(jsonobj.getString("id"))
-                                        }
-                                        if(styledata.size <= 1){
-                                            spinner_product.visibility = View.GONE
                                         }
                                         val arrayadapter = ArrayAdapter(applicationContext,android.R.layout.simple_expandable_list_item_1,styledata)
                                         spinner_product.adapter = arrayadapter

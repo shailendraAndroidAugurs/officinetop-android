@@ -212,7 +212,6 @@ class FragmentHome : Fragment() {
                                     Log.d("bestSellingProduct size", bestSellingProductList.size.toString())
                                 }
 
-
                             }
                         }
                     }
@@ -236,7 +235,7 @@ class FragmentHome : Fragment() {
 
                 rootView.tv_banner_buynow.setOnClickListener {
                     try {
-                        if (AdvertisementImagearray[image_slider.currentPosition].MainCatId.equals("27")){
+                        if (AdvertisementImagearray[image_slider.currentPosition].type.equals("INVITE_FRIEND")){
                             startActivity(intentFor<InviteFriendsActivity>())
                         }
                        else  if(!AdvertisementImagearray[image_slider.currentPosition].url.toString().isNullOrEmpty()) {
