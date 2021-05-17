@@ -1,17 +1,12 @@
-package com.officinetop.car_parts
+package com.officinetop.rim
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import com.officinetop.R
 
-class RimActicvity : AppCompatActivity() {
-
+class RimActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rim)
-
-
     }
-
-
 }
