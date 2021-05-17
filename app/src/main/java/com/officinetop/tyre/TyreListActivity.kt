@@ -498,6 +498,12 @@ class TyreListActivity : BaseActivity() {
 
             }
 
+            sort_distance_container.visibility = View.GONE
+
+            radio_group_price_distance.visibility = View.GONE
+            price_sorting_layout.visibility = View.VISIBLE
+
+
             toolbar.setOnMenuItemClickListener {
                 val priceIndex = radio_grp_price.indexOfChild(radio_grp_price.findViewById(radio_grp_price.checkedRadioButtonId))
                 val radio_grp_Alphabetical = radio_grp_Alphabetical.indexOfChild(radio_grp_Alphabetical.findViewById(radio_grp_Alphabetical.checkedRadioButtonId))
