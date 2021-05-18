@@ -128,7 +128,7 @@
     <string name="prepend_euro_symbol_with_da_string"> € %s</string>
     <string name="prepend_euro_symbol_string">€ %s</string>
     <string name="tyre_detail">Tyre Detail</string>
-
+    <string name="copied">Copied</string>
     <string name="tyre_price_total">Total: € %s </string>
     <string name="append_km">%d Km</string>
     <string name="distance">Distance</string>
@@ -146,6 +146,7 @@
     <string name="speed_index_value">This tire is approved for speeds up to %s</string>
     <string name="dummy_prepend_euro_symbol_with_da"> € 10</string>
     <string name="show_only_fav">Show only Favourite</string>
+    <string name="equal_to_the_previous_ones">equal to the previous ones</string>
 
     <string name="show_only_offers">Show only Offers or Coupon</string>
     <string name="proceed">Proceed</string>
@@ -758,6 +759,10 @@
     <string name="razorpay_button_description">and debit or credit card</string>
     <string name="mot_details_alert">it is not possible to proceed, contact our office for details</string>
     <string name="select_style">Select Style</string>
+    <string name="search_with_car_model">Search with car model</string>
+    <string name="search_by_measures">Search by measures</string>
+    <string name="number_of_holes">Number of holes</string>
+    <string name="distance_between_bolts">Distance between bolts</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

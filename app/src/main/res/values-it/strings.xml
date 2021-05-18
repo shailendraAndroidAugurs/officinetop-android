@@ -625,11 +625,16 @@ informazioni in accordo alle </string>
     <string name="bankTransfer">Bonifico Bancario</string>
     <string name="registered_person">Instatario:</string>
     <string name="iban">Iban:</string>
+    <string name="search_with_car_model">Ricerca con modello auto</string>
     <string name="please_send_backcopyto_receipt">Si prega di inviare copia della ricevuta del bonifico a:</string>
     <string name="backTransfer_note1">indicare nella causale il numero di ordine a cui si riferisce il pagamento.</string>
     <string name="backTransfer_note2">l\'ordine sarà valido solo dopo ricevuto l\'accredito sul nostro conto.</string>
-
+    <string name="copied">Copiato</string>
+    <string name="number_of_holes">Numro di fori</string>
+    <string name="distance_between_bolts">Distranza tra bulloni</string>
+    <string name="search_by_measures">Ricerca tramit misure</string>
     <string name="bank_transfer_proceed">Vuoi procedere con Bonifico Bancario ?</string>
+    <string name="equal_to_the_previous_ones">uguali agli anteriori</string>
     <string name="please_login_to_continue_for_add_wish_list">Effettua il login per continuare per Aggiungi alla lista dei desideri</string>
     <string name="term_condition_policy_login">Continuando, consenti a questa app di utilizzare le tue informazioni in accordo alle</string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>

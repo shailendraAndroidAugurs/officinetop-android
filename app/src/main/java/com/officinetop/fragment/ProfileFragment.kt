@@ -15,9 +15,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.officinetop.Orders.OrderListActivity
 import com.officinetop.R
@@ -171,9 +168,9 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
             startActivity(intent)
         }
         copyreferral.setOnClickListener {
-           myClip = ClipData.newPlainText("text", txt_referralcode.text)
-          //  myClipboard!!.primaryClip = ClipData.newPlainText("text", txt_referralcode.text)
-            // Toast.makeText(context, getString(R.string.ReferralCode), Toast.LENGTH_SHORT).show()
+            val clip = ClipData.newPlainText("text", txt_referralcode.text)
+            myClipboard?.setPrimaryClip(clip)
+            Toast.makeText(context, ""+resources.getString(R.string.copied), Toast.LENGTH_SHORT).show()
         }
 
         rootView = view
