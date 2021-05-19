@@ -105,6 +105,7 @@ class LocationActivity : BaseActivity() {
                                             ?: "") + " " + (dataModels.stateName
                                             ?: "") + " " + (dataModels.countryName ?: "")
 
+
                                     complete_address.visibility = View.VISIBLE
                                     complete_address.text = completeAddress
 
@@ -270,9 +271,9 @@ class LocationActivity : BaseActivity() {
         val thoroughfare = addressList.get(0).thoroughfare.takeIf { !it.isNullOrEmpty() }
         val url = addressList.get(0).url.takeIf { !it.isNullOrEmpty() }
 
-        Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
+       /* Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
                 + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
-                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)
+                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)*/
 
 
 
@@ -320,7 +321,6 @@ class LocationActivity : BaseActivity() {
                                     }
 
                                 }
-
                             } else if (response.code() == 401) {
                                 storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
                                 showInfoDialog("successFully Saved") {
