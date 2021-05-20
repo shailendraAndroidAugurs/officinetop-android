@@ -271,9 +271,9 @@ class LocationActivity : BaseActivity() {
         val thoroughfare = addressList.get(0).thoroughfare.takeIf { !it.isNullOrEmpty() }
         val url = addressList.get(0).url.takeIf { !it.isNullOrEmpty() }
 
-       /* Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
+       Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
                 + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
-                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)*/
+                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)
 
 
 
