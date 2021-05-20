@@ -60,7 +60,8 @@ class LocationActivity : BaseActivity() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLocation()
 
-        checkpermission(storagePermissionRequestList(), { setPlacePicker() }, true)
+       // checkpermission(storagePermissionRequestList(), { setPlacePicker() }, true)
+        setPlacePicker()
         disableTextField()
         getSavedUserLocation()
 
@@ -112,6 +113,7 @@ class LocationActivity : BaseActivity() {
                                     latitude = if (dataModels.latitude.isNullOrBlank() || dataModels.latitude.equals("null")) "0" else dataModels.latitude
                                     longitude = if (dataModels.longitude.isNullOrBlank() || dataModels.longitude.equals("null")) "0" else dataModels.longitude
                                     zipCode = dataModels.zipCode ?: ""
+
                                     disableTextField()
                                     logFindLocationEvent(this)
                                     if (!latitude.isNullOrBlank() && !latitude.equals("null") && !longitude.isNullOrBlank() && !longitude.equals("null")) {
