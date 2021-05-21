@@ -120,7 +120,7 @@ class LocationActivity : BaseActivity() {
                                         storeLatLong(latitude!!.toDouble(), longitude!!.toDouble(), true)
 
                                     } else {
-                                        storeLatLong(0.0, 0.0)
+                                        storeLatLong(00.0, 0.0)
 
                                     }
 
@@ -274,9 +274,9 @@ class LocationActivity : BaseActivity() {
         val thoroughfare = addressList.get(0).thoroughfare.takeIf { !it.isNullOrEmpty() }
         val url = addressList.get(0).url.takeIf { !it.isNullOrEmpty() }
 
-     /*  Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
-                + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
-                + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)*/
+  Log.e("subarea:", subArea + "=knownName=" + streetName + "=postalcode=" + zipCode
+             + "=countryCode=" + countryCode + "=extras=" + extras + "=locale=" + locale + "=phone=" + phone + "=premises=" + premises
+             + "=subThroughfare=" + subThoroughfare + "=throughfare=" + thoroughfare + "=url=" + url + "=street=" + street)
 
 
 
@@ -284,9 +284,9 @@ class LocationActivity : BaseActivity() {
         complete_address.text = completeAddress
 
         prov.setText(stateName)
-        cap.setText(countryName)
+        cap.setText(zipCode)
         citta.setText(cityName)
-        via.setText("${streetName}")
+        via.setText(thoroughfare+", "+"${streetName}")
         disableTextField()
         if (isAutomaticLocationSave) {
             saveLocation()
