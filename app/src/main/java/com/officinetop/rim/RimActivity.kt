@@ -10,6 +10,8 @@ class RimActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rim)
         setSupportActionBar(toolbar)
+/*
         toolbar_title.text = resources.getString(R.string.user_location)
+*/
     }
 }
