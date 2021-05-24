@@ -297,7 +297,7 @@
     <string name="spare_part">Spare Parts</string>
     <string name="car_rim">Wheel Rim</string>
     <string name="invoice">Download Invoice</string>
-    <string name="SENDER_ID"><!--850442644528-->976463692726</string>
+    <string name="SENDER_ID">976463692726</string>
 
     <!-- //FCM Notification//-->
     <string name="notifications_admin_channel_name">officinetop</string>
