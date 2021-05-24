@@ -6,6 +6,7 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 android {
+
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
@@ -15,10 +16,10 @@ android {
 
     signingConfigs {
         config {
-            storeFile file("$rootDir/OfficineTop.jks")
-            storePassword 'Augurs@9848'
-            keyAlias = 'OfficineTop'
-            keyPassword 'Augurs@9848'
+            storeFile file("D:\\officinetop_key_store.jks")
+            storePassword '111111'
+            keyAlias = 'officinetop'
+            keyPassword '111111'
         }
 
     }
@@ -38,8 +39,8 @@ android {
         applicationId "com.officinetop"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.2.44"
     }
     buildTypes {
         release {
@@ -151,7 +152,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.6.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 
-    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.google.firebase:firebase-dynamic-links:19.1.1'
 
     // ViewModel and LiveData
