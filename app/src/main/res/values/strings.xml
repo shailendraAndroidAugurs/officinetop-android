@@ -763,6 +763,7 @@
     <string name="search_by_measures">Search by measures</string>
     <string name="number_of_holes">Number of holes</string>
     <string name="distance_between_bolts">Distance between bolts</string>
+    <string name="compatibility_with_model">Compatibility with model</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

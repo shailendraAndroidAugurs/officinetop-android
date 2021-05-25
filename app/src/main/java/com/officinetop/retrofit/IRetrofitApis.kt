@@ -72,6 +72,10 @@ interface IRetrofitApis {
     fun carManufacturer(): Call<ResponseBody>
 
     @Headers(Constant.headerJSON)
+    @GET(Constant.UrlEndPoints.rim_car_brands)
+    fun rimCarBrands(): Call<ResponseBody>
+
+    @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.carModels + "/{brandID}")
     fun carModels(@Path("brandID") brandID: String): Call<ResponseBody>
 

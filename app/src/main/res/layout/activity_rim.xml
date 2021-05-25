@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:paddingBottom="@dimen/_40sdp"
     tools:context=".rim.RimActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,11 +27,7 @@
             android:orientation="vertical"
             >
 
-
-
-
-
-    <Button
+      <Button
         android:id="@+id/locationBtn"
         style="@style/RoundButton"
         android:layout_width="match_parent"
@@ -91,6 +86,7 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_12sdp"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -258,10 +254,10 @@
         android:background="@color/grey_light_bg"
         >
 
-      <LinearLayout
+      <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal"
+          android:layout_marginHorizontal="@dimen/_12sdp"
           >
 
           <TextView
@@ -271,19 +267,17 @@
               android:textStyle="bold"
               android:textSize="@dimen/_15sdp"
               android:textColor="@color/black"
-              android:layout_marginHorizontal="@dimen/_12sdp"
               />
 
-
-
-          <CheckBox
+            <CheckBox
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text=""
+              android:text="@string/equal_to_the_previous_ones"
+              android:layout_alignParentRight="true"
               />
 
 
-      </LinearLayout>
+      </RelativeLayout>
 
 
 
