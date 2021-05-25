@@ -33,6 +33,8 @@ object Models {
                          @SerializedName(Constant.Fields.carModel) val model: String = "",
                          @SerializedName(Constant.Fields.carModelYear) val modelYear: String = "") : Serializable
 
+    data class RimBrandlist(@SerializedName(Constant.Fields.tyrebrandid) val tyrebrandid: String = "",
+                            @SerializedName(Constant.Fields.rimbrand) val rimbrand: String = "") : Serializable
 
     data class CarVersion(
 

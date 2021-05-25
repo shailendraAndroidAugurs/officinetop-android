@@ -135,6 +135,15 @@ inline fun Context.getDataSetArrayFromResponse(body: String?): JSONArray {
 
 }
 
+inline fun Context.getDataArrayFromResponse(body: String?): JSONArray {
+    try {
+        body?.let { return JSONObject(body).getJSONArray(Constant.Fields.data) }
+    } catch (e: Exception) {
+    }
+    return JSONArray()
+
+}
+
 inline fun Context.getDataFromResponse(body: String?): JSONObject {
     try {
         body?.let {
