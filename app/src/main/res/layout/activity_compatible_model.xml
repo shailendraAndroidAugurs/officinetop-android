@@ -47,6 +47,31 @@
 
     </FrameLayout>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/brand"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textStyle="bold"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <com.isapanah.awesomespinner.AwesomeSpinner
+            android:id="@+id/spinner_model_rim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:spinnerHint="@string/sel_manufacturer" />
+
+    </FrameLayout>
+
 </LinearLayout>
 
 

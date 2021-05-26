@@ -14,4 +14,10 @@ class RimActivity : AppCompatActivity() {
         toolbar_title.text = resources.getString(R.string.user_location)
 */
     }
+
+
+
+
+
+
 }
