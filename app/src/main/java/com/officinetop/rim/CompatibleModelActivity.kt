@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.google.gson.Gson
 import com.isapanah.awesomespinner.AwesomeSpinner
 import com.officinetop.R
-import com.officinetop.data.Models
-import com.officinetop.data.getDataArrayFromResponse
-import com.officinetop.data.getDataFromResponse
-import com.officinetop.data.getDataSetArrayFromResponse
+import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
 import com.officinetop.utils.getProgressDialog
 import kotlinx.android.synthetic.main.activity_add_vehicle.*
@@ -26,6 +24,7 @@ import retrofit2.Response
 class CompatibleModelActivity : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
     val rimcarBrand: MutableList<Models.RimBrandlist> = ArrayList()
+    val rimcarmodel: MutableList<Models.RimCaModels> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +54,9 @@ class CompatibleModelActivity : AppCompatActivity() {
 
                 progressDialog.dismiss()
                 if (response.code() == 200) {
-                    val dataset = getDataArrayFromResponse(body)
+                    val dataset = getDataSetArrayFromResponse(body)
                     rimcarBrand.clear()
+                    Log.d("rimedata", "onResponse: car maker ="+body)
                     Log.d("rimedata", "onResponse: car maker ="+dataset)
 
                     val brandTitle: MutableList<String> = ArrayList()
@@ -90,7 +90,8 @@ class CompatibleModelActivity : AppCompatActivity() {
 
                         //clearSpinners()
                        /* spinner_model.setAdapter(getEmptyAdapter())*/
-                       /* loadCarModel(manufacturers[position].brandID)*/
+                        loadCarModel(rimcarBrand[position].tyrebrandid)
+                        Toast.makeText(applicationContext,""+rimcarBrand[position].tyrebrandid,Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -103,6 +104,64 @@ class CompatibleModelActivity : AppCompatActivity() {
 
         })
     }
+
+
+    private fun loadCarModel(brandID: String) {
+        progressDialog.show()
+
+        RetrofitClient.client.rimcarModels("23").enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val body = response.body()?.string()
+                Log.d("AddVehicleActivity", "onResponse: models = "+body)
+
+                    progressDialog.dismiss()
+
+                if (isStatusCodeValid(body)) {
+                    val dataset = getDataArrayFromResponse(body)
+
+
+                    val modelTitle: MutableList<String> = ArrayList()
+                    rimcarmodel.clear()
+
+                    var selectedIndex = -1
+
+                    for (i in 0 until dataset.length()) {
+                        val data = Gson().fromJson<Models.RimCaModels>(dataset.getJSONObject(i).toString(), Models.RimCaModels::class.java)
+                        rimcarmodel.add(data)
+                        modelTitle.add(data.tyre24ModelId)
+
+                       /* if (isForEdit) {
+                            if (data.modelID == myCar?.carModel?.modelID && data.modelYear == myCar?.carModel?.modelYear) {
+                                selectedIndex = i
+                            }
+                        }*/
+                    }
+
+                    bindSpinner(spinner_model_rim, modelTitle)
+
+                   /* if (selectedIndex > -1)
+                        spinner_model.setSelection(selectedIndex)*/
+
+                    spinner_model_rim.setOnSpinnerItemClickListener { position, _ ->
+                        /*spinner_fuel.setAdapter(getEmptyAdapter())
+                        spinner_version.setAdapter(getEmptyAdapter())
+
+                        loadCarVersion(model[position].modelID, model[position].modelYear)*/
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                progressDialog.dismiss()
+                Log.d("AddVehicleActivity", "onResponse: models = "+t.message)
+
+            }
+
+        })
+    }
+
 
 
     private fun bindSpinner(spinner: AwesomeSpinner, titles: List<String>) {

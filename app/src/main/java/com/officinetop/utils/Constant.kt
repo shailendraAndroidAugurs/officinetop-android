@@ -181,6 +181,9 @@ object Constant {
         const val getworkshopCalendarPriceMaintenance = "maintenanceMinCalendarPrice"
         const val getSosoworkshopCalendarPrice = "wrackerServiceMinCalendarPrice"
         const val save_n3_id = "store_oe_cross_by_n3"
+        const val rim_car_brands = "rim_car_brands"
+        const val rim_car_model_by_brandId = "rim_car_model_by_brandId"
+
     }
 
     object Key {
@@ -255,6 +258,14 @@ object Constant {
         const val carModelID = "idModello"
         const val carModel = "Modello"
         const val carModelYear = "ModelloAnno"
+
+        const val  tyrebrandid = "Tyre24BrandId"
+        const val  rimbrand = "Brand"
+
+        const val  tyre24ModelId = "Tyre24ModelId"
+        const val  model = "Model"
+
+
 
     }
 
