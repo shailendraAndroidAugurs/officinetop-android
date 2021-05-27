@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_100sdp">
+
+    <ImageView
+        android:id="@+id/img_car_image"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_car_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/img_car_image"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+    <TextView
+        android:id="@+id/tv_car_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_car_type"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textStyle="normal"
+        android:layout_toRightOf="@+id/img_car_image"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+    <TextView
+        android:id="@+id/tv_car_type_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_car_comment"
+        android:textStyle="normal"
+        android:layout_toRightOf="@+id/img_car_image"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+    <TextView
+        android:id="@+id/tv_manufacture_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_car_type_desc"
+        android:textStyle="normal"
+        android:layout_toRightOf="@+id/img_car_image"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+</RelativeLayout>

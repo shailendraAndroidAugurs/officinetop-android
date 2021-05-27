@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/brand"
+        android:text="@string/model"
         android:layout_marginTop="@dimen/_5sdp"
         android:textStyle="bold"
         android:textSize="@dimen/_15sdp"
@@ -68,11 +68,30 @@
             android:id="@+id/spinner_model_rim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:spinnerHint="@string/sel_manufacturer" />
+            app:spinnerHint="@string/select_model" />
 
     </FrameLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textStyle="bold"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/car_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </LinearLayout>
+
+
 
 
 </LinearLayout>

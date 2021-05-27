@@ -51,6 +51,7 @@
     <string name="map"> Mappa</string>
     <string name="sel_manufacturer">Seleziona marchio</string>
     <string name="sel_model">Seleziona il modello</string>
+    <string name="select_model">Seleziona modello</string>
     <string name="sel_version">Seleziona la versione dell\'auto</string>
     <string name="sel_fuel">Seleziona l\'alimentazione</string>
     <string name="maker">Marca</string>

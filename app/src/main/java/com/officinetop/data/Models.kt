@@ -199,6 +199,34 @@ object Models {
             var minPrice: String = "0.0"
     ) : Serializable
 
+
+    data class Carversionlist(
+            @SerializedName("Id")
+            var Id: String = "",
+            @SerializedName("IdModel")
+            var IdModel: String = "",
+            @SerializedName("Tyre24CarId")
+            var Tyre24CarId: String = "",
+            @SerializedName("CarType")
+            var CarType: String = "",
+            @SerializedName("CarTypeDesc")
+            var CarTypeDesc: String = "",
+            @SerializedName("ManufactureYear")
+            var ManufactureYear: String = "",
+            @SerializedName("CarComment")
+            var CarComment: String = "",
+            @SerializedName("CarPic")
+            var CarPic: String = "",
+            @SerializedName("HoleNumber")
+            var HoleNumber: String = "",
+            @SerializedName("HoleCircle")
+            var HoleCircle: String = "",
+            @SerializedName("HubHole")
+            var HubHole: String = "",
+            @SerializedName("PermitNumber")
+            var PermitNumber: String = ""
+    ) : Serializable
+
     data class ProductDetail(
             @SerializedName("p_name")
             var productName: String,
