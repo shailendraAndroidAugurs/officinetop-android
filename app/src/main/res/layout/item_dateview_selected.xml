@@ -5,9 +5,9 @@
     android:background="@color/colorAccent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
+    android:paddingLeft="15dp"
     android:paddingTop="5dp"
-    android:paddingRight="10dp"
+    android:paddingRight="15dp"
     android:paddingBottom="5dp">
 
     <TextView
