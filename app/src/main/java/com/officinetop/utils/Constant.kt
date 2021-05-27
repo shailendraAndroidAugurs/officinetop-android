@@ -183,6 +183,7 @@ object Constant {
         const val save_n3_id = "store_oe_cross_by_n3"
         const val rim_car_brands = "rim_car_brands"
         const val rim_car_model_by_brandId = "rim_car_model_by_brandId"
+        const val rim_car_type_by_modelId = "rim_car_type_by_modelId"
 
     }
 
