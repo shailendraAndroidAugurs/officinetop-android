@@ -667,6 +667,7 @@
     <string name="distance_sort">Distance (closer first)</string>
     <string name="mot_details_alert">it is not possible to proceed, contact our office for details</string>
     <string name="compatibility_with_model">Compatibility with model</string>
+    <string name="available_sizes">Available sizes</string>
     <string name="go">Go</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>

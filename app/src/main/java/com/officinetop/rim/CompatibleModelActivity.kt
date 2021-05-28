@@ -91,10 +91,9 @@ class CompatibleModelActivity : AppCompatActivity() {
 
                     spinner_brand_name.setOnSpinnerItemClickListener { position, itemAtPosition ->
 
-                        //clearSpinners()
+                        clearSpinners()
                        /* spinner_model.setAdapter(getEmptyAdapter())*/
-                        loadCarModel(rimcarBrand[position].tyrebrandid)
-                        Toast.makeText(applicationContext,""+rimcarBrand[position].tyrebrandid,Toast.LENGTH_SHORT).show()
+                        loadCarModel(rimcarBrand[position].id)
 
                     }
                 }
@@ -143,7 +142,7 @@ class CompatibleModelActivity : AppCompatActivity() {
                         /*spinner_fuel.setAdapter(getEmptyAdapter())
                         spinner_version.setAdapter(getEmptyAdapter()) */
 
-                        loadCarVersionList(rimcarmodel[position].tyre24ModelId)
+                        loadCarVersionList(rimcarmodel[position].id)
                     }
 
 
@@ -244,6 +243,8 @@ class CompatibleModelActivity : AppCompatActivity() {
 
 
     private fun clearSpinners() {
-        spinner_brand_name.clearSelection()
+       // rimcarBrand.clear()
+        rimcarmodel.clear()
+        rimcarlist.clear()
     }
 }

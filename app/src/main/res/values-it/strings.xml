@@ -680,6 +680,7 @@ informazioni in accordo alle </string>
     <string name="distance_sort">Distanza (prima il più vicino)</string>
     <string name="mot_details_alert">non è possibile procedere, contattare i nostri uffici per i dettagli</string>
     <string name="compatibility_with_model">Compatbilita con modello</string>
+    <string name="available_sizes">Misure disponibili</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
