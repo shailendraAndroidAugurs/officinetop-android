@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.R
 import com.officinetop.binding_adapters.imageLoad
@@ -29,6 +31,9 @@ class CarVersionListAdapter(private val context: Context, private val carlist: L
         holder.tv_car_comment.setText(carlist.get(position).CarComment)
         holder.tv_car_type_desc.setText(carlist.get(position).CarType)
         holder.tv_manufacture_year.setText(carlist.get(position).ManufactureYear)
+        holder.rv_container.setOnClickListener {
+              Toast.makeText(context,""+carlist.get(position).Id,Toast.LENGTH_SHORT).show()
+        }
         imageLoad(holder.img_car_image,carlist.get(position).CarPic)
     }
 
@@ -38,6 +43,7 @@ class CarVersionListAdapter(private val context: Context, private val carlist: L
         val tv_car_type_desc: TextView = view.tv_car_type_desc
         val tv_manufacture_year: TextView = view.tv_manufacture_year
         val img_car_image: ImageView = view.img_car_image
+        val rv_container: RelativeLayout = view.rv_container
     }
 
 

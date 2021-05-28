@@ -765,6 +765,7 @@
     <string name="distance_between_bolts">Distance between bolts</string>
     <string name="compatibility_with_model">Compatibility with model</string>
     <string name="select_model">Select model</string>
+    <string name="available_sizes">Available sizes</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
