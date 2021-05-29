@@ -229,6 +229,58 @@ object Models {
             var PermitNumber: String = ""
     ) : Serializable
 
+    data class Availablecartypelist(
+            @SerializedName("Id")
+            var Id: String = "",
+            @SerializedName("IdCarType")
+            var IdCarType: String = "",
+            @SerializedName("IdFrontDiameter")
+            var IdFrontDiameter: String = "",
+            @SerializedName("IdRearDiameter")
+            var IdRearDiameter: String = "",
+            @SerializedName("IdFrontWidth")
+            var IdFrontWidth: String = "",
+            @SerializedName("IdRearWidth")
+            var IdRearWidth: String = "",
+            @SerializedName("front_diameter")
+            var front_diameter: String = "",
+            @SerializedName("rear_diameter")
+            var rear_diameter: String = "",
+            @SerializedName("total_quantity")
+            var total_quantity: String = "",
+            @SerializedName("measures")
+            var measures: List<Measures>
+
+    ) : Serializable
+
+
+
+    data class Measures(
+            @SerializedName("Id")
+            var Id: String = "",
+            @SerializedName("IdCarType")
+            var IdCarType: String = "",
+            @SerializedName("IdFrontDiameter")
+            var IdFrontDiameter: String = "",
+            @SerializedName("IdRearDiameter")
+            var IdRearDiameter: String = "",
+            @SerializedName("IdFrontWidth")
+            var IdFrontWidth: String = "",
+            @SerializedName("IdRearWidth")
+            var IdRearWidth: String = "",
+            @SerializedName("front_diameter")
+            var front_diameter: String = "",
+            @SerializedName("rear_diameter")
+            var rear_diameter: String = "",
+            @SerializedName("quantity")
+            var quantity: String = "",
+            @SerializedName("front_width")
+            var front_width: String = "",
+            @SerializedName("rear_width")
+            var rear_width: String = ""
+
+    ) : Serializable
+
     data class ProductDetail(
             @SerializedName("p_name")
             var productName: String,

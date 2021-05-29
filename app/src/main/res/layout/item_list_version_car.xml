@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/gray_light"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_margin="@dimen/_7sdp"
+    android:background="@color/white"
+    android:id="@+id/rv_container"
     android:layout_height="@dimen/_100sdp">
 
     <ImageView
@@ -17,7 +25,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:textStyle="bold"
         android:layout_toRightOf="@+id/img_car_image"
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_14sdp"
         android:textColor="@color/black"
         android:layout_marginHorizontal="@dimen/_12sdp"
         />
@@ -27,10 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_car_type"
-        android:layout_marginTop="@dimen/_5sdp"
         android:textStyle="normal"
         android:layout_toRightOf="@+id/img_car_image"
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/black"
         android:layout_marginHorizontal="@dimen/_12sdp"
         />
@@ -42,7 +49,7 @@
         android:layout_below="@+id/tv_car_comment"
         android:textStyle="normal"
         android:layout_toRightOf="@+id/img_car_image"
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/black"
         android:layout_marginHorizontal="@dimen/_12sdp"
         />
@@ -54,9 +61,10 @@
         android:layout_below="@+id/tv_car_type_desc"
         android:textStyle="normal"
         android:layout_toRightOf="@+id/img_car_image"
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_12sdp"
         android:textColor="@color/black"
         android:layout_marginHorizontal="@dimen/_12sdp"
         />
 
 </RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.officinetop.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.officinetop.R
 import com.officinetop.binding_adapters.imageLoad
 import com.officinetop.data.Models
+import com.officinetop.rim.AvailableRimActivity
 import kotlinx.android.synthetic.main.item_faq.view.*
 import kotlinx.android.synthetic.main.item_list_version_car.view.*
 
@@ -32,7 +34,9 @@ class CarVersionListAdapter(private val context: Context, private val carlist: L
         holder.tv_car_type_desc.setText(carlist.get(position).CarType)
         holder.tv_manufacture_year.setText(carlist.get(position).ManufactureYear)
         holder.rv_container.setOnClickListener {
-              Toast.makeText(context,""+carlist.get(position).Id,Toast.LENGTH_SHORT).show()
+              val intent = Intent( context, AvailableRimActivity::class.java)
+              intent.putExtra("id",carlist.get(position).Id)
+              context.startActivity(intent)
         }
         imageLoad(holder.img_car_image,carlist.get(position).CarPic)
     }
