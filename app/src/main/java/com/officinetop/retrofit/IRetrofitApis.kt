@@ -81,6 +81,9 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.rim_car_type_by_modelId)
     fun rimcarversionlist(@Query("model_id") modelID: String): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.alloy_rim_attachments_by_type)
+    fun rimavailablelist(@Query("car_type_id") modelID: String): Call<ResponseBody>
+
 
     @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.carModels + "/{brandID}")
