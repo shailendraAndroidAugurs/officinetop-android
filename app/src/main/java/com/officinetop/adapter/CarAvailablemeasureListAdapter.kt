@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.item_list_version_car.view.*
 
 class CarAvailablemeasureListAdapter(private val context: Context, private val carlist: List<Models.Availablecartypelist>) : RecyclerView.Adapter<CarAvailablemeasureListAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_car_availble_rim, parent, false))
     }
@@ -38,12 +37,25 @@ class CarAvailablemeasureListAdapter(private val context: Context, private val c
         var layoutmanager = LinearLayoutManager(context)
         holder.car_measure_list.layoutManager = layoutmanager
         holder.car_measure_list.adapter = adapter
+        var clicked = false
+        holder.rv_container_parent.setOnClickListener{
+            if(clicked){
+                holder.car_measure_list.visibility = View.GONE
+                clicked = false
+            }
+            else{
+                holder.car_measure_list.visibility = View.VISIBLE
+                clicked = true
+            }
+
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tv_daimeter: TextView = view.tv_daimeter
         val tv_quantitiy: TextView = view.tv_quantitiy
         val car_measure_list: RecyclerView = view.car_measure_list
+        val rv_container_parent: RelativeLayout = view.rv_container_parent
 
     }
 

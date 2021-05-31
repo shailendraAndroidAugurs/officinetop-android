@@ -30,8 +30,13 @@ class CarmeasureExpandableAdapter(private val context: Context, private val carl
     override fun getItemCount(): Int = carlist.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tv_daimeter.setText(context.resources.getString(R.string.front)+": "+carlist.get(position).front_width+"X"+carlist.get(position).front_diameter+"\""+"\n"+
-                context.resources.getString(R.string.rear)+": "+carlist.get(position).rear_width+"X"+carlist.get(position).rear_diameter+"\"")
+        if(carlist.get(position).front_width.equals(carlist.get(position).rear_width) && carlist.get(position).front_diameter.equals(carlist.get(position).rear_diameter)){
+            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+" - "+context.resources.getString(R.string.rear)+": "+carlist.get(position).front_width+"X"+carlist.get(position).front_diameter)
+        }
+        else{
+            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+": "+carlist.get(position).front_width+"X"+carlist.get(position).front_diameter+"\""+"\n"+
+                    context.resources.getString(R.string.rear)+": "+carlist.get(position).rear_width+"X"+carlist.get(position).rear_diameter+"\"")
+        }
         holder.tv_quantitiy.setText("("+carlist.get(position).quantity+")")
     }
 

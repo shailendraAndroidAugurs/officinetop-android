@@ -14,6 +14,7 @@ import com.officinetop.R
 import com.officinetop.Support.Support_Activity
 import com.officinetop.data.Models
 import com.officinetop.data.getUserId
+import com.officinetop.rim.AvailableRimActivity
 import com.officinetop.utils.loadImage
 import com.officinetop.utils.parseServerDateTime
 
@@ -68,17 +69,15 @@ class RecyclerViewAdapterChating(val context: Context, val list: MutableList<Mod
             val message_body = itemView.findViewById(R.id.message_body) as TextView
             Log.d("sendString support", chat.messages)
             val message_time = itemView.findViewById(R.id.message_time) as TextView
-
             if (chat.type.equals("1")) {
-
-
                 message_body.visibility = View.GONE
                 val receivedImage = itemView.findViewById(R.id.iv_receivedimage) as ImageView
                 receivedImage.visibility = View.VISIBLE
                 context.loadImage(chat.messages, receivedImage, R.drawable.ic_placeholder)
                 receivedImage.setOnClickListener {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(chat.messages)))
-
+                    val intent = Intent( context, AvailableRimActivity::class.java)
+                    context.startActivity(intent)
                 }
             } else {
                 val special = "'"

@@ -46,6 +46,7 @@ class LocationActivity : BaseActivity() {
     private var stateName: String? = null
     private var streetName: String? = null
     private var isAutomaticLocationSave = false
+    var manual_location = false
 
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,13 +68,14 @@ class LocationActivity : BaseActivity() {
 
         locationBtn.setOnClickListener {
 
-
-            if (isLocationEnabled(this)) {
-                isAutomaticLocationSave = true
-                getcurrentLocation()
-            } else {
-                showInfoDialog("need to enable location services")
-            }
+          if(!manual_location) {
+              if (isLocationEnabled(this)) {
+                  isAutomaticLocationSave = true
+                  getcurrentLocation()
+              } else {
+                  showInfoDialog("need to enable location services")
+              }
+          }
 
 
         }
@@ -276,7 +278,7 @@ class LocationActivity : BaseActivity() {
 
        Log.e("subarea:", ""+geoCoder!!.getFromLocation(lat!!, long!!, 5))
 
-
+        manual_location = true
 
         complete_address.visibility = View.VISIBLE
         complete_address.text = completeAddress
