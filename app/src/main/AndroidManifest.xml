@@ -36,6 +36,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="m">
+        <activity android:name=".rim.RimPartActivity"></activity>
         <activity android:name=".rim.AvailableRimActivity"></activity>
         <activity android:name=".rim.CompatibleModelActivity">
 

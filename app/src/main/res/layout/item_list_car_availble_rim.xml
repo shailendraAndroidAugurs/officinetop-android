@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_marginVertical="@dimen/_4sdp"
         android:background="@color/white"
-        android:id="@+id/rv_container"
+        android:id="@+id/rv_container_parent"
         android:layout_height="@dimen/_50sdp">
 
         <TextView
@@ -47,6 +47,7 @@
         android:id="@+id/car_measure_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_margin="@dimen/_5sdp"
         />
 
