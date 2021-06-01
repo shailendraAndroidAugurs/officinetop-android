@@ -25,10 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:orientation="vertical"
             android:layout_marginEnd="8dp"
+            android:orientation="vertical"
             android:paddingBottom="8dp">
-
 
 
             <TextView
@@ -91,20 +90,19 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1sp"
-                android:background="@color/gray_dark"
                 android:layout_marginTop="@dimen/_10sdp"
-                />
+                android:background="@color/gray_dark" />
 
             <TextView
                 android:id="@+id/text"
                 style="@style/TextViewNormal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:text="@string/EnteritManually"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/complete_address" />
 
@@ -130,162 +128,166 @@
                 android:id="@+id/textDes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
                 android:text="@string/ConfirmationOnLocation"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:paddingBottom="8dp">
-
-
-            <TextView
-                android:id="@+id/provtext"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="@string/Prov"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/cap"
-                app:layout_constraintStart_toStartOf="parent"
-              />
-
-            <EditText
-                android:id="@+id/prov"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/gray_dark_transparent"
-                android:hint="@string/Prov"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLines="2"
-                android:paddingStart="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/cap"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/provtext" />
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:paddingBottom="8dp">
 
 
-            <TextView
-                android:id="@+id/captext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="@string/Cap"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/prov"
-                app:layout_constraintTop_toBottomOf="@+id/textDes" />
+                <TextView
+                    android:id="@+id/provtext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="@string/Prov"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/cap"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/cap"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/gray_dark_transparent"
-                android:hint="@string/Cap"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLines="2"
-                android:paddingStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/prov"
-                app:layout_constraintTop_toBottomOf="@+id/captext" />
+                <EditText
+                    android:id="@+id/prov"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/gray_light"
+                    android:hint="@string/Prov"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/cap"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/provtext" />
 
-            <TextView
-                android:id="@+id/cittatxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/city"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cap" />
 
-            <EditText
-                android:id="@+id/citta"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/gray_dark_transparent"
-                android:gravity="center_vertical"
-                android:hint="@string/inputtextSingleline"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLines="2"
-                android:paddingStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cittatxt" />
+                <TextView
+                    android:id="@+id/captext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:text="@string/Cap"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/prov"
+                    app:layout_constraintTop_toBottomOf="@+id/textDes" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:visibility="gone"
-                android:text="@string/Zero_fifty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/citta" />
+                <EditText
+                    android:id="@+id/cap"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/gray_light"
+                    android:hint="@string/Cap"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/prov"
+                    app:layout_constraintTop_toBottomOf="@+id/captext" />
 
-            <TextView
-                android:id="@+id/viatxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/street"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/citta" />
+                <TextView
+                    android:id="@+id/cittatxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/city"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cap" />
 
-            <EditText
-                android:id="@+id/via"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/gray_dark_transparent"
-                android:gravity="center_vertical"
-                android:hint="@string/inputtextSingleline"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLines="3"
-                android:paddingStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viatxt" />
+                <EditText
+                    android:id="@+id/citta"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/gray_light"
+                    android:gravity="center_vertical"
+                    android:hint="@string/inputtextSingleline"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cittatxt" />
 
-            <TextView
-                android:id="@+id/viavalue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="@string/Zero_fifty"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/via" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/Zero_fifty"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/citta" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/viatxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/street"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/citta" />
+
+                <EditText
+                    android:id="@+id/via"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/gray_light"
+                    android:gravity="center_vertical"
+                    android:hint="@string/inputtextSingleline"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="3"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viatxt" />
+
+                <TextView
+                    android:id="@+id/viavalue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/Zero_fifty"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/via" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <Button
                 android:id="@+id/aggioraBtn"
                 style="@style/RoundButton"
