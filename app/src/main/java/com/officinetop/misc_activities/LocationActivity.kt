@@ -103,10 +103,7 @@ class LocationActivity : BaseActivity() {
                                     citta.setText(dataModels.cityName ?: "")
                                     via.setText(dataModels.address1)
                                     location.text = "Lat: " + dataModels.latitude + ", Long: " + dataModels.longitude
-                                    completeAddress = dataModels.address1 + " " + (dataModels.zipCode
-                                            ?: "") + " " + (dataModels.cityName
-                                            ?: "") + " " + (dataModels.stateName
-                                            ?: "") + " " + (dataModels.countryName ?: "")
+                                    completeAddress = dataModels.address1
 
 
                                     complete_address.visibility = View.VISIBLE
@@ -115,7 +112,6 @@ class LocationActivity : BaseActivity() {
                                     latitude = if (dataModels.latitude.isNullOrBlank() || dataModels.latitude.equals("null")) "0" else dataModels.latitude
                                     longitude = if (dataModels.longitude.isNullOrBlank() || dataModels.longitude.equals("null")) "0" else dataModels.longitude
                                     zipCode = dataModels.zipCode ?: ""
-
                                     disableTextField()
                                     logFindLocationEvent(this)
                                     if (!latitude.isNullOrBlank() && !latitude.equals("null") && !longitude.isNullOrBlank() && !longitude.equals("null")) {
@@ -329,6 +325,7 @@ class LocationActivity : BaseActivity() {
                                 showInfoDialog("successFully Saved") {
                                     finish()
                                 }
+                                Log.d("check_location_data",""+latitude?.toDouble()!!+"   "+longitude?.toDouble()!!)
                             }
                         }
                     }

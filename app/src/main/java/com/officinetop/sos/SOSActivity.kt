@@ -418,21 +418,24 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         mFusedLocationClient?.lastLocation?.addOnCompleteListener(this) { task ->
             val location: Location? = task.result
             Log.e("latitudecurrentlocation", location.toString() + "location")
-            if (location == null) {
-                requestNewLocationData()
-            }
-            else {
-                val langCode = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
+
+                val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
+            Log.d("check_location_data",""+UserSavedLatitude+"   "+UserSavedLogitude)
+
+            if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
                     mLatitude = UserSavedLatitude
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
+
+                    if (location == null) {
+                        requestNewLocationData()
+                    }else {
                     mLatitude = location.latitude.toString()//"44.1571507"
                     mLongitude = location.longitude.toString()//"12.2142107"
-               /*       mLatitude = "44.1571507"
+                 /*     mLatitude = "44.1571507"
                       mLongitude = "12.2142107"*/
                 }
                 loadMapView()
@@ -461,25 +464,25 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             mLatitude = mLastLocation.latitude.toString()
             mLongitude = mLastLocation.longitude.toString()
             loadMapView()
-        }
+}
+}
+
+@SuppressLint("MissingPermission")
+private fun loadMapView() {
+    mMap.isMyLocationEnabled = true
+    if (mLatitude != null && mLongitude != null) {
+        val myLocation = LatLng(mLatitude!!.toDouble(),
+                mLongitude!!.toDouble())
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10f))
+        mMap.addMarker(MarkerOptions()
+                .position(myLocation))
     }
 
-    @SuppressLint("MissingPermission")
-    private fun loadMapView() {
-        mMap.isMyLocationEnabled = true
-        if (mLatitude != null && mLongitude != null) {
-            val myLocation = LatLng(mLatitude!!.toDouble(),
-                    mLongitude!!.toDouble())
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10f))
-            mMap.addMarker(MarkerOptions()
-                    .position(myLocation))
-        }
-
-        if (isOnline()) {
-            getAllWrackerWorkshopAddressInfo()
-        } else {
-            showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
-        }
+    if (isOnline()) {
+        getAllWrackerWorkshopAddressInfo()
+    } else {
+        showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
     }
+}
 }
 
