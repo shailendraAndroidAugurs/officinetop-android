@@ -424,7 +424,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
             Log.d("check_location_data",""+UserSavedLatitude+"   "+UserSavedLogitude)
 
-            if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
+            if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0" &&isLoggedIn()) {
                     mLatitude = UserSavedLatitude
                     mLongitude = UserSavedLogitude
                     // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
@@ -433,10 +433,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                     if (location == null) {
                         requestNewLocationData()
                     }else {
-                    mLatitude = location.latitude.toString()//"44.1571507"
-                    mLongitude = location.longitude.toString()//"12.2142107"
-                 /*     mLatitude = "44.1571507"
-                      mLongitude = "12.2142107"*/
+                   mLatitude = location.latitude.toString()//"44.1571507"
+                   mLongitude = location.longitude.toString()//"12.2142107"
+              /*      mLatitude = "44.1571507"
+                     mLongitude = "12.2142107"*/
                 }
                 loadMapView()
             }
