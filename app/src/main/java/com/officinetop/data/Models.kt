@@ -229,6 +229,66 @@ object Models {
             var PermitNumber: String = ""
     ) : Serializable
 
+
+    data class rimProductDetails(
+            @SerializedName("Id")
+            var Id: String = "",
+            @SerializedName("Id_Diameter")
+            var Id_Diameter: String = "",
+            @SerializedName("Id_Width")
+            var Id_Width: String = "",
+            @SerializedName("AlloyRimPrice")
+            var AlloyRimPrice: String = "",
+            @SerializedName("AlloyRimPriceEC")
+            var AlloyRimPriceEC: String = "",
+            @SerializedName("AlloyRimStock")
+            var AlloyRimStock: String = "",
+            @SerializedName("AlloyRimDescription")
+            var AlloyRimDescription: String = "",
+            @SerializedName("AlloyRimLochzahl")
+            var AlloyRimLochzahl: String = "",
+            @SerializedName("AlloyRimET")
+            var AlloyRimET: String = "",
+            @SerializedName("AlloyRimLochkreis")
+            var AlloyRimLochkreis: String = "",
+            @SerializedName("AlloyRimHubHole")
+            var AlloyRimHubHole: String = "",
+            @SerializedName("AlloyRimHubHoleType")
+            var AlloyRimHubHoleType: String = "",
+            @SerializedName("AlloyRimOwnStock")
+            var AlloyRimOwnStock: String = "",
+            @SerializedName("AlloyRimWholesalerArticleNo")
+            var AlloyRimWholesalerArticleNo: String = "",
+            @SerializedName("Manufacturer")
+            var Manufacturer: String = "",
+            @SerializedName("Type")
+            var Type: String = "",
+            @SerializedName("TypeName")
+            var TypeName: String = "",
+            @SerializedName("TypeColor")
+            var TypeColor: String = "",
+            @SerializedName("TypeConstruction")
+            var TypeConstruction: String = "",
+            @SerializedName("ImageUrl")
+            var ImageUrl: String = "",
+            @SerializedName("alloyIsPromo")
+            var alloyIsPromo: String = "",
+            @SerializedName("assemble_time")
+            var assemble_time: String = "",
+            @SerializedName("rim_anteriore")
+            var rim_anteriore: String = "",
+            @SerializedName("front_width")
+            var front_width: String = "",
+            @SerializedName("front_diameter")
+            var front_diameter: String = "",
+            @SerializedName("rim_posteriore")
+            var rim_posteriore: String = "",
+            @SerializedName("rear_width")
+            var rear_width: String = "",
+            @SerializedName("rear_diameter")
+            var rear_diameter: String = ""
+    ) : Serializable
+
     data class Availablecartypelist(
             @SerializedName("Id")
             var Id: String = "",
