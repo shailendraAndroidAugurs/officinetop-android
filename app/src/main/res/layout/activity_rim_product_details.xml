@@ -660,48 +660,6 @@
                             android:layout_height="@dimen/_1sdp"
                             android:background="@color/black" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="@string/Ean"
-                                android:textColor="@color/black" />
-
-                            <View
-                                android:layout_width="@dimen/_1sdp"
-                                android:layout_height="match_parent"
-                                android:background="@color/black" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                android:layout_weight="1">
-
-                                <HorizontalScrollView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/ean_no"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="center_vertical"
-                                        android:scrollHorizontally="true"
-                                        android:textColor="@color/black" />
-                                </HorizontalScrollView>
-                            </LinearLayout>
-
-                        </LinearLayout>
-
 
                     </LinearLayout>
 
@@ -794,9 +752,7 @@
                     android:background="@color/horizontal_divider_color"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/tyre_info_layout"
-                    android:visibility="visible" />
+
 
                 <TextView
                     style="@style/TextViewHeading"
@@ -805,16 +761,6 @@
                     android:paddingBottom="5dp"
                     android:text="@string/recommendation_msg"
                     android:textColor="@color/black" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/product_recommendation_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_grid_home_btn" />
 
 
                 <RelativeLayout

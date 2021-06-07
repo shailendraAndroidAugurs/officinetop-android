@@ -18,10 +18,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.gson.Gson
 import com.officinetop.BaseActivity
 import com.officinetop.R
-import com.officinetop.data.Models
-import com.officinetop.data.getBearerToken
-import com.officinetop.data.isStatusCodeValid
-import com.officinetop.data.storeLatLong
+import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
 import com.officinetop.utils.*
 import kotlinx.android.synthetic.main.activity_location.*
@@ -314,7 +311,6 @@ class LocationActivity : BaseActivity() {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
-                                    storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
                                     showInfoDialog(jsonObject.optString("message")) {
                                         finish()
                                     }
@@ -330,5 +326,9 @@ class LocationActivity : BaseActivity() {
                         }
                     }
         }
+
+//        if(!isLoggedIn())
+//        storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
+
     }
 }
