@@ -53,9 +53,11 @@ class RimProductDetailsActivity : AppCompatActivity() {
 
                         if (productDetails != null) {
                             loadImage(productDetails!!.ImageUrl, prodcut_image)
-                            product_name.text = productDetails!!.Manufacturer
-                            product_name.text = productDetails!!.Manufacturer
-
+                            tv_type.text = productDetails!!.Manufacturer
+                            tv_type_name.text = productDetails!!.TypeName
+                            tv_type_color.text = productDetails!!.TypeColor
+                            tv_rim_anteriore.text = productDetails!!.rim_anteriore
+                            tv_rim_posteriore.text = productDetails!!.rim_posteriore
                         }
 
                     }

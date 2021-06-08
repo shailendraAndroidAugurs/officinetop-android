@@ -36,7 +36,8 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="m">
-        <activity android:name=".rim.RimProductDetails"></activity>
+        <activity android:name=".rim.RimProductDetailsActivity">
+        </activity>
         <activity android:name=".rim.RimPartActivity" />
         <activity android:name=".rim.AvailableRimActivity" />
         <activity android:name=".rim.CompatibleModelActivity"></activity>
@@ -165,6 +166,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

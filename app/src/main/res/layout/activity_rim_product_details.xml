@@ -67,26 +67,35 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/product_name"
-                    style="@style/TextViewHeading"
+                    android:id="@+id/tv_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingBottom="0dp"
                     android:text="@string/sample_product"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="22sp" />
 
                 <TextView
-                    android:id="@+id/product_description"
-                    style="@style/TextViewHeading"
+                    android:id="@+id/tv_type_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:gravity="center"
-                    android:paddingTop="0dp"
-                    android:textColor="@color/gray_dark"
-                    android:visibility="gone" />
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_type_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:textSize="18dp" />
 
 
                 <LinearLayout
@@ -109,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:padding="0dp"
-                        android:text=""
+                        android:text="0"
                         android:textColor="@color/theme_orange"
                         android:textSize="12sp" />
 
@@ -154,26 +163,60 @@
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="gone"
+                        />
 
                 </LinearLayout>
 
 
-             <LinearLayout
+             <RelativeLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:orientation="vertical">
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Anteriore 8.00 X 19"
-                   />
+                 <TextView
+                     android:id="@+id/tv_rim_anteriore"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_2sdp"
+                     android:gravity="center"
+                     android:textColor="@color/black"
+                     android:layout_alignParentLeft="true"
+                     android:visibility="visible"
+                     android:textSize="18dp" />
+
                  <Spinner
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
                      />
-             </LinearLayout>
+
+             </RelativeLayout>
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:id="@+id/tv_rim_posteriore"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_2sdp"
+                     android:gravity="center"
+                     android:textColor="@color/black"
+                     android:visibility="visible"
+                     android:textSize="18dp"
+                     android:layout_alignParentLeft="true"
+                     />
+
+                 <Spinner
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     />
+
+             </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
