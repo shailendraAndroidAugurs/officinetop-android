@@ -668,6 +668,11 @@
     <string name="mot_details_alert">it is not possible to proceed, contact our office for details</string>
     <string name="compatibility_with_model">Compatibility with model</string>
     <string name="available_sizes">Available sizes</string>
+    <string name="et_off_set">ET (offset)</string>
+    <string name="no_of_holes">No. of holes</string>
+    <string name="distance_between_holes">Distance between holes</string>
+    <string name="winter_compatibility">Winter compatibility</string>
+    <string name="color">Color</string>
     <string name="go">Go</string>
     <string name="sun">SUN</string>
     <string name="mon">MON</string>

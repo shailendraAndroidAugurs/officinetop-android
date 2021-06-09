@@ -666,6 +666,7 @@ informazioni in accordo alle </string>
     <string name="go">Vai</string>
     <string name="no_ticket_message">Nessun biglietto trovato, in questo momento</string>
     <string name="language_select">it</string>
+    <string name="color">Colore</string>
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
     <string name="tue">MAR</string>
@@ -681,6 +682,10 @@ informazioni in accordo alle </string>
     <string name="mot_details_alert">non è possibile procedere, contattare i nostri uffici per i dettagli</string>
     <string name="compatibility_with_model">Compatbilita con modello</string>
     <string name="available_sizes">Misure disponibili</string>
+    <string name="et_off_set">ET (offset)</string>
+    <string name="no_of_holes">No. di fori</string>
+    <string name="distance_between_holes">Distanza tra fori</string>
+    <string name="winter_compatibility">Winter compatibility</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

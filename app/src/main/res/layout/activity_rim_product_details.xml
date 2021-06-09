@@ -35,7 +35,9 @@
                     android:layout_marginEnd="@dimen/service_detail_container_margin"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="1dp">
+                    app:cardElevation="1dp"
+                    android:visibility="gone"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -192,6 +194,15 @@
                      android:layout_alignParentRight="true"
                      />
 
+                 <TextView
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_marginStart="@dimen/_5sdp"
+                     android:layout_weight="1"
+                     android:gravity="center_vertical"
+                     android:text="@string/diameter"
+                     android:textColor="@color/black" />
+
              </RelativeLayout>
              <RelativeLayout
                  android:layout_width="match_parent"
@@ -347,7 +358,7 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="@string/Manufacturer"
+                            android:text="@string/width"
                             android:textColor="@color/black" />
 
                         <View
@@ -397,15 +408,6 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="@string/Wheel_size"
-                                android:textColor="@color/black" />
-
                             <View
                                 android:layout_width="@dimen/_1sdp"
                                 android:layout_height="match_parent"
@@ -448,7 +450,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="@string/Season_Type"
+                                android:text="@string/et_off_set"
                                 android:textColor="@color/black" />
 
                             <View
@@ -491,7 +493,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="@string/speed_index"
+                                android:text="@string/no_of_holes"
                                 android:textColor="@color/black" />
 
                             <View
@@ -552,7 +554,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="@string/speed_load_index"
+                                android:text="@string/distance_between_holes"
                                 android:textColor="@color/black" />
 
                             <View
@@ -622,7 +624,7 @@
                                         android:layout_weight="1"
                                         android:gravity="center_vertical"
                                         android:scrollHorizontally="true"
-                                        android:text="@string/Three_peak_mountain"
+                                        android:text="@string/winter_compatibility"
                                         android:textColor="@color/black" />
                                 </HorizontalScrollView>
                             </LinearLayout>
@@ -668,7 +670,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
-                                android:text="@string/Delivery_date"
+                                android:text="@string/color"
                                 android:textColor="@color/black" />
 
                             <View
@@ -692,19 +694,7 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/ll_ean_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:orientation="vertical">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:background="@color/black" />
-
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_DOT"
