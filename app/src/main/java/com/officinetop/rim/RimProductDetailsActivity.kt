@@ -40,7 +40,6 @@ class RimProductDetailsActivity : AppCompatActivity() {
         RetrofitClient.client.rimdetails("103311","103326").enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
-                progressDialog.dismiss()
 
                 progressDialog.dismiss()
 
@@ -59,10 +58,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
                             tv_rim_anteriore.text = productDetails!!.rim_anteriore
                             tv_rim_posteriore.text = productDetails!!.rim_posteriore
                         }
-
                     }
-
-
                 }
             }
 

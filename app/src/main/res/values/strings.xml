@@ -766,6 +766,11 @@
     <string name="compatibility_with_model">Compatibility with model</string>
     <string name="select_model">Select model</string>
     <string name="available_sizes">Available sizes</string>
+    <string name="et_off_set">ET (offset)</string>
+    <string name="no_of_holes">No. of holes</string>
+    <string name="distance_between_holes">Distance between holes</string>
+    <string name="winter_compatibility">Winter compatibility</string>
+    <string name="color">Color</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
