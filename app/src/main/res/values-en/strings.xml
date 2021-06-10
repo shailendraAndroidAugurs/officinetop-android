@@ -139,9 +139,10 @@
     <string name="season">Season</string>
     <string name="width">Width</string>
     <string name="distance_between_bolts">Distance between bolts</string>
-    <string name="equal_to_the_previous_ones">equal to the previous ones</string>
+    <string name="equal_to_the_previous_ones">Same as the forequarters</string>
     <string name="number_of_holes">Number of holes</string>
     <string name="aspect_ratio">Aspect Ratio</string>
+    <string name="find_the_cicle">Find the Circles</string>
     <string name="speed_index">Speed Index</string>
     <string name="additional_info">Additional Information</string>
     <string name="run_flat">Run Flat</string>

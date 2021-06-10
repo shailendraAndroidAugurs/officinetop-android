@@ -286,7 +286,9 @@ object Models {
             @SerializedName("rear_width")
             var rear_width: String = "",
             @SerializedName("rear_diameter")
-            var rear_diameter: String = ""
+            var rear_diameter: String = "",
+            @SerializedName("winter")
+            var winter: String = ""
     ) : Serializable
 
     data class Availablecartypelist(

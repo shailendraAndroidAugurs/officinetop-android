@@ -146,11 +146,10 @@
     <string name="speed_index_value">This tire is approved for speeds up to %s</string>
     <string name="dummy_prepend_euro_symbol_with_da"> € 10</string>
     <string name="show_only_fav">Show only Favourite</string>
-    <string name="equal_to_the_previous_ones">equal to the previous ones</string>
-
+    <string name="equal_to_the_previous_ones">Same as the forequarters</string>
     <string name="show_only_offers">Show only Offers or Coupon</string>
     <string name="proceed">Proceed</string>
-
+    <string name="find_the_cicle">Find the Circles</string>
     <!-- Workshop detail -->
     <string name="description">Description</string>
     <string name="price">Price</string>

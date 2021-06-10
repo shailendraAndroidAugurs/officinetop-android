@@ -36,7 +36,7 @@
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="1dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     >
 
                     <RelativeLayout
@@ -184,9 +184,9 @@
                      android:layout_marginTop="@dimen/_2sdp"
                      android:gravity="center"
                      android:textColor="@color/black"
-                     android:layout_alignParentLeft="true"
                      android:visibility="visible"
-                     android:textSize="18dp" />
+                     android:textSize="18dp"
+                     android:layout_alignParentLeft="true" />
 
                  <Spinner
                      android:layout_width="wrap_content"
@@ -194,17 +194,10 @@
                      android:layout_alignParentRight="true"
                      />
 
-                 <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="match_parent"
-                     android:layout_marginStart="@dimen/_5sdp"
-                     android:layout_weight="1"
-                     android:gravity="center_vertical"
-                     android:text="@string/diameter"
-                     android:textColor="@color/black" />
 
              </RelativeLayout>
              <RelativeLayout
+                 android:id="@+id/laout_rim_posteriore"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:orientation="vertical">
@@ -347,7 +340,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/ll_manufacturer"
+                        android:id="@+id/ll_width"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="horizontal">
@@ -378,10 +371,11 @@
                                 android:layout_height="match_parent">
 
                                 <TextView
-                                    android:id="@+id/manufacturer"
+                                    android:id="@+id/tv_width"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
+                                    android:layout_gravity="center"
                                     android:gravity="center_vertical"
                                     android:scrollHorizontally="true"
                                     android:textColor="@color/black" />
@@ -392,8 +386,9 @@
                     </LinearLayout>
 
 
+
                     <LinearLayout
-                        android:id="@+id/ll_wheel_size"
+                        android:id="@+id/ll_diameter"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -408,28 +403,39 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="@string/diameter"
+                                android:textColor="@color/black" />
+
                             <View
                                 android:layout_width="@dimen/_1sdp"
                                 android:layout_height="match_parent"
                                 android:background="@color/black" />
 
                             <TextView
-                                android:id="@+id/wheel_size"
+                                android:id="@+id/tv_diameter"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:textColor="@color/black" />
-
                         </LinearLayout>
 
 
                     </LinearLayout>
 
 
+
+
                     <LinearLayout
-                        android:id="@+id/ll_seson_type"
+                        android:id="@+id/ll_et_offset"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -459,12 +465,13 @@
                                 android:background="@color/black" />
 
                             <TextView
-                                android:id="@+id/season_type"
+                                android:id="@+id/tv_etoffset"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
 
@@ -472,7 +479,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_speed_index"
+                        android:id="@+id/ll_no_of_holes"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -514,10 +521,11 @@
                                     android:layout_height="match_parent">
 
                                     <TextView
-                                        android:id="@+id/speed_index"
+                                        android:id="@+id/tv_no_of_holes"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
+                                        android:layout_gravity="center"
                                         android:gravity="center_vertical"
                                         android:scrollHorizontally="true"
                                         android:textColor="@color/black" />
@@ -533,7 +541,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_tyre_load_index"
+                        android:id="@+id/ll_distance_between_holes"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -573,11 +581,12 @@
                                     android:layout_height="match_parent">
 
                                     <TextView
-                                        android:id="@+id/tyre_speed_load_index"
+                                        android:id="@+id/tv_distance_between_holes"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="@dimen/_5sdp"
                                         android:layout_weight="1"
+                                        android:layout_gravity="center"
                                         android:gravity="center_vertical"
                                         android:scrollHorizontally="true"
                                         android:textColor="@color/black" />
@@ -592,7 +601,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/ll_three_peak_mountain_snowflake"
+                        android:id="@+id/ll_winter_compatibilty"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -635,12 +644,13 @@
                                 android:background="@color/black" />
 
                             <TextView
-                                android:id="@+id/three_peak_moountain"
+                                android:id="@+id/tv_winter_compatibilty"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
 
@@ -649,7 +659,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/ll_delivery_date"
+                        android:id="@+id/ll_color"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:orientation="vertical">
@@ -679,12 +689,13 @@
                                 android:background="@color/black" />
 
                             <TextView
-                                android:id="@+id/delivery_date"
+                                android:id="@+id/tv_color"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
-                                android:gravity="center_vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:textColor="@color/black" />
 
 
@@ -787,43 +798,9 @@
 
 
 
-                <TextView
-                    style="@style/TextViewHeading"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:text="@string/recommendation_msg"
-                    android:textColor="@color/black" />
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <TextView
-                        style="@style/TextViewHeading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tab_feedback"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/see_all_feedback"
-                        style="@style/TextViewNormal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="@string/see_all"
-                        android:textColor="@color/black" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/fedback_recycler_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
 

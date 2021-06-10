@@ -25,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:background="@color/white"
             >
 
       <Button
@@ -46,7 +48,6 @@
         android:orientation="vertical"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@color/grey_light_bg"
         >
 
         <TextView
@@ -72,7 +73,7 @@
             />
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -98,16 +99,17 @@
                 />
 
             <EditText
+                android:id="@+id/et_front_width"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -132,16 +134,17 @@
                 />
 
             <EditText
+                android:id="@+id/et_front_diameter"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -166,16 +169,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_front_et"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -200,16 +204,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_front_no_of_holes"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -223,6 +228,7 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="@dimen/_12sdp"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -234,9 +240,10 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_front_distance_holes"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
@@ -251,7 +258,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@color/grey_light_bg"
         >
 
       <RelativeLayout
@@ -270,19 +276,18 @@
               />
 
             <CheckBox
+              android:id="@+id/cb_front_rear_same"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/equal_to_the_previous_ones"
               android:layout_alignParentRight="true"
+              android:textSize="@dimen/_15sdp"
               />
-
 
       </RelativeLayout>
 
-
-
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -307,16 +312,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_rear_width"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -341,16 +347,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_rear_diameter"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -375,16 +382,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_rear_et"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -409,16 +417,17 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_rear_no_of_holes"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
        </LinearLayout>
 
         <LinearLayout
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
            android:orientation="horizontal">
@@ -443,9 +452,10 @@
                 />
 
             <EditText
-                android:layout_width="@dimen/_35sdp"
+                android:id="@+id/et_rear_distamce_holes"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@color/white"
+                android:background="@drawable/shape_border_gray"
                 />
 
 
@@ -455,6 +465,7 @@
     </LinearLayout>
 
             <Button
+                android:id="@+id/btn_search_for"
                 style="@style/RoundButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
