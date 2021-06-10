@@ -186,6 +186,7 @@ object Constant {
         const val rim_car_type_by_modelId = "rim_car_type_by_modelId"
         const val alloy_rim_attachments_by_type = "alloy_rim_attachments_by_type"
         const val alloy_rim_details = "alloy_rim_details"
+        const val alloy_rim_search_list = "alloy_rim_search_list"
 
     }
 

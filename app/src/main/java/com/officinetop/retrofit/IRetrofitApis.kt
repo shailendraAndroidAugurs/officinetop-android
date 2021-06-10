@@ -87,6 +87,20 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.alloy_rim_details)
     fun rimdetails(@Query("front_rim_id") front_rim_id: String,@Query("rear_rim_id") rear_rim_id: String): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.alloy_rim_search_list)
+    fun rimsearch(@Query("front_width") front_width: String,
+                  @Query("front_diameter") front_diameter: String,
+                  @Query("front_rim_et") front_rim_et: String,
+                  @Query("front_number_of_holes") front_number_of_holes: String,
+                  @Query("front_bolts_distance") front_bolts_distance: String,
+                  @Query("front_rear_same") front_rear_same : Int,
+                  @Query("rear_width") rear_width: String,
+                  @Query("rear_diameter") rear_diameter: String,
+                  @Query("rear_rim_et") rear_rim_et: String,
+                  @Query("rear_number_of_holes") rear_number_of_holes: String,
+                  @Query("rear_bolts_distance") rear_bolts_distance: String
+    ): Call<ResponseBody>
+
 
     @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.carModels + "/{brandID}")

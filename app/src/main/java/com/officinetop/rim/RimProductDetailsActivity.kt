@@ -57,6 +57,16 @@ class RimProductDetailsActivity : AppCompatActivity() {
                             tv_type_color.text = productDetails!!.TypeColor
                             tv_rim_anteriore.text = productDetails!!.rim_anteriore
                             tv_rim_posteriore.text = productDetails!!.rim_posteriore
+
+                            //binding product description data
+                            tv_width.text = "Ant. "+productDetails!!.front_width + " - Post."+productDetails!!.rear_width
+                            tv_diameter.text = productDetails!!.front_diameter
+                            tv_etoffset.text = productDetails!!.AlloyRimET
+                            tv_no_of_holes.text = productDetails!!.AlloyRimLochzahl
+                            tv_distance_between_holes.text = productDetails!!.AlloyRimLochkreis
+                            tv_winter_compatibilty.text = productDetails!!.winter
+                            tv_color.text = productDetails!!.TypeColor
+
                         }
                     }
                 }
