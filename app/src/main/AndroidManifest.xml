@@ -37,11 +37,14 @@
         tools:replace="android:allowBackup"
         tools:targetApi="m">
         <activity android:name=".rim.RimProductDetailsActivity">
+
         </activity>
         <activity android:name=".rim.RimPartActivity" />
         <activity android:name=".rim.AvailableRimActivity" />
-        <activity android:name=".rim.CompatibleModelActivity"></activity>
-        <activity android:name=".rim.RimActivity" />
+        <activity android:name=".rim.CompatibleModelActivity">
+        </activity>
+        <activity android:name=".rim.RimActivity" >
+        </activity>
         <activity
             android:name=".Orders.OrderListActivity"
             android:screenOrientation="portrait" />
