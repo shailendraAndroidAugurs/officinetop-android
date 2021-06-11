@@ -327,8 +327,8 @@ class LocationActivity : BaseActivity() {
                     }
         }
 
-//        if(!isLoggedIn())
-//        storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
+
+        storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
 
     }
 }

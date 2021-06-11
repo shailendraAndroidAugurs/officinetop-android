@@ -358,6 +358,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
                     if (isStatusCodeValid(body)) {
                         val bodyJsonObject = JSONObject(body)
+                        Log.d("check_res_data",""+bodyJsonObject.getString("data"))
                         if (bodyJsonObject.has("data") && bodyJsonObject.opt("data") != null && !bodyJsonObject.getString("data").isNullOrBlank() && !bodyJsonObject.getString("data").equals("null")) {
                             val SearchData = Gson().fromJson<Models.SparePartSearchData>(bodyJsonObject.getString("data"), Models.SparePartSearchData::class.java)
                             SearchOENList.clear()
@@ -372,7 +373,6 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                             OENSerachBindInView()
                             ProductSerachBindInView()
                             CategorySerachBindInView()
-                            Log.d("check_size_oflist",""+SearchcategoryList.size+"  "+SearchOENList.size+"  "+SearchN3PartList.size+"  "+SearchProductList.size)
                           } else {
 
                         }
@@ -496,6 +496,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     }
 
     private fun CategorySerachBindInView() {
+        Log.d("check_size_oflist",""+SearchcategoryList.size+"  "+SearchOENList.size+"  "+SearchN3PartList.size+"  "+SearchProductList.size)
         myadpterN3Category = object : RecyclerView.Adapter<Holder>() {
             override fun getItemCount(): Int {
                 return SearchcategoryList.size
@@ -507,6 +508,8 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchcategoryList[position].name
+                Log.d("check_size_oflist",""+SearchcategoryList[position].name)
+
                 if (searchText.length > 0) {
                     var index: Int = SearchcategoryList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
 
@@ -536,9 +539,10 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             }
         } else {
             for (i in 0 until SearchcategoryList.size) {
-                heightdata = layoutheight * SearchN3PartList.size
+                heightdata = layoutheight * SearchcategoryList.size
             }
         }
+
 
         val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightdata.toFloat(), resources.displayMetrics)
         var param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height.toInt())
@@ -564,7 +568,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 holder.itemView.tv_search_item.text = SearchProductList[position].name
                 if (searchText.length > 0) {
-                    var index: Int = SearchProductList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
+         ;           var index: Int = SearchProductList[position].name.toLowerCase().indexOf(searchText.toLowerCase())
 
                     while (index >= 0) {
                         val sb = SpannableStringBuilder(SearchProductList[position].name)

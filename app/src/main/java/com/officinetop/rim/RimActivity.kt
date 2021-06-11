@@ -66,14 +66,16 @@ class RimActivity : AppCompatActivity() {
                 if (isStatusCodeValid(body)) {
 
                     val dataset = getDataSetArrayFromResponse(body)
-
+/*                    val data = Gson().fromJson<Models.RimBrandlist>(dataset.getJSONObject(i).toString(), Models.RimBrandlist::class.java)
+                    rimcarBrand.add(data)
+                    brandTitle.add(data.rimbrand)*/
 
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
-                Log.d("check_submit_data", "onResponse: models = "+t.message)
+                Log.d("check_submit_data", "error : = "+t.message)
 
             }
 
