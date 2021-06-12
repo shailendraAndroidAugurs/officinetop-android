@@ -422,24 +422,28 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-            Log.d("check_location_data",""+UserSavedLatitude+"   "+UserSavedLogitude)
 
             if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
-                    mLatitude = UserSavedLatitude
+                Log.d("check_location_data s ",""+true)
+
+                mLatitude = UserSavedLatitude
                     mLongitude = UserSavedLogitude
-                  // currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
+              //  currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 } else {
 
-                    if (location == null) {
+                Log.d("check_location_data s ",""+false)
+
+                if (location == null) {
                         requestNewLocationData()
                     }else {
-                   mLatitude = location.latitude.toString()//"44.1571507"
-                   mLongitude = location.longitude.toString()//"12.2142107"
-              /*      mLatitude = "44.1571507"
+                 mLatitude = location.latitude.toString()//"44.1571507"
+                  mLongitude = location.longitude.toString()//"12.2142107"
+          /*           mLatitude = "44.1571507"
                      mLongitude = "12.2142107"*/
                 }
-                loadMapView()
+
             }
+            loadMapView()
         }
     }
 
@@ -463,6 +467,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             Log.e("latitudemLastLocation", mLastLocation.latitude.toString())
             mLatitude = mLastLocation.latitude.toString()
             mLongitude = mLastLocation.longitude.toString()
+            Log.d("check_location_data d ",""+mLatitude+"   "+mLongitude)
+
             loadMapView()
 }
 }
