@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.officinetop.data.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
@@ -20,7 +21,6 @@ import com.officinetop.Orders.OrderListActivity
 import com.officinetop.R
 import com.officinetop.WishList.WishListActivity
 import com.officinetop.authentication.LoginActivity
-import com.officinetop.data.*
 import com.officinetop.invite_frnds.InviteFriendsActivity
 import com.officinetop.push_notification.NotificationList
 import com.officinetop.retrofit.RetrofitClient
@@ -340,6 +340,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                         val responseString = response.body()?.string()
                         progressDialog?.dismiss()
                         Log.d("LoginActivity", "onResponse: logout = $responseString")
+                        context?.storeLatLong(00.0, 0.0)
                         if (response.code() == 200) {
                             context?.removeUserDetail()
                         } else if (response.code() == 401) {

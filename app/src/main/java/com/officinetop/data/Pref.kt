@@ -533,6 +533,11 @@ inline fun Context.storeLatLong(Lat: Double, Long: Double, userSavedAddress: Boo
     sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).putBoolean(Constant.Path.userSavedAddress, userSavedAddress).apply()
 }
 
+inline fun Context.storeAddress(Lat: Double, Long: Double, userSavedAddress: Boolean = false) {
+    val sharedPreferences_current_latlong = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+    sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).putBoolean(Constant.Path.userSavedAddress, userSavedAddress).apply()
+}
+
 inline fun Context.UserAddressLatLong(Lat: Double, Long: Double) {
     val sharedPreferences_UserStore_latlong = getSharedPreferences(Constant.Key.usertLatLong, Context.MODE_PRIVATE)
     sharedPreferences_UserStore_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).apply()
