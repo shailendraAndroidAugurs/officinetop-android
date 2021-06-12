@@ -115,19 +115,19 @@ class LocationActivity : BaseActivity() {
                                         storeLatLong(latitude!!.toDouble(), longitude!!.toDouble(), true)
 
                                     } else {
-                                        storeLatLong(00.0, 0.0)
+                                   //     storeLatLong(00.0, 0.0)
 
                                     }
 
                                 } else {
                                     getcurrentLocation()
-                                    storeLatLong(0.0, 0.0)
+                                 //   storeLatLong(0.0, 0.0)
                                 }
 
                             } else {
                                 getcurrentLocation()
 
-                                storeLatLong(0.0, 0.0)
+                              //  storeLatLong(0.0, 0.0)
                             }
 
                         } else {
@@ -321,7 +321,6 @@ class LocationActivity : BaseActivity() {
                                 showInfoDialog("successFully Saved") {
                                     finish()
                                 }
-                                Log.d("check_location_data",""+latitude?.toDouble()!!+"   "+longitude?.toDouble()!!)
                             }
                         }
                     }
@@ -329,6 +328,8 @@ class LocationActivity : BaseActivity() {
 
 
         storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
+        Log.d("check_location_data l ",""+latitude?.toDouble()!!+"   "+longitude?.toDouble()!!)
+
 
     }
 }
