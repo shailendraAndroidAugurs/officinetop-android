@@ -247,6 +247,7 @@ object Constant {
         const val usertLatLong = "usertLatLong"
         const val count = "count"
         const val date = "date"
+        const val userAddress = "userAddress"
     }
 
     object Fields {
@@ -405,6 +406,11 @@ object Constant {
         const val n3_Id = "n3_id"
         const val search = "search"
         const val sort_by_distance = "sort_by_distance"
+        const val stateName = "stateName"
+        const val zipCode = "zipCode"
+        const val cityName = "cityName"
+        const val via = "via"
+        const val saved_status = "saved_status"
     }
 
     object RC {

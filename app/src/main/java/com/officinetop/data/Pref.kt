@@ -533,9 +533,20 @@ inline fun Context.storeLatLong(Lat: Double, Long: Double, userSavedAddress: Boo
     sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).putBoolean(Constant.Path.userSavedAddress, userSavedAddress).apply()
 }
 
-inline fun Context.storeAddress(Lat: Double, Long: Double, userSavedAddress: Boolean = false) {
-    val sharedPreferences_current_latlong = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
-    sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).putBoolean(Constant.Path.userSavedAddress, userSavedAddress).apply()
+inline fun Context.storeAddress(stateName: String?, zipCode: String?, cityName: String?, via: String,saved_status : String) {
+    val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
+    user_save_address.edit().putString(Constant.Path.stateName,stateName).putString(Constant.Path.zipCode,zipCode).putString(Constant.Path.cityName, cityName).putString(Constant.Path.via, via).putString(Constant.Path.saved_status, saved_status).apply()
+}
+
+inline fun Context.getAdress():ArrayList<String> {
+    val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
+    val address_data = ArrayList<String>()
+    address_data.add(user_save_address.getString(Constant.Path.stateName, "") ?: "")
+    address_data.add(user_save_address.getString(Constant.Path.zipCode, "") ?: "")
+    address_data.add(user_save_address.getString(Constant.Path.cityName, "") ?: "")
+    address_data.add(user_save_address.getString(Constant.Path.via, "") ?: "")
+    address_data.add(user_save_address.getString(Constant.Path.saved_status, "") ?: "")
+    return address_data
 }
 
 inline fun Context.UserAddressLatLong(Lat: Double, Long: Double) {
