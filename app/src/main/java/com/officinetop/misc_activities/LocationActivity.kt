@@ -61,6 +61,23 @@ class LocationActivity : BaseActivity() {
        // checkpermission(storagePermissionRequestList(), { setPlacePicker() }, true)
         setPlacePicker()
         disableTextField()
+
+
+        var address_data :ArrayList<String>  = getAdress()
+      if(!isLoggedIn()){
+             prov.setText(address_data.get(0))
+            cap.setText(address_data.get(1))
+            citta.setText(address_data.get(2))
+            via.setText(address_data.get(3))
+        }
+        else if(isLoggedIn() &&address_data.get(4).equals("true")){
+          prov.setText(address_data.get(0))
+          cap.setText(address_data.get(1))
+          citta.setText(address_data.get(2))
+          via.setText(address_data.get(3))
+          saveLocation(address_data.get(4))
+      }
+
         getSavedUserLocation()
 
         locationBtn.setOnClickListener {
@@ -78,11 +95,16 @@ class LocationActivity : BaseActivity() {
         }
 
         aggioraBtn.setOnClickListener {
-            saveLocation()
+            saveLocation("false")
         }
     }
 
     private fun getSavedUserLocation() {
+/*
+        applicationContext.storeAddress(stateName,zipCode,cityName,dataModels.address1)
+*/
+
+
         RetrofitClient.client.getUserSavedAddress(getBearerToken()
                 ?: "")
                 .onCall { networkException, response ->
@@ -280,9 +302,12 @@ class LocationActivity : BaseActivity() {
         cap.setText(zipCode)
         citta.setText(cityName)
         via.setText(thoroughfare+", "+"${streetName}")
+        if(!isLoggedIn()){
+            applicationContext.storeAddress(stateName,zipCode,cityName,thoroughfare+", "+"${streetName}","true")
+        }
         disableTextField()
         if (isAutomaticLocationSave) {
-            saveLocation()
+            saveLocation("false")
         }
     }
 
@@ -299,7 +324,7 @@ class LocationActivity : BaseActivity() {
         via.isEnabled = false
     }
 
-    private fun saveLocation() {
+    private fun saveLocation(get: String) {
         if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)) {
             completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
             RetrofitClient.client.saveUserLocation(getBearerToken()
@@ -311,9 +336,13 @@ class LocationActivity : BaseActivity() {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
 
-                                    showInfoDialog(jsonObject.optString("message")) {
-                                        finish()
+                                    applicationContext.storeAddress("","","",""+" ","false")
+                                    if(get.equals("false")){
+                                        showInfoDialog(jsonObject.optString("message")) {
+                                            finish()
+                                        }
                                     }
+
 
                                 }
                             } else if (response.code() == 401) {
@@ -326,9 +355,9 @@ class LocationActivity : BaseActivity() {
                     }
         }
 
+         if(!isLoggedIn())
+             storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
 
-        storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
-        Log.d("check_location_data l ",""+latitude?.toDouble()!!+"   "+longitude?.toDouble()!!)
 
 
     }
