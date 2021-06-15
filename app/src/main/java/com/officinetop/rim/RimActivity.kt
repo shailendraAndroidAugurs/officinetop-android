@@ -23,6 +23,8 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class RimActivity : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
@@ -57,7 +59,13 @@ class RimActivity : AppCompatActivity() {
              samedata = 1
         else
              samedata = 0
-        RetrofitClient.client.rimsearch(et_front_width.text.toString(), et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString(),et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString()).enqueue(object : Callback<ResponseBody> {
+
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+
+//        Toast.makeText(applicationContext,""+df.format(et_front_width.text.toString()),Toa)
+       RetrofitClient.client.rimsearch(df.format(et_front_width.text.toString()), et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString(),et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progressDialog.dismiss()
@@ -65,8 +73,8 @@ class RimActivity : AppCompatActivity() {
 
                 if (isStatusCodeValid(body)) {
 
-                    val dataset = getDataSetArrayFromResponse(body)
-/*                    val data = Gson().fromJson<Models.RimBrandlist>(dataset.getJSONObject(i).toString(), Models.RimBrandlist::class.java)
+/*                    val dataset = getDataSetArrayFromResponse(body)
+                  val data = Gson().fromJson<Models.RimBrandlist>(dataset.getJSONObject(i).toString(), Models.RimBrandlist::class.java)
                     rimcarBrand.add(data)
                     brandTitle.add(data.rimbrand)*/
 

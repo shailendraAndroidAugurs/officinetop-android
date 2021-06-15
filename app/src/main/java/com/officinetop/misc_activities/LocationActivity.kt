@@ -326,6 +326,10 @@ class LocationActivity : BaseActivity() {
 
     private fun saveLocation(get: String) {
         if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)) {
+            if(get.equals("true")){
+                    latitude = getLat()
+                    longitude =getLong()
+                }
             completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
             RetrofitClient.client.saveUserLocation(getBearerToken()
                     ?: "", latitude, longitude, "", completeAddress, "", "",
@@ -335,13 +339,13 @@ class LocationActivity : BaseActivity() {
                             if (response.isSuccessful) {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
-
-                                    applicationContext.storeAddress("","","",""+" ","false")
                                     if(get.equals("false")){
                                         showInfoDialog(jsonObject.optString("message")) {
                                             finish()
                                         }
                                     }
+                                    applicationContext.storeAddress("","","",""+" ","false")
+
 
 
                                 }
