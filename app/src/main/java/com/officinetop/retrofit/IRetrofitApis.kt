@@ -276,6 +276,27 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
+
+    @GET(Constant.UrlEndPoints.alloy_rim_workshop_list)
+    fun getRimWorkshop(@Query(Constant.Path.serviceID) serviceId: Int,
+                            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+                            @Query(Constant.Path.filterRating) rating: String,
+                            @Query(Constant.Path.filterPriceRange) priceRange: String,
+                            @Query(Constant.Path.sortPrice) priceSortLevel: Int,
+                            @Query("user_id") user_id: String,
+                            @Query(Constant.Path.selectedCarId) selectedCarId: String,
+                            @Query(Constant.Path.version_id) version_id: String,
+
+                            @Query("user_lat") user_lat: String,
+                            @Query("user_long") user_long: String,
+                            @Query("distance_range") distance_range: String,
+                            @Query(Constant.Path.favorite) favorite: String,
+                            @Query(Constant.Path.couponFilter) couponfilter: String,
+                            @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
+                            @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
+    ): Call<ResponseBody>
+
+
     @GET(Constant.UrlEndPoints.assembleServiceWorkshop)
     fun getAssemblyWorkshops(@Query(Constant.Path.productId) categoryId: Int,
                              @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
@@ -297,6 +318,17 @@ interface IRetrofitApis {
                              @Query(Constant.Path.sort_by_distance) sort_by_distance: Int
 
 
+    ): Call<ResponseBody>
+
+
+    @GET(Constant.UrlEndPoints.alloy_rim_calender)
+    fun getRimCalender(@Query(Constant.Path.serviceID) serviceId: Int,
+                            @Query(Constant.Path.version_id) versionId: String,
+                            @Query(Constant.Path.workshopFilterSelectedDate) workshopFilterSelectedDate: String,
+                            @Query("user_lat") user_lat: String,
+                            @Query("user_long") user_long: String,
+                            @Query("distance_range") distance_range: String,
+                            @Query("main_category_id") mainCategoryId: String
     ): Call<ResponseBody>
 
 

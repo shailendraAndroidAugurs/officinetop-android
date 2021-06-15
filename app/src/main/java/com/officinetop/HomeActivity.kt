@@ -699,7 +699,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
 
                 })
-
     }
 
     private fun selectCar(carID: String) {
@@ -786,7 +785,6 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 override fun onResponse(call: Call<Models.MyCar>, response: Response<Models.MyCar>) {
                     val responseBody = response.body()
-
                     progressDialog.dismiss()
                     Log.d("deleteCar", "onResponse: $responseBody")
 
