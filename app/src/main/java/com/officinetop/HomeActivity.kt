@@ -31,12 +31,15 @@ import com.officinetop.retrofit.RetrofitClient
 import com.officinetop.utils.*
 import com.officinetop.virtual_garage.AddVehicleActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.container
+import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.dialog_car_list.*
 import kotlinx.android.synthetic.main.item_my_cars_small.view.*
 import kotlinx.android.synthetic.main.layout_home_custom_toolbar.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.snackbar
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -141,6 +144,10 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         getLocation()
+        var address_data: ArrayList<String> = getAdress()
+        if (isLoggedIn() && address_data.get(4).equals("true")) {
+            saveLocation(address_data)
+        }
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -625,7 +632,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
 
             }
-            Log.d("check_card_id",car.id+"   "+getSavedSelectedVehicleID())
+            Log.d("check_card_id", car.id + "   " + getSavedSelectedVehicleID())
 
 
 
@@ -637,7 +644,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     if ((supportFragmentManager.findFragmentByTag("Home") is FragmentHome)) {
 
-                       /* supportFragmentManager.beginTransaction()
+                        /* supportFragmentManager.beginTransaction()
                                 .replace(R.id.container, FragmentHome(), "Home")
                                 .commit()
 
@@ -647,14 +654,13 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         fragment.bestSellingApi()
 
 
-                    }else{
+                    } else {
                         saveSelectedCar(json)
                     }
 
-                }else{
+                } else {
                     saveSelectedCar(json)
                 }
-
 
 
             }
@@ -1062,6 +1068,32 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     })
         }
     }
+
+    private fun saveLocation(address_data: ArrayList<String>) {
+        var  completeAddress =address_data.get(5)
+        RetrofitClient.client.saveUserLocation(getBearerToken()
+                ?: "", getLat(), getLong(), "", completeAddress, "", "",
+                address_data.get(3), address_data.get(1), address_data.get(1), address_data.get(0), address_data.get(2))
+                .onCall { networkException, response ->
+                    response?.let {
+                        if (response.isSuccessful) {
+                            val jsonObject = JSONObject(response.body()?.string())
+                            if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
+                                applicationContext.storeAddress(address_data.get(0),address_data.get(1),address_data.get(2),address_data.get(3),address_data.get(5),"false")
+                            }
+                        } else if (response.code() == 401) {
+                            /*storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
+                                showInfoDialog("successFully Saved") {
+                                    finish()
+                                }*/
+                        }
+                    }
+                }
+    }
+
+
+
+
 }
 
 

@@ -340,7 +340,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                         val responseString = response.body()?.string()
                         progressDialog?.dismiss()
                         Log.d("LoginActivity", "onResponse: logout = $responseString")
-                        context?.storeLatLong(00.0, 0.0)
+                        context?.removeLocallocation()
                         if (response.code() == 200) {
                             context?.removeUserDetail()
                         } else if (response.code() == 401) {
