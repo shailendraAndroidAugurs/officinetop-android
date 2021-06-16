@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -977,7 +978,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             misclearselection = false
             create()
         }
-
     }
 
     private fun createSortDialog() {

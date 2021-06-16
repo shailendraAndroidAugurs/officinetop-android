@@ -413,6 +413,7 @@ object Constant {
         const val cityName = "cityName"
         const val via = "via"
         const val saved_status = "saved_status"
+        const val complete_address = "complete_address"
     }
 
     object RC {

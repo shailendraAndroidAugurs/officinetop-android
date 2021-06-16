@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.officinetop.R
 import com.officinetop.adapter.CarAvailablemeasureListAdapter
-import com.officinetop.data.Models
-import com.officinetop.data.getDataFromResponse
-import com.officinetop.data.getDataSetArrayFromResponse
-import com.officinetop.data.isStatusCodeValid
+import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
 import com.officinetop.utils.getProgressDialog
 import com.officinetop.utils.loadImage
@@ -37,7 +34,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
     fun loadRimProductDetails(){
         progressDialog.show()
 
-        RetrofitClient.client.rimdetails("103311","103326").enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.rimdetails("103311","103326",getLat(),getLong()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
 

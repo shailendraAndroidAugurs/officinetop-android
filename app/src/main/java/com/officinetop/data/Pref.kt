@@ -533,9 +533,16 @@ inline fun Context.storeLatLong(Lat: Double, Long: Double, userSavedAddress: Boo
     sharedPreferences_current_latlong.edit().putString(Constant.Path.latitude, Lat.toString()).putString(Constant.Path.longitude, Long.toString()).putBoolean(Constant.Path.userSavedAddress, userSavedAddress).apply()
 }
 
-inline fun Context.storeAddress(stateName: String?, zipCode: String?, cityName: String?, via: String,saved_status : String) {
+inline fun Context.removeLocallocation() {
+    val sharedPreferences_current_latlong = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
+     sharedPreferences_current_latlong.edit().clear().commit()
     val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
-    user_save_address.edit().putString(Constant.Path.stateName,stateName).putString(Constant.Path.zipCode,zipCode).putString(Constant.Path.cityName, cityName).putString(Constant.Path.via, via).putString(Constant.Path.saved_status, saved_status).apply()
+      user_save_address.edit().clear().commit()
+}
+
+inline fun Context.storeAddress(stateName: String?, zipCode: String?, cityName: String?, via: String,complete_address : String?,saved_status : String) {
+    val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
+    user_save_address.edit().putString(Constant.Path.stateName,stateName).putString(Constant.Path.zipCode,zipCode).putString(Constant.Path.cityName, cityName).putString(Constant.Path.via, via).putString(Constant.Path.saved_status, saved_status).putString(Constant.Path.complete_address, complete_address).apply()
 }
 
 inline fun Context.getAdress():ArrayList<String> {
@@ -546,6 +553,7 @@ inline fun Context.getAdress():ArrayList<String> {
     address_data.add(user_save_address.getString(Constant.Path.cityName, "") ?: "")
     address_data.add(user_save_address.getString(Constant.Path.via, "") ?: "")
     address_data.add(user_save_address.getString(Constant.Path.saved_status, "") ?: "")
+    address_data.add(user_save_address.getString(Constant.Path.complete_address, "") ?: "")
     return address_data
 }
 
