@@ -101,8 +101,8 @@ class LocationActivity : BaseActivity() {
         aggioraBtn.setOnClickListener {
             if(!isLoggedIn()){
                 applicationContext.storeAddress(stateName,zipCode,cityName,thoroughfare+", "+"${streetName}",completeAddress,"true")
-                storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
             }
+            storeLatLong(latitude?.toDouble()!!, longitude?.toDouble()!!, true)
             saveLocation()
         }
     }
@@ -333,8 +333,8 @@ class LocationActivity : BaseActivity() {
 
     private fun saveLocation() {
         if (isEditTextValid(this@LocationActivity, prov, cap, citta, via)) {
-            latitude = getLat()
-            longitude =getLong()
+         /*   latitude = getLat()
+            longitude =getLong()*/
             completeAddress = via.text.toString() + " " + zipCode + " " + citta.text.toString() + " " + prov.text.toString() + " " + cap.text.toString()
             RetrofitClient.client.saveUserLocation(getBearerToken()
                     ?: "", latitude, longitude, "", completeAddress, "", "",
@@ -346,7 +346,6 @@ class LocationActivity : BaseActivity() {
                                 if (jsonObject.has("status_code") && jsonObject.optString("status_code") == "1" && jsonObject.has("message")) {
                                     var address_data :ArrayList<String>  = getAdress()
                                     applicationContext.storeAddress(address_data.get(0),address_data.get(1),address_data.get(2),address_data.get(3),address_data.get(5),"false")
-
                                     showInfoDialog(jsonObject.optString("message")) {
 
                                         finish()
