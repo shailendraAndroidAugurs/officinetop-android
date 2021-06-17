@@ -975,7 +975,8 @@ fun Context.getCartItemsList(context: Context?, onCartListCallback: OnCartListCa
                             e.printStackTrace()
                         }
                     } else {
-                        context.showInfoDialog(context.getString(R.string.Failed_to_load_data))
+                        view.proceed_to_pay_container.visibility = View.GONE
+                        view.image_emptycart.visibility = View.VISIBLE
                     }
 
 
