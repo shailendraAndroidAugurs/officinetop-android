@@ -334,6 +334,15 @@ interface IRetrofitApis {
                             @Query("main_category_id") mainCategoryId: String
     ): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.alloy_rims_by_attachment)
+    fun getRimPorductlist(@Query(Constant.Path.serviceID) serviceId: Int,
+                       @Query("attachments_id") attachments_id: String,
+                       @Query("anteriore") anteriore: String,
+                       @Query("posteriore") posteriore: String,
+                       @Query("width") width: String,
+                       @Query("diameter") diameter: String): Call<ResponseBody>
+
+
 
     @GET(Constant.UrlEndPoints.getRevisionCalendar)
     fun getRevisionCalendar(@Query(Constant.Path.serviceID) serviceId: Int,

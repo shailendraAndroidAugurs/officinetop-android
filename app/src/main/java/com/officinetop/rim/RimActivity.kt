@@ -36,8 +36,8 @@ class RimActivity : AppCompatActivity() {
         toolbar_title.text = resources.getString(R.string.find_the_cicle)
         btn_search_for.setOnClickListener {
             if (!isValid(et_front_width, et_front_diameter, et_front_et, et_front_no_of_holes,et_front_distance_holes,et_rear_width,et_rear_diameter,et_rear_et,et_rear_no_of_holes,et_rear_distamce_holes)) {
-                return@setOnClickListener
-            }
+               return@setOnClickListener
+          }
             progressDialog.show()
             submitdata()
         }
@@ -60,25 +60,20 @@ class RimActivity : AppCompatActivity() {
         else
              samedata = 0
 
-
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
-
-//        Toast.makeText(applicationContext,""+df.format(et_front_width.text.toString()),Toa)
-       RetrofitClient.client.rimsearch(df.format(et_front_width.text.toString()), et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString(),et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString()).enqueue(object : Callback<ResponseBody> {
+          RetrofitClient.client.rimsearch(et_front_width.text.toString()+".00", et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString()+".00",et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progressDialog.dismiss()
                 Log.d("check_submit_data", "onResponse: models = "+body)
 
-                if (isStatusCodeValid(body)) {
+                        /*       if (isStatusCodeValid(body)) {
 
-/*                    val dataset = getDataSetArrayFromResponse(body)
+*//*              val dataset = getDataSetArrayFromResponse(body)
                   val data = Gson().fromJson<Models.RimBrandlist>(dataset.getJSONObject(i).toString(), Models.RimBrandlist::class.java)
                     rimcarBrand.add(data)
-                    brandTitle.add(data.rimbrand)*/
+                    brandTitle.add(data.rimbrand)*//*
 
-                }
+               }     */
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
