@@ -176,7 +176,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             override fun getInfoWindow(p0: Marker?): View {
                 val allWrakerService = p0?.tag as? Models.AllWrackerWorkshops
                 allWrakerService?.let {
-                    //val view = LayoutInflater.from(this@SOSActivity).inflate(R.layout.map_layout,null)
+                    0//val view = LayoutInflater.from(this@SOSActivity).inflate(R.layout.map_layout,null)
                     val binding: MapLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(this@SOSActivity), R.layout.map_layout, null, false)
                     binding.data = allWrakerService
                     binding.address1.text = if (!allWrakerService.address1.toString().isNullOrBlank() && allWrakerService.address1.toString() != "null") allWrakerService.address1.toString() else "" //allWrakerService.address1.takeIf { !it.isNullOrEmpty() }
@@ -429,7 +429,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 mLatitude = UserSavedLatitude
                     mLongitude = UserSavedLogitude
               //  currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
-                } else {
+                loadMapView()
+            } else {
 
                 Log.d("check_location_data s ",""+false)
 
@@ -443,6 +444,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 }
 
             }
+            Log.d("check_data_location",""+mLatitude+"  "+mLongitude)
             loadMapView()
         }
     }
