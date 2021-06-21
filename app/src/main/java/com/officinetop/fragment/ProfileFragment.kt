@@ -428,7 +428,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(userDetail.mobileNumber, userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 uiContentsBinding("", "", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
             }

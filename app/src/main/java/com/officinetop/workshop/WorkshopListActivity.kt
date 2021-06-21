@@ -1055,7 +1055,6 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun callRevisionApi(priceRangeString: String, priceSortLevel: Int,distancesort : Int, ratingformate: String) {
-          Toast.makeText(applicationContext,""+getLat()+"  "+getLong(),Toast.LENGTH_SHORT).show()
           Log.d("check_lat_long",""+""+getLat()+"  "+getLong())
         RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId,sort_by_distance = distancesort)
                 .onCall { networkException, response ->

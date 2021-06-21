@@ -976,7 +976,7 @@ object Models {
             @SerializedName("l_name")
             val lName: String = "",
             @SerializedName("mobile_number")
-            val mobileNumber: Long,
+            val mobileNumber: String,
             @SerializedName("password")
             val password: String,
             @SerializedName("profile_image")
