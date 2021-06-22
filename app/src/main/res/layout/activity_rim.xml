@@ -30,7 +30,7 @@
             >
 
       <Button
-        android:id="@+id/locationBtn"
+        android:id="@+id/btn_search_with_model"
         style="@style/RoundButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

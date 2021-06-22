@@ -16,9 +16,11 @@ import com.officinetop.R
 import com.officinetop.binding_adapters.imageLoad
 import com.officinetop.data.Models
 import com.officinetop.rim.AvailableRimActivity
+import com.officinetop.rim.RimPartActivity
 import kotlinx.android.synthetic.main.item_faq.view.*
 import kotlinx.android.synthetic.main.item_list_car_availble_rim.view.*
 import kotlinx.android.synthetic.main.item_list_version_car.view.*
+import org.jetbrains.anko.intentFor
 
 class CarmeasureExpandableAdapter(private val context: Context, private val carlist: List<Models.Measures>) : RecyclerView.Adapter<CarmeasureExpandableAdapter.ViewHolder>() {
 
@@ -38,11 +40,17 @@ class CarmeasureExpandableAdapter(private val context: Context, private val carl
                     context.resources.getString(R.string.rear)+": "+carlist.get(position).rear_width+"X"+carlist.get(position).rear_diameter+"\"")
         }
         holder.tv_quantitiy.setText("("+carlist.get(position).quantity+")")
+
+       holder.rv_container_parent.setOnClickListener {
+           context.startActivity(context.intentFor<RimPartActivity>().putExtra("car_type_id", carlist.get(position).IdCarType).putExtra("car_type_id", carlist.get(position).IdCarType))
+       }
+
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tv_daimeter: TextView = view.tv_daimeter
         val tv_quantitiy: TextView = view.tv_quantitiy
+        val rv_container_parent: RelativeLayout = view.rv_container_parent
 
     }
 

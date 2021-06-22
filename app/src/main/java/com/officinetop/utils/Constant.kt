@@ -190,6 +190,7 @@ object Constant {
         const val alloy_rim_search_list = "alloy_rim_search_list"
         const val alloy_rim_workshop_list = "alloy_rim_workshop_list"
         const val alloy_rim_calender = "alloy_rim_calender"
+        const val alloy_rims_by_car_type = "alloy_rims_by_car_type"
 
     }
 
