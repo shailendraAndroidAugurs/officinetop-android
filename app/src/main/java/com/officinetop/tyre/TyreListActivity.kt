@@ -581,7 +581,8 @@ class TyreListActivity : BaseActivity() {
                 setContentView(R.layout.dialog_rating_tyrefilter)
                 window?.setGravity(Gravity.TOP)
                 window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
-                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp
+                )
 
 
                 val filterTyreRatingList: MutableList<String> = ArrayList()

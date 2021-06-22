@@ -105,6 +105,15 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
+    @GET(Constant.UrlEndPoints.alloy_rims_by_car_type)
+    fun getRimproductlist(@Query("car_type_id") front_width: String,
+                          @Query("front_diameter_id") front_diameter_id: String,
+                          @Query("rear_diameter_id") rear_diameter_id: String,
+                          @Query("front_width_id") front_width_id: String,
+                          @Query("rear_width_id") rear_width_id: String
+    ): Call<ResponseBody>
+
+
     @Headers(Constant.headerJSON)
     @GET(Constant.UrlEndPoints.carModels + "/{brandID}")
     fun carModels(@Path("brandID") brandID: String): Call<ResponseBody>

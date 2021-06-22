@@ -26,11 +26,11 @@
 
                 <include layout="@layout/include_toolbar" />
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/gray_dark" />
+
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -121,7 +121,7 @@
                 tools:context=".fragment.FragmentProductFeedback">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/rv_product_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"

@@ -47,6 +47,10 @@ class RimActivity : AppCompatActivity() {
             submitdata()
         }
 
+        btn_search_with_model.setOnClickListener {
+            startActivity(intentFor<CompatibleModelActivity>())
+        }
+
         cb_front_rear_same.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                   et_rear_width.text =  et_front_width.text
@@ -69,7 +73,6 @@ class RimActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progressDialog.dismiss()
-                Log.d("check_submit_data", "onResponse: models = "+body)
                 if (isStatusCodeValid(body)) {
                     startActivity(intentFor<RimPartActivity>().putExtra("json_response", body))
                 }
