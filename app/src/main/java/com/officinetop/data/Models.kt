@@ -243,6 +243,10 @@ object Models {
             var AlloyRimPriceEC: String = "",
             @SerializedName("AlloyRimStock")
             var AlloyRimStock: String = "",
+            @SerializedName("AlloyRimFrontID")
+            var AlloyRimFrontID: String = "",
+            @SerializedName("AlloyRimRearID")
+            var AlloyRimRearID: String = "",
             @SerializedName("AlloyRimDescription")
             var AlloyRimDescription: String = "",
             @SerializedName("AlloyRimLochzahl")

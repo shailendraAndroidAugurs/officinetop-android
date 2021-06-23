@@ -55,7 +55,7 @@
             android:layout_height="@dimen/_40sdp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             android:background="@drawable/shape_button_orange"
             android:text="@string/search_by_measures"

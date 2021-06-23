@@ -23,18 +23,26 @@ import retrofit2.Response
 class RimProductDetailsActivity : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
     private var productDetails: Models.rimProductDetails? = null
+    var front_id = ""
+    var rear_id = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rim_product_details)
         progressDialog = getProgressDialog()
+        if(intent.hasExtra("front_id")){
+            front_id = intent.getStringExtra("front_id")
+        }
+        if(intent.hasExtra("rear_id")){
+            rear_id = intent.getStringExtra("rear_id")
+        }
         loadRimProductDetails()
     }
 
     fun loadRimProductDetails(){
         progressDialog.show()
 
-        RetrofitClient.client.rimdetails("103311","103326",getLat(),getLong()).enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
 

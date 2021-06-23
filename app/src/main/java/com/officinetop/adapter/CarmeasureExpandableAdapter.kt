@@ -42,7 +42,14 @@ class CarmeasureExpandableAdapter(private val context: Context, private val carl
         holder.tv_quantitiy.setText("("+carlist.get(position).quantity+")")
 
        holder.rv_container_parent.setOnClickListener {
-           context.startActivity(context.intentFor<RimPartActivity>().putExtra("car_type_id", carlist.get(position).IdCarType).putExtra("car_type_id", carlist.get(position).IdCarType))
+           context.startActivity(context.intentFor<RimPartActivity>().
+           putExtra("car_type_id", carlist.get(position).IdCarType).
+           putExtra("front_diameter_id", carlist.get(position).IdFrontDiameter).
+           putExtra("rear_diameter_id", carlist.get(position).IdRearDiameter).
+           putExtra("front_width_id", carlist.get(position).IdFrontWidth).
+           putExtra("rear_width_id", carlist.get(position).IdRearWidth).
+           putExtra("call_from_model",true)
+           )
        }
 
     }

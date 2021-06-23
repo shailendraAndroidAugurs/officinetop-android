@@ -7,13 +7,17 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.officinetop.R
-import com.officinetop.adapter.CarAvailablemeasureListAdapter
 import com.officinetop.adapter.RimProductlistAdapter
 import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
-import kotlinx.android.synthetic.main.activity_available_rim.*
+import com.officinetop.utils.Constant
+import com.officinetop.utils.getProgressDialog
+import com.officinetop.utils.showInfoDialog
+import com.officinetop.virtual_garage.AddVehicleActivity
 import kotlinx.android.synthetic.main.activity_rim_part.*
 import okhttp3.ResponseBody
+import org.jetbrains.anko.intentFor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,32 +30,41 @@ class RimPartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rim_part)
-
         if(intent.hasExtra("json_response")){
             bindDatainView(intent.getStringExtra("json_response"))
         }
+
+        if(intent.hasExtra("call_from_model")){
+            var car_type_id = intent.getStringExtra("car_type_id")
+            var front_diameter_id = intent.getStringExtra("front_diameter_id")
+            var rear_diameter_id = intent.getStringExtra("rear_diameter_id")
+            var front_width_id = intent.getStringExtra("front_width_id")
+            var rear_width_id = intent.getStringExtra("rear_width_id")
+            loadProductWithModel(car_type_id,front_diameter_id,rear_diameter_id,front_width_id,rear_width_id)
+        }
     }
 
-    fun loadRimProductDetails(){
+    fun loadProductWithModel(carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String) {
+        progressDialog = getProgressDialog()
         progressDialog.show()
-
-        RetrofitClient.client.rimdetails("103311","103326",getLat(),getLong()).enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.getRimproductlist("2","4","4","4","4").enqueue(object : Callback<ResponseBody> {
+     /*   RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId).enqueue(object : Callback<ResponseBody> {*/
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
-
+                Log.d("rim_productl_list", "onResponse: models = "+body)
                 progressDialog.dismiss()
-
                 if (isStatusCodeValid(body)) {
-                    val dataset = getDataFromResponse(body)
-
-                    Log.d("pdetails_data", "onResponse: models = "+body)
-                    dataset.let { it1 ->
-
-
+                    bindDatainView(body)
+                }
+                else{
+                    val body = JSONObject(body)
+                    if (!body.getString("message").isNullOrBlank()) {
+                        showInfoDialog(body.getString("message"), true) {
+                           onBackPressed()
+                        }
                     }
                 }
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
                 Log.d("pdetails_data",""+t.message)
