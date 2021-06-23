@@ -10,7 +10,7 @@
     android:padding="0dp">
 
     <LinearLayout
-        android:id="@+id/tire_cell"
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -198,7 +198,7 @@
                 android:maxLines="2"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textSize="@dimen/_13sdp"
                 />
 
