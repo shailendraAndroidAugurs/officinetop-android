@@ -34,21 +34,21 @@ class RimPartActivity : AppCompatActivity() {
             bindDatainView(intent.getStringExtra("json_response"))
         }
 
-        if(intent.hasExtra("call_from_model")){
-            var car_type_id = intent.getStringExtra("car_type_id")
-            var front_diameter_id = intent.getStringExtra("front_diameter_id")
-            var rear_diameter_id = intent.getStringExtra("rear_diameter_id")
-            var front_width_id = intent.getStringExtra("front_width_id")
-            var rear_width_id = intent.getStringExtra("rear_width_id")
-            loadProductWithModel(car_type_id,front_diameter_id,rear_diameter_id,front_width_id,rear_width_id)
+        if(!intent.hasExtra("call_from_model")){
+//            var car_type_id = intent.getStringExtra("car_type_id")
+//            var front_diameter_id = intent.getStringExtra("front_diameter_id")
+//            var rear_diameter_id = intent.getStringExtra("rear_diameter_id")
+//            var front_width_id = intent.getStringExtra("front_width_id")
+//            var rear_width_id = intent.getStringExtra("rear_width_id")
         }
+
+        loadProductWithModel("2","4","4","4","4")
     }
 
-    fun loadProductWithModel(carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String) {
+  fun loadProductWithModel(carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String) {
         progressDialog = getProgressDialog()
         progressDialog.show()
-        RetrofitClient.client.getRimproductlist("2","4","4","4","4").enqueue(object : Callback<ResponseBody> {
-     /*   RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId).enqueue(object : Callback<ResponseBody> {*/
+       RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 Log.d("rim_productl_list", "onResponse: models = "+body)

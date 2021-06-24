@@ -292,7 +292,9 @@ object Models {
             @SerializedName("rear_diameter")
             var rear_diameter: String = "",
             @SerializedName("winter")
-            var winter: String = ""
+            var winter: String = "",
+            @SerializedName("min_service_price")
+            var min_service_price: String = ""
     ) : Serializable
 
     data class Availablecartypelist(
