@@ -45,7 +45,7 @@ class RimProductlistAdapter(private val context: Context, private val productlis
       holder.tv_rim_posteriore.visibility = View.GONE
 
         if(!productlist.get(i).rim_anteriore.isNullOrEmpty())
-            holder.tv_rim_anteriore.text = productlist.get(i).rim_anteriore
+       holder.tv_rim_anteriore.text = productlist.get(i).rim_anteriore
         else
             holder.tv_rim_anteriore.visibility = View.GONE
 

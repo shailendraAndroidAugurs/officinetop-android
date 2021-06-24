@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.officinetop.R
@@ -50,7 +51,6 @@ class RimProductDetailsActivity : AppCompatActivity() {
 
                 if (isStatusCodeValid(body)) {
                     val dataset = getDataFromResponse(body)
-
                     Log.d("pdetails_data", "onResponse: models = "+body)
                     dataset.let { it1 ->
                         productDetails = Gson().fromJson<Models.rimProductDetails>(it1.toString(), Models.rimProductDetails::class.java)
@@ -62,7 +62,8 @@ class RimProductDetailsActivity : AppCompatActivity() {
                             tv_type_color.text = productDetails!!.TypeColor
                             tv_rim_anteriore.text = productDetails!!.rim_anteriore
                             tv_rim_posteriore.text = productDetails!!.rim_posteriore
-
+                            productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
+                            buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
                             //binding product description data
                             tv_width.text = "Ant. "+productDetails!!.front_width + " - Post."+productDetails!!.rear_width
                             tv_diameter.text = productDetails!!.front_diameter
@@ -76,7 +77,6 @@ class RimProductDetailsActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
                 Log.d("pdetails_data",""+t.message)
