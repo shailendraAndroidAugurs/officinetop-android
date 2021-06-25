@@ -153,6 +153,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                 Log.e("isSuccessful", data_set.toString())
                                 if (data_set.length() > 0) {
                                     allWrackerServicesWorkshopList.clear()
+                                    Log.e("isSuccessful", ""+true)
+
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
                                         allWrackerServicesWorkshopList.add(data)
@@ -176,7 +178,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             override fun getInfoWindow(p0: Marker?): View {
                 val allWrakerService = p0?.tag as? Models.AllWrackerWorkshops
                 allWrakerService?.let {
-                    0//val view = LayoutInflater.from(this@SOSActivity).inflate(R.layout.map_layout,null)
+                    //val view = LayoutInflater.from(this@SOSActivity).inflate(R.layout.map_layout,null)
                     val binding: MapLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(this@SOSActivity), R.layout.map_layout, null, false)
                     binding.data = allWrakerService
                     binding.address1.text = if (!allWrakerService.address1.toString().isNullOrBlank() && allWrakerService.address1.toString() != "null") allWrakerService.address1.toString() else "" //allWrakerService.address1.takeIf { !it.isNullOrEmpty() }
@@ -207,6 +209,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
         if (!showAllServices) {
             workshopId = userId
         }
+        Log.e("isSuccessful", "wd  "+true)
+
 
         val progressDialog = getProgressDialog(true)
 
@@ -240,6 +244,8 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                 }
                             } catch (e: Exception) {
                                 e.printStackTrace()
+                                Log.d("wrakerServicesCall", ""+e.message)
+
                             }
                             bindWrackerServices(userId.toInt())
                         }
@@ -426,10 +432,10 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0") {
                 Log.d("check_location_data s ",""+true)
 
-                mLatitude = UserSavedLatitude
+                    mLatitude = UserSavedLatitude
                     mLongitude = UserSavedLogitude
               //  currentLatLong = LatLng(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
-                loadMapView()
+
             } else {
 
                 Log.d("check_location_data s ",""+false)
@@ -437,7 +443,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 if (location == null) {
                         requestNewLocationData()
                     }else {
-                 mLatitude = location.latitude.toString()//"44.1571507"
+                  mLatitude = location.latitude.toString()//"44.1571507"
                   mLongitude = location.longitude.toString()//"12.2142107"
           /*           mLatitude = "44.1571507"
                      mLongitude = "12.2142107"*/
@@ -470,7 +476,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
             mLatitude = mLastLocation.latitude.toString()
             mLongitude = mLastLocation.longitude.toString()
             Log.d("check_location_data d ",""+mLatitude+"   "+mLongitude)
-
             loadMapView()
 }
 }

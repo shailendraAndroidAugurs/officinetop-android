@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ class CarAvailablemeasureListAdapter(private val context: Context, private val c
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tv_daimeter.setText(context.resources.getString(R.string.diameter)+": "+carlist.get(position).front_diameter+"\"")
         holder.tv_quantitiy.setText("("+carlist.get(position).total_quantity+")")
+        Log.d("cheeck_measure_data",""+carlist.get(position).measures)
         var adapter = CarmeasureExpandableAdapter(context,carlist.get(position).measures)
         var layoutmanager = LinearLayoutManager(context)
         holder.car_measure_list.layoutManager = layoutmanager
