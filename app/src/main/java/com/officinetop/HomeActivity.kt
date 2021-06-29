@@ -694,7 +694,7 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         progressDialog.dismiss()
                         Log.d("LoginActivity", "onResponse: logout = $responseString")
                         if (response.code() == 200) {
-                            removeUserDetail()
+                           // removeUserDetail()
                         }
 
                         responseString?.let {
