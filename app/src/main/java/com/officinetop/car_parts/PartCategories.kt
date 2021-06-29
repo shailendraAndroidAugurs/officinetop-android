@@ -254,11 +254,16 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
     }
 
     override fun onGroupCategoryClicked(selectedGroupCategoryID: Int) {
-        RetrofitClient.client.saveN3id(selectedGroupCategoryID).genericAPICall { _, response ->
-            Log.v("SaveN3id", "************* response $response")
-        }
         startActivity(intentFor<ProductListActivity>(Constant.Key.partItemID to selectedGroupCategoryID,
                 Constant.Key.searchedCategoryType to "3"))
+        Executors.newSingleThreadExecutor().submit {
+            RetrofitClient.client.saveN3id(selectedGroupCategoryID).genericAPICall { _, response ->
+                Log.v("SaveN3id", "************* response $response")
+            }
+
+        }
+
+
     }
 
 
