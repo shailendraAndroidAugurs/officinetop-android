@@ -89,13 +89,15 @@
                         android:id="@+id/workshop_name"
                         style="@style/TextViewSubHeadingBlack"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:paddingLeft="0dp"
                         android:paddingTop="0dp"
                         android:text="@string/WorkshopName"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:maxLines="3"
+                        />
 
                     <ImageView
                         android:id="@+id/call_workshop"
