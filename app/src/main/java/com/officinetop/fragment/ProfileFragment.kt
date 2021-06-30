@@ -138,7 +138,6 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                         startActivityForResult(intent, 100)
                     }
                 } catch (e: Exception) {
-
                 }
             } else {
                 context?.showInfoDialog(getString(R.string.TheInternetConnectionAppearstobeoffline), true) {}
