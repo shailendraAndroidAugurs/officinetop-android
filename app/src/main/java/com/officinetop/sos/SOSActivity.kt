@@ -154,7 +154,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                 if (data_set.length() > 0) {
                                     allWrackerServicesWorkshopList.clear()
                                     Log.e("isSuccessful", ""+true)
-
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
                                         allWrackerServicesWorkshopList.add(data)
@@ -443,9 +442,9 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                 if (location == null) {
                         requestNewLocationData()
                     }else {
-                  mLatitude = location.latitude.toString()//"44.1571507"
-                  mLongitude = location.longitude.toString()//"12.2142107"
-          /*           mLatitude = "44.1571507"
+                 mLatitude = location.latitude.toString()//"44.1571507"
+                 mLongitude = location.longitude.toString()//"12.2142107"
+                   /* mLatitude = "44.1571507"
                      mLongitude = "12.2142107"*/
                 }
 

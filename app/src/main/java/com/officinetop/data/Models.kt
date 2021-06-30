@@ -489,7 +489,7 @@ object Models {
             @SerializedName("longitude")
             val longitude: String? = null,
             @SerializedName("mobile_number")
-            val mobileNumber: Long? = null,
+            val mobileNumber: String? = null,
             @SerializedName("users_id")
             val usersId: Int,
             @SerializedName("workshop_name")
