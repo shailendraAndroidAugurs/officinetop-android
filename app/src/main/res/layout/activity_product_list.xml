@@ -177,9 +177,22 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:paddingStart="5dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/product_not_found_msg"
+            android:textColor="@color/black" />
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <include
                 android:id="@+id/layout_recyclerview"
