@@ -390,7 +390,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+            uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", if (!userDetail.email.isNullOrBlank())userDetail.email else "", if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
 
             } else {
                 userContact = userDetailData.userContact.get(0)
