@@ -404,7 +404,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
-                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userContact = userDetailData.userContact.get(0)
                 uiContentsBinding("", "", "", "", "", getString(R.string.Add_address), "", "", userContact.mobile.toString(), "", apiRespoinsewallet?.amount.toString())
@@ -416,7 +416,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
                 userAddress = userDetailData.userAddress.get(0)
-                uiContentsBinding(userDetail.mobileNumber.toString(), userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 userAddress = userDetailData.userAddress.get(0)
                 uiContentsBinding("", "", "", "", "", userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, "", "", apiRespoinsewallet?.amount.toString())
@@ -427,7 +427,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 val sb = StringBuilder()
                 sb.append(Constant.profileBaseUrl).append(userDetail.profileImage)
                 imageurl = sb.toString()
-                uiContentsBinding(userDetail.mobileNumber, userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+                uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", userDetail.email, if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
             } else {
                 uiContentsBinding("", "", "", "", "", getString(R.string.Add_address), "", "", getString(R.string.Add_mobile_number), "", apiRespoinsewallet?.amount.toString())
             }
