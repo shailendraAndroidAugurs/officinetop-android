@@ -390,7 +390,7 @@ class ProfileFragment : Fragment(), OnGetLoginUserDetail {
                 imageurl = sb.toString()
                 userContact = userDetailData.userContact.get(0)
                 userAddress = userDetailData.userAddress.get(0)
-            uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", if (!userDetail.email.isNullOrBlank())userDetail.email else "", if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", imageurl, userAddress.address1, userAddress.zipCode.toString(), userAddress.landmark, userContact.mobile.toString(), userDetail.ownreferalcode.toString(), apiRespoinsewallet?.amount.toString())
+            uiContentsBinding(if (!userDetail.mobileNumber.isNullOrBlank())userDetail.mobileNumber else "", if (!userDetail.email.isNullOrBlank())userDetail.email else "", if (!userDetail.fName.isNullOrBlank()) userDetail.fName else "", if (!userDetail.lName.isNullOrBlank()) userDetail.lName else "", if (!imageurl.isNullOrBlank())imageurl else "",if (!userAddress.address1.isNullOrBlank()) userAddress.address1 else "",if (!userAddress.zipCode.isNullOrBlank()) userAddress.zipCode.toString() else "", if (!userAddress.landmark.isNullOrBlank())userAddress.landmark else "", if (!userContact.mobile.isNullOrBlank())userContact.mobile.toString() else "",if(!userDetail.ownreferalcode.isNullOrEmpty()) userDetail.ownreferalcode.toString() else "",if(!apiRespoinsewallet?.amount.isNullOrEmpty()) apiRespoinsewallet?.amount.toString() else "")
 
             } else {
                 userContact = userDetailData.userContact.get(0)
