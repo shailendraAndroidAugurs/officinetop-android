@@ -45,7 +45,7 @@
                         app:auto_cycle="false"
                         app:indicator_visibility="visible"
                         app:pager_animation="Default"
-                        app:pager_animation_span="1000" />
+                        app:pager_animation_span="0" />
 
                     <ImageView
                         android:id="@+id/image_slideview_workshop"

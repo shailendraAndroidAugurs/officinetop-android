@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -252,6 +253,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                 if (isStatusCodeValid(body)) {
                     val dataSet = getDataSetArrayFromResponse(it)
                     bindRecyclerView(dataSet)
+                    ly_product_not_found.visibility = View.GONE
+
                     Log.d("check_list_size", "" + brandlist.size)
                     if (brandlist.size == 0) {
                         val brandJSONArray = JSONObject(body).getJSONArray("brands")
@@ -266,12 +269,15 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
                     //bindRecyclerView(JSONArray())
 
                     if (!this::listAdapter.isInitialized || listAdapter.getListSize() == 0) {
-                        showInfoDialog(getMessageFromJSON(it)) {
+                       /* showInfoDialog(getMessageFromJSON(it)) {
                             if (!isfilterApply) {
                                 finish()
                             }
                             logSearchEvent(this@ProductListActivity, "Spare part", "Product search", "1", searchedKeyWord, true)
-                        }
+                        }*/
+
+                        ly_product_not_found.visibility = View.VISIBLE
+
                     }
 
                 }
