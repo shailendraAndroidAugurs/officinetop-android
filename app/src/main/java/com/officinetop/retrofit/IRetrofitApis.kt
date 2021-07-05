@@ -110,7 +110,8 @@ interface IRetrofitApis {
                           @Query("front_diameter_id") front_diameter_id: String,
                           @Query("rear_diameter_id") rear_diameter_id: String,
                           @Query("front_width_id") front_width_id: String,
-                          @Query("rear_width_id") rear_width_id: String
+                          @Query("rear_width_id") rear_width_id: String,
+                          @Query("user_id") user_id: String
     ): Call<ResponseBody>
 
 

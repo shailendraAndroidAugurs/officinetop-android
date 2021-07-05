@@ -48,7 +48,7 @@ class RimPartActivity : AppCompatActivity() {
   fun loadProductWithModel(carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String) {
         progressDialog = getProgressDialog()
         progressDialog.show()
-       RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId).enqueue(object : Callback<ResponseBody> {
+       RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId,getUserId()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 Log.d("rim_productl_list", "onResponse: models = "+body)

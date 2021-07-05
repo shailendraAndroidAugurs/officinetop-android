@@ -146,7 +146,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                         Log.d("networkException", it.localizedMessage)
                     }
                     response?.let {
-                        if (response.isSuccessful) {
+                        if (isStatusCodeValid(response.toString())) {
                             try {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) jsonObject.getJSONArray("data_set") else JSONArray()
@@ -156,16 +156,25 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                     Log.e("isSuccessful", ""+true)
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
-                                        allWrackerServicesWorkshopList.add(data)
+                                    allWrackerServicesWorkshopList.add(data)
                                     }
                                     val data = allWrackerServicesWorkshopList.get(0)
                                     getWrackersServices(data.id.toString(), data.usersId.toString(), getSelectedCar()?.carVersionModel?.idVehicle
                                             ?: "", true)
                                 }
+
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
                             bindAllWrackerServicesOnMap()
+                        }else{
+                                val jsonObject = JSONObject(response.body()?.string())
+                            if (!jsonObject.getString("message").isNullOrBlank()) {
+                                showInfoDialog(jsonObject.getString("message"), true) {
+                                    onBackPressed()
+                                }
+                            }
+
                         }
                     }
                 }
@@ -229,7 +238,6 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                     wrackersList.clear()
                                     for (i in 0 until data_set.length()) {
                                         val data = Gson().fromJson<Models.WrackerServices>(data_set.getJSONObject(i).toString(), Models.WrackerServices::class.java)
-
                                         wrackersList.add(data)
                                         main_category_id = wrackersList.get(i).main_category_id
                                         Log.d("wrakerServicesCall", data.id.toString())
