@@ -175,7 +175,8 @@
              <RelativeLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:orientation="vertical">
+                 android:orientation="vertical"
+                 >
 
                  <TextView
                      android:id="@+id/tv_rim_anteriore"
@@ -188,7 +189,21 @@
                      android:textSize="18dp"
                      android:layout_alignParentLeft="true" />
 
+                 <TextView
+                     android:id="@+id/tv_rim_front_price"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_2sdp"
+                     android:gravity="center"
+                     android:textColor="@color/black"
+                     android:visibility="visible"
+                     android:layout_toLeftOf="@+id/spinner_front"
+                     android:textSize="18dp"
+                     android:layout_marginRight="@dimen/_5sdp"
+                     />
+
                  <Spinner
+                     android:id="@+id/spinner_front"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:layout_alignParentRight="true"
@@ -214,7 +229,21 @@
                      android:layout_alignParentLeft="true"
                      />
 
+                 <TextView
+                     android:id="@+id/tv_rim_rear_price"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_2sdp"
+                     android:gravity="center"
+                     android:textColor="@color/black"
+                     android:visibility="visible"
+                     android:layout_toLeftOf="@+id/spinner_rear"
+                     android:textSize="18dp"
+                     android:layout_marginRight="@dimen/_5sdp"
+                     />
+
                  <Spinner
+                     android:id="@+id/spinner_rear"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:layout_alignParentRight="true"
@@ -275,7 +304,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="0dp"
-                        android:textColor="@color/gray_dark"
+                        android:textColor="@color/black"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -383,8 +412,6 @@
 
 
                     </LinearLayout>
-
-
 
                     <LinearLayout
                         android:id="@+id/ll_diameter"
