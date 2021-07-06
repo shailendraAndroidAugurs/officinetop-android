@@ -1,19 +1,22 @@
 package com.officinetop.rim
 
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.officinetop.R
-import com.officinetop.adapter.CarAvailablemeasureListAdapter
 import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
 import com.officinetop.utils.getProgressDialog
 import com.officinetop.utils.loadImage
-import kotlinx.android.synthetic.main.activity_available_rim.*
+import com.officinetop.utils.moveToLoginPage
+import com.officinetop.utils.showConfirmDialogForLogin
 import kotlinx.android.synthetic.main.activity_rim_product_details.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -26,6 +29,10 @@ class RimProductDetailsActivity : AppCompatActivity() {
     private var productDetails: Models.rimProductDetails? = null
     var front_id = ""
     var rear_id = ""
+    var spinner_data  = ArrayList<Int>()
+    var front_price = 0.00
+    var rear_price = 0.00
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +44,43 @@ class RimProductDetailsActivity : AppCompatActivity() {
         if(intent.hasExtra("rear_id")){
             rear_id = intent.getStringExtra("rear_id")
         }
+        bindSpinnerValue()
         loadRimProductDetails()
+        add_product_to_cart.setOnClickListener {
+            if (!isLoggedIn()) {
+                showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this) })
+            }
+            else{
+
+            }
+        }
+    }
+
+    private fun bindSpinnerValue() {
+
+        spinner_data.add(1)
+        spinner_data.add(2)
+        spinner_data.add(3)
+        spinner_data.add(4)
+        val arrayAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, spinner_data)
+        spinner_front.adapter = arrayAdapter
+        spinner_rear.adapter = arrayAdapter
+        spinner_front.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, ""+(front_price*selectedItem.toInt()))
+                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, ""+(front_price*selectedItem.toInt())+(rear_price*selectedItem.toInt()))
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+
+        spinner_rear.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                Toast.makeText(applicationContext,""+selectedItem,Toast.LENGTH_SHORT).show()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
     }
 
     fun loadRimProductDetails(){
@@ -60,12 +103,17 @@ class RimProductDetailsActivity : AppCompatActivity() {
                             tv_type.text = productDetails!!.Manufacturer
                             tv_type_name.text = productDetails!!.TypeName
                             tv_type_color.text = productDetails!!.TypeColor
-                            tv_rim_anteriore.text = productDetails!!.rim_anteriore
-                            tv_rim_posteriore.text = productDetails!!.rim_posteriore
+                            tv_rim_anteriore.text = resources.getString(R.string.front)+" "+if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
+                            tv_rim_posteriore.text = resources.getString(R.string.rear)+" "+if(!productDetails!!.rim_posteriore.isNullOrEmpty())productDetails!!.rim_posteriore else ""
                             productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
+                            tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0")
+                            tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else "0")
+                            front_price = if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
+                            rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else 0.00
                             buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
-                            //binding product description data
-                            tv_width.text = "Ant. "+productDetails!!.front_width + " - Post."+productDetails!!.rear_width
+                            //binding p
+                            // roduct description data
+                            tv_width.text = "Ant. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
                             tv_diameter.text = productDetails!!.front_diameter
                             tv_etoffset.text = productDetails!!.AlloyRimET
                             tv_no_of_holes.text = productDetails!!.AlloyRimLochzahl

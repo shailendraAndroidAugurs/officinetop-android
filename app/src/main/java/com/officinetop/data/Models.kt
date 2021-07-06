@@ -294,7 +294,11 @@ object Models {
             @SerializedName("winter")
             var winter: String = "",
             @SerializedName("min_service_price")
-            var min_service_price: String = ""
+            var min_service_price: String = "",
+            @SerializedName("anteriore_price")
+            var anteriore_price: String = "",
+            @SerializedName("posteriore_price")
+            var posteriore_price: String = ""
     ) : Serializable
 
     data class Availablecartypelist(
