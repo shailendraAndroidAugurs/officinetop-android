@@ -13,12 +13,15 @@ import com.google.gson.Gson
 import com.officinetop.R
 import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
-import com.officinetop.utils.getProgressDialog
-import com.officinetop.utils.loadImage
-import com.officinetop.utils.moveToLoginPage
-import com.officinetop.utils.showConfirmDialogForLogin
+import com.officinetop.utils.*
+import com.officinetop.workshop.WorkshopListActivity
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_rim_product_details.*
+import kotlinx.android.synthetic.main.activity_rim_product_details.add_product_to_cart
+import kotlinx.android.synthetic.main.activity_rim_product_details.buy_product_with_assembly
+import kotlinx.android.synthetic.main.activity_rim_product_details.productTotalPrices
 import okhttp3.ResponseBody
+import org.jetbrains.anko.intentFor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,14 +53,21 @@ class RimProductDetailsActivity : AppCompatActivity() {
             if (!isLoggedIn()) {
                 showConfirmDialogForLogin(getString(R.string.PleaselogintocontinueforAddtocart), { moveToLoginPage(this) })
             }
-            else{
+        }
 
+        buy_product_with_assembly.setOnClickListener {
+            if (productDetails != null) {
+                val myIntent = intentFor<WorkshopListActivity>(
+                        Constant.Key.is_workshop to true,
+                        Constant.Key.is_rim_workshop_service to true,
+                        Constant.Key.productDetail to productDetails?.toString()
+                )
+                startActivity(myIntent)
             }
         }
     }
 
     private fun bindSpinnerValue() {
-
         spinner_data.add(1)
         spinner_data.add(2)
         spinner_data.add(3)
@@ -86,7 +96,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
     fun loadRimProductDetails(){
         progressDialog.show()
 
-        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong()).enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong(),"",getUserId()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
 
@@ -128,9 +138,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
                 Log.d("pdetails_data",""+t.message)
-
             }
-
         })
     }
 

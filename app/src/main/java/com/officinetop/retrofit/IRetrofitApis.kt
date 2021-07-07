@@ -88,7 +88,10 @@ interface IRetrofitApis {
     fun rimdetails(@Query("front_rim_id") front_rim_id: String,
                    @Query("rear_rim_id") rear_rim_id: String,
                    @Query("user_lat") user_lat: String,
-                   @Query("user_long") user_long: String): Call<ResponseBody>
+                   @Query("user_long") user_long: String,
+                   @Query("version_id") version_id: String,
+                   @Query("user_id") user_id: String
+                   ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.alloy_rim_search_list)
     fun rimsearch(@Query("front_width") front_width: String,
