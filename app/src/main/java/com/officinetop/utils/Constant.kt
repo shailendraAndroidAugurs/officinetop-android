@@ -226,6 +226,7 @@ object Constant {
         const val is_sos_service = "is_sos_service"
         const val is_sos_service_emergency = "is_sos_service_emergency"
         const val is_car_maintenance_service = "is_car_maintenance_service"
+        const val is_rim_workshop_service = "is_rim_workshop_service"
         const val productDetail = "productDetail"
         const val workshopCategoryDetail = "workshopCategoryDetail"
         const val workshopAssembledDetail = "workshopAssembledDetail"
