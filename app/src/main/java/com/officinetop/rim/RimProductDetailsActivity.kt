@@ -96,7 +96,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
     fun loadRimProductDetails(){
         progressDialog.show()
 
-        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong(),"",getUserId()).enqueue(object : Callback<ResponseBody> {
+        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong(), getSelectedCar()?.carVersionModel?.idVehicle!!,getUserId()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
 
