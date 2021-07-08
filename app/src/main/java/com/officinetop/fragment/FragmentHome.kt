@@ -37,6 +37,7 @@ import com.officinetop.misc_activities.MaintenanceActivity
 import com.officinetop.misc_activities.RevisionActivity
 import com.officinetop.quotes.QuotesActivity
 import com.officinetop.retrofit.RetrofitClient
+import com.officinetop.rim.RimActivity
 import com.officinetop.sos.SOSActivity
 import com.officinetop.tyre.TyreDiameterActivity
 import com.officinetop.tyre.TyreListActivity
@@ -92,6 +93,10 @@ class FragmentHome : Fragment() {
                 startActivity(intentFor<ProductListActivity>(Constant.Key.is_best_selling to true))
             }
 
+        }
+
+        click_rim_wheels.setOnClickListener {
+             startActivity(intentFor<RimActivity>())
         }
     }
 
