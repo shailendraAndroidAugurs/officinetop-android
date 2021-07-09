@@ -191,6 +191,7 @@ object Constant {
         const val alloy_rim_workshop_list = "alloy_rim_workshop_list"
         const val alloy_rim_calender = "alloy_rim_calender"
         const val alloy_rims_by_car_type = "alloy_rims_by_car_type"
+        const val getRimWorkshopPackageNew = "alloy_rim_workshop_package"
 
     }
 
@@ -417,6 +418,7 @@ object Constant {
         const val via = "via"
         const val saved_status = "saved_status"
         const val complete_address = "complete_address"
+        const val assemble_time = "assemble_time"
     }
 
     object RC {

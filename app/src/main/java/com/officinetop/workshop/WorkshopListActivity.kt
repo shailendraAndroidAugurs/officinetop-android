@@ -93,7 +93,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var motservices_time = ""
     private var assembledProductDetail = ""
     private var isAssembly = false
-
+    private var assmbled_time = ""
     private var hasRecyclerLoadedOnce = false
     private var calendarPriceMap: HashMap<String, String> = HashMap()
 
@@ -160,6 +160,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         isSOSServiceEmergency = intent?.getBooleanExtra(Constant.Key.is_sos_service_emergency, false)
                 ?: false
         isCarWash = intent?.getBooleanExtra(Constant.Key.is_car_wash, false) ?: false
+        isrimService = intent?.getBooleanExtra(Constant.Key.is_rim_workshop_service, false) ?: false
         if (intent.hasExtra(Constant.Key.cartItem)) {
             // for assembly
             cartItem = intent.getSerializableExtra(Constant.Key.cartItem) as Models.CartItem
@@ -305,6 +306,22 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
             }
         }
+        else if(isrimService){
+                   Toast.makeText(this,"worksff",Toast.LENGTH_SHORT).show()
+                   Log.d("ischeckloading",""+true)
+            if (intent.hasExtra(Constant.Key.productDetail)) {
+                val rimserviceDetails = intent.getSerializableExtra(Constant.Key.productDetail) as Models.rimProductDetails
+                Log.d("ischeckloading",""+rimserviceDetails)
+
+                if (rimserviceDetails != null) {
+                    Log.d("ischeckloading",""+true)
+
+                   assmbled_time = rimserviceDetails.assemble_time
+                }
+            }
+            
+            
+        }
 
         SelectedCalendarDateIntial = selectedFormattedDate
         defaultCalendarShow()
@@ -379,6 +396,8 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val sosAppointmentCall = RetrofitClient.client.getSosAppointmentCalendar(workshopUserId, selectedFormattedDate,
                 latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1")
 
+        val rimServicecall = RetrofitClient.client.getRimCalender(selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+
         val callback = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progress_bar.visibility = View.GONE
@@ -451,6 +470,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         else if (isMotService) motServiceCall.enqueue(callback)
         else if (isSOSAppointment) sosAppointmentCall.enqueue(callback)
         else if (isCarWash) nonAssemblyCall.enqueue(callback)
+        else if (isrimService) rimServicecall.enqueue(callback)
     }
 
     @SuppressLint("WrongConstant")
@@ -724,7 +744,23 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
                             }
                         }
                     }
-        } else {
+        } else if (isrimService) {
+            Log.d("chek_service_id", "" + serviceID.toString())
+            RetrofitClient.client.getRimWorkshop(selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal",favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0",priceRange = if (priceRangeFinal == -1) "" else priceRangeString, sortPrice = priceSortLevel,sort_by_distance = distanceSortLevel)
+                    .onCall { _, response ->
+                        response?.let {
+                            progress_bar.visibility = View.GONE
+                            if (response.isSuccessful) {
+                                try {
+                                    setWorkshopValues(response)
+                                } catch (e: java.lang.Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                    }
+        }
+        else {
             Log.d("ProductOrWorkshopList", "loadWorkshops: serviceID $serviceID -- selectedFormattedDate = $selectedFormattedDate -- ratingString = $ratingString " +
                     "-- priceRangeString = $priceRangeString -- priceSortLevel = $priceSortLevel  -- workshopType $workshopType -- isAssemblyService --  $isAssemblyService")
 
