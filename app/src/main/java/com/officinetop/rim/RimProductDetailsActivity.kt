@@ -25,6 +25,7 @@ import org.jetbrains.anko.intentFor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 
 class RimProductDetailsActivity : AppCompatActivity() {
@@ -60,7 +61,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
                 val myIntent = intentFor<WorkshopListActivity>(
                         Constant.Key.is_workshop to true,
                         Constant.Key.is_rim_workshop_service to true,
-                        Constant.Key.productDetail to productDetails?.toString()
+                        Constant.Key.productDetail to productDetails
                 )
                 startActivity(myIntent)
             }
@@ -95,51 +96,57 @@ class RimProductDetailsActivity : AppCompatActivity() {
 
     fun loadRimProductDetails(){
         progressDialog.show()
+       try{
+           RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong(), getSelectedCar()?.carVersionModel?.idVehicle!!,getUserId()).enqueue(object : Callback<ResponseBody> {
+               override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                   val body = response.body()?.string()
 
-        RetrofitClient.client.rimdetails(front_id,rear_id,getLat(),getLong(), getSelectedCar()?.carVersionModel?.idVehicle!!,getUserId()).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val body = response.body()?.string()
+                   progressDialog.dismiss()
 
-                progressDialog.dismiss()
+                   if (isStatusCodeValid(body)) {
+                       val dataset = getDataFromResponse(body)
+                       Log.d("pdetails_data", "onResponse: models = "+body)
+                       dataset.let { it1 ->
+                           productDetails = Gson().fromJson<Models.rimProductDetails>(it1.toString(), Models.rimProductDetails::class.java)
 
-                if (isStatusCodeValid(body)) {
-                    val dataset = getDataFromResponse(body)
-                    Log.d("pdetails_data", "onResponse: models = "+body)
-                    dataset.let { it1 ->
-                        productDetails = Gson().fromJson<Models.rimProductDetails>(it1.toString(), Models.rimProductDetails::class.java)
+                           if (productDetails != null) {
+                               loadImage(productDetails!!.ImageUrl, prodcut_image)
+                               tv_type.text = productDetails!!.Manufacturer
+                               tv_type_name.text = productDetails!!.TypeName
+                               tv_type_color.text = productDetails!!.TypeColor
+                               tv_rim_anteriore.text = resources.getString(R.string.front)+" "+if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
+                               tv_rim_posteriore.text = resources.getString(R.string.rear)+" "+if(!productDetails!!.rim_posteriore.isNullOrEmpty())productDetails!!.rim_posteriore else ""
+                               productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
+                               tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0")
+                               tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else "0")
+                               front_price = if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
+                               rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else 0.00
+                               buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
+                               //binding p
+                               // roduct description data
+                               tv_width.text = "Ant. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
+                               tv_diameter.text = productDetails!!.front_diameter
+                               tv_etoffset.text = productDetails!!.AlloyRimET
+                               tv_no_of_holes.text = productDetails!!.AlloyRimLochzahl
+                               tv_distance_between_holes.text = productDetails!!.AlloyRimLochkreis
+                               tv_winter_compatibilty.text = productDetails!!.winter
+                               tv_color.text = productDetails!!.TypeColor
 
-                        if (productDetails != null) {
-                            loadImage(productDetails!!.ImageUrl, prodcut_image)
-                            tv_type.text = productDetails!!.Manufacturer
-                            tv_type_name.text = productDetails!!.TypeName
-                            tv_type_color.text = productDetails!!.TypeColor
-                            tv_rim_anteriore.text = resources.getString(R.string.front)+" "+if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
-                            tv_rim_posteriore.text = resources.getString(R.string.rear)+" "+if(!productDetails!!.rim_posteriore.isNullOrEmpty())productDetails!!.rim_posteriore else ""
-                            productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
-                            tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0")
-                            tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else "0")
-                            front_price = if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
-                            rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else 0.00
-                            buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
-                            //binding p
-                            // roduct description data
-                            tv_width.text = "Ant. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
-                            tv_diameter.text = productDetails!!.front_diameter
-                            tv_etoffset.text = productDetails!!.AlloyRimET
-                            tv_no_of_holes.text = productDetails!!.AlloyRimLochzahl
-                            tv_distance_between_holes.text = productDetails!!.AlloyRimLochkreis
-                            tv_winter_compatibilty.text = productDetails!!.winter
-                            tv_color.text = productDetails!!.TypeColor
+                           }
+                       }
+                   }
+               }
+               override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                   progressDialog.dismiss()
+                   Log.d("pdetails_data","f "+t.message)
+               }
+           })
 
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                progressDialog.dismiss()
-                Log.d("pdetails_data",""+t.message)
-            }
-        })
+       }
+       catch (e:Exception){
+           progressDialog.dismiss()
+           Log.d("pdetails_data","e "+e.message)
+       }
     }
 
 }
