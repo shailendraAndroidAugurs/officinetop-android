@@ -214,7 +214,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             searchedCategoryType?.let {
 
                 RetrofitClient.client.getSearchSparePartsBykeywords(keyword = searchedKeyWord, version_id = selectedVehicleVersionID, type = it, coupon = coupon, limit = current_page.toString(), favorite = favorite, user_id = getUserId()
-                        , priceRange = if (priceRangeFinal == -1f) "" else priceRangeString, priceSortLevel = priceSortLevel, brands = filterBrandList.joinToString(","), ratingLevel = ratingLevel, ratingRange = ratingString)
+                        , priceRange = if (priceRangeFinal == -1f) "" else priceRangeString, priceSortLevel = priceSortLevel, brands = filterBrandList.joinToString(","), ratingLevel = ratingLevel, ratingRange = ratingString,n3_Id = partID)
                         .enqueue(object : Callback<ResponseBody> {
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                 progress_bar.visibility = View.GONE

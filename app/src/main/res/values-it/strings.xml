@@ -34,11 +34,11 @@
     <!-- <string name="fb_login_protocol_scheme">fb566332697636167</string>-->
 
 
-    <string name="virtual_garage_title">Inserisci i dati dell\'auto</string>
+    <string name="virtual_garage_title">Oppure riceraca tramite versione dell\'auto </string>
     <string name="add_car">Aggiungi auto</string>
     <string name="modify_car">Aggiorna auto</string>
     <string name="plate">Targa</string>
-    <string name="plate_search_label">Oppure cerca con targa</string>
+    <string name="plate_search_label">Cerca con targa</string>
     <string name="car_parts">Tipo di pezzi di ricambio</string>
     <string name="feedback">Recensioni</string>
     <string name="best_selling_product">I più venduti</string>

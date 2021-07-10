@@ -76,19 +76,24 @@ class RimProductDetailsActivity : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, spinner_data)
         spinner_front.adapter = arrayAdapter
         spinner_rear.adapter = arrayAdapter
+        var front_selectedItem = "1"
+        var rear_selectedItem = "1"
+
         spinner_front.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, ""+(front_price*selectedItem.toInt()))
-                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, ""+(front_price*selectedItem.toInt())+(rear_price*selectedItem.toInt()))
+                front_selectedItem = parent.getItemAtPosition(position).toString()
+                tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, ""+(front_price*front_selectedItem.toInt()))
+                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, ""+((front_price*front_selectedItem.toInt())+(rear_price*rear_selectedItem.toInt())))
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         })
 
         spinner_rear.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(applicationContext,""+selectedItem,Toast.LENGTH_SHORT).show()
+                rear_selectedItem = parent.getItemAtPosition(position).toString()
+                tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, ""+(rear_price*rear_selectedItem.toInt()))
+                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, ""+((front_price*front_selectedItem.toInt())+(rear_price*rear_selectedItem.toInt())))
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         })
@@ -117,8 +122,8 @@ class RimProductDetailsActivity : AppCompatActivity() {
                                tv_rim_anteriore.text = resources.getString(R.string.front)+" "+if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
                                tv_rim_posteriore.text = resources.getString(R.string.rear)+" "+if(!productDetails!!.rim_posteriore.isNullOrEmpty())productDetails!!.rim_posteriore else ""
                                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
-                               tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0")
-                               tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else "0")
+                               tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0.0")
+                               tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else "0.0")
                                front_price = if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
                                rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else 0.00
                                buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
