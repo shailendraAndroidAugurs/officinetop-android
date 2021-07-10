@@ -52,11 +52,12 @@ class RimPartActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 Log.d("rim_productl_list", "onResponse: models = "+body)
-                progressDialog.dismiss()
+
                 if (isStatusCodeValid(body)) {
                     bindDatainView(body)
                 }
                 else{
+                    progressDialog.dismiss()
                     val body = JSONObject(body)
                     if (!body.getString("message").isNullOrBlank()) {
                         showInfoDialog(body.getString("message"), true) {
@@ -88,6 +89,7 @@ class RimPartActivity : AppCompatActivity() {
        var layoutmanager = LinearLayoutManager(this)
        rv_product_list.layoutManager = layoutmanager
        rv_product_list.adapter = adapter
+       progressDialog.dismiss()
    }
 
 }

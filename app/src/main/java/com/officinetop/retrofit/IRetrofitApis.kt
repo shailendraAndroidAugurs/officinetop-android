@@ -476,7 +476,8 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
                                  @Query(Constant.Path.workshopId) workshopId: String,
                                  @Query(Constant.Path.userid) user_id: String,
-                                 @Query(Constant.Path.serviceID) serviceID: String
+                                 @Query(Constant.Path.serviceID) serviceID: String,
+                                 @Query(Constant.Path.version_id) versionId: String
     ): Call<ResponseBody>
 
 
@@ -633,9 +634,7 @@ interface IRetrofitApis {
                    @Query(Constant.Path.version_id) version_id: String,
                    @Query("brand") brands: String? = "",
                    @Query(Constant.Path.userid) userid: String? = ""
-
-
-                   ): Call<ResponseBody>
+    ): Call<ResponseBody>
 
 
 
@@ -1713,7 +1712,9 @@ interface IRetrofitApis {
             @Field(Constant.Path.sortPrice) priceSortLevel: Int,
             @Field("brand") brands: String? = "",
             @Field("rating_level") ratingLevel: String,
-            @Field("rating_range") ratingRange: String
+            @Field("rating_range") ratingRange: String,
+            @Field(Constant.Path.n3_Id) n3_Id: Int
+
 
     ): Call<ResponseBody>
 

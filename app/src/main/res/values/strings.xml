@@ -43,11 +43,11 @@
     <string name="fb_login_protocol_scheme">fb225885835535723</string>
 
     <!--virtual garage-->
-    <string name="virtual_garage_title">Fill in the car data</string>
+    <string name="virtual_garage_title">Or search by version of the car</string>
     <string name="add_car">Add Car</string>
     <string name="modify_car">Update Car</string>
     <string name="plate">Licence Plate</string>
-    <string name="plate_search_label">Or Search With Licence Plate</string>
+    <string name="plate_search_label">Search with license plate</string>
 
     <!--Home-->
     <string name="car_parts">Spare Parts Type</string>
