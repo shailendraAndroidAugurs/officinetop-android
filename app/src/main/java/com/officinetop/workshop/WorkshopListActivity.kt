@@ -396,7 +396,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val sosAppointmentCall = RetrofitClient.client.getSosAppointmentCalendar(workshopUserId, selectedFormattedDate,
                 latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1")
 
-        val rimServicecall = RetrofitClient.client.getRimCalender(selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+        val rimServicecall = RetrofitClient.client.getRimCalender(0,selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
 
         val callback = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -1091,7 +1091,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     }
 
     private fun callRevisionApi(priceRangeString: String, priceSortLevel: Int,distancesort : Int, ratingformate: String) {
-          Log.d("check_lat_long",""+""+getLat()+"  "+getLong())
+        Log.d("check_lat_long",""+""+getLat()+"  "+getLong())
         RetrofitClient.client.getRevisionWorkshop(revisionServiceID, selectedFormattedDate, ratingformate, if (priceRangeFinal == -1) "" else priceRangeString, priceSortLevel, user_id = getUserId(), selectedCarId = getSavedSelectedVehicleID(), version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, user_lat = getLat(), user_long = getLong(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", favorite = if (isFavouriteChecked) "1" else "0", couponfilter = if (isOfferChecked) "1" else "0", mainCategoryId = revisionMain_categoryId,sort_by_distance = distancesort)
                 .onCall { networkException, response ->
                     networkException?.let {
