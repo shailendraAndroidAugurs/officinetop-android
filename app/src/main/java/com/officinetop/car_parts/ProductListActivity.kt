@@ -209,7 +209,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             coupon = "1"
             //CategoryType = "0"
         }
-
+             Toast.makeText(applicationContext,""+CategoryType,Toast.LENGTH_SHORT).show()
         if (isSearchPreview) {
             searchedCategoryType?.let {
 
