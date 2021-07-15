@@ -103,6 +103,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     var isTyre = false
     var isSOSService = false
     private var isCarWash = false
+    private var isrimService = false
     private var isSosEmergency: Boolean = false
     var couponList: List<Models.Coupon>? = null
     var isCarMaintenanceService = false
@@ -112,6 +113,10 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
     private var isMotService = false
     private var productID = ""
     var productQuantity = ""
+    private var assmbled_time = ""
+    var tempDistanceInitial = 0
+    var tempDistanceFinal = 100
+    private var WorkshopDistanceforDefault = Constant.defaultDistance
     private var motservicesaveragetime = ""
     var mainCategoryIDForAssembly: String = ""
     private var mainCategoryIDForCarWash: String = ""
@@ -174,7 +179,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
         if (intent != null && intent.hasExtra(Constant.Path.couponId))
             workshopCouponId = intent.getStringExtra(Constant.Path.couponId)
 
-
+         assmbled_time = intent.getStringExtra(Constant.Path.assemble_time)
         // Intent for revision workshop
         if (intent.hasExtra(Constant.Key.is_revision))
             isRevision = intent.getBooleanExtra(Constant.Key.is_revision, false)
@@ -195,6 +200,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         }
 
+        //intent for rim workshop
+
+        isrimService = intent?.getBooleanExtra(Constant.Key.is_rim_workshop_service, false) ?: false
 
         if (WorkshopJson != null) {
             servicesAverageTime = WorkshopJson.optString("service_average_time")
@@ -404,7 +412,11 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             getCalendarSOS()
         } else if (isCarMaintenanceService) {
             getCalendarMaintenance()
-        } else {
+        }
+        else if(isrimService){
+            getRimCalender()
+        }
+        else {
             if (intent != null && intent.hasExtra(Constant.Key.workshopCalendarPrice))
                 calendarPriceMap = intent.getSerializableExtra(Constant.Key.workshopCalendarPrice) as HashMap<String, String>
         }
@@ -1589,6 +1601,26 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
     private fun getCalendarSOS() {
         RetrofitClient.client.getSelectedWorkshopCalendarPriceSOs(workshopUsersId.toString(), calendarSelectedDateFilter, "1", sosServiceId, servicesPrice, servicesAverageTime, maxAppointment, mainCategoryId).onCall { networkException, response ->
+            if (response!!.isSuccessful) {
+                val bodyResponse = response.body()?.string()
+                if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
+                    val bodyJsonObject = JSONObject(bodyResponse)
+                    if (bodyResponse != null && bodyJsonObject.has("data_set") && bodyJsonObject.opt("data_set") != null) {
+                        val dataSet = getDataSetArrayFromResponse(bodyResponse)
+                        calendarPriceMap.clear()
+                        for (i in 0 until dataSet.length()) {
+                            val calendarDatePricesObject = Gson().fromJson<Models.CalendarPrice>(dataSet[i].toString(), Models.CalendarPrice::class.java)
+                            calendarPriceMap[calendarDatePricesObject.date] = calendarDatePricesObject.minPrice.toString()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun getRimCalender() {
+        RetrofitClient.client.getRimCalender(1,selectedDateFilter,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal").onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
                 if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {

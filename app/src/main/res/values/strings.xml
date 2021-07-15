@@ -773,6 +773,7 @@ Tel and Whatsaap: 328 5668826</string>
     <string name="distance_between_holes">Distance between holes</string>
     <string name="winter_compatibility">Winter compatibility</string>
     <string name="color">Color</string>
+    <string name="alloy_wheels">Alloy  Wheels</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

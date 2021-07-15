@@ -323,7 +323,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
         val gson = GsonBuilder().create()
         val productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
         if (current_page == 0) {
-            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash = false, isSOSAppointment = false, isMotService = false, isQuotes = false, isCarMaintenanceServices = false, mIsWorkshop = false, mIsRevision = false, mIsTyre = false, isrimService = false,mSelectedFormattedDate = selectedFormattedDate, mView = this, mContext = this, mCalendarPriceMap = calendarPriceMap, mPartIdMap = hashMapOf(), motPartIdMap = hashMapOf(), currentLat = "0.0", currentLong = "0.0", motservicesTime = "")
             linearLayoutManager = LinearLayoutManager(this)
             recycler_view.layoutManager = linearLayoutManager
             recycler_view.adapter = listAdapter

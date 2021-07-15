@@ -34,9 +34,9 @@ import java.io.Serializable
 import java.text.DecimalFormat
 import kotlin.math.*
 
-class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,
+class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList>, search_view: androidx.appcompat.widget.SearchView, mJsonArray: JSONArray, isCarWash: Boolean, isSOSAppointment: Boolean, isMotService: Boolean, isQuotes: Boolean, isCarMaintenanceServices: Boolean, mIsWorkshop: Boolean, mIsRevision: Boolean, mIsTyre: Boolean,isrimService: Boolean,
 
-                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>, private val currentLat: String = "0", private val currentLong: String = "0", motservicesTime: String, mot_type: String = "")
+                                   mSelectedFormattedDate: String, mView: FilterListInterface, mContext: Context, mCalendarPriceMap: HashMap<String, String>, mPartIdMap: HashMap<String, Models.servicesCouponData>, motPartIdMap: HashMap<String, Models.MotservicesCouponData>, private val currentLat: String = "0", private val currentLong: String = "0", motservicesTime: String, mot_type: String = "",assmbled_time:String ="")
 
     : RecyclerView.Adapter<ProductOrWorkshopListAdapter.ViewHolder>(), Filterable {
     private var productOrWorkshopListParent = productOrWorkshopList
@@ -79,9 +79,11 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
     private var serviceId: String = ""
     private var isSosEmergency: Boolean = false
     private var isCarWash: Boolean = false
+    private var isrimService: Boolean = false
     private var cartItem: Models.CartItem? = null
     private var currentLatLong: LatLng? = null
     private var mot_type: String = ""
+    private var assmbled_time: String = ""
 
     private var isLoadingVisible = false
     fun setWorkshopCategory(workshopDetail: String) {
@@ -139,6 +141,8 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
         this.motservicesTime = motservicesTime
         this.isCarWash = isCarWash
         this.mot_type = mot_type
+        this.isrimService = isrimService
+        this.assmbled_time = assmbled_time
 
     }
 
@@ -375,6 +379,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             , Constant.Key.is_quotes to isQuotesServices
                             , Constant.Key.is_sos_service to isSOSAppointment
                             , Constant.Key.is_motService to isMotService
+                            , Constant.Key.is_rim_workshop_service to isrimService
                             , Constant.Path.mot_id to id
                             , Constant.Path.latitude to latitude
                             , Constant.Path.longitude to longitude
@@ -394,8 +399,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                             , "QutoesServiceAverageTime" to if (json.has("service_average_time") && json.optString("service_average_time") != null && json.optString("service_average_time") != "null") json.optString("service_average_time") else ""
                             , Constant.Path.qutoesUserDescription to qutoesUserDescription
                             , Constant.Path.qutoesUserAttachImage to qutoesUserImage
-
-
+                            ,Constant.Path.assemble_time to assmbled_time
                     ).putExtras(bundle)
 
 
@@ -625,7 +629,7 @@ class ProductOrWorkshopListAdapter(productOrWorkshopList: ArrayList<Models.Produ
                  Log.d(" test Distance Response", response.toString())
                  var jsonObject: JSONObject = JSONObject(response);
                  var array: JSONArray = jsonObject.getJSONArray("routes");
-                 var routes: JSONObject = array.getJSONObject(0);
+                 var rfoutes: JSONObject = array.getJSONObject(0);
                  var legs: JSONArray = routes.getJSONArray("legs");
                  var steps: JSONObject = legs.getJSONObject(0);
                  var distance: JSONObject = steps.getJSONObject("distance");

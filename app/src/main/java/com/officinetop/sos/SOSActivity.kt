@@ -146,8 +146,7 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                         Log.d("networkException", it.localizedMessage)
                     }
                     response?.let {
-                        if (isStatusCodeValid(response.toString())) {
-                            try {
+                        try {
                                 val jsonObject = JSONObject(response.body()?.string())
                                 val data_set = if (jsonObject.has("data_set") && jsonObject.get("data_set") != null && !jsonObject.getString("data_set").isNullOrBlank() && !jsonObject.getString("data_set").equals("null")) jsonObject.getJSONArray("data_set") else JSONArray()
                                 Log.e("isSuccessful", data_set.toString())
@@ -158,25 +157,28 @@ class SOSActivity : BaseActivity(), OnMapReadyCallback, GoogleApiClient.Connecti
                                         val data = Gson().fromJson<Models.AllWrackerWorkshops>(data_set.getJSONObject(i).toString(), Models.AllWrackerWorkshops::class.java)
                                     allWrackerServicesWorkshopList.add(data)
                                     }
+
+
                                     val data = allWrackerServicesWorkshopList.get(0)
                                     getWrackersServices(data.id.toString(), data.usersId.toString(), getSelectedCar()?.carVersionModel?.idVehicle
                                             ?: "", true)
                                 }
+                            else {
+                                    val jsonObject = JSONObject(response.body()?.string())
+                                    if (!jsonObject.getString("message").isNullOrBlank()) {
+                                        showInfoDialog(jsonObject.getString("message"), true) {
+                                            onBackPressed()
+                                        }
+                                    }
+
+                                }
 
                             } catch (e: Exception) {
                                 e.printStackTrace()
+                                Log.e("isSuccessful", ""+e.message)
                             }
                             bindAllWrackerServicesOnMap()
-                        }else{
-                                val jsonObject = JSONObject(response.body()?.string())
-                            if (!jsonObject.getString("message").isNullOrBlank()) {
-                                showInfoDialog(jsonObject.getString("message"), true) {
-                                    onBackPressed()
-                                }
-                            }
-
                         }
-                    }
                 }
     }
 
