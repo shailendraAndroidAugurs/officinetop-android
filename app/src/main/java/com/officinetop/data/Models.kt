@@ -2210,7 +2210,10 @@ object Models {
             @SerializedName("name")
             val name: String,
             @SerializedName("search_type")
-            val type: String
+            val type: String,
+            @SerializedName("id")
+            val id: Int
+
     )
 
     data class Search_SparePart(
@@ -2221,7 +2224,9 @@ object Models {
             @SerializedName("productid")
             val productid: String,
             @SerializedName("products_name")
-            val productsName: String
+            val productsName: String,
+            @SerializedName("id")
+            val id: Int
 
     )
     data class Search_SparePart_Category(
@@ -2240,7 +2245,10 @@ object Models {
             @SerializedName("name")
             val name: String,
             @SerializedName("search_type")
-            val type: String
+            val type: String,
+            @SerializedName("id")
+            val id: Int
+
 
 
     )

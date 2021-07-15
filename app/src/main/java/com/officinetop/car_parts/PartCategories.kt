@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView.OnEditorActionListener
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -426,7 +425,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                         searchStoreQuery(SearchOENList[position].name)
                     }
 
-                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type, Constant.Key.searchedKeyword to SearchOENList[position].name))
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchOENList[position].type, Constant.Key.searchedKeyword to SearchOENList[position].name,Constant.Key.partItemID to SearchOENList[position].id))
 
                 }
             }
@@ -478,7 +477,8 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                     if (isLoggedIn()) {
                         searchStoreQuery(SearchN3PartList[position].name)
                     }
-                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type, Constant.Key.searchedKeyword to SearchN3PartList[position].name))
+
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchN3PartList[position].type, Constant.Key.searchedKeyword to SearchN3PartList[position].name, Constant.Key.partItemID to SearchN3PartList[position].id))
 
                 }
             }
@@ -532,7 +532,9 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
                     if (isLoggedIn()) {
                         searchStoreQuery(SearchcategoryList[position].name)
                     }
-                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchcategoryList[position].type, Constant.Key.searchedKeyword to SearchcategoryList[position].name))
+
+
+                    startActivity(intentFor<ProductListActivity>(Constant.Key.is_searchPreview to true, Constant.Key.searchedCategoryType to SearchcategoryList[position].type, Constant.Key.searchedKeyword to SearchcategoryList[position].name,Constant.Key.partItemID to SearchcategoryList[position].id))
 
                 }
             }
@@ -593,7 +595,7 @@ class   PartCategories : BaseActivity(), PartCategoryInterface {
 
 
                     startActivity(intentFor<ProductDetailActivity>(
-                            Constant.Path.productDetails to SearchProductList[position].productid).forwardResults())
+                            Constant.Path.productDetails to SearchProductList[position].productid,Constant.Key.partItemID to SearchProductList[position].id).forwardResults())
                 }
             }
         }
