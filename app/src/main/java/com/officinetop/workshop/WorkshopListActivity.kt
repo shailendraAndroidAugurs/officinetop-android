@@ -64,7 +64,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
     private var isCarMaintenanceService = false
     private var isMotService = false
     private var isCarWash = false
-    private var isrimService = true
+    private var isrimService = false
     private var mot_type = ""
     private val filterBrandList: MutableList<String> = ArrayList()
     var selectedItemPosition = 0
@@ -811,7 +811,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         var productOrWorkshopList: ArrayList<Models.ProductOrWorkshopList> = ArrayList<Models.ProductOrWorkshopList>()
         if (jsonArray.length() == 0) {
             productOrWorkshopList.clear()
-            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService,isrimService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type,assmbled_time)
             recycler_view.adapter = listAdapter
             //   Toast.makeText(this,"If is run..."+jsonArray.length(),Toast.LENGTH_LONG).show();
         } else {
@@ -819,7 +819,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
             val gson = GsonBuilder().create()
             productOrWorkshopList = gson.fromJson(jsonArray.toString(), Array<Models.ProductOrWorkshopList>::class.java).toCollection(java.util.ArrayList<Models.ProductOrWorkshopList>())
             productOrWorkshopList.get(0).service_id
-            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type)
+            listAdapter = ProductOrWorkshopListAdapter(productOrWorkshopList, search_view, jsonArray, isCarWash, isSOSAppointment, isMotService, isQuotes, isCarMaintenanceService, isWorkshop, revisonService, isTyreService,isrimService, selectedFormattedDate, this, this, calendarPriceMap, partidhasMap, motpartlist, getLat(), getLong(), motservices_time, mot_type,assmbled_time)
             listAdapter.getQuotesIds(quotesServiceQuotesInsertedId, quotesMainCategoryId, qutoesUserDescription, qutoesUserImage)
             if (intent.hasExtra(Constant.Key.cartItem))
                 listAdapter.getCartItem(cartItem!!)
