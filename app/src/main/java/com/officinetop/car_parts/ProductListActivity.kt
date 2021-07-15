@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -118,6 +117,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
 
         intent.printValues(localClassName)
 
+         Log.d("check_n3_id",""+intent.getIntExtra(Constant.Key.partItemID, 0))
         // push up the progress bar
         app_bar.post {
             val params = progress_bar.layoutParams as FrameLayout.LayoutParams
@@ -209,7 +209,8 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             coupon = "1"
             //CategoryType = "0"
         }
-             Toast.makeText(applicationContext,""+CategoryType,Toast.LENGTH_SHORT).show()
+
+
         if (isSearchPreview) {
             searchedCategoryType?.let {
 
