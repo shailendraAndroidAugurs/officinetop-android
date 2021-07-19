@@ -69,7 +69,7 @@ class RimActivity : AppCompatActivity() {
         else
              samedata = 0
 
-          RetrofitClient.client.rimsearch(et_front_width.text.toString()+".00", et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString()+".00",et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString()).enqueue(object : Callback<ResponseBody> {
+          RetrofitClient.client.rimsearch(et_front_width.text.toString()+".00", et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString()+".00",et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString(),5).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progressDialog.dismiss()
