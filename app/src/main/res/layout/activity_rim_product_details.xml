@@ -172,7 +172,7 @@
                 </LinearLayout>
 
 
-             <RelativeLayout
+             <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:orientation="vertical"
@@ -189,6 +189,12 @@
                      android:textSize="18dp"
                      android:layout_alignParentLeft="true" />
 
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="vertical"
+                     >
+
                  <TextView
                      android:id="@+id/tv_rim_front_price"
                      android:layout_width="wrap_content"
@@ -199,6 +205,8 @@
                      android:visibility="visible"
                      android:layout_toLeftOf="@+id/spinner_front"
                      android:textSize="18dp"
+                     android:padding="@dimen/_5sdp"
+                     android:background="@color/grey_light_bg"
                      android:layout_marginRight="@dimen/_5sdp"
                      />
 
@@ -209,9 +217,11 @@
                      android:layout_alignParentRight="true"
                      />
 
+                 </RelativeLayout>
 
-             </RelativeLayout>
-             <RelativeLayout
+
+             </LinearLayout>
+             <LinearLayout
                  android:id="@+id/laout_rim_posteriore"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
@@ -229,6 +239,12 @@
                      android:layout_alignParentLeft="true"
                      />
 
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="vertical"
+                     >
+
                  <TextView
                      android:id="@+id/tv_rim_rear_price"
                      android:layout_width="wrap_content"
@@ -240,6 +256,8 @@
                      android:layout_toLeftOf="@+id/spinner_rear"
                      android:textSize="18dp"
                      android:layout_marginRight="@dimen/_5sdp"
+                     android:padding="@dimen/_5sdp"
+                     android:background="@color/grey_light_bg"
                      />
 
                  <Spinner
@@ -249,7 +267,9 @@
                      android:layout_alignParentRight="true"
                      />
 
-             </RelativeLayout>
+                 </RelativeLayout>
+
+             </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

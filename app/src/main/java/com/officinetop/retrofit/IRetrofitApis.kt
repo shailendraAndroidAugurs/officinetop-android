@@ -104,7 +104,8 @@ interface IRetrofitApis {
                   @Query("rear_diameter") rear_diameter: String,
                   @Query("rear_rim_et") rear_rim_et: String,
                   @Query("rear_number_of_holes") rear_number_of_holes: String,
-                  @Query("rear_bolts_distance") rear_bolts_distance: String
+                  @Query("rear_bolts_distance") rear_bolts_distance: String,
+                  @Query("limit") limit: Int
     ): Call<ResponseBody>
 
 
