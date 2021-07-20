@@ -419,6 +419,7 @@ object Constant {
         const val saved_status = "saved_status"
         const val complete_address = "complete_address"
         const val assemble_time = "assemble_time"
+        const val current_location = "current_location"
     }
 
     object RC {
