@@ -396,7 +396,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
         val sosAppointmentCall = RetrofitClient.client.getSosAppointmentCalendar(workshopUserId, selectedFormattedDate,
                 latitude, longitude, serviceID.toString(), if (getSavedSelectedVehicleID().equals("")) getSelectedCar()?.carVersionModel?.idVehicle!! else getSavedSelectedVehicleID(), distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal", version_id = getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId = mainCategoryId, wrecker_service_type = "1")
 
-        val rimServicecall = RetrofitClient.client.getRimCalender(0,selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
+        val rimServicecall = RetrofitClient.client.getRimCalender(5,0,selectedFormattedDate,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal")
 
         val callback = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -545,6 +545,7 @@ class WorkshopListActivity : BaseActivity(), FilterListInterface {
 
                     return isLastPage
                 }
+
 
                 override fun isLoading(): Boolean {
                     return isLoading

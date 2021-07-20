@@ -1620,7 +1620,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
 
     private fun getRimCalender() {
-        RetrofitClient.client.getRimCalender(1,selectedDateFilter,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal").onCall { networkException, response ->
+        RetrofitClient.client.getRimCalender(5,1,selectedDateFilter,assmbled_time,getLat(),getLong(),distance_range = if ((tempDistanceInitial.toString() == "0" && tempDistanceFinal.toString() == "100")) WorkshopDistanceforDefault else "$tempDistanceInitial,$tempDistanceFinal").onCall { networkException, response ->
             if (response!!.isSuccessful) {
                 val bodyResponse = response.body()?.string()
                 if (bodyResponse != null && isStatusCodeValid(bodyResponse)) {
