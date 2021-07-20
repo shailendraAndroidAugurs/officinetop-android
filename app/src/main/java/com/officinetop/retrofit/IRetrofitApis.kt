@@ -332,13 +332,14 @@ interface IRetrofitApis {
 
 
     @GET(Constant.UrlEndPoints.alloy_rim_calender)
-    fun getRimCalender(@Query("thirty_days") thirty_days: Int,
+    fun getRimCalender(@Query("limit") limit: Int,
+                       @Query("thirty_days") thirty_days: Int,
                        @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
                        @Query(Constant.Path.assemble_time) assemble_time: String,
                        @Query("user_lat") user_lat: String,
                        @Query("user_long") user_long: String,
                        @Query("distance_range") distance_range: String
-    ): Call<ResponseBody>
+                       ): Call<ResponseBody>
 
     @GET(Constant.UrlEndPoints.alloy_rims_by_attachment)
     fun getRimPorductlist(@Query(Constant.Path.serviceID) serviceId: Int,
