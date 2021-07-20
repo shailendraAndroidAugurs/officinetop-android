@@ -545,6 +545,17 @@ inline fun Context.storeAddress(stateName: String?, zipCode: String?, cityName: 
     user_save_address.edit().putString(Constant.Path.stateName,stateName).putString(Constant.Path.zipCode,zipCode).putString(Constant.Path.cityName, cityName).putString(Constant.Path.via, via).putString(Constant.Path.saved_status, saved_status).putString(Constant.Path.complete_address, complete_address).apply()
 }
 
+inline fun Context.currentLocation(isAutomatic : Boolean) {
+    val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
+    user_save_address.edit().putBoolean(Constant.Path.current_location,isAutomatic).apply()
+}
+
+inline fun Context.isAutomaticLocation():Boolean{
+    val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
+    val  islocation = user_save_address.getBoolean(Constant.Path.current_location,false)
+    return islocation
+}
+
 inline fun Context.getAdress():ArrayList<String> {
     val user_save_address = getSharedPreferences(Constant.Key.userAddress, Context.MODE_PRIVATE)
     val address_data = ArrayList<String>()

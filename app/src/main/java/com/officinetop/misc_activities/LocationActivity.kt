@@ -89,6 +89,7 @@ class LocationActivity : BaseActivity() {
           if(!manual_location) {
               if (isLocationEnabled(this)) {
                   isAutomaticLocationSave = true
+                  currentLocation(true)
                   getcurrentLocation()
               } else {
                   showInfoDialog("need to enable location services")
@@ -256,6 +257,7 @@ class LocationActivity : BaseActivity() {
             Address = place?.address.toString()
             if (place != null) {
                 isAutomaticLocationSave = false
+                currentLocation(false)
                 setLocationInView(place.latLng?.latitude, place.latLng?.longitude)
 
 
