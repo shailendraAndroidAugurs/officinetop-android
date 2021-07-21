@@ -171,8 +171,8 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         createMyCarDialog()
         toolbar_car_subtitle.visibility = View.GONE
 
-        if (isAutomaticLocation())
-        updateCurrentLocation()
+//        if (isAutomaticLocation())
+//        updateCurrentLocation()
 
         user_location.setOnClickListener {
             startActivity(intentFor<LocationActivity>())
@@ -277,10 +277,9 @@ class HomeActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-
-
                     }
                 }
+
     }
 
 
