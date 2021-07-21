@@ -331,15 +331,7 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
 
-    @GET(Constant.UrlEndPoints.alloy_rim_calender)
-    fun getRimCalender(@Query("limit") limit: Int,
-                       @Query("thirty_days") thirty_days: Int,
-                       @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
-                       @Query(Constant.Path.assemble_time) assemble_time: String,
-                       @Query("user_lat") user_lat: String,
-                       @Query("user_long") user_long: String,
-                       @Query("distance_range") distance_range: String
-                       ): Call<ResponseBody>
+
 
     @GET(Constant.UrlEndPoints.alloy_rims_by_attachment)
     fun getRimPorductlist(@Query(Constant.Path.serviceID) serviceId: Int,
@@ -483,6 +475,16 @@ interface IRetrofitApis {
                                  @Query(Constant.Path.version_id) versionId: String
     ): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.alloy_rim_calender)
+    fun getRimCalender(@Query("limit") limit: Int,
+                       @Query("thirty_days") thirty_days: Int,
+                       @Query(Constant.Path.workshopFilterSelectedDate) selected_date: String,
+                       @Query(Constant.Path.assemble_time) assemble_time: String,
+                       @Query("user_lat") user_lat: String,
+                       @Query("user_long") user_long: String,
+                       @Query("distance_range") distance_range: String
+    ): Call<ResponseBody>
+
 
 
 
@@ -566,9 +568,9 @@ interface IRetrofitApis {
             @Field(Constant.Path.categoryId) categoryId: String,
             @Field(Constant.Path.mainCategoryId) mainCategoryId: String,
             @Field(Constant.Path.selectedCarId) selectedCarId: String,
-            @Field(Constant.Path.couponId) couponId: String,
             @Field(Constant.Path.orderId) orderId: String,
             @Field("version_id") versionId: String,
+            @Field(Constant.Path.couponId) couponId: String,
             @Field("temp_slot_id") temp_slot_id: String,
             @Field(Constant.Path.specialConditionId) specialConditionId: String,
             @Field(Constant.Path.workshopId) workshopId: String,
