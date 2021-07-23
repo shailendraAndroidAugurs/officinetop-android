@@ -469,7 +469,7 @@ interface IRetrofitApis {
     fun getRimWorkshopPackageNew(@Query(Constant.Path.workshopFilterSelectedDate) selectedDate: String,
                                  @Query(Constant.Path.service_average_time) service_average_time: String,
                                  @Query(Constant.Path.mainCategoryId) mainCategoryId: String,
-                                 @Query(Constant.Path.workshopId) workshopId: String,
+                                 @Query(Constant.Path.workshopId) workshopId: Int,
                                  @Query(Constant.Path.userid) user_id: String,
                                  @Query(Constant.Path.serviceID) serviceID: String,
                                  @Query(Constant.Path.version_id) versionId: String

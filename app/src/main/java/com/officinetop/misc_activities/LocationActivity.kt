@@ -92,7 +92,7 @@ class LocationActivity : BaseActivity() {
                   currentLocation(true)
                   getcurrentLocation()
               } else {
-                  showInfoDialog("need to enable location services")
+                  showInfoDialog(resources.getString(R.string.alert_message_location))
               }
           }
 

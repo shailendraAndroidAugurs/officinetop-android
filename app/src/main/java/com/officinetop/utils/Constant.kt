@@ -285,6 +285,7 @@ object Constant {
         const val start = "start"
         const val item_id = "item_id"
         const val serviceID = "service_id"
+        const val rimServiceId = "rim_service_id"
         const val PartID = "part_id"
         const val Motpartdata = "Motpart_data"
         const val categoryNumber = "categoryNumber"

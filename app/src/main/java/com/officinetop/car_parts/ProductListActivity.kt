@@ -566,7 +566,7 @@ class ProductListActivity : BaseActivity(), FilterListInterface {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             toolbar.setNavigationOnClickListener { dismiss() }
 
-            toolbar_title.text = "Sort"
+            toolbar_title.text = resources.getString(R.string.sort)
             toolbar.inflateMenu(R.menu.menu_single_item)
             toolbar.setOnMenuItemClickListener {
 
