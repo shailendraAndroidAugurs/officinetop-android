@@ -45,7 +45,7 @@
     <string name="more">Vedi tutto</string>
     <string name="dialog_message_add_car">Aggiungi i dettagli dell\'auto per ottenere prodotti e servizi più adatti.</string>
     <string name="dialog_message_select_car">Seleziona i dettagli dell\'auto per ottenere prodotti e servizi adeguati.</string>
-    <string name="sort">Ordina lista</string>
+    <string name="sort">Ordina</string>
     <string name="WorkshopSort">Ordina</string>
     <string name="filter">Filtri</string>
     <string name="map"> Mappa</string>
@@ -677,7 +677,7 @@ informazioni in accordo alle </string>
     <string name="sat">SAB</string>
     <string name="email_not_valid">Email not valid</string>
     <string name="category">Categoria</string>
-    <string name="razorpay_button_description">e carta di debito or credito</string>
+    <string name="razorpay_button_description">e carta di debito o credito</string>
     <string name="price_sort">Prezzo (prima il più basso)</string>
     <string name="distance_sort">Distanza (prima il più vicino)</string>
     <string name="mot_details_alert">non è possibile procedere, contattare i nostri uffici per i dettagli</string>
@@ -690,6 +690,7 @@ informazioni in accordo alle </string>
     <string name="alloy_wheels">Cerchi in lega</string>
     <string name="product_not_found_msg">Non hai trovato i prodotti? \n contattci \n Email: assistenza@officinetop.com \n
 Tel e Whatsaap: 328 5668826</string>
+    <string name="alert_message_location">È necessario attivare la posizione</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
@@ -702,7 +703,7 @@ Tel e Whatsaap: 328 5668826</string>
     </string-array>
     <string-array name="Address_Type">
         <item>Casa</item>
-        <item>Office</item>
+        <item>Ufficio</item>
         <item>Altro</item>
     </string-array>
     <string-array name="notify">

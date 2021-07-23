@@ -639,7 +639,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
             //set slider
             createImageSliderDialog()
             image_slider.removeAllSliders()
-0
+
             for (i in 0 until imagesArray.length()) {
                 //   val imageRes = Constant.itemImageBaseURL + imagesArray.getJSONObject(i).getString("image_name")
                 val imageRes = imagesArray.getJSONObject(i).getString("image_url")
@@ -919,7 +919,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
 
         if (isAssembly)
             RetrofitClient.client.getAssemblyWorkshopPackageDetail(workshopUsersId, selectedDateFilter, productID, getSavedSelectedVehicleID(), getUserId(), workshopCategoryId, servicesAverageTime.toString(), getSelectedCar()?.carVersionModel?.idVehicle!!, mainCategoryId).enqueue(callback)
-        else if (isRevision) {
+        else if (isRevision || isrimService) {
             if (WorkshopJson != null) {
                 serviceID = WorkshopJson.optString("service_id")
 
@@ -953,6 +953,9 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     ?: "", quotesServicesAvarageTime, maxAppointment = maxAppointment).enqueue(callback)
         else if (isMotService)
             RetrofitClient.client.getMotServicePackageDetail(workshopUsersId, workshopCategoryId.toInt(), motType, selectedDateFilter, getSavedSelectedVehicleID(), getUserId(), motservicesaveragetime, workshopCouponId, mainCategoryId).enqueue(callback)
+        else if (isrimService)
+            RetrofitClient.client.getRimWorkshopPackageNew(selectedDateFilter,servicesAverageTime,mainCategoryId,workshopId = workshopUsersId,user_id = getUserId(),serviceID = serviceID,versionId = getSelectedCar()?.carVersionModel?.idVehicle.toString()).enqueue(callback)
+
         else RetrofitClient.client.getWorkshopPackageDetailNew(workshopUsersId, workshopCategoryId.toInt(), selectedDateFilter, getSelectedCar()?.carSize, getUserId(), getSavedSelectedVehicleID(), mainCategoryIDForCarWash, getSelectedCar()?.carVersionModel?.idVehicle!!, servicesAverageTime, maxAppointment, hourlyRate, getSelectedCar()?.carMakeModel?.brandID!!, getSelectedCar()?.carModel?.modelID + "/" + getSelectedCar()?.carModel?.modelYear).enqueue(callback)
 
         Log.d("check_service_time",""+averageServiceTime)
@@ -999,6 +1002,7 @@ class WorkshopDetailActivity : BaseActivity(), OnGetFeedbacks {
                     packageTiming.text = getFormattedTime(packageDetails.getString("start_time"), packageDetails.getString("end_time"))
                     packagePrice.text = try {
                         if (isCarMaintenanceService) {
+
                             getString(R.string.prepend_euro_symbol_string, carMaintenanceServicePrice.toDouble().roundTo2Places().toString())
                         } else if (isRevision) {
                             if (packageDetails.has("discount_type") && packageDetails.optString("discount_type") == "0") {
