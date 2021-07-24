@@ -38,7 +38,7 @@ class RimActivity : AppCompatActivity() {
         setContentView(R.layout.activity_rim)
         setSupportActionBar(toolbar)
         progressDialog = getProgressDialog()
-        toolbar_title.text = resources.getString(R.string.find_the_cicle)
+        toolbar_title.text = resources.getString(R.string.rim)
         btn_search_for.setOnClickListener {
             if (!isValid(et_front_width, et_front_diameter, et_front_et, et_front_no_of_holes,et_front_distance_holes,et_rear_width,et_rear_diameter,et_rear_et,et_rear_no_of_holes,et_rear_distamce_holes)) {
                return@setOnClickListener

@@ -688,6 +688,7 @@ Tel and Whatsaap: 328 5668826</string>
     <string name="sat">SAT</string>
     <string name="email_not_valid">Email not valid</string>
     <string name="growing">Growing</string>
+    <string name="rim">Rims</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>
