@@ -632,11 +632,11 @@ informazioni in accordo alle </string>
     <string name="backTransfer_note1">indicare nella causale il numero di ordine a cui si riferisce il pagamento.</string>
     <string name="backTransfer_note2">l\'ordine sarà valido solo dopo ricevuto l\'accredito sul nostro conto.</string>
     <string name="copied">Copiato</string>
-    <string name="number_of_holes">Numro di fori</string>
-    <string name="distance_between_bolts">Distranza tra bulloni</string>
-    <string name="search_by_measures">Ricerca tramit misure</string>
+    <string name="number_of_holes">Numero di fori</string>
+    <string name="distance_between_bolts">Distanza tra i bulloni</string>
+    <string name="search_by_measures">Ricerca tramite misure</string>
     <string name="bank_transfer_proceed">Vuoi procedere con Bonifico Bancario ?</string>
-    <string name="equal_to_the_previous_ones">Uguale ai quarti anteriori</string>
+    <string name="equal_to_the_previous_ones">Uguale a quelli interiori</string>
     <string name="please_login_to_continue_for_add_wish_list">Effettua il login per continuare per Aggiungi alla lista dei desideri</string>
     <string name="term_condition_policy_login">Continuando, consenti a questa app di utilizzare le tue informazioni in accordo alle</string>
     <string name="condition_link">https://www.officinetop.com/condizioni-uso/</string>
@@ -691,6 +691,7 @@ informazioni in accordo alle </string>
     <string name="product_not_found_msg">Non hai trovato i prodotti? \n contattci \n Email: assistenza@officinetop.com \n
 Tel e Whatsaap: 328 5668826</string>
     <string name="alert_message_location">È necessario attivare la posizione</string>
+    <string name="rim">Cerchioni</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>

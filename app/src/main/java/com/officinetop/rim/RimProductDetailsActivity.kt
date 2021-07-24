@@ -1,13 +1,12 @@
 package com.officinetop.rim
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.officinetop.R
@@ -30,6 +29,7 @@ import java.io.Serializable
 
 class RimProductDetailsActivity : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
+    private lateinit var imageDialog: Dialog
     private var productDetails: Models.rimProductDetails? = null
     var front_id = ""
     var rear_id = ""
@@ -128,7 +128,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
                                rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else 0.00
                                buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
                                //binding p
-                               // roduct description data
+                               // roduct descript/ion data
                                tv_width.text = "Ant. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
                                tv_diameter.text = productDetails!!.front_diameter
                                tv_etoffset.text = productDetails!!.AlloyRimET
@@ -136,6 +136,11 @@ class RimProductDetailsActivity : AppCompatActivity() {
                                tv_distance_between_holes.text = productDetails!!.AlloyRimLochkreis
                                tv_winter_compatibilty.text = productDetails!!.winter
                                tv_color.text = productDetails!!.TypeColor
+
+                               prodcut_image.setOnClickListener {
+                                   createImageDialog(productDetails!!.ImageUrl)
+                                   imageDialog.show()
+                               }
 
                            }
                        }
@@ -152,6 +157,21 @@ class RimProductDetailsActivity : AppCompatActivity() {
            progressDialog.dismiss()
            Log.d("pdetails_data","e "+e.message)
        }
+    }
+
+    private fun createImageDialog(imageRes: String) {
+        imageDialog = Dialog(this, R.style.DialogSlideAnimStyle)
+        val slider = ImageView(this)
+        loadImage(imageRes, slider)
+        slider.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        with(imageDialog) {
+            requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+            setContentView(slider)
+            window?.setGravity(android.view.Gravity.TOP)
+            window?.setLayout(android.view.WindowManager.LayoutParams.MATCH_PARENT, android.view.WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
+            create()
+        }
     }
 
 }
