@@ -149,18 +149,23 @@ class OnlinePaymentScreen : BaseActivity() {
             cartItemType = intent.getStringExtra(Constant.Path.cartItemType)
 
         // 0 only for product, 1 only for services , 2 only for services with product ,3 mix item
+
         if (cartItemType.equals("1")) {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.services_address_note)
             layout_address.visibility = View.GONE
             tv_delivery_address_txt.visibility = View.GONE
+            layout_pay_on_workshop.visibility = View.VISIBLE
         } else if (cartItemType.equals("2") || cartItemType.equals("3")) {
             tv_notes.visibility = View.VISIBLE
             tv_notes.text = getString(R.string.product_services_address_note)
             layout_address.visibility = View.GONE
             tv_delivery_address_txt.visibility = View.GONE
+            layout_pay_on_workshop.visibility = View.VISIBLE
 
         }
+
+        Log.d("check_data_res",""+cartItemType)
 
 
 
