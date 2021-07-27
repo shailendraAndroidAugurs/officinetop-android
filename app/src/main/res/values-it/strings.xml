@@ -686,7 +686,7 @@ informazioni in accordo alle </string>
     <string name="et_off_set">ET (offset)</string>
     <string name="no_of_holes">No. di fori</string>
     <string name="distance_between_holes">Distanza tra fori</string>
-    <string name="winter_compatibility">Winter compatibility</string>
+    <string name="winter_compatibility">Compatibilità invernale</string>
     <string name="alloy_wheels">Cerchi in lega</string>
     <string name="product_not_found_msg">Non hai trovato i prodotti? \n contattci \n Email: assistenza@officinetop.com \n
 Tel e Whatsaap: 328 5668826</string>
@@ -696,7 +696,7 @@ Tel e Whatsaap: 328 5668826</string>
         <item>Gomme</item>
         <item>Manutenzione</item>
         <item>Revisioni</item>
-        <item>Lavaggi</item>0
+        <item>Lavaggi</item>
         <item>Ricambi</item>
         <item>Tagliandi</item>
         <item>SOS</item>
