@@ -93,13 +93,13 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
                 val latestLocation = locationList[locationList.size - 1]
                 // add marker
 
-               currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
+             currentLatLong = LatLng(latestLocation.latitude, latestLocation.longitude)
                 //currentLatLong = LatLng(44.186516, c)
-               // currentLatLong = LatLng(44.186516, 12.2142107)
+               //currentLatLong = LatLng(44.186516, 12.2142107)
                 val langCode = getSharedPreferences(Constant.Key.currentLatLong, Context.MODE_PRIVATE)
                 val UserSavedLatitude = langCode.getString(Constant.Path.latitude, "0.0")
                 val UserSavedLogitude = langCode.getString(Constant.Path.longitude, "0.0")
-                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0")
+                if (!UserSavedLatitude.isNullOrBlank() && !UserSavedLogitude.isNullOrBlank() && UserSavedLatitude != "0.0" && UserSavedLogitude != "0.0" && !isAutomaticLocation() )
                     storeLatLong(UserSavedLatitude.toDouble(), UserSavedLogitude.toDouble())
                 else {
                     if (currentLatLong?.latitude != 0.0 && currentLatLong?.longitude != 0.0) {
