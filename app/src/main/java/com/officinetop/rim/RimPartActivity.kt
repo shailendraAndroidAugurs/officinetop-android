@@ -1,12 +1,16 @@
 package com.officinetop.rim
 
 import android.app.ProgressDialog
+import android.nfc.tech.MifareUltralight
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.officinetop.R
+import com.officinetop.adapter.PaginationListener
 import com.officinetop.adapter.RimProductlistAdapter
 import com.officinetop.data.*
 import com.officinetop.retrofit.RetrofitClient
@@ -14,7 +18,10 @@ import com.officinetop.utils.Constant
 import com.officinetop.utils.getProgressDialog
 import com.officinetop.utils.showInfoDialog
 import com.officinetop.virtual_garage.AddVehicleActivity
+import kotlinx.android.synthetic.main.activity_maintenance.*
 import kotlinx.android.synthetic.main.activity_rim_part.*
+import kotlinx.android.synthetic.main.activity_tyre_list.*
+import kotlinx.android.synthetic.main.activity_tyre_list.recycler_view
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
 import org.json.JSONObject
@@ -25,6 +32,13 @@ import retrofit2.Response
 class RimPartActivity : AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
     val rimProductlist: MutableList<Models.rimProductDetails> = ArrayList()
+    var layoutmanager = LinearLayoutManager(this)
+    var adapter = RimProductlistAdapter(this,rimProductlist)
+    private var isListLoading = false
+    private val PAGESTART = 0
+    private var currentPage = PAGESTART
+    private var isLastPageOfList = false
+    private var isFirstTimeLoading = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,21 +56,65 @@ class RimPartActivity : AppCompatActivity() {
 //            var rear_width_id = intent.getStringExtra("rear_width_id")
         }
 
-        loadProductWithModel("2","4","4","4","4")
+        loadProductWithModel(false,"2","4","4","4","4",currentPage)
+        setPaginationScroll()
+
     }
 
-  fun loadProductWithModel(carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String) {
+
+    private fun setPaginationScroll() {
+
+        val recyclerViewOnScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = layoutmanager.childCount
+                val totalItemCount: Int = layoutmanager.itemCount
+                val firstVisibleItemPosition: Int = layoutmanager.findFirstVisibleItemPosition()
+                if (!isListLoading && !isLastPageOfList) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
+                        currentPage += 5
+                        isListLoading = true
+/*
+                        progress_bar_bottom.visibility = View.VISIBLE
+*/
+                        loadProductWithModel(true,"2","4","4","4","4",currentPage)
+
+                    }
+                }
+            }
+        }
+        rv_product_list.addOnScrollListener(recyclerViewOnScrollListener)
+    }
+
+
+    fun loadProductWithModel(ispagination : Boolean,carTypeId: String, frontDiameterId: String, rearDiameterId: String, frontWidthId: String, rearWidthId: String,limit : Int) {
         progressDialog = getProgressDialog()
         progressDialog.show()
-       RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId,getUserId()).enqueue(object : Callback<ResponseBody> {
+       RetrofitClient.client.getRimproductlist(carTypeId,frontDiameterId,rearDiameterId,frontWidthId,rearWidthId,getUserId(),limit).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 Log.d("rim_productl_list", "onResponse: models = "+body)
-
+                isListLoading = false
                 if (isStatusCodeValid(body)) {
-                    bindDatainView(body)
+                    val dataset = getDataSetArrayFromResponse(body)
+                    progressDialog.dismiss()
+                    for (i in 0 until dataset.length()) {
+                        val data = Gson().fromJson<Models.rimProductDetails>(dataset.getJSONObject(i).toString(), Models.rimProductDetails::class.java)
+                        rimProductlist.add(data)
+                    }
+                   if(ispagination){
+                       adapter.notifyDataSetChanged()
+
+                   }else{
+                       adapter = RimProductlistAdapter(applicationContext,rimProductlist)
+                       rv_product_list.layoutManager = layoutmanager
+                       rv_product_list.adapter = adapter
+                       progressDialog.dismiss()
+                   }
                 }
                 else{
+                    isLastPageOfList = true
                     progressDialog.dismiss()
                     val body = JSONObject(body)
                     if (!body.getString("message").isNullOrBlank()) {
@@ -68,6 +126,7 @@ class RimPartActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 progressDialog.dismiss()
+                isLastPageOfList = true
                 Log.d("pdetails_data",""+t.message)
 
             }
@@ -77,19 +136,19 @@ class RimPartActivity : AppCompatActivity() {
 
 
    fun bindDatainView(jsonresponse: String?) {
-       val dataset = getDataSetArrayFromResponse(jsonresponse)
+    /*   val dataset = getDataSetArrayFromResponse(jsonresponse)
        rimProductlist.clear()
 
        for (i in 0 until dataset.length()) {
            val data = Gson().fromJson<Models.rimProductDetails>(dataset.getJSONObject(i).toString(), Models.rimProductDetails::class.java)
            rimProductlist.add(data)
        }
+*/
 
-       var adapter = RimProductlistAdapter(this,rimProductlist)
-       var layoutmanager = LinearLayoutManager(this)
+       adapter = RimProductlistAdapter(this,rimProductlist)
        rv_product_list.layoutManager = layoutmanager
        rv_product_list.adapter = adapter
-       progressDialog.dismiss()
+
    }
 
 }
