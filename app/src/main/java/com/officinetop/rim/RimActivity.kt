@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_rim.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +41,7 @@ class RimActivity : AppCompatActivity() {
         progressDialog = getProgressDialog()
         toolbar_title.text = resources.getString(R.string.rim)
         btn_search_for.setOnClickListener {
-            if (!isValid(et_front_width, et_front_diameter, et_front_et, et_front_no_of_holes,et_front_distance_holes,et_rear_width,et_rear_diameter,et_rear_et,et_rear_no_of_holes,et_rear_distamce_holes)) {
+        if (!isValid(et_front_width, et_front_diameter, et_front_et, et_front_no_of_holes,et_front_distance_holes,et_rear_width,et_rear_diameter,et_rear_et,et_rear_no_of_holes,et_rear_distamce_holes)) {
                return@setOnClickListener
           }
             progressDialog.show()
@@ -69,12 +70,34 @@ class RimActivity : AppCompatActivity() {
         else
              samedata = 0
 
-          RetrofitClient.client.rimsearch(et_front_width.text.toString()+".00", et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString()+".00",et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString(),5).enqueue(object : Callback<ResponseBody> {
+       var  front_width  = ""
+       var  rear_width  = ""
+
+
+        if (et_front_width.text.contains("."))
+            front_width = et_front_width.toString()
+        else
+            front_width = et_front_width.text.toString()+".00"
+
+        if (et_rear_width.text.contains("."))
+            rear_width = et_front_width.toString()
+        else
+            rear_width = et_front_width.text.toString()+".00"
+
+
+
+          RetrofitClient.client.rimsearch(front_width, et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,rear_width,et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString(),5).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val body = response.body()?.string()
                 progressDialog.dismiss()
                 if (isStatusCodeValid(body)) {
-                    startActivity(intentFor<RimPartActivity>().putExtra("json_response", body))
+                    startActivity(intentFor<RimPartActivity>().putExtra("json_response", body)
+                            .putExtra("front_width",et_front_width.text.toString()+".00")
+                            .putExtra("front_diameter",et_front_diameter.text.toString())
+                            .putExtra("front_et",et_front_et.text.toString())
+                            .putExtra("front_no_of_holes",et_front_no_of_holes.text.toString())
+                            .putExtra("front_distance_holes",et_front_distance_holes.text.toString())
+                               )
                 }
                 else{
                     val body = JSONObject(body)
