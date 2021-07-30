@@ -19,6 +19,7 @@ import com.officinetop.utils.getProgressDialog
 import com.officinetop.utils.showInfoDialog
 import com.officinetop.virtual_garage.AddVehicleActivity
 import kotlinx.android.synthetic.main.activity_maintenance.*
+import kotlinx.android.synthetic.main.activity_rim.*
 import kotlinx.android.synthetic.main.activity_rim_part.*
 import kotlinx.android.synthetic.main.activity_tyre_list.*
 import kotlinx.android.synthetic.main.activity_tyre_list.recycler_view
@@ -42,6 +43,7 @@ class RimPartActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rim_part)
         if(intent.hasExtra("json_response")){
@@ -128,6 +130,38 @@ class RimPartActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 isLastPageOfList = true
                 Log.d("pdetails_data",""+t.message)
+
+            }
+
+        })
+    }
+
+
+    private fun submitdata() {
+        var samedata : Int
+        if(cb_front_rear_same.isChecked)
+            samedata = 1
+        else
+            samedata = 0
+
+        RetrofitClient.client.rimsearch(et_front_width.text.toString()+".00", et_front_diameter.text.toString(), et_front_et.text.toString(), et_front_no_of_holes.text.toString(),et_front_distance_holes.text.toString(),samedata,et_rear_width.text.toString()+".00",et_rear_diameter.text.toString(),et_rear_et.text.toString(),et_rear_no_of_holes.text.toString(),et_rear_distamce_holes.text.toString(),5).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val body = response.body()?.string()
+                progressDialog.dismiss()
+                if (isStatusCodeValid(body)) {
+                    startActivity(intentFor<RimPartActivity>().putExtra("json_response", body))
+                }
+                else{
+                    val body = JSONObject(body)
+                    if (!body.getString("message").isNullOrBlank()) {
+                        showInfoDialog(body.getString("message"))
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                progressDialog.dismiss()
+                Log.d("check_submit_data", "error : = "+t.message)
 
             }
 
