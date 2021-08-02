@@ -298,7 +298,9 @@ object Models {
             @SerializedName("anteriore_price")
             var anteriore_price: String = "",
             @SerializedName("posteriore_price")
-            var posteriore_price: String = ""
+            var posteriore_price: String = "",
+            @SerializedName("wish_list")
+            var wish_list: String = ""
     ) : Serializable
 
     data class Availablecartypelist(

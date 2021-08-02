@@ -1090,6 +1090,47 @@ fun Context.addToFavoriteSendRequest(context: Context, productId: String, Produc
 }
 
 
+fun Context.addToFavoriterimSendRequest(context: Context, productId: String, ProductType: String, Iv_favorite: ImageView,rim_front_id : String,rim_rear_id:String,item: Models.rimProductDetails? = null) {
+    RetrofitClient.client.addToFavoriteforrim(context.getBearerToken()
+            ?: "", productId, ProductType, "", getSelectedCar()?.carVersionModel?.idVehicle
+            ?: "",rim_front_id,rim_rear_id).onCall { _, response ->
+
+        response.let {
+            val body = response?.body()?.string()
+            if (body.isNullOrEmpty() || response.code() == 401)
+                showConfirmDialog(getString(R.string.please_login_to_continue_for_add_wish_list)) { moveToLoginPage(context) }
+
+
+            if (response?.isSuccessful!!) {
+                val body = JSONObject(body)
+                if (body.has("message")) {
+                    Iv_favorite.setImageResource(R.drawable.ic_heart)
+
+                    if (item != null) {
+                        item.wish_list = "1"
+                    //    logAddToWishListEvent(this, item.pr_description!!, productId, ProductType, "USD", if (!item.seller_price.isNullOrBlank()) item.seller_price.toDouble() else 0.0)
+
+                    } /*else if (productorworkshopObject != null) {
+                        productorworkshopObject.wish_list = "1"
+                        logAddToWishListEvent(this, if (productorworkshopObject.productName.isNullOrBlank()) productorworkshopObject.companyName else productorworkshopObject.productName, productId, ProductType, "USD", if (!productorworkshopObject.sellerPrice.isNullOrBlank()) productorworkshopObject.sellerPrice.toDouble() else 0.0)
+
+                    }*/
+
+                    if (productId != null && productId != "")
+                        showInfoDialog(getString(R.string.Successfully_addedProduct_to_wishlist))
+                    else
+                        showInfoDialog(getString(R.string.SuccessfullyaddedthisWorkshopfavorite))
+
+
+                }
+
+            }
+
+        }
+    }
+}
+
+
 fun Context.removeFromFavoriteSendRquest(context: Context, productId: String, Iv_favorite: ImageView, item: Models.TyreDetailItem? = null, workshopId: String = "", productorworkshopObject: Models.ProductOrWorkshopList? = null, productType: String = "") {
     RetrofitClient.client.removeFromFavorite(context.getBearerToken()
             ?: "", productId, workshopId, productType).onCall { _, response ->
