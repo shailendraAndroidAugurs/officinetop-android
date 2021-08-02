@@ -1483,6 +1483,19 @@ interface IRetrofitApis {
     ): Call<ResponseBody>
 
     @FormUrlEncoded
+    @POST(Constant.UrlEndPoints.addToFavorite)
+    fun addToFavoriteforrim(
+            @Header(Constant.Fields.authorization) authToken: String,
+            @Field(Constant.Path.productid) productid: String,
+            @Field(Constant.Path.productType) productType: String,
+            @Field(Constant.Path.workshopId) workshopId: String,
+            @Field(Constant.Path.version_id) version_id: String,
+            @Field(Constant.Path.rim_front_id) rim_front_id: String,
+            @Field(Constant.Path.rim_rear_id) rim_rear_id: String,
+            @Header("accept") accept: String = "application/json"
+    ): Call<ResponseBody>
+
+    @FormUrlEncoded
     @POST(Constant.UrlEndPoints.removeFromFavorite)
     fun removeFromFavorite(
             @Header(Constant.Fields.authorization) authToken: String,

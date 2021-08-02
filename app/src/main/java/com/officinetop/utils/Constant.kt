@@ -421,6 +421,9 @@ object Constant {
         const val complete_address = "complete_address"
         const val assemble_time = "assemble_time"
         const val current_location = "current_location"
+        const val rim_front_id = "rim_front_id"
+        const val rim_rear_id = "rim_rear_id"
+
     }
 
     object RC {
