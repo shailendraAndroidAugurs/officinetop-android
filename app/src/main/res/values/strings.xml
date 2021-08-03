@@ -504,10 +504,11 @@
     <string name="Please_wait"> Please wait…</string>
     <string name="iva_inc_22Percentage"> iva inc. %s </string>
 
-    <string name="product_not_found_msg">You did not find the products? \n contact us \n Email: assistenza@officinetop.com \n
+    <string name="product_not_found_msg">You did not find the products? \n Contact us \n Email: assistenza@officinetop.com \n
 Tel and Whatsaap: 328 5668826</string>
 
     <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;new string of java file-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
 
     <string name="partNotFound"> Part not found for this services. Please try again</string>
     <string name="Feedback_List"> Feedback List</string>
