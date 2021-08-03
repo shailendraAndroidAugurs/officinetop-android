@@ -300,7 +300,9 @@ object Models {
             @SerializedName("posteriore_price")
             var posteriore_price: String = "",
             @SerializedName("wish_list")
-            var wish_list: String = ""
+            var wish_list: String = "",
+            @SerializedName("seller_id")
+            var seller_id: String = ""
     ) : Serializable
 
     data class Availablecartypelist(
