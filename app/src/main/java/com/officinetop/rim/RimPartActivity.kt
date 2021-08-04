@@ -74,7 +74,7 @@ class RimPartActivity : AppCompatActivity() {
                 val totalItemCount: Int = layoutmanager.itemCount
                 val firstVisibleItemPosition: Int = layoutmanager.findFirstVisibleItemPosition()
                 if (!isListLoading && !isLastPageOfList) {
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
+               if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= MifareUltralight.PAGE_SIZE) {
                         currentPage += 5
                         isListLoading = true
 /*
