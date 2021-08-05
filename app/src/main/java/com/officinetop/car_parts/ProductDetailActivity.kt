@@ -434,18 +434,28 @@ class ProductDetailActivity : BaseActivity(), OnGetFeedbacks {
                                         ll_productDetail.visibility = View.VISIBLE
                                         setProductDetailData(productData.getString("data"))
                                         val data = JSONObject(productData.getString("data"))
-                                        val jsonArray = data.getJSONArray("styles")
-                                        val styledata = ArrayList<String>()
-                                  /*      styledata.add(data.getString("style"))
-                                        style_id.add(intent.getStringExtra(Constant.Path.productDetails))*/
-                                        for (i in 0 until jsonArray.length()){
-                                            val jsonobj = jsonArray.getJSONObject(i)
-                                            styledata.add(jsonobj.getString("style"))
-                                            style_id.add(jsonobj.getString("id"))
+                                        if (data.getString("compatible_status").equals("0")){
+
                                         }
-                                        val arrayadapter = ArrayAdapter(applicationContext,android.R.layout.simple_expandable_list_item_1,styledata)
-                                        spinner_product.adapter = arrayadapter
-                                        spinner_product.setSelection(select_item_position)
+                                        if (data.has("styles")&&data.getJSONArray("styles")!=null){
+                                            val jsonArray = data.getJSONArray("styles")
+                                            val styledata = ArrayList<String>()
+                                            styledata.add(data.getString("style"))
+                                            style_id.add(intent.getStringExtra(Constant.Path.productDetails))
+
+                                            for (i in 0 until jsonArray.length()){
+                                                val jsonobj = jsonArray.getJSONObject(i)
+                                                styledata.add(jsonobj.getString("style"))
+                                                style_id.add(jsonobj.getString("id"))
+                                            }
+                                            val arrayadapter = ArrayAdapter(applicationContext,android.R.layout.simple_expandable_list_item_1,styledata)
+                                            spinner_product.adapter = arrayadapter
+                                            spinner_product.setSelection(select_item_position)
+                                        }
+                                        else{
+                                            spinner_product.visibility = View.GONE
+                                        }
+
                                          min_price = data.getString("min_service_price")
                                         if(data.getString("compatible_status").equals("1")){
                                             layout_compatible.visibility = View.VISIBLE

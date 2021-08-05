@@ -692,6 +692,7 @@ informazioni in accordo alle </string>
 Tel e WhatsApp: 328 5668826</string>
     <string name="alert_message_location">È necessario attivare la posizione</string>
     <string name="rim">Cerchioni</string>
+    <string name="search_for">Cerca</string>
     <string-array name="home_icon_titles">
         <item>Gomme</item>
         <item>Manutenzione</item>
