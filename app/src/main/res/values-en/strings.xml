@@ -689,6 +689,7 @@ Tel and WhatsApp: 328 5668826</string>
     <string name="email_not_valid">Email not valid</string>
     <string name="growing">Growing</string>
     <string name="rim">Rims</string>
+    <string name="search_for">Search for</string>
     <string-array name="home_icon_titles">
         <item>Tyre</item>
         <item>Maintenance</item>

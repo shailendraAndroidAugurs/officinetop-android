@@ -486,7 +486,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:background="@drawable/shape_button_rounded_orange"
-                android:text="Search for"
+                android:text="@string/search_for"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/location" />
