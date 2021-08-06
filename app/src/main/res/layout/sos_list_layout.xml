@@ -8,14 +8,14 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="@dimen/_2sdp"
-    android:weightSum="4">
+    android:weightSum="10">
 
     <ImageView
         android:id="@+id/workshop_images"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_5sdp"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 
     <TextView
         android:id="@+id/workshop_name"
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_2sdp"
         android:layout_toEndOf="@+id/workshop_images"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center_vertical" />
 
     <Button
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_toEndOf="@+id/workshop_name"
-        android:layout_weight="1"
+        android:layout_weight="2.5"
         android:background="@drawable/shape_rectangle_orange_filled"
         android:text="@string/Emergency"
         android:textAllCaps="false"
@@ -45,7 +45,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_toEndOf="@+id/workshop_emergency"
-        android:layout_weight="1"
+        android:layout_weight="2.5"
         android:background="@drawable/shape_rectangle_orange_filled"
         android:text="@string/Appointment"
         android:textAllCaps="false"
