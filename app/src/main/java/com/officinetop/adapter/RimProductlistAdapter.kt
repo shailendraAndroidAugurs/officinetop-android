@@ -57,7 +57,7 @@ class RimProductlistAdapter(private val context: Context, private val productlis
             holder.tv_rim_anteriore.visibility = View.GONE
 
         holder.parent_layout.setOnClickListener {
-            context.startActivity(context.intentFor<RimProductDetailsActivity>().putExtra("front_id", productlist.get(i).AlloyRimFrontID).putExtra("rear_id", productlist.get(i).AlloyRimRearID))
+            context.startActivity(context.intentFor<RimProductDetailsActivity>().putExtra("front_id", productlist.get(i).AlloyRimFrontID).putExtra("rear_id", productlist.get(i).AlloyRimRearID).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 
 
