@@ -40,7 +40,11 @@ class RimPartActivity : AppCompatActivity() {
     private var currentPage = PAGESTART
     private var isLastPageOfList = false
     private var isFirstTimeLoading = true
-
+    var car_type_id = ""
+    var front_diameter_id =""
+    var rear_diameter_id = ""
+    var front_width_id = ""
+    var rear_width_id = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,15 +54,16 @@ class RimPartActivity : AppCompatActivity() {
             bindDatainView(intent.getStringExtra("json_response"))
         }
 
-        if(!intent.hasExtra("call_from_model")){
-//            var car_type_id = intent.getStringExtra("car_type_id")
-//            var front_diameter_id = intent.getStringExtra("front_diameter_id")
-//            var rear_diameter_id = intent.getStringExtra("rear_diameter_id")
-//            var front_width_id = intent.getStringExtra("front_width_id")
-//            var rear_width_id = intent.getStringExtra("rear_width_id")
+        if(intent.hasExtra("call_from_model")){
+            car_type_id = intent.getStringExtra("car_type_id")
+            front_diameter_id = intent.getStringExtra("front_diameter_id")
+            rear_diameter_id = intent.getStringExtra("rear_diameter_id")
+            front_width_id = intent.getStringExtra("front_width_id")
+             rear_width_id = intent.getStringExtra("rear_width_id")
+            loadProductWithModel(false,car_type_id,front_diameter_id,rear_diameter_id,front_width_id,rear_width_id,currentPage)
+
         }
 
-        loadProductWithModel(false,"2","4","4","4","4",currentPage)
         setPaginationScroll()
 
     }
@@ -80,9 +85,9 @@ class RimPartActivity : AppCompatActivity() {
 /*
                         progress_bar_bottom.visibility = View.VISIBLE
 */
-                        loadProductWithModel(true,"2","4","4","4","4",currentPage)
+                      loadProductWithModel(true,car_type_id,front_diameter_id,rear_diameter_id,front_width_id,rear_width_id,currentPage)
 
-                    }
+               }
                 }
             }
         }
