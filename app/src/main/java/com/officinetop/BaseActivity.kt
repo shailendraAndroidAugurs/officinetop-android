@@ -56,7 +56,7 @@ open class BaseActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbac
         connectionCallback.bind()
         super.onResume()
     }
-
+// new project
     override fun onPause() {
         connectionCallback.unbind()
         super.onPause()
