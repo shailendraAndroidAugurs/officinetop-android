@@ -34,23 +34,23 @@ class CarAvailablemeasureListAdapter(private val context: Context, private val c
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tv_daimeter.setText(context.resources.getString(R.string.diameter)+": "+carlist.get(position).front_diameter+"\"")
         holder.tv_quantitiy.setText("("+carlist.get(position).total_quantity+")")
-        Log.d("cheeck_measure_data",""+carlist.get(position).measures)
+//        Log.d("cheeck_measure_data",""+carlist.get(position).measures)
         var adapter = CarmeasureExpandableAdapter(context,carlist.get(position).measures)
-        var layoutmanager = LinearLayoutManager(context)
-        holder.car_measure_list.layoutManager = layoutmanager
-        holder.car_measure_list.adapter = adapter
-        var clicked = false
-        holder.rv_container_parent.setOnClickListener{
-            if(clicked){
-                holder.car_measure_list.visibility = View.GONE
-                clicked = false
-            }
-            else{
-                holder.car_measure_list.visibility = View.VISIBLE
-                clicked = true
-            }
-
-        }
+//        var layoutmanager = LinearLayoutManager(context)
+//        holder.car_measure_list.layoutManager = layoutmanager
+//        holder.car_measure_list.adapter = adapter
+//        var clicked = false
+//        holder.rv_container_parent.setOnClickListener{
+//            if(clicked){
+//                holder.car_measure_list.visibility = View.GONE
+//                clicked = false
+//            }
+//            else{
+//                holder.car_measure_list.visibility = View.VISIBLE
+//                clicked = true
+//            }
+//
+//        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
