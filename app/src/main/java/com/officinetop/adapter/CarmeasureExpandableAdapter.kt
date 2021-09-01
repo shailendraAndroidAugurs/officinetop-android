@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.item_list_car_availble_rim.view.*
 import kotlinx.android.synthetic.main.item_list_version_car.view.*
 import org.jetbrains.anko.intentFor
 
-class CarmeasureExpandableAdapter(private val context: Context, private val carlist: List<Models.Measures>) : RecyclerView.Adapter<CarmeasureExpandableAdapter.ViewHolder>() {
+class CarmeasureExpandableAdapter(private val context: Context, private val carlist: List<Models.Availablecartypelist>) : RecyclerView.Adapter<CarmeasureExpandableAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,14 +32,14 @@ class CarmeasureExpandableAdapter(private val context: Context, private val carl
     override fun getItemCount(): Int = carlist.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(carlist.get(position).front_width.equals(carlist.get(position).rear_width) && carlist.get(position).front_diameter.equals(carlist.get(position).rear_diameter)){
-            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+" - "+context.resources.getString(R.string.rear)+": "+carlist.get(position).front_width+"X"+carlist.get(position).front_diameter)
+        if(carlist.get(position).front_diameter.equals(carlist.get(position).rear_diameter) && carlist.get(position).front_diameter.equals(carlist.get(position).rear_diameter)){
+            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+" - "+context.resources.getString(R.string.rear)+": "+carlist.get(position).front_diameter+"X"+carlist.get(position).front_diameter)
         }
         else{
-            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+": "+carlist.get(position).front_width+"X"+carlist.get(position).front_diameter+"\""+"\n"+
-                    context.resources.getString(R.string.rear)+": "+carlist.get(position).rear_width+"X"+carlist.get(position).rear_diameter+"\"")
+            holder.tv_daimeter.setText(context.resources.getString(R.string.front)+": "+carlist.get(position).front_diameter+"X"+carlist.get(position).front_diameter+"\""+"\n"+
+                    context.resources.getString(R.string.rear)+": "+carlist.get(position).rear_diameter+"X"+carlist.get(position).rear_diameter+"\"")
         }
-        holder.tv_quantitiy.setText("("+carlist.get(position).quantity+")")
+        holder.tv_quantitiy.setText("("+carlist.get(position).total_quantity+")")
 
        holder.rv_container_parent.setOnClickListener {
            context.startActivity(context.intentFor<RimPartActivity>().

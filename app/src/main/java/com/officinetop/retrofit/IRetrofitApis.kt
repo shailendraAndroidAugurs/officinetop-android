@@ -84,6 +84,13 @@ interface IRetrofitApis {
     @GET(Constant.UrlEndPoints.alloy_rim_attachments_by_type)
     fun rimavailablelist(@Query("car_type_id") modelID: String): Call<ResponseBody>
 
+    @GET(Constant.UrlEndPoints.alloy_rim_attachments_by_type_diameter)
+    fun rimavailablesublist(@Query("diameter_rear_id") diameter_rear_id: String,
+                   @Query("car_type_id") car_type_id: String,
+                   @Query("diameter_front_id") diameter_front_id: String
+
+    ): Call<ResponseBody>
+
     @GET(Constant.UrlEndPoints.alloy_rim_details)
     fun rimdetails(@Query("front_rim_id") front_rim_id: String,
                    @Query("rear_rim_id") rear_rim_id: String,
