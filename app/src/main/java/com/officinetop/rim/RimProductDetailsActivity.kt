@@ -69,6 +69,7 @@ class RimProductDetailsActivity : AppCompatActivity() {
     }
 
     private fun bindSpinnerValue() {
+        spinner_data.add(0)
         spinner_data.add(1)
         spinner_data.add(2)
         spinner_data.add(3)
@@ -122,8 +123,8 @@ class RimProductDetailsActivity : AppCompatActivity() {
                                tv_rim_anteriore.text = resources.getString(R.string.front)+" "+if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
                                tv_rim_posteriore.text = resources.getString(R.string.rear)+" "+if(!productDetails!!.rim_posteriore.isNullOrEmpty())productDetails!!.rim_posteriore else if(!productDetails!!.rim_anteriore.isNullOrEmpty()) productDetails!!.rim_anteriore else ""
                                productTotalPrices.text =getString(R.string.total)+" "+getString(R.string.prepend_euro_symbol_string, productDetails!!.AlloyRimPrice)
-                               tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0.0")
-                               tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0.0")
+//                               tv_rim_front_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0.0")
+//                               tv_rim_rear_price.text   = getString(R.string.prepend_euro_symbol_string, if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price else if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price else "0.0")
                                front_price = if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
                                rear_price = if(!productDetails!!.posteriore_price.isNullOrEmpty())productDetails!!.posteriore_price.toDouble() else  if(!productDetails!!.anteriore_price.isNullOrEmpty())productDetails!!.anteriore_price.toDouble() else 0.00
                                buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"

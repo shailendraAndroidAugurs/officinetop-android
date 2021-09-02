@@ -29,7 +29,6 @@
             android:orientation="vertical"
             android:paddingBottom="8dp">
 
-
             <TextView
                 android:id="@+id/textLabel"
                 style="@style/TextViewNormal"
@@ -37,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:textFontWeight="@integer/config_navAnimTime"
                 android:text="@string/FindYourLocation"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
