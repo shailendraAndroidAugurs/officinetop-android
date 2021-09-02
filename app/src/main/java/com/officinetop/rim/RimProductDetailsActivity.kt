@@ -130,9 +130,9 @@ class RimProductDetailsActivity : AppCompatActivity() {
                                buy_product_with_assembly.text =  getString(R.string.buy_with_assembly)+"("+getString(R.string.prepend_euro_symbol_string, productDetails!!.min_service_price)+")"
                                //binding p
                                // roduct descript/ion data
-                               tv_width.text = "Ant. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
+                               tv_width.text = "Front. "+if (!productDetails!!.front_width.isNullOrEmpty())productDetails!!.front_width else "" +" - Post."+if(!productDetails!!.rear_width.isNullOrEmpty())productDetails!!.rear_width else ""
                                tv_diameter.text = productDetails!!.front_diameter
-                               tv_etoffset.text = productDetails!!.AlloyRimET
+                               tv_etoffset.text = "Front. "+productDetails!!.AlloyRimET
                                tv_no_of_holes.text = productDetails!!.AlloyRimLochzahl
                                tv_distance_between_holes.text = productDetails!!.AlloyRimLochkreis
                                tv_winter_compatibilty.text = productDetails!!.winter
