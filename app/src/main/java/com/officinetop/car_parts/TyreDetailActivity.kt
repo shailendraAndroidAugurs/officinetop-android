@@ -114,6 +114,7 @@ class TyreDetailActivity : BaseActivity(), OnGetFeedbacks {
                     buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, minimumServicePrices)})"
             }
 
+
         } else {
             buy_product_with_assembly.text = getString(R.string.buy_with_assembly) + " (${getString(R.string.prepend_euro_symbol_string, "0.0")})"
         }
